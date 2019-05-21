@@ -184,7 +184,7 @@ public class SimApp<T extends Configuration> extends Application<T> implements R
             message = signature.sign(message);
         }
         refMessage = refmapper.toXML(message);
-
+        System.out.println("Server returned : " + refMessage.toString());
 
         RestResult result = client.post(config.getCounterpartRestUrl(), refMessage);
         System.out.println("Client send to Server : " + refMessage);

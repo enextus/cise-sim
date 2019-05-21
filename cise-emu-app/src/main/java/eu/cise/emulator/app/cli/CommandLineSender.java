@@ -30,6 +30,12 @@ public class CommandLineSender extends Command {
                 .type(String.class)
                 .required(true)
                 .help("add templateXml name to send configured destination ");
+
+        subparser.addArgument("-c", "--config")
+                .dest("config")
+                .type(String.class)
+                .required(true)
+                .help("add specific config (to change id and destination)");
     }
 
 
@@ -37,42 +43,37 @@ public class CommandLineSender extends Command {
     public void run(Bootstrap<?> bootstrap, Namespace namespace) throws Exception {
         XmlMapper xmlMapper = new DefaultXmlMapper();
         MessageValidator validator = new MessageValidator();
-        SimConfig config = createConfig();
+        SimConfig config;
+        Logger logger = LoggerFactory.getLogger("eu.cise.emulator.app.cli");
+
+        String aConfigParam = namespace.getString("config");
+        if (!(aConfigParam.equals(""))) {
+            config = SimConfig.createMyConfig(aConfigParam);
+            logger.debug("to send -> " + namespace.getString("send"));
+        } else {
+            config = ConfigFactory.create(SimConfig.class);
+        }
+
+        String servicefile = namespace.getString("send");
+        if ((servicefile.equals(""))) {
+            System.out.println("ERROR:  add a template xml file to the command line expression with the \"-s\" option");
+            return;
+        }
+
         simApp = new SimApp(new SourceStreamProcessor(),
                 new Sender(),
                 new SimLogger.Slf4j(),
                 config, xmlMapper, validator);
-
-        Logger logger = LoggerFactory.getLogger("eu.cise.emulator.app.cli");
-        if ((namespace.getString("send").equals(""))) {
-            logger.debug("to send -> " + namespace.getString("send"));
-        }
-
         simApp.run();
-        String servicefile = "";
-
-        if (!(namespace.getString("send").equals(""))) {
-            servicefile = namespace.getString("service");
-
-        }
 
         try {
             simApp.sendEvent(servicefile, "");
         } catch (Throwable e) {
-            logger.error("An error occurred:\n\n" + e.getMessage() + "\n");
+            logger.error("error occurred:\n\n" + e.getMessage() + "\n");
 
-            if (simApp.isDebug = true)
-                logger.error(e.getStackTrace().toString());
         }
+
     }
 
-    /**
-     * Retrieve the configuration object.
-     *
-     * @return a SimConfig object.
-     */
-    private static SimConfig createConfig() {
-        return ConfigFactory.create(SimConfig.class);
-    }
 
 }
