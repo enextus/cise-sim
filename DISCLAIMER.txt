@@ -1,0 +1,40 @@
+CISE SIM (c) 2019, European Union
+
+CISE SIM has been developed by the Joint Research Centre of the European Union. It is released as open source software under the 3-Clause BSD License.
+
+CISE SIM makes use of multiple external components and dependencies, which continue to be subject to the terms and conditions stipulated in the respective licences they have been released under. These external components and dependencies include, but not limited to, the following:
+
+Apache 2: Objenesis
+Apache License 2.0: Javassist
+Apache Software Licenses: Log4j Implemented Over SLF4J
+BSD-Style License: JAXB2 Basics - Basic Plugins, JAXB2 Basics - Runtime, JAXB2 Basics - Tools
+BSD style: XStream Core
+CC0: reactive-streams
+CDDL 1.1: javax.ws.rs-api
+CDDL+GPL License: jersey-core-client, jersey-core-common, jersey-repackaged-guava
+CDDL/GPLv2+CE: JavaMail API
+CDDL + GPLv2 with classpath exception: HK2 API module, HK2 Implementation Utilities, OSGi resource locator bundle - used by various API providers that rely on META-INF/services mechanism to locate providers., ServiceLocator Default Implementation, aopalliance version 1.0 repackaged as a module, javax.annotation API, javax.inject:1 as OSGi bundle
+Common Development and Distribution License (CDDL) v1.0: JavaBeans Activation Framework (JAF)
+COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0: Streaming API for XML
+Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0): aismessages
+Eclipse Public License 1.0: JUnit
+Eclipse Public License - v 1.0: Logback Classic Module, Logback Core Module
+GNU General Public Library: Streaming API for XML
+GNU Lesser General Public License: Logback Classic Module, Logback Core Module
+GPL2 w/ CPE: javax.ws.rs-api
+Indiana University Extreme! Lab Software License, vesion 1.1.1: MXP1: Xml Pull Parser 3rd Edition (XPP3)
+LGPL 2.1: Javassist
+MIT License: JCL 1.1.1 implemented over SLF4J, JUL to SLF4J bridge, SLF4J API Module
+MIT License: JCL 1.1.1 implemented over SLF4J, SLF4J API Module
+MIT License: JCL 1.1.1 implemented over SLF4J, SLF4J API Module, Spectrum
+MPL 1.1: Javassist
+New BSD License: Hamcrest All, Hamcrest Core
+New BSD License: Hamcrest Core
+Public Domain: MXP1: Xml Pull Parser 3rd Edition (XPP3), XML Pull Parsing API
+The Apache Software License, Version 2.0: Apache Commons BeanUtils, Apache Commons Lang, Byte Buddy (without dependencies), Byte Buddy Java agent, Commons Collections, Non-Blocking Reactive Foundation for the JVM, Reactor Test support, Woodstox
+The Apache Software License, Version 2.0: Apache Commons BeanUtils, Apache Commons Lang, Commons Collections, Non-Blocking Reactive Foundation for the JVM, Reactor Test support, Woodstox
+The Apache Software License, Version 2.0: Apache Commons BeanUtils, Apache Commons Lang, Commons Collections, Non-Blocking Reactive Foundation for the JVM, Woodstox
+The BSD License: OWNER :: Core, OWNER :: Java 8 Support, Stax2 API
+The MIT License: mockito-core
+
+The European Union disclaims all liability related to or arising out of the use made by third parties of any external components and dependencies which may be included with CISE SIM.

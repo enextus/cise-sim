@@ -1,0 +1,49 @@
+package eu.cise.sim.transport.Validation;
+
+import eu.eucise.servicemodel.v1.authority.Participant;
+import eu.eucise.servicemodel.v1.message.Message;
+import eu.eucise.servicemodel.v1.service.Service;
+import eu.cise.sim.transport.Exception.IllegalMessageException;
+
+import java.util.Optional;
+
+abstract public class AbsValidator<T extends Message> implements Validator {
+
+    final public T message;
+
+    public AbsValidator(T message) {
+        this.message = message;
+    }
+
+
+
+    @Override
+    public void messageNotNullCheck() {
+        Optional.ofNullable(message)
+                .orElseThrow(() -> new IllegalMessageException(IllegalMessageException.NULL_MESSAGE));
+    }
+
+    @Override
+    public void senderIdNotNullCheck() {
+        Optional.ofNullable(message)
+                .map(Message::getSender)
+                .map(Service::getServiceID)
+                .orElseThrow(() -> new IllegalMessageException(IllegalMessageException.SENDER_ID_NOT_SPECIFIED));
+    }
+
+    @Override
+    public void senderAddressNotNullCheck() {
+        Optional.ofNullable(message)
+                .map(Message::getSender)
+                .map(Service::getParticipant)
+                .map(Participant::getEndpointUrl)
+                .orElseThrow(() -> new IllegalMessageException(IllegalMessageException.SENDER_ADDRESS_NOT_SPECIFIED));
+    }
+
+    @Override
+    public abstract void destinationAddressingCheck();
+
+    protected boolean isServiceIdNull(Service recipient) {
+        return recipient == null || recipient.getServiceID() == null;
+    }
+}

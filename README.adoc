@@ -1,0 +1,93 @@
+= CISE Adaptor for AIS data
+Gian_Carlo Pace <giancarlo.pace@ec.europa.eu>
+v1.1, 2019-01-11
+:page-layout: docs
+:imagesdir: assets/images
+:homepage: https://github.com/ec-jrc/cise-ais-adaptor
+:numbered:
+:source-highlighter: Coderay coderay
+ifndef::env-site[]
+:toc: right
+:idprefix:
+:idseparator: -
+//:icons: font
+endif::[]
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:source-language: bash
+
+
+== Overview
+The CISE Adaptor for AIS data is an application to read AIS tracks encoded with NMEA messages, translate them into a stream of CISE Data Model compliant objects and to dispatch CISE Push messages to a connected CISE Gateway.
+
+The INPUT is an AIS NMEA transcription and the OUTPUT is a corresponding number of HTTP request each of them containing a CISE PUSH message.
+
+The AIS NMEA message type supported are two:
+
+* Message No.1/2/3: Voyage Message Type
+* Message No.5: Positional Message Type
+
+The application allows to configure the number of vessels to collect and send in each Push message and a timeout after which the Push message will be sent whatever number of Vessel (>0) will be collected.
+
+== Requirements
+The application should preferably installed on a linux machine. Theoretically should work also in any Operative System supporting Java and having a bash shell support but it has only been tested in a GNU/Linux server.
+
+The server should be installed with:
+
+- Java 1.8
+- Maven 3.5+
+
+== Compilation
+Clone the git repository:
+[source,bash]
+----
+...$ git clone git@github.com:ec-jrc/cise-ais-adaptor.git
+----
+
+After cloning the git repository is possible to compile the project using maven.
+
+WARNING: To compile the software it's mandatory to send an email to the JRC CISE Team <JRC-CISE@ec.europa.eu> requesting the content of the ais-mvn-repo directory. Once received, *please copy the file ais-mvn-repo.tgz in the project directory* and proceed with the following steps.
+
+[source,bash]
+----
+...$ cd cise-ais-adaptor
+...$ tar xvfz cise-mvn-repo.tgz
+...$ mvn clean install
+----
+
+== Preparing the software
+When the compilation will be finished (with a BUILD SUCCESSFUL in the standard output) it will be created a distribution package that can be used to run the software.
+
+[source,bash]
+----
+...$ cd target
+...$ mv cise-ais-adaptor-bin.tar.gz /my/installation/path
+...$ cd /my/installation/path
+...$ tar xvfz cise-ais-adaptor.tar.gz
+...$ cd cise-ais-adaptor-bin
+----
+
+== Running the AIS Adaptor
+The ais-adaptor application can be started by using a script `adaptor` in the distribution root path. Using the command:
+
+The command:
+[source,bash]
+----
+...$ ./adaptor run
+----
+
+it will be possible to start ais-adaptor in foreground. While to run it in background is possible to launch it with:
+
+[source,bash]
+----
+...$ ./adaptor start
+----
+
+.Next steps
+NOTE: Please refer to the link:ais-docs/src/main/asciidoc/configuration.adoc[configuration chapter] to configure the adaptor with the parameters specific to the public administration where the ais-adaptor will be installed.
+

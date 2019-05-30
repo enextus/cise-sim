@@ -1,0 +1,14 @@
+# Releases
+
+## 2019-01-11 v1.1
+- added the support to messages of type 'Push' and ServiceOperation 'Subscribe'. This features allows to interact directly with the light client.
+- Fixed an error on the datetime passed to the translation of the eta ais field.
+- Improved the documentation
+
+## 2018-10-17 v1.0
+- added the ServiceType field in the xml that is a mandatory field requested by the Simulator.
+- added a timeout in the message sending. The application will collect a ``processing.entities-per-message`` number of entities (vessels) before packing a cise message and send it. In the unfortunate case that collecting the entities stops for a while before reaching the number of vessel triggering the sending, the vessels would stay unsent in a buffer. A timeout has been added to trigger the send of the cise message in this case.
+- added the support for multiple service profile to be added to the message.
+
+## 2018-07-04 Beta release
+- First publicly available release
