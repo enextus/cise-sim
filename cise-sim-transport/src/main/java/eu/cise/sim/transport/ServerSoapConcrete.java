@@ -1,14 +1,12 @@
 package eu.cise.sim.transport;
 
 import eu.cise.sim.transport.conformance.AcceptanceAgent;
-import eu.eucise.servicemodel.v1.message.Acknowledgement;
-import eu.eucise.servicemodel.v1.message.Message;
-
-import javax.jws.WebMethod;
-import javax.jws.WebService;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Message;
 
 
-@WebService(name = "transport", serviceName = "soap")
+// TODO Fix annotation for web services
+//@WebService(name = "transport", serviceName = "soap")
 public class ServerSoapConcrete implements Server {
      public static ServerSoapConcrete instance ;
      String id;
@@ -37,7 +35,7 @@ public class ServerSoapConcrete implements Server {
         return instance;
     }
 
-    @WebMethod(operationName = "message")
+//    @WebMethod(operationName = "message")
     public Message Create(Message receivedMessage) {
         Acknowledgement returnnmessage = messageManager.treatIncomingMessage(receivedMessage);
 

@@ -1,6 +1,6 @@
 package eu.cise.sim.transport;
 
-import eu.eucise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.Message;
 
     /**
      * Dispatcher interface will abstract from the protocols and details used to

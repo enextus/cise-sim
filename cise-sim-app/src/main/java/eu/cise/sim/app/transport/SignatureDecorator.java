@@ -1,6 +1,6 @@
 package eu.cise.sim.app.transport;
 
-import eu.eucise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
 import eu.cise.sim.transport.conformance.SubmissionAgent;
 

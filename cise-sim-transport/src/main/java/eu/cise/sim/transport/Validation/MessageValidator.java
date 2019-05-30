@@ -1,9 +1,9 @@
 package eu.cise.sim.transport.Validation;
 
 
-        import eu.eucise.servicemodel.v1.message.Message;
-import eu.eucise.servicemodel.v1.message.PullRequest;
-import eu.eucise.servicemodel.v1.message.Push;
+        import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.PullRequest;
+import eu.cise.servicemodel.v1.message.Push;
 
 import java.util.function.Consumer;
 

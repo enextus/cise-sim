@@ -1,9 +1,9 @@
 package eu.cise.sim.transport.Validation;
 
 import eu.cise.sim.transport.Exception.IllegalMessageException;
-import eu.eucise.servicemodel.v1.authority.Participant;
-import eu.eucise.servicemodel.v1.message.Message;
-import eu.eucise.servicemodel.v1.service.Service;
+import eu.cise.servicemodel.v1.authority.Participant;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.service.Service;
 
 import java.util.Optional;
 

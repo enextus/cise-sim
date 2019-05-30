@@ -1,7 +1,7 @@
 package eu.cise.sim.transport;
 
 
-import eu.eucise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.DefaultXmlValidator;
 import eu.eucise.xml.XmlMapper;

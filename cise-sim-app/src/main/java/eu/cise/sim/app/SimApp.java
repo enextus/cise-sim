@@ -29,8 +29,8 @@ package eu.cise.sim.app;
 
 import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
-import eu.eucise.servicemodel.v1.message.Message;
-import eu.eucise.servicemodel.v1.message.XmlEntityPayload;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.XmlEntityPayload;
 import eu.cise.signature.SignatureService;
 import eu.cise.signature.SignatureServiceBuilder;
 import eu.cise.sim.app.candidate.Sender;

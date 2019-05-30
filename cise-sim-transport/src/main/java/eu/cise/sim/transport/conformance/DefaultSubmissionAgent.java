@@ -1,9 +1,9 @@
 package eu.cise.sim.transport.conformance;
 
 import eu.cise.sim.transport.Validation.MessageValidator;
-import eu.eucise.servicemodel.v1.authority.Participant;
-import eu.eucise.servicemodel.v1.message.Message;
-import eu.eucise.servicemodel.v1.service.Service;
+import eu.cise.servicemodel.v1.authority.Participant;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.service.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

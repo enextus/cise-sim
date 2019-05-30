@@ -1,6 +1,6 @@
 package eu.cise.sim.app.context;
 
-import eu.eucise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.sim.transport.conformance.Consumers;
 import eu.cise.sim.transport.conformance.GatewayProcessor;
 import eu.eucise.xml.XmlMapper;

@@ -1,6 +1,7 @@
 package eu.cise.sim.transport.conformance;
 
-import eu.eucise.servicemodel.v1.message.Message;
+
+import eu.cise.servicemodel.v1.message.Message;
 
 /**
  * The GatewayProcessor is the heart of the system that will route messages

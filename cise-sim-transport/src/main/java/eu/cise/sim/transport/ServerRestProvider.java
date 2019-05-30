@@ -1,7 +1,7 @@
 package eu.cise.sim.transport;
 
-import eu.eucise.servicemodel.v1.message.Acknowledgement;
-import eu.eucise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Message;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
