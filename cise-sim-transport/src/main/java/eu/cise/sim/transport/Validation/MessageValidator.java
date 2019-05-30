@@ -2,10 +2,10 @@ package eu.cise.sim.transport.Validation;
 
 
         import eu.eucise.servicemodel.v1.message.Message;
-        import eu.eucise.servicemodel.v1.message.PullRequest;
-        import eu.eucise.servicemodel.v1.message.Push;
+import eu.eucise.servicemodel.v1.message.PullRequest;
+import eu.eucise.servicemodel.v1.message.Push;
 
-        import java.util.function.Consumer;
+import java.util.function.Consumer;
 
 public class MessageValidator implements Validator {
 

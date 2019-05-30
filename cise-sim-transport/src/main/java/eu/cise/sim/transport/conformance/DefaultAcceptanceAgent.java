@@ -1,12 +1,12 @@
 package eu.cise.sim.transport.conformance;
 
-import eu.eucise.servicemodel.v1.message.*;
-import eu.eucise.servicemodel.v1.service.Service;
-import eu.eucise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.sim.transport.Exception.IllegalMessageException;
 import eu.cise.sim.transport.Exception.InvalidMessageSignatureException;
 import eu.cise.sim.transport.treatIncomingAgent;
 import eu.eucise.helpers.AckBuilder;
+import eu.eucise.servicemodel.v1.message.*;
+import eu.eucise.servicemodel.v1.service.Service;
+import eu.eucise.servicemodel.v1.service.ServiceOperationType;
 import eu.eucise.xml.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +14,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 import java.util.UUID;
 
+import static eu.eucise.helpers.AckBuilder.newAck;
+import static eu.eucise.helpers.ServiceBuilder.newService;
 import static eu.eucise.servicemodel.v1.message.AcknowledgementType.*;
 import static eu.eucise.servicemodel.v1.message.InformationSecurityLevelType.NON_CLASSIFIED;
 import static eu.eucise.servicemodel.v1.message.InformationSensitivityType.GREEN;
 import static eu.eucise.servicemodel.v1.message.PriorityType.HIGH;
-import static eu.eucise.helpers.AckBuilder.newAck;
-import static eu.eucise.helpers.ServiceBuilder.newService;
 import static java.lang.String.format;
 
 public class DefaultAcceptanceAgent implements treatIncomingAgent {

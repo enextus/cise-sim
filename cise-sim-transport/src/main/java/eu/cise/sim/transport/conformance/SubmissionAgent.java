@@ -1,6 +1,6 @@
 package eu.cise.sim.transport.conformance;
-import eu.eucise.servicemodel.v1.message.Message;
 import eu.cise.sim.transport.Exception.CiseTransportException;
+import eu.eucise.servicemodel.v1.message.Message;
 
 /**
  * It's the message entry point. When a gateway receives a message it's

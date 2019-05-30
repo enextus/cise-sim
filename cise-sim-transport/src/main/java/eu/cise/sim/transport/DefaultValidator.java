@@ -1,7 +1,7 @@
 package eu.cise.sim.transport;
 
-import eu.eucise.servicemodel.v1.message.Message;
 import eu.cise.sim.transport.Validation.AbsValidator;
+import eu.eucise.servicemodel.v1.message.Message;
 
 import java.util.function.Consumer;
 
