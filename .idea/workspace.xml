@@ -1,0 +1,1404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="49010a8d-aa37-4da1-ad02-9f9a8870e966" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/cise.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_dataformat_jackson_dataformat_yaml_2_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_guava_2_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_joda_2_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_jaxrs_jackson_jaxrs_base_2_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_jaxrs_jackson_jaxrs_json_provider_2_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_afterburner_2_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_jaxb_annotations_2_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_parameter_names_2_9_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_liveperson_dropwizard_websockets_1_3_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_configuration_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_core_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_jackson_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_jersey_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_jetty_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_lifecycle_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_logging_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_metrics_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_request_logging_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_servlets_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_util_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_dropwizard_validation_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_metrics_metrics_healthchecks_4_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_metrics_metrics_jersey2_4_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_metrics_metrics_jetty9_4_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_metrics_metrics_jmx_4_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_metrics_metrics_json_4_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_metrics_metrics_jvm_4_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_metrics_metrics_logback_4_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_dropwizard_metrics_metrics_servlets_4_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_websocket_javax_websocket_api_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_websocket_javax_websocket_client_api_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_argparse4j_argparse4j_0_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_text_1_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_9_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_core_2_9_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_groovy_groovy_all_2_4_9.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_annotations_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_client_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_continuation_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_http_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_io_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_jndi_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_plus_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_security_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_server_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_servlet_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_servlets_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_util_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_webapp_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_xml_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_websocket_javax_websocket_client_impl_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_websocket_javax_websocket_server_impl_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_api_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_client_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_common_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_server_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_servlet_9_4_11_v20180605.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_java_websocket_Java_WebSocket_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_22_0_GA.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_analysis_6_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_commons_6_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_tree_6_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spockframework_spock_core_1_1_groovy_2_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_testng_testng_7_0_0_beta6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/checkstyle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/AnnotatedEchoServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/CiseEmuApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/CiseEmuConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/MessageJsonProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/MessageRaw.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/MessageXmlProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/cli/RenderCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/core/InstanceID.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/MessageRestProcess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/MessageSoapProcess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/MessageSoapWsdlDefinition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/httptransport/SimpleServerEndpoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-app/src/main/resources/config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-transport/cise-emu-transport.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/ServerSoapProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/IhmWebSocket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/postWebSocket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-transport/src/test/java/eu/cise/emulator/websocket/server/InetSocketServerTest.groovy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cise-emu-transport/src/test/java/eu/cise/emulator/websocket/server/UnitTestSocketServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/compile/webpack.config.base.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/compile/webpack.config.dev.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/compile/webpack.config.prod.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/assets/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/TodoApp.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/TodoApp.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/footer/TodoFooter.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/footer/TodoFooter.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/header/TodoHeader.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/header/TodoHeader.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/persistence/CloseSafe.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/todo/TodoInput.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/todo/TodoInput.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/todo/TodoItem.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/todo/TodoItem.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/todo/TodoList.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/todo/TodoList.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/todo/TodoPanel.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/todo/TodoPanel.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/todo/TodoStatus.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/components/todo/TodoStatus.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/dev.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/helper/event.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/helper/string.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/prod.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/store/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-emu-react/src/store/model.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/dependency-reduced-pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/AppContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/AppContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/Banner.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/Banner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/MainCLIApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/MainCLIApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/SimApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/SimApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/candidate/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/Sender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/candidate/SourceStreamProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/SourceStreamProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/context/DefaultAppContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/context/DefaultAppContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/context/ServerAppContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/context/ServerAppContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/context/SimConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/context/SimConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/context/context.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/context/context.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/interop/restInter.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/interop/restInter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/interop/restInterConcrete.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/interop/restInterConcrete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/interop/soapClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/interop/soapClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/resources/SourceBufferFileSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/SourceBufferFileSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/resources/SourceBufferInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/SourceBufferInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/transport/SignatureDecorator.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/httptransport/SignatureDecorator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/util/CrossOrigin.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/util/CrossOrigin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/java/eu/cise/sim/app/util/SimLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/util/SimLogger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/resources/META-INF/message.wsld" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/resources/META-INF/message.wsld" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/resources/binding-xmls/proxy.jax" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/resources/binding-xmls/proxy.jax" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/resources/cisePrivate.jks" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/resources/cisePrivate.jks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/resources/cisePublic.jks" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/resources/cisePublic.jks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/resources/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/resources/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/resources/private.jks" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/resources/private.jks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/main/resources/simapp.properties" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/main/resources/simapp.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-app/src/test/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-app/src/test/resources/logback.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-react/.babelrc" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-react/.babelrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-react/.eslintrc" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-react/.eslintrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-react/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-react/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-react/.prettierrc" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-react/.prettierrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-react/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-react/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-react/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-react/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-react/postcss.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/dependency-reduced-pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Banner.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Banner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/DefaultValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/DefaultValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/DispatchResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/DispatchResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Dispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Dispatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Exception/CiseTransportException.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Exception/CiseTransportException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Exception/IllegalMessageException.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Exception/IllegalMessageException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Exception/InvalidMessageSignatureException.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Exception/InvalidMessageSignatureException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/HelloWorldConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/HelloWorldConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/JerseyRestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/JerseyRestClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/ResponseAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/ResponseAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/RestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/RestClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/RestDispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/RestDispatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/RestResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/RestResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Sender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/SenderRest.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/SenderRest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/SenderRestConcrete.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/SenderRestConcrete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/SenderSoap.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/SenderSoap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/SenderSoapConcrete.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/SenderSoapConcrete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/ServerRest.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/ServerRest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/ServerRestConcrete.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/ServerRestConcrete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/ServerRestProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/ServerRestProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/ServerSoap.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/ServerSoap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/ServerSoapConcrete.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/ServerSoapConcrete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/SimAppConsumers.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/SimAppConsumers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/TransportFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/TransportFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/TransportFacadeConcrete.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/TransportFacadeConcrete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Validation/AbsValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Validation/AbsValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Validation/MessageValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Validation/MessageValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Validation/PullRequestValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Validation/PullRequestValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Validation/PushValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Validation/PushValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/Validation/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Validation/Validator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/conformance/AcceptanceAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/conformance/AcceptanceAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/conformance/AcceptanceResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/conformance/AcceptanceResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/conformance/Consumers.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/conformance/Consumers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/conformance/DefaultAcceptanceAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/conformance/DefaultAcceptanceAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/conformance/DefaultSubmissionAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/conformance/DefaultSubmissionAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/conformance/GatewayProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/conformance/GatewayProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/conformance/SubmissionAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/conformance/SubmissionAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/java/eu/cise/sim/transport/treatIncomingAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/treatIncomingAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/main/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/test/java/eu/cise/sim/sender/AppToSenderTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/test/java/eu/cise/sim/sender/AppToSenderTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/test/java/eu/cise/sim/sender/SenderApiTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/test/java/eu/cise/sim/sender/SenderApiTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-transport/src/test/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-transport/src/test/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-valid/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-valid/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-valid/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-valid/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-valid/src/main/java/eu/cise/sign/Banner.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-valid/src/main/java/eu/cise/sign/Banner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-valid/src/main/java/eu/cise/sign/MainPackageDescription.java" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-valid/src/main/java/eu/cise/sign/MainPackageDescription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-valid/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-valid/src/main/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-valid/src/main/resources/cisePrivate.jks" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-valid/src/main/resources/cisePrivate.jks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-valid/src/main/resources/cisePublic.jks" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-valid/src/main/resources/cisePublic.jks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-valid/src/test/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-valid/src/test/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-valid/src/test/resources/cisePrivate.jks" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-valid/src/test/resources/cisePrivate.jks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-valid/src/test/resources/cisePublic.jks" beforeDir="false" afterPath="$PROJECT_DIR$/cise-emu-valid/src/test/resources/cisePublic.jks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-web/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-web/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-web/src/main/java/eu/cise/sim/web/MainPackageDescription.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-web/src/main/resources/banner.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-web/src/test/java/eu/cise/sim/web/ApplicationWebTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cise-sim-web/src/test/resources/banner.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/classes/" />
+    <ignored path="$PROJECT_DIR$/cise-sim-react/node_modules/" />
+    <ignored path="$PROJECT_DIR$/cise-sim-app/target/" />
+    <ignored path="$PROJECT_DIR$/cise-sim-valid/target/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/cise-sim-transport/target/" />
+    <ignored path="$PROJECT_DIR$/cise-sim-web/target/" />
+    <ignored path="$PROJECT_DIR$/cise-emu-app/target/" />
+    <ignored path="$PROJECT_DIR$/cise-emu-transport/target/" />
+    <ignored path="$PROJECT_DIR$/cise-emu-web/target/" />
+    <ignored path="$PROJECT_DIR$/cise-emu-valid/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="cise-sim" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/CiseEmuApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="53" column="71" selection-start-line="53" selection-start-column="71" selection-end-line="53" selection-end-column="71" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/IhmWebSocket.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-150">
+              <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cise-emu-react/src/socket.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cise-emu-react/src/containers/Chat/ReceiveMessage/ReceiveMessage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="276">
+              <caret line="105" column="113" selection-start-line="105" selection-start-column="113" selection-end-line="105" selection-end-column="113" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="555">
+              <caret line="118" column="25" selection-start-line="118" selection-start-column="25" selection-end-line="118" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cise-emu-react/src/containers/Chat/ReceiveMessage/MessageType.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cise-emu-react/src/containers/Chat/SendMessage/SendMessage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="86" column="44" selection-start-line="86" selection-start-column="44" selection-end-line="86" selection-end-column="44" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/SimApp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="47" selection-start-line="47" selection-end-line="47" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/MainCLIApp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="934">
+              <caret line="141" selection-start-line="141" selection-end-line="141" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>dependencies</find>
+      <find>sim-app</find>
+      <find>dropwiz</find>
+      <find>dropwizard</find>
+      <find>transport</find>
+      <find>resources</find>
+      <find>established service from</find>
+      <find>ChatServer(port).start();</find>
+      <find>spock</find>
+      <find>liveperson</find>
+      <find>dropwizard-websockets</find>
+      <find>hibernat</find>
+      <find>validar</find>
+      <find>valida</find>
+      <find>check</find>
+      <find>surf</find>
+      <find>ResponseMetered</find>
+      <find>response</find>
+      <find>shade</find>
+      <find>sha</find>
+      <find>hibern</find>
+      <find>com.codahale.metrics.annotation.ResponseMetered</find>
+      <find>hibernate</find>
+      <find>&lt;Divider /&gt;</find>
+      <find>.xml&lt;option&gt;</find>
+      <find>&quot;;</find>
+      <find>StepLabel</find>
+      <find>field</find>
+      <find>variant=&quot;outlined&quot;</find>
+      <find>f</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>.xml&lt;/option&gt;</replace>
+      <replace>INCOMING</replace>
+      <replace>';</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/cise-sim-app/pom.xml" />
+        <option value="$PROJECT_DIR$/cise-emu-valid/pom.xml" />
+        <option value="$PROJECT_DIR$/cise-emu-web/pom.xml" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/core/InstanceID.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/cli/RenderCommand.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/MessageRaw.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/MessageJsonProvider.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/Message.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/resources/banner.txt" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/MessageXmlProvider.java" />
+        <option value="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emu/transport/ServerRestProvider.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/MessageRestProcess.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/CiseEmuApplication.java" />
+        <option value="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/transport/ServerSoapProvider.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/MessageSoapWsdlDefinition.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/MessageSoapProcess.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/transport/SimpleServerEndPoint.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/transport/SimpleServerEndpoint.java" />
+        <option value="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/Banner.java" />
+        <option value="$PROJECT_DIR$/cise-emu-react/package.json" />
+        <option value="$PROJECT_DIR$/cise-emu-react/package.json.old" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/context/ServerAppContext.java" />
+        <option value="$PROJECT_DIR$/cise-emu-transport/src/test/java/eu/cise/emulator/websocket/server/UnitTestSocketServer.java" />
+        <option value="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/InetSocketServer.java" />
+        <option value="$PROJECT_DIR$/cise-emu-transport/src/test/java/eu/cise/emulator/websocket/server/InetSocketServerTest.groovy" />
+        <option value="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/postWebSocket.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/AnnotatedEchoServer.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/config.yml" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/CiseEmuConfiguration.java" />
+        <option value="$PROJECT_DIR$/cise-emu-transport/pom.xml" />
+        <option value="$PROJECT_DIR$/cise-emu-react/src/reducers/index.js" />
+        <option value="$PROJECT_DIR$/cise-emu-react/src/index.js" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/test/java/eu/cise/emulator/IhmWebSocketTest.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/test/java/eu/cise/emulator/server/IhmWebSocketTest.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/test/java/eu/cise/emulator/websocket/server/IhmWebSocketTest.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/target/classes/config.yml" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/test/java/eu/cise/emulator/app/IhmWebSocketTest.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/CiseEmuApplication.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/pom.xml" />
+        <option value="$PROJECT_DIR$/cise-emu-react/src/containers/ListOptionX/ListOptionX.js" />
+        <option value="$PROJECT_DIR$/cise-emu-react/src/App.js" />
+        <option value="$PROJECT_DIR$/cise-emu-react/src/containers/Chat/Chat.js" />
+        <option value="$PROJECT_DIR$/cise-emu-react/src/containers/Chat/ChatHistory/ChatHistory.js" />
+        <option value="$PROJECT_DIR$/cise-emu-react/src/containers/Chat/SendMessage/MessageType.js" />
+        <option value="$PROJECT_DIR$/cise-emu-react/src/containers/Chat/SendMessage/SendMessage.js" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/MainCLIApp.java" />
+        <option value="$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/SimApp.java" />
+        <option value="$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/IhmWebSocket.java" />
+        <option value="$PROJECT_DIR$/cise-emu-react/src/socket.js" />
+        <option value="$PROJECT_DIR$/cise-emu-react/src/containers/Chat/ReceiveMessage/ReceiveMessage.js" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="2142" />
+    <option name="y" value="77" />
+    <option name="width" value="2554" />
+    <option name="height" value="1413" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="cise-emu" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cise-emu" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cise-emu" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cise-emu" type="462c0819:PsiDirectoryNode" />
+              <item name="cise-emu-react" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cise-emu" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cise-emu" type="462c0819:PsiDirectoryNode" />
+              <item name="cise-emu-react" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="Spock" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Spock" value="spock.lang.Specification" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/cise-emu-app/src/test/java/eu/cise/emulator" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cise-emu-react/package.json" />
+    <property name="nodejs_interpreter_path" value="node" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/pom.xml" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="eu.cise.emulator.websocket.server" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="spock.lang.Specification" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cise-emu-app/src/main/resources/META-INF" />
+      <recent name="$PROJECT_DIR$/cise-emu-app/src/main/resources" />
+      <recent name="$PROJECT_DIR$/cise-emu-app/src/main/resources/META-INF/services" />
+      <recent name="$PROJECT_DIR$/cise-sim-app" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="eu.cise.emulator.websocket.server" />
+      <recent name="eu.cise.emulator.app.resources" />
+      <recent name="eu.cise.emulator.transport" />
+      <recent name="eu.cise.emulator.app.candidate" />
+      <recent name="eu.cise.emulator.app.core" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cise-emu-app" />
+      <recent name="$PROJECT_DIR$/cise-emu-app/src/main/resources" />
+      <recent name="$PROJECT_DIR$/cise-sim-app/src/test" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="eu.cise.emulator.app" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="npm.start">
+    <configuration name="CiseEmuApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8 (Corretto)" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="eu.cise.emulator.app.CiseEmuApplication" />
+      <module name="app" />
+      <option name="PROGRAM_PARAMETERS" value="server $PROJECT_DIR$/cise-emu-app/config.yml" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cise-emu-app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="eu.cise.emulator.app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="clean install" />
+      </method>
+    </configuration>
+    <configuration name="MainCLIApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="eu.cise.emulator.app.MainCLIApp" />
+      <module name="app" />
+      <option name="PROGRAM_PARAMETERS" value="-d -v -s &quot;/opt/jboss/EuciseData/sim-egn/messageXmlFiles/Operations/PushTemplate.xml&quot; -p &quot;/opt/jboss/EuciseData/sim-egn/payloadXmlFiles/Aircraft.xml&quot;" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="eu.cise.emulator.app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JarApplication">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/cise-emu-app/target/cise-emu-app-0.0.1-SNAPSHOT.jar" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/cise-emu-react/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.CiseEmuApplication" />
+      <item itemvalue="Application.MainCLIApp" />
+      <item itemvalue="npm.start" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+        <item itemvalue="Application.CiseEmuApplication" />
+        <item itemvalue="Application.MainCLIApp" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="49010a8d-aa37-4da1-ad02-9f9a8870e966" name="Default Changelist" comment="" />
+      <created>1559219570683</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1559219570683</updated>
+      <workItem from="1559219572162" duration="223000" />
+      <workItem from="1559553627701" duration="1427000" />
+      <workItem from="1559627883592" duration="24044000" />
+      <workItem from="1559737699780" duration="7669000" />
+      <workItem from="1559837171157" duration="5548000" />
+      <workItem from="1559896048062" duration="84000" />
+      <workItem from="1559896152416" duration="13365000" />
+      <workItem from="1559925333102" duration="3434000" />
+      <workItem from="1560244850702" duration="21185000" />
+      <workItem from="1560317969048" duration="6974000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="InetSocketServerTest - 2019.06.07 at 15h 56m 29s.xml">
+      <configuration name="InetSocketServerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InetSocketServerTest - 2019.06.07 at 15h 56m 44s.xml">
+      <configuration name="InetSocketServerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InetSocketServerTest - 2019.06.07 at 15h 59m 58s.xml">
+      <configuration name="InetSocketServerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InetSocketServerTest - 2019.06.07 at 16h 05m 26s.xml">
+      <configuration name="InetSocketServerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InetSocketServerTest_include_message_ - 2019.06.07 at 16h 05m 41s.xml">
+      <configuration name="InetSocketServerTest.include message " configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InetSocketServerTest_include_message_ - 2019.06.07 at 16h 06m 51s.xml">
+      <configuration name="InetSocketServerTest.include message " configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InetSocketServerTest - 2019.06.07 at 16h 07m 47s.xml">
+      <configuration name="InetSocketServerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InetSocketServerTest - 2019.06.07 at 16h 24m 30s.xml">
+      <configuration name="InetSocketServerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InetSocketServerTest - 2019.06.07 at 16h 25m 03s.xml">
+      <configuration name="InetSocketServerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InetSocketServerTest - 2019.06.07 at 16h 27m 00s.xml">
+      <configuration name="InetSocketServerTest" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="83953000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="2559" y="-1" width="2562" height="1446" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8168693" visible="true" weight="0.2279587" />
+      <window_info id="Structure" order="1" sideWeight="0.08660508" side_tool="true" weight="0.22111554" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" sideWeight="0.08660508" side_tool="true" weight="0.22111554" />
+      <window_info id="Learn" order="7" />
+      <window_info active="true" id="npm" order="8" sideWeight="0.1831307" side_tool="true" visible="true" weight="0.22629482" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4996016" weight="0.32978722" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4928287" visible="true" weight="0.51770914" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8103586" weight="0.3715147" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49960285" weight="0.329296" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49163347" weight="0.31574982" />
+      <window_info anchor="bottom" id="Docker" order="8" sideWeight="0.49960285" weight="0.329296" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5059761" side_tool="true" weight="0.32902735" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49402392" weight="0.32902735" />
+      <window_info anchor="bottom" id="Java Enterprise" order="11" sideWeight="0.4988086" weight="0.32902735" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
+      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.4992057" weight="0.32902735" />
+      <window_info anchor="bottom" id="TypeScript" order="14" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.2498008" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.32962668" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" weight="0.32988048" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.81785715" visible="true" weight="0.22629482" />
+      <window_info id="Structure" order="1" sideWeight="0.08660508" side_tool="true" weight="0.22111554" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" sideWeight="0.08660508" side_tool="true" weight="0.22111554" />
+      <window_info id="Learn" order="7" />
+      <window_info id="npm" order="8" sideWeight="0.18214285" side_tool="true" visible="true" weight="0.22629482" />
+      <window_info anchor="bottom" id="TypeScript" order="0" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" sideWeight="0.4996016" weight="0.32978722" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.4928287" visible="true" weight="0.14893617" />
+      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.8103586" weight="0.3731003" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.49960285" weight="0.329296" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49163347" weight="0.31610942" />
+      <window_info anchor="bottom" id="Docker" order="9" sideWeight="0.49960285" weight="0.329296" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5059761" side_tool="true" weight="0.32902735" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49402392" weight="0.32902735" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" sideWeight="0.4988086" weight="0.32902735" />
+      <window_info anchor="bottom" id="Database Changes" order="13" />
+      <window_info anchor="bottom" id="Version Control" order="14" sideWeight="0.4992057" weight="0.32902735" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.2498008" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.32962668" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" weight="0.32988048" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/candidate/MessageJsonProvider.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/ServerRestProvider.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/httptransport/ServerRestProvider.java</url>
+          <line>46</line>
+          <properties />
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/MessageSoapProcess.java</url>
+          <line>44</line>
+          <properties />
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cise-emu-transport/src/test/java/eu/cise/emulator/websocket/server/InetSocketServerTest.groovy</url>
+          <line>8</line>
+          <properties />
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/CiseEmuApplication.java</url>
+          <line>74</line>
+          <properties />
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/IhmWebSocket.java</url>
+          <line>31</line>
+          <properties />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/SimApp.java</url>
+          <line>148</line>
+          <properties />
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/resources/MessageSoapProcess.java</url>
+          <line>36</line>
+          <properties class="eu.cise.emulator.app.resources.MessageSoapProcess" method="getMessageResponseInJSON">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/IhmWebSocket.java</url>
+          <line>36</line>
+          <properties class="eu.cise.emulator.websocket.server.IhmWebSocket" method="myOnOpen">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/IhmWebSocket.java</url>
+          <line>42</line>
+          <properties class="eu.cise.emulator.websocket.server.IhmWebSocket" method="myOnMsg">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/IhmWebSocket.java</url>
+          <line>70</line>
+          <properties class="eu.cise.emulator.websocket.server.IhmWebSocket" method="myOnClose">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/cise-emu-react/src/socket.js</url>
+          <line>18</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>refWsdl.getAbsoluteFile()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>refWsdl.getAbsolutePath()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-util/9.4.8.v20171121/jetty-util-9.4.8.v20171121.jar!/org/eclipse/jetty/util/component/AbstractLifeCycle.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="54" column="22" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-transport/src/test/java/eu/cise/emulator/websocket/server/InetSocketServerTest.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="11" column="24" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="24" />
+          <folding>
+            <element signature="e#44#93#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/javax-websocket-client-impl/9.4.10.v20180503/javax-websocket-client-impl-9.4.10.v20180503.jar!/org/eclipse/jetty/websocket/jsr356/ClientContainer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="88" selection-start-line="88" selection-end-line="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/AnnotatedEchoServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-web/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-valid/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="9" lean-forward="true" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-transport/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="163" selection-start-line="163" selection-end-line="163" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/CiseEmuConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="52" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#394#395#0" expanded="true" />
+            <element signature="e#429#430#0" expanded="true" />
+            <element signature="e#502#503#0" expanded="true" />
+            <element signature="e#549#550#0" expanded="true" />
+            <element signature="e#590#591#0" expanded="true" />
+            <element signature="e#641#642#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-1.8.0-amazon-corretto/src.zip!/java/lang/ClassLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1626">
+          <caret line="356" selection-start-line="356" selection-end-line="356" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/postWebSocket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/src/main/resources/config.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-client/9.4.10.v20180503/jetty-client-9.4.10.v20180503.jar!/org/eclipse/jetty/client/HttpClient.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="110" selection-start-line="110" selection-end-line="110" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-client/9.4.10.v20180503/jetty-client-9.4.10.v20180503.jar!/org/eclipse/jetty/client/http/HttpClientTransportOverHTTP.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="15" column="15" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="44" />
+          <folding>
+            <element signature="e#806#807#0" expanded="true" />
+            <element signature="e#881#882#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/reducers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/liveperson/dropwizard-websockets/1.3.2/dropwizard-websockets-1.3.2.jar!/io/dropwizard/websockets/WebsocketBundle.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="96" column="13" selection-start-line="96" selection-start-column="13" selection-end-line="96" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-client/9.4.10.v20180503/websocket-client-9.4.10.v20180503.jar!/org/eclipse/jetty/websocket/client/WebSocketClient.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="141" selection-start-line="141" selection-end-line="141" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/liveperson/dropwizard-websockets/1.3.2/dropwizard-websockets-1.3.2.jar!/io/dropwizard/websockets/GeneralUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$MAVEN_REPOSITORY$/io/dropwizard/dropwizard-bom/1.2.3/dropwizard-bom-1.2.3.pom">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="18" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="18" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/emulator-1.0-SNAPSHOT-shaded.pom">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/target/classes/config.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" selection-start-line="5" selection-end-line="22" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/target/classes/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/checkstyle.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/src/test/java/eu/cise/emulator/app/IhmWebSocketTest.java" />
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="758">
+          <caret line="167" lean-forward="true" selection-start-line="167" selection-end-line="167" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/registerServiceWorker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="46" column="25" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/node_modules/@types/react/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="444" column="15" selection-start-line="444" selection-start-column="11" selection-end-line="444" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/node_modules/react/cjs/react.development.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="1838" column="2" selection-start-line="1838" selection-start-column="2" selection-end-line="1838" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="59" lean-forward="true" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/containers/ListOptionX/ListOptionX.js" />
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="65" column="23" selection-start-line="65" selection-start-column="14" selection-end-line="65" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/containers/Chat/Chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="47" selection-start-line="47" selection-end-line="47" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/containers/Chat/ChatHistory/ChatHistory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/containers/Chat/SendMessage/MessageType.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="37" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/containers/Chat/ReceiveMessage/MessageType.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/App.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/MyComponent.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Store.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="118" column="25" selection-start-line="118" selection-start-column="25" selection-end-line="118" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/containers/Chat/SendMessage/SendMessage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="86" column="44" selection-start-line="86" selection-start-column="44" selection-end-line="86" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.3.1/commons-cli-1.3.1.jar!/org/apache/commons/cli/Util.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.3.1/commons-cli-1.3.1.jar!/org/apache/commons/cli/Option.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="243" selection-start-line="243" selection-end-line="243" />
+          <folding>
+            <element signature="e#2190#2191#0" expanded="true" />
+            <element signature="e#2221#2222#0" expanded="true" />
+            <element signature="e#2512#2513#0" expanded="true" />
+            <element signature="e#2547#2548#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.3.1/commons-cli-1.3.1.jar!/org/apache/commons/cli/CommandLine.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="e#700#701#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/eu/europa/ec/jrc/marex/eucise-model-helpers/1.0.7/eucise-model-helpers-1.0.7.jar!/eu/eucise/xml/DefaultXmlValidator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="148" selection-start-line="148" selection-end-line="148" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/MainCLIApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="934">
+          <caret line="141" selection-start-line="141" selection-end-line="141" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/eu/europa/ec/jrc/marex/eucise-model-helpers/1.0.7/eucise-model-helpers-1.0.7.jar!/eu/eucise/xml/XmlMapper.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/SimApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="47" selection-start-line="47" selection-end-line="47" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-app/src/main/java/eu/cise/emulator/app/CiseEmuApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="53" column="71" selection-start-line="53" selection-start-column="71" selection-end-line="53" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-transport/src/main/java/eu/cise/emulator/websocket/server/IhmWebSocket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-150">
+          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/socket.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cise-emu-react/src/containers/Chat/ReceiveMessage/ReceiveMessage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="105" column="113" selection-start-line="105" selection-start-column="113" selection-end-line="105" selection-end-column="113" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8 (Corretto)</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

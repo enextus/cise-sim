@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: eu.europa.ec.jrc.marex:cise-signature:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/eu/europa/ec/jrc/marex/cise-signature/1.0-SNAPSHOT/cise-signature-1.0-20190521.150835-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/eu/europa/ec/jrc/marex/cise-signature/1.0-SNAPSHOT/cise-signature-1.0-20190521.150835-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/eu/europa/ec/jrc/marex/cise-signature/1.0-SNAPSHOT/cise-signature-1.0-20190521.150835-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
