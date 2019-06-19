@@ -25,7 +25,7 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
     private static CiseEmuApplication AppLiveRunning;
     private final CountDownLatch cdl;
 
-    CiseEmuApplication(CountDownLatch cdl) {
+    public CiseEmuApplication(CountDownLatch cdl) {
         this.cdl = cdl;
     }
     public static void main(final String[] args) throws Exception {
