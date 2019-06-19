@@ -23,7 +23,7 @@ class ReceiveMessage extends Component {
     super(props);
 
     this.state = {
-      inputValue: ""
+      inputValue: "",
     };
   }
 

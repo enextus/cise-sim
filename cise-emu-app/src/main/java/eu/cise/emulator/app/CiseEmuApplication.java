@@ -1,7 +1,6 @@
 package eu.cise.emulator.app;
 
-import com.google.common.io.Resources;
-import eu.cise.emulator.app.cli.RenderCommand;
+import eu.cise.emulator.app.cli.CommandLineSender;
 import eu.cise.emulator.app.core.InstanceID;
 import eu.cise.emulator.app.resources.MessageRestProcess;
 import eu.cise.emulator.app.resources.MessageSoapProcess;
@@ -9,6 +8,7 @@ import eu.cise.emulator.httptransport.ServerRestProvider;
 import eu.cise.emulator.httptransport.ServerSoapProvider;
 import eu.cise.emulator.websocket.server.IhmWebSocket;
 import io.dropwizard.Application;
+import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.websockets.GeneralUtils;
@@ -22,7 +22,7 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
 
 
     private io.dropwizard.websockets.WebsocketBundle websocketBundle;
-
+    private static CiseEmuApplication AppLiveRunning;
     private final CountDownLatch cdl;
 
     CiseEmuApplication(CountDownLatch cdl) {
@@ -30,7 +30,9 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
     }
     public static void main(final String[] args) throws Exception {
         CountDownLatch serverStarted = new CountDownLatch(1);
-        Thread serverThread = new Thread(GeneralUtils.rethrow(() -> new CiseEmuApplication(serverStarted).run(new String[]{"server", Resources.getResource("config.yml").getPath()})));
+        Thread serverThread = new Thread(GeneralUtils.rethrow(() -> new CiseEmuApplication(serverStarted)
+                .run(args))); // was fixed argument server config.yml (root of the directory jar -> class)
+
         serverThread.setDaemon(true);
         serverThread.start();
         serverStarted.await(10, SECONDS);
@@ -44,17 +46,22 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<CiseEmuConfiguration> bootstrap) {
-        // Enable variable substitution with environment variables
-     /*   bootstrap.setConfigurationSourceProvider(             new SubstitutingSourceProvider(
-                        bootstrap.getConfigurationSourceProvider(),
-                        new EnvironmentVariableSubstitutor(false)
-                )
-        );*/
+       // Enable variable substitution with environment variables
+//        bootstrap.setConfigurationSourceProvider(
+//               new SubstitutingSourceProvider(
+//                    bootstrap.getConfigurationSourceProvider(),
+//                        new EnvironmentVariableSubstitutor(false)
+//                )
+//        );
 
+        bootstrap.setConfigurationSourceProvider(
+                new ResourceConfigurationSourceProvider());
+
+        bootstrap.addCommand(new CommandLineSender());
+        // add task for sending ?
         WebsocketBundle websocketBundle = new WebsocketBundle(IhmWebSocket.class);
         bootstrap.addBundle(websocketBundle);
 
-        bootstrap.addCommand(new RenderCommand());
         //bootstrap.addBundle(jaxWsBundle);
         //bootstrap.addBundle(new AssetsBundle());
     }
@@ -72,6 +79,7 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
             environment.jersey().register(ServerSoapProvider.getInstance());
             environment.jersey().register(new MessageSoapProcess(instance));
         }
+
          // final ServerEndpointConfig config = ServerEndpointConfig.Builder.create(postWebSocket.class, "/extends-ws").build();
          // websocketBundle.addEndpoint(config);
 

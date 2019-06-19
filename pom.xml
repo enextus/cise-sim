@@ -47,6 +47,7 @@
         <module>cise-emu-transport</module>
         <module>cise-emu-valid</module>
         <module>cise-emu-web</module>
+        <module>cise-emu-assembly</module>
     </modules>
 
     <properties>

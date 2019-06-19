@@ -32,7 +32,7 @@ public class MessageSoapWsdlDefinition {
             StringBuffer futurContent=new StringBuffer();
 //            ClassLoader classLoader = MessageSoapWsdlDefinition.class.getClassLoader();
 //            File refWsdl= null;
-//            String filename = "MTEA-INF/services/message.wsld";
+//            String filename = "META-INF/services/message.wsld";
 //            URL resource = classLoader.getResource(filename);
 //            if (resource == null) {
 //                throw new IllegalArgumentException("file is not found!");

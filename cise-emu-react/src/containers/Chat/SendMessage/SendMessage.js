@@ -19,7 +19,9 @@ class SendMessage extends Component {
     super(props);
 
     this.state = {
-      inputValue: ""
+      inputValue: "",
+      xmlTemplate:"",
+      payload:""
     };
   }
 
@@ -65,12 +67,11 @@ class SendMessage extends Component {
         <Grid item xs={12}>
         <TextField
     id="filled-full-width"
-    label="Message Raw Format"
+    label="Message Context Id"
     fullWidth={true}
     style={fieldStyle}
-    placeholder="As it is to Be Sent"
-    helperText="format used to order execution to the simulator service"
-    fullWidth
+    placeholder="Id used to group actions"
+    helperText="used to order execution to the simulator service"
     margin="normal"
     variant="filled"
     value={this.state.inputValue}
@@ -89,9 +90,8 @@ class SendMessage extends Component {
     </InputLabel>
     <Select
     native
-    value={this.state.OptionX}
+    value={this.state.xmlTemplate}
         >
-        <option value="" />
         <option value="AcknowledgementTemplate.xml">AcknowledgementTemplate</option>
         <option value="FeedbackTemplate.xml">FeedbackTemplate</option>
         <option value="Pull_discoverTemplate.xml">Pull_discoverTemplate</option>
@@ -115,71 +115,70 @@ class SendMessage extends Component {
     </InputLabel>
     <Select
     native
-    value={this.state.OptionX}
+    value={this.state.payload}
         >
-        <option value="" />
-        <option value="Action.xml">Action.xml</option>
-        <option value="Agent.xml">Agent.xml</option>
-        <option value="Aircraft.xml">Aircraft.xml</option>
-        <option value="Anomaly.xml">Anomaly.xml</option>
-        <option value="AnomalyMessage.xml">AnomalyMessage.xml</option>
-        <option value="AnomalyMessage%5BCISE.ext%5D.xml">AnomalyMessage%5BCISE.ext%5D.xml</option>
-    <option value="Cargo.xml">Cargo.xml</option>
-        <option value="CargoDocument.xml">CargoDocument.xml</option>
-        <option value="CertificateDocument.xml">CertificateDocument.xml</option>
-        <option value="CrisisIncident.xml">CrisisIncident.xml</option>
-        <option value="Document.xml">Document.xml</option>
-        <option value="EventDocument.xml">EventDocument.xml</option>
-        <option value="FormalOrganization.xml">FormalOrganization.xml</option>
-        <option value="Incident.xml">Incident.xml</option>
-        <option value="IncidentMessage.xml">IncidentMessage.xml</option>
-        <option value="IrregularMigrationIncident.xml">IrregularMigrationIncident.xml</option>
-        <option value="LandVehicle.xml">LandVehicle.xml</option>
-        <option value="LawInfringementIncident.xml">LawInfringementIncident.xml</option>
-        <option value="Location.xml">Location.xml</option>
-        <option value="LocationDocument.xml">LocationDocument.xml</option>
-        <option value="LocationMessage.xml">LocationMessage.xml</option>
-        <option value="MaritimeSafetyIncident.xml">MaritimeSafetyIncident.xml</option>
-        <option value="MeteoOceanographicCondition.xml">MeteoOceanographicCondition.xml</option>
-        <option value="Movement.xml">Movement.xml</option>
-        <option value="OperationalAsset.xml">OperationalAsset.xml</option>
-        <option value="Organization.xml">Organization.xml</option>
-        <option value="OrganizationalCollaboration.xml">OrganizationalCollaboration.xml</option>
-        <option value="OrganizationalUnit.xml">OrganizationalUnit.xml</option>
-        <option value="OrganizationDocument.xml">OrganizationDocument.xml</option>
-        <option value="Person.xml">Person.xml</option>
-        <option value="PersonDocument.xml">PersonDocument.xml</option>
-        <option value="PersonMessage.xml">PersonMessage.xml</option>
-        <option value="PortOrganization.xml">PortOrganization.xml</option>
-        <option value="PRF_01_Vessel_Push_05.xml">PRF_01_Vessel_Push_05.xml</option>
-        <option value="PRF_01_Vessel_Push_06.xml">PRF_01_Vessel_Push_06.xml</option>
-        <option value="PRF_01_Vessel_Push_07.xml">PRF_01_Vessel_Push_07.xml</option>
-        <option value="PRF_01_Vessel_Push_08.xml">PRF_01_Vessel_Push_08.xml</option>
-        <option value="PRF_04_Vessel_Push_05.xml">PRF_04_Vessel_Push_05.xml</option>
-        <option value="Risk.xml">Risk.xml</option>
-        <option value="RiskDocument.xml">RiskDocument.xml</option>
-        <option value="USC_01_Anomaly_push_02.xml">USC_01_Anomaly_push_02.xml</option>
-        <option value="USC_01_AnomalyService_subscribe_01.xml">USC_01_AnomalyService_subscribe_01.xml</option>
-        <option value="USC_01_PersonService_Pull_03.xml">USC_01_PersonService_Pull_03.xml</option>
-        <option value="USC_01_PersonService_Pull_04.xml">USC_01_PersonService_Pull_04.xml</option>
-        <option value="USC_01_VesselService_Cargo_Pull_05.xml">USC_01_VesselService_Cargo_Pull_05.xml</option>
-        <option value="USC_01_VesselService_Cargo_Pull_06.xml">USC_01_VesselService_Cargo_Pull_06.xml</option>
-        <option value="USC_02_LocationDocument_Pull_02.xml">USC_02_LocationDocument_Pull_02.xml</option>
-        <option value="USC_02_LocationDocument_Pull_06.xml">USC_02_LocationDocument_Pull_06.xml</option>
-        <option value="USC_02_MaritimeSafetyIncident_Push_01.xml">USC_02_MaritimeSafetyIncident_Push_01.xml</option>
-        <option value="USC_02_OperationalAsset_Pull_04.xml">USC_02_OperationalAsset_Pull_04.xml</option>
-        <option value="USC_02_OperationalAsset_Pull_07.xml">USC_02_OperationalAsset_Pull_07.xml</option>
-        <option value="USC_02_Vessel_Pull_03.xml">USC_02_Vessel_Pull_03.xml</option>
-        <option value="USC_02_Vessel_Pull_05.xml">USC_02_Vessel_Pull_05.xml</option>
-        <option value="USC_03_ActionService_Push_06.xml">USC_03_ActionService_Push_06.xml</option>
-        <option value="USC_03_IncidentService_Pull_03.xml">USC_03_IncidentService_Pull_03.xml</option>
-        <option value="USC_03_IncidentService_Pull_04.xml">USC_03_IncidentService_Pull_04.xml</option>
-        <option value="USC_03_RiskService_Push_05.xml">USC_03_RiskService_Push_05.xml</option>
-        <option value="USC_03_VesselService_Location_Pull_01.xml">USC_03_VesselService_Location_Pull_01.xml</option>
-        <option value="USC_03_VesselService_Location_Pull_02.xml">USC_03_VesselService_Location_Pull_02.xml</option>
-        <option value="Vessel.xml">Vessel.xml</option>
-        <option value="VesselDocument.xml">VesselDocument.xml</option>
-        <option value="VesselMessage.xml">VesselMessage.xml</option>
+        <option value="Action.xml">Action</option>
+        <option value="Agent.xml">Agent</option>
+        <option value="Aircraft.xml">Aircraft</option>
+        <option value="Anomaly.xml">Anomaly</option>
+        <option value="AnomalyMessage.xml">AnomalyMessage</option>
+        <option value="AnomalyMessage%5BCISE.ext%5D.xml">AnomalyMessage%5BCISE.ext%5D</option>
+    <option value="Cargo.xml">Cargo</option>
+        <option value="CargoDocument.xml">CargoDocument</option>
+        <option value="CertificateDocument.xml">CertificateDocument</option>
+        <option value="CrisisIncident.xml">CrisisIncident</option>
+        <option value="Document.xml">Document</option>
+        <option value="EventDocument.xml">EventDocument</option>
+        <option value="FormalOrganization.xml">FormalOrganization</option>
+        <option value="Incident.xml">Incident</option>
+        <option value="IncidentMessage.xml">IncidentMessage</option>
+        <option value="IrregularMigrationIncident.xml">IrregularMigrationIncident</option>
+        <option value="LandVehicle.xml">LandVehicle</option>
+        <option value="LawInfringementIncident.xml">LawInfringementIncident</option>
+        <option value="Location.xml">Location</option>
+        <option value="LocationDocument.xml">LocationDocument</option>
+        <option value="LocationMessage.xml">LocationMessage</option>
+        <option value="MaritimeSafetyIncident.xml">MaritimeSafetyIncident</option>
+        <option value="MeteoOceanographicCondition.xml">MeteoOceanographicCondition</option>
+        <option value="Movement.xml">Movement</option>
+        <option value="OperationalAsset.xml">OperationalAsset</option>
+        <option value="Organization.xml">Organization</option>
+        <option value="OrganizationalCollaboration.xml">OrganizationalCollaboration</option>
+        <option value="OrganizationalUnit.xml">OrganizationalUnit</option>
+        <option value="OrganizationDocument.xml">OrganizationDocument</option>
+        <option value="Person.xml">Person</option>
+        <option value="PersonDocument.xml">PersonDocument</option>
+        <option value="PersonMessage.xml">PersonMessage</option>
+        <option value="PortOrganization.xml">PortOrganization</option>
+        <option value="PRF_01_Vessel_Push_05.xml">PRF_01_Vessel_Push_05</option>
+        <option value="PRF_01_Vessel_Push_06.xml">PRF_01_Vessel_Push_06</option>
+        <option value="PRF_01_Vessel_Push_07.xml">PRF_01_Vessel_Push_07</option>
+        <option value="PRF_01_Vessel_Push_08.xml">PRF_01_Vessel_Push_08</option>
+        <option value="PRF_04_Vessel_Push_05.xml">PRF_04_Vessel_Push_05</option>
+        <option value="Risk.xml">Risk</option>
+        <option value="RiskDocument.xml">RiskDocument</option>
+        <option value="USC_01_Anomaly_push_02.xml">USC_01_Anomaly_push_02</option>
+        <option value="USC_01_AnomalyService_subscribe_01.xml">USC_01_AnomalyService_subscribe_01</option>
+        <option value="USC_01_PersonService_Pull_03.xml">USC_01_PersonService_Pull_03</option>
+        <option value="USC_01_PersonService_Pull_04.xml">USC_01_PersonService_Pull_04</option>
+        <option value="USC_01_VesselService_Cargo_Pull_05.xml">USC_01_VesselService_Cargo_Pull_05</option>
+        <option value="USC_01_VesselService_Cargo_Pull_06.xml">USC_01_VesselService_Cargo_Pull_06</option>
+        <option value="USC_02_LocationDocument_Pull_02.xml">USC_02_LocationDocument_Pull_02</option>
+        <option value="USC_02_LocationDocument_Pull_06.xml">USC_02_LocationDocument_Pull_06</option>
+        <option value="USC_02_MaritimeSafetyIncident_Push_01.xml">USC_02_MaritimeSafetyIncident_Push_01</option>
+        <option value="USC_02_OperationalAsset_Pull_04.xml">USC_02_OperationalAsset_Pull_04</option>
+        <option value="USC_02_OperationalAsset_Pull_07.xml">USC_02_OperationalAsset_Pull_07</option>
+        <option value="USC_02_Vessel_Pull_03.xml">USC_02_Vessel_Pull_03</option>
+        <option value="USC_02_Vessel_Pull_05.xml">USC_02_Vessel_Pull_05</option>
+        <option value="USC_03_ActionService_Push_06.xml">USC_03_ActionService_Push_06</option>
+        <option value="USC_03_IncidentService_Pull_03.xml">USC_03_IncidentService_Pull_03</option>
+        <option value="USC_03_IncidentService_Pull_04.xml">USC_03_IncidentService_Pull_04</option>
+        <option value="USC_03_RiskService_Push_05.xml">USC_03_RiskService_Push_05</option>
+        <option value="USC_03_VesselService_Location_Pull_01.xml">USC_03_VesselService_Location_Pull_01</option>
+        <option value="USC_03_VesselService_Location_Pull_02.xml">USC_03_VesselService_Location_Pull_02</option>
+        <option value="Vessel.xml">Vessel</option>
+        <option value="VesselDocument.xml">VesselDocument</option>
+        <option value="VesselMessage.xml">VesselMessage</option>
 
         </Select>
         </FormControl>
@@ -209,9 +208,10 @@ class SendMessage extends Component {
 
   sendMessage() {
     const socket = Singleton.getInstance();
+    const id=getId();
     let messageDto = JSON.stringify({
       user: this.props.thisUser,
-      data: this.state.inputValue,
+      data: this.state.inputValue+"@"+id+"\n"+this.state.xmlTemplate+"#"+this.state.payload,
       type: MessageType.TEXT_MESSAGE
     });
     socket.send(messageDto);
@@ -230,8 +230,19 @@ function mapStateToProps(state) {
   return {
     messages: state.messages,
     thisUser: state.thisUser,
-    OptionX: state.OptionX
+    xmlTemplate: state.xmlTemplate,
+    payload: state.payload
   };
+}
+
+export function getId() {
+  let d = new Date().getTime()
+  const uuid = 'xxxxx-xxxxyx'.replace(/[xy]/g, function(c) {
+    const r = ((d + Math.random() * 16) % 16) | 0
+    d = Math.floor(d / 16)
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
+  })
+  return uuid
 }
 
 // Promote component to container

@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cise-emu-app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cise-emu-assembly" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cise-emu-transport" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cise-emu-valid" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cise-emu-web" charset="UTF-8" />

@@ -44,12 +44,17 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.XmlEntityPayload;
 import eu.cise.signature.SignatureService;
 import eu.cise.signature.SignatureServiceBuilder;
+import eu.eucise.xml.CISENamespaceContext;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import javax.xml.namespace.NamespaceContext;
+import javax.xml.xpath.XPathExpression;
+import java.util.List;
 
 /**
  * Main class in the domain module. The run() method start the process.
@@ -115,27 +120,45 @@ public class SimApp <T extends Configuration> extends Application<T> implements 
         this.xmlMapper = xmlMapper;
         this.validator = validator;
     }
+    /*reader*/ private static final String[] CISE_DATA_MODEL_ELEMENT = new String[]{"Action", "Agent", "Aircraft", "Anomaly", "Cargo", "CargoDocument", "Catch", "CertificateDocument", "ContainmentUnit", "CrisisIncident", "Document", "EventDocument", "FormalOrganization", "Incident", "IrregularMigrationIncident", "LandVehicle", "LawInfringementIncident", "Location", "LocationDocument", "MaritimeSafetyIncident", "MeteoOceanographicCondition", "Movement", "NamedLocation", "OperationalAsset", "Organization", "OrganizationalCollaboration", "OrganizationalUnit", "OrganizationDocument", "Person", "PersonDocument", "PollutionIncident", "PortFacilityLocation", "PortLocation", "PortOrganization", "Risk", "RiskDocument", "Stream", "Vessel", "VesselDocument"};
+    /*reader*/ private final NamespaceContext ciseNamespaceContext = new CISENamespaceContext();
+    /*reader*/ private XPathExpression dataElementXPath;
+    private String buildDataElementXPathPattern() {
+        StringBuilder bld = new StringBuilder();
+        bld.append("/*[local-name()='Push' or  local-name()='PullResponse'  or  local-name()='PullRequest' or local-name()='Feedback']/Payload/*");
+        bld.append("[local-name() = '");
+        bld.append(CISE_DATA_MODEL_ELEMENT[0]);
+        bld.append("'");
 
+        for(int i = 1; i < CISE_DATA_MODEL_ELEMENT.length; ++i) {
+            bld.append(" or  local-name() = '");
+            bld.append(CISE_DATA_MODEL_ELEMENT[i]);
+            bld.append("'");
+        }
+
+        bld.append("]");
+        return bld.toString();
+    }
 
     private Message loadMessage(String servicefile, String payloadfile) {
 
         SourceBufferInterface sourceBuffer = new SourceBufferFileSource();
         StringBuffer serviceBuffer = sourceBuffer.ServiceBufferParameter(servicefile);
-        StringBuffer payloadBuffer = sourceBuffer.PayloadBufferParameter(payloadfile);
+        String completedMessage = "";
 
         XmlMapper mapper = new DefaultXmlMapper.Pretty();
         Message messageObject = mapper.fromXML(serviceBuffer.toString());
+        if (!("".equals(payloadfile))) {
+            StringBuffer payloadBuffer = sourceBuffer.PayloadBufferParameter(payloadfile);
+            if (!(payloadBuffer.toString().equals(""))) {
+                //XmlEntityPayload sourcePayload = new XmlEntityPayload();
+                Message resultMapper = mapper.fromXML(payloadBuffer.toString());
+                //XmlEntityPayload res= (XmlEntityPayload)resultMapper;
 
-
-        XmlEntityPayload sourcePayload = new XmlEntityPayload();
-        Object resultMapper = mapper.fromXML(payloadBuffer.toString());
-        String completedMessage = "";
-        // Push.class, PullResponse.class, PullRequest.class,
-        // asuming only pull and push
-        // could not with Feedback.class, Acknowledgement.class
-
-        ((XmlEntityPayload) messageObject.getPayload()).getAnies().clear();
-        ((XmlEntityPayload) messageObject.getPayload()).getAnies().add(resultMapper);
+                List<Object> res =((XmlEntityPayload) resultMapper.getPayload()).getAnies();
+                ((XmlEntityPayload) messageObject.getPayload()).getAnies().add(res);
+            }
+        }
          completedMessage = mapper.toXML(messageObject).toString();
         return messageObject;
     }
@@ -199,3 +222,6 @@ public class SimApp <T extends Configuration> extends Application<T> implements 
 
 
 }
+
+//REPENTIR
+// note READER mean excerp from the class DefaultXmlValidator

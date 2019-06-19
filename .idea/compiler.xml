@@ -6,16 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="app" />
         <module name="web" />
+        <module name="valid" />
+        <module name="cise-emu-assembly" />
+        <module name="app" />
         <module name="cise-emu-transport" />
         <module name="transport" />
-        <module name="valid" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
       <module name="cise-emu-app" target="1.5" />
+      <module name="cise-emu-assembly" target="1.8" />
       <module name="cise-emu-transport" target="1.8" />
       <module name="ciseemu-transport" target="1.8" />
       <module name="emu-app" target="1.8" />

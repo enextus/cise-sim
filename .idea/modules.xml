@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/cise-emu-app/app.iml" filepath="$PROJECT_DIR$/cise-emu-app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cise-emu-assembly/cise-emu-assembly.iml" filepath="$PROJECT_DIR$/cise-emu-assembly/cise-emu-assembly.iml" />
       <module fileurl="file://$PROJECT_DIR$/cise-emu-transport/cise-emu-transport.iml" filepath="$PROJECT_DIR$/cise-emu-transport/cise-emu-transport.iml" />
       <module fileurl="file://$PROJECT_DIR$/emulator.iml" filepath="$PROJECT_DIR$/emulator.iml" />
       <module fileurl="file://$PROJECT_DIR$/cise-emu-valid/valid.iml" filepath="$PROJECT_DIR$/cise-emu-valid/valid.iml" />
