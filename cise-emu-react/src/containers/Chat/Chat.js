@@ -5,7 +5,7 @@ import ReceiveMessage from './ReceiveMessage/ReceiveMessage';
 import { Grid , Paper} from '@material-ui/core';
 
 
-class Chat extends Component {
+export default class Chat extends Component {
     render() {
         const headerStyle = {
             height: '30px' ,
@@ -48,16 +48,16 @@ class Chat extends Component {
 
                 <Grid item xs={8}>
                     <Paper style= {commandPaneStyle}>
-                        <SendMessage />
+                        <SendMessage store={this.props.store}/>
                     </Paper>
                     <Paper style= {ResultPaneStyle}>
-                        <ReceiveMessage />
+                        <ReceiveMessage store={this.props.store} />
                     </Paper>
                 </Grid>
                   
                 <Grid item xs={4}>
                 <Paper style= {HistoricalPaneStyle}>
-                    <ChatHistory />
+                    <ChatHistory store={this.props.store} />
                 </Paper>
             </Grid>          
             </Grid></div>
@@ -66,5 +66,5 @@ class Chat extends Component {
 
 }
 
-export default Chat;
+
 

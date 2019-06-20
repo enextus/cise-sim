@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import {MoveToInbox} from "@material-ui/icons";
 import {
   Button,
   AppBar,
@@ -10,31 +9,37 @@ import {
   Typography,
   FormControlLabel
 } from "@material-ui/core";
-class UserList extends Component {
+export default class UserList extends Component {
+   myuser="";
+   userList={}
   render() {
-    if (!this.props.users || this.props.users.length < 1) {
-      return "";
+    this.myuser=this.props.store.appStore.memberId;
+    if (this.myuser==="") {
+      return ("");
     }
+/*{this.renderUser()}*/
     return (
       <div style={{ textAlign: "right" }}>
         <AppBar title="Users" showMenuIconButton={false}>
           <Toolbar>
-            <Typography variant="h6">{this.renderUser()}</Typography>
+            <Typography variant="h6"> <Button>
+              <MoveToInbox /> {this.props.store.appStore.memberId}
+            </Button></Typography>
             <FormGroup>
               <FormControlLabel
                 control={
                   <Switch
-                    checked={connect}
+                    checked={this.props.store.appStore.connected}
                     onChange={handleChange}
                     aria-label="LoginSwitch"
                   />
                 }
-                label={connect ? "up" : "down"}
+                label={this.props.store.appStore.connected ? "up" : "down"}
               />
             </FormGroup>
             <Button
               variant="contained"
-              color={connect ? "primary" : "secondary"}
+              color={this.props.store.appStore.connected ? "primary" : "secondary"}
             >Mode: REST</Button>
           </Toolbar>
         </AppBar>
@@ -43,10 +48,16 @@ class UserList extends Component {
   }
 
   renderUser() {
-    return this.props.users.map(user => (
+    // todo put condition to return all except the user
+    /*return this.userList.filter(user => (
       <Button>
-        <InboxIcon /> {user.name}
+        <MoveToInbox /> {user}
       </Button>
+    ));*/
+    return this.userList.map(user => (
+        <Button>
+          <MoveToInbox /> {user}
+        </Button>
     ));
   }
 }
@@ -55,11 +66,11 @@ function handleChange(event) {
   //this.props.connect= false;
 }
 
-function mapStateToProps(state) {
-  return {
-    users: state.users,
-    connect: state.connect
-  };
-}
+//init function mapStateToProps(state) {
+//init return {
+//init users: state.users,
+//init connect: state.connect
+//init };
+//init }
 
-export default connect(mapStateToProps)(UserList);
+//init export default connect(mapStateToProps)(UserList);

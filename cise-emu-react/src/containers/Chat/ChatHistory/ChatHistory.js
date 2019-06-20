@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-
-class ChatHistory extends Component {
+export default class ChatHistory extends Component {
 
     render() {
         const style = {
@@ -13,8 +11,9 @@ class ChatHistory extends Component {
             display: 'flex',
             flexDirection: 'column'
         };
-
-        const msgs = this.props.messages.map((message, i) =>
+        //appStore
+        //messageStore
+        const msgs = this.props.store.messageStore.messages.map((message, i) =>
             this.renderMessages(message, i)
         );
 
@@ -31,7 +30,7 @@ class ChatHistory extends Component {
             margin: '5px 0'
         };
 
-        const isMe = this.props.thisUser.name === message.user.name;
+        const isMe = this.props.store.appStore.memberId === message.source;
         const floatDirection = isMe ? 'right' : 'left'
         const nameColor = isMe ? 'green' : 'red';
         const margin = isMe ? ' 0 0 0 40px' : '0 40px 0 0 ';
@@ -53,9 +52,10 @@ class ChatHistory extends Component {
         return (
             <div key={i} style={style}>
                 <span style={textStyle}>
-                    <span style={nameStyle}>{message.user.name}</span>
+                    <span style={nameStyle}>{message.source}</span>{" - "}
+                    <span> {message.destination}</span>
                     <br />
-                    {message.data}
+                    {message.correlationId}
                 </span>
             </div>
         );
@@ -64,15 +64,15 @@ class ChatHistory extends Component {
 
 
 // Whatever is returned is going to show up as props inside UserList
-function mapStateToProps(state) {
-    return {
-        messages: state.messages,
-        thisUser: state.thisUser
-    }
-}
+//init function mapStateToProps(state) {
+//init  return {
+//init   messages: state.messages,
+//init   thisUser: state.thisUser
+//init  }
+//init }
 
 // Promote component to container
-export default connect(mapStateToProps)(ChatHistory);
+//init  export default connect(mapStateToProps)(ChatHistory);
 
 
 

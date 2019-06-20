@@ -40,7 +40,7 @@ public class CommandLineSenderTest   {
     public void idStartsAtOne() throws InterruptedException {
         CountDownLatch serverStarted = new CountDownLatch(2);
         CliThread = new Thread(GeneralUtils.rethrow(() -> new CiseEmuApplication(serverStarted)
-                .run("sender","clisource/AisModifiedPush.xml"))); // was fixed argument server config.yml (root of the directory jar -> class)
+                .run("sender","-s", "clisource/AisModifiedPush.xml"))); // was fixed argument server config.yml (root of the directory jar -> class)
         serverStarted.await(5, SECONDS);
     }
     @After
