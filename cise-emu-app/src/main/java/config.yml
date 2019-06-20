@@ -1,3 +1,4 @@
+instanceName: test
 server:
   applicationConnectors:
     - type: http
@@ -9,4 +10,3 @@ logging:
   level: INFO
   loggers:
     eu.europa.ec.jrc.marex: DEBUG
-instanceName: test
