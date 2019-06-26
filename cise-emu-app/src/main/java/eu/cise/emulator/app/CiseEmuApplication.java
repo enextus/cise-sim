@@ -21,11 +21,10 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
 
     private static CiseEmuApplication appLiveRunning;
     private static Thread serverThread = null;
-    private InstanceID instanceID = null;
-    private String version = "0.0.1";
-
     private final CountDownLatch cdl;
     private final boolean initWithParameter;
+    private InstanceID instanceID = null;
+    private String version = "0.0.1";
 
     public CiseEmuApplication(CountDownLatch cdl, boolean initWithParameter) {
         this.cdl = cdl;
@@ -44,23 +43,20 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
         if (args.length == 0) {
             final String[] argsDefault = new String[]{"server", "config.yml"};
             appLiveRunning = new CiseEmuApplication(serverStarted);
-            serverThread = new Thread(GeneralUtils.rethrow(() -> appLiveRunning.run(argsDefault))); // was fixed argument server config.yml (root of the directory jar -> class)
+            serverThread
+                    = new Thread(GeneralUtils.rethrow(() -> appLiveRunning.run(argsDefault))); //
+            // was fixed argument server config.yml (root of the directory jar -> class)
         } else {
             appLiveRunning = new CiseEmuApplication(serverStarted, true);
-            serverThread = new Thread(GeneralUtils.rethrow(() -> appLiveRunning.run(args))); // was fixed argument server config.yml (root of the directory jar -> class)
+            serverThread
+                    = new Thread(GeneralUtils.rethrow(() -> appLiveRunning.run(args))); // was
+            // fixed argument server config.yml (root of the directory jar -> class)
         }
 
         serverThread.setDaemon(true);
         serverThread.start();
         serverStarted.await(10, SECONDS);
     }
-
-
-    @Override
-    public String getName() {
-        return "emulator";
-    }//+":"+CiseEmuApplication.appLiveRunning.instanceID.getName();}
-
 
     public static String getMemberId() {
         return (CiseEmuApplication.appLiveRunning.instanceID.getName());
@@ -70,6 +66,10 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
         return (CiseEmuApplication.appLiveRunning.getVersion());
     }
 
+    @Override
+    public String getName() {
+        return "emulator";
+    }//+":"+CiseEmuApplication.appLiveRunning.instanceID.getName();}
 
     @Override
     public void initialize(final Bootstrap<CiseEmuConfiguration> bootstrap) {
@@ -78,7 +78,8 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
         if (!initWithParameter) {
             bootstrap.setConfigurationSourceProvider(new ResourceConfigurationSourceProvider());
         }
-        //by default would use the FileConfigurationSourceProvider that user must always provide with server check or send
+        //by default would use the FileConfigurationSourceProvider that user must always provide
+        // with server check or send
 
         bootstrap.addBundle(new io.dropwizard.websockets.WebsocketBundle(OutBoundWebSocketService.class));
 
@@ -97,8 +98,10 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
 
         String version = "0.0.1"; //temporally hard coded
         appLiveRunning.instanceID = configuration.buildInstance();
-        ////OUT : allow service to inform itself on the identity and option given by the configuration
-        final OutBoundRestServiceAPI outRestMessageService = new OutBoundRestServiceAPI(getVersion(), instanceID);
+        ////OUT : allow service to inform itself on the identity and option given by the
+        // configuration
+        final OutBoundRestServiceAPI outRestMessageService
+                = new OutBoundRestServiceAPI(getVersion(), instanceID);
         environment.jersey().register(outRestMessageService);
 
         // OUT = check the web socket is up
@@ -106,7 +109,8 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
         environment.healthChecks().register("OUT_WebSocket", outWebSocketCheckService);
 
         // IN = to the infrastructure server members (node, adapter, emulator, simulator ...)
-        final InboundRESTMessageService inboundRESTMessageService = new eu.cise.emulator.app.resource.InboundRESTMessageService(version, instanceID);
+        final InboundRESTMessageService inboundRESTMessageService
+                = new eu.cise.emulator.app.resource.InboundRESTMessageService(version, instanceID);
         environment.jersey().register(inboundRESTMessageService);
 
 
