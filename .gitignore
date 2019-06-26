@@ -27,3 +27,6 @@ hs_err_pid*
 
 ## NPM and JavaScript replated
 node_modules
+
+## Generic
+*.patch
