@@ -27,21 +27,23 @@ public class SourceBufferFileSource implements SourceBufferInterface {
 
 
     private URL StringtoURL(String stringUrl) throws MalformedURLException {
-            URL url = new URL((stringUrl.trim().startsWith("file://") ? stringUrl : "file://" + stringUrl));
+        URL url = new URL((stringUrl.trim().startsWith("file://") ? stringUrl : "file://" + stringUrl));
         return url;
     }
 
     private URI URLtoURI(URL url) throws URISyntaxException {
-            return url.toURI();
+        return url.toURI();
     }
 
     private URL getFileURL() {
         return getClass().getResource("banner.txt");
     }
 
-    /** getDirectoryListing :return List of File within directory : by using  lambda and file nio */
-    private List<File> getDirectoryListing(String originpath){
-        List<File> directoryListing= new ArrayList<>();
+    /**
+     * getDirectoryListing :return List of File within directory : by using  lambda and file nio
+     */
+    private List<File> getDirectoryListing(String originpath) {
+        List<File> directoryListing = new ArrayList<>();
         try (Stream<Path> walk = Files.walk(Paths.get(originpath))) {
 
             directoryListing = walk.filter(Files::isRegularFile)
@@ -52,9 +54,9 @@ public class SourceBufferFileSource implements SourceBufferInterface {
         return directoryListing;
     }
 
- private StringBuffer AppendBufferFromUri(StringBuffer strBuffer, URI uri) throws FileNotFoundException{
+    private StringBuffer AppendBufferFromUri(StringBuffer strBuffer, URI uri) throws FileNotFoundException {
         File file = new File(uri);
-        if (file.exists()){
+        if (file.exists()) {
             FileInputStream in = new FileInputStream(file);
             try (FileChannel channel = in.getChannel()) {
                 ByteBuffer byteBuffer = channel.map(FileChannel.MapMode.READ_ONLY, 0, file.length());
@@ -67,27 +69,25 @@ public class SourceBufferFileSource implements SourceBufferInterface {
                 e.printStackTrace();
             }
         }
-     return strBuffer;
- }
-
-
+        return strBuffer;
+    }
 
 
     @Override
-    public StringBuffer ServiceBufferParameter(String ServiceStringUri)  {
+    public StringBuffer serviceBufferParameter(String ServiceStringUri) {
         StringBuffer returnable = new StringBuffer();
         URL ServiceUrl = null;
         URI ServiceUri = null;
         try {
-             ServiceUrl = StringtoURL(ServiceStringUri);
-             ServiceUri = URLtoURI(ServiceUrl);
+            ServiceUrl = StringtoURL(ServiceStringUri);
+            ServiceUri = URLtoURI(ServiceUrl);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         try {
-            AppendBufferFromUri(returnable,ServiceUri);
+            AppendBufferFromUri(returnable, ServiceUri);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -96,7 +96,7 @@ public class SourceBufferFileSource implements SourceBufferInterface {
 
 
     @Override
-    public StringBuffer PayloadBufferParameter(String PayloadStringUri)  {
+    public StringBuffer payloadBufferParameter(String PayloadStringUri) {
         StringBuffer returnable = new StringBuffer();
         URL PayloadUrl = null;
         URI PayloadUri = null;
@@ -110,7 +110,7 @@ public class SourceBufferFileSource implements SourceBufferInterface {
         }
 
         try {
-            AppendBufferFromUri(returnable,PayloadUri);
+            AppendBufferFromUri(returnable, PayloadUri);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -118,12 +118,12 @@ public class SourceBufferFileSource implements SourceBufferInterface {
     }
 
     @Override
-    public List<File> ServiceDirectoryListing(String pathParameter) {
+    public List<File> serviceDirectoryListing(String pathParameter) {
         return getDirectoryListing(pathParameter);
     }
 
     @Override
-    public List<File> PayloadDirectoryListing(String pathParameter) {
+    public List<File> payloadDirectoryListing(String pathParameter) {
         return getDirectoryListing(pathParameter);
     }
 }

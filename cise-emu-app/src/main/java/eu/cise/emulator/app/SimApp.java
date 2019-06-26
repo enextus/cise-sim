@@ -67,7 +67,7 @@ import java.util.List;
  * - dispatchMessages: using multi threading dispatches the cise messages
  * to the conformance absorbing peaks
  */
-public class SimApp <T extends Configuration> extends Application<T> implements Runnable {
+public class SimApp<T extends Configuration> extends Application<T> implements Runnable {
 
     private final SimLogger logger;
     private final SimConfig config;
@@ -77,10 +77,10 @@ public class SimApp <T extends Configuration> extends Application<T> implements 
     private final XmlMapper xmlMapper;
     private final MessageValidator validator;
 
-    public boolean isDebug= false;
-    public boolean isVerbose=false;
-    public String payloadFile =null;
-    public String serviceFile =null;
+    public boolean isDebug = false;
+    public boolean isVerbose = false;
+    public String payloadFile = null;
+    public String serviceFile = null;
     private JAXWSBundle jaxWsBundle = new JAXWSBundle();
 
     /**
@@ -102,10 +102,11 @@ public class SimApp <T extends Configuration> extends Application<T> implements 
      * into a cise
      * vessel if is of type 1,2,3 or 5, otherwise it will be an empty optional.
      * - {@code List<Entity>} -&gt; Push:
+     *
      * @param aStreamProcessor stream generator of ais strings
-     * @param aSender stream processor of ais strings into cise messages
-     * @param logger             dispatcher of sim messages
-     * @param config             application configuration object
+     * @param aSender          stream processor of ais strings into cise messages
+     * @param logger           dispatcher of sim messages
+     * @param config           application configuration object
      * @param xmlMapper
      * @param validator
      */
@@ -120,9 +121,11 @@ public class SimApp <T extends Configuration> extends Application<T> implements 
         this.xmlMapper = xmlMapper;
         this.validator = validator;
     }
+
     /*reader*/ private static final String[] CISE_DATA_MODEL_ELEMENT = new String[]{"Action", "Agent", "Aircraft", "Anomaly", "Cargo", "CargoDocument", "Catch", "CertificateDocument", "ContainmentUnit", "CrisisIncident", "Document", "EventDocument", "FormalOrganization", "Incident", "IrregularMigrationIncident", "LandVehicle", "LawInfringementIncident", "Location", "LocationDocument", "MaritimeSafetyIncident", "MeteoOceanographicCondition", "Movement", "NamedLocation", "OperationalAsset", "Organization", "OrganizationalCollaboration", "OrganizationalUnit", "OrganizationDocument", "Person", "PersonDocument", "PollutionIncident", "PortFacilityLocation", "PortLocation", "PortOrganization", "Risk", "RiskDocument", "Stream", "Vessel", "VesselDocument"};
     /*reader*/ private final NamespaceContext ciseNamespaceContext = new CISENamespaceContext();
     /*reader*/ private XPathExpression dataElementXPath;
+
     private String buildDataElementXPathPattern() {
         StringBuilder bld = new StringBuilder();
         bld.append("/*[local-name()='Push' or  local-name()='PullResponse'  or  local-name()='PullRequest' or local-name()='Feedback']/Payload/*");
@@ -130,7 +133,7 @@ public class SimApp <T extends Configuration> extends Application<T> implements 
         bld.append(CISE_DATA_MODEL_ELEMENT[0]);
         bld.append("'");
 
-        for(int i = 1; i < CISE_DATA_MODEL_ELEMENT.length; ++i) {
+        for (int i = 1; i < CISE_DATA_MODEL_ELEMENT.length; ++i) {
             bld.append(" or  local-name() = '");
             bld.append(CISE_DATA_MODEL_ELEMENT[i]);
             bld.append("'");
@@ -143,47 +146,47 @@ public class SimApp <T extends Configuration> extends Application<T> implements 
     private Message loadMessage(String servicefile, String payloadfile) {
 
         SourceBufferInterface sourceBuffer = new SourceBufferFileSource();
-        StringBuffer serviceBuffer = sourceBuffer.ServiceBufferParameter(servicefile);
+        StringBuffer serviceBuffer = sourceBuffer.serviceBufferParameter(servicefile);
         String completedMessage = "";
 
         XmlMapper mapper = new DefaultXmlMapper.Pretty();
         Message messageObject = mapper.fromXML(serviceBuffer.toString());
         if (!("".equals(payloadfile))) {
-            StringBuffer payloadBuffer = sourceBuffer.PayloadBufferParameter(payloadfile);
+            StringBuffer payloadBuffer = sourceBuffer.payloadBufferParameter(payloadfile);
             if (!(payloadBuffer.toString().equals(""))) {
                 //XmlEntityPayload sourcePayload = new XmlEntityPayload();
                 Message resultMapper = mapper.fromXML(payloadBuffer.toString());
                 //XmlEntityPayload res= (XmlEntityPayload)resultMapper;
 
-                List<Object> res =((XmlEntityPayload) resultMapper.getPayload()).getAnies();
+                List<Object> res = ((XmlEntityPayload) resultMapper.getPayload()).getAnies();
                 ((XmlEntityPayload) messageObject.getPayload()).getAnies().add(res);
             }
         }
-         completedMessage = mapper.toXML(messageObject).toString();
+        completedMessage = mapper.toXML(messageObject).toString();
         return messageObject;
     }
 
     public void sendEvent(String servicefile, String payloadfile) {
-        Message message= loadMessage (servicefile, payloadfile);
-         RestClient client = new JerseyRestClient();
-          XmlMapper refmapper= new DefaultXmlMapper();
-          String refMessage = refmapper.<Message>toXML(message);
-         if (config.isSignatureMessageSend().contains("true")) {
-             System.out.println("before signed  : " + refMessage);
-             //XmlMapper refmapper2 = refmapper.fromXML(refMessage);
-             SignatureServiceBuilder signBuilder =SignatureServiceBuilder.newSignatureService(refmapper);
-             SignatureService signature = signBuilder
-                     .withKeyStoreName((String) config.getKeyStoreName())
-                     .withKeyStorePassword((String) config.getKeyStorePassword())
-                     .withPrivateKeyAlias((String) config.getPrivateKeyAlias())
-                     .withPrivateKeyPassword((String) config.getPrivateKeyPassword())
-                     .build();
-             message = signature.sign(message);
-         }
+        Message message = loadMessage(servicefile, payloadfile);
+        RestClient client = new JerseyRestClient();
+        XmlMapper refmapper = new DefaultXmlMapper();
+        String refMessage = refmapper.<Message>toXML(message);
+        if (config.isSignatureMessageSend().contains("true")) {
+            System.out.println("before signed  : " + refMessage);
+            //XmlMapper refmapper2 = refmapper.fromXML(refMessage);
+            SignatureServiceBuilder signBuilder = SignatureServiceBuilder.newSignatureService(refmapper);
+            SignatureService signature = signBuilder
+                    .withKeyStoreName((String) config.getKeyStoreName())
+                    .withKeyStorePassword((String) config.getKeyStorePassword())
+                    .withPrivateKeyAlias((String) config.getPrivateKeyAlias())
+                    .withPrivateKeyPassword((String) config.getPrivateKeyPassword())
+                    .build();
+            message = signature.sign(message);
+        }
         refMessage = refmapper.toXML(message);
 
 
-        RestResult result = client.post(config.getCounterpartRestUrl(),refMessage);
+        RestResult result = client.post(config.getCounterpartRestUrl(), refMessage);
         System.out.println("Client send to Server : " + refMessage);
         System.out.println("Server returned : " + result.getBody());
 
@@ -203,12 +206,15 @@ public class SimApp <T extends Configuration> extends Application<T> implements 
         environment.jersey().register(new ServerRestConcrete(config.getSimulatorId(), (AcceptanceAgent) messageProcessor));
         //jaxWsBundle.publishEndpoint(new EndpointBuilder("/hello", new ServerSoapConcrete()));
 
-        };
+    }
+
+    ;
 
 
     @Override
     public void run() {
     }
+
     @Override
     public String getName() {
         return "Gateway";

@@ -25,8 +25,9 @@ public class ServerAppContext {
     private final SimLogger logger;
     private final SignatureService signatureService;/*see after note ... altered interface*/
     private final XmlValidator xmlValidator;
-    private final AcceptanceAgent acceptanceAgent ;
-    private final SubmissionAgent submissionAgent ;
+    private final AcceptanceAgent acceptanceAgent;
+    private final SubmissionAgent submissionAgent;
+
     public ServerAppContext() {
         this.config = ConfigFactory.create(SimConfig.class);
 
@@ -48,44 +49,42 @@ public class ServerAppContext {
 
         this.signatureService = SignatureServiceBuilder.newSignatureService()
                 .withKeyStoreName(config.getKeyStoreName()).
-                withKeyStorePassword(config.getKeyStorePassword())
+                        withKeyStorePassword(config.getKeyStorePassword())
                 .withPrivateKeyAlias(config.getPrivateKeyAlias())
                 .withPrivateKeyPassword(config.getPrivateKeyPassword())
                 .build();
 
-         GatewayProcessor submissionGatewayProcessor =  new GatewayProcessor() {
-             @Override
-             public void process(Message message) {
-                 notify();
-             }
-         };//newInstanceOf(config.getSubmissionGatewayProcessor(), GatewayProcessor.class);
+        GatewayProcessor submissionGatewayProcessor = new GatewayProcessor() {
+            @Override
+            public void process(Message message) {
+                notify();
+            }
+        };//newInstanceOf(config.getSubmissionGatewayProcessor(), GatewayProcessor.class);
 
 
         //MessageValidator validator,GatewayProcessor gatewayProcessor, String gatewayAddressString)
-          DefaultSubmissionAgent asubmitagent = new DefaultSubmissionAgent(new MessageValidator(), submissionGatewayProcessor,config.getSimulatorId()) ;
-         this.submissionAgent = new SignatureDecorator( asubmitagent ,  signatureService);
+        DefaultSubmissionAgent asubmitagent = new DefaultSubmissionAgent(new MessageValidator(), submissionGatewayProcessor, config.getSimulatorId());
+        this.submissionAgent = new SignatureDecorator(asubmitagent, signatureService);
 
-        this. acceptanceAgent = (AcceptanceAgent) new DefaultAcceptanceAgent(xmlMapper,xmlValidator);
-
-
+        this.acceptanceAgent = (AcceptanceAgent) new DefaultAcceptanceAgent(xmlMapper, xmlValidator);
 
 
-        if (config.getWebappWsMode().contains("REST")){
-            Server myserver=  (ServerRestConcrete) new ServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
-            ((ServerRestConcrete)myserver).SetupServerRestConcrete(config.getSimulatorId(),acceptanceAgent );
-            myserver=  (ServerRest) myserver;
+        if (config.getWebappWsMode().contains("REST")) {
+            Server myserver = (ServerRestConcrete) new ServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
+            ((ServerRestConcrete) myserver).SetupServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
+            myserver = (ServerRest) myserver;
 
-        }else{
-            Server myserver=  (ServerSoapConcrete) new ServerSoapConcrete();
-            ((ServerSoapConcrete)myserver).SetupServerSoapConcrete(config.getSimulatorId(), acceptanceAgent);
-            myserver=  (ServerSoap) myserver;
+        } else {
+            Server myserver = (ServerSoapConcrete) new ServerSoapConcrete();
+            ((ServerSoapConcrete) myserver).SetupServerSoapConcrete(config.getSimulatorId(), acceptanceAgent);
+            myserver = (ServerSoap) myserver;
 
         }
 
     }
 
     public DefaultAcceptanceAgent makeMessageProcessor() {
-        return new DefaultAcceptanceAgent( xmlMapper, xmlValidator);
+        return new DefaultAcceptanceAgent(xmlMapper, xmlValidator);
     }
 
 

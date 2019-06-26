@@ -28,9 +28,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <prerequisites>
-        <maven>3.0.0</maven>
-    </prerequisites>
+
 
     <parent>
         <artifactId>emulator</artifactId>
@@ -40,7 +38,7 @@
 
     <groupId>eu.europa.ec.jrc.marex</groupId>
 	<artifactId>cise-emu-app</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
 
     <name>app</name>
 
@@ -167,7 +165,7 @@
         </plugins>
     </pluginManagement>
         <plugins>
-            <!--
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -188,7 +186,7 @@
                     </execution>
                 </executions>
             </plugin>
--->
+
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.6</version>
@@ -422,12 +420,6 @@
          </dependency>-->
 
 
-
-       <!-- - - - - - jaxws - - -  <dependency>
-          <groupId>com.github.roskart.dropwizard-jaxws</groupId>
-          <artifactId>dropwizard-jaxws</artifactId>
-          <version>RELEASE</version>
-      </dependency>-->
 
 <dependency>
           <groupId>com.fasterxml.jackson.dataformat</groupId>

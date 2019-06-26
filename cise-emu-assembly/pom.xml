@@ -8,6 +8,7 @@
         <artifactId>emulator</artifactId>
         <groupId>eu.europa.ec.jrc.marex</groupId>
         <version>1.0-SNAPSHOT</version>
+
     </parent>
 
     <groupId>eu.europa.ec.jrc.marex</groupId>

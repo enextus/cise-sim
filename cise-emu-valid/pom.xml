@@ -10,7 +10,7 @@
 
     <groupId>eu.europa.ec.jrc.marex</groupId>
 	<artifactId>cise-emu-valid</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
 	<name>valid</name>
 	<description>formal validation (include helping classes / method and technical domain standard interface)</description>
 

@@ -1,10 +1,9 @@
 package eu.cise.emulator.app.context;
 
-import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.emulator.httptransport.conformance.Consumers;
 import eu.cise.emulator.httptransport.conformance.GatewayProcessor;
+import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.XmlMapper;
-
 
 
 class Context {
@@ -16,13 +15,13 @@ class Context {
     }
 
     public GatewayProcessor makeGatewayProcessor() {
-        if (instanceGP==null) instanceGP=new GatewayProcessor() {
+        if (instanceGP == null) instanceGP = new GatewayProcessor() {
             @Override
             public void process(Message message) {
                 System.out.println(".");
             }
         };
-                return instanceGP;
+        return instanceGP;
     }
 
     public Consumers getConsumers() {

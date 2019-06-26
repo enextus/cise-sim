@@ -33,39 +33,37 @@ public class CommandLineSender extends Command {
     }
 
 
-
-
     @Override
     public void run(Bootstrap<?> bootstrap, Namespace namespace) throws Exception {
-        XmlMapper xmlMapper= new DefaultXmlMapper();
+        XmlMapper xmlMapper = new DefaultXmlMapper();
         MessageValidator validator = new MessageValidator();
-        SimConfig config= createConfig();
+        SimConfig config = createConfig();
         simApp = new SimApp(new SourceStreamProcessor(),
                 new Sender(),
                 new SimLogger.Slf4j(),
                 config, xmlMapper, validator);
 
         Logger logger = LoggerFactory.getLogger("eu.cise.emulator.app.cli");
-        if ( (namespace.getString("send" ).equals("") ) ) {
+        if ((namespace.getString("send").equals(""))) {
             logger.debug("to send -> " + namespace.getString("send"));
         }
 
         simApp.run();
-        String servicefile="";
+        String servicefile = "";
 
-        if(!(namespace.getString("send").equals(""))) {
-            servicefile=namespace.getString("service");
+        if (!(namespace.getString("send").equals(""))) {
+            servicefile = namespace.getString("service");
 
         }
 
-        try{
-        simApp.sendEvent(servicefile,"");
-    } catch (Throwable e) {
+        try {
+            simApp.sendEvent(servicefile, "");
+        } catch (Throwable e) {
             logger.error("An error occurred:\n\n" + e.getMessage() + "\n");
 
-        if (simApp.isDebug=true)
-            logger.error(e.getStackTrace().toString());
-    }
+            if (simApp.isDebug = true)
+                logger.error(e.getStackTrace().toString());
+        }
     }
 
     /**

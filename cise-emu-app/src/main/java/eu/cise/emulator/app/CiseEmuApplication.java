@@ -27,13 +27,14 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
     private final CountDownLatch cdl;
     private final boolean InitWithParameter;
 
-    public CiseEmuApplication(CountDownLatch cdl,boolean InitWithParameter) {
+    public CiseEmuApplication(CountDownLatch cdl, boolean InitWithParameter) {
         this.cdl = cdl;
-        this.InitWithParameter =InitWithParameter;
+        this.InitWithParameter = InitWithParameter;
     }
+
     public CiseEmuApplication(CountDownLatch cdl) {
         this.cdl = cdl;
-        this.InitWithParameter =false;
+        this.InitWithParameter = false;
     }
 
 
@@ -41,12 +42,12 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
         CountDownLatch serverStarted = new CountDownLatch(1);
 
         if (args.length == 0) {
-            final String[] argsDefault= new String[]{"server", "config.yml"};
+            final String[] argsDefault = new String[]{"server", "config.yml"};
             appLiveRunning = new CiseEmuApplication(serverStarted);
             serverThread = new Thread(GeneralUtils.rethrow(() -> appLiveRunning.run(argsDefault))); // was fixed argument server config.yml (root of the directory jar -> class)
         } else {
-            appLiveRunning = new CiseEmuApplication(serverStarted,true);
-            serverThread = new Thread(GeneralUtils.rethrow(() ->appLiveRunning.run(args))); // was fixed argument server config.yml (root of the directory jar -> class)
+            appLiveRunning = new CiseEmuApplication(serverStarted, true);
+            serverThread = new Thread(GeneralUtils.rethrow(() -> appLiveRunning.run(args))); // was fixed argument server config.yml (root of the directory jar -> class)
         }
 
         serverThread.setDaemon(true);
@@ -55,14 +56,16 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
     }
 
 
-
     @Override
-    public String getName() {return "emulator";}//+":"+CiseEmuApplication.appLiveRunning.instanceID.getName();}
+    public String getName() {
+        return "emulator";
+    }//+":"+CiseEmuApplication.appLiveRunning.instanceID.getName();}
 
 
     public static String getMemberId() {
         return (CiseEmuApplication.appLiveRunning.instanceID.getName());
     }
+
     public static String getMemberVersion() {
         return (CiseEmuApplication.appLiveRunning.getVersion());
     }
@@ -72,10 +75,9 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
     public void initialize(final Bootstrap<CiseEmuConfiguration> bootstrap) {
 
 
-
-
-
-        if (!InitWithParameter) {bootstrap.setConfigurationSourceProvider(new ResourceConfigurationSourceProvider()); }
+        if (!InitWithParameter) {
+            bootstrap.setConfigurationSourceProvider(new ResourceConfigurationSourceProvider());
+        }
         //by default would use the FileConfigurationSourceProvider that user must always provide with server check or send
 
         bootstrap.addBundle(new io.dropwizard.websockets.WebsocketBundle(OutBoundWebSocketService.class));
@@ -93,7 +95,7 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
     public void run(final CiseEmuConfiguration configuration, final Environment environment) {
         CrossOrigin.setup(environment);
 
-        String version="0.0.1"; //temporally hard coded
+        String version = "0.0.1"; //temporally hard coded
         appLiveRunning.instanceID = configuration.buildInstance();
         ////OUT : allow service to inform itself on the identity and option given by the configuration
         final OutBoundRestServiceAPI outRestMessageService = new OutBoundRestServiceAPI(getVersion(), instanceID);
@@ -101,7 +103,7 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
 
         // OUT = check the web socket is up
         final OutBoundWebSocketCheck outWebSocketCheckService = new OutBoundWebSocketCheck(version);
-        environment.healthChecks().register("OUT_WebSocket", outWebSocketCheckService );
+        environment.healthChecks().register("OUT_WebSocket", outWebSocketCheckService);
 
         // IN = to the infrastructure server members (node, adapter, emulator, simulator ...)
         final InboundRESTMessageService inboundRESTMessageService = new eu.cise.emulator.app.resource.InboundRESTMessageService(version, instanceID);
