@@ -20,7 +20,7 @@ export default class UserList extends Component {
 /*{this.renderUser()}*/
     return (
       <div style={{ textAlign: "right" }}>
-        <AppBar title="Users" showMenuIconButton={false}>
+        <AppBar title="Users" >
           <Toolbar>
             <Typography variant="h6"> <Button>
               <MoveToInbox /> {this.props.store.appStore.memberId}

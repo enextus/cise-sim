@@ -1,7 +1,9 @@
 package eu.cise.emulator.app.util;
 
+import ch.qos.logback.classic.Logger;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -35,7 +37,9 @@ public class CrossOrigin {
         cors.setInitParameter("allowedOrigins", "*");
         cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
         cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
-
+        String name;
+        Logger logger= (Logger) LoggerFactory.getLogger(CrossOrigin.class.getName());
+        logger.debug("added the filter");
         // Add URL mapping
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
     }

@@ -1,6 +1,7 @@
 package eu.cise.emulator.app.context;
 
 import eu.cise.emulator.app.candidate.Sender;
+import eu.cise.emulator.app.util.SignatureDecorator;
 import eu.cise.emulator.app.util.SimLogger;
 import eu.cise.emulator.httptransport.*;
 import eu.cise.emulator.httptransport.Validation.MessageValidator;

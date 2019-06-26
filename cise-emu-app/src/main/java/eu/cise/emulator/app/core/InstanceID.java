@@ -14,10 +14,12 @@ public class InstanceID {
     }
 
     public String render(Optional<String> name) {
-        return (":"+this.numid+":"+this.numid);
+        return (":"+this.name+":"+this.numid);
     }
 
     public Long getNumId() {
         return this.numid;
     }
+
+    public String getName() {return this.name;}
 }

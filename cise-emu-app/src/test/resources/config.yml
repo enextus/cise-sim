@@ -1,0 +1,12 @@
+instanceName: test
+server:
+  applicationConnectors:
+    - type: http
+      port: 48080
+  adminConnectors:
+    - type: http
+      port: 48081
+logging:
+  level: INFO
+  loggers:
+    eu.europa.ec.jrc.marex: DEBUG

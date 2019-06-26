@@ -255,7 +255,16 @@
             <artifactId> dropwizard-util</artifactId>
             <version>${dropwizard.version}</version>
         </dependency>
-
+<!--            <dependency>-->
+<!--                <groupId>resources.dropwizard</groupId>-->
+<!--                <artifactId>dropwizard-testing</artifactId>-->
+<!--                <version>${dropwizard.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>resources.dropwizard</groupId>-->
+<!--                <artifactId>dropwizard-metrics-graphite</artifactId>-->
+<!--                <version>${dropwizard.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>com.liveperson</groupId>
                 <artifactId>dropwizard-websockets</artifactId>
