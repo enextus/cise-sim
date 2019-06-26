@@ -63,7 +63,7 @@ public class OutBoundRestServiceAPI {
         try {
 
             String messageJson = getMapper().writeValueAsString(amessage);
-            OutBoundWebSocketClient aclient = OutBoundWebSocketClient.Build();
+            OutBoundWebSocketClient aclient = OutBoundWebSocketClient.build();
             aclient.addMessageHandler(new OutBoundWebSocketClient.MessageHandler() {
                 public void handleMessage(String message) {
                     getLogger().info("!!!!!returnedMessageByWebsocket = success!!!!!!!");

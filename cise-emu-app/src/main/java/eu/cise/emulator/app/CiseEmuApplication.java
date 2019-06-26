@@ -22,19 +22,19 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
     private static CiseEmuApplication appLiveRunning;
     private static Thread serverThread = null;
     private InstanceID instanceID = null;
-    private String Version = "0.0.1";
+    private String version = "0.0.1";
 
     private final CountDownLatch cdl;
-    private final boolean InitWithParameter;
+    private final boolean initWithParameter;
 
-    public CiseEmuApplication(CountDownLatch cdl, boolean InitWithParameter) {
+    public CiseEmuApplication(CountDownLatch cdl, boolean initWithParameter) {
         this.cdl = cdl;
-        this.InitWithParameter = InitWithParameter;
+        this.initWithParameter = initWithParameter;
     }
 
     public CiseEmuApplication(CountDownLatch cdl) {
         this.cdl = cdl;
-        this.InitWithParameter = false;
+        this.initWithParameter = false;
     }
 
 
@@ -75,7 +75,7 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
     public void initialize(final Bootstrap<CiseEmuConfiguration> bootstrap) {
 
 
-        if (!InitWithParameter) {
+        if (!initWithParameter) {
             bootstrap.setConfigurationSourceProvider(new ResourceConfigurationSourceProvider());
         }
         //by default would use the FileConfigurationSourceProvider that user must always provide with server check or send
@@ -114,6 +114,6 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
 
 
     public String getVersion() {
-        return Version;
+        return version;
     }
 }
