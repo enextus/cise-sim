@@ -27,7 +27,7 @@
 
 package eu.cise.emulator.app;
 
-import com.roskart.dropwizard.jaxws.JAXWSBundle;
+//import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.emulator.app.candidate.Sender;
 import eu.cise.emulator.app.candidate.SourceStreamProcessor;
 import eu.cise.emulator.app.context.ServerAppContext;
@@ -81,7 +81,7 @@ public class SimApp<T extends Configuration> extends Application<T> implements R
     public boolean isVerbose = false;
     public String payloadFile = null;
     public String serviceFile = null;
-    private JAXWSBundle jaxWsBundle = new JAXWSBundle();
+    //private JAXWSBundle jaxWsBundle = new JAXWSBundle();
 
     /**
      * The App is mainly built with a stream generator a processor and a message
@@ -223,7 +223,8 @@ public class SimApp<T extends Configuration> extends Application<T> implements R
 
     @Override
     public void initialize(Bootstrap<T> bootstrap) {
-        bootstrap.addBundle(jaxWsBundle);
+        System.out.println("simapp initialised : " + bootstrap.getApplication().getName());
+        //bootstrap.addBundle(jaxWsBundle);
     }
 
 

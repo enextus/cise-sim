@@ -23,7 +23,7 @@ public class ServerAppContext {
 
     private final MessageValidator validator;
     private final SimLogger logger;
-    private final SignatureService signatureService;/*see after note ... altered interface*/
+    private final SignatureService signatureService;
     private final XmlValidator xmlValidator;
     private final AcceptanceAgent acceptanceAgent;
     private final SubmissionAgent submissionAgent;
@@ -59,7 +59,8 @@ public class ServerAppContext {
             public void process(Message message) {
                 notify();
             }
-        };//newInstanceOf(config.getSubmissionGatewayProcessor(), GatewayProcessor.class);
+        };
+        //newInstanceOf(config.getSubmissionGatewayProcessor(), GatewayProcessor.class);
 
 
         //MessageValidator validator,GatewayProcessor gatewayProcessor, String gatewayAddressString)

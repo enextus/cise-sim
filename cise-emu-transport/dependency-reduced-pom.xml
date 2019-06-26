@@ -9,7 +9,7 @@
   <groupId>eu.europa.ec.jrc.marex</groupId>
   <artifactId>cise-emu-transport</artifactId>
   <name>transport</name>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
   <build>
     <plugins>
       <plugin>

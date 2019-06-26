@@ -10,7 +10,7 @@ class Context {
     private GatewayProcessor instanceGP;
     private Consumers consumers;
 
-    public Context() {
+    Context() {
 
     }
 
