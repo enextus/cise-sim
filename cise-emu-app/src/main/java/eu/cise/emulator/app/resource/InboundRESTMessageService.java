@@ -15,25 +15,24 @@ public class InboundRESTMessageService {
     String version;
     InstanceID instanceID;
 
-        public InboundRESTMessageService(String version, InstanceID instanceID) {
-            this.version=version;
-            this.instanceID=instanceID;
-        }
-
+    public InboundRESTMessageService(String version, InstanceID instanceID) {
+        this.version = version;
+        this.instanceID = instanceID;
+    }
 
 
     @POST
     @Consumes("text/plain,text/xml,application/xml")
-    @Produces ("text/plain")
+    @Produces("text/plain")
     @Path("/CISEMessageServiceREST")
     public String sendMessage(String msg) throws Exception {
 
-        Logger mylogger= (Logger) LoggerFactory.getLogger(InboundRESTMessageService.class.getName());
+        Logger mylogger = (Logger) LoggerFactory.getLogger(InboundRESTMessageService.class.getName());
         // TODO: implement the xml rest reception
         /*XmlMapper mapper = new DefaultXmlMapper.Pretty();
         String completedMessage = mapper.toXML(someMessage ).toString();
         return someMessage;*/
-        mylogger.debug( "CISEMessageServiceRESTXML received POST message"+msg);
-        return "Received@"+ CiseEmuApplication.getMemberId() + ":"+msg;
+        mylogger.debug("CISEMessageServiceRESTXML received POST message" + msg);
+        return "Received@" + CiseEmuApplication.getMemberId() + ":" + msg;
     }
 }

@@ -5,12 +5,12 @@ import java.util.List;
 
 public interface SourceBufferInterface {
 
-    StringBuffer ServiceBufferParameter (String ServiceUri) ;
+    StringBuffer serviceBufferParameter(String serviceUri);
 
-    StringBuffer PayloadBufferParameter (String PayloadUri) ;
+    StringBuffer payloadBufferParameter(String payloadUri);
 
-    List<File> ServiceDirectoryListing(String pathParameter);
+    List<File> serviceDirectoryListing(String pathParameter);
 
-    List<File> PayloadDirectoryListing(String pathParameter);
+    List<File> payloadDirectoryListing(String pathParameter);
 
 }

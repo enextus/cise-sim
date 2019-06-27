@@ -40,7 +40,7 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;
-        if(null == o || o.getClass() != this.getClass()) return false;
+        if (null == o || o.getClass() != this.getClass()) return false;
 
         User other = (User) o;
 

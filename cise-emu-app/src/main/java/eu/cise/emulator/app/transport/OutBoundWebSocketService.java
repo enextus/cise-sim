@@ -19,7 +19,7 @@ import java.util.Set;
 @ServerEndpoint("/websocket")
 public class OutBoundWebSocketService {
 
-    private final static Logger logger = (Logger) LoggerFactory.getLogger(OutBoundWebSocketService.class);
+    private final Logger logger = (Logger) LoggerFactory.getLogger(OutBoundWebSocketService.class);
 
     private HashMap<Session, User> users = new HashMap<Session, User>();
 
@@ -29,7 +29,7 @@ public class OutBoundWebSocketService {
     @OnOpen
     public void myOnOpen(final Session session) throws IOException {
         sessions.add(session);
-        logger.info(" established new session " + session.toString() );
+        logger.info(" established new session " + session.toString());
     }
 
 
@@ -114,14 +114,6 @@ public class OutBoundWebSocketService {
         broadcastMessage(newMessage);
     }
 
-    /*public static void main(String[] args) {
-        int port;
-        try {
-            port = Integer.parseInt(System.getenv("PORT"));
-        } catch (NumberFormatException nfe) {
-            port = 9000;
-        }
-        new OutBoundWebSocketService(port).start();
-    }*/
+
 
 }

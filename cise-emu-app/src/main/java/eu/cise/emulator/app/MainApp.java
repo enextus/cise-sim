@@ -50,12 +50,12 @@ public class MainApp implements Runnable {
     public MainApp(SimConfig config) {
         ctx = new DefaultAppContext(config);
         banner = new Banner();
-        XmlMapper xmlMapper= new DefaultXmlMapper();
+        XmlMapper xmlMapper = new DefaultXmlMapper();
         MessageValidator validator = new MessageValidator();
         simApp = new SimApp(new SourceStreamProcessor(),
-                new Sender(),
-                new SimLogger.Slf4j(),
-                config, xmlMapper, validator);
+                            new Sender(),
+                            new SimLogger.Slf4j(),
+                            config, xmlMapper, validator);
     }
 
     /**

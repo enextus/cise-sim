@@ -72,7 +72,7 @@ if [ "$JAVA_VERSION" == "1.9" ]; then
 fi
 
 CISEEMU_RUN_CMD="${JAVA_EXEC} ${JAVA_OPTS} -Dconfdir=${CISEEMU_HOME}/conf/ \
--Djava.io.tmpdir=${CISEEMU_HOME}/tmp -jar ${CISEEMU_HOME}/lib/cise-emu-app-0.0.1-SNAPSHOT.jar sender \
+-Djava.io.tmpdir=${CISEEMU_HOME}/tmp -jar ${CISEEMU_HOME}/lib/cise-emu-app-1.0-SNAPSHOT.jar sender \
 ${CISEEMU_HOME}/conf/AisModifiedPush.xml"
 
 }

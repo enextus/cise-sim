@@ -17,21 +17,21 @@ public class OutBoundWebSocketClient {
         try {
             URI internalUri = new URI("ws://localhost:8080/websocket");
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            container.connectToServer(this, internalUri );
-        } catch (URISyntaxException es){
+            container.connectToServer(this, internalUri);
+        } catch (URISyntaxException es) {
             throw new RuntimeException(es);
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public static OutBoundWebSocketClient Build(){
-      if (clientEndPoint!=null) {
-          return clientEndPoint;
-      } else {
-          return new OutBoundWebSocketClient();
-      }
+    public static OutBoundWebSocketClient build() {
+        if (clientEndPoint != null) {
+            return clientEndPoint;
+        } else {
+            return new OutBoundWebSocketClient();
+        }
     }
 
     /**
@@ -49,7 +49,7 @@ public class OutBoundWebSocketClient {
      * Callback hook for Connection close events.
      *
      * @param userSession the userSession which is getting closed.
-     * @param reason the reason for connection close
+     * @param reason      the reason for connection close
      */
     @OnClose
     public void onClose(Session userSession, CloseReason reason) {
@@ -92,9 +92,8 @@ public class OutBoundWebSocketClient {
      *
      * @author Jiji_Sasidharan
      */
-    public static interface MessageHandler {
-
-        public void handleMessage(String message);
+    public interface MessageHandler {
+        void handleMessage(String message);
     }
 }
 

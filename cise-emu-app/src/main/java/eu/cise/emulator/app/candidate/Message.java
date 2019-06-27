@@ -14,22 +14,29 @@ public class Message implements Serializable {
     private String data;
 
     @JsonProperty
-    public MessageType getType() { return type; }
-    public void setType(MessageType type) { this.type = type; }
+    public MessageType getType() {
+        return type;
+    }
+
+    public void setType(MessageType type) {
+        this.type = type;
+    }
 
     @JsonProperty
     public User getUser() {
         return user;
     }
+
     public void setUser(User user) {
         this.user = user;
     }
 
 
     @JsonProperty
-    public String getData(){
+    public String getData() {
         return data;
     }
+
     public void setData(String data) {
         this.data = data;
     }

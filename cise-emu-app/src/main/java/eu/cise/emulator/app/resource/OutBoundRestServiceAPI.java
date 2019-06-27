@@ -7,9 +7,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.cise.emulator.app.candidate.Message;
 import eu.cise.emulator.app.candidate.MessageType;
+import eu.cise.emulator.app.candidate.User;
 import eu.cise.emulator.app.core.InstanceID;
 import eu.cise.emulator.app.transport.OutBoundWebSocketClient;
-import eu.cise.emulator.app.candidate.User;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
@@ -63,7 +63,7 @@ public class OutBoundRestServiceAPI {
         try {
 
             String messageJson = getMapper().writeValueAsString(amessage);
-            OutBoundWebSocketClient aclient = OutBoundWebSocketClient.Build();
+            OutBoundWebSocketClient aclient = OutBoundWebSocketClient.build();
             aclient.addMessageHandler(new OutBoundWebSocketClient.MessageHandler() {
                 public void handleMessage(String message) {
                     getLogger().info("!!!!!returnedMessageByWebsocket = success!!!!!!!");
