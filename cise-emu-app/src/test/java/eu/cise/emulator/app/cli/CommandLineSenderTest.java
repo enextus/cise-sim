@@ -41,9 +41,9 @@ public class CommandLineSenderTest {
     @Test
     public void is_sending_a_message_from_cli() throws Exception {
         server.stubFor(post(urlEqualTo("/mock-node"))
-                               .willReturn(aResponse()
-                                                   .withHeader("Content-Type", "text/xml")
-                                                   .withBody("<Push />")));
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "text/xml")
+                        .withBody("<Push />")));
         CiseEmuApplication.main(new String[]{"sender", "-c", simappPropertiesPath, "-s",
                 messagePushPath});
     }
@@ -51,21 +51,37 @@ public class CommandLineSenderTest {
     @Test
     public void is_sending_correct_applicationxml_message_from_cli() throws Exception {
         server.stubFor(post(urlEqualTo("/mock-node"))
-                               .willReturn(aResponse()
-                                                   .withHeader("Content-Type", "text/xml")
-                                                   .withBody("<Push />")));
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "text/xml")
+                        .withBody("<Push />")));
         CiseEmuApplication.main(new String[]{"sender", "-c", simappPropertiesPath, "-s",
                 messagePushPath});
         server.verify(postRequestedFor(urlEqualTo("/mock-node")).withHeader("Content-Type",
-                                                                            equalTo("application/xml")));
+                equalTo("application/xml")));
+    }
+
+    @Test
+    public void is_sending_correct_xmlvalidated_message_from_cli() throws Exception {
+        server.stubFor(post(urlEqualTo("/mock-node"))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "text/xml")
+                        .withBody("<Push />")));
+        CiseEmuApplication.main(new String[]{"sender", "-c", simappPropertiesPath, "-s",
+                messagePushPath});
+        List<ServeEvent> allServeEvents = getAllServeEvents();
+        ServeEvent test = allServeEvents.get(allServeEvents.size() - 1);
+        String contentBodyString = test.getRequest().getBodyAsString();
+        XmlMapper refmapper = new DefaultXmlMapper();
+        Message aMessage = refmapper.fromXML(contentBodyString);
+
     }
 
     @Test
     public void is_sending_correct_signed_message_from_cli() throws Exception {
         server.stubFor(post(urlEqualTo("/mock-node"))
-                               .willReturn(aResponse()
-                                                   .withHeader("Content-Type", "text/xml")
-                                                   .withBody("<Push />")));
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "text/xml")
+                        .withBody("<Push />")));
         CiseEmuApplication.main(new String[]{"sender", "-c", simappPropertiesPath, "-s",
                 messagePushPath});
         List<ServeEvent> allServeEvents = getAllServeEvents();
@@ -90,9 +106,9 @@ public class CommandLineSenderTest {
     @Test
     public void is_sending_a_valid_message_from_cli() throws Exception {
         server.stubFor(post(urlEqualTo("/mock-node"))
-                               .willReturn(aResponse()
-                                                   .withHeader("Content-Type", "text/xml")
-                                                   .withBody("<Push />")));
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "text/xml")
+                        .withBody("<Push />")));
 
 
         CiseEmuApplication.main(new String[]{"sender", "-c", simappPropertiesPath, "-s",
