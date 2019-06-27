@@ -12,12 +12,12 @@ import {
   StepLabel
 } from "@material-ui/core";
 import {call_made, call_received,ExpandMore} from "@material-ui/icons";
-//import Singleton from "../../../socket";
-//import MessageType from "./MessageType";
+import Singleton from "../../../transport/socket";
+import MessageType from "./MessageType";
 
-import { connect } from "react-redux";
+//init import { connect } from "react-redux";
 
-class ReceiveMessage extends Component {
+export default class ReceiveMessage extends Component {
     activeStep;
   constructor(props) {
     super(props);
@@ -238,4 +238,4 @@ function mapStateToProps(state) {
 
 
 // Promote component to container
-export default connect(mapStateToProps)(ReceiveMessage);
+//init export default connect(mapStateToProps)(ReceiveMessage);

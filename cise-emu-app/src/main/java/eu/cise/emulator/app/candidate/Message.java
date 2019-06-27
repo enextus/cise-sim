@@ -1,33 +1,43 @@
 package eu.cise.emulator.app.candidate;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 //@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @XmlRootElement
 public class Message implements Serializable {
+    private User user;
+    private MessageType type;
+    private String data;
 
-    private int id;
-    private String body;
-
-    public Message() {
+    @JsonProperty
+    public MessageType getType() {
+        return type;
     }
 
-    public int getId() {
-        return id;
+    public void setType(MessageType type) {
+        this.type = type;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @JsonProperty
+    public User getUser() {
+        return user;
     }
 
-    public String getBody() {
-        return body;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setBody(String name) {
-        this.body = name;
+
+    @JsonProperty
+    public String getData() {
+        return data;
     }
 
+    public void setData(String data) {
+        this.data = data;
+    }
 }

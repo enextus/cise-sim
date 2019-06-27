@@ -29,6 +29,7 @@ package eu.cise.emulator.app.context;
 
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.Sources;
+import org.aeonbits.owner.ConfigFactory;
 
 /**
  * Extending the {AdaptorConfig} configuration object adding properties
@@ -109,4 +110,9 @@ public interface SimConfig extends Config {
     @Key("gateway-processor.submission.class")
     @DefaultValue("jrc.cise.gw.RabbitMQProcessor")
     String getSubmissionGatewayProcessor();
+
+    static SimConfig createMyConfig(String myPath) {
+        ConfigFactory.setProperty("conf.dir", myPath.toString());
+        return ConfigFactory.create(SimConfig.class);
+    }
 }

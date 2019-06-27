@@ -10,11 +10,11 @@ import {
   FormControlLabel,
   Grid
 } from "@material-ui/core";
-import Singleton from "../../../socket";
+import Singleton from "../../../transport/socket";
 import MessageType from "./MessageType";
-import { connect } from "react-redux";
+//init import { connect } from "react-redux";
 
-class SendMessage extends Component {
+export default class SendMessage extends Component {
   constructor(props) {
     super(props);
 
@@ -226,14 +226,14 @@ class SendMessage extends Component {
 }
 
 // Whatever is returned is going to show up as props inside UserList
-function mapStateToProps(state) {
-  return {
-    messages: state.messages,
-    thisUser: state.thisUser,
-    xmlTemplate: state.xmlTemplate,
-    payload: state.payload
-  };
-}
+//init function mapStateToProps(state) {
+//init return {
+//init messages: state.messages,
+//init thisUser: state.thisUser,
+//init xmlTemplate: state.xmlTemplate,
+//init payload: state.payload
+//init };
+//init }
 
 export function getId() {
   let d = new Date().getTime()
@@ -246,4 +246,4 @@ export function getId() {
 }
 
 // Promote component to container
-export default connect(mapStateToProps)(SendMessage);
+//init export default connect(mapStateToProps)(SendMessage);

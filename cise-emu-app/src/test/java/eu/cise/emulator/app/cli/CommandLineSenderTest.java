@@ -1,56 +1,123 @@
 package eu.cise.emulator.app.cli;
+
+import com.github.tomakehurst.wiremock.client.WireMock;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import eu.cise.emulator.app.CiseEmuApplication;
-import io.dropwizard.websockets.GeneralUtils;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.signature.SignatureService;
+import eu.cise.signature.SignatureServiceBuilder;
+import eu.eucise.xml.DefaultXmlMapper;
+import eu.eucise.xml.XmlMapper;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.concurrent.CountDownLatch;
+import java.util.List;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 
-public class CommandLineSenderTest   {
+public class CommandLineSenderTest {
 
-    private CommandLineSender mycommand;
-    private CiseEmuApplication myapp;
-    private Thread serverThread ;
-    private Thread CliThread;
+
+    @Rule
+    public WireMockRule server
+            = new WireMockRule(WireMockConfiguration.options().port(64738), true);
+    private WireMock mockCiseNode;
+    private String simappPropertiesPath;
+    private String messagePushPath;
 
     @Before
-    public void setup() throws InterruptedException {
-        // Before each test, we re-instantiate our resource so it will reset
-        // the counter. It is good practice when dealing with a class that
-        // contains mutable data to reset it so tests can be ran independently
-        // of each other.
-        mycommand = new CommandLineSender();
-        CiseEmuApplication AppLiveRunning;
-        CountDownLatch serverStarted = new CountDownLatch(1);
-        serverThread = new Thread(GeneralUtils.rethrow(() -> new CiseEmuApplication(serverStarted)
-                    .run("server","config.yml"))); // was fixed argument server config.yml (root of the directory jar -> class)
-        serverThread.setDaemon(true);
-        serverThread.start();
+    public void setup() {
 
-            serverStarted.await(3, SECONDS);
-
-        }
+        simappPropertiesPath = getClass().getResource("/simapp.properties").getPath();
+        messagePushPath = getClass().getResource("/AisModifiedPush.xml").getPath();
+    }
 
 
     @Test
-    public void idStartsAtOne() throws InterruptedException {
-        CountDownLatch serverStarted = new CountDownLatch(2);
-        CliThread = new Thread(GeneralUtils.rethrow(() -> new CiseEmuApplication(serverStarted)
-                .run("sender","clisource/AisModifiedPush.xml"))); // was fixed argument server config.yml (root of the directory jar -> class)
-        serverStarted.await(5, SECONDS);
+    public void is_sending_a_message_from_cli() throws Exception {
+        server.stubFor(post(urlEqualTo("/mock-node"))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "text/xml")
+                        .withBody("<Push />")));
+        CiseEmuApplication.main(new String[]{"sender", "-c", simappPropertiesPath, "-s",
+                messagePushPath});
     }
+
+    @Test
+    public void is_sending_correct_applicationxml_message_from_cli() throws Exception {
+        server.stubFor(post(urlEqualTo("/mock-node"))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "text/xml")
+                        .withBody("<Push />")));
+        CiseEmuApplication.main(new String[]{"sender", "-c", simappPropertiesPath, "-s",
+                messagePushPath});
+        server.verify(postRequestedFor(urlEqualTo("/mock-node")).withHeader("Content-Type",
+                equalTo("application/xml")));
+    }
+
+    @Test
+    public void is_sending_correct_xmlvalidated_message_from_cli() throws Exception {
+        server.stubFor(post(urlEqualTo("/mock-node"))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "text/xml")
+                        .withBody("<Push />")));
+        CiseEmuApplication.main(new String[]{"sender", "-c", simappPropertiesPath, "-s",
+                messagePushPath});
+        List<ServeEvent> allServeEvents = getAllServeEvents();
+        ServeEvent test = allServeEvents.get(allServeEvents.size() - 1);
+        String contentBodyString = test.getRequest().getBodyAsString();
+        XmlMapper refmapper = new DefaultXmlMapper();
+        Message aMessage = refmapper.fromXML(contentBodyString);
+
+    }
+
+    @Test
+    public void is_sending_correct_signed_message_from_cli() throws Exception {
+        server.stubFor(post(urlEqualTo("/mock-node"))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "text/xml")
+                        .withBody("<Push />")));
+        CiseEmuApplication.main(new String[]{"sender", "-c", simappPropertiesPath, "-s",
+                messagePushPath});
+        List<ServeEvent> allServeEvents = getAllServeEvents();
+        ServeEvent test = allServeEvents.get(allServeEvents.size() - 1);
+        String contentBodyString = test.getRequest().getBodyAsString();
+        XmlMapper refmapper = new DefaultXmlMapper();
+        Message aMessage = refmapper.fromXML(contentBodyString);
+        SignatureServiceBuilder signBuilder
+                = SignatureServiceBuilder.newSignatureService(refmapper);
+
+        SignatureService signature = signBuilder
+                .withKeyStoreName("adaptor.jks")
+                .withKeyStorePassword("cisecise")
+                .withPrivateKeyAlias("sim1-node01.node01.eucise.fr")
+                .withPrivateKeyPassword("cisecise")
+                .build();
+        signature.verify(aMessage);
+
+    }
+
+
+    @Test
+    public void is_sending_a_valid_message_from_cli() throws Exception {
+        server.stubFor(post(urlEqualTo("/mock-node"))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "text/xml")
+                        .withBody("<Push />")));
+
+
+        CiseEmuApplication.main(new String[]{"sender", "-c", simappPropertiesPath, "-s",
+                messagePushPath});
+    }
+
     @After
-    public void teardown() throws InterruptedException {
-
-        serverThread.interrupt();
-        CliThread.interrupt();
+    public void teardown() {
+        WireMock.resetAllRequests();
     }
-
-
-
 
 }

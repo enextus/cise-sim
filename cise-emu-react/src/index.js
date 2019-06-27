@@ -1,21 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import React from "react";
+import { render } from "react-dom";
+import DevTools from "mobx-react-devtools";
+import MessageList from "./components/MessageList";
+import MessageListModel from "./models/MessageListModel";
+import MainAppModel from "./models/MainAppModel";
+import MainApp from "./app/MainApp";
 
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import reducers from './reducers';
+import WaitModal from "./components/WaitModal";
+import {Provider} from "mobx-react";
+import MessageType from "./models/MessageType";
+import {autorun} from "mobx";
 
-/*TODO change to MOBX logic*/
-const createStoreWithMiddleware = applyMiddleware()(createStore);
 
-ReactDOM.render(
-    <Provider store={createStoreWithMiddleware(reducers)} >
-        <App/>
-    </Provider>
-    , document.getElementById('root')
+const stores = {
+    appStore: new  MainAppModel(),
+    messageStore: new MessageListModel()
+}
+
+render(
+    <div>
+        <DevTools />
+          <MainApp store={stores}/>
+    </div>,
+    document.getElementById("root")
 );
 
-registerServiceWorker();
+
+
+autorun(() => {
+    stores.appStore.obtainSelfMember();
+    stores.appStore.registerSocket();
+       });
+
+setInterval(() => {
+    if (stores.appStore.IsConnected)
+{
+    stores.appStore.closeModal();
+} else {
+    stores.appStore.openModal();
+}
+}, 3000);
+
+
+
+
+
+//stores.add(socketClient.socket);
+window.store = stores;
