@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns4:Push xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/">
+	<CorrelationID>476d949d-5aa4-44cc-8e20-c1a2288fe098</CorrelationID>
+	<CreationDateTime>2018-01-18T13:46:44.068+01:00</CreationDateTime>
+	<MessageID>4691ff5e-5427-4aec-b504-247f2b5db18f</MessageID>
+	<Priority>Low</Priority>
+	<Sender>
+		<DataFreshness>RealTime</DataFreshness>
+		<SeaBasin>Atlantic</SeaBasin>
+		<ServiceID>de.sim1-node01.vessel.subscribe.provider</ServiceID>
+		<ServiceOperation>Subscribe</ServiceOperation>
+		<ServiceRole>Provider</ServiceRole>
+		<ServiceStatus>Online</ServiceStatus>
+		<ServiceType>VesselService</ServiceType>
+		<ServiceCapability>
+			<MaxEntitiesPerMsg>3</MaxEntitiesPerMsg>
+		</ServiceCapability>
+	</Sender>
+	<Payload xsi:type="ns4:XmlEntityPayload" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<InformationSecurityLevel>NonClassified</InformationSecurityLevel>
+		<InformationSensitivity>Green</InformationSensitivity>
+		<IsPersonalData>false</IsPersonalData>
+		<Purpose>NonSpecified</Purpose>
+		<EnsureEncryption>false</EnsureEncryption>
+		<Vessel>
+			<IMONumber>7710525</IMONumber>
+		</Vessel>
+	</Payload>
+</ns4:Push>

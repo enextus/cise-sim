@@ -23,6 +23,7 @@ public class CiseEmulatorConfigurationMock {
         ciseEmulatorConfiguration.setCertificatePassword("secret");
         return ciseEmulatorConfiguration;
     }
+
     static CiseEmulatorConfiguration getMinimalCliServerConfiguration() {
         CiseEmulatorConfiguration ciseEmulatorConfiguration = new CiseEmulatorConfiguration();
         //operation x 8

@@ -14,8 +14,7 @@ DEBUG_PORT=9999
 function print_help {
 cat<<EOF
 Usage: ${GRE}${SW_NAME}${NOR} COMMAND
-emulator lifecycle manager (starting, stopping, debugging).
-
+emulator server lifecycle manager (starting, stopping, debugging).
 COMMAND
     start       starts the emulator in a detached shell using nohup command.
     run         starts the emulator in foreground.
@@ -99,9 +98,9 @@ if [ "$JAVA_VERSION" == "1.9" ]; then
     JAVA_OPTS="${JAVA_OPTS} --add-modules java.xml.bind"
 fi
 
-SW_RUN_CMD="${JAVA_EXEC} ${JAVA_OPTS} -Dconf.dir=${SW_HOME}/conf/ \
+SW_RUN_CMD="${JAVA_EXEC} ${JAVA_OPTS} \
     -Dlogback.configurationFile=${SW_HOME}/conf/logback.xml \
-    -Djava.io.tmpdir=${SW_HOME}/tmp -jar ${SW_HOME}/lib/cise-emulator.jar -d"
+    -Djava.io.tmpdir=${SW_HOME}/tmp -jar ${SW_HOME}/lib/cise-emulator.jar server ./conf/config.yml  "
 }
 
 # MAIN ###

@@ -5,7 +5,7 @@ signature.keyStorePassword: cisecise
 signature.certificateKey: sim1-node01.node01.eucise.fr
 signature.certificatePassword: certificatepasswordtest
 signature.counterpartCertificateKey: counterpartcertificatekey
-operation.mode : EGN
+operation.mode: EGN
 operation.publishedId: fr.sim-egn
 operation.serviceMode: SOAP
 operation.counterpartUrl: http://localhost:8085/sim-LSA/CISEMessageService?wsdl

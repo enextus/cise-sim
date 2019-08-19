@@ -10,5 +10,5 @@ document.body.removeChild(document.querySelector('.spinner'))
 render(TodoApp)
 
 function render(Component) {
-  ReactDOM.render(<Component store={store} />, document.getElementById('application'))
+    ReactDOM.render(<Component store={store}/>, document.getElementById('application'))
 }

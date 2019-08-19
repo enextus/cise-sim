@@ -21,7 +21,7 @@ import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 
 
-class ServerCustomCommandTest extends Specification{
+class ServerCustomCommandTest extends Specification {
 
 
     public final PrintStream originalOut = System.out;
@@ -52,7 +52,7 @@ class ServerCustomCommandTest extends Specification{
                 StandardCopyOption.REPLACE_EXISTING
         );
         // create a mock object for jar execution
-        jarLocation= new JarLocation(getClass());
+        jarLocation = new JarLocation(getClass());
         // Redirect stdout and stderr to our byte streams
         System.setOut(new PrintStream(stdOut));
         System.setErr(new PrintStream(stdErr));
@@ -60,13 +60,13 @@ class ServerCustomCommandTest extends Specification{
 
 
     @Test
-    def " standard 'server' invocation of dropwizard using absolute filepath as first param"(){
-        given : "exec directory is provided with configuration file"
+    def " standard 'server' invocation of dropwizard using absolute filepath as first param"() {
+        given: "exec directory is provided with configuration file"
         Bootstrap<CiseEmulatorConfiguration> bootstrap = new Bootstrap<>(new CiseEmulatorApplication());
         cli = new Cli(jarLocation, bootstrap, stdOut, stdErr);
-        when : "parameter is simple server with valid relative path"
+        when: "parameter is simple server with valid relative path"
         final boolean success = cli.run("server", destpath.toString());
-        then : " response is ok  AND a file have been created in the output directory"
+        then: " response is ok  AND a file have been created in the output directory"
         this.destpath.getBytes() == this.srcPath.getBytes()
     }
 

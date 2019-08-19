@@ -1,19 +1,20 @@
 package eu.europa.ec.jrc.marex.config;
+
 import io.dropwizard.jackson.Jackson;
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.Test
 import spock.lang.Specification;
 
-public class CiseEmulatorConfigTest  extends Specification{
+public class CiseEmulatorConfigTest extends Specification {
 
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
     @Test
     public void ConfigValueExpectationTest() throws Exception {
-         Object person;
-         //MAPPER.readValue(fixture("fixtures/person.json"), EmulatorConfig.class));
+        Object person;
+        //MAPPER.readValue(fixture("fixtures/person.json"), EmulatorConfig.class));
         expect:
-        1 + 1 ==2 ;
+        1 + 1 == 2;
     }
 }
 

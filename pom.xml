@@ -1,153 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-        xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!--
+  ~ Copyright Cise Emulator (c) 2019, European Union
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without
+  ~ modification, are permitted provided that the following conditions are met:
+  ~     * Redistributions of source code must retain the above copyright
+  ~       notice, this list of conditions and the following disclaimer.
+  ~     * Redistributions in binary form must reproduce the above copyright
+  ~       notice, this list of conditions and the following disclaimer in the
+  ~       documentation and/or other materials provided with the distribution.
+  ~     * Neither the name of the <organization> nor the
+  ~       names of its contributors may be used to endorse or promote products
+  ~       derived from this software without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+  ~ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  ~ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  ~ DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+  ~ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  ~ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  ~ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  ~ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ~ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  ~ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  -->
 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>eu.europa.ec.jrc.marex</groupId>
     <artifactId>cise-emulator</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <groupId>eu.europa.ec.jrc.marex</groupId>
+    <version>1.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-    <name>cise-emulator</name>
+    <name>emulator</name>
+    <description>main aggregation for sim project</description>
 
-
+    <modules>
+        <module>cise-emulator-app</module>
+        <module>cise-emulator-domain</module>
+        <module>cise-emulator-transport</module>
+        <module>cise-emulator-assembly</module>
+    </modules>
 
     <properties>
-        <main.basedir>${project.basedir}</main.basedir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <dropwizard.version>1.2.3</dropwizard.version>
-        <org.aeonbits.owner.version>1.0.10</org.aeonbits.owner.version>
-        <mainClass>eu.europa.ec.jrc.marex.CiseEmulatorApplication</mainClass>
+
+        <jetty.version>9.4.11.v20180605</jetty.version>
+        <jersey.version>2.21</jersey.version>
+        <dropwizard.version>1.3.5</dropwizard.version>
+        <jackson.version>2.9.4</jackson.version>
+        <jackson.jaxrs.version>2.9.4</jackson.jaxrs.version>
+        <jodatime.version>2.5</jodatime.version>
+        <junit.version>4.11</junit.version>
+
+        <java.version>1.8</java.version>
+
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <main.basedir>${project.basedir}</main.basedir>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.dropwizard</groupId>
-                <artifactId>dropwizard-bom</artifactId>
-                <version>${dropwizard.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-
-    <repositories>
-        <repository>
-            <id>local-repo</id>
-            <url>file://${main.basedir}/cise-mvn-repo/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-
-        <repository>
-            <id>local-repo-r</id>
-            <url>file://${main.basedir}/cise-mvn-repo/releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
-
-
-    <dependencies>
-        <dependency>
-            <groupId>io.dropwizard</groupId>
-            <artifactId>dropwizard-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.dropwizard</groupId>
-            <artifactId>dropwizard-testing</artifactId>
-        </dependency>
-        <!-- preconfiguration ref ais-mvn-repo -->
-        <dependency>
-            <groupId>eu.europa.ec.jrc.marex</groupId>
-            <artifactId>cise-data-model</artifactId>
-            <version>1.5.3.12</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.europa.ec.jrc.marex</groupId>
-            <artifactId>cise-signature</artifactId>
-            <version>1.1-SNAPSHOT</version>
-        </dependency>
-        <!-- <dependency>
-             <groupId>eu.europa.ec.jrc.marex</groupId> <-groupid is not defined in ais-mvn-repo->
-             <artifactId>cise-registry-model</artifactId>
-             <version>1.5.9</version>
-         </dependency>-->
-         <dependency>
-             <groupId>eu.europa.ec.jrc.marex</groupId>
-             <artifactId>eucise-model-helpers</artifactId>
-             <version>1.0.9</version>
-         </dependency>
-        <!--<dependency>
-             <groupId>eu.europa.ec.jrc.marex</groupId>
-             <artifactId>cise-models</artifactId><- reference physical location "<url>file:///home/gicappa/p/jrc/cise-ais-emulator/ais-mvn-repo/releases</url>" in ais-mvn-repo->
-             <version>1.5.3.12</version>
-         </dependency>
-         -->
-
-
-         <!-- - - - - - preconfiguration related  - - - - -->
-        <dependency>
-            <groupId>org.aeonbits.owner</groupId>
-            <artifactId>owner</artifactId>
-            <version>${org.aeonbits.owner.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aeonbits.owner</groupId>
-            <artifactId>owner-java8</artifactId>
-            <version>${org.aeonbits.owner.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aeonbits.owner</groupId>
-            <artifactId>owner-java8-extras</artifactId>
-            <version>${org.aeonbits.owner.version}</version>
-        </dependency>
-
-        <!-- - - - - - test related  - - - - -->
-        <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-core</artifactId>
-            <version>1.0-groovy-2.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>2.4.7</version>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
-
     <build>
+
         <plugins>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.1</version>
+                <version>2.4.3</version>
                 <configuration>
                     <createDependencyReducedPom>true</createDependencyReducedPom>
-                    <transformers>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>${mainClass}</mainClass>
-                        </transformer>
-                    </transformers>
-                    <!-- exclude signed Manifests -->
                     <filters>
                         <filter>
                             <artifact>*:*</artifact>
@@ -159,79 +86,144 @@
                         </filter>
                     </filters>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
+
             <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>${mainClass}</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.2</version>
             </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
+
     </build>
+    <dependencyManagement>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.8.1</version>
-                <configuration>
-                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-                    <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.3</version>
-            </plugin>
-        </plugins>
-    </reporting>
+        <dependencies>
 
+            <!-- inner module dependencies -->
+            <dependency>
+                <artifactId>cise-emulator-transport</artifactId>
+                <groupId>eu.europa.ec.jrc.marex</groupId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.europa.ec.jrc.marex</groupId>
+                <artifactId>cise-emulator-domain</artifactId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+
+            <!-- EUCISE dependencies -->
+            <dependency>
+                <artifactId>cise-data-model</artifactId>
+                <groupId>eu.europa.ec.jrc.marex</groupId>
+                <version>1.5.3.10</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>eucise-model-helpers</artifactId>
+                <groupId>eu.europa.ec.jrc.marex</groupId>
+                <version>1.0.7</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>eucise-service-model</artifactId>
+                <groupId>eu.europa.ec.jrc.marex</groupId>
+                <version>1.0.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>eu.europa.ec.jrc.marex</groupId>
+                <artifactId>cise-signature</artifactId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+            <!-- ext Dependencies -->
+            <dependency>
+                <artifactId>guava</artifactId>
+                <groupId>com.google.guava</groupId>
+                <version>22.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${jodatime.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>log4j-over-slf4j</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.3</version>
+            </dependency>
+
+
+            <!-- dropwizard framework Libraries -->
+
+
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-core</artifactId>
+                <version>${dropwizard.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-assets</artifactId>
+                <version>${dropwizard.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-util</artifactId>
+                <version>${dropwizard.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>resources.dropwizard</groupId>
+                <artifactId>dropwizard-testing</artifactId>
+                <version>${dropwizard.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-testing</artifactId>
+                <version>${dropwizard.version}</version>
+            </dependency>
+            <!-- Test Libraries -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.9.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.tomakehurst</groupId>
+                <artifactId>wiremock-jre8-standalone</artifactId>
+                <version>2.23.2</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+    <repositories>
+    </repositories>
 
 
     <profiles>
@@ -255,5 +247,6 @@
             </properties>
         </profile>
     </profiles>
-    
+
+
 </project>
