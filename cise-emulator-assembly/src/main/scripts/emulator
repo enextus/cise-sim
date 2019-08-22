@@ -98,9 +98,7 @@ if [ "$JAVA_VERSION" == "1.9" ]; then
     JAVA_OPTS="${JAVA_OPTS} --add-modules java.xml.bind"
 fi
 
-SW_RUN_CMD="${JAVA_EXEC} ${JAVA_OPTS} \
-    -Dlogback.configurationFile=${SW_HOME}/conf/logback.xml \
-    -Djava.io.tmpdir=${SW_HOME}/tmp -jar ${SW_HOME}/lib/cise-emulator.jar server ./conf/config.yml  "
+SW_RUN_CMD="${JAVA_EXEC} ${JAVA_OPTS} -jar ${SW_HOME}/lib/cise-emulator.jar server ./conf/config.yml  "
 }
 
 # MAIN ###

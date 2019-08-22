@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * A utility to run DropWizard (http://dropwizard.io/) applications in-process.
  */
-public class DropWizardCustormServerRunner {
+public class DropWizardCustomServerRunner {
     public static <T extends Configuration> DropWizardServer<T> createServer(
             T config,
             Class<? extends Application<T>> applicationClass) throws Exception {

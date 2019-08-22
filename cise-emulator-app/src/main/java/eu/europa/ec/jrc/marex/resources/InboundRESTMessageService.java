@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.*;
 import java.io.IOException;
 
-@Path("/emu/rest/")
+@Path("/emu/rest")
 public class InboundRESTMessageService {
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(InboundRESTMessageService.class);
     private String fileNameTemplate;
@@ -59,8 +59,14 @@ public class InboundRESTMessageService {
         ValidationResult validResult = executor.validateIncoming(inputXmlMessage);
         LOGGER.info("inputXmlMessage validated {} : xml {} and conformed structure:{} signature {} semantic {}", validResult.isOK(emulatorConfig.getSignatureOnReceive().contains("true")),
                 validResult.isOkXML(), validResult.isOkEntity(), validResult.isOkSignedEntity(), validResult.isOkSemantic());
+        String ackMessage = "";
+        if (validResult.isOkEntity()==false)
+            executor.AcknowledgmentFailMessage(inputXmlMessage,"BAD_REQUEST");
+        else if (validResult.isOkSignedEntity()==false)
+            executor.AcknowledgmentFailMessage(inputXmlMessage,"SECURITY_ERROR");
+        else
+            executor.AcknowledgmentSuccessMessage(inputXmlMessage);
 
-        String ackMessage = executor.ciseAckMessage(inputXmlMessage);
 
         String createdreffile = InteractIOFile.createRelativeRef(fileNameTemplate, "Ack", createdfile, new StringBuffer(ackMessage));
         LOGGER.error("{} => {} / {}", createdfile, InteractIOFile.getFilename(fileNameTemplate, createdfile, ""), (createdfile.equals("200") ? "ACK" : createdfile));

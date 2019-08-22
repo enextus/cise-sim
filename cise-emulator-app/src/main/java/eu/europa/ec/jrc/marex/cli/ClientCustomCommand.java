@@ -69,19 +69,10 @@ public class ClientCustomCommand extends Command {
         String configpath = ((namespace.get("config") != null) ? namespace.get("config") : "cliconfig.yml");
         ConfigManager configManager = new ConfigManager(bootstrap);
         CiseEmulatorConfiguration emulatorConfig = configManager.readExistCiseEmulatorConfiguration(configpath);
-/*        CiseEmulatorConfiguration emulatorConfig = this.parseConfiguration(
-            bootstrap.getConfigurationFactoryFactory(),
-            bootstrap.getConfigurationSourceProvider(),
-            bootstrap.getValidatorFactory().getValidator(),
-                configpath,
-            CiseEmulatorConfiguration.class,
-            bootstrap.getObjectMapper());
-*/
-
+        //bootstrap.setConfigurationSourceProvider(); urlconfigurationmanager-fileconfigurationmanager-resourceconfigurationmanager
         XmlMapper xmlMapper = new DefaultXmlMapper();
         MessageValidator validator = new MessageValidator();
         Executor executor;
-
 
         String servicefile = namespace.getString("send");
         if ((servicefile.equals(""))) {
@@ -99,7 +90,7 @@ public class ClientCustomCommand extends Command {
                 xmlMapper,
                 validator);
 
-
+        String pathDefault= namespace.getString("location");
         Message generatedMessage = executor.LoadMessage(servicefile, payload);
 
 

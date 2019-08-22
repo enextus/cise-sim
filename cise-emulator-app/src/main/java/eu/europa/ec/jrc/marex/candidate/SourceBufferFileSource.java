@@ -1,6 +1,8 @@
 package eu.europa.ec.jrc.marex.candidate;
 
 
+import eu.europa.ec.jrc.marex.CiseEmulatorApplication;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -81,8 +83,7 @@ public class SourceBufferFileSource implements SourceBufferInterface {
 
     @Override
     public StringBuffer getReferenceFileContent(String contentUri) {
-        if (contentUri.isEmpty())
-            return new StringBuffer("");
+        if (contentUri.isEmpty()) return new StringBuffer("");
         StringBuffer returnable = new StringBuffer();
         URL ServiceUrl = null;
         URI ServiceUri = null;

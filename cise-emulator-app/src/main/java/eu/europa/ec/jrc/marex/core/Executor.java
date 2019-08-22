@@ -31,6 +31,7 @@ package eu.europa.ec.jrc.marex.core;
 import eu.cise.datamodel.v1.entity.vessel.NavigationalStatusType;
 import eu.cise.datamodel.v1.entity.vessel.Vessel;
 import eu.cise.datamodel.v1.entity.vessel.VesselType;
+import eu.cise.servicemodel.v1.authority.Participant;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.Service;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
@@ -38,6 +39,7 @@ import eu.eucise.helpers.AckBuilder;
 import eu.eucise.helpers.DateHelper;
 import eu.eucise.xml.DefaultXmlValidator;
 import eu.eucise.xml.XmlValidator;
+import eu.europa.ec.jrc.marex.CiseEmulatorApplication;
 import eu.europa.ec.jrc.marex.candidate.RestClient;
 import eu.europa.ec.jrc.marex.client.RestResult;
 import eu.europa.ec.jrc.marex.CiseEmulatorConfiguration;
@@ -145,10 +147,11 @@ public class Executor {
     }
 
     public Message LoadMessage(String servicefile, String payloadfile) {
+        String pathDefault= System.getProperty("user.dir");
         SourceBufferInterface sourceBuffer = new SourceBufferFileSource();
-        StringBuffer templateMessageBuffer = sourceBuffer.getReferenceFileContent(servicefile);
+        StringBuffer templateMessageBuffer = sourceBuffer.getReferenceFileContent(servicefile.startsWith("./") ? pathDefault + servicefile.substring(1) :servicefile );
         Message TemplateMessage = loadContent(templateMessageBuffer);
-        StringBuffer payloadMessageBuffer = sourceBuffer.getReferenceFileContent(payloadfile);
+        StringBuffer payloadMessageBuffer = sourceBuffer.getReferenceFileContent(payloadfile.startsWith("./") ? pathDefault + payloadfile.substring(1) :payloadfile);
         if (!(payloadMessageBuffer.toString().isEmpty())) {
             Message payloadMessage = loadContent(payloadMessageBuffer);
             TemplateMessage.setPayload(payloadMessage.getPayload());
@@ -260,39 +263,70 @@ public class Executor {
     }
 
 
-    public String ciseAckMessage(String inputXmlMessage) {
+    public String AcknowledgmentSuccessMessage(String inputXmlMessage) {
         Message inputMessage = xmlMapper.fromXML(inputXmlMessage);
-        return xmlMapper.toXML(buildAck(inputMessage).build());
+        String literalMessageAckReturn = xmlMapper.toXML(buildAck(inputMessage, AcknowledgementType.SUCCESS).build());
+        return literalMessageAckReturn;
     }
 
-    public String ciseUnvalidAckMessage(String inputXmlMessage) {
-        return xmlMapper.toXML(buildAck((Message) new Push()).build());
-    }
+    public String AcknowledgmentFailMessage(String inputXmlMessage, String ErrorType) {
+            Message inputMessage = xmlMapper.fromXML(inputXmlMessage);
+            String literalMessageAckReturn = "";
+            switch (ErrorType){
+                case ("BAD_REQUEST"):
+                    literalMessageAckReturn = xmlMapper.toXML(buildAck(inputMessage, AcknowledgementType.BAD_REQUEST).build());
+                case ("SECURITY_ERROR"):
+                    literalMessageAckReturn = xmlMapper.toXML(buildAck(inputMessage, AcknowledgementType.SECURITY_ERROR).build());
+            }
+            return literalMessageAckReturn;
+        }
 
-    private AckBuilder buildAck(Message inputMessage) {
+    private AckBuilder buildAck (Message inputMessage, AcknowledgementType atype) {
         String uuid = UUID.randomUUID().toString();
-        String na = "N/A";
-        return newAck()
-                .id(uuid)
-                .recipient(newService()
-                        .id(na)
+
+        AckBuilder ackBuild= newAck()
+                .id(uuid) ;
+        Participant recipientParticipant= inputMessage.getRecipient().getParticipant();
+        if (recipientParticipant != null) {
+            String recipient_participantId=recipientParticipant.getId();
+            String recipient_endpointUrl=recipientParticipant.getEndpointUrl();
+            ackBuild.recipient(newService()
+                        .id(inputMessage.getRecipient().getServiceID())
                         .operation(ServiceOperationType.ACKNOWLEDGEMENT)
-                        .participantId(na)
-                        .participantUrl(na))
-                .sender(newService()
-                        .id(na)
-                        .operation(ServiceOperationType.ACKNOWLEDGEMENT)
-                        .participantId(na)
-                        .participantUrl(na))
-                .correlationId(na)
-                .creationDateTime(new Date())
-                .informationSecurityLevel(NON_CLASSIFIED)
-                .informationSensitivity(GREEN)
-                .purpose(PurposeType.NON_SPECIFIED)
-                .priority(LOW)
-                .isRequiresAck(false)
-                .ackCode(AcknowledgementType.SUCCESS)
-                ;
+                        .participantId(recipient_participantId)
+                        .participantUrl(recipient_endpointUrl));
+    }else{
+        ackBuild.recipient(newService()
+                .id(inputMessage.getRecipient().getServiceID())
+                .operation(ServiceOperationType.ACKNOWLEDGEMENT));
     }
+        Participant senderParticipant= inputMessage.getRecipient().getParticipant();
+        if (senderParticipant != null) {
+            String sender_participantId = recipientParticipant.getId();
+            String sender_endpointUrl = recipientParticipant.getEndpointUrl();
+            ackBuild.sender(newService()
+                    .id(inputMessage.getSender().getServiceID())
+                    .operation(ServiceOperationType.ACKNOWLEDGEMENT)
+                    .participantId(sender_participantId)
+                    .participantUrl(sender_endpointUrl));
+        }else{
+            ackBuild.sender(newService()
+                    .id(inputMessage.getSender().getServiceID())
+                    .operation(ServiceOperationType.ACKNOWLEDGEMENT));
+        }
+
+        ackBuild.correlationId(inputMessage.getCorrelationID())
+                .creationDateTime(new Date())
+                .informationSecurityLevel(inputMessage.getPayload().getInformationSecurityLevel())
+                .informationSensitivity(inputMessage.getPayload().getInformationSensitivity())
+                .purpose(inputMessage.getPayload().getPurpose())
+                .priority(inputMessage.getPriority())
+                .ackCode(atype);
+        if (inputMessage.isRequiresAck() != null)
+            ackBuild.isRequiresAck(inputMessage.isRequiresAck());
+
+        return ackBuild;
+    }
+
 }
 
