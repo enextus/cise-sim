@@ -16,16 +16,17 @@ cat<<EOF
 Usage: ${GRE}${SW_NAME}${NOR} COMMAND
 emulator server lifecycle manager (starting, stopping, debugging).
 COMMAND
-    start       starts the emulator in a detached shell using nohup command.
-    run         starts the emulator in foreground.
-    stop        stops the emulator running in background.
-    restart     restart the emulator running in background.
-    debug-start starts the emulator in a detached shell launching the application
+    start       starts the cli - emulator in a detached shell using nohup command.
+    run         starts the cli - emulator in foreground.
+    stop        stops the cli - emulator running in background.
+    restart     restart the cli - emulator running in background.
+    debug-start starts the cli - emulator in a detached shell launching the application
                 in debug mode (port ${DEBUG_PORT}).
-    debug-run   starts the emulator in foreground launching the application
+    debug-run   starts the cli - emulator in foreground launching the application
                 in debug mode (port ${DEBUG_PORT}).
     status      show the current status the emulator (started or stopped).
-
+    sender      start the cli - emulator in sender mode (as client to send a template.xml file)
+    cliserver      start the cli - emulator in server mode (as server to receive)
 EOF
 }
 
@@ -75,7 +76,7 @@ export JAVA_OPTS="-Xdebug -agentlib:jdwp=emulator=dt_socket,address=${DEBUG_PORT
 
 function start {
 
-${NOHUP_EXEC} ${SW_RUN_CMD} > ${SW_HOME}/logs/localhost.log 2>&1 &
+${NOHUP_EXEC} ${SW_RUN_SWR_CMD} > ${SW_HOME}/logs/localhost.log 2>&1 &
 pid=$!
 sleep 1
 kill -0 ${pid} > /dev/null 2>&1
@@ -88,7 +89,18 @@ log_exit_msg
 
 function run {
 
-${SW_RUN_CMD} 2>&1
+${SW_RUN_SWR_CMD} 2>&1
+
+}
+
+function sender {
+echo execute command : ${SW_RUN_CLI_CMD} composed from $*
+${SW_RUN_CLI_CMD}  2>&1
+
+}
+function cliserver {
+echo execute command : ${SW_RUN_CLI_CMD} composed from $*
+${SW_RUN_CLI_CMD}  2>&1
 
 }
 
@@ -98,13 +110,30 @@ if [ "$JAVA_VERSION" == "1.9" ]; then
     JAVA_OPTS="${JAVA_OPTS} --add-modules java.xml.bind"
 fi
 
-SW_RUN_CMD="${JAVA_EXEC} ${JAVA_OPTS} -jar ${SW_HOME}/lib/cise-emulator.jar server ./conf/config.yml  "
+SW_RUN_SWR_CMD="${JAVA_EXEC} ${JAVA_OPTS} -jar ${SW_HOME}/lib/cise-emulator.jar server ./conf/config.yml  "
+
+
+SW_RUN_CLI_CMD="${JAVA_EXEC} ${JAVA_OPTS}  ${PREFIX_CMD} -jar ${SW_HOME}/lib/cise-emulator.jar ${POSTFIX_CMD} "
 }
 
 # MAIN ###
 enable_colors_if_supported
 
 cd ${SW_HOME}
+PREFIX_CMD=""
+POSTFIX_CMD=""
+COUNT_VAR=0
+for var in "$@"
+ do
+  if [[ $var == -Ddw.* ]]
+  then
+    PREFIX_CMD="$PREFIX_CMD $var"
+  else
+    POSTFIX_CMD="$POSTFIX_CMD $var"
+  fi
+ done
+echo "prefix : $PREFIX_CMD"
+echo "postfix:  $POSTFIX_CMD"
 
 sw_run_cmd
 
@@ -112,6 +141,16 @@ case $1 in
     start)
         log_start_msg
         start
+        exit 0
+        ;;
+     sender)
+        log_start_msg
+        sender
+        exit 0
+        ;;
+     cliserver)
+        log_start_msg
+        cliserver $*
         exit 0
         ;;
     run)

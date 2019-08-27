@@ -117,19 +117,19 @@
             <dependency>
                 <artifactId>cise-data-model</artifactId>
                 <groupId>eu.europa.ec.jrc.marex</groupId>
-                <version>1.5.3.10</version>
+                <version>1.5.3.12</version>
             </dependency>
 
             <dependency>
                 <artifactId>eucise-model-helpers</artifactId>
                 <groupId>eu.europa.ec.jrc.marex</groupId>
-                <version>1.0.7</version>
+                <version>1.0.9</version>
             </dependency>
 
             <dependency>
                 <artifactId>eucise-service-model</artifactId>
                 <groupId>eu.europa.ec.jrc.marex</groupId>
-                <version>1.0.5</version>
+                <version>1.0.7</version>
             </dependency>
 
             <dependency>
@@ -174,6 +174,13 @@
                 <version>1.2.3</version>
             </dependency>
 
+            <!-- xml manipulation -->
+
+            <dependency>
+                <groupId>javax.xml</groupId>
+                <artifactId>jaxp-api</artifactId>
+                <version>1.4.2</version>
+            </dependency>
 
             <!-- dropwizard framework Libraries -->
 
@@ -204,12 +211,14 @@
                 <artifactId>dropwizard-testing</artifactId>
                 <version>${dropwizard.version}</version>
             </dependency>
-            <!-- Test Libraries -->
+            <!-- Complementary library -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>2.9.2</version>
             </dependency>
+
+            <!-- Test Libraries -->
 
             <dependency>
                 <groupId>com.github.tomakehurst</groupId>
@@ -247,6 +256,31 @@
     </dependencyManagement>
 
     <repositories>
+        <repository>
+            <id>cise-mvn-repo.embedded.snapshots</id>
+            <url>file://${project.basedir}/cise-mvn-repo/snapshots</url>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+                <enabled>true</enabled>
+                <checksumPolicy>ignore</checksumPolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>cise-mvn-repo.embedded.releases</id>
+            <url>file://${project.basedir}/cise-mvn-repo/releases</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
 

@@ -40,6 +40,10 @@
             <source>${project.parent.basedir}/cise-emulator-app/src/main/resources/config.yml</source>
             <outputDirectory>/conf</outputDirectory>
         </file>
+        <file>
+            <source>${project.parent.basedir}/cise-emulator-app/src/main/resources/cliconfig.yml</source>
+            <outputDirectory>/conf</outputDirectory>
+        </file>
     </files>
     <fileSets>
         <fileSet>

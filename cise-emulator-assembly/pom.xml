@@ -48,6 +48,21 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>emulator-deploy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>deploy</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <outputDirectory>../target</outputDirectory>
+                            <descriptors>
+                                <descriptor>src/main/assemblies/baseScript.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>emulator-bin</id>
                         <phase>package</phase>
                         <goals>
@@ -56,7 +71,7 @@
                         <configuration>
                             <finalName>cise-emulator-bin</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <outputDirectory>../target</outputDirectory>
+                            <outputDirectory>../target/deploy/deploy</outputDirectory>
                             <descriptors>
                                 <descriptor>src/main/assemblies/bin.xml</descriptor>
                             </descriptors>
@@ -71,7 +86,7 @@
                         <configuration>
                             <finalName>cise-emulator-src</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <outputDirectory>../target</outputDirectory>
+                            <outputDirectory>../target/deploy/deploy</outputDirectory>
                             <descriptors>
                                 <descriptor>src/main/assemblies/src.xml</descriptor>
                             </descriptors>
