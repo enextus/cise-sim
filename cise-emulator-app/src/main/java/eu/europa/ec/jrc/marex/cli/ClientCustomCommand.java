@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
+import eu.europa.ec.jrc.marex.candidate.CiseEmulatorConfigurationException;
+import eu.europa.ec.jrc.marex.candidate.CiseEmulatorException;
 import eu.europa.ec.jrc.marex.client.RestResult;
 import eu.europa.ec.jrc.marex.core.Executor;
 import eu.europa.ec.jrc.marex.core.sub.MessageValidator;
@@ -59,29 +61,38 @@ public class ClientCustomCommand extends Command {
                 .required(false)
                 .help("specify directory input path to create file with merged sent content");
 
+        subparser.addArgument("-u", "--counterpartUrl")
+                .dest("counterpartUrl")
+                .type(String.class)
+                .required(false)
+                .help("specify counterpart Url to send message");
+
     }
 
     @Override
     public void run(Bootstrap bootstrap, Namespace namespace) throws Exception {
 
         Logger logger = LoggerFactory.getLogger("eu.cise.emulator.app.cli");
-
-        String configpath = ((namespace.get("config") != null) ? namespace.get("config") : "cliconfig.yml");
+        String configpath = ((namespace.get("config") != null) ? namespace.get("config") : "./conf/cliconfig.yml");
         ConfigManager configManager = new ConfigManager(bootstrap);
         CiseEmulatorConfiguration emulatorConfig = configManager.readExistCiseEmulatorConfiguration(configpath);
         //bootstrap.setConfigurationSourceProvider(); urlconfigurationmanager-fileconfigurationmanager-resourceconfigurationmanager
+        if (emulatorConfig==null) throw new CiseEmulatorConfigurationException("no configuration file found in expected location : "+configpath);
         XmlMapper xmlMapper = new DefaultXmlMapper();
         MessageValidator validator = new MessageValidator();
         Executor executor;
-
         String servicefile = namespace.getString("send");
         if ((servicefile.equals(""))) {
             System.out.println("ERROR:  add a template xml file to the command line expression with the \"-s\" option");
             return;
         }
-
         String payload = namespace.getString("payload");
         if (payload == null) payload = "";
+
+        String outputDirectory = namespace.getString("outputDirectory");
+        if (outputDirectory != null) emulatorConfig.setOutputDirectory(outputDirectory);
+        String counterpartUrl= namespace.getString("counterpartUrl");
+        if (counterpartUrl != null) emulatorConfig.setCounterpartUrl(counterpartUrl);
 
         executor = new Executor(new SourceStreamProcessor(),
                 new Sender(),
@@ -89,10 +100,8 @@ public class ClientCustomCommand extends Command {
                 emulatorConfig,
                 xmlMapper,
                 validator);
-
         String pathDefault= namespace.getString("location");
         Message generatedMessage = executor.LoadMessage(servicefile, payload);
-
 
         String fileNameTemplate = emulatorConfig.getOutputDirectory() + emulatorConfig.getPublishedId() + "_out";
         String createdfile = InteractIOFile.createRef(fileNameTemplate, new StringBuffer(xmlMapper.toXML(generatedMessage)));
@@ -101,7 +110,7 @@ public class ClientCustomCommand extends Command {
         RestResult obtainedResult = executor.sendEvent(generatedMessage, signSend);
         String createdfileResult = InteractIOFile.createRelativeRef(fileNameTemplate, createdfile, obtainedResult.getCode().toString(), new StringBuffer(obtainedResult.getBody()));
         assert (LOGGER.isInfoEnabled());
-        LOGGER.info("{} => {} / {}", createdfile, obtainedResult.getCode().toString(), (obtainedResult.getCode().toString().equals(200) ? "ACK" : obtainedResult.getCode().toString()));
+        LOGGER.warn("file created with timestamp  {} => result in {} / {}", createdfile, obtainedResult.getCode().toString(), (obtainedResult.getCode().toString().equals(200) ? "ACK" : obtainedResult.getCode().toString()));
     }
 
 

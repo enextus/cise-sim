@@ -40,7 +40,7 @@ public class ServerCustomCommand extends Command {
         tmpConfigFile.deleteOnExit();
         bootstrap.getObjectMapper().writeValue(tmpConfigFile);
         */
-        String[] param = {"server", "cliconfig.yml"};
+        String[] param = {"server", "./conf/cliconfig.yml"};
         cli.run(param); //(bootstrap.getApplication(),param);
     }
 

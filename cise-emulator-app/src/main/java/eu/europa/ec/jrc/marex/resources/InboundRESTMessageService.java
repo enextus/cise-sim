@@ -26,7 +26,7 @@ public class InboundRESTMessageService {
     private CiseEmulatorConfiguration emulatorConfig;
 
     public InboundRESTMessageService(CiseEmulatorConfiguration emulatorConfig) {
-        this.fileNameTemplate = emulatorConfig.getOutputDirectory() + emulatorConfig.getPublishedId() + "_out_";
+        this.fileNameTemplate = emulatorConfig.getOutputDirectory() + emulatorConfig.getPublishedId() + "_in_";
         this.emulatorConfig = emulatorConfig;
         DefaultXmlMapper xmlMapper = new DefaultXmlMapper();
         MessageValidator validator = new MessageValidator();
@@ -60,12 +60,14 @@ public class InboundRESTMessageService {
         LOGGER.info("inputXmlMessage validated {} : xml {} and conformed structure:{} signature {} semantic {}", validResult.isOK(emulatorConfig.getSignatureOnReceive().contains("true")),
                 validResult.isOkXML(), validResult.isOkEntity(), validResult.isOkSignedEntity(), validResult.isOkSemantic());
         String ackMessage = "";
-        if (validResult.isOkEntity()==false)
-            executor.AcknowledgmentFailMessage(inputXmlMessage,"BAD_REQUEST");
-        else if (validResult.isOkSignedEntity()==false)
-            executor.AcknowledgmentFailMessage(inputXmlMessage,"SECURITY_ERROR");
+        if (validResult.isOkEntity()==false) {
+            ackMessage = executor.AcknowledgmentFailMessage(inputXmlMessage, "BAD_REQUEST", "content could not be validated as Entity");
+            LOGGER.info(" respond with a BAD REQUEST ACK for  structure:{} semantic {}", validResult.isOkEntity(), validResult.isOkSemantic());
+        }else if (emulatorConfig.getSignatureOnReceive().equals("true") && validResult.isOkSignedEntity()==false){
+            ackMessage =  executor.AcknowledgmentFailMessage(inputXmlMessage,"SECURITY_ERROR","signature error");
+        LOGGER.info(" respond with a SECURITY ERROR ACK for  signature required on start :{} signature validated {}", validResult.isOK(emulatorConfig.getSignatureOnReceive().contains("true")),validResult.isOkSignedEntity());}
         else
-            executor.AcknowledgmentSuccessMessage(inputXmlMessage);
+            ackMessage =  executor.AcknowledgmentSuccessMessage(inputXmlMessage);
 
 
         String createdreffile = InteractIOFile.createRelativeRef(fileNameTemplate, "Ack", createdfile, new StringBuffer(ackMessage));

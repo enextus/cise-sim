@@ -27,7 +27,9 @@
 
 package eu.europa.ec.jrc.marex.core;
 
-
+import com.sun.org.apache.xpath.internal.jaxp.XPathFactoryImpl;
+import eu.cise.emulator.validator.ServicePayloadBindingvalidator;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.datamodel.v1.entity.vessel.NavigationalStatusType;
 import eu.cise.datamodel.v1.entity.vessel.Vessel;
 import eu.cise.datamodel.v1.entity.vessel.VesselType;
@@ -37,6 +39,7 @@ import eu.cise.servicemodel.v1.service.Service;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.eucise.helpers.AckBuilder;
 import eu.eucise.helpers.DateHelper;
+import eu.eucise.helpers.ServiceBuilder;
 import eu.eucise.xml.DefaultXmlValidator;
 import eu.eucise.xml.XmlValidator;
 import eu.europa.ec.jrc.marex.CiseEmulatorApplication;
@@ -54,9 +57,19 @@ import eu.cise.signature.SignatureServiceBuilder;
 
 import eu.eucise.xml.CISENamespaceContext;
 import eu.eucise.xml.XmlMapper;
+import org.eclipse.jetty.xml.XmlParser;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 import javax.xml.namespace.NamespaceContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+import java.io.StringReader;
 import java.util.Date;
 import java.util.UUID;
 
@@ -196,14 +209,33 @@ public class Executor {
 
     public RestResult sendEvent(Message loadMessage, boolean sign) {
         RestClient client = new JerseyRestClient();
+        Object resolvedFilenameKeyStore = config.getKeyStoreFileName();
+
+
         if (config.getSignatureOnSend().contains("true")) {
             SignatureServiceBuilder signBuilder = SignatureServiceBuilder.newSignatureService(xmlMapper);
+            String resolvedConfDir= (System.getProperty("user.dir")+"/conf/");
+            /**wa01:in >  work around until modification of eventual change in signature lib null ="" **/
+            String oldConfDir = System.getProperty("conf.dir");/**wa01:*/
+            String actualUserDir = System.getProperty("user.dir");
+            resolvedFilenameKeyStore = (config.getKeyStoreFileName().contains("/")?
+                    config.getKeyStoreFileName().substring(config.getKeyStoreFileName().lastIndexOf("/")+1)
+                    : config.getKeyStoreFileName());
+            if (config.getKeyStoreFileName().startsWith("/")) {
+                resolvedConfDir=config.getKeyStoreFileName().substring(0,config.getKeyStoreFileName().lastIndexOf("/"));
+            } else if (config.getKeyStoreFileName().startsWith("./")) {
+                resolvedConfDir=actualUserDir + config.getKeyStoreFileName().substring(1,config.getKeyStoreFileName().lastIndexOf("/"));
+            }
+            System.setProperty("conf.dir",resolvedConfDir);/**wa01:*/
+            /**< out:wa01**/
+
             SignatureService signature = signBuilder
-                    .withKeyStoreName((String) config.getKeyStoreFileName())
+                    .withKeyStoreName((String) resolvedFilenameKeyStore)
                     .withKeyStorePassword((String) config.getKeyStorePassword())
                     .withPrivateKeyAlias((String) config.getCertificateKey())
                     .withPrivateKeyPassword((String) config.getCertificatePassword())
                     .build();
+            //System.setProperty("conf.dir",oldConfDir);/**wa01:*/
             loadMessage = signature.sign(loadMessage);
         }
         RestResult result = client.post(config.getCounterpartUrl(), xmlMapper.toXML(loadMessage));
@@ -225,12 +257,56 @@ public class Executor {
         } catch (Exception e) {
             result.setOkEntity(false);
         }
+//        try {
+//            inputMessage = xmlMapper.fromXML(inputXmlMessage);
+//            ServicePayloadBindingvalidator servicePayloadBindingvalidator= new ServicePayloadBindingvalidator();
+//            String xml = inputMessage.getPayload().toString();
+//            //
+//
+//            String aContentType = "Vessel";
+//            try {
+//                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//                DocumentBuilder builder = factory.newDocumentBuilder();
+//                Document document = builder.parse(new InputSource(new StringReader(xml)));
+//
+//                XPathFactory xPathfactory = XPathFactory.newInstance();
+//                XPath xpath = xPathfactory.newXPath();
+//                XPathExpression expr = xpath
+//                        .compile("/company/company_name[@name='facebook-members']");
+//                //.compile("//computer[@serialno]/@serialno");
+//
+//                String numberOfDownloads = expr.evaluate(document, XPathConstants.STRING).toString();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            servicePayloadBindingvalidator.isConformContentTypeBinding(aContentType, inputMessage.getRecipient().getServiceType().toString());
+//            result.setOkEntity(true);
+//        } catch (Exception e) {
+//            result.setOkEntity(false);
+//        }
         try {
             SignatureServiceBuilder signBuilder = SignatureServiceBuilder.newSignatureService(xmlMapper);
+            String resolvedConfDir= (System.getProperty("user.dir")+"/conf/");
+            /**wa01:in >  work around until modification of eventual change in signature lib null ="" **/
+            String oldConfDir = System.getProperty("conf.dir");/**wa01:*/
+            String actualUserDir = System.getProperty("user.dir");
+            String resolvedFilenameKeyStore = (config.getKeyStoreFileName().contains("/")?
+                    config.getKeyStoreFileName().substring(config.getKeyStoreFileName().lastIndexOf("/")+1)
+                    : config.getKeyStoreFileName());
+            if (config.getKeyStoreFileName().startsWith("/")) {
+                resolvedConfDir=config.getKeyStoreFileName().substring(0,config.getKeyStoreFileName().lastIndexOf("/"));
+            } else if (config.getKeyStoreFileName().startsWith("./")) {
+                resolvedConfDir=actualUserDir + config.getKeyStoreFileName().substring(1,config.getKeyStoreFileName().lastIndexOf("/"));
+            }
+            System.setProperty("conf.dir",resolvedConfDir);/**wa01:*/
+            /**< out:wa01**/
+
             SignatureService signature = signBuilder
-                    .withKeyStoreName((String) config.getKeyStoreFileName())
+                    .withKeyStoreName((String) resolvedFilenameKeyStore)
                     .withKeyStorePassword((String) config.getKeyStorePassword())
                     .withPrivateKeyAlias((String) config.getCounterpartCertificate())
+                    .withPrivateKeyPassword((String) (config.getCounterpartCertificatePassword()==null ? "" :config.getCounterpartCertificatePassword()))
                     .build();
             signature.verify(inputMessage);
             result.setOkSignedEntity(true);
@@ -265,67 +341,80 @@ public class Executor {
 
     public String AcknowledgmentSuccessMessage(String inputXmlMessage) {
         Message inputMessage = xmlMapper.fromXML(inputXmlMessage);
-        String literalMessageAckReturn = xmlMapper.toXML(buildAck(inputMessage, AcknowledgementType.SUCCESS).build());
+        String literalMessageAckReturn = xmlMapper.toXML(buildAck(inputMessage, AcknowledgementType.SUCCESS,""));
         return literalMessageAckReturn;
     }
 
-    public String AcknowledgmentFailMessage(String inputXmlMessage, String ErrorType) {
+    public String AcknowledgmentFailMessage(String inputXmlMessage, String ErrorType, String errorMessage) {
             Message inputMessage = xmlMapper.fromXML(inputXmlMessage);
             String literalMessageAckReturn = "";
             switch (ErrorType){
                 case ("BAD_REQUEST"):
-                    literalMessageAckReturn = xmlMapper.toXML(buildAck(inputMessage, AcknowledgementType.BAD_REQUEST).build());
+                    literalMessageAckReturn = xmlMapper.toXML(buildAck(inputMessage, AcknowledgementType.BAD_REQUEST,errorMessage));
                 case ("SECURITY_ERROR"):
-                    literalMessageAckReturn = xmlMapper.toXML(buildAck(inputMessage, AcknowledgementType.SECURITY_ERROR).build());
+                    literalMessageAckReturn = xmlMapper.toXML(buildAck(inputMessage, AcknowledgementType.SECURITY_ERROR,errorMessage));
             }
             return literalMessageAckReturn;
         }
 
-    private AckBuilder buildAck (Message inputMessage, AcknowledgementType atype) {
+    private Acknowledgement buildAck (Message inputMessage, AcknowledgementType aType, String aDetail) {
+        /*
+            <CorrelationID>54e6b628-bc4f-46f2-adf1-0d6eca8127f7</CorrelationID>
+    <CreationDateTime>2019-08-26T18:43:58.209+02:00</CreationDateTime>
+    <MessageID>fa9b1a11-745b-4d9d-9301-853039e911a3</MessageID>
+    <Priority>Low</Priority>
+    <RequiresAck>false</RequiresAck>
+         */
+        Acknowledgement resultAck = new Acknowledgement();
         String uuid = UUID.randomUUID().toString();
-
-        AckBuilder ackBuild= newAck()
-                .id(uuid) ;
+        resultAck.setMessageID(uuid);
+        resultAck.setCorrelationID(inputMessage.getCorrelationID());
+        resultAck.setPriority(inputMessage.getPriority());
+        resultAck.setCreationDateTime(inputMessage.getCreationDateTime());
+        if (inputMessage.getCorrelationID()!= null) resultAck.setContextID(inputMessage.getCorrelationID());
+        ////
         Participant recipientParticipant= inputMessage.getRecipient().getParticipant();
         if (recipientParticipant != null) {
             String recipient_participantId=recipientParticipant.getId();
             String recipient_endpointUrl=recipientParticipant.getEndpointUrl();
-            ackBuild.recipient(newService()
-                        .id(inputMessage.getRecipient().getServiceID())
-                        .operation(ServiceOperationType.ACKNOWLEDGEMENT)
-                        .participantId(recipient_participantId)
-                        .participantUrl(recipient_endpointUrl));
-    }else{
-        ackBuild.recipient(newService()
-                .id(inputMessage.getRecipient().getServiceID())
-                .operation(ServiceOperationType.ACKNOWLEDGEMENT));
-    }
+            Service anewService = ServiceBuilder.newService()
+                    .id(inputMessage.getRecipient().getServiceID())
+                    .operation(ServiceOperationType.ACKNOWLEDGEMENT)
+                    .participantId(recipient_participantId)
+                    .participantUrl(recipient_endpointUrl).build();
+            resultAck.setRecipient(anewService);
+        }else{
+            Service anewService = ServiceBuilder.newService()
+                    .id(inputMessage.getRecipient().getServiceID())
+                    .operation(ServiceOperationType.ACKNOWLEDGEMENT)
+                    .build();
+            resultAck.setRecipient(anewService);
+        }
         Participant senderParticipant= inputMessage.getRecipient().getParticipant();
         if (senderParticipant != null) {
             String sender_participantId = recipientParticipant.getId();
             String sender_endpointUrl = recipientParticipant.getEndpointUrl();
-            ackBuild.sender(newService()
+            Service anewService =ServiceBuilder.newService()
                     .id(inputMessage.getSender().getServiceID())
                     .operation(ServiceOperationType.ACKNOWLEDGEMENT)
                     .participantId(sender_participantId)
-                    .participantUrl(sender_endpointUrl));
+                    .participantUrl(sender_endpointUrl).build();
+            resultAck.setSender(anewService);
         }else{
-            ackBuild.sender(newService()
+            Service anewService =ServiceBuilder.newService()
                     .id(inputMessage.getSender().getServiceID())
-                    .operation(ServiceOperationType.ACKNOWLEDGEMENT));
+                    .operation(ServiceOperationType.ACKNOWLEDGEMENT)
+                    .build();
+            resultAck.setSender(anewService);
         }
 
-        ackBuild.correlationId(inputMessage.getCorrelationID())
-                .creationDateTime(new Date())
-                .informationSecurityLevel(inputMessage.getPayload().getInformationSecurityLevel())
-                .informationSensitivity(inputMessage.getPayload().getInformationSensitivity())
-                .purpose(inputMessage.getPayload().getPurpose())
-                .priority(inputMessage.getPriority())
-                .ackCode(atype);
-        if (inputMessage.isRequiresAck() != null)
-            ackBuild.isRequiresAck(inputMessage.isRequiresAck());
+        ///
 
-        return ackBuild;
+        resultAck.setAckCode(aType);
+        resultAck.setAckDetail(aDetail);
+
+
+        return resultAck;
     }
 
 }

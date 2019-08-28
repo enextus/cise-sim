@@ -137,6 +137,9 @@ public class CiseEmulatorConfiguration extends Configuration {
     private String counterpartCertificateKey;
 
 
+    private String counterpartCertificateKeyPassword;
+
+
     @JsonProperty("signature.OnSend")
     public String getSignatureOnSend() {
         return SignatureOnSend;
@@ -206,5 +209,11 @@ public class CiseEmulatorConfiguration extends Configuration {
     public void setCounterpartCertificate(String counterpartCertificateKey) {
         this.counterpartCertificateKey = counterpartCertificateKey;
     }
+    @JsonProperty("signature.counterpartCertificateKeyPassword")
+    public String getCounterpartCertificatePassword() {return counterpartCertificateKeyPassword; }
 
+    @JsonProperty("signature.counterpartCertificateKeyPassword")
+    public void setCounterpartCertificatePassword(String counterpartCertificateKeyPassword) {
+        this.counterpartCertificateKeyPassword = counterpartCertificateKeyPassword;
+    }
 }

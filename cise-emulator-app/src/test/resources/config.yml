@@ -3,12 +3,14 @@ signature.OnSend: true
 signature.keyStoreFileName: keyStore.jks
 signature.keyStorePassword: cisecise
 signature.certificateKey: sim1-node01.node01.eucise.fr
-signature.certificatePassword: certificatepasswordtest
-signature.counterpartCertificateKey: counterpartcertificatekey
+signature.certificatePassword: cisecise
+signature.counterpartCertificateKey: cisecise
+signature.counterpartCertificateKeyPassword:
+
 operation.mode: EGN
 operation.publishedId: fr.sim-egn
 operation.serviceMode: SOAP
-operation.counterpartUrl: http://localhost:8085/sim-LSA/CISEMessageService?wsdl
+operation.counterpartUrl: http://localhost:18080/sim-EGN/rest/CISEMessageServiceREST
 operation.outputDirectory: /opt/jboss/EuciseData/
 operation.inputDirectory: /opt/jboss/EuciseData/
 operation.sourceMessageDir: /opt/jboss/EuciseData/sim-egn/messageXmlFiles

@@ -33,7 +33,7 @@ public class InteractIOFile {
     }
 
     public static String getFilename(String prefix, String timeMarker, String postfix) {
-        return (prefix + "_" + timeMarker + (postfix.isEmpty() ? "" : "_") + postfix);
+        return (prefix + "_" + timeMarker + (postfix.isEmpty() ? "" : "_") + postfix+".xml");
     }
 
 
