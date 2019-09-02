@@ -2,9 +2,12 @@ package eu.cise.emulator.validator;
 import com.github.mfatihercik.dsb.DSM;
 import com.github.mfatihercik.dsb.DSMBuilder
 import spock.lang.Shared
-import javax.xml.ws.Service;
+import spock.lang.Unroll
+import spock.lang.Ignore
 import java.io.IOException;
 import java.util.*;
+
+@Ignore
 class ServicePayloadBindingvalidatorSpec extends spock.lang.Specification{
 
 
@@ -13,6 +16,7 @@ class ServicePayloadBindingvalidatorSpec extends spock.lang.Specification{
 
 
 
+    @Unroll
     def "validate the content Type linked to the ServiceType"() {
         expect:
         avalidator.isConformContentTypeBinding(aContentType,aServiceType) == aResult;
