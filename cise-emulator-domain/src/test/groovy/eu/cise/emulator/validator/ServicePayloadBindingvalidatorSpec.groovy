@@ -7,7 +7,7 @@ import spock.lang.Ignore
 import java.io.IOException;
 import java.util.*;
 
-@Ignore
+
 class ServicePayloadBindingvalidatorSpec extends spock.lang.Specification{
 
 
@@ -15,7 +15,7 @@ class ServicePayloadBindingvalidatorSpec extends spock.lang.Specification{
     private ServicePayloadBindingvalidator avalidator= new ServicePayloadBindingvalidator();
 
 
-
+    @Ignore
     @Unroll
     def "validate the content Type linked to the ServiceType"() {
         expect:
@@ -29,6 +29,7 @@ class ServicePayloadBindingvalidatorSpec extends spock.lang.Specification{
         "FormalOrganization" | "OrganizationService" |  true
     }
 
+    @Ignore
     def "doesnt validate content Type  not linked to the ServiceType"() {
         expect:
         avalidator.isConformContentTypeBinding(aContentType,aServiceType) == aResult;
