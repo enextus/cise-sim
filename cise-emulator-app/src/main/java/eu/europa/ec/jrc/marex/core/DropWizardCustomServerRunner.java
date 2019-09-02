@@ -1,8 +1,9 @@
 package eu.europa.ec.jrc.marex.core;
 
 import com.codahale.metrics.MetricRegistry;
+import eu.europa.ec.jrc.marex.CiseEmulatorApplication;
+import eu.europa.ec.jrc.marex.CiseEmulatorConfiguration;
 import io.dropwizard.Application;
-import io.dropwizard.Configuration;
 import io.dropwizard.cli.ServerCommand;
 import io.dropwizard.configuration.ConfigurationFactory;
 import io.dropwizard.setup.Bootstrap;
@@ -20,7 +21,9 @@ import java.util.List;
  * A utility to run DropWizard (http://dropwizard.io/) applications in-process.
  */
 public class DropWizardCustomServerRunner {
-    public static <T extends Configuration> DropWizardServer<T> createServer(
+
+    public static File tmpConfigFile;
+    public static <T extends CiseEmulatorConfiguration> DropWizardServer<T> createServer(
             T config,
             Class<? extends Application<T>> applicationClass) throws Exception {
         // Create application
@@ -32,12 +35,12 @@ public class DropWizardCustomServerRunner {
         bootstrap.addCommand(serverCommand);
 
         // Write a temporary config file
-        File tmpConfigFile = new File(
+        tmpConfigFile = new File(
                 System.getProperty("java.io.tmpdir"),
                 config.getClass().getCanonicalName() + "_" + System.currentTimeMillis());
-        tmpConfigFile.deleteOnExit();
+        //tmpConfigFile.deleteOnExit();
         bootstrap.getObjectMapper().writeValue(tmpConfigFile, config);
-
+         System.out.println(" config was writed to "+tmpConfigFile.toPath().toAbsolutePath().toString());
         // Parse configuration
         ConfigurationFactory<T> configurationFactory
                 = bootstrap.getConfigurationFactoryFactory()
@@ -72,16 +75,17 @@ public class DropWizardCustomServerRunner {
             }
         });
 
-        return new DropWizardServer(builtConfig, bootstrap, application, environment, server, environment.metrics());
+        return new DropWizardServer((CiseEmulatorConfiguration) builtConfig, bootstrap, application, environment, server, environment.metrics());
     }
 
-    public static class DropWizardServer<T extends Configuration> {
+    public static class DropWizardServer<T extends CiseEmulatorConfiguration> extends CiseEmulatorApplication {
         private final T builtConfig;
         private final Bootstrap<T> bootstrap;
         private final Application<T> application;
         private final Environment environment;
         private final Server jettyServer;
         private final MetricRegistry metricRegistry;
+
 
         DropWizardServer(T builtConfig,
                          Bootstrap<T> bootstrap,

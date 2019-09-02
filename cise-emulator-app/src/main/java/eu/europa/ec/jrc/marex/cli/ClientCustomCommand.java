@@ -1,6 +1,7 @@
 package eu.europa.ec.jrc.marex.cli;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
@@ -8,6 +9,7 @@ import eu.europa.ec.jrc.marex.candidate.CiseEmulatorConfigurationException;
 import eu.europa.ec.jrc.marex.candidate.CiseEmulatorException;
 import eu.europa.ec.jrc.marex.client.RestResult;
 import eu.europa.ec.jrc.marex.core.Executor;
+import eu.europa.ec.jrc.marex.core.sub.CiseTransportException;
 import eu.europa.ec.jrc.marex.core.sub.MessageValidator;
 import eu.europa.ec.jrc.marex.core.sub.Sender;
 import eu.europa.ec.jrc.marex.core.sub.SourceStreamProcessor;
@@ -28,8 +30,9 @@ import org.slf4j.LoggerFactory;
 import javax.validation.Validator;
 
 public class ClientCustomCommand extends Command {
+    public static final String SUCCESS = "Success";
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientCustomCommand.class);
-
+    private static String MESSAGE_MODAL="SEND";
     public ClientCustomCommand() {
         super("sender", "sending from console");
     }
@@ -66,7 +69,6 @@ public class ClientCustomCommand extends Command {
                 .type(String.class)
                 .required(false)
                 .help("specify counterpart Url to send message");
-
     }
 
     @Override
@@ -104,15 +106,26 @@ public class ClientCustomCommand extends Command {
         Message generatedMessage = executor.LoadMessage(servicefile, payload);
 
         String fileNameTemplate = emulatorConfig.getOutputDirectory() + emulatorConfig.getPublishedId() + "_out";
-        String createdfile = InteractIOFile.createRef(fileNameTemplate, new StringBuffer(xmlMapper.toXML(generatedMessage)));
+        String createdFile = InteractIOFile.createRef(fileNameTemplate, MESSAGE_MODAL,new StringBuffer(xmlMapper.toXML(generatedMessage)));
 
         boolean signSend = emulatorConfig.getSignatureOnSend().equals("true");
         RestResult obtainedResult = executor.sendEvent(generatedMessage, signSend);
-        String createdfileResult = InteractIOFile.createRelativeRef(fileNameTemplate, createdfile, obtainedResult.getCode().toString(), new StringBuffer(obtainedResult.getBody()));
-        assert (LOGGER.isInfoEnabled());
-        LOGGER.warn("file created with timestamp  {} => result in {} / {}", createdfile, obtainedResult.getCode().toString(), (obtainedResult.getCode().toString().equals(200) ? "ACK" : obtainedResult.getCode().toString()));
-    }
 
+        // transform return to message
+        Acknowledgement ackReturned = null;
+        String AckCode="ERROR",AckDetail="unknown error"; // TODO: please replace with adequate default value for no ack received (network error?)
+        try {
+            ackReturned = (Acknowledgement) xmlMapper.fromXML(obtainedResult.getBody());
+            AckCode=ackReturned.getAckCode().toString();
+            AckDetail=ackReturned.getAckDetail().toString();
+        } catch (Exception e) {
+            LOGGER.error("unable to interprete returned ACK : " + obtainedResult.getBody(),e);
+        }
+
+
+        String createdfileResult = InteractIOFile.createRelativeRef(fileNameTemplate, createdFile,AckCode,MESSAGE_MODAL, new StringBuffer(obtainedResult.getBody()));
+        if (!(obtainedResult.getCode().toString().equals(200)) && AckCode!=SUCCESS) LOGGER.warn(obtainedResult.getBody());
+    }
 
     private CiseEmulatorConfiguration parseConfiguration(ConfigurationFactoryFactory configurationFactoryFactory, ConfigurationSourceProvider provider, Validator validator, String path, Class klass, ObjectMapper objectMapper) {
         CiseEmulatorConfiguration ciseEmulatorConfiguration = null;
@@ -125,6 +138,5 @@ public class ClientCustomCommand extends Command {
         }
         return ciseEmulatorConfiguration;
     }
-
 
 }

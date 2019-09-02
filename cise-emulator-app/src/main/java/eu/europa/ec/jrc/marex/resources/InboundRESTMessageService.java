@@ -19,6 +19,9 @@ import java.io.IOException;
 @Path("/emu/rest")
 public class InboundRESTMessageService {
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(InboundRESTMessageService.class);
+    public static final String ERROR = "ERROR";
+    public static final String ACK = "ACK";
+    public static final String MESSAGE_MODAL = "RECEIVE";
     private String fileNameTemplate;
     private XmlMapper xmlMapper = new DefaultXmlMapper();
     private Executor executor;
@@ -26,7 +29,7 @@ public class InboundRESTMessageService {
     private CiseEmulatorConfiguration emulatorConfig;
 
     public InboundRESTMessageService(CiseEmulatorConfiguration emulatorConfig) {
-        this.fileNameTemplate = emulatorConfig.getOutputDirectory() + emulatorConfig.getPublishedId() + "_in_";
+        this.fileNameTemplate = emulatorConfig.getInputDirectory() +"/"+ emulatorConfig.getPublishedId();
         this.emulatorConfig = emulatorConfig;
         DefaultXmlMapper xmlMapper = new DefaultXmlMapper();
         MessageValidator validator = new MessageValidator();
@@ -41,7 +44,7 @@ public class InboundRESTMessageService {
 
     @POST
     @Consumes("text/plain,text/xml,application/xml")
-    @Produces("text/plain")
+    @Produces("text/xml")
     @Path("/CISEMessageServiceREST")
     public String sendMessage(String inputXmlMessage) throws Exception {
 
@@ -52,30 +55,35 @@ public class InboundRESTMessageService {
         return someMessage;*/
 
 
-        String createdfile = InteractIOFile.createRef(this.fileNameTemplate, new StringBuffer(inputXmlMessage));
-        if (createdfile == null)
-            throw new IOException("unable to create send file : " + InteractIOFile.getFilename(this.fileNameTemplate, createdfile, ""));
+        String createdFile = InteractIOFile.createRef(this.fileNameTemplate,MESSAGE_MODAL, new StringBuffer(inputXmlMessage));
+        if (createdFile == null)
+            throw new IOException("unable to create send file : " + InteractIOFile.getFilename(this.fileNameTemplate, null, MESSAGE_MODAL,""));
 
         ValidationResult validResult = executor.validateIncoming(inputXmlMessage);
         LOGGER.info("inputXmlMessage validated {} : xml {} and conformed structure:{} signature {} semantic {}", validResult.isOK(emulatorConfig.getSignatureOnReceive().contains("true")),
                 validResult.isOkXML(), validResult.isOkEntity(), validResult.isOkSignedEntity(), validResult.isOkSemantic());
         String ackMessage = "";
+        String filePost = ACK;
         if (validResult.isOkEntity()==false) {
             ackMessage = executor.AcknowledgmentFailMessage(inputXmlMessage, "BAD_REQUEST", "content could not be validated as Entity");
-            LOGGER.info(" respond with a BAD REQUEST ACK for  structure:{} semantic {}", validResult.isOkEntity(), validResult.isOkSemantic());
+            filePost=ERROR;
+           // LOGGER.warn("BAD_REQUEST ACK sent for  structural {}, semantic {} reasons ; see file://{}", validResult.isOkEntity(), validResult.isOkSemantic(),InteractIOFile.getFilename(this.fileNameTemplate, filePost,MESSAGE_MODAL, filePost));
         }else if (emulatorConfig.getSignatureOnReceive().equals("true") && validResult.isOkSignedEntity()==false){
             ackMessage =  executor.AcknowledgmentFailMessage(inputXmlMessage,"SECURITY_ERROR","signature error");
-        LOGGER.info(" respond with a SECURITY ERROR ACK for  signature required on start :{} signature validated {}", validResult.isOK(emulatorConfig.getSignatureOnReceive().contains("true")),validResult.isOkSignedEntity());}
+            filePost= ERROR;
+           // LOGGER.warn("SECURITY ERROR ACK sent for signature required on start {} signature validated {}  ; see file://{} ", validResult.isOK(emulatorConfig.getSignatureOnReceive().contains("true")),validResult.isOkSignedEntity(),InteractIOFile.getFilename(this.fileNameTemplate, filePost,MESSAGE_MODAL, filePost));
+
+        }
         else
-            ackMessage =  executor.AcknowledgmentSuccessMessage(inputXmlMessage);
+             executor.AcknowledgmentSuccessMessage(inputXmlMessage);
 
 
-        String createdreffile = InteractIOFile.createRelativeRef(fileNameTemplate, "Ack", createdfile, new StringBuffer(ackMessage));
-        LOGGER.error("{} => {} / {}", createdfile, InteractIOFile.getFilename(fileNameTemplate, createdfile, ""), (createdfile.equals("200") ? "ACK" : createdfile));
+        String createdreffile = InteractIOFile.createRelativeRef(fileNameTemplate, filePost, createdFile,MESSAGE_MODAL, new StringBuffer(ackMessage));
+        LOGGER.warn("New content RECEIVED with timestamp {} result in {} / see AcknowledgementFile://{}", createdFile, filePost, InteractIOFile.getFilename(fileNameTemplate, createdFile, MESSAGE_MODAL,filePost));
         if (createdreffile != null)
             return (ackMessage);
         else
-            throw new IOException("unable to create ack file : " + InteractIOFile.getFilename(this.fileNameTemplate, createdreffile, "ack"));
+            throw new IOException("New content RECEIVED with timestamp "+createdFile+" / unable to create ack file : " + InteractIOFile.getFilename(this.fileNameTemplate, createdreffile,MESSAGE_MODAL, filePost));
     }
 
 }

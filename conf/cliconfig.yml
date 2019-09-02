@@ -19,18 +19,8 @@ server:
   applicationConnectors:
     - type: http
       port: 48080
-  adminConnectors:
-    - type: http
-      port: 48081
-logging:
-  level: INFO
+logging: !<default>
+  level: "INFO"
   loggers:
-    "eu.europa.ec.jrc.marex.cli.clientCustom.Command": INFO
-    "eu.europa.ec.jrc.marex.resource.InboundRESTMessageService": INFO
-  appenders:
-    - type: console
-      threshold: ALL
-      queueSize: 512
-      discardingThreshold: 0
-      timeZone: UTC
-      target: stdout
+    eu.europa.ec.jrc.marex.cli.clientCustom.Command: "INFO"
+    eu.europa.ec.jrc.marex.resource.InboundRESTMessageService: "INFO"
