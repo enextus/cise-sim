@@ -1,19 +1,17 @@
 package eu.europa.ec.jrc.marex.cli;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import eu.europa.ec.jrc.marex.candidate.CiseEmulatorConfigurationException;
-import eu.europa.ec.jrc.marex.candidate.CiseEmulatorException;
 import eu.europa.ec.jrc.marex.client.RestResult;
 import eu.europa.ec.jrc.marex.core.Executor;
-import eu.europa.ec.jrc.marex.core.sub.CiseTransportException;
 import eu.europa.ec.jrc.marex.core.sub.MessageValidator;
 import eu.europa.ec.jrc.marex.core.sub.Sender;
 import eu.europa.ec.jrc.marex.core.sub.SourceStreamProcessor;
 import eu.europa.ec.jrc.marex.CiseEmulatorConfiguration;
+import eu.europa.ec.jrc.marex.emulator.AcknowledgementHelper;
 import eu.europa.ec.jrc.marex.util.ConfigManager;
 import eu.europa.ec.jrc.marex.util.InteractIOFile;
 import eu.europa.ec.jrc.marex.util.SimLogger;
@@ -33,6 +31,8 @@ public class ClientCustomCommand extends Command {
     public static final String SUCCESS = "Success";
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientCustomCommand.class);
     private static String MESSAGE_MODAL="SEND";
+    private final AcknowledgementHelper acknowledgementHelper = new AcknowledgementHelper();
+
     public ClientCustomCommand() {
         super("sender", "sending from console");
     }
@@ -111,21 +111,13 @@ public class ClientCustomCommand extends Command {
         boolean signSend = emulatorConfig.getSignatureOnSend().equals("true");
         RestResult obtainedResult = executor.sendEvent(generatedMessage, signSend);
 
-        // transform return to message
-        Acknowledgement ackReturned = null;
-        String AckCode="ERROR",AckDetail="unknown error"; // TODO: please replace with adequate default value for no ack received (network error?)
-        try {
-            ackReturned = (Acknowledgement) xmlMapper.fromXML(obtainedResult.getBody());
-            AckCode=ackReturned.getAckCode().toString();
-            AckDetail=ackReturned.getAckDetail().toString();
-        } catch (Exception e) {
-            LOGGER.error("unable to interprete returned ACK : " + obtainedResult.getBody(),e);
-        }
-
+        String AckCode = acknowledgementHelper.getAckCode(xmlMapper, obtainedResult.getBody());
 
         String createdfileResult = InteractIOFile.createRelativeRef(fileNameTemplate, createdFile,AckCode,MESSAGE_MODAL, new StringBuffer(obtainedResult.getBody()));
         if (!(obtainedResult.getCode().toString().equals(200)) && AckCode!=SUCCESS) LOGGER.warn(obtainedResult.getBody());
     }
+
+
 
     private CiseEmulatorConfiguration parseConfiguration(ConfigurationFactoryFactory configurationFactoryFactory, ConfigurationSourceProvider provider, Validator validator, String path, Class klass, ObjectMapper objectMapper) {
         CiseEmulatorConfiguration ciseEmulatorConfiguration = null;
