@@ -44,6 +44,27 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>${cxf.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>${basedir}/src/main/resources/META-INF/CISEMessageService.wsdl</wsdl>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
                 <version>1.5</version>
@@ -71,6 +92,11 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>eu.europa.ec.jrc.marex.CiseEmulatorApplication</mainClass>
                                 </transformer>
+
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/cxf/bus-extensions.txt</resource>
+                                </transformer>
+
                             </transformers>
                             <finalName>cise-emulator</finalName>
                         </configuration>
@@ -120,6 +146,13 @@
         <dependency>
             <groupId>javax.xml</groupId>
             <artifactId>jaxp-api</artifactId>
+        </dependency>
+
+        <!-- /soap service / -->
+        <dependency>
+            <groupId>com.github.roskart.dropwizard-jaxws</groupId>
+            <artifactId>dropwizard-jaxws</artifactId>
+            <version>1.1.0</version>
         </dependency>
 
         <!-- EUCISE dependencies -->

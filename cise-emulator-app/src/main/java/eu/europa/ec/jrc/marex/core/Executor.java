@@ -199,7 +199,7 @@ public class Executor {
             v.setNavigationalStatus(NavigationalStatusType.ENGAGED_IN_FISHING);
             v.getShipTypes().add(VesselType.FISHING_VESSEL);
             v.setYearBuilt(1978);
-            payload.getAnies().add(v);
+            payload.getAny().add(v);
 
             // end with charging the payload
             messageObject.setPayload(payload);
@@ -238,6 +238,7 @@ public class Executor {
             //System.setProperty("conf.dir",oldConfDir);/**wa01:*/
             loadMessage = signature.sign(loadMessage);
         }
+
         RestResult result = client.post(config.getCounterpartUrl(), xmlMapper.toXML(loadMessage));
         return result;
     }
