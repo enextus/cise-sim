@@ -112,18 +112,12 @@ public class ClientCustomCommand extends Command {
         boolean signSend = emulatorConfig.getSignatureOnSend().equals("true");
         SendResult obtainedResult = new SendResult(500,"","");
 
-        if (emulatorConfig.getServiceMode().toUpperCase().contains("SOAP")  ) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
+        if (emulatorConfig.getServiceMode().toUpperCase().contains("REST")  ) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
              obtainedResult = executor.sendEvent(generatedMessage, signSend);
-        }else if (emulatorConfig.getServiceMode().toUpperCase().contains("REST")  ) {
-             String anURLString= emulatorConfig.getCounterpartUrl();
-             String CompUriString= "http://"+anURLString.substring(anURLString.lastIndexOf("/"))+".eu";
-             String lastCompUrlString= anURLString.substring(anURLString.lastIndexOf("/"));
-             try {
-                 CiseMessageSoapServiceClient soapServiceClient= new CiseMessageSoapServiceClient (anURLString, CompUriString, lastCompUrlString);
+        }else if (emulatorConfig.getServiceMode().toUpperCase().contains("SOAP")  ) {
+            String anURLStr= emulatorConfig.getCounterpartUrl();
+            CiseMessageSoapServiceClient soapServiceClient= new CiseMessageSoapServiceClient (anURLStr, xmlMapper);
                  obtainedResult = soapServiceClient.send(generatedMessage);
-             }catch (Exception e ){
-                 LOGGER.error("url or uri error :",e);
-             }
         }
 
 

@@ -3,10 +3,12 @@ import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.eucise.xml.XmlMapper;
 import eu.europa.ec.jrc.marex.client.SendResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import javax.ws.rs.core.Configuration;
 import javax.xml.namespace.QName;
@@ -14,20 +16,16 @@ import javax.xml.ws.Service;
 
 
 public class CiseMessageSoapServiceClient {
-    private URL wsdlURL;
-    private String serviceURI;
-    private String LocalPartURI ;
+    private String wsdlURL;
+    private static final String SERVICE_URI ="http://www.cise.eu/accesspoint/service/v1/" ;
+    private static final String LOCAL_URI = "CISEMessageService";
+    private XmlMapper xmlmapper ;
+    Logger logger = LoggerFactory.getLogger(CiseMessageSoapServiceClient.class);
 
-    public CiseMessageSoapServiceClient(URL wsdlURL, String serviceURI, String localPartURI) {
-        this.wsdlURL = wsdlURL;
-        this.serviceURI = serviceURI;
-        this.LocalPartURI = localPartURI;
-    }
 
-    public CiseMessageSoapServiceClient(String urlString, String serviceURI, String localPartURI) throws MalformedURLException {
-        this.wsdlURL = new URL(urlString);
-        this.serviceURI = serviceURI;
-        this.LocalPartURI = localPartURI;
+    public CiseMessageSoapServiceClient(String urlString, XmlMapper mapper) throws MalformedURLException {
+        this.wsdlURL = urlString;
+        this.xmlmapper = mapper;
     }
 
 
@@ -36,14 +34,23 @@ public class CiseMessageSoapServiceClient {
         Acknowledgement resultAcknowledgement= new Acknowledgement();
         try {
 
-            QName SERVICE_NAME = new QName(this.serviceURI, this.LocalPartURI);
-            Service service = Service.create(this.wsdlURL, SERVICE_NAME);
+            QName SERVICE_QNAME = new QName(CiseMessageSoapServiceClient.SERVICE_URI, CiseMessageSoapServiceClient.LOCAL_URI);
+            Service service = Service.create(new URL(this.wsdlURL), SERVICE_QNAME);
             CISEMessageServiceSoapImpl client = service.getPort(CISEMessageServiceSoapImpl.class);
-             resultAcknowledgement = client.send(message);
+            resultAcknowledgement = client.send(message);
         } catch (Exception e){
-
+            logger.error("fail to send to "+ this.wsdlURL,e);
+            resultAcknowledgement.setMessageID(message.getMessageID());
+            resultAcknowledgement.setPriority(message.getPriority());
+            resultAcknowledgement.setCorrelationID(message.getMessageID());
+            resultAcknowledgement.setCorrelationID(message.getMessageID());
+            resultAcknowledgement.setCreationDateTime(message.getCreationDateTime());
+            resultAcknowledgement.setAckCode(AcknowledgementType.ENTITY_TYPE_NOT_ACCEPTED);
+            resultAcknowledgement.setAckDetail(e.getMessage());
+            resultAcknowledgement.setRequiresAck(message.isRequiresAck());
+            resultAcknowledgement.setSender(message.getRecipient());
         }
-        return new SendResult(200, resultAcknowledgement.toString(), "");
+        return new SendResult(200, xmlmapper.toXML(resultAcknowledgement), "");
     }
 
 
