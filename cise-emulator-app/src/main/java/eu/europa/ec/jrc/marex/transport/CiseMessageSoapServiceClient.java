@@ -1,29 +1,38 @@
 package eu.europa.ec.jrc.marex.transport;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.europa.ec.jrc.marex.client.SendResult;
 
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import javax.ws.rs.core.Configuration;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
+
 public class CiseMessageSoapServiceClient {
     private URL wsdlURL;
     private String serviceURI;
     private String LocalPartURI ;
 
-
-    public void CiseMessageSoapServiceClient (String urlString, String uriString,String localPart) throws MalformedURLException, URISyntaxException {
-        wsdlURL = new URL(urlString);
-        serviceURI = uriString;
-        LocalPartURI = localPart;
+    public CiseMessageSoapServiceClient(URL wsdlURL, String serviceURI, String localPartURI) {
+        this.wsdlURL = wsdlURL;
+        this.serviceURI = serviceURI;
+        this.LocalPartURI = localPartURI;
     }
 
-    public Acknowledgement send(Message message){
+    public CiseMessageSoapServiceClient(String urlString, String serviceURI, String localPartURI) throws MalformedURLException {
+        this.wsdlURL = new URL(urlString);
+        this.serviceURI = serviceURI;
+        this.LocalPartURI = localPartURI;
+    }
+
+
+
+    public SendResult send(Message message){
         Acknowledgement resultAcknowledgement= new Acknowledgement();
         try {
 
@@ -34,7 +43,7 @@ public class CiseMessageSoapServiceClient {
         } catch (Exception e){
 
         }
-        return resultAcknowledgement;
+        return new SendResult(200, resultAcknowledgement.toString(), "");
     }
 
 

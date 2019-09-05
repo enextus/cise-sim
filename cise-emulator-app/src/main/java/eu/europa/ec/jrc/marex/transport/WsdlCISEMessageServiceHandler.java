@@ -1,4 +1,5 @@
 package eu.europa.ec.jrc.marex.transport;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,9 +10,9 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import java.util.Set;
 
 
-public class CISEMessageServiceHandler implements SOAPHandler<SOAPMessageContext> {
+public class WsdlCISEMessageServiceHandler implements SOAPHandler<SOAPMessageContext> {
 
-    Logger log = LoggerFactory.getLogger(CISEMessageServiceHandler.class);
+    Logger log = LoggerFactory.getLogger(WsdlCISEMessageServiceHandler.class);
 
     @Override
     public Set<QName> getHeaders() {
@@ -33,10 +34,10 @@ public class CISEMessageServiceHandler implements SOAPHandler<SOAPMessageContext
         Boolean outbound = (Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
         if (outbound) {
-            log.info("WsdlFirstService server handler - outbound");
+            log.info("WsdlCISEMessageServiceHandler server handler - outbound");
         }
         else {
-            log.info("WsdlFirstService server handler - inbound");
+            log.info("WsdlCISEMessageServiceHandler server handler - inbound");
         }
 
         return true;

@@ -2,7 +2,7 @@ package eu.europa.ec.jrc.marex.client;
 
 import java.io.Serializable;
 
-public class RestResult implements Serializable {
+public class SendResult implements Serializable {
 
     private static final long serialVersionUID = 42L;
 
@@ -11,7 +11,7 @@ public class RestResult implements Serializable {
     private final String message;
     private final boolean ok;
 
-    public RestResult(Integer code, String body, String message) {
+    public SendResult(Integer code, String body, String message) {
         this.code = code;
         this.ok = isOK(code);
         this.body = body;
@@ -43,7 +43,7 @@ public class RestResult implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RestResult that = (RestResult) o;
+        SendResult that = (SendResult) o;
 
         if (ok != that.ok) return false;
         if (code != null ? !code.equals(that.code) : that.code != null)

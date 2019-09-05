@@ -27,9 +27,6 @@
 
 package eu.europa.ec.jrc.marex.core;
 
-import com.sun.org.apache.xpath.internal.jaxp.XPathFactoryImpl;
-import eu.cise.emulator.validator.ServicePayloadBindingvalidator;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.datamodel.v1.entity.vessel.NavigationalStatusType;
 import eu.cise.datamodel.v1.entity.vessel.Vessel;
 import eu.cise.datamodel.v1.entity.vessel.VesselType;
@@ -37,47 +34,26 @@ import eu.cise.servicemodel.v1.authority.Participant;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.Service;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
-import eu.eucise.helpers.AckBuilder;
+import eu.cise.signature.SignatureService;
+import eu.cise.signature.SignatureServiceBuilder;
 import eu.eucise.helpers.DateHelper;
 import eu.eucise.helpers.ServiceBuilder;
+import eu.eucise.xml.CISENamespaceContext;
 import eu.eucise.xml.DefaultXmlValidator;
+import eu.eucise.xml.XmlMapper;
 import eu.eucise.xml.XmlValidator;
-import eu.europa.ec.jrc.marex.CiseEmulatorApplication;
-import eu.europa.ec.jrc.marex.candidate.RestClient;
-import eu.europa.ec.jrc.marex.client.RestResult;
 import eu.europa.ec.jrc.marex.CiseEmulatorConfiguration;
+import eu.europa.ec.jrc.marex.candidate.RestClient;
 import eu.europa.ec.jrc.marex.candidate.SourceBufferFileSource;
 import eu.europa.ec.jrc.marex.candidate.SourceBufferInterface;
+import eu.europa.ec.jrc.marex.client.SendResult;
 import eu.europa.ec.jrc.marex.core.sub.*;
 import eu.europa.ec.jrc.marex.util.SimLogger;
 
-
-import eu.cise.signature.SignatureService;
-import eu.cise.signature.SignatureServiceBuilder;
-
-import eu.eucise.xml.CISENamespaceContext;
-import eu.eucise.xml.XmlMapper;
-import org.eclipse.jetty.xml.XmlParser;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-
 import javax.xml.namespace.NamespaceContext;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathFactory;
-import java.io.StringReader;
 import java.util.Date;
 import java.util.UUID;
-
-import static eu.cise.servicemodel.v1.message.InformationSecurityLevelType.NON_CLASSIFIED;
-import static eu.cise.servicemodel.v1.message.InformationSensitivityType.GREEN;
-import static eu.cise.servicemodel.v1.message.PriorityType.LOW;
-import static eu.eucise.helpers.AckBuilder.newAck;
-import static eu.eucise.helpers.ServiceBuilder.newService;
 
 /**
  * Main class in the domain module. The config() method consolidate the class to support domain main process.
@@ -86,7 +62,6 @@ public class Executor {
 
     private final SimLogger logger;
     private final CiseEmulatorConfiguration config;
-    //private final SourceStreamProcessor streamProcessor;
     private final Sender sender;
 
     private final XmlValidator xmlValidator = new DefaultXmlValidator();
@@ -98,30 +73,14 @@ public class Executor {
     public boolean isVerbose = false;
     public String payloadFile = null;
     public String serviceFile = null;
-    //private JAXWSBundle jaxWsBundle = new JAXWSBundle();
 
     /**
-     * The App is mainly built with a stream generator a processor and a message
-     * dispatcher.
+     * The App is mainly built as processor of messages dispatcher.
      * <p>
-     * The generator will produce a stream of strings reading them from
-     * different possible sources:
-     * - plain text files
-     * - tcp sockets
-     * - whatever other AIS information producer
-     * <p>
-     * The processor will transform the incoming stream of ais strings into a
-     * sequence of CISE push messages objects. The transformation will be
-     * performed in multiple stages.
-     * - String -&gt; AisMsg: where the latter is a decoded representation
-     * of the message in an domain object
-     * - AisMsg -&gt; {@code Optional<Entity>}: the ais message is translated
-     * into a cise
-     * vessel if is of type 1,2,3 or 5, otherwise it will be an empty optional.
-     * - {@code List<Entity>} -&gt; Push:
+     * The executor transform incoming stream into a messages objects.
      *
-     * @param aStreamProcessor stream generator of ais strings
-     * @param aSender          stream processor of ais strings into cise messages
+     * @param aStreamProcessor stream generator of strings
+     * @param aSender
      * @param logger           dispatcher of sim messages
      * @param config           application configuration object
      * @param xmlMapper
@@ -137,6 +96,9 @@ public class Executor {
         this.config = config;
         this.xmlMapper = xmlMapper;
         this.validator = validator;
+    }
+    public CiseEmulatorConfiguration getConfig(){
+        return config;
     }
 
     /*reader*/ private static final String[] CISE_DATA_MODEL_ELEMENT = new String[]{"Action", "Agent", "Aircraft", "Anomaly", "Cargo", "CargoDocument", "Catch", "CertificateDocument", "ContainmentUnit", "CrisisIncident", "Document", "EventDocument", "FormalOrganization", "Incident", "IrregularMigrationIncident", "LandVehicle", "LawInfringementIncident", "Location", "LocationDocument", "MaritimeSafetyIncident", "MeteoOceanographicCondition", "Movement", "NamedLocation", "OperationalAsset", "Organization", "OrganizationalCollaboration", "OrganizationalUnit", "OrganizationDocument", "Person", "PersonDocument", "PollutionIncident", "PortFacilityLocation", "PortLocation", "PortOrganization", "Risk", "RiskDocument", "Stream", "Vessel", "VesselDocument"};
@@ -199,7 +161,7 @@ public class Executor {
             v.setNavigationalStatus(NavigationalStatusType.ENGAGED_IN_FISHING);
             v.getShipTypes().add(VesselType.FISHING_VESSEL);
             v.setYearBuilt(1978);
-            payload.getAny().add(v);
+            payload.getAnies().add(v);
 
             // end with charging the payload
             messageObject.setPayload(payload);
@@ -207,7 +169,7 @@ public class Executor {
         return messageObject;
     }
 
-    public RestResult sendEvent(Message loadMessage, boolean sign) {
+    public SendResult sendEvent(Message loadMessage, boolean sign) {
         RestClient client = new JerseyRestClient();
         Object resolvedFilenameKeyStore = config.getKeyStoreFileName();
 
@@ -239,7 +201,7 @@ public class Executor {
             loadMessage = signature.sign(loadMessage);
         }
 
-        RestResult result = client.post(config.getCounterpartUrl(), xmlMapper.toXML(loadMessage));
+        SendResult result = client.post(config.getCounterpartUrl(), xmlMapper.toXML(loadMessage));
         return result;
     }
 

@@ -56,7 +56,7 @@ public class CiseEmulatorConfiguration extends Configuration {
 
     @JsonProperty("operation.serviceMode")
     public String getServiceMode() {
-        return PublishedId;
+        return ServiceMode;
     }
 
     @JsonProperty("operation.serviceMode")

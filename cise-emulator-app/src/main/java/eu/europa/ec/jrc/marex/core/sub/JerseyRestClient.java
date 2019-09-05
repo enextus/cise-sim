@@ -2,7 +2,7 @@ package eu.europa.ec.jrc.marex.core.sub;
 
 
 import eu.europa.ec.jrc.marex.candidate.RestClient;
-import eu.europa.ec.jrc.marex.client.RestResult;
+import eu.europa.ec.jrc.marex.client.SendResult;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -29,18 +29,18 @@ public class JerseyRestClient implements RestClient {
     }
 
     @Override
-    public RestResult post(String address, String payload) {
+    public SendResult post(String address, String payload) {
         return vestException(address, (a) -> translateResult(targetXml(a).post(Entity.xml(payload))));
     }
 
     @Override
-    public RestResult get(String address) {
+    public SendResult get(String address) {
         return vestException(address, (a) -> translateResult(targetXml(a).get()));
 
     }
 
     @Override
-    public RestResult delete(String address) {
+    public SendResult delete(String address) {
         return vestException(address, (a) -> translateResult(targetXml(a).delete()));
     }
 
@@ -48,12 +48,12 @@ public class JerseyRestClient implements RestClient {
         return client.target(address).request(MediaType.APPLICATION_XML);
     }
 
-    private RestResult translateResult(Response r) {
-        return new RestResult(r.getStatus(), r.readEntity(String.class),
+    private SendResult translateResult(Response r) {
+        return new SendResult(r.getStatus(), r.readEntity(String.class),
                 r.getStatusInfo().getReasonPhrase());
     }
 
-    private RestResult vestException(String address, Function<String, RestResult> function) {
+    private SendResult vestException(String address, Function<String, SendResult> function) {
         try {
             return function.apply(address);
         } catch (Throwable t) {

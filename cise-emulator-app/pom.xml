@@ -42,6 +42,7 @@
     <version>1.1-SNAPSHOT</version>
 
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.cxf</groupId>
@@ -50,16 +51,53 @@
                 <executions>
                     <execution>
                         <id>generate-sources</id>
-                        <phase>generate-sources</phase>
                         <goals>
                             <goal>wsdl2java</goal>
                         </goals>
                         <configuration>
+                            <sourceRoot>${basedir}/java-templates</sourceRoot>
                             <wsdlOptions>
                                 <wsdlOption>
                                     <wsdl>${basedir}/src/main/resources/META-INF/CISEMessageService.wsdl</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>ant-magic</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <delete dir="java-templates/eu/cise/servicemodel"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>templating-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <id>filter-src</id>
+                        <goals>
+                            <goal>filter-sources</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <sourceDirectory>${basedir}/java-templates/eu/cise/accesspoint/service/v1
+                            </sourceDirectory>
+                            <outputDirectory>${basedir}/src/main/generated-sources/eu/cise/accesspoint/service/v1
+                            </outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -93,7 +131,8 @@
                                     <mainClass>eu.europa.ec.jrc.marex.CiseEmulatorApplication</mainClass>
                                 </transformer>
 
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/cxf/bus-extensions.txt</resource>
                                 </transformer>
 

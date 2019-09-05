@@ -2,7 +2,7 @@
 <jws:handler-chains xmlns:jws="http://java.sun.com/xml/ns/javaee" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <jws:handler-chain>
         <jws:handler>
-            <jws:handler-class>eu.europa.ec.jrc.marex.transport.CISEMessageServiceHandler</jws:handler-class>
+            <jws:handler-class>eu.europa.ec.jrc.marex.transport.WsdlCISEMessageServiceHandler</jws:handler-class>
         </jws:handler>
     </jws:handler-chain>
 </jws:handler-chains>

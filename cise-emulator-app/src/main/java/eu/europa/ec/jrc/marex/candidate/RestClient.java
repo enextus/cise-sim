@@ -1,14 +1,14 @@
 package eu.europa.ec.jrc.marex.candidate;
 
-import eu.europa.ec.jrc.marex.client.RestResult;
+import eu.europa.ec.jrc.marex.client.SendResult;
 
 public interface RestClient {
 
-    RestResult post(String address, String payload);
+    SendResult post(String address, String payload);
 
-    RestResult get(String address);
+    SendResult get(String address);
 
-    RestResult delete(String address);
+    SendResult delete(String address);
 
 }
 

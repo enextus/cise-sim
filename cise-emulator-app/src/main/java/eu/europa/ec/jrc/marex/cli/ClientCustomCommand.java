@@ -5,13 +5,14 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import eu.europa.ec.jrc.marex.candidate.CiseEmulatorConfigurationException;
-import eu.europa.ec.jrc.marex.client.RestResult;
+import eu.europa.ec.jrc.marex.client.SendResult;
 import eu.europa.ec.jrc.marex.core.Executor;
 import eu.europa.ec.jrc.marex.core.sub.MessageValidator;
 import eu.europa.ec.jrc.marex.core.sub.Sender;
 import eu.europa.ec.jrc.marex.core.sub.SourceStreamProcessor;
 import eu.europa.ec.jrc.marex.CiseEmulatorConfiguration;
 import eu.europa.ec.jrc.marex.emulator.AcknowledgementHelper;
+import eu.europa.ec.jrc.marex.transport.CiseMessageSoapServiceClient;
 import eu.europa.ec.jrc.marex.util.ConfigManager;
 import eu.europa.ec.jrc.marex.util.InteractIOFile;
 import eu.europa.ec.jrc.marex.util.SimLogger;
@@ -109,7 +110,22 @@ public class ClientCustomCommand extends Command {
         String createdFile = InteractIOFile.createRef(fileNameTemplate, MESSAGE_MODAL,new StringBuffer(xmlMapper.toXML(generatedMessage)));
 
         boolean signSend = emulatorConfig.getSignatureOnSend().equals("true");
-        RestResult obtainedResult = executor.sendEvent(generatedMessage, signSend);
+        SendResult obtainedResult = new SendResult(500,"","");
+
+        if (emulatorConfig.getServiceMode().toUpperCase().contains("SOAP")  ) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
+             obtainedResult = executor.sendEvent(generatedMessage, signSend);
+        }else if (emulatorConfig.getServiceMode().toUpperCase().contains("REST")  ) {
+             String anURLString= emulatorConfig.getCounterpartUrl();
+             String CompUriString= "http://"+anURLString.substring(anURLString.lastIndexOf("/"))+".eu";
+             String lastCompUrlString= anURLString.substring(anURLString.lastIndexOf("/"));
+             try {
+                 CiseMessageSoapServiceClient soapServiceClient= new CiseMessageSoapServiceClient (anURLString, CompUriString, lastCompUrlString);
+                 obtainedResult = soapServiceClient.send(generatedMessage);
+             }catch (Exception e ){
+                 LOGGER.error("url or uri error :",e);
+             }
+        }
+
 
         String AckCode = acknowledgementHelper.getAckCode(xmlMapper, obtainedResult.getBody());
 
