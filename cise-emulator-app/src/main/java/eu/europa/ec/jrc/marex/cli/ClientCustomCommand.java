@@ -27,11 +27,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.Validator;
+import java.io.File;
 
 public class ClientCustomCommand extends Command {
     public static final String SUCCESS = "Success";
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientCustomCommand.class);
-    private static String MESSAGE_MODAL="SEND";
+    private static String MESSAGE_MODAL = "SEND";
     private final AcknowledgementHelper acknowledgementHelper = new AcknowledgementHelper();
 
     public ClientCustomCommand() {
@@ -76,11 +77,19 @@ public class ClientCustomCommand extends Command {
     public void run(Bootstrap bootstrap, Namespace namespace) throws Exception {
 
         Logger logger = LoggerFactory.getLogger("eu.cise.emulator.app.cli");
-        String configpath = ((namespace.get("config") != null) ? namespace.get("config") : "./conf/cliconfig.yml");
+        String configfile = namespace.get("config");
         ConfigManager configManager = new ConfigManager(bootstrap);
-        CiseEmulatorConfiguration emulatorConfig = configManager.readExistCiseEmulatorConfiguration(configpath);
+        CiseEmulatorConfiguration emulatorConfig = null;
+        if (configfile == null) {
+            String defaultConfigPath = ((new File("./cise-emulator-assembly/src/main/conf").exists()) ? "./cise-emulator-assembly/src/main/conf/cliconfig.yml" : "./conf/cliconfig.yml");
+            emulatorConfig = configManager.readExistCiseEmulatorConfiguration(defaultConfigPath);
+        } else {
+            emulatorConfig = configManager.readExistCiseEmulatorConfiguration(configfile);
+        }
+
         //bootstrap.setConfigurationSourceProvider(); urlconfigurationmanager-fileconfigurationmanager-resourceconfigurationmanager
-        if (emulatorConfig==null) throw new CiseEmulatorConfigurationException("no configuration file found in expected location : "+configpath);
+        String defaultConfigPath = ((new File("./cise-emulator-assembly/src/main/conf").exists()) ? "./cise-emulator-assembly/src/main/conf/cliconfig.yml" : "./conf/cliconfig.yml");
+
         XmlMapper xmlMapper = new DefaultXmlMapper();
         MessageValidator validator = new MessageValidator();
         Executor executor;
@@ -94,7 +103,7 @@ public class ClientCustomCommand extends Command {
 
         String outputDirectory = namespace.getString("outputDirectory");
         if (outputDirectory != null) emulatorConfig.setOutputDirectory(outputDirectory);
-        String counterpartUrl= namespace.getString("counterpartUrl");
+        String counterpartUrl = namespace.getString("counterpartUrl");
         if (counterpartUrl != null) emulatorConfig.setCounterpartUrl(counterpartUrl);
 
         executor = new Executor(new SourceStreamProcessor(),
@@ -103,30 +112,30 @@ public class ClientCustomCommand extends Command {
                 emulatorConfig,
                 xmlMapper,
                 validator);
-        String pathDefault= namespace.getString("location");
+        String pathDefault = namespace.getString("location");
         Message generatedMessage = executor.LoadMessage(servicefile, payload);
 
         String fileNameTemplate = emulatorConfig.getOutputDirectory() + emulatorConfig.getPublishedId() + "_out";
-        String createdFile = InteractIOFile.createRef(fileNameTemplate, MESSAGE_MODAL,new StringBuffer(xmlMapper.toXML(generatedMessage)));
+        String createdFile = InteractIOFile.createRef(fileNameTemplate, MESSAGE_MODAL, new StringBuffer(xmlMapper.toXML(generatedMessage)));
 
         boolean signSend = emulatorConfig.getSignatureOnSend().equals("true");
-        SendResult obtainedResult = new SendResult(500,"","");
+        SendResult obtainedResult = new SendResult(500, "", "");
 
-        if (emulatorConfig.getServiceMode().toUpperCase().contains("REST")  ) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
-             obtainedResult = executor.sendEvent(generatedMessage, signSend);
-        }else if (emulatorConfig.getServiceMode().toUpperCase().contains("SOAP")  ) {
-            String anURLStr= emulatorConfig.getCounterpartUrl();
-            CiseMessageSoapServiceClient soapServiceClient= new CiseMessageSoapServiceClient (anURLStr, xmlMapper);
-                 obtainedResult = soapServiceClient.send(generatedMessage);
+        if (emulatorConfig.getServiceMode().toUpperCase().contains("REST")) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
+            obtainedResult = executor.sendEvent(generatedMessage, signSend);
+        } else if (emulatorConfig.getServiceMode().toUpperCase().contains("SOAP")) {
+            String anURLStr = emulatorConfig.getCounterpartUrl();
+            CiseMessageSoapServiceClient soapServiceClient = new CiseMessageSoapServiceClient(anURLStr, xmlMapper);
+            obtainedResult = soapServiceClient.send(generatedMessage);
         }
 
 
         String AckCode = acknowledgementHelper.getAckCode(xmlMapper, obtainedResult.getBody());
 
-        String createdfileResult = InteractIOFile.createRelativeRef(fileNameTemplate, createdFile,AckCode,MESSAGE_MODAL, new StringBuffer(obtainedResult.getBody()));
-        if (!(obtainedResult.getCode().toString().equals(200)) && AckCode!=SUCCESS) LOGGER.warn(obtainedResult.getBody());
+        String createdfileResult = InteractIOFile.createRelativeRef(fileNameTemplate, createdFile, AckCode, MESSAGE_MODAL, new StringBuffer(obtainedResult.getBody()));
+        if (!(obtainedResult.getCode().toString().equals(200)) && AckCode != SUCCESS)
+            LOGGER.warn(obtainedResult.getBody());
     }
-
 
 
     private CiseEmulatorConfiguration parseConfiguration(ConfigurationFactoryFactory configurationFactoryFactory, ConfigurationSourceProvider provider, Validator validator, String path, Class klass, ObjectMapper objectMapper) {

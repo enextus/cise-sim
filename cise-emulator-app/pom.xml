@@ -59,6 +59,9 @@
                             <wsdlOptions>
                                 <wsdlOption>
                                     <wsdl>${basedir}/src/main/resources/META-INF/CISEMessageService.wsdl</wsdl>
+                                    <extraargs>
+                                        <extraarg>-xjc-Xlocator</extraarg>
+                                    </extraargs>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>
@@ -130,12 +133,10 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>eu.europa.ec.jrc.marex.CiseEmulatorApplication</mainClass>
                                 </transformer>
-
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/cxf/bus-extensions.txt</resource>
                                 </transformer>
-
                             </transformers>
                             <finalName>cise-emulator</finalName>
                         </configuration>
@@ -274,6 +275,18 @@
             <artifactId>wiremock-groovy</artifactId>
             <version>0.2.0</version>
             <scope>test</scope>
+        </dependency>
+        <!---  / source generated classes  with wsdl /  -->
+        <dependency>
+            <groupId>org.apache.cxf.xjc-utils</groupId>
+            <artifactId>cxf-xjc-runtime</artifactId>
+            <version>3.3.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.2</version>
         </dependency>
     </dependencies>
 

@@ -41,7 +41,8 @@ public class ServerCustomCommand extends Command {
     private static String TempConfigFile;
     private static final ObjectMapper DEFAULT_MAPPER;
     private static final JsonSerializer DEFAULT_SERIALIZER;
-    static{
+
+    static {
         YAMLFactory yf = new YAMLFactory();
         DEFAULT_MAPPER = new ObjectMapper();
         //configure mapper
@@ -49,13 +50,14 @@ public class ServerCustomCommand extends Command {
         // Ignore null values when writing json.
         DEFAULT_MAPPER.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false);
         DEFAULT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        DEFAULT_SERIALIZER= new JsonSerializer() {
+        DEFAULT_SERIALIZER = new JsonSerializer() {
             @Override
             public void serialize(Object o, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
                 jsonGenerator.writeObject(o);
             }
         };
     }
+
     @Override
     public void configure(Subparser subparser) {
 
@@ -78,20 +80,21 @@ public class ServerCustomCommand extends Command {
         ConfigManager configManager = new ConfigManager(bootstrap);
         String inputDirectory = namespace.getString("inputDirectory");
         String configfile = namespace.getString("config");
-        CiseEmulatorConfiguration emulatorConfig;
-        String defaultConfigPath= ((new File("./cise-emulator-assembly/src/main/conf"). exists())? "./cise-emulator-assembly/src/main/conf/cliconfig.yml":"./conf/cliconfig.yml");
-        emulatorConfig = configManager.readExistCiseEmulatorConfiguration (defaultConfigPath);
-        if (configfile!=null) {
+        CiseEmulatorConfiguration emulatorConfig = null;
+        if (configfile == null) {
+            String defaultConfigPath = ((new File("./cise-emulator-assembly/src/main/conf").exists()) ? "./cise-emulator-assembly/src/main/conf/cliconfig.yml" : "./conf/cliconfig.yml");
+            emulatorConfig = configManager.readExistCiseEmulatorConfiguration(defaultConfigPath);
+        } else {
             emulatorConfig = configManager.readExistCiseEmulatorConfiguration(configfile);
         }
-        if (inputDirectory != null ) {
+        if (inputDirectory != null) {
             emulatorConfig.setInputDirectory(inputDirectory);
         }
-        int av=new Double(Math.random()*999999L).intValue();
-        TempConfigFile= "./tmp/config"+av+".yml";
+        int av = new Double(Math.random() * 999999L).intValue();
+        TempConfigFile = "./tmp/config" + av + ".yml";
         if (new File(TempConfigFile).exists()) (new File(TempConfigFile)).delete();
 
-        CiseEmulatorApplication server = DropWizardCustomServerRunner.createServer(emulatorConfig,CiseEmulatorApplication.class );
+        CiseEmulatorApplication server = DropWizardCustomServerRunner.createServer(emulatorConfig, CiseEmulatorApplication.class);
         server.run(new String[]{"server", DropWizardCustomServerRunner.tmpConfigFile.toPath().toAbsolutePath().toString()});
         // mapper.createObjectNode();
         // FileOutputStream fos = new FileOutputStream(new File(fileconf));
