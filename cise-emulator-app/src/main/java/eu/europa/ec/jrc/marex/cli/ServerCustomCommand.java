@@ -78,9 +78,10 @@ public class ServerCustomCommand extends Command {
         ConfigManager configManager = new ConfigManager(bootstrap);
         String inputDirectory = namespace.getString("inputDirectory");
         String configfile = namespace.getString("config");
-
-        CiseEmulatorConfiguration emulatorConfig = configManager.readExistCiseEmulatorConfiguration ("./conf/cliconfig.yml");
-        if (!(configfile.isEmpty())) {
+        CiseEmulatorConfiguration emulatorConfig;
+        String defaultConfigPath= ((new File("./cise-emulator-assembly/src/main/conf"). exists())? "./cise-emulator-assembly/src/main/conf/cliconfig.yml":"./conf/cliconfig.yml");
+        emulatorConfig = configManager.readExistCiseEmulatorConfiguration (defaultConfigPath);
+        if (configfile!=null) {
             emulatorConfig = configManager.readExistCiseEmulatorConfiguration(configfile);
         }
         if (inputDirectory != null ) {

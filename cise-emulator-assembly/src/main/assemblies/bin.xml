@@ -73,30 +73,7 @@
             <includes>
                 <include>*</include>
             </includes>
-            <fileMode>0755</fileMode>
-        </fileSet>
-        <fileSet>
-            <directory>${project.parent.basedir}/cise-emulator-app/src/test/resources/xmlmessages</directory>
-            <outputDirectory>/xmlmessages</outputDirectory>
-            <includes>
-                <include>*</include>
-            </includes>
-            <fileMode>0755</fileMode>
-        </fileSet>
-        <fileSet>
-            <directory>${project.parent.basedir}/cise-emulator-app/src/test/resources/xmlpayloads</directory>
-            <outputDirectory>/xmlpayloads</outputDirectory>
-            <includes>
-                <include>*</include>
-            </includes>
-            <fileMode>0755</fileMode>
-        </fileSet>
-        <fileSet>
-            <directory>${project.parent.basedir}/cise-emulator-domain/src/main/resources</directory>
-            <outputDirectory>/conf</outputDirectory>
-            <includes>
-                <include>*</include>
-            </includes>
+            <fileMode>7775</fileMode>
         </fileSet>
         <fileSet>
             <directory>${project.parent.basedir}/cise-emulator-app/src/test/resources</directory>
@@ -105,6 +82,14 @@
                 <include>*.jks</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>${project.parent.basedir}/cise-emulator-assembly/src/main/conf/</directory>
+            <outputDirectory>/conf</outputDirectory>
+            <includes>
+                <include>*</include>
+            </includes>
+        </fileSet>
+
         <fileSet>
             <directory>.</directory>
             <outputDirectory>logs</outputDirectory>
