@@ -277,5 +277,7 @@
         </dependency>
     </dependencies>
 
-
+    <properties>
+        <main.basedir>${project.basedir}/..</main.basedir>
+    </properties>
 </project>

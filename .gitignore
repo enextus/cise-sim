@@ -30,3 +30,7 @@ node_modules
 
 ## Generic
 *.patch
+/cise-mvn-repo/releases/
+/cise-mvn-repo/snapshots/
+/cise-mvn-repo/releases/
+/cise-mvn-repo/snapshots/
