@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright SIM (c) 2019, European Union
+  ~ Copyright Cise Emulator (c) 2019, European Union
   ~ All rights reserved.
   ~
   ~ Redistribution and use in source and binary forms, with or without
@@ -27,30 +27,27 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-
-    <artifactId>emulator</artifactId>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>cise-emulator</artifactId>
     <groupId>eu.europa.ec.jrc.marex</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-	<name>sim</name>
-	<description> main aggregation for sim project </description>
-
+    <name>emulator</name>
+    <description>main aggregation for sim project</description>
 
     <modules>
-        <module>cise-emu-app</module>
-        <module>cise-emu-transport</module>
-        <module>cise-emu-valid</module>
-        <module>cise-emu-web</module>
-        <module>cise-emu-assembly</module>
+        <module>cise-emulator-app</module>
+        <module>cise-emulator-domain</module>
+        <module>cise-emulator-transport</module>
+        <module>cise-emulator-assembly</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
+        <cxf.version>3.2.9</cxf.version>
         <jetty.version>9.4.11.v20180605</jetty.version>
         <jersey.version>2.21</jersey.version>
         <dropwizard.version>1.3.5</dropwizard.version>
@@ -70,87 +67,75 @@
 
     <build>
 
-            <plugins>
+        <plugins>
 
-                <!-- compiler plugin
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.5.1</version>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                    </configuration>
-                </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <createDependencyReducedPom>true</createDependencyReducedPom>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+            </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.2</version>
+            </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-shade-plugin</artifactId>
-                    <version>2.4.3</version>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>shade</goal>
-                            </goals>
-                            <configuration>
-                                <transformers>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                        <mainClass>eu.cise.emulator.app.CiseEmuApplication</mainClass>
-                                    </transformer>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                        <resource>META-INF/cxf/bus-extensions.txt</resource>
-                                    </transformer>
-                                </transformers>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.5.2</version>
-                </plugin>
-
-            </plugins>
+        </plugins>
 
     </build>
     <dependencyManagement>
 
         <dependencies>
 
+            <!-- inner module dependencies -->
+            <dependency>
+                <artifactId>cise-emulator-transport</artifactId>
+                <groupId>eu.europa.ec.jrc.marex</groupId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.europa.ec.jrc.marex</groupId>
+                <artifactId>cise-emulator-domain</artifactId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
 
             <!-- EUCISE dependencies -->
             <dependency>
                 <artifactId>cise-data-model</artifactId>
                 <groupId>eu.europa.ec.jrc.marex</groupId>
-                <version>1.5.3.10</version>
+                <version>1.5.3.12</version>
             </dependency>
 
             <dependency>
                 <artifactId>eucise-model-helpers</artifactId>
                 <groupId>eu.europa.ec.jrc.marex</groupId>
-                <version>1.0.7</version>
+                <version>1.0.9</version>
             </dependency>
 
             <dependency>
                 <artifactId>eucise-service-model</artifactId>
                 <groupId>eu.europa.ec.jrc.marex</groupId>
-                <version>1.0.5</version>
+                <version>1.0.7</version>
             </dependency>
 
-            <dependency>  <groupId>eu.cise.sim</groupId>
-                <artifactId>transport</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
             <dependency>
                 <groupId>eu.europa.ec.jrc.marex</groupId>
                 <artifactId>cise-signature</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.1-SNAPSHOT</version>
             </dependency>
             <!-- ext Dependencies -->
             <dependency>
@@ -163,30 +148,6 @@
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>${jodatime.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.aeonbits.owner</groupId>
-                <artifactId>owner</artifactId>
-                <version>1.0.10</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.aeonbits.owner</groupId>
-                <artifactId>owner-java8</artifactId>
-                <version>1.0.10</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.aeonbits.owner</groupId>
-                <artifactId>owner-java8-extras</artifactId>
-                <version>1.0.10</version>
-            </dependency>
-
-            <dependency>
-                <groupId>stax</groupId>
-                <artifactId>stax-api</artifactId>
-                <version>1.0.1</version>
             </dependency>
 
             <dependency>
@@ -213,27 +174,15 @@
                 <version>1.2.3</version>
             </dependency>
 
-            <dependency>
-                <groupId>dk.tbsalling</groupId>
-                <artifactId>aismessages</artifactId>
-                <version>2.2.2</version>
-            </dependency>
+            <!-- xml manipulation -->
 
             <dependency>
-                <groupId>org.glassfish.jersey.core</groupId>
-                <artifactId>jersey-client</artifactId>
-                <version>2.19</version>
+                <groupId>javax.xml</groupId>
+                <artifactId>jaxp-api</artifactId>
+                <version>1.4.2</version>
             </dependency>
 
-            <dependency>
-                <groupId>io.projectreactor</groupId>
-                <artifactId>reactor-bom</artifactId>
-                <version>Bismuth-RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Test Libraries -->
+            <!-- dropwizard framework Libraries -->
 
 
             <dependency>
@@ -248,125 +197,28 @@
                 <version>${dropwizard.version}</version>
             </dependency>
             <dependency>
-            <groupId>io.dropwizard</groupId>
-            <artifactId> dropwizard-util</artifactId>
-            <version>${dropwizard.version}</version>
-        </dependency>
-<!--            <dependency>-->
-<!--                <groupId>resources.dropwizard</groupId>-->
-<!--                <artifactId>dropwizard-testing</artifactId>-->
-<!--                <version>${dropwizard.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>resources.dropwizard</groupId>-->
-<!--                <artifactId>dropwizard-metrics-graphite</artifactId>-->
-<!--                <version>${dropwizard.version}</version>-->
-<!--            </dependency>-->
-            <dependency>
-                <groupId>com.liveperson</groupId>
-                <artifactId>dropwizard-websockets</artifactId>
-                <version>1.3.2</version>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-util</artifactId>
+                <version>${dropwizard.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>org.java-websocket</groupId>
-                <artifactId>Java-WebSocket</artifactId>
-                <version>1.3.0</version>
+                <groupId>resources.dropwizard</groupId>
+                <artifactId>dropwizard-testing</artifactId>
+                <version>${dropwizard.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>org.eclipse.jetty.websocket</groupId>
-                <artifactId>javax-websocket-server-impl</artifactId>
-                <version>${jetty.version}</version>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-testing</artifactId>
+                <version>${dropwizard.version}</version>
             </dependency>
-
-
-
-            <dependency>
-                <groupId>org.glassfish.jersey.test-framework</groupId>
-                <artifactId>jersey-test-framework-core</artifactId>
-                <version>${jersey.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-                <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
-                <version>${jersey.version}</version>
-                <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>javax.servlet</groupId>
-                        <artifactId>javax.servlet-api</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>junit</groupId>
-                        <artifactId>junit</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-
+            <!-- Complementary library -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>2.9.2</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>2.9.1</version>
-            </dependency>
-
-
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.12</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>2.7.22</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.hamcrest</groupId>
-                <artifactId>hamcrest-all</artifactId>
-                <version>1.3</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.hamcrest</groupId>
-                <artifactId>hamcrest-core</artifactId>
-                <version>1.3</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.greghaskins</groupId>
-                <artifactId>spectrum</artifactId>
-                <version>1.1.0</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>io.rest-assured</groupId>
-                <artifactId>rest-assured</artifactId>
-                <version>3.0.3</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.npathai</groupId>
-                <artifactId>hamcrest-optional</artifactId>
-                <version>2.0.0</version>
-                <scope>test</scope>
-            </dependency>
+            <!-- Test Libraries -->
 
             <dependency>
                 <groupId>com.github.tomakehurst</groupId>
@@ -374,14 +226,62 @@
                 <version>2.23.2</version>
                 <scope>test</scope>
             </dependency>
-
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-core</artifactId>
+                <version>1.0-groovy-2.4</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>2.4.7</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency> <!-- enables mocking of classes (in addition to interfaces) -->
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>1.6.5</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency> <!-- enables mocking of classes without default constructor (together with
+                         CGLIB) -->
+                <groupId>org.objenesis</groupId>
+                <artifactId>objenesis</artifactId>
+                <version>2.5.1</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
 
     <repositories>
-        </repositories>
+        <repository>
+            <id>cise-mvn-repo.embedded.snapshots</id>
+            <url>file://${project.basedir}/cise-mvn-repo/snapshots</url>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+                <enabled>true</enabled>
+                <checksumPolicy>ignore</checksumPolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
 
+        <repository>
+            <id>cise-mvn-repo.embedded.releases</id>
+            <url>file://${project.basedir}/cise-mvn-repo/releases</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 
     <profiles>

@@ -1,0 +1,32 @@
+{
+  "services": [  {"serviceName":"ActionService", "contentTypes":["Action"]},
+    {"serviceName":"AgentService","contentTypes":["Agent", "Person and Organization"]},
+    {"serviceName":"AircraftService","contentTypes":["Aircraft"]},
+    {"serviceName":"AnomalyService","contentTypes":["Anomaly"]},
+    {"serviceName":"CargoDocumentService","contentTypes":["CargoDocument"]},
+    {"serviceName":"CargoService","contentTypes":["Cargo"]},
+    {"serviceName":"CertificateDocumentService","contentTypes":["CertificateDocument"]},
+    {"serviceName":"CrisisIncident","contentTypes":["CrisisIncident"]},
+    {"serviceName":"DocumentService","contentTypes":["Document", "Stream"]},
+    {"serviceName":"EventDocumentService","contentTypes":["EventDocument"]},
+    {"serviceName":"IncidentService","contentTypes":["Incident"]},
+    {"serviceName":"IrregularMigrationIncidentService","contentTypes":["IrregularMigrationIncident"]},
+    {"serviceName":"LandVehicleService","contentTypes":["LandVehicle"]},
+    {"serviceName":"LawInfringementIncidentService","contentTypes":["LawInfringementIncident"]},
+    {"serviceName":"LocationService","contentTypes":["Location", "PortLocation", "PortFacilityLocation", "NamedLocation"]},
+    {"serviceName":"LocationDocumentService","contentTypes":["LocationDocument"]},
+    {"serviceName":"MaritimeSafetyIncidentService","contentTypes":["MaritimeSafetyIncident"]},
+    {"serviceName":"MeteoOceanographicConditionService","contentTypes":["MeteoOceanographicCondition"]},
+    {"serviceName":"MovementService","contentTypes":["Movement"]},
+    {"serviceName":"OperationalAssetService","contentTypes":["OperationalAsset"]},
+    {"serviceName":"OrganizationService","contentTypes":["Organization", "PortOrganization", "OrganizationalUnit", "OrganizationalCollaboration", "FormalOrganization"]},
+    {"serviceName":"OrganizationDocumentService","contentTypes":["OrganizationDocument"]},
+    {"serviceName":"PersonService","contentTypes":["Person"]},
+    {"serviceName":"PersonDocumentService","contentTypes":["PersonDocument"]},
+    {"serviceName":"RiskDocumentService","contentTypes":["RiskDocument"]},
+    {"serviceName":"RiskService","contentTypes":["Risk"]},
+    {"serviceName":"VesselDocumentService","contentTypes":["VesselDocument"]},
+    {"serviceName":"VesselService","contentTypes":["Vessel"]}
+  ]
+
+}
