@@ -1,0 +1,36 @@
+signature.OnReceive: false
+signature.OnSend: true
+signature.keyStoreFileName: ./conf/keyStore.jks
+signature.keyStorePassword: cisecise
+signature.certificateKey: sim1-node01.node01.eucise.fr
+signature.certificatePassword: cisecise
+signature.counterpartCertificateKey: cisecise
+signature.counterpartCertificateKeyPassword:
+
+
+operation.mode: EGN
+operation.publishedId: fr.main.sim-egn
+operation.serviceMode: REST
+operation.counterpartUrl: http://localhost:18080/sim-EGN/rest/CISEMessageServiceREST
+operation.outputDirectory: ./tmp/
+operation.inputDirectory: ./tmp/
+operation.sourceMessageDir: ./xmlmessages/
+operation.sourcePayloadDir: ./xmlpayloads/
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 18080
+
+logging:
+  level: INFO
+  loggers:
+    "eu.europa.ec.jrc.marex.cli.clientCustomCommand": INFO
+    "eu.europa.ec.jrc.marex.resource.InboundRESTMessageService": INFO
+  appenders:
+    - type: console
+      threshold: ALL
+      queueSize: 512
+      discardingThreshold: 0
+      timeZone: UTC
+      target: stdout

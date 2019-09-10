@@ -1,0 +1,10 @@
+version: 1.0
+params:
+  dateFormat: dd.MM.yyyy  # default 'dateFormat' for all 'date' dataType
+result:
+  type: object
+  path: /services/*
+  fields:
+    serviceName: default
+    contentTypes:
+      type: array

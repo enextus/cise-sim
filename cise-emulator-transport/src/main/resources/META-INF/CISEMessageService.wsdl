@@ -1,0 +1,1593 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://www.cise.eu/accesspoint/service/v1/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+                  name="CISEMessageService" targetNamespace="http://www.cise.eu/accesspoint/service/v1/">
+  <wsdl:types>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/service/"
+           xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://www.cise.eu/servicemodel/v1/authority/" targetNamespace="http://www.cise.eu/servicemodel/v1/service/" version="1.0">
+
+  
+  <xs:import namespace="http://www.cise.eu/servicemodel/v1/authority/"/>
+
+  
+  <xs:element name="Service" type="tns:Service"/>
+
+  
+  <xs:element name="ServiceProfile" type="tns:ServiceProfile"/>
+
+  
+  <xs:element name="SubscriptionCapability" type="tns:SubscriptionCapability"/>
+
+  
+  <xs:complexType name="Service">
+    
+    <xs:sequence>
+      
+      <xs:element minOccurs="0" name="DataFreshness" type="tns:DataFreshnessType"/>
+      
+      <xs:element minOccurs="0" name="SeaBasin" type="ns1:SeaBasinType"/>
+      
+      <xs:element name="ServiceID" type="xs:string"/>
+      
+      <xs:element name="ServiceOperation" type="tns:ServiceOperationType"/>
+      
+      <xs:element minOccurs="0" name="ServiceRole" type="tns:ServiceRoleType"/>
+      
+      <xs:element minOccurs="0" name="ServiceStatus" type="tns:ServiceStatusType"/>
+      
+      <xs:element minOccurs="0" name="ServiceType" type="tns:ServiceType"/>
+      
+      <xs:element minOccurs="0" name="Participant" type="ns1:Participant"/>
+      
+      <xs:element minOccurs="0" name="ServiceCapability" type="tns:ServiceCapability"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="ServiceCapability">
+    
+    <xs:sequence>
+      
+      <xs:element minOccurs="0" name="ExpectedResponseTime" type="xs:int"/>
+      
+      <xs:element minOccurs="0" name="MaxEntitiesPerMsg" type="xs:int"/>
+      
+      <xs:element minOccurs="0" name="MaxNumberOfRequests" type="xs:int"/>
+      
+      <xs:element minOccurs="0" name="QueryByExampleType" type="tns:QueryByExampleType"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="SubscriptionCapability">
+    
+    <xs:complexContent>
+      
+      <xs:extension base="tns:ServiceCapability">
+        
+        <xs:sequence>
+          
+          <xs:element minOccurs="0" name="MaxFrequency" type="xs:duration"/>
+          
+          <xs:element minOccurs="0" name="RefreshRate" type="xs:duration"/>
+          
+          <xs:element minOccurs="0" name="SubscriptionEnd" type="xs:dateTime"/>
+        
+        </xs:sequence>
+      
+      </xs:extension>
+    
+    </xs:complexContent>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="ServiceProfile">
+    
+    <xs:sequence>
+      
+      <xs:element minOccurs="0" name="Community" type="ns1:CommunityType"/>
+      
+      <xs:element minOccurs="0" name="Country" type="ns1:CountryType"/>
+      
+      <xs:element minOccurs="0" name="DataFreshness" type="tns:DataFreshnessType"/>
+      
+      <xs:element minOccurs="0" name="Function" type="ns1:FunctionType"/>
+      
+      <xs:element minOccurs="0" name="SeaBasin" type="ns1:SeaBasinType"/>
+      
+      <xs:element minOccurs="0" name="ServiceID" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="ServiceOperation" type="tns:ServiceOperationType"/>
+      
+      <xs:element minOccurs="0" name="ServiceRole" type="tns:ServiceRoleType"/>
+      
+      <xs:element minOccurs="0" name="ServiceType" type="tns:ServiceType"/>
+      
+      <xs:element minOccurs="0" name="ServiceStatus" type="tns:ServiceStatusType"/>
+      
+      <xs:element minOccurs="0" name="ServiceCapability" type="tns:ServiceCapability"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:simpleType name="DataFreshnessType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="Historic"/>
+      
+      <xs:enumeration value="RealTime"/>
+      
+      <xs:enumeration value="NearlyRealTime"/>
+      
+      <xs:enumeration value="Unknown"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="ServiceOperationType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="Pull"/>
+      
+      <xs:enumeration value="Push"/>
+      
+      <xs:enumeration value="Subscribe"/>
+      
+      <xs:enumeration value="Acknowledgement"/>
+      
+      <xs:enumeration value="Feedback"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="ServiceRoleType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="Consumer"/>
+      
+      <xs:enumeration value="Provider"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="ServiceStatusType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="Draft"/>
+      
+      <xs:enumeration value="Online"/>
+      
+      <xs:enumeration value="Maintenance"/>
+      
+      <xs:enumeration value="Deprecated"/>
+      
+      <xs:enumeration value="Offline"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="ServiceType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="ActionService"/>
+      
+      <xs:enumeration value="AgentService"/>
+      
+      <xs:enumeration value="AircraftService"/>
+      
+      <xs:enumeration value="AnomalyService"/>
+      
+      <xs:enumeration value="CargoDocumentService"/>
+      
+      <xs:enumeration value="CargoService"/>
+      
+      <xs:enumeration value="CertificateDocumentService"/>
+      
+      <xs:enumeration value="CrisisIncidentService"/>
+      
+      <xs:enumeration value="DocumentService"/>
+      
+      <xs:enumeration value="EventDocumentService"/>
+      
+      <xs:enumeration value="IncidentService"/>
+      
+      <xs:enumeration value="IrregularMigrationIncidentService"/>
+      
+      <xs:enumeration value="LandVehicleService"/>
+      
+      <xs:enumeration value="LawInfringementIncidentService"/>
+      
+      <xs:enumeration value="LocationService"/>
+      
+      <xs:enumeration value="LocationDocumentService"/>
+      
+      <xs:enumeration value="MaritimeSafetyIncidentService"/>
+      
+      <xs:enumeration value="MeteoOceanographicConditionService"/>
+      
+      <xs:enumeration value="MovementService"/>
+      
+      <xs:enumeration value="OperationalAssetService"/>
+      
+      <xs:enumeration value="OrganizationService"/>
+      
+      <xs:enumeration value="OrganizationDocumentService"/>
+      
+      <xs:enumeration value="PersonService"/>
+      
+      <xs:enumeration value="PersonDocumentService"/>
+      
+      <xs:enumeration value="RiskDocumentService"/>
+      
+      <xs:enumeration value="RiskService"/>
+      
+      <xs:enumeration value="VesselDocumentService"/>
+      
+      <xs:enumeration value="VesselService"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="QueryByExampleType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="BestEffort"/>
+      
+      <xs:enumeration value="ExactSearch"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+
+</xs:schema>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/message/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns1="http://www.cise.eu/servicemodel/v1/service/" targetNamespace="http://www.cise.eu/servicemodel/v1/message/" version="1.0">
+
+  
+  <xs:import namespace="http://www.cise.eu/servicemodel/v1/service/"/>
+
+  
+  <xs:import namespace="http://www.cise.eu/servicemodel/v1/authority/"/>
+
+  
+  <xs:element name="Acknowledgement" type="tns:Acknowledgement"/>
+
+  
+  <xs:element name="EncryptedEntityPayload" type="tns:EncryptedEntityPayload"/>
+
+  
+  <xs:element name="Feedback" type="tns:Feedback"/>
+
+  
+  <xs:element name="PullRequest" type="tns:PullRequest"/>
+
+  
+  <xs:element name="PullResponse" type="tns:PullResponse"/>
+
+  
+  <xs:element name="Push" type="tns:Push"/>
+
+  
+  <xs:element name="ReliabilityProfile" type="tns:ReliabilityProfile"/>
+
+  
+  <xs:element name="XmlEntityPayload" type="tns:XmlEntityPayload"/>
+
+  
+  <xs:complexType abstract="true" name="Message">
+    
+    <xs:sequence>
+      
+      <xs:element minOccurs="0" name="ContextID" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="CorrelationID" type="xs:string"/>
+      
+      <xs:element name="CreationDateTime" type="xs:dateTime"/>
+      
+      <xs:element name="MessageID" type="xs:string"/>
+      
+      <xs:element name="Priority" type="tns:PriorityType"/>
+      
+      <xs:element minOccurs="0" name="RequiresAck" type="xs:boolean"/>
+      
+      <xs:element name="Sender" type="ns1:Service"/>
+      
+      <xs:element minOccurs="0" name="Recipient" type="ns1:Service"/>
+      
+      <xs:element minOccurs="0" name="Payload" type="tns:CoreEntityPayload"/>
+      
+      <xs:element minOccurs="0" name="Reliability" type="tns:ReliabilityProfile"/>
+      
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="CcRecipients" type="ns1:Service"/>
+      
+      <xs:any namespace="##other" processContents="skip"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType abstract="true" name="CoreEntityPayload">
+    
+    <xs:sequence>
+      
+      <xs:element name="InformationSecurityLevel" type="tns:InformationSecurityLevelType"/>
+      
+      <xs:element name="InformationSensitivity" type="tns:InformationSensitivityType"/>
+      
+      <xs:element minOccurs="0" name="IsPersonalData" type="xs:boolean"/>
+      
+      <xs:element name="Purpose" type="tns:PurposeType"/>
+      
+      <xs:element minOccurs="0" name="RetentionPeriod" type="xs:dateTime"/>
+      
+      <xs:element minOccurs="0" name="EnsureEncryption" type="xs:boolean"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="XmlEntityPayload">
+    
+    <xs:complexContent>
+      
+      <xs:extension base="tns:CoreEntityPayload">
+        
+        <xs:sequence>
+          
+          <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+        
+        </xs:sequence>
+      
+      </xs:extension>
+    
+    </xs:complexContent>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="EncryptedEntityPayload">
+    
+    <xs:complexContent>
+      
+      <xs:extension base="tns:CoreEntityPayload">
+        
+        <xs:sequence>
+          
+          <xs:element name="Entities" type="xs:string"/>
+        
+        </xs:sequence>
+      
+      </xs:extension>
+    
+    </xs:complexContent>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="ReliabilityProfile">
+    
+    <xs:sequence>
+      
+      <xs:element name="RetryStrategy" type="tns:RetryStrategyType"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="Push">
+    
+    <xs:complexContent>
+      
+      <xs:extension base="tns:Message">
+        
+        <xs:sequence>
+          
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DiscoveryProfiles" type="ns1:ServiceProfile"/>
+        
+        </xs:sequence>
+      
+      </xs:extension>
+    
+    </xs:complexContent>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="PullResponse">
+    
+    <xs:complexContent>
+      
+      <xs:extension base="tns:Message">
+        
+        <xs:sequence>
+          
+          <xs:element minOccurs="0" name="ErrorDetail" type="xs:string"/>
+          
+          <xs:element name="ResultCode" type="tns:ResponseCodeType"/>
+          
+          <xs:element minOccurs="0" name="Fulfils" type="ns1:ServiceCapability"/>
+        
+        </xs:sequence>
+      
+      </xs:extension>
+    
+    </xs:complexContent>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="PullRequest">
+    
+    <xs:complexContent>
+      
+      <xs:extension base="tns:Message">
+        
+        <xs:sequence>
+          
+          <xs:element name="PullType" type="tns:PullType"/>
+          
+          <xs:element minOccurs="0" name="ResponseTimeOut" type="xs:int"/>
+          
+          <xs:element minOccurs="0" name="Requests" type="ns1:ServiceCapability"/>
+          
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DiscoveryProfiles" type="ns1:ServiceProfile"/>
+          
+          <xs:element minOccurs="0" name="PayloadSelector" type="tns:PayloadSelector"/>
+        
+        </xs:sequence>
+      
+      </xs:extension>
+    
+    </xs:complexContent>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="PayloadSelector">
+    
+    <xs:sequence>
+      
+      <xs:element maxOccurs="unbounded" name="Selectors" type="tns:SelectorCondition"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="SelectorCondition">
+    
+    <xs:sequence>
+      
+      <xs:element name="Selector" type="xs:string"/>
+      
+      <xs:element name="Operator" type="tns:ConditionOperatorType"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="Feedback">
+    
+    <xs:complexContent>
+      
+      <xs:extension base="tns:Message">
+        
+        <xs:sequence>
+          
+          <xs:element name="FeedbackType" type="tns:FeedbackType"/>
+          
+          <xs:element minOccurs="0" name="Reason" type="xs:string"/>
+          
+          <xs:element name="RefMessageID" type="xs:string"/>
+        
+        </xs:sequence>
+      
+      </xs:extension>
+    
+    </xs:complexContent>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="Acknowledgement">
+    
+    <xs:complexContent>
+      
+      <xs:extension base="tns:Message">
+        
+        <xs:sequence>
+          
+          <xs:element name="AckCode" type="tns:AcknowledgementType"/>
+          
+          <xs:element minOccurs="0" name="AckDetail" type="xs:string"/>
+          
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DiscoveredServices" type="ns1:Service"/>
+        
+        </xs:sequence>
+      
+      </xs:extension>
+    
+    </xs:complexContent>
+  
+  </xs:complexType>
+
+  
+  <xs:simpleType name="PriorityType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="Low"/>
+      
+      <xs:enumeration value="Medium"/>
+      
+      <xs:enumeration value="High"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="InformationSecurityLevelType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="EUTopSecret"/>
+      
+      <xs:enumeration value="EUSecret"/>
+      
+      <xs:enumeration value="EUConfidential"/>
+      
+      <xs:enumeration value="EURestricted"/>
+      
+      <xs:enumeration value="NonClassified"/>
+      
+      <xs:enumeration value="NonSpecified"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="InformationSensitivityType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="Red"/>
+      
+      <xs:enumeration value="Amber"/>
+      
+      <xs:enumeration value="Green"/>
+      
+      <xs:enumeration value="White"/>
+      
+      <xs:enumeration value="NonSpecified"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="PurposeType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="VTM"/>
+      
+      <xs:enumeration value="Safety"/>
+      
+      <xs:enumeration value="Security"/>
+      
+      <xs:enumeration value="SAR"/>
+      
+      <xs:enumeration value="Operation"/>
+      
+      <xs:enumeration value="FisheriesWarning"/>
+      
+      <xs:enumeration value="FisheriesMonitoring"/>
+      
+      <xs:enumeration value="FisheriesOperation"/>
+      
+      <xs:enumeration value="EnvironmentMonitoring"/>
+      
+      <xs:enumeration value="EnvironmentWarning"/>
+      
+      <xs:enumeration value="EnvironmentResponse"/>
+      
+      <xs:enumeration value="CustomsMonitoring"/>
+      
+      <xs:enumeration value="CustomsOperation"/>
+      
+      <xs:enumeration value="BorderMonitoring"/>
+      
+      <xs:enumeration value="BorderOperation"/>
+      
+      <xs:enumeration value="LawEnforcementMonitoring"/>
+      
+      <xs:enumeration value="LawEnforcementOperation"/>
+      
+      <xs:enumeration value="DefenceMonitoring"/>
+      
+      <xs:enumeration value="CounterTerrorism"/>
+      
+      <xs:enumeration value="CSDPTask"/>
+      
+      <xs:enumeration value="NonSpecified"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="RetryStrategyType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="NoRetry"/>
+      
+      <xs:enumeration value="LowReliability"/>
+      
+      <xs:enumeration value="HighReliability"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="ResponseCodeType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="Success"/>
+      
+      <xs:enumeration value="EndPointNotFound"/>
+      
+      <xs:enumeration value="SecurityError"/>
+      
+      <xs:enumeration value="InternalGatewayFault"/>
+      
+      <xs:enumeration value="InvalidRequestObject"/>
+      
+      <xs:enumeration value="Unauthorized"/>
+      
+      <xs:enumeration value="BadRequest"/>
+      
+      <xs:enumeration value="ServiceTypeNotSupported"/>
+      
+      <xs:enumeration value="EntityTypeNotAccepted"/>
+      
+      <xs:enumeration value="ObjectTypeNotAccepted"/>
+      
+      <xs:enumeration value="ServerError"/>
+      
+      <xs:enumeration value="TimestampError"/>
+      
+      <xs:enumeration value="AuthenticationError"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="PullType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="GetSubscribers"/>
+      
+      <xs:enumeration value="Discover"/>
+      
+      <xs:enumeration value="Request"/>
+      
+      <xs:enumeration value="Subscribe"/>
+      
+      <xs:enumeration value="Unsubscribe"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="ConditionOperatorType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="EQUAL"/>
+      
+      <xs:enumeration value="NOT_EQUAL"/>
+      
+      <xs:enumeration value="LIKE"/>
+      
+      <xs:enumeration value="NOT_LIKE"/>
+      
+      <xs:enumeration value="IS_NULL"/>
+      
+      <xs:enumeration value="GREATER_THAN"/>
+      
+      <xs:enumeration value="GREATER_THAN_OR_EQUAL_TO"/>
+      
+      <xs:enumeration value="LESS_THAN"/>
+      
+      <xs:enumeration value="LESS_THAN_OR_EQUAL_TO"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="FeedbackType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="info"/>
+      
+      <xs:enumeration value="delete"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="AcknowledgementType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="Success"/>
+      
+      <xs:enumeration value="EndPointNotFound"/>
+      
+      <xs:enumeration value="SecurityError"/>
+      
+      <xs:enumeration value="InternalGatewayFault"/>
+      
+      <xs:enumeration value="InvalidRequestObject"/>
+      
+      <xs:enumeration value="Unauthorized"/>
+      
+      <xs:enumeration value="BadRequest"/>
+      
+      <xs:enumeration value="ServiceTypeNotSupported"/>
+      
+      <xs:enumeration value="EntityTypeNotAccepted"/>
+      
+      <xs:enumeration value="ObjectTypeNotAccepted"/>
+      
+      <xs:enumeration value="ServerError"/>
+      
+      <xs:enumeration value="TimestampError"/>
+      
+      <xs:enumeration value="AuthenticationError"/>
+      
+      <xs:enumeration value="NetworkError"/>
+      
+      <xs:enumeration value="ServiceManagerError"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+
+</xs:schema>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/authority/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" targetNamespace="http://www.cise.eu/servicemodel/v1/authority/" version="1.0">
+
+  
+  <xs:element name="Gateway" type="tns:Gateway"/>
+
+  
+  <xs:element name="Participant" type="tns:Participant"/>
+
+  
+  <xs:element name="PointOfContact" type="tns:PointOfContact"/>
+
+  
+  <xs:complexType name="Participant">
+    
+    <xs:sequence>
+      
+      <xs:element minOccurs="0" name="Id" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="Name" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="Description" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="ClassificationLevel" type="tns:ClassificationLevelType"/>
+      
+      <xs:element minOccurs="0" name="EndpointUrl" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="EndpointType" type="tns:EndpointType"/>
+      
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ProvidedServicesIds" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="Gateway" type="tns:Gateway"/>
+      
+      <xs:element minOccurs="0" name="Owner" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="PointOfContact" type="tns:PointOfContact"/>
+      
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="AreasOfInterest" type="tns:SeaBasinType"/>
+      
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Communities" type="tns:CommunityType"/>
+      
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Functions" type="tns:FunctionType"/>
+      
+      <xs:element minOccurs="0" name="MemberState" type="tns:CountryType"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="Gateway">
+    
+    <xs:sequence>
+      
+      <xs:element minOccurs="0" name="Id" type="xs:string"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:complexType name="PointOfContact">
+    
+    <xs:sequence>
+      
+      <xs:element minOccurs="0" name="Name" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="Surname" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="Address" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="Telephone" type="xs:string"/>
+      
+      <xs:element minOccurs="0" name="Email" type="xs:string"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+  
+  <xs:simpleType name="SeaBasinType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="Atlantic"/>
+      
+      <xs:enumeration value="BalticSea"/>
+      
+      <xs:enumeration value="NorthSea"/>
+      
+      <xs:enumeration value="Mediterranean"/>
+      
+      <xs:enumeration value="BlackSea"/>
+      
+      <xs:enumeration value="OutermostRegions"/>
+      
+      <xs:enumeration value="ArcticOcean"/>
+      
+      <xs:enumeration value="NonSpecified"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="ClassificationLevelType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="Unclassified"/>
+      
+      <xs:enumeration value="EURestricted"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="EndpointType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="REST"/>
+      
+      <xs:enumeration value="SOAP"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="CommunityType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="GeneralLawEnforcement"/>
+      
+      <xs:enumeration value="Customs"/>
+      
+      <xs:enumeration value="MarineEnvironment"/>
+      
+      <xs:enumeration value="MaritimeSafetySecurity"/>
+      
+      <xs:enumeration value="DefenceMonitoring"/>
+      
+      <xs:enumeration value="FisheriesControl"/>
+      
+      <xs:enumeration value="BorderControl"/>
+      
+      <xs:enumeration value="Other"/>
+      
+      <xs:enumeration value="NonSpecified"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="FunctionType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="VTM"/>
+      
+      <xs:enumeration value="Safety"/>
+      
+      <xs:enumeration value="Security"/>
+      
+      <xs:enumeration value="SAR"/>
+      
+      <xs:enumeration value="Operation"/>
+      
+      <xs:enumeration value="FisheriesWarning"/>
+      
+      <xs:enumeration value="FisheriesMonitoring"/>
+      
+      <xs:enumeration value="FisheriesOperation"/>
+      
+      <xs:enumeration value="EnvironmentMonitoring"/>
+      
+      <xs:enumeration value="EnvironmentWarning"/>
+      
+      <xs:enumeration value="EnvironmentResponse"/>
+      
+      <xs:enumeration value="CustomsMonitoring"/>
+      
+      <xs:enumeration value="CustomsOperation"/>
+      
+      <xs:enumeration value="BorderMonitoring"/>
+      
+      <xs:enumeration value="BorderOperation"/>
+      
+      <xs:enumeration value="LawEnforcementMonitoring"/>
+      
+      <xs:enumeration value="LawEnforcementOperation"/>
+      
+      <xs:enumeration value="DefenceMonitoring"/>
+      
+      <xs:enumeration value="CounterTerrorism"/>
+      
+      <xs:enumeration value="CSDPTask"/>
+      
+      <xs:enumeration value="NonSpecified"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+  
+  <xs:simpleType name="CountryType">
+    
+    <xs:restriction base="xs:string">
+      
+      <xs:enumeration value="AF"/>
+      
+      <xs:enumeration value="AX"/>
+      
+      <xs:enumeration value="AL"/>
+      
+      <xs:enumeration value="DZ"/>
+      
+      <xs:enumeration value="AS"/>
+      
+      <xs:enumeration value="AD"/>
+      
+      <xs:enumeration value="AO"/>
+      
+      <xs:enumeration value="AI"/>
+      
+      <xs:enumeration value="AQ"/>
+      
+      <xs:enumeration value="AG"/>
+      
+      <xs:enumeration value="AR"/>
+      
+      <xs:enumeration value="AM"/>
+      
+      <xs:enumeration value="AW"/>
+      
+      <xs:enumeration value="AU"/>
+      
+      <xs:enumeration value="AT"/>
+      
+      <xs:enumeration value="AZ"/>
+      
+      <xs:enumeration value="BS"/>
+      
+      <xs:enumeration value="BH"/>
+      
+      <xs:enumeration value="BD"/>
+      
+      <xs:enumeration value="BB"/>
+      
+      <xs:enumeration value="BY"/>
+      
+      <xs:enumeration value="BE"/>
+      
+      <xs:enumeration value="BZ"/>
+      
+      <xs:enumeration value="BJ"/>
+      
+      <xs:enumeration value="BM"/>
+      
+      <xs:enumeration value="BT"/>
+      
+      <xs:enumeration value="BO"/>
+      
+      <xs:enumeration value="BQ"/>
+      
+      <xs:enumeration value="BA"/>
+      
+      <xs:enumeration value="BW"/>
+      
+      <xs:enumeration value="BV"/>
+      
+      <xs:enumeration value="BR"/>
+      
+      <xs:enumeration value="IO"/>
+      
+      <xs:enumeration value="BN"/>
+      
+      <xs:enumeration value="BG"/>
+      
+      <xs:enumeration value="BF"/>
+      
+      <xs:enumeration value="BI"/>
+      
+      <xs:enumeration value="CV"/>
+      
+      <xs:enumeration value="KH"/>
+      
+      <xs:enumeration value="CM"/>
+      
+      <xs:enumeration value="CA"/>
+      
+      <xs:enumeration value="KY"/>
+      
+      <xs:enumeration value="CF"/>
+      
+      <xs:enumeration value="TD"/>
+      
+      <xs:enumeration value="CL"/>
+      
+      <xs:enumeration value="CN"/>
+      
+      <xs:enumeration value="CX"/>
+      
+      <xs:enumeration value="CC"/>
+      
+      <xs:enumeration value="CO"/>
+      
+      <xs:enumeration value="KM"/>
+      
+      <xs:enumeration value="CD"/>
+      
+      <xs:enumeration value="CG"/>
+      
+      <xs:enumeration value="CK"/>
+      
+      <xs:enumeration value="CR"/>
+      
+      <xs:enumeration value="CI"/>
+      
+      <xs:enumeration value="HR"/>
+      
+      <xs:enumeration value="CU"/>
+      
+      <xs:enumeration value="CW"/>
+      
+      <xs:enumeration value="CY"/>
+      
+      <xs:enumeration value="CZ"/>
+      
+      <xs:enumeration value="DK"/>
+      
+      <xs:enumeration value="DJ"/>
+      
+      <xs:enumeration value="DM"/>
+      
+      <xs:enumeration value="DO"/>
+      
+      <xs:enumeration value="EC"/>
+      
+      <xs:enumeration value="EG"/>
+      
+      <xs:enumeration value="SV"/>
+      
+      <xs:enumeration value="GQ"/>
+      
+      <xs:enumeration value="ER"/>
+      
+      <xs:enumeration value="EE"/>
+      
+      <xs:enumeration value="ET"/>
+      
+      <xs:enumeration value="FK"/>
+      
+      <xs:enumeration value="FO"/>
+      
+      <xs:enumeration value="FJ"/>
+      
+      <xs:enumeration value="FI"/>
+      
+      <xs:enumeration value="FR"/>
+      
+      <xs:enumeration value="GF"/>
+      
+      <xs:enumeration value="PF"/>
+      
+      <xs:enumeration value="TF"/>
+      
+      <xs:enumeration value="GA"/>
+      
+      <xs:enumeration value="GM"/>
+      
+      <xs:enumeration value="GE"/>
+      
+      <xs:enumeration value="DE"/>
+      
+      <xs:enumeration value="GH"/>
+      
+      <xs:enumeration value="GI"/>
+      
+      <xs:enumeration value="GR"/>
+      
+      <xs:enumeration value="GL"/>
+      
+      <xs:enumeration value="GD"/>
+      
+      <xs:enumeration value="GP"/>
+      
+      <xs:enumeration value="GU"/>
+      
+      <xs:enumeration value="GT"/>
+      
+      <xs:enumeration value="GG"/>
+      
+      <xs:enumeration value="GN"/>
+      
+      <xs:enumeration value="GW"/>
+      
+      <xs:enumeration value="GY"/>
+      
+      <xs:enumeration value="HT"/>
+      
+      <xs:enumeration value="HM"/>
+      
+      <xs:enumeration value="VA"/>
+      
+      <xs:enumeration value="HN"/>
+      
+      <xs:enumeration value="HK"/>
+      
+      <xs:enumeration value="HU"/>
+      
+      <xs:enumeration value="IS"/>
+      
+      <xs:enumeration value="IN"/>
+      
+      <xs:enumeration value="ID"/>
+      
+      <xs:enumeration value="IR"/>
+      
+      <xs:enumeration value="IQ"/>
+      
+      <xs:enumeration value="IE"/>
+      
+      <xs:enumeration value="IM"/>
+      
+      <xs:enumeration value="IL"/>
+      
+      <xs:enumeration value="IT"/>
+      
+      <xs:enumeration value="JM"/>
+      
+      <xs:enumeration value="JP"/>
+      
+      <xs:enumeration value="JE"/>
+      
+      <xs:enumeration value="JO"/>
+      
+      <xs:enumeration value="KZ"/>
+      
+      <xs:enumeration value="KE"/>
+      
+      <xs:enumeration value="KI"/>
+      
+      <xs:enumeration value="KP"/>
+      
+      <xs:enumeration value="KR"/>
+      
+      <xs:enumeration value="KW"/>
+      
+      <xs:enumeration value="KG"/>
+      
+      <xs:enumeration value="LA"/>
+      
+      <xs:enumeration value="LV"/>
+      
+      <xs:enumeration value="LB"/>
+      
+      <xs:enumeration value="LS"/>
+      
+      <xs:enumeration value="LR"/>
+      
+      <xs:enumeration value="LY"/>
+      
+      <xs:enumeration value="LI"/>
+      
+      <xs:enumeration value="LT"/>
+      
+      <xs:enumeration value="LU"/>
+      
+      <xs:enumeration value="MO"/>
+      
+      <xs:enumeration value="MK"/>
+      
+      <xs:enumeration value="MG"/>
+      
+      <xs:enumeration value="MW"/>
+      
+      <xs:enumeration value="MY"/>
+      
+      <xs:enumeration value="MV"/>
+      
+      <xs:enumeration value="ML"/>
+      
+      <xs:enumeration value="MT"/>
+      
+      <xs:enumeration value="MH"/>
+      
+      <xs:enumeration value="MQ"/>
+      
+      <xs:enumeration value="MR"/>
+      
+      <xs:enumeration value="MU"/>
+      
+      <xs:enumeration value="YT"/>
+      
+      <xs:enumeration value="MX"/>
+      
+      <xs:enumeration value="FM"/>
+      
+      <xs:enumeration value="MD"/>
+      
+      <xs:enumeration value="MC"/>
+      
+      <xs:enumeration value="MN"/>
+      
+      <xs:enumeration value="ME"/>
+      
+      <xs:enumeration value="MS"/>
+      
+      <xs:enumeration value="MA"/>
+      
+      <xs:enumeration value="MZ"/>
+      
+      <xs:enumeration value="MM"/>
+      
+      <xs:enumeration value="NA"/>
+      
+      <xs:enumeration value="NR"/>
+      
+      <xs:enumeration value="NP"/>
+      
+      <xs:enumeration value="NL"/>
+      
+      <xs:enumeration value="NC"/>
+      
+      <xs:enumeration value="NZ"/>
+      
+      <xs:enumeration value="NI"/>
+      
+      <xs:enumeration value="NE"/>
+      
+      <xs:enumeration value="NG"/>
+      
+      <xs:enumeration value="NU"/>
+      
+      <xs:enumeration value="NF"/>
+      
+      <xs:enumeration value="MP"/>
+      
+      <xs:enumeration value="NO"/>
+      
+      <xs:enumeration value="OM"/>
+      
+      <xs:enumeration value="PK"/>
+      
+      <xs:enumeration value="PW"/>
+      
+      <xs:enumeration value="PS"/>
+      
+      <xs:enumeration value="PA"/>
+      
+      <xs:enumeration value="PG"/>
+      
+      <xs:enumeration value="PY"/>
+      
+      <xs:enumeration value="PE"/>
+      
+      <xs:enumeration value="PH"/>
+      
+      <xs:enumeration value="PN"/>
+      
+      <xs:enumeration value="PL"/>
+      
+      <xs:enumeration value="PT"/>
+      
+      <xs:enumeration value="PR"/>
+      
+      <xs:enumeration value="QA"/>
+      
+      <xs:enumeration value="RE"/>
+      
+      <xs:enumeration value="RO"/>
+      
+      <xs:enumeration value="RU"/>
+      
+      <xs:enumeration value="RW"/>
+      
+      <xs:enumeration value="BL"/>
+      
+      <xs:enumeration value="SH"/>
+      
+      <xs:enumeration value="KN"/>
+      
+      <xs:enumeration value="LC"/>
+      
+      <xs:enumeration value="MF"/>
+      
+      <xs:enumeration value="PM"/>
+      
+      <xs:enumeration value="VC"/>
+      
+      <xs:enumeration value="WS"/>
+      
+      <xs:enumeration value="SM"/>
+      
+      <xs:enumeration value="ST"/>
+      
+      <xs:enumeration value="SA"/>
+      
+      <xs:enumeration value="SN"/>
+      
+      <xs:enumeration value="RS"/>
+      
+      <xs:enumeration value="SC"/>
+      
+      <xs:enumeration value="SL"/>
+      
+      <xs:enumeration value="SG"/>
+      
+      <xs:enumeration value="SX"/>
+      
+      <xs:enumeration value="SK"/>
+      
+      <xs:enumeration value="SI"/>
+      
+      <xs:enumeration value="SB"/>
+      
+      <xs:enumeration value="SO"/>
+      
+      <xs:enumeration value="ZA"/>
+      
+      <xs:enumeration value="GS"/>
+      
+      <xs:enumeration value="SS"/>
+      
+      <xs:enumeration value="ES"/>
+      
+      <xs:enumeration value="LK"/>
+      
+      <xs:enumeration value="SD"/>
+      
+      <xs:enumeration value="SR"/>
+      
+      <xs:enumeration value="SJ"/>
+      
+      <xs:enumeration value="SZ"/>
+      
+      <xs:enumeration value="SE"/>
+      
+      <xs:enumeration value="CH"/>
+      
+      <xs:enumeration value="SY"/>
+      
+      <xs:enumeration value="TW"/>
+      
+      <xs:enumeration value="TJ"/>
+      
+      <xs:enumeration value="TZ"/>
+      
+      <xs:enumeration value="TH"/>
+      
+      <xs:enumeration value="TL"/>
+      
+      <xs:enumeration value="TG"/>
+      
+      <xs:enumeration value="TK"/>
+      
+      <xs:enumeration value="TO"/>
+      
+      <xs:enumeration value="TT"/>
+      
+      <xs:enumeration value="TN"/>
+      
+      <xs:enumeration value="TR"/>
+      
+      <xs:enumeration value="TM"/>
+      
+      <xs:enumeration value="TC"/>
+      
+      <xs:enumeration value="TV"/>
+      
+      <xs:enumeration value="UG"/>
+      
+      <xs:enumeration value="UA"/>
+      
+      <xs:enumeration value="AE"/>
+      
+      <xs:enumeration value="GB"/>
+      
+      <xs:enumeration value="UM"/>
+      
+      <xs:enumeration value="US"/>
+      
+      <xs:enumeration value="UY"/>
+      
+      <xs:enumeration value="UZ"/>
+      
+      <xs:enumeration value="VU"/>
+      
+      <xs:enumeration value="VE"/>
+      
+      <xs:enumeration value="VN"/>
+      
+      <xs:enumeration value="VG"/>
+      
+      <xs:enumeration value="VI"/>
+      
+      <xs:enumeration value="WF"/>
+      
+      <xs:enumeration value="EH"/>
+      
+      <xs:enumeration value="YE"/>
+      
+      <xs:enumeration value="ZM"/>
+      
+      <xs:enumeration value="ZW"/>
+      
+      <xs:enumeration value="EU"/>
+      
+      <xs:enumeration value="RC"/>
+    
+    </xs:restriction>
+  
+  </xs:simpleType>
+
+
+</xs:schema>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/accesspoint/service/v1/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://www.cise.eu/servicemodel/v1/service/" xmlns:ns1="http://www.cise.eu/servicemodel/v1/message/" elementFormDefault="unqualified" targetNamespace="http://www.cise.eu/accesspoint/service/v1/" version="1.0">
+
+  
+  <xs:import namespace="http://www.cise.eu/servicemodel/v1/message/"/>
+
+  
+  <xs:import namespace="http://www.cise.eu/servicemodel/v1/service/"/>
+
+  
+  <xs:element name="message" type="ns1:Message"/>
+
+  
+  <xs:element name="send" type="tns:send"/>
+
+  
+  <xs:element name="sendResponse" type="tns:sendResponse"/>
+
+  
+  <xs:complexType name="send">
+    
+    <xs:sequence>
+      
+      <xs:element minOccurs="0" name="message" type="ns1:Message"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+
+  
+  <xs:complexType name="sendResponse">
+    
+    <xs:sequence>
+      
+      <xs:element minOccurs="0" name="return" type="ns1:Acknowledgement"/>
+    
+    </xs:sequence>
+  
+  </xs:complexType>
+
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sendResponse">
+    <wsdl:part element="tns:sendResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="send">
+    <wsdl:part element="tns:send" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CISEMessageServiceSoapImpl">
+    <wsdl:operation name="send">
+      <wsdl:input message="tns:send" name="send">
+    </wsdl:input>
+      <wsdl:output message="tns:sendResponse" name="sendResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CISEMessageServiceSoapBinding" type="tns:CISEMessageServiceSoapImpl">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="send">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="send">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sendResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CISEMessageService">
+    <wsdl:port binding="tns:CISEMessageServiceSoapBinding" name="CISEMessageServiceSoapPort">
+      <soap:address location="http://localhost:18080/sim-EGN/CISEMessageService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
