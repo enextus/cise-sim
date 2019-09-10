@@ -38,3 +38,5 @@ node_modules
 **/target/**
 target/**
 
+
+/cise-emulator-react/build/

@@ -32,9 +32,6 @@ public class AcknowledgementHelper {
         String serviceSenderDescriptor = "<Sender>\n" +
                 "        <ServiceID>cx.simlsa1-nodecx.vessel.push.provider</ServiceID>\n" +
                 "        <ServiceOperation>Push</ServiceOperation>\n" +
-                "        <ServiceRole>Provider</ServiceRole>\n" +
-                "        <ServiceStatus>Online</ServiceStatus>\n" +
-                "        <ServiceType>VesselService</ServiceType>\n" +
                 "</Sender>";
 
         int positionAckCodeTag = inicialContent.indexOf("<AckCode>");

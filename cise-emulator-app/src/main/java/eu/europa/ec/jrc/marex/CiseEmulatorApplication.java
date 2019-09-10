@@ -70,7 +70,8 @@ public class CiseEmulatorApplication extends Application<CiseEmulatorConfigurati
                 xmlMapper,
                 validator);
         // create the Inbound Service(s) (as server treatment of incoming Cise Platform Messages)
-        InboundService.init(executor);
+        String filenameTemplate = configuration.getInputDirectory() +"/"+ configuration.getPublishedId();
+        InboundService.init(executor,filenameTemplate);
         // create adequate transport to invoke the inbound service
         if (configuration.getServiceMode().toUpperCase().contains("SOAP")  ) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
             Endpoint e = jaxWsBundle.publishEndpoint(

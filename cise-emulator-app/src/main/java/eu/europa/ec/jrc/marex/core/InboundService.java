@@ -13,12 +13,14 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 public class InboundService {
-    private static Executor preparedConfiguration = null;
-    private static final AcknowledgementHelper acknowledgementHelper;
-    private String fileNameTemplate;
-    XmlMapper xmlMapper = new DefaultXmlMapper.Pretty();
-    MessageValidator validator = new MessageValidator();
     private static final org.slf4j.Logger LOGGER;
+    private static final AcknowledgementHelper acknowledgementHelper;
+    private static String fileNameTemplate;
+    private static Executor preparedConfiguration = null;
+
+    private XmlMapper xmlMapper = new DefaultXmlMapper.Pretty();
+    private MessageValidator validator = new MessageValidator();
+
 
     public static final String ERROR = "ERROR";
     public static final String ACK = "ACK";
@@ -32,8 +34,9 @@ public class InboundService {
     public InboundService() {
     }
 
-    public static void  init(Executor ConfiguredDelegate) {
+    public static void  init(Executor ConfiguredDelegate, String filenametemplate) {
         preparedConfiguration = ConfiguredDelegate;
+        fileNameTemplate = filenametemplate;
     }
 
     public Acknowledgement Receive(Message message) {
@@ -54,11 +57,10 @@ public class InboundService {
         if (validResult.isOkEntity()==false) {
             ackMessage = preparedConfiguration.AcknowledgmentFailMessage(inputXmlMessage, "BAD_REQUEST", "content could not be validated as Entity");
             filePost=ERROR;
-        }else if (preparedConfiguration.getConfig().getSignatureOnReceive().equals("true") && validResult.isOkSignedEntity()==false){
+        } else if (preparedConfiguration.getConfig().getSignatureOnReceive().equals("true") && validResult.isOkSignedEntity()==false) {
             ackMessage =  preparedConfiguration.AcknowledgmentFailMessage(inputXmlMessage,"SECURITY_ERROR","signature error");
             filePost= ERROR;
-        }
-        else{
+        } else {
             ackMessage = preparedConfiguration.AcknowledgmentSuccessMessage(inputXmlMessage);
         }
 

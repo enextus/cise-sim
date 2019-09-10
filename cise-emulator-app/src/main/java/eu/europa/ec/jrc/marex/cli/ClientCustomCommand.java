@@ -112,7 +112,6 @@ public class ClientCustomCommand extends Command {
                 emulatorConfig,
                 xmlMapper,
                 validator);
-        String pathDefault = namespace.getString("location");
         Message generatedMessage = executor.LoadMessage(servicefile, payload);
 
         String fileNameTemplate = emulatorConfig.getOutputDirectory() + emulatorConfig.getPublishedId() + "_out";

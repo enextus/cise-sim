@@ -9,7 +9,7 @@ signature.counterpartCertificateKeyPassword: password
 
 operation.mode: EGN
 operation.publishedId: fr.sim-egn
-operation.serviceMode: SOAP
+operation.serviceMode: REST
 operation.counterpartUrl: http://localhost:8080/sim-LSA/CISEMessageService?wsdl
 operation.outputDirectory: ./tmp/
 operation.inputDirectory: ./tmp/
