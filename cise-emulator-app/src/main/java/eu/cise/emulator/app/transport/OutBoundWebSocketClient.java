@@ -22,14 +22,14 @@ public class OutBoundWebSocketClient {
     private Session userSession = null;
     private URI internalUri;
     private MessageHandler messageHandler;
-    final private WebSocketContainer container;
+    private final WebSocketContainer container;
     private boolean firstConnect = true;
 
-    private OutBoundWebSocketClient(String Port, MessageHandler messageHandler) {
+    private OutBoundWebSocketClient(String port, MessageHandler messageHandler) {
         // async wait for available
         try {
-            Port = (Port == null ? "8080" : Port);
-            internalUri = new URI("ws://localhost:" + Port + "/websocket");
+            port = (port == null ? "8080" : port);
+            internalUri = new URI("ws://localhost:" + port + "/websocket");
             container = ContainerProvider.getWebSocketContainer();
             this.messageHandler = messageHandler;
         } catch (URISyntaxException es) {

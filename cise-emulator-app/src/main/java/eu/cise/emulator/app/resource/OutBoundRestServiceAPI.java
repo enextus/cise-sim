@@ -120,18 +120,18 @@ public class OutBoundRestServiceAPI {
     public JsonNode getPreview(
             @PathParam("service") String service,
             @DefaultValue("") @QueryParam("payload") String payload,
-            @DefaultValue("") @QueryParam("message_id") String message_id,
-            @DefaultValue("false") @QueryParam("request_async_ack") boolean request_async_ack,
-            @DefaultValue("") @QueryParam("consolidation_id") String consolidation_id) {
+            @DefaultValue("") @QueryParam("message_id") String messageId,
+            @DefaultValue("false") @QueryParam("request_async_ack") boolean requestAsyncAck,
+            @DefaultValue("") @QueryParam("consolidation_id") String consolidationId) {
 
-        List<File> SingleTemplateListResult = extractvalue(service, config.getSimulatorMessageDir());
-        List<File> SinglePayloadListResult = extractvalue(payload, config.getSimulatorPayloadDir());
+        List<File> singleTemplateListResult = extractvalue(service, config.getSimulatorMessageDir());
+        List<File> singlePayloadListResult = extractvalue(payload, config.getSimulatorPayloadDir());
         MessageReturn messageReturn = new MessageReturn(config.getSimulatorId());
         String phase = "init phase (upload files content)";
         // produce adecuate JSON content structure {status:, body:} // actually flat structuree no object related but FUTUR need if should include sub notice:{line:,message:}}
-        if (SingleTemplateListResult.size() == 0) {
+        if (singleTemplateListResult.size() == 0) {
             return (messageReturn.build("an error occured in " + phase +
-                            " ; in more detail ... \n " + "could not find file with path hash = " + service + "\n message(" + message_id + "::service:" + service + "/payload:" + payload + "/ack:" + request_async_ack + "/consolidationId:" + consolidation_id + ")"
+                            " ; in more detail ... \n " + "could not find file with path hash = " + service + "\n message(" + messageId + "::service:" + service + "/payload:" + payload + "/ack:" + requestAsyncAck + "/consolidationId:" + consolidationId + ")"
                     , "", ""));
         }
 
@@ -140,14 +140,14 @@ public class OutBoundRestServiceAPI {
         String refMessageReturned = "";
         phase = "init phase (upload files content)";
         try {
-            if (!(payload.equals("")) && SinglePayloadListResult.size() > 0) {
-                loadedMessage = loadMessageBothFile(SingleTemplateListResult.get(0).getAbsolutePath(), SinglePayloadListResult.get(0).getAbsolutePath());
+            if (!(payload.equals("")) && singlePayloadListResult.size() > 0) {
+                loadedMessage = loadMessageBothFile(singleTemplateListResult.get(0).getAbsolutePath(), singlePayloadListResult.get(0).getAbsolutePath());
                 getLogger().warn("not implemented yet : will only take into account the payload");
             } else {
-                loadedMessage = loadMessageWithOnlyServiceFile(SingleTemplateListResult.get(0).getAbsolutePath());
+                loadedMessage = loadMessageWithOnlyServiceFile(singleTemplateListResult.get(0).getAbsolutePath());
             }
             phase = "sending phase ( update metadata)";
-            loadedMessage = conformMessage(loadedMessage, message_id, consolidation_id, request_async_ack);
+            loadedMessage = conformMessage(loadedMessage, messageId, consolidationId, requestAsyncAck);
             phase = "sending phase ( sign content)";
             loadedMessage = finaliseMessage(mapper, loadedMessage);
 
@@ -155,7 +155,7 @@ public class OutBoundRestServiceAPI {
             e.printStackTrace();
             return (messageReturn.build("an error occured in " + phase +
                             " ; in more detail ... \n " + e.toString() +
-                            "\n message(" + message_id + "::service:" + service + "/payload:" + payload + "/ack:" + request_async_ack + "/consolidationId:" + consolidation_id + ")"
+                            "\n message(" + messageId + "::service:" + service + "/payload:" + payload + "/ack:" + requestAsyncAck + "/consolidationId:" + consolidationId + ")"
                     , "", (loadedMessage != null ? mapper.toXML(loadedMessage) : "")));
         }
         return (messageReturn.build("", "", mapper.toXML(loadedMessage)));
@@ -169,18 +169,18 @@ public class OutBoundRestServiceAPI {
     public /*Map<Integer,String>*/JsonNode send(
             @PathParam("service") String service,
             @DefaultValue("") @QueryParam("payload") String payload,
-            @DefaultValue("") @QueryParam("message_id") String message_id,
-            @DefaultValue("false") @QueryParam("request_async_ack") boolean request_async_ack,
-            @DefaultValue("") @QueryParam("consolidation_id") String consolidation_id) {
+            @DefaultValue("") @QueryParam("message_id") String messageId,
+            @DefaultValue("false") @QueryParam("request_async_ack") boolean requestAsyncAck,
+            @DefaultValue("") @QueryParam("consolidation_id") String consolidationId) {
 
-        List<File> SingleTemplateListResult = extractvalue(service, config.getSimulatorMessageDir());
-        List<File> SinglePayloadListResult = extractvalue(payload, config.getSimulatorPayloadDir());
+        List<File> singleTemplateListResult = extractvalue(service, config.getSimulatorMessageDir());
+        List<File> singlePayloadListResult = extractvalue(payload, config.getSimulatorPayloadDir());
         MessageReturn messageReturn = new MessageReturn(config.getSimulatorId());
         String phase = "init phase (upload files content)";
         // produce adecuate JSON content structure {status:, body:} // actually flat structuree no object related but FUTUR need if should include sub notice:{line:,message:}}
-        if (SingleTemplateListResult.size() == 0) {
+        if (singleTemplateListResult.size() == 0) {
             return (messageReturn.build("an error occured in " + phase +
-                            " ; in more detail ... \n " + "could not find file with path hash = " + service + "\n message(" + message_id + "::service:" + service + "/payload:" + payload + "/ack:" + request_async_ack + "/consolidationId:" + consolidation_id + ")"
+                            " ; in more detail ... \n " + "could not find file with path hash = " + service + "\n message(" + messageId + "::service:" + service + "/payload:" + payload + "/ack:" + requestAsyncAck + "/consolidationId:" + consolidationId + ")"
                     , "", ""));
         }
 
@@ -189,13 +189,13 @@ public class OutBoundRestServiceAPI {
         String refMessageReturned = "";
         phase = "init phase (upload files content)";
         try {
-            if (!(payload.equals("")) && SinglePayloadListResult.size() > 0) {
-                loadedMessage = loadMessageBothFile(SingleTemplateListResult.get(0).getAbsolutePath(), SinglePayloadListResult.get(0).getAbsolutePath());
+            if (!(payload.equals("")) && singlePayloadListResult.size() > 0) {
+                loadedMessage = loadMessageBothFile(singleTemplateListResult.get(0).getAbsolutePath(), singlePayloadListResult.get(0).getAbsolutePath());
                 getLogger().warn("not implemented yet : will only take into account the payload");
             } else {
 
                 phase = "init phase (merge files content)";
-                loadedMessage = loadMessageWithOnlyServiceFile(SingleTemplateListResult.get(0).getAbsolutePath());
+                loadedMessage = loadMessageWithOnlyServiceFile(singleTemplateListResult.get(0).getAbsolutePath());
             }
             phase = "sending phase ( merged content)";
             //loadedMessage= conformMessage(loadedMessage, message_id, consolidation_id, request_async_ack);
@@ -207,18 +207,18 @@ public class OutBoundRestServiceAPI {
             e.printStackTrace();
             return (messageReturn.build("an error occured in " + phase +
                             " ; in more detail ... \n " + e.toString() +
-                            "\n message(" + message_id + "::service:" + service + "/payload:" + payload + "/ack:" + request_async_ack + "/consolidationId:" + consolidation_id + ")"
+                            "\n message(" + messageId + "::service:" + service + "/payload:" + payload + "/ack:" + requestAsyncAck + "/consolidationId:" + consolidationId + ")"
                     , "", (loadedMessage != null ? mapper.toXML(loadedMessage) : "")));
         }
         return (messageReturn.build("", refMessageReturned, mapper.toXML(loadedMessage)));
     }
 
 
-    private Message conformMessage(Message loadedMessage, String message_id, String consolidation_id, boolean request_async_ack) {
+    private Message conformMessage(Message loadedMessage, String messageId, String consolidationId, boolean requestAsyncAck) {
 
-        loadedMessage.setCorrelationID(consolidation_id);
-        loadedMessage.setMessageID(message_id);
-        loadedMessage.setRequiresAck(request_async_ack);
+        loadedMessage.setCorrelationID(consolidationId);
+        loadedMessage.setMessageID(messageId);
+        loadedMessage.setRequiresAck(requestAsyncAck);
         try {
             GregorianCalendar thisMomentGC;
             thisMomentGC = new GregorianCalendar();
@@ -254,10 +254,10 @@ public class OutBoundRestServiceAPI {
     private List<File> extractvalue(String expectedHashString, String directory) {
         SourceBufferFileSource aSourceBufferutil = new SourceBufferFileSource();
         List<File> activeFileList = aSourceBufferutil.getReferenceDirectoryListing(directory);
-        List<File> SingleListResult = activeFileList.stream()
+        List<File> singleListResult = activeFileList.stream()
                 .filter(file1 -> expectedHashString.equals(Integer.toString(XmlFileReference.getCalculedHash(((File) file1).getAbsolutePath()))))
                 .collect(Collectors.toList());
-        return (SingleListResult);
+        return (singleListResult);
     }
 
 

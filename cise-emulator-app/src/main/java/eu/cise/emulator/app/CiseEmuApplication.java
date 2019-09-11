@@ -22,13 +22,13 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
     private static Thread serverThread = null;
     private InstanceID instanceID = null;
     private SimConfig appConfig;
-    private boolean InitWithParameter = false;
+    private boolean initWithParameter = false;
     private CountDownLatch serverStarted;
 
     public CiseEmuApplication(SimConfig refConfig, CountDownLatch aServerStarted, boolean withParameter) {
         super();
         this.serverStarted = aServerStarted;
-        this.InitWithParameter = withParameter;
+        this.initWithParameter = withParameter;
         this.appConfig = refConfig;
     }
 
@@ -39,14 +39,10 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
             final String[] argsDefault = new String[]{"server", "config.yml"};
             appLiveRunning = new CiseEmuApplication(createConfig(), serverStarted, false);
             appLiveRunning.run(argsDefault);
-            //serverThread = new Thread(GeneralUtils.rethrow(() -> appLiveRunning.run(argsDefault))); // was fixed argument server config.yml (root of the directory jar -> class)
         } else {
             appLiveRunning = new CiseEmuApplication(createConfig(), serverStarted, true);
             appLiveRunning.run(args);
-            //serverThread = new Thread(GeneralUtils.rethrow(() ->appLiveRunning.run(args))); // was fixed argument server config.yml (root of the directory jar -> class)
         }
-        //serverThread.setDaemon(true);
-        //serverThread.start();
     }
 
 
@@ -54,36 +50,31 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
         return ConfigFactory.create(SimConfig.class);
     }
 
-    @Override
-    public String getName() {
-        return ("");
-        //return (CiseEmuApplication.appLiveRunning!=null?CiseEmuApplication.getMemberId():"#ToBeLoaded#");
-    }
-
     public static String getMemberId() {
-        // final String render = CiseEmuApplication.appLiveRunning.instanceID.render(Optional.empty());
         final String render = "test";
         return render;
     }
 
     public static String getMemberIdClient() {
-        // final String render = CiseEmuApplication.appLiveRunning.instanceID.render(Optional.of(InstanceID.ACTOR_WEB_CLIENT));
         final String render = "test";
         return render;
     }
 
     public static String getMemberIdServer() {
-        // final String render = CiseEmuApplication.appLiveRunning.instanceID.render(Optional.of(InstanceID.ACTOR_WEB_SERVER));
         final String render = "test";
         return render;
     }
 
+    @Override
+    public String getName() {
+        return ("");
+    }
 
     @Override
     public void initialize(final Bootstrap<CiseEmuConfiguration> bootstrap) {
 
 
-        if (!this.InitWithParameter) {
+        if (!this.initWithParameter) {
             bootstrap.setConfigurationSourceProvider(new ResourceConfigurationSourceProvider());
         }
         //by default would use the FileConfigurationSourceProvider that user must always provide
@@ -94,10 +85,8 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
         bootstrap.addCommand(new CommandLineSender());
 
         //// todo: allow service to serve the InBound request also in SOAP mode
-        // bootstrap.addBundle(jaxWsBundle);
 
         //// todo: allow service to serve as asset : the client html+javascript
-        //bootstrap.addBundle(new AssetsBundle());
     }
 
     @Override
@@ -111,10 +100,10 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
         environment.jersey().register(outRestMessageService);
 
         ////OUT : allow service to inform itself on the identity and option given by the configuration
-        final OutBoundWebSocketClient outRestMessageclient = OutBoundWebSocketClient.build("8080"); //TODO set dynamic value to reflect via this.instanceID.getPort()
+        final OutBoundWebSocketClient outRestMessageClient = OutBoundWebSocketClient.build("8080"); //TODO set dynamic value to reflect via this.instanceID.getPort()
 
         // IN = to the infrastructure server members (node, adapter, emulator, simulator ...)
-        final InboundRESTMessageService inboundRESTMessageService = new eu.cise.emulator.app.resource.InboundRESTMessageService(this.instanceID, this.appConfig, outRestMessageclient);
+        final InboundRESTMessageService inboundRESTMessageService = new eu.cise.emulator.app.resource.InboundRESTMessageService(this.instanceID, this.appConfig, outRestMessageClient);
         environment.jersey().register(inboundRESTMessageService);
 
 

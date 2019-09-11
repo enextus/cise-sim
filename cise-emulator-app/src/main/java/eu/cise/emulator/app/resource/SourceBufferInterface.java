@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface SourceBufferInterface {
 
-    StringBuffer getReferenceFileContent(String PayloadUri);
+    StringBuffer getReferenceFileContent(String payloadUri);
 
     List<File> getReferenceDirectoryListing(String pathParameter);
 

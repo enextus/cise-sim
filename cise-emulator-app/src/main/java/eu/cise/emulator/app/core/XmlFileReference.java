@@ -51,4 +51,10 @@ public class XmlFileReference {
         XmlFileReference other = (XmlFileReference) o;
         return Objects.equals(this.getHash(), other.getHash());
     }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hash);
+    }
 }
