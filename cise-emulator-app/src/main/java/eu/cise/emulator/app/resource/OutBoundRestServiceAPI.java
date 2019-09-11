@@ -306,12 +306,19 @@ public class OutBoundRestServiceAPI {
         if (config.isSignatureMessageSend().contains("true")) {
             System.out.println("before signed  : " + mapper.<Message>toXML(tempMessageObject));
             SignatureServiceBuilder signBuilder = SignatureServiceBuilder.newSignatureService(mapper);
+            String resolvedConfDir = (System.getProperty("user.dir") + "/conf/");
+            /*wa01:in >  work around until modification of eventual change in signature lib null ="" */
+            String oldConfDir = System.getProperty("conf.dir"); /*wa01:*/
+            String actualUserDir = System.getProperty("user.dir");
             SignatureService signature = signBuilder
                     .withKeyStoreName((String) config.getKeyStoreName())
                     .withKeyStorePassword((String) config.getKeyStorePassword())
                     .withPrivateKeyAlias((String) config.getPrivateKeyAlias())
                     .withPrivateKeyPassword((String) config.getPrivateKeyPassword())
                     .build();
+
+            System.setProperty("conf.dir", resolvedConfDir); /*wa01:*/
+            /*< out:wa01*/
 
             finalMessageObject = signature.sign(tempMessageObject);
         } else {

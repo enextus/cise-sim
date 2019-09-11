@@ -15,10 +15,12 @@ operation.outputDirectory: ./tmp/
 operation.inputDirectory: ./tmp/
 operation.sourceMessageDir: ./xmlmessages/
 operation.sourcePayloadDir: ./xmlpayloads/
+
 server:
   applicationConnectors:
     - type: http
       port: 48080
+
 logging: !<default>
   level: "INFO"
   loggers:
