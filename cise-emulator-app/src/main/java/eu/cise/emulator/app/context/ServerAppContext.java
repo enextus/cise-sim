@@ -73,9 +73,9 @@ public class ServerAppContext {
 
 
 //        if (config.getWebappWsMode().contains("REST")) {
-            Server myserver = (ServerRestConcrete) new ServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
-            ((eu.cise.emulator.httptransport.ServerRestConcrete) myserver).SetupServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
-            myserver = (ServerRest) myserver;
+        Server myserver = (ServerRestConcrete) new ServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
+        ((eu.cise.emulator.httptransport.ServerRestConcrete) myserver).SetupServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
+        myserver = (ServerRest) myserver;
 
 //        } else {
 //            Server myserver = (ServerSoapConcrete) new ServerSoapConcrete();

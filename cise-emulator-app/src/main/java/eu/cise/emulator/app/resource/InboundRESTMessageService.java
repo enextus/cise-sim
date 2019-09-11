@@ -31,33 +31,33 @@ public class InboundRESTMessageService {
     SimConfig config;
     InstanceID instanceID;
     private final MessageValidator validator;
-    private final Logger mylogger ;
-    private final XmlMapper mapper ;
+    private final Logger mylogger;
+    private final XmlMapper mapper;
     private final SignatureService signature;
     private final OutBoundWebSocketClient outRestMessageclient;
-   // private final OutBoundWebSocketClient webSocketClient;
+
+    // private final OutBoundWebSocketClient webSocketClient;
     public InboundRESTMessageService(InstanceID instanceID, SimConfig config, OutBoundWebSocketClient outRestMessageclient) {
-            this.config=config;
-            this.instanceID=instanceID;
-            this.validator = new  MessageValidator();
-            this.mylogger = (Logger) LoggerFactory.getLogger(InboundRESTMessageService.class.getName());
-            this.mapper = new DefaultXmlMapper.Pretty();
-            SignatureServiceBuilder signBuilder = SignatureServiceBuilder.newSignatureService(mapper);
-            this.outRestMessageclient= outRestMessageclient;
-            this.signature = signBuilder
+        this.config = config;
+        this.instanceID = instanceID;
+        this.validator = new MessageValidator();
+        this.mylogger = (Logger) LoggerFactory.getLogger(InboundRESTMessageService.class.getName());
+        this.mapper = new DefaultXmlMapper.Pretty();
+        SignatureServiceBuilder signBuilder = SignatureServiceBuilder.newSignatureService(mapper);
+        this.outRestMessageclient = outRestMessageclient;
+        this.signature = signBuilder
                 .withKeyStoreName((String) config.getKeyStoreName())
                 .withKeyStorePassword((String) config.getKeyStorePassword())
                 .withPrivateKeyAlias((String) config.getPrivateKeyAlias())
                 .withPrivateKeyPassword((String) config.getPrivateKeyPassword())
                 .build();
-            //this.webSocketClient = OutBoundWebSocketClient.build();
-        }
-
+        //this.webSocketClient = OutBoundWebSocketClient.build();
+    }
 
 
     @POST
     @Consumes("text/plain,text/xml,application/xml")
-    @Produces ("text/plain")
+    @Produces("text/plain")
     @Path("/CISEMessageServiceREST")
     public String ReceiveMessage(String messageContent) throws Exception {
 
@@ -74,7 +74,7 @@ public class InboundRESTMessageService {
         mylogger.debug("CISEMessageServiceRESTXML received POST message :// " + messageContent);
         Phase = "XML validation";
         try {
-            message =  mapper.fromXML(messageContent);
+            message = mapper.fromXML(messageContent);
         } catch (Exception e) {
             thisAcknoledgment.setAckCode(AcknowledgementType.BAD_REQUEST);
             mylogger.debug("CISEMessageServiceRESTXML reject message in " + Phase);
@@ -138,7 +138,7 @@ public class InboundRESTMessageService {
         return thisAcknoledgment;
     }
 
-    Service createServiceDummy(){
+    Service createServiceDummy() {
         Service defaultService = new Service();
         defaultService.setServiceID("N/A");
         defaultService.setServiceStatus(ServiceStatusType.MAINTENANCE);
@@ -146,9 +146,8 @@ public class InboundRESTMessageService {
         defaultService.setServiceRole(ServiceRoleType.CONSUMER);
         defaultService.setServiceOperation(ServiceOperationType.PUSH);
 
-    return defaultService;
+        return defaultService;
     }
-
 
 
 }

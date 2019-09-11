@@ -34,8 +34,8 @@ import org.slf4j.LoggerFactory;
 public interface SimLogger {
 
 
-
     void logSenderResponses(Sender result);
+
     void logSenderError(Throwable throwable);
 
     class Slf4j implements SimLogger {

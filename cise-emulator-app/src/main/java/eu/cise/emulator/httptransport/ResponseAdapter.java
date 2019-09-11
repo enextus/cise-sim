@@ -18,6 +18,7 @@ public class ResponseAdapter {
     public Response toSoapResponse(AcceptanceResponse response) {
         return toGenericResponse(response);
     }
+
     public Response toGenericResponse(AcceptanceResponse response) {
         switch (response) {
             case PROCESSED:

@@ -16,7 +16,6 @@ abstract public class AbsValidator<T extends Message> implements Validator {
     }
 
 
-
     @Override
     public void messageNotNullCheck() {
         Optional.ofNullable(message)

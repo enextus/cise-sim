@@ -28,16 +28,16 @@ public class SourceBufferFileSource implements SourceBufferInterface {
 
     private URL StringtoURL(String stringUrl) throws MalformedURLException {
         String proposedStringUrl = stringUrl;
-        if (proposedStringUrl.trim().startsWith("/"))  proposedStringUrl= "file://" + stringUrl;
-        else  if (!(proposedStringUrl.trim().startsWith("file://"))) {
+        if (proposedStringUrl.trim().startsWith("/")) proposedStringUrl = "file://" + stringUrl;
+        else if (!(proposedStringUrl.trim().startsWith("file://"))) {
             String prefix = null;
             try {
                 prefix = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
-            prefix = prefix.substring(0,prefix.lastIndexOf("/")+1);
-            proposedStringUrl= prefix + stringUrl;
+            prefix = prefix.substring(0, prefix.lastIndexOf("/") + 1);
+            proposedStringUrl = prefix + stringUrl;
         }
         URL url = new URL(proposedStringUrl);
         return url;

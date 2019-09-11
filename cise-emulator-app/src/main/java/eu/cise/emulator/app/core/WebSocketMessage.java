@@ -37,6 +37,7 @@ public class WebSocketMessage implements Serializable {
     public String getData() {
         return data;
     }
+
     @JsonValue
     public void setAcknowledgment(String acknowledgment) {
         this.acknowledgment = acknowledgment;

@@ -1,8 +1,6 @@
 package eu.europa.ec.jrc.marex.candidate;
 
 
-import eu.europa.ec.jrc.marex.CiseEmulatorApplication;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

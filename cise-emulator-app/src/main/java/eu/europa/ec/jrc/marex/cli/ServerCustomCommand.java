@@ -1,35 +1,21 @@
 package eu.europa.ec.jrc.marex.cli;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.cfg.ConfigOverride;
-import com.fasterxml.jackson.databind.cfg.ContextAttributes;
-import com.fasterxml.jackson.databind.cfg.MapperConfig;
-import com.fasterxml.jackson.databind.introspect.AnnotatedClass;
-import com.fasterxml.jackson.databind.introspect.ClassIntrospector;
-import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
-import com.fasterxml.jackson.databind.jsontype.SubtypeResolver;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import eu.europa.ec.jrc.marex.CiseEmulatorApplication;
 import eu.europa.ec.jrc.marex.CiseEmulatorConfiguration;
 import eu.europa.ec.jrc.marex.core.DropWizardCustomServerRunner;
 import eu.europa.ec.jrc.marex.util.ConfigManager;
-import io.dropwizard.Application;
 import io.dropwizard.cli.Cli;
 import io.dropwizard.cli.Command;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.util.JarLocation;
-import jdk.nashorn.internal.ir.ObjectNode;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ServerCustomCommand extends Command {

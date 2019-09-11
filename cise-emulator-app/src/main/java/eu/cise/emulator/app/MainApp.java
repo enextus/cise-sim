@@ -53,9 +53,9 @@ public class MainApp implements Runnable {
         XmlMapper xmlMapper = new DefaultXmlMapper();
         MessageValidator validator = new MessageValidator();
         simApp = new SimApp(new SourceStreamProcessor(),
-                            new Sender(),
-                            new SimLogger.Slf4j(),
-                            config, xmlMapper, validator);
+                new Sender(),
+                new SimLogger.Slf4j(),
+                config, xmlMapper, validator);
     }
 
     /**

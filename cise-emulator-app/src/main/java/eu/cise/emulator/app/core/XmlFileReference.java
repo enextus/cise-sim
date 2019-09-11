@@ -33,20 +33,21 @@ public class XmlFileReference {
     }
 
     public int getHash() {
-        if (this.hash==null) { this.hash = new Integer(Objects.hash(path)); }
+        if (this.hash == null) {
+            this.hash = new Integer(Objects.hash(path));
+        }
         return this.hash;
     }
 
-    public static int getCalculedHash(String path){
+    public static int getCalculedHash(String path) {
         return Objects.hash(path);
     }
-
 
 
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;
-        if(null == o || o.getClass() != this.getClass()) return false;
+        if (null == o || o.getClass() != this.getClass()) return false;
         XmlFileReference other = (XmlFileReference) o;
         return Objects.equals(this.getHash(), other.getHash());
     }

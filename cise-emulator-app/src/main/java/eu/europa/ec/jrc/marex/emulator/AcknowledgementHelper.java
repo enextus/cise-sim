@@ -2,7 +2,6 @@ package eu.europa.ec.jrc.marex.emulator;
 
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.eucise.xml.XmlMapper;
-import eu.europa.ec.jrc.marex.cli.ClientCustomCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,13 +9,14 @@ public class AcknowledgementHelper {
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AcknowledgementHelper.class);
+
     public AcknowledgementHelper() {
     }
 
     public String getAckCode(XmlMapper xmlMapper, String inicialContent) {
 
         Acknowledgement ackReturned = null;
-        String correctedContent=increaseAckCodeWithSender(inicialContent);
+        String correctedContent = increaseAckCodeWithSender(inicialContent);
         String AckCode = "ERROR", AckDetail = "unknown error"; // TODO: please replace with adequate default value for no ack received (network error?)
         try {
             ackReturned = (Acknowledgement) xmlMapper.fromXML(correctedContent);

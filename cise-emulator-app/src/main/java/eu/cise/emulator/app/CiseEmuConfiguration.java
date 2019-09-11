@@ -23,20 +23,19 @@ public class CiseEmuConfiguration extends Configuration {
     }
 
 
-
-  @JsonProperty
-  public String getInstanceVersion() {
+    @JsonProperty
+    public String getInstanceVersion() {
         return instanceName;
-  }
+    }
 
-  @JsonProperty
-  public void setInstanceVersion(String version) {
+    @JsonProperty
+    public void setInstanceVersion(String version) {
         this.instanceVersion = version;
-  }
+    }
 
     public InstanceID buildInstance() {
 
-        return new InstanceID(instanceName,instanceName);
+        return new InstanceID(instanceName, instanceName);
     }
 
 }

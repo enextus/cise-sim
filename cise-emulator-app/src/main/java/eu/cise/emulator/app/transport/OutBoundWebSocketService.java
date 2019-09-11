@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static eu.cise.emulator.app.core.WebSocketMessageType.*;
-import static eu.cise.emulator.app.core.WebSocketMessageType.MEMBER_JOINED_ACK;
 
 @ServerEndpoint("/websocket")
 public class OutBoundWebSocketService {
@@ -35,8 +34,6 @@ public class OutBoundWebSocketService {
     }
 
 
-
-
     @OnMessage
     public void myOnMsg(final Session session, String message) {
 
@@ -50,14 +47,15 @@ public class OutBoundWebSocketService {
                     break;
                 case MEMBER_JOINED_ACK:
                     break;
-                case MEMBER_LEFT:_LEFT:
+                case MEMBER_LEFT:
+                    _LEFT:
                     removeMember(msg.getMember());
                     break;
                 case TEXT_MESSAGE:
                     broadcastMessage(msg);
             }
 
-                logger.info(" ## OutBoundWebSocketService ##  obtained message from user: " + msg.getMember() + ", text: " + msg.getData());
+            logger.info(" ## OutBoundWebSocketService ##  obtained message from user: " + msg.getMember() + ", text: " + msg.getData());
         } catch (IOException e) {
             logger.error(" ## OutBoundWebSocketService ## obtained message with wrong message format.");
             // return error message to user
@@ -68,14 +66,14 @@ public class OutBoundWebSocketService {
     @OnClose
     public void myOnClose(final Session session, CloseReason cr) {
         sessions.remove(session);
-        try {broadcastUserActivityMessage(MEMBER_LEFT);
+        try {
+            broadcastUserActivityMessage(MEMBER_LEFT);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         logger.info("## OutBoundWebSocketService ## get connection closed to: " + session.getUserPrincipal());
 
     }
-
 
 
     private void broadcastMessage(WebSocketMessage msg) {
@@ -91,7 +89,7 @@ public class OutBoundWebSocketService {
     }
 
     private void addMember(String member, Session session) throws JsonProcessingException {
-        members.put(member, session );
+        members.put(member, session);
         acknowledgeUserJoined(member, session);
         broadcastUserActivityMessage(MEMBER_JOINED);
     }
@@ -117,7 +115,6 @@ public class OutBoundWebSocketService {
         newMessage.setType(webSocketMessageType);
         broadcastMessage(newMessage);
     }
-
 
 
 }

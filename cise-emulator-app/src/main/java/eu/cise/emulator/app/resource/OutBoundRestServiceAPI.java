@@ -48,7 +48,7 @@ public class OutBoundRestServiceAPI {
     private SimConfig config;
 
     public OutBoundRestServiceAPI(InstanceID instanceID, SimConfig config) {
-        this.validator = new  MessageValidator();
+        this.validator = new MessageValidator();
         this.instanceID = instanceID;
         this.config = config;
     }
@@ -84,7 +84,7 @@ public class OutBoundRestServiceAPI {
         SourceBufferFileSource aSourceBufferutil = new SourceBufferFileSource();
         List<File> activelistFile = aSourceBufferutil.getReferenceDirectoryListing(config.getSimulatorMessageDir());
         activelistFile.forEach(s -> {
-            activeListFileReference.add(new XmlFileReference(s.getName(),s.getAbsolutePath()));
+            activeListFileReference.add(new XmlFileReference(s.getName(), s.getAbsolutePath()));
         });
         String messageJson = "{}";
         try {
@@ -103,7 +103,7 @@ public class OutBoundRestServiceAPI {
         SourceBufferFileSource aSourceBufferutil = new SourceBufferFileSource();
         List<File> activelistFile = aSourceBufferutil.getReferenceDirectoryListing(config.getSimulatorPayloadDir());
         activelistFile.forEach(s -> {
-            activeListFileReference.add(new XmlFileReference(s.getName(),s.getAbsolutePath()));
+            activeListFileReference.add(new XmlFileReference(s.getName(), s.getAbsolutePath()));
         });
         String messageJson = "{}";
         try {
@@ -124,43 +124,42 @@ public class OutBoundRestServiceAPI {
             @DefaultValue("false") @QueryParam("request_async_ack") boolean request_async_ack,
             @DefaultValue("") @QueryParam("consolidation_id") String consolidation_id) {
 
-        List<File> SingleTemplateListResult = extractvalue(service,config.getSimulatorMessageDir());
-        List<File> SinglePayloadListResult = extractvalue(payload,config.getSimulatorPayloadDir());
+        List<File> SingleTemplateListResult = extractvalue(service, config.getSimulatorMessageDir());
+        List<File> SinglePayloadListResult = extractvalue(payload, config.getSimulatorPayloadDir());
         MessageReturn messageReturn = new MessageReturn(config.getSimulatorId());
-        String phase="init phase (upload files content)";
+        String phase = "init phase (upload files content)";
         // produce adecuate JSON content structure {status:, body:} // actually flat structuree no object related but FUTUR need if should include sub notice:{line:,message:}}
         if (SingleTemplateListResult.size() == 0) {
-            return (messageReturn.build("an error occured in "+phase+
-                            " ; in more detail ... \n "+"could not find file with path hash = "+service+"\n message("+message_id+"::service:"+service+"/payload:"+payload+"/ack:"+request_async_ack+"/consolidationId:"+consolidation_id+")"
-                    , "","" ));
+            return (messageReturn.build("an error occured in " + phase +
+                            " ; in more detail ... \n " + "could not find file with path hash = " + service + "\n message(" + message_id + "::service:" + service + "/payload:" + payload + "/ack:" + request_async_ack + "/consolidationId:" + consolidation_id + ")"
+                    , "", ""));
         }
 
         XmlMapper mapper = new DefaultXmlMapper.Pretty();
         eu.cise.servicemodel.v1.message.Message loadedMessage = null;
-        String refMessageReturned= "";
-        phase="init phase (upload files content)";
+        String refMessageReturned = "";
+        phase = "init phase (upload files content)";
         try {
-            if (!(payload.equals("")) && SinglePayloadListResult.size() > 0 ) {
+            if (!(payload.equals("")) && SinglePayloadListResult.size() > 0) {
                 loadedMessage = loadMessageBothFile(SingleTemplateListResult.get(0).getAbsolutePath(), SinglePayloadListResult.get(0).getAbsolutePath());
                 getLogger().warn("not implemented yet : will only take into account the payload");
             } else {
                 loadedMessage = loadMessageWithOnlyServiceFile(SingleTemplateListResult.get(0).getAbsolutePath());
             }
-            phase="sending phase ( update metadata)";
-            loadedMessage= conformMessage(loadedMessage, message_id, consolidation_id, request_async_ack);
-            phase="sending phase ( sign content)";
-            loadedMessage= finaliseMessage(mapper,loadedMessage);
+            phase = "sending phase ( update metadata)";
+            loadedMessage = conformMessage(loadedMessage, message_id, consolidation_id, request_async_ack);
+            phase = "sending phase ( sign content)";
+            loadedMessage = finaliseMessage(mapper, loadedMessage);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            return (messageReturn.build("an error occured in "+phase+
-                            " ; in more detail ... \n "+e.toString()+
-                            "\n message("+message_id+"::service:"+service+"/payload:"+payload+"/ack:"+request_async_ack+"/consolidationId:"+consolidation_id+")"
-                    , "", (loadedMessage!=null?mapper.toXML(loadedMessage):"")));
+            return (messageReturn.build("an error occured in " + phase +
+                            " ; in more detail ... \n " + e.toString() +
+                            "\n message(" + message_id + "::service:" + service + "/payload:" + payload + "/ack:" + request_async_ack + "/consolidationId:" + consolidation_id + ")"
+                    , "", (loadedMessage != null ? mapper.toXML(loadedMessage) : "")));
         }
         return (messageReturn.build("", "", mapper.toXML(loadedMessage)));
     }
-
 
 
     //send/-1330230982?payload=358277851&request_async_ack=false&consolidation_id=test
@@ -174,42 +173,42 @@ public class OutBoundRestServiceAPI {
             @DefaultValue("false") @QueryParam("request_async_ack") boolean request_async_ack,
             @DefaultValue("") @QueryParam("consolidation_id") String consolidation_id) {
 
-        List<File> SingleTemplateListResult = extractvalue(service,config.getSimulatorMessageDir());
-        List<File> SinglePayloadListResult = extractvalue(payload,config.getSimulatorPayloadDir());
+        List<File> SingleTemplateListResult = extractvalue(service, config.getSimulatorMessageDir());
+        List<File> SinglePayloadListResult = extractvalue(payload, config.getSimulatorPayloadDir());
         MessageReturn messageReturn = new MessageReturn(config.getSimulatorId());
-        String phase="init phase (upload files content)";
+        String phase = "init phase (upload files content)";
         // produce adecuate JSON content structure {status:, body:} // actually flat structuree no object related but FUTUR need if should include sub notice:{line:,message:}}
         if (SingleTemplateListResult.size() == 0) {
-            return (messageReturn.build("an error occured in "+phase+
-                            " ; in more detail ... \n "+"could not find file with path hash = "+service+"\n message("+message_id+"::service:"+service+"/payload:"+payload+"/ack:"+request_async_ack+"/consolidationId:"+consolidation_id+")"
-                    , "","" ));
+            return (messageReturn.build("an error occured in " + phase +
+                            " ; in more detail ... \n " + "could not find file with path hash = " + service + "\n message(" + message_id + "::service:" + service + "/payload:" + payload + "/ack:" + request_async_ack + "/consolidationId:" + consolidation_id + ")"
+                    , "", ""));
         }
 
         XmlMapper mapper = new DefaultXmlMapper.Pretty();
         eu.cise.servicemodel.v1.message.Message loadedMessage = null;
-        String refMessageReturned= "";
-        phase="init phase (upload files content)";
+        String refMessageReturned = "";
+        phase = "init phase (upload files content)";
         try {
-            if (!(payload.equals("")) && SinglePayloadListResult.size() > 0 ) {
+            if (!(payload.equals("")) && SinglePayloadListResult.size() > 0) {
                 loadedMessage = loadMessageBothFile(SingleTemplateListResult.get(0).getAbsolutePath(), SinglePayloadListResult.get(0).getAbsolutePath());
                 getLogger().warn("not implemented yet : will only take into account the payload");
             } else {
 
-                phase="init phase (merge files content)";
+                phase = "init phase (merge files content)";
                 loadedMessage = loadMessageWithOnlyServiceFile(SingleTemplateListResult.get(0).getAbsolutePath());
             }
-            phase="sending phase ( merged content)";
+            phase = "sending phase ( merged content)";
             //loadedMessage= conformMessage(loadedMessage, message_id, consolidation_id, request_async_ack);
-            phase="sending phase ( sign content)";
-            loadedMessage= finaliseMessage(mapper,loadedMessage);
-            phase="sending phase ( envoice content)";
+            phase = "sending phase ( sign content)";
+            loadedMessage = finaliseMessage(mapper, loadedMessage);
+            phase = "sending phase ( envoice content)";
             refMessageReturned = sendMessage(loadedMessage);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            return (messageReturn.build("an error occured in "+phase+
-                    " ; in more detail ... \n "+e.toString()+
-                    "\n message("+message_id+"::service:"+service+"/payload:"+payload+"/ack:"+request_async_ack+"/consolidationId:"+consolidation_id+")"
-                    , "", (loadedMessage!=null?mapper.toXML(loadedMessage):"")));
+            return (messageReturn.build("an error occured in " + phase +
+                            " ; in more detail ... \n " + e.toString() +
+                            "\n message(" + message_id + "::service:" + service + "/payload:" + payload + "/ack:" + request_async_ack + "/consolidationId:" + consolidation_id + ")"
+                    , "", (loadedMessage != null ? mapper.toXML(loadedMessage) : "")));
         }
         return (messageReturn.build("", refMessageReturned, mapper.toXML(loadedMessage)));
     }
@@ -217,7 +216,7 @@ public class OutBoundRestServiceAPI {
 
     private Message conformMessage(Message loadedMessage, String message_id, String consolidation_id, boolean request_async_ack) {
 
-        loadedMessage.setCorrelationID( consolidation_id);
+        loadedMessage.setCorrelationID(consolidation_id);
         loadedMessage.setMessageID(message_id);
         loadedMessage.setRequiresAck(request_async_ack);
         try {
@@ -231,28 +230,28 @@ public class OutBoundRestServiceAPI {
         return loadedMessage;
     }
 
-    public String sendMessage  (eu.cise.servicemodel.v1.message.Message refMessage) {
+    public String sendMessage(eu.cise.servicemodel.v1.message.Message refMessage) {
 
         RestClient client = new JerseyRestClient();
         XmlMapper refmapper = new DefaultXmlMapper.Pretty();
         String refMessageString = refmapper.<Message>toXML(refMessage);
-        Acknowledgement thisAcknoledgment= new Acknowledgement();
-        RestResult result =new RestResult(200,"#noEnvoice","#noEnvoice");
+        Acknowledgement thisAcknoledgment = new Acknowledgement();
+        RestResult result = new RestResult(200, "#noEnvoice", "#noEnvoice");
         try {
             result = client.post(config.getCounterpartRestUrl(), refMessageString);
             // construct the acknoledgmente from the rest resulting.
-        } catch (Exception e){
-            logger.debug("error on calling client : "+e.getMessage());
+        } catch (Exception e) {
+            logger.debug("error on calling client : " + e.getMessage());
         }
         System.out.println("Client send to Server : " + refMessage);
 
-        return ( result.getBody());
+        return (result.getBody());
         // TODO: post on websocket ({messageType:... , timeSent:... , timeSent:...
 
     }
 
 
-    private List<File> extractvalue(String expectedHashString, String directory){
+    private List<File> extractvalue(String expectedHashString, String directory) {
         SourceBufferFileSource aSourceBufferutil = new SourceBufferFileSource();
         List<File> activeFileList = aSourceBufferutil.getReferenceDirectoryListing(directory);
         List<File> SingleListResult = activeFileList.stream()
@@ -272,7 +271,6 @@ public class OutBoundRestServiceAPI {
 
         return tempMessageObject;
     }
-
 
 
     private eu.cise.servicemodel.v1.message.Message loadMessageBothFile(String servicefile, String payloadfile) throws FileNotFoundException, XmlNotParsableException, UnknownError {
@@ -316,7 +314,7 @@ public class OutBoundRestServiceAPI {
                     .build();
 
             finalMessageObject = signature.sign(tempMessageObject);
-        }else {
+        } else {
             return tempMessageObject;
         }
         if (finalMessageObject != null) return finalMessageObject;

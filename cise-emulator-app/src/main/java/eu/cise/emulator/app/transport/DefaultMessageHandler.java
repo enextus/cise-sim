@@ -9,6 +9,6 @@ public class DefaultMessageHandler implements MessageHandler {
 
     @Override
     public void handleMessage(String message) {
-       logger.debug("captured by "+this.getClass().getCanonicalName()+" :: "+message);
+        logger.debug("captured by " + this.getClass().getCanonicalName() + " :: " + message);
     }
 }

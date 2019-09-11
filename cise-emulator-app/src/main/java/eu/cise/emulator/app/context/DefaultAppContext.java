@@ -51,10 +51,9 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public SourceStreamProcessor makeSourceStreamProcessor()  {
+    public SourceStreamProcessor makeSourceStreamProcessor() {
         return new SourceStreamProcessor();
     }
-
 
 
 }

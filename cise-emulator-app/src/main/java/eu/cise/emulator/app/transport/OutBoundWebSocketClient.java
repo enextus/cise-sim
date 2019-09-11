@@ -22,16 +22,16 @@ public class OutBoundWebSocketClient {
     private Session userSession = null;
     private URI internalUri;
     private MessageHandler messageHandler;
-    final private WebSocketContainer container ;
-    private boolean firstConnect = true ;
+    final private WebSocketContainer container;
+    private boolean firstConnect = true;
 
     private OutBoundWebSocketClient(String Port, MessageHandler messageHandler) {
         // async wait for available
         try {
-            Port = (Port ==null?"8080":Port);
-            internalUri = new URI("ws://localhost:"+Port+"/websocket");
+            Port = (Port == null ? "8080" : Port);
+            internalUri = new URI("ws://localhost:" + Port + "/websocket");
             container = ContainerProvider.getWebSocketContainer();
-            this.messageHandler =  messageHandler;
+            this.messageHandler = messageHandler;
         } catch (URISyntaxException es) {
             throw new RuntimeException(es);
         }
@@ -49,28 +49,28 @@ public class OutBoundWebSocketClient {
 
     public static OutBoundWebSocketClient rebuild() throws Exception {
         if (clientEndPoint != null) {
-            clientEndPoint.firstConnect=true;
+            clientEndPoint.firstConnect = true;
             return clientEndPoint;
         } else {
-            throw new WebSocketException() ;
+            throw new WebSocketException();
         }
     }
 
-    public void startConnect(){
-       try{
-           if (firstConnect) {
-               container.connectToServer(this, internalUri);
-               WebSocketMessage message = new WebSocketMessage();
-               message.setMember("#Master#");
-               message.setType(WebSocketMessageType.MEMBER_JOINED);
-               message.setData("");
-               message.setStatus("Success");
-               sendMessage(message);
-               firstConnect = false;
-           }
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
+    public void startConnect() {
+        try {
+            if (firstConnect) {
+                container.connectToServer(this, internalUri);
+                WebSocketMessage message = new WebSocketMessage();
+                message.setMember("#Master#");
+                message.setType(WebSocketMessageType.MEMBER_JOINED);
+                message.setData("");
+                message.setStatus("Success");
+                sendMessage(message);
+                firstConnect = false;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

@@ -18,31 +18,28 @@ import javax.ws.rs.core.UriInfo;
 @Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.APPLICATION_XML)
 public class ServerRestConcrete implements ServerRest {
-     public static ServerRestConcrete instance;
+    public static ServerRestConcrete instance;
 
     @Context
-     UriInfo uriInfo;
-     @Context
-     Request request;
-     String id;
-    AcceptanceAgent messageManager ;
+    UriInfo uriInfo;
+    @Context
+    Request request;
+    String id;
+    AcceptanceAgent messageManager;
 
     public void SetupServerRestConcrete(String id, AcceptanceAgent messageManager) {
         instance = this;
-        if (! instance.isStarted()){
-        this.instance.id = id;
-        this.messageManager = (AcceptanceAgent) messageManager;
-        this.isStarted();
+        if (!instance.isStarted()) {
+            this.instance.id = id;
+            this.messageManager = (AcceptanceAgent) messageManager;
+            this.isStarted();
         }
     }
 
 
-
     public ServerRestConcrete(String id, AcceptanceAgent messageManager) {
-        SetupServerRestConcrete(id,messageManager);
+        SetupServerRestConcrete(id, messageManager);
     }
-
-
 
 
     // for the browser
@@ -52,9 +49,9 @@ public class ServerRestConcrete implements ServerRest {
 
         Acknowledgement returnnmessage = messageManager.treatIncomingMessage(receivedMessage);
 
-        if(receivedMessage==null)
+        if (receivedMessage == null)
             throw new RuntimeException("Error with Post: message body not found");
-        if(returnnmessage==null)
+        if (returnnmessage == null)
             throw new RuntimeException("Error with Post: treated message result in non valid body");
         return returnnmessage;
     }

@@ -1,10 +1,8 @@
 package eu.europa.ec.jrc.marex;
 
-import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.dropwizard.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
-
-import java.text.SimpleDateFormat;
 
 public class CiseEmulatorConfiguration extends Configuration {
 
@@ -209,8 +207,11 @@ public class CiseEmulatorConfiguration extends Configuration {
     public void setCounterpartCertificate(String counterpartCertificateKey) {
         this.counterpartCertificateKey = counterpartCertificateKey;
     }
+
     @JsonProperty("signature.counterpartCertificateKeyPassword")
-    public String getCounterpartCertificatePassword() {return counterpartCertificateKeyPassword; }
+    public String getCounterpartCertificatePassword() {
+        return counterpartCertificateKeyPassword;
+    }
 
     @JsonProperty("signature.counterpartCertificateKeyPassword")
     public void setCounterpartCertificatePassword(String counterpartCertificateKeyPassword) {

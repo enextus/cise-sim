@@ -1,7 +1,5 @@
 package eu.europa.ec.jrc.marex;
 
-import eu.europa.ec.jrc.marex.CiseEmulatorConfiguration;
-
 public class CiseEmulatorConfigurationMock {
 
     static CiseEmulatorConfiguration getMinimalSenderConfiguration() {

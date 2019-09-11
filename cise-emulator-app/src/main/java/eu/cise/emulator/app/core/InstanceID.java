@@ -5,14 +5,14 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 public class InstanceID {
-    public static final String ACTOR_WEB_CLIENT = "WClient" ;
-    public static final String ACTOR_WEB_SERVER = "WServer" ;
-    private final Long numid=  new AtomicLong().get();
+    public static final String ACTOR_WEB_CLIENT = "WClient";
+    public static final String ACTOR_WEB_SERVER = "WServer";
+    private final Long numid = new AtomicLong().get();
     private final String version;
     private final String name;
 
     public InstanceID(String name, String version) {
-        this.version= version;
+        this.version = version;
         this.name = name;
     }
 

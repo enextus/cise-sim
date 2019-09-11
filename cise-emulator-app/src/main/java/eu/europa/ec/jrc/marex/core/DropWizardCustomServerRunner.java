@@ -23,6 +23,7 @@ import java.util.List;
 public class DropWizardCustomServerRunner {
 
     public static File tmpConfigFile;
+
     public static <T extends CiseEmulatorConfiguration> DropWizardServer<T> createServer(
             T config,
             Class<? extends Application<T>> applicationClass) throws Exception {
@@ -40,7 +41,7 @@ public class DropWizardCustomServerRunner {
                 config.getClass().getCanonicalName() + "_" + System.currentTimeMillis());
         //tmpConfigFile.deleteOnExit();
         bootstrap.getObjectMapper().writeValue(tmpConfigFile, config);
-         System.out.println(" config was writed to "+tmpConfigFile.toPath().toAbsolutePath().toString());
+        System.out.println(" config was writed to " + tmpConfigFile.toPath().toAbsolutePath().toString());
         // Parse configuration
         ConfigurationFactory<T> configurationFactory
                 = bootstrap.getConfigurationFactoryFactory()

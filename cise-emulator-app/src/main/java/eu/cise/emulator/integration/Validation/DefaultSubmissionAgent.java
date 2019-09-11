@@ -8,11 +8,10 @@ import org.slf4j.LoggerFactory;
 
 public class DefaultSubmissionAgent implements SubmissionAgent {
 
-    private final Logger gatewayLogger  = LoggerFactory.getLogger("eu.cise.sim.transport.DefaultSubmissionAgent");
+    private final Logger gatewayLogger = LoggerFactory.getLogger("eu.cise.sim.transport.DefaultSubmissionAgent");
     private final MessageValidator validator;
     private final GatewayProcessor gatewayProcessor;
     private final String gatewayAddressString;
-
 
 
     public DefaultSubmissionAgent(MessageValidator validator,

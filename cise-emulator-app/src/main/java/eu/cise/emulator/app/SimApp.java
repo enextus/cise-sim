@@ -171,7 +171,7 @@ public class SimApp<T extends Configuration> extends Application<T> implements R
                 ((XmlEntityPayload) messageObject.getPayload()).getAnies().add(res);
             }
         }
-         completedMessage = mapper.toXML(messageObject).toString();
+        completedMessage = mapper.toXML(messageObject).toString();
         return messageObject;
     }
 

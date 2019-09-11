@@ -9,17 +9,14 @@ import eu.europa.ec.jrc.marex.client.SendResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URL;
+import javax.ws.rs.core.Configuration;
+import javax.xml.namespace.QName;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.Dispatch;
 import javax.xml.ws.Service;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.ws.rs.core.Configuration;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
 
 
 public class CiseMessageSoapServiceClient {

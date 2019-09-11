@@ -47,22 +47,23 @@ public class InvalidMessageSignatureException extends RuntimeException {
         super(cause);
     }
 
-    public InvalidMessageSignatureException(String message, Throwable t, Object...args) {
+    public InvalidMessageSignatureException(String message, Throwable t, Object... args) {
         super(format(message, args), t);
     }
 
     public InvalidMessageSignatureException(String message) {
         super(message);
     }
-/**
-    public IllegalMessageException(String message, Throwable t, Object... args) {
-        super(message, t, args);
-    }
 
-    public IllegalMessageException(String message, Throwable t, Object...args) {
-        super(format(message, args), t);
-    }
-**/
+    /**
+     * public IllegalMessageException(String message, Throwable t, Object... args) {
+     * super(message, t, args);
+     * }
+     * <p>
+     * public IllegalMessageException(String message, Throwable t, Object...args) {
+     * super(format(message, args), t);
+     * }
+     **/
     @Override
     public String toString() {
         return format("[%s]=%s", getClass().getSimpleName(), getMessage());
