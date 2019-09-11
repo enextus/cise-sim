@@ -44,9 +44,10 @@
             <excludes>
                 <exclude>.git/**</exclude>
                 <exclude>.idea/**</exclude>
-                <exclude>target/**</exclude>
-                <exclude>local-repo/**</exclude>
+                <exclude>**/target/**</exclude>
+                <exclude>**/cise-mvn-repo/**</exclude>
                 <exclude>**/*.iml</exclude>
+                <exclude>**/node_modules/**</exclude>
             </excludes>
         </fileSet>
     </fileSets>
