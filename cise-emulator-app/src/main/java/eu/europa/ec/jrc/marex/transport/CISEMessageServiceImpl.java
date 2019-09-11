@@ -19,6 +19,6 @@ public class CISEMessageServiceImpl implements CISEMessageServiceSoapImpl {
 
     @Override
     public Acknowledgement send(Message message) {
-        return inboundService.Receive(message);
+        return inboundService.receive(message);
     }
 }

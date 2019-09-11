@@ -45,8 +45,8 @@ public class ValidationResult implements Serializable {
     }
 
 
-    public boolean isOK(boolean RequireSigned) {
-        return (this.okXML && this.okEntity && this.okSemantic && ((!RequireSigned) || okSignedEntity));
+    public boolean isOK(boolean requireSigned) {
+        return (this.okXML && this.okEntity && this.okSemantic && ((!requireSigned) || okSignedEntity));
     }
 
 

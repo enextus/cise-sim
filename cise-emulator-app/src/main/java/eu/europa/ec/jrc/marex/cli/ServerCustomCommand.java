@@ -24,7 +24,7 @@ public class ServerCustomCommand extends Command {
         super("cliserver", "customized server with functional console output");
     }
 
-    private static String TempConfigFile;
+    private static String tempConfigFile;
     private static final ObjectMapper DEFAULT_MAPPER;
     private static final JsonSerializer DEFAULT_SERIALIZER;
 
@@ -77,8 +77,8 @@ public class ServerCustomCommand extends Command {
             emulatorConfig.setInputDirectory(inputDirectory);
         }
         int av = new Double(Math.random() * 999999L).intValue();
-        TempConfigFile = "./tmp/config" + av + ".yml";
-        if (new File(TempConfigFile).exists()) (new File(TempConfigFile)).delete();
+        tempConfigFile = "./tmp/config" + av + ".yml";
+        if (new File(tempConfigFile).exists()) (new File(tempConfigFile)).delete();
 
         CiseEmulatorApplication server = DropWizardCustomServerRunner.createServer(emulatorConfig, CiseEmulatorApplication.class);
         server.run(new String[]{"server", DropWizardCustomServerRunner.tmpConfigFile.toPath().toAbsolutePath().toString()});

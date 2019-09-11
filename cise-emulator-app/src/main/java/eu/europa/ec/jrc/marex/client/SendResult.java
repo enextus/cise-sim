@@ -1,7 +1,7 @@
 package eu.europa.ec.jrc.marex.client;
 
 import java.io.Serializable;
-
+/* source copied from the ais.transport */
 public class SendResult implements Serializable {
 
     private static final long serialVersionUID = 42L;
@@ -72,7 +72,3 @@ public class SendResult implements Serializable {
                 '}';
     }
 }
-
-
-//*REPENTIR **/
-//*package jrc.cise.transport;*//

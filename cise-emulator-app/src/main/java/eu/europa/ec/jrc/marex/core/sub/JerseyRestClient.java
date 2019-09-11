@@ -62,7 +62,3 @@ public class JerseyRestClient implements RestClient {
     }
 
 }
-
-
-//*REPENTIR **/
-//*package jrc.cise.transport;*//

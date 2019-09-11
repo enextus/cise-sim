@@ -9,115 +9,115 @@ public class CiseEmulatorConfiguration extends Configuration {
     /*----------operation-----------*/
     //operation x 8
     @NotEmpty
-    private String OperationMode;//"operation.mode"
+    private String operationMode; //"operation.mode"
 
     @NotEmpty
-    private String PublishedId;//"operation.publishedId"
+    private String publishedId; //"operation.publishedId"
 
     @NotEmpty
-    private String ServiceMode;//"operation.serviceMode"
+    private String serviceMode; //"operation.serviceMode"
 
     @NotEmpty
-    private String CounterpartUrl;//"operation.counterpartUrl"
+    private String counterpartUrl; //"operation.counterpartUrl"
 
     @NotEmpty
-    private String OutputDirectory;//"operation.outputDirectory"
+    private String outputDirectory; //"operation.outputDirectory"
 
     @NotEmpty
-    private String InputDirectory;//"operation.inputDirectory"
+    private String inputDirectory; //"operation.inputDirectory"
 
     @NotEmpty
-    private String SourceMessageDir;//"operation.sourceMessageDir"
+    private String sourceMessageDir; //"operation.sourceMessageDir"
 
     @NotEmpty
-    private String SourcePayloadDir;//"operation.sourcePayloadDir"
+    private String sourcePayloadDir; //"operation.sourcePayloadDir"
 
     @JsonProperty("operation.mode")
     public String getOperationMode() {
-        return OperationMode;
+        return operationMode;
     }
 
     @JsonProperty("operation.mode")
-    public void setOperationMode(String OperationMode) {
-        this.OperationMode = OperationMode;
+    public void setOperationMode(String operationMode) {
+        this.operationMode = operationMode;
     }
 
     @JsonProperty("operation.publishedId")
     public String getPublishedId() {
-        return PublishedId;
+        return publishedId;
     }
 
     @JsonProperty("operation.publishedId")
-    public void setPublishedId(String PublishedId) {
-        this.PublishedId = PublishedId;
+    public void setPublishedId(String publishedId) {
+        this.publishedId = publishedId;
     }
 
     @JsonProperty("operation.serviceMode")
     public String getServiceMode() {
-        return ServiceMode;
+        return serviceMode;
     }
 
     @JsonProperty("operation.serviceMode")
-    public void setServiceMode(String ServiceMode) {
-        this.ServiceMode = ServiceMode;
+    public void setServiceMode(String serviceMode) {
+        this.serviceMode = serviceMode;
     }
 
     @JsonProperty("operation.counterpartUrl")
     public String getCounterpartUrl() {
-        return CounterpartUrl;
+        return counterpartUrl;
     }
 
     @JsonProperty("operation.counterpartUrl")
-    public void setCounterpartUrl(String CounterpartUrl) {
-        this.CounterpartUrl = CounterpartUrl;
+    public void setCounterpartUrl(String counterpartUrl) {
+        this.counterpartUrl = counterpartUrl;
     }
 
     @JsonProperty("operation.outputDirectory")
     public String getOutputDirectory() {
-        return OutputDirectory;
+        return outputDirectory;
     }
 
     @JsonProperty("operation.outputDirectory")
-    public void setOutputDirectory(String OutputDirectory) {
-        this.OutputDirectory = OutputDirectory;
+    public void setOutputDirectory(String outputDirectory) {
+        this.outputDirectory = outputDirectory;
     }
 
     @JsonProperty("operation.inputDirectory")
     public String getInputDirectory() {
-        return InputDirectory;
+        return inputDirectory;
     }
 
     @JsonProperty("operation.inputDirectory")
-    public void setInputDirectory(String InputDirectory) {
-        this.InputDirectory = InputDirectory;
+    public void setInputDirectory(String inputDirectory) {
+        this.inputDirectory = inputDirectory;
     }
 
     @JsonProperty("operation.sourceMessageDir")
     public String getSourceMessageDir() {
-        return SourceMessageDir;
+        return sourceMessageDir;
     }
 
     @JsonProperty("operation.sourceMessageDir")
-    public void setSourceMessageDir(String SourceMessageDir) {
-        this.SourceMessageDir = SourceMessageDir;
+    public void setSourceMessageDir(String sourceMessageDir) {
+        this.sourceMessageDir = sourceMessageDir;
     }
 
     @JsonProperty("operation.sourcePayloadDir")
     public String getSourcePayloadDir() {
-        return SourcePayloadDir;
+        return sourcePayloadDir;
     }
 
     @JsonProperty("operation.sourcePayloadDir")
-    public void setSourcePayloadDir(String SourcePayloadDir) {
-        this.SourcePayloadDir = SourcePayloadDir;
+    public void setSourcePayloadDir(String sourcePayloadDir) {
+        this.sourcePayloadDir = sourcePayloadDir;
     }
     /*----------signature-----------*/
 
     @NotEmpty
-    private String SignatureOnSend;
+    private String signatureOnSend;
 
     @NotEmpty
-    private String SignatureOnReceive;
+    private String signatureOnReceive;
 
     @NotEmpty
     private String keyStoreFileName;
@@ -140,22 +140,22 @@ public class CiseEmulatorConfiguration extends Configuration {
 
     @JsonProperty("signature.OnSend")
     public String getSignatureOnSend() {
-        return SignatureOnSend;
+        return signatureOnSend;
     }
 
     @JsonProperty("signature.OnSend")
-    public void setSignatureOnSend(String SignatureOnSend) {
-        this.SignatureOnSend = SignatureOnSend;
+    public void setSignatureOnSend(String signatureOnSend) {
+        this.signatureOnSend = signatureOnSend;
     }
 
     @JsonProperty("signature.OnReceive")
     public String getSignatureOnReceive() {
-        return SignatureOnReceive;
+        return signatureOnReceive;
     }
 
     @JsonProperty("signature.OnReceive")
-    public void setSignatureOnReceive(String SignatureOnReceive) {
-        this.SignatureOnReceive = SignatureOnReceive;
+    public void setSignatureOnReceive(String signatureOnReceive) {
+        this.signatureOnReceive = signatureOnReceive;
     }
 
     @JsonProperty("signature.keyStoreFileName")

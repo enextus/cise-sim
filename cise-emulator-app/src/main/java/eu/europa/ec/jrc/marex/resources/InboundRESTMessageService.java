@@ -67,17 +67,17 @@ public class InboundRESTMessageService {
                 validResult.isOkXML(), validResult.isOkEntity(), validResult.isOkSignedEntity(), validResult.isOkSemantic());
         String ackMessage = "";
         String filePost = ACK;
-        if (validResult.isOkEntity() == false) {
-            ackMessage = executor.AcknowledgmentFailMessage(inputXmlMessage, "BAD_REQUEST", "content could not be validated as Entity");
+        if (!validResult.isOkEntity()) {
+            ackMessage = executor.acknowledgmentFailMessage(inputXmlMessage, "BAD_REQUEST", "content could not be validated as Entity");
             filePost = ERROR;
             // LOGGER.warn("BAD_REQUEST ACK sent for  structural {}, semantic {} reasons ; see file://{}", validResult.isOkEntity(), validResult.isOkSemantic(),InteractIOFile.getFilename(this.fileNameTemplate, filePost,MESSAGE_MODAL, filePost));
-        } else if (emulatorConfig.getSignatureOnReceive().equals("true") && validResult.isOkSignedEntity() == false) {
-            ackMessage = executor.AcknowledgmentFailMessage(inputXmlMessage, "SECURITY_ERROR", "signature error");
+        } else if (emulatorConfig.getSignatureOnReceive().equals("true") && !validResult.isOkSignedEntity()) {
+            ackMessage = executor.acknowledgmentFailMessage(inputXmlMessage, "SECURITY_ERROR", "signature error");
             filePost = ERROR;
             // LOGGER.warn("SECURITY ERROR ACK sent for signature required on start {} signature validated {}  ; see file://{} ", validResult.isOK(emulatorConfig.getSignatureOnReceive().contains("true")),validResult.isOkSignedEntity(),InteractIOFile.getFilename(this.fileNameTemplate, filePost,MESSAGE_MODAL, filePost));
 
         } else
-            executor.AcknowledgmentSuccessMessage(inputXmlMessage);
+            executor.acknowledgmentSuccessMessage(inputXmlMessage);
 
 
         String createdreffile = InteractIOFile.createRelativeRef(fileNameTemplate, filePost, createdFile, MESSAGE_MODAL, new StringBuffer(ackMessage));
