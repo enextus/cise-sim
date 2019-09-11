@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
-import eu.europa.ec.jrc.marex.candidate.CiseEmulatorConfigurationException;
+import eu.europa.ec.jrc.marex.CiseEmulatorConfiguration;
 import eu.europa.ec.jrc.marex.client.SendResult;
 import eu.europa.ec.jrc.marex.core.Executor;
 import eu.europa.ec.jrc.marex.core.sub.MessageValidator;
 import eu.europa.ec.jrc.marex.core.sub.Sender;
 import eu.europa.ec.jrc.marex.core.sub.SourceStreamProcessor;
-import eu.europa.ec.jrc.marex.CiseEmulatorConfiguration;
 import eu.europa.ec.jrc.marex.emulator.AcknowledgementHelper;
 import eu.europa.ec.jrc.marex.transport.CiseMessageSoapServiceClient;
 import eu.europa.ec.jrc.marex.util.ConfigManager;
@@ -32,7 +31,7 @@ import java.io.File;
 public class ClientCustomCommand extends Command {
     public static final String SUCCESS = "Success";
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientCustomCommand.class);
-    private static String MESSAGE_MODAL = "SEND";
+    private static final String MESSAGE_MODAL = "SEND";
     private final AcknowledgementHelper acknowledgementHelper = new AcknowledgementHelper();
 
     public ClientCustomCommand() {
@@ -112,7 +111,7 @@ public class ClientCustomCommand extends Command {
                 emulatorConfig,
                 xmlMapper,
                 validator);
-        Message generatedMessage = executor.LoadMessage(servicefile, payload);
+        Message generatedMessage = executor.loadMessage(servicefile, payload);
 
         String fileNameTemplate = emulatorConfig.getOutputDirectory() + emulatorConfig.getPublishedId() + "_out";
         String createdFile = InteractIOFile.createRef(fileNameTemplate, MESSAGE_MODAL, new StringBuffer(xmlMapper.toXML(generatedMessage)));
@@ -129,10 +128,10 @@ public class ClientCustomCommand extends Command {
         }
 
 
-        String AckCode = acknowledgementHelper.getAckCode(xmlMapper, obtainedResult.getBody());
+        String ackCode = acknowledgementHelper.getAckCode(xmlMapper, obtainedResult.getBody());
 
-        String createdfileResult = InteractIOFile.createRelativeRef(fileNameTemplate, createdFile, AckCode, MESSAGE_MODAL, new StringBuffer(obtainedResult.getBody()));
-        if (!(obtainedResult.getCode().toString().equals(200)) && AckCode != SUCCESS)
+        String createdfileResult = InteractIOFile.createRelativeRef(fileNameTemplate, createdFile, ackCode, MESSAGE_MODAL, new StringBuffer(obtainedResult.getBody()));
+        if (!(obtainedResult.getCode().toString().equals(200)) && ackCode != SUCCESS)
             LOGGER.warn(obtainedResult.getBody());
     }
 

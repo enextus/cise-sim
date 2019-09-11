@@ -31,12 +31,11 @@ public class WsdlCISEMessageServiceHandler implements SOAPHandler<SOAPMessageCon
     @Override
     public boolean handleMessage(SOAPMessageContext context) {
 
-        Boolean outbound = (Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+        Boolean outbound = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
         if (outbound) {
             log.info("WsdlCISEMessageServiceHandler server handler - outbound");
-        }
-        else {
+        } else {
             log.info("WsdlCISEMessageServiceHandler server handler - inbound");
         }
 

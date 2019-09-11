@@ -20,7 +20,7 @@ import static eu.eucise.helpers.AckBuilder.newAck;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 import static java.lang.String.format;
 
-public class DefaultAcceptanceAgent implements treatIncomingAgent {
+public class DefaultAcceptanceAgent implements TreatIncomingAgent {
 
     private final Logger gatewayLogger = LoggerFactory.getLogger("eu.cise.sim.transport.DefaultAcceptanceAgent");
     ;

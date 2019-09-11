@@ -3,7 +3,6 @@ package eu.europa.ec.jrc.marex.core.sub;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
 import eu.cise.signature.SignatureServiceBuilder;
-
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.DefaultXmlValidator;
 import eu.eucise.xml.XmlMapper;
@@ -70,7 +69,7 @@ public class ServerAppContext {
 
         if (config.getWebappWsMode().contains("REST")) {
             Server myserver = (ServerRestConcrete) new ServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
-            ((ServerRestConcrete) myserver).SetupServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
+            ((ServerRestConcrete) myserver).setupServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
             myserver = (ServerRest) myserver;
         }
 

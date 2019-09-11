@@ -26,7 +26,7 @@ public class ServerRestConcrete implements ServerRest {
     String id;
     AcceptanceAgent messageManager;
 
-    public void SetupServerRestConcrete(String id, AcceptanceAgent messageManager) {
+    public void setupServerRestConcrete(String id, AcceptanceAgent messageManager) {
         instance = this;
         if (!instance.isStarted()) {
             this.instance.id = id;
@@ -37,14 +37,14 @@ public class ServerRestConcrete implements ServerRest {
 
 
     public ServerRestConcrete(String id, AcceptanceAgent messageManager) {
-        SetupServerRestConcrete(id, messageManager);
+        setupServerRestConcrete(id, messageManager);
     }
 
 
     // for the browser
     @POST()
     @Path("/sec/messages")
-    public Acknowledgement Create(Message receivedMessage) {
+    public Acknowledgement create(Message receivedMessage) {
 
         Acknowledgement returnnmessage = messageManager.treatIncomingMessage(receivedMessage);
 

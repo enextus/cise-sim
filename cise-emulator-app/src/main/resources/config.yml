@@ -1,27 +1,32 @@
 signature.OnReceive: true
 signature.OnSend: true
-signature.keyStoreFileName: keyStore.jks
-signature.keyStorePassword: cisecise
-signature.certificateKey: sim1-node01.node01.eucise.fr
-signature.certificatePassword: cisecise
-signature.counterpartCertificateKey: cisecise
-signature.counterpartCertificateKeyPassword:
+signature.keyStoreFileName: ./cise-emulator-assembly/src/main/conf/keyStore.jks
+signature.keyStorePassword: password
+signature.certificateKey: apache.nodecx.eucise.cx
+signature.certificatePassword: password
+signature.counterpartCertificateKey: simlsa3-nodecx.nodecx.eucise.cx
+signature.counterpartCertificateKeyPassword: password
+
 
 operation.mode: EGN
 operation.publishedId: fr.sim-egn
-operation.serviceMode: SOAP
+operation.serviceMode: REST
 operation.counterpartUrl: http://localhost:18080/sim-EGN/rest/CISEMessageServiceREST
-operation.outputDirectory: /opt/jboss/EuciseData/
-operation.inputDirectory: /opt/jboss/EuciseData/
-operation.sourceMessageDir: /opt/jboss/EuciseData/sim-egn/messageXmlFiles
-operation.sourcePayloadDir: /opt/jboss/EuciseData/sim-egn/payloadXmlFiles
+operation.outputDirectory: ./tmp
+operation.inputDirectory: ./tmp
+operation.sourceMessageDir:  ./cise-emulator-assembly/src/main/conf/xmlmessages
+operation.sourcePayloadDir: ./cise-emulator-assembly/src/main/conf/xmlpayloads
+
+
 server:
   applicationConnectors:
     - type: http
-      port: 58080
+      port: 8080
   adminConnectors:
     - type: http
-      port: 58081
+      port: 8081
+
+
 logging:
   level: INFO
   loggers:

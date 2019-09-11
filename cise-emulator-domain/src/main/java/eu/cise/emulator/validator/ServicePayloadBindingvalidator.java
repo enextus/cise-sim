@@ -1,15 +1,14 @@
 package eu.cise.emulator.validator;
+
 import com.github.mfatihercik.dsb.DSM;
 import com.github.mfatihercik.dsb.DSMBuilder;
 
-import java.io.IOException;
 import java.util.*;
 
 public class ServicePayloadBindingvalidator {
-    private static ServicePayloadBindingvalidator selfRefSingleton = new ServicePayloadBindingvalidator() ;
-    private final List<BindedService> servicesRef;
+    private final List<BoundService> servicesRef;
 
-    static final String jsonData ="{\n" +
+    private static final String JSON_DATA = "{\n" +
             "  \"services\": [  {\"serviceName\":\"ActionService\", \"contentTypes\":[\"Action\"]},\n" +
             "    {\"serviceName\":\"AgentService\",\"contentTypes\":[\"Agent\", \"Person and Organization\"]},\n" +
             "    {\"serviceName\":\"AircraftService\",\"contentTypes\":[\"Aircraft\"]},\n" +
@@ -42,7 +41,7 @@ public class ServicePayloadBindingvalidator {
             "\n" +
             "}";
 
-    static final String configContent=
+    private static final String CONFIG_CONTENT =
             "version: 1.0\n" +
                     "params:\n" +
                     "  dateFormat: dd.MM.yyyy  # default 'dateFormat' for all 'date' dataType\n" +
@@ -55,81 +54,29 @@ public class ServicePayloadBindingvalidator {
                     "      type: array\n";
 
     public ServicePayloadBindingvalidator() {
-        DSM dsm = new DSMBuilder(configContent).create();
-        servicesRef = (List<BindedService>) dsm.toObject(jsonData);
+        DSM dsm = new DSMBuilder(CONFIG_CONTENT).create();
+        servicesRef = (List<BoundService>) dsm.toObject(JSON_DATA);
     }
 
 
-
-    public static ServicePayloadBindingvalidator getinstance() {
-        if (ServicePayloadBindingvalidator.selfRefSingleton== null){
-            return new ServicePayloadBindingvalidator();
-        } else {
-            return  ServicePayloadBindingvalidator.selfRefSingleton;
-        }
-    }
-
-    public boolean isConformContentTypeBinding(String aContentType, String aServiceType){
+    public boolean isConformContentTypeBinding(String aContentType, String aServiceType) {
         boolean sresponse = false;
-        sresponse = (getServiceCorrespondContentBinding( aContentType ).equals(aServiceType));
+        sresponse = (getServiceCorrespondContentBinding(aContentType).equals(aServiceType));
         return sresponse;
     }
 
-    public String getServiceCorrespondContentBinding(String aContentType){
-        Iterator<BindedService> anIterator= servicesRef.iterator();
-        while (anIterator.hasNext()){
-            Object aObjectIterated= anIterator.next();
-            ArrayList<String> aArrayListContentType  =(ArrayList<String> ) ((LinkedHashMap) aObjectIterated).get("contentTypes");
+    public String getServiceCorrespondContentBinding(String aContentType) {
+        Iterator<BoundService> anIterator = servicesRef.iterator();
+        while (anIterator.hasNext()) {
+            Object aObjectIterated = anIterator.next();
+            ArrayList<String> aArrayListContentType = (ArrayList<String>) ((LinkedHashMap) aObjectIterated).get("contentTypes");
             boolean test = aArrayListContentType.contains(aContentType);
             //Arrays.stream(aArrayListContentType).anyMatch(aContentType::equals);
             if (test) {
-                return (String) ((LinkedHashMap)aObjectIterated).get("serviceName");
+                return (String) ((LinkedHashMap) aObjectIterated).get("serviceName");
             }
         }
         return "";
     }
 
-
-    class BindedService{
-
-        private  String serviceName;
-        private String[] contentTypes;
-
-        public BindedService() {
-            super();
-        }
-
-        public String getServiceName() {
-            return serviceName;
-        }
-
-        public void setServiceName(String serviceName) {
-            this.serviceName = serviceName;
-        }
-
-        public String[] getContentTypes() {
-            return contentTypes;
-        }
-        public boolean asContentType(String aContentType){
-            boolean result = Arrays.stream(contentTypes).anyMatch(aContentType::equals);
-            return result;
-        }
-
-        public void setContentTypes(String[] contentTypes) {
-            this.contentTypes = contentTypes;
-        }
-
-    }
 }
-
-
-
-
-
-/* /test method alteration/
-    public ServicePayloadBindingvalidator() {
-        DSM dsm = new DSMBuilder(this.getClass().getClassLoader().getResource("ServiceContentTypeBinding.json.yml").getFile()).create();
-        servicesRef = (List<BindedService>) dsm.toObject(this.getClass().getClassLoader().getResource("mapping.yml").getFile());
-    }
-
-    * */

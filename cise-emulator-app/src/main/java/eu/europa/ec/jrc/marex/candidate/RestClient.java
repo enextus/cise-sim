@@ -11,7 +11,3 @@ public interface RestClient {
     SendResult delete(String address);
 
 }
-
-
-//*REPENTIR **/
-//*package jrc.cise.transport;*//

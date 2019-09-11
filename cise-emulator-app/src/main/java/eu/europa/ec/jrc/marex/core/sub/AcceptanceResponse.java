@@ -14,7 +14,3 @@ public enum AcceptanceResponse {
         return xmlBody;
     }
 }
-
-/* REPENTIR : from  previous conformance implementation b9d2690e hornste
-package jrc.cise.gw.preprocessing;
- */

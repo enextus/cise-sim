@@ -9,24 +9,23 @@ import eu.europa.ec.jrc.marex.client.SendResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URL;
+import javax.ws.rs.core.Configuration;
+import javax.xml.namespace.QName;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.Dispatch;
 import javax.xml.ws.Service;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.ws.rs.core.Configuration;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
 
+/* other option use a dispatch api https://cxf.apache.org/docs/how-do-i-develop-a-client.html
+ */
 
 public class CiseMessageSoapServiceClient {
     private String wsdlURL;
     private static final String SERVICE_URI = "http://www.cise.eu/accesspoint/service/v1/";
     private static final String LOCAL_URI = "CISEMessageService";
-    private static final String SERVICE_PORT = "CISEMessageServiceSoapPort";//"CISEMessageServiceSoapImpl";
+    private static final String SERVICE_PORT = "CISEMessageServiceSoapPort"; //"CISEMessageServiceSoapImpl";
     private XmlMapper xmlmapper;
     Logger logger = LoggerFactory.getLogger(CiseMessageSoapServiceClient.class);
 
@@ -43,10 +42,10 @@ public class CiseMessageSoapServiceClient {
 
             URL wsdlURL = new URL(this.wsdlURL);
             //fail safe ... can access the url
-            QName SERVICE_QNAME = new QName(CiseMessageSoapServiceClient.SERVICE_URI, CiseMessageSoapServiceClient.LOCAL_URI);
-            Service service = Service.create(wsdlURL, SERVICE_QNAME);
-            QName PORT_QNAME = new QName(CiseMessageSoapServiceClient.SERVICE_URI, CiseMessageSoapServiceClient.SERVICE_PORT);//, CiseMessageSoapServiceClient.SERVICE_PORT
-            CISEMessageServiceSoapImpl client = service.getPort(PORT_QNAME, CISEMessageServiceSoapImpl.class);
+            QName serviceQname = new QName(CiseMessageSoapServiceClient.SERVICE_URI, CiseMessageSoapServiceClient.LOCAL_URI);
+            Service service = Service.create(wsdlURL, serviceQname);
+            QName portQname = new QName(CiseMessageSoapServiceClient.SERVICE_URI, CiseMessageSoapServiceClient.SERVICE_PORT);
+            CISEMessageServiceSoapImpl client = service.getPort(portQname, CISEMessageServiceSoapImpl.class);
             // resultAcknowledgement = client.send(message);
 
 
@@ -79,25 +78,3 @@ public class CiseMessageSoapServiceClient {
 
 }
 
-
-/* other option use a dispatch api https://cxf.apache.org/docs/how-do-i-develop-a-client.html
-import java.net.URL;
-import javax.xml.transform.Source;
-import javax.xml.ws.Dispatch;
-import javax.xml.ws.Service;
-...
-
-URL wsdlURL = new URL("http://localhost/hello?wsdl");
-Service service = Service.create(wsdlURL, new QName("HelloService"));
-Dispatch<Source> disp = service.createDispatch(new QName("HelloPort"), Source.class, Service.Mode.PAYLOAD);
-
-Source request = new StreamSource("<hello/>")
-Source response = disp.invoke(request);
-
-
-            QName SERVICE_QNAME = new QName(CiseMessageSoapServiceClient.SERVICE_URI, CiseMessageSoapServiceClient.LOCAL_URI);
-            Service service = Service.create(new URL(this.wsdlURL), SERVICE_QNAME);
-            CISEMessageServiceSoapImpl client = service.getPort(CISEMessageServiceSoapImpl.class);
-            resultAcknowledgement = client.send(message);
-
- */

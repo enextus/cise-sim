@@ -1,6 +1,6 @@
 signature.OnReceive: true
 signature.OnSend: true
-signature.keyStoreFileName: /home/cise/IdeaProjects/cise-emulator/cise-emulator-app/src/test/resources/remoteDemo/apache-nodecx.jks
+signature.keyStoreFileName: /opt/jboss/EuciseData/sim-egn/conf/apache-nodecx.jks
 signature.keyStorePassword: password
 signature.certificateKey: apache.nodecx.eucise.cx
 signature.certificatePassword: password
@@ -10,15 +10,17 @@ signature.counterpartCertificateKeyPassword: password
 operation.mode: EGN
 operation.publishedId: fr.sim-egn
 operation.serviceMode: REST
-operation.counterpartUrl: http://localhost:8080/sim-LSA/CISEMessageService?wsdl
+operation.counterpartUrl: http://localhost:8080/sim-LSA/rest/CISEMessageServiceREST
 operation.outputDirectory: ./tmp/
 operation.inputDirectory: ./tmp/
 operation.sourceMessageDir: ./xmlmessages/
 operation.sourcePayloadDir: ./xmlpayloads/
+
 server:
   applicationConnectors:
     - type: http
       port: 48080
+
 logging: !<default>
   level: "INFO"
   loggers:
