@@ -117,7 +117,7 @@
                     <failsOnError>true</failsOnError>
                     <configLocation>checkstyle.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
-                    <excludes>**/target/**</excludes>
+                    <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
                 </configuration>
                 <executions>
                     <execution>
