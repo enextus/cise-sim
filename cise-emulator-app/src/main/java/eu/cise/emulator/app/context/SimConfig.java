@@ -57,11 +57,11 @@ public interface SimConfig extends Config {
     @Key("counterpart.rest.url")
     String getCounterpartRestUrl();
 
-    @DefaultValue("fr.sim-egn")
+    @DefaultValue("/opt/jboss/EuciseData/sim-egn/messageXmlFiles")
     @Key("simulator.message.dir")
     String getSimulatorMessageDir();
 
-    @DefaultValue("fr.sim-egn")
+    @DefaultValue("/opt/jboss/EuciseData/sim-egn/payloadXmlFiles")
     @Key("simulator.payload.dir")
     String getSimulatorPayloadDir();
 

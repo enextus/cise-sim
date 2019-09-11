@@ -1,6 +1,7 @@
 package eu.cise.emulator.app.resource;
 
 import ch.qos.logback.classic.Logger;
+import eu.cise.emulator.app.CiseEmuConfiguration;
 import eu.cise.emulator.app.context.SimConfig;
 import eu.cise.emulator.app.core.InstanceID;
 import eu.cise.emulator.app.core.WebSocketMessage;
@@ -31,12 +32,12 @@ public class InboundRESTMessageService {
     private final MessageValidator validator;
     private final Logger mylogger;
     private final XmlMapper mapper;
-    private final SignatureService signature;
+    private  SignatureService signature;
     private final OutBoundWebSocketClient outRestMessageclient;
-    SimConfig config;
+    CiseEmuConfiguration config;
     InstanceID instanceID;
 
-    public InboundRESTMessageService(InstanceID instanceID, SimConfig config, OutBoundWebSocketClient outRestMessageclient) {
+    public InboundRESTMessageService(InstanceID instanceID, CiseEmuConfiguration config, OutBoundWebSocketClient outRestMessageclient) {
         this.config = config;
         this.instanceID = instanceID;
         this.validator = new MessageValidator();
@@ -44,12 +45,29 @@ public class InboundRESTMessageService {
         this.mapper = new DefaultXmlMapper.Pretty();
         SignatureServiceBuilder signBuilder = SignatureServiceBuilder.newSignatureService(mapper);
         this.outRestMessageclient = outRestMessageclient;
-        this.signature = signBuilder
-                .withKeyStoreName((String) config.getKeyStoreName())
+        String resolvedConfDir = (System.getProperty("user.dir") + "/conf/");
+        /*wa01:in >  work around until modification of eventual change in signature lib null ="" */
+        String oldConfDir = System.getProperty("conf.dir"); /*wa01:*/
+        String actualUserDir = System.getProperty("user.dir");
+        String resolvedFilenameKeyStore = (config.getKeyStoreFileName().contains("/") ?
+                config.getKeyStoreFileName().substring(config.getKeyStoreFileName().lastIndexOf("/") + 1)
+                : config.getKeyStoreFileName());
+        if (config.getKeyStoreFileName().startsWith("/")) {
+            resolvedConfDir = config.getKeyStoreFileName().substring(0, config.getKeyStoreFileName().lastIndexOf("/"));
+        } else if (config.getKeyStoreFileName().startsWith("./")) {
+            resolvedConfDir = actualUserDir + config.getKeyStoreFileName().substring(1, config.getKeyStoreFileName().lastIndexOf("/"));
+        }
+        System.setProperty("conf.dir", resolvedConfDir); /*wa01:*/
+        /*< out:wa01*/
+
+        SignatureService signature = signBuilder
+                .withKeyStoreName((String) resolvedFilenameKeyStore)
                 .withKeyStorePassword((String) config.getKeyStorePassword())
-                .withPrivateKeyAlias((String) config.getPrivateKeyAlias())
-                .withPrivateKeyPassword((String) config.getPrivateKeyPassword())
+                .withPrivateKeyAlias((String) config.getCertificateKey())
+                .withPrivateKeyPassword((String) config.getCertificatePassword())
                 .build();
+        //System.setProperty("conf.dir",oldConfDir);/**wa01:*/
+
     }
 
 

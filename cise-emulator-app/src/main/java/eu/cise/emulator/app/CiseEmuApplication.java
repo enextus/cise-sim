@@ -103,7 +103,7 @@ public class CiseEmuApplication extends Application<CiseEmuConfiguration> {
         final OutBoundWebSocketClient outRestMessageClient = OutBoundWebSocketClient.build("8080"); //TODO set dynamic value to reflect via this.instanceID.getPort()
 
         // IN = to the infrastructure server members (node, adapter, emulator, simulator ...)
-        final InboundRESTMessageService inboundRESTMessageService = new eu.cise.emulator.app.resource.InboundRESTMessageService(this.instanceID, this.appConfig, outRestMessageClient);
+        final InboundRESTMessageService inboundRESTMessageService = new eu.cise.emulator.app.resource.InboundRESTMessageService(this.instanceID, configuration, outRestMessageClient);
         environment.jersey().register(inboundRESTMessageService);
 
 
