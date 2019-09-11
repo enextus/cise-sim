@@ -37,11 +37,13 @@
     <module name="FileTabCharacter"/>
 
     <!-- Trailing spaces -->
+<!--
     <module name="RegexpSingleline">
         <property name="format" value="\s+$"/>
         <property name="message" value="Line has trailing spaces."/>
+        <property name="ignoreComments" value="true"/>
     </module>
-
+-->
     <!-- Space after 'for' and 'if' -->
     <module name="RegexpSingleline">
         <property name="format" value="^\s*(for|if)\b[^ ]"/>

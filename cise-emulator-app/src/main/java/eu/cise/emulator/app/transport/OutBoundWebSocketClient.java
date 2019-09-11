@@ -15,14 +15,12 @@ import java.net.URISyntaxException;
 
 @ClientEndpoint
 public class OutBoundWebSocketClient {
-    private final Logger logger = (Logger) LoggerFactory.getLogger(OutBoundWebSocketService.class);
-
     static OutBoundWebSocketClient clientEndPoint;
-
+    private final Logger logger = (Logger) LoggerFactory.getLogger(OutBoundWebSocketService.class);
+    private final WebSocketContainer container;
     private Session userSession = null;
     private URI internalUri;
     private MessageHandler messageHandler;
-    private final WebSocketContainer container;
     private boolean firstConnect = true;
 
     private OutBoundWebSocketClient(String port, MessageHandler messageHandler) {
@@ -38,11 +36,11 @@ public class OutBoundWebSocketClient {
 
     }
 
-    public static OutBoundWebSocketClient build(String Port) {
+    public static OutBoundWebSocketClient build(String port) {
         if (clientEndPoint != null) {
             return clientEndPoint;
         } else {
-            OutBoundWebSocketClient outBoundWebSocketClient = new OutBoundWebSocketClient(Port, new DefaultMessageHandler());
+            OutBoundWebSocketClient outBoundWebSocketClient = new OutBoundWebSocketClient(port, new DefaultMessageHandler());
             return outBoundWebSocketClient;
         }
     }

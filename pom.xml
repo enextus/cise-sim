@@ -109,6 +109,7 @@
                     <failsOnError>true</failsOnError>
                     <configLocation>checkstyle.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
+                    <excludes>**/target/**</excludes>
                 </configuration>
                 <executions>
                     <execution>
