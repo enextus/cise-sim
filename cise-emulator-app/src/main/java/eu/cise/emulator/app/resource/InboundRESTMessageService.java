@@ -2,7 +2,6 @@ package eu.cise.emulator.app.resource;
 
 import ch.qos.logback.classic.Logger;
 import eu.cise.emulator.app.CiseEmuConfiguration;
-import eu.cise.emulator.app.context.SimConfig;
 import eu.cise.emulator.app.core.InstanceID;
 import eu.cise.emulator.app.core.WebSocketMessage;
 import eu.cise.emulator.app.core.WebSocketMessageType;
