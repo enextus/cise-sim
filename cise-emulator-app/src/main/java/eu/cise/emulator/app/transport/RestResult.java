@@ -72,7 +72,3 @@ public class RestResult implements Serializable {
                 '}';
     }
 }
-
-
-//*REPENTIR **/
-//*package jrc.cise.transport;*//

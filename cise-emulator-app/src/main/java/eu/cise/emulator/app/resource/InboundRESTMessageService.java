@@ -28,15 +28,14 @@ import javax.ws.rs.Produces;
 
 @Path("/sim-LSA/rest/")
 public class InboundRESTMessageService {
-    SimConfig config;
-    InstanceID instanceID;
     private final MessageValidator validator;
     private final Logger mylogger;
     private final XmlMapper mapper;
     private final SignatureService signature;
     private final OutBoundWebSocketClient outRestMessageclient;
+    SimConfig config;
+    InstanceID instanceID;
 
-    // private final OutBoundWebSocketClient webSocketClient;
     public InboundRESTMessageService(InstanceID instanceID, SimConfig config, OutBoundWebSocketClient outRestMessageclient) {
         this.config = config;
         this.instanceID = instanceID;
@@ -51,7 +50,6 @@ public class InboundRESTMessageService {
                 .withPrivateKeyAlias((String) config.getPrivateKeyAlias())
                 .withPrivateKeyPassword((String) config.getPrivateKeyPassword())
                 .build();
-        //this.webSocketClient = OutBoundWebSocketClient.build();
     }
 
 
@@ -59,29 +57,29 @@ public class InboundRESTMessageService {
     @Consumes("text/plain,text/xml,application/xml")
     @Produces("text/plain")
     @Path("/CISEMessageServiceREST")
-    public String ReceiveMessage(String messageContent) throws Exception {
+    public String receiveMessage(String messageContent) throws Exception {
 
 
         Message message = null;
         Service defaultService = createServiceDummy();
         // initial loading phase
-        String Phase = "received XML initial loading ";
+        String phase = "received XML initial loading ";
         // create  dummy service definition for standard initial phase error response.
         Acknowledgement thisAcknoledgment = new Acknowledgement();
         thisAcknoledgment.setSender(defaultService);
         thisAcknoledgment.setRecipient(defaultService);
 
         mylogger.debug("CISEMessageServiceRESTXML received POST message :// " + messageContent);
-        Phase = "XML validation";
+        phase = "XML validation";
         try {
             message = mapper.fromXML(messageContent);
         } catch (Exception e) {
             thisAcknoledgment.setAckCode(AcknowledgementType.BAD_REQUEST);
-            mylogger.debug("CISEMessageServiceRESTXML reject message in " + Phase);
+            mylogger.debug("CISEMessageServiceRESTXML reject message in " + phase);
             // add event to the websocket (queue)
             return mapper.toXML(thisAcknoledgment);
         }
-        Phase = "content validation";
+        phase = "content validation";
         try {
             validator.validates(message, v -> {
                 v.messageNotNullCheck();
@@ -91,23 +89,12 @@ public class InboundRESTMessageService {
             });
         } catch (Exception e) {
             thisAcknoledgment.setAckCode(AcknowledgementType.INVALID_REQUEST_OBJECT);
-            mylogger.debug("CISEMessageServiceRESTXML reject message in " + Phase);
+            mylogger.debug("CISEMessageServiceRESTXML reject message in " + phase);
             // add event to the websocket (queue)
             return mapper.toXML(thisAcknoledgment);
         }
-        Phase = "signature validation";
+        phase = "signature validation";
         thisAcknoledgment = conformAcknowledgment(message);
-//        try {
-//            signature.verify(message);
-//        } catch (eu.cise.emulator.integration.Exception.Exception e) {
-//            thisAcknoledgment.setAckCode(AcknowledgementType.SECURITY_ERROR);
-//            mylogger.debug("CISEMessageServiceRESTXML reject message in " + Phase + "\n" +e.getStackTrace());
-//            // add event to the websocket (queue)
-//           // webSocketClient.sendMessage(messageContent);
-//            return mapper.toXML(messageReturn.build("","",(messageContent)));
-//        }
-
-
         thisAcknoledgment.setAckCode(AcknowledgementType.SUCCESS);
         /*insure connected*/
         outRestMessageclient.startConnect();

@@ -5,30 +5,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ClientResponse {
 
     @JsonProperty
-    private String ResponseCode;
+    private String responseCode;
 
     @JsonProperty
-    private String AcknoledgeContent;
+    private String acknowledgeContent;
 
-    public ClientResponse(String responseCode, String acknoledgeContent) {
-        ResponseCode = responseCode;
-        AcknoledgeContent = acknoledgeContent;
+    public ClientResponse(String responseCode, String acknowledgeContent) {
+        this.responseCode = responseCode;
+        this.acknowledgeContent = acknowledgeContent;
     }
 
     public String getResponseCode() {
-        return ResponseCode;
+        return responseCode;
     }
 
     public void setResponseCode(String responseCode) {
-        ResponseCode = responseCode;
+        this.responseCode = responseCode;
     }
 
-    public String getAcknoledgeContent() {
-        return AcknoledgeContent;
+    public String getAcknowledgeContent() {
+        return acknowledgeContent;
     }
 
-    public void setAcknoledgeContent(String acknoledgeContent) {
-        AcknoledgeContent = acknoledgeContent;
+    public void setAcknowledgeContent(String acknowledgeContent) {
+        this.acknowledgeContent = acknowledgeContent;
     }
 
 }

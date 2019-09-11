@@ -83,6 +83,18 @@
                             </tasks>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>ant-magic2</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <delete dir="java-templates"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -99,7 +111,7 @@
                         <configuration>
                             <sourceDirectory>${basedir}/java-templates/eu/cise/accesspoint/service/v1
                             </sourceDirectory>
-                            <outputDirectory>${basedir}/src/main/generated-sources/eu/cise/accesspoint/service/v1
+                            <outputDirectory>${basedir}/target/generated-sources/eu/cise/accesspoint/service/v1
                             </outputDirectory>
                         </configuration>
                     </execution>
