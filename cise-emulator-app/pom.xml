@@ -54,7 +54,7 @@
                             <goal>wsdl2java</goal>
                         </goals>
                         <configuration>
-                            <sourceRoot>${build.directory}/java-templates</sourceRoot>
+                            <sourceRoot>${project.build.directory}/java-templates</sourceRoot>
                             <wsdlOptions>
                                 <wsdlOption>
                                     <wsdl>${basedir}/src/main/resources/META-INF/CISEMessageService.wsdl</wsdl>
@@ -78,7 +78,7 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <delete dir="${build.directory}/java-templates/eu/cise/servicemodel"/>
+                                <delete dir="${project.build.directory}/java-templates/eu/cise/servicemodel"/>
                             </tasks>
                         </configuration>
                     </execution>
@@ -96,7 +96,7 @@
                         </goals>
                         <phase>compile</phase>
                         <configuration>
-                            <sourceDirectory>${build.directory}/java-templates/eu/cise/accesspoint/service/v1
+                            <sourceDirectory>${project.build.directory}/java-templates/eu/cise/accesspoint/service/v1
                             </sourceDirectory>
                             <outputDirectory>${basedir}/target/generated-sources/eu/cise/accesspoint/service/v1
                             </outputDirectory>
