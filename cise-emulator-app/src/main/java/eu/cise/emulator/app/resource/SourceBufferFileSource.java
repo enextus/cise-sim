@@ -92,12 +92,12 @@ public class SourceBufferFileSource implements SourceBufferInterface {
     }
 
     @Override
-    public StringBuffer getReferenceFileContent(String contentUri) {
+    public StringBuffer getReferenceFileContent(String payloadUri) {
         StringBuffer returnable = new StringBuffer();
         URL ServiceUrl = null;
         URI ServiceUri = null;
         try {
-            ServiceUrl = StringtoURL(contentUri);
+            ServiceUrl = StringtoURL(payloadUri);
             ServiceUri = URLtoURI(ServiceUrl);
         } catch (MalformedURLException e) {
             e.printStackTrace();

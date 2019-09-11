@@ -26,12 +26,12 @@ import java.util.stream.Stream;
 public class SourceBufferFileSource implements SourceBufferInterface {
 
 
-    private URL StringtoURL(String stringUrl) throws MalformedURLException {
+    private URL stringToURL(String stringUrl) throws MalformedURLException {
         URL url = new URL((stringUrl.trim().startsWith("file://") ? stringUrl : "file://" + stringUrl));
         return url;
     }
 
-    private URI URLtoURI(URL url) throws URISyntaxException {
+    private URI urlToURI(URL url) throws URISyntaxException {
         return url.toURI();
     }
 
@@ -54,7 +54,7 @@ public class SourceBufferFileSource implements SourceBufferInterface {
         return directoryListing;
     }
 
-    private StringBuffer AppendBufferFromUri(StringBuffer strBuffer, URI uri) throws FileNotFoundException {
+    private StringBuffer appendBufferFromUri(StringBuffer strBuffer, URI uri) throws FileNotFoundException {
         File file = new File(uri);
         if (file.exists()) {
             FileInputStream in = new FileInputStream(file);
@@ -80,21 +80,21 @@ public class SourceBufferFileSource implements SourceBufferInterface {
     }
 
     @Override
-    public StringBuffer getReferenceFileContent(String contentUri) {
-        if (contentUri.isEmpty()) return new StringBuffer("");
+    public StringBuffer getReferenceFileContent(String payloadUri) {
+        if (payloadUri.isEmpty()) return new StringBuffer("");
         StringBuffer returnable = new StringBuffer();
-        URL ServiceUrl = null;
-        URI ServiceUri = null;
+        URL serviceUrl = null;
+        URI serviceUri = null;
         try {
-            ServiceUrl = StringtoURL(contentUri);
-            ServiceUri = URLtoURI(ServiceUrl);
+            serviceUrl = stringToURL(payloadUri);
+            serviceUri = urlToURI(serviceUrl);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         try {
-            AppendBufferFromUri(returnable, ServiceUri);
+            appendBufferFromUri(returnable, serviceUri);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

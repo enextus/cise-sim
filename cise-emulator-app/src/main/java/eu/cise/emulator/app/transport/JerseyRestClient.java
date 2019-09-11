@@ -35,7 +35,6 @@ public class JerseyRestClient implements RestClient {
     @Override
     public RestResult get(String address) {
         return vestException(address, (a) -> translateResult(targetXml(a).get()));
-
     }
 
     @Override
@@ -61,7 +60,3 @@ public class JerseyRestClient implements RestClient {
     }
 
 }
-
-
-//*REPENTIR **/
-//*package jrc.cise.transport;*//

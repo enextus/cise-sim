@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class InboundService {
     private static final org.slf4j.Logger LOGGER;
-    private static final AcknowledgementHelper acknowledgementHelper;
+    private static final AcknowledgementHelper ACKNOWLEDGEMENT_HELPER;
     private static String fileNameTemplate;
     private static Executor preparedConfiguration = null;
 
@@ -28,18 +28,18 @@ public class InboundService {
 
     static {
         LOGGER = LoggerFactory.getLogger(InboundService.class);
-        acknowledgementHelper = new AcknowledgementHelper();
+        ACKNOWLEDGEMENT_HELPER = new AcknowledgementHelper();
     }
 
     public InboundService() {
     }
 
-    public static void init(Executor ConfiguredDelegate, String filenametemplate) {
-        preparedConfiguration = ConfiguredDelegate;
-        fileNameTemplate = filenametemplate;
+    public static void init(Executor configuredDelegate, String filenameTemplate) {
+        preparedConfiguration = configuredDelegate;
+        fileNameTemplate = filenameTemplate;
     }
 
-    public Acknowledgement Receive(Message message) {
+    public Acknowledgement receive(Message message) {
         String inputXmlMessage = "";
         try {
             inputXmlMessage = xmlMapper.toXML(message);
@@ -54,14 +54,14 @@ public class InboundService {
         LOGGER.info("inputXmlMessage validated {} : xml {} and conformed structure:{} signature {} semantic {}", validResult.isOK(preparedConfiguration.getConfig().getSignatureOnReceive().contains("true")), validResult.isOkXML(), validResult.isOkEntity(), validResult.isOkSignedEntity(), validResult.isOkSemantic());
         String ackMessage = "";
         String filePost = ACK;
-        if (validResult.isOkEntity() == false) {
-            ackMessage = preparedConfiguration.AcknowledgmentFailMessage(inputXmlMessage, "BAD_REQUEST", "content could not be validated as Entity");
+        if (!validResult.isOkEntity()) {
+            ackMessage = preparedConfiguration.acknowledgmentFailMessage(inputXmlMessage, "BAD_REQUEST", "content could not be validated as Entity");
             filePost = ERROR;
-        } else if (preparedConfiguration.getConfig().getSignatureOnReceive().equals("true") && validResult.isOkSignedEntity() == false) {
-            ackMessage = preparedConfiguration.AcknowledgmentFailMessage(inputXmlMessage, "SECURITY_ERROR", "signature error");
+        } else if (preparedConfiguration.getConfig().getSignatureOnReceive().equals("true") && !validResult.isOkSignedEntity()) {
+            ackMessage = preparedConfiguration.acknowledgmentFailMessage(inputXmlMessage, "SECURITY_ERROR", "signature error");
             filePost = ERROR;
         } else {
-            ackMessage = preparedConfiguration.AcknowledgmentSuccessMessage(inputXmlMessage);
+            ackMessage = preparedConfiguration.acknowledgmentSuccessMessage(inputXmlMessage);
         }
 
 

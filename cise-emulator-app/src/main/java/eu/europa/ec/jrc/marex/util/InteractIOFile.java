@@ -10,13 +10,14 @@ import java.util.Date;
 
 public class InteractIOFile {
 
+    private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
 
     public static String createRef(String serviceId, String typeMessage, StringBuffer content) {
         return createAbsoluteRef(serviceId, "", typeMessage, content);
     }
 
     public static String createAbsoluteRef(String serviceId, String resultMarker, String typeMessage, StringBuffer msg) {
-        SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
+
         String timeMarker = DATE_TIME_FORMAT.format(new Date(System.currentTimeMillis()));
         return createRelativeRef(serviceId, resultMarker, timeMarker, typeMessage, msg);
     }

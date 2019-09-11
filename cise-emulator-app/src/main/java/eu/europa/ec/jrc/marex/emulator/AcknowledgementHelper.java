@@ -17,15 +17,15 @@ public class AcknowledgementHelper {
 
         Acknowledgement ackReturned = null;
         String correctedContent = increaseAckCodeWithSender(inicialContent);
-        String AckCode = "ERROR", AckDetail = "unknown error"; // TODO: please replace with adequate default value for no ack received (network error?)
+        String ackCode = "ERROR", ackDetail = "unknown error"; // TODO: please replace with adequate default value for no ack received (network error?)
         try {
             ackReturned = (Acknowledgement) xmlMapper.fromXML(correctedContent);
-            AckCode = ackReturned.getAckCode().toString();
-            AckDetail = ackReturned.getAckDetail().toString();
+            ackCode = ackReturned.getAckCode().toString();
+            ackDetail = ackReturned.getAckDetail().toString();
         } catch (Exception e) {
             LOGGER.error("unable to evaluated the returned ACK : [" + correctedContent + "]", e);
         }
-        return AckCode;
+        return ackCode;
     }
 
     public String increaseAckCodeWithSender(String inicialContent) {
