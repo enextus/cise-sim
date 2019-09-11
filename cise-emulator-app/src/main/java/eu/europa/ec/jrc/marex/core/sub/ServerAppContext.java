@@ -69,7 +69,7 @@ public class ServerAppContext {
 
         if (config.getWebappWsMode().contains("REST")) {
             Server myserver = (ServerRestConcrete) new ServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
-            ((ServerRestConcrete) myserver).SetupServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
+            ((ServerRestConcrete) myserver).setupServerRestConcrete(config.getSimulatorId(), acceptanceAgent);
             myserver = (ServerRest) myserver;
         }
 

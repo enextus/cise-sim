@@ -20,7 +20,7 @@ public class SimAppConsumers {
         logger.info("Starting Gateway Consumers");
         Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("Shutdown hook ran!")));
 
-     consumers=null;
+        consumers = null;
     }
 
 

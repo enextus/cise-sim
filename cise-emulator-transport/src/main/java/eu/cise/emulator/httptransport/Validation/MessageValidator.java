@@ -1,7 +1,7 @@
 package eu.cise.emulator.httptransport.Validation;
 
 
-        import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.PullRequest;
 import eu.cise.servicemodel.v1.message.Push;
 

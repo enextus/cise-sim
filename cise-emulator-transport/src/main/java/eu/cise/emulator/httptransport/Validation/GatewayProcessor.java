@@ -21,6 +21,3 @@ public interface GatewayProcessor {
      */
     void process(Message message);
 }
-
-
-// REPENTIR from jrc.cise.gw.processing.GatewayProcessor

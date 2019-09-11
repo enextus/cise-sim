@@ -17,18 +17,16 @@ import java.lang.reflect.Type;
 
 @Provider
 public class ServerSoapProvider implements MessageBodyReader<Message> {
-    private static final ServerSoapProvider instance = new ServerSoapProvider();
-
-
+    private static final ServerSoapProvider INSTANCE = new ServerSoapProvider();
 
 
     private ServerSoapProvider() {
 
     }
-    
 
-    static public ServerSoapProvider getInstance(){
-        return instance;
+
+    public static  ServerSoapProvider getInstance() {
+        return INSTANCE;
     }
 
 
@@ -42,16 +40,21 @@ public class ServerSoapProvider implements MessageBodyReader<Message> {
     public Message readFrom(Class<Message> type, Type genericType, Annotation[] annotations, MediaType mediaType,
                             MultivaluedMap<String, String> httpHeaders,
                             InputStream inputStream)
-            throws IOException, WebApplicationException
-    {
-        Message cReturn= new Acknowledgement();
-        StringBuffer inXMLcontent=new StringBuffer();
+            throws IOException, WebApplicationException {
+        Message cReturn = new Acknowledgement();
+        StringBuffer inXMLcontent = new StringBuffer();
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(inputStream))) {
             inXMLcontent.append(br.readLine());
-        }catch (Exception e){
-            if (e instanceof IOException ){throw  (IOException) e ;};
-            if (e instanceof WebApplicationException ){throw  (WebApplicationException) e ;};
+        } catch (Exception e) {
+            if (e instanceof IOException) {
+                throw (IOException) e;
+            }
+
+            if (e instanceof WebApplicationException) {
+                throw (WebApplicationException) e;
+            }
+
         }
 
         return cReturn;

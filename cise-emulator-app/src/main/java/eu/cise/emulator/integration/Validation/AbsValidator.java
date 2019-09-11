@@ -7,9 +7,9 @@ import eu.cise.servicemodel.v1.service.Service;
 
 import java.util.Optional;
 
-abstract public class AbsValidator<T extends Message> implements Validator {
+public abstract class AbsValidator<T extends Message> implements Validator {
 
-    final public T message;
+    public final  T message;
 
     public AbsValidator(T message) {
         this.message = message;

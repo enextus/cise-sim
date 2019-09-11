@@ -62,6 +62,7 @@ public class RestResult implements Serializable {
         return result;
     }
 
+
     @Override
     public String toString() {
         return "RestResult{" +
@@ -72,7 +73,3 @@ public class RestResult implements Serializable {
                 '}';
     }
 }
-
-
-//*REPENTIR **/
-//*package jrc.cise.transport;*//

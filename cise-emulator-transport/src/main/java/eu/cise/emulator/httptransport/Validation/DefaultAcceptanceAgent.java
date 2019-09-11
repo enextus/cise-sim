@@ -21,9 +21,9 @@ import static eu.eucise.helpers.AckBuilder.newAck;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 import static java.lang.String.format;
 
-public class DefaultAcceptanceAgent implements treatIncomingAgent {
+public class DefaultAcceptanceAgent implements TreatIncomingAgent {
 
-    private final Logger gatewayLogger  = LoggerFactory.getLogger("eu.cise.sim.transport.DefaultAcceptanceAgent");
+    private final Logger gatewayLogger = LoggerFactory.getLogger("eu.cise.sim.transport.DefaultAcceptanceAgent");
     private final XmlMapper xmlMapper;
     private final XmlValidator xmlValidator;
     private String parameter;
@@ -41,7 +41,7 @@ public class DefaultAcceptanceAgent implements treatIncomingAgent {
         try {
             /*xmlValidator.validate(messageXML);*/
 
-           /* submissionAgent.forward(xmlMapper.fromXML(messageXML));*/
+            /* submissionAgent.forward(xmlMapper.fromXML(messageXML));*/
 
             return AcceptanceResponse.PROCESSED.withXmlBody(xmlMapper.toXML(processed()));
 
@@ -115,19 +115,20 @@ public class DefaultAcceptanceAgent implements treatIncomingAgent {
                 .ackDetail(e.getMessage() + (e.getStackTrace().toString()))
                 .build();
     }
-    public Acknowledgement treatIncomingMessage(Message receivedMessage)  {
-        XmlMapper refmapper= new DefaultXmlMapper();
+
+    public Acknowledgement treatIncomingMessage(Message receivedMessage) {
+        XmlMapper refmapper = new DefaultXmlMapper();
         String refMessage;
         refMessage = refmapper.toXML(receivedMessage);
         //extract attributes
-        String correlationId= receivedMessage.getCorrelationID();
-        String contextId= receivedMessage.getContextID();
-        String messageId= receivedMessage.getMessageID();
-        PriorityType priority= receivedMessage.getPriority();
-        ReliabilityProfile reliability= receivedMessage.getReliability();
-        Service recipient= receivedMessage.getRecipient();
-        Service sender= receivedMessage.getSender();
-        AcceptanceResponse returnResponse= accept(xmlMapper.toXML(receivedMessage));
+        String correlationId = receivedMessage.getCorrelationID();
+        String contextId = receivedMessage.getContextID();
+        String messageId = receivedMessage.getMessageID();
+        PriorityType priority = receivedMessage.getPriority();
+        ReliabilityProfile reliability = receivedMessage.getReliability();
+        Service recipient = receivedMessage.getRecipient();
+        Service sender = receivedMessage.getSender();
+        AcceptanceResponse returnResponse = accept(xmlMapper.toXML(receivedMessage));
 
         /*respond acknowledge*/
         Acknowledgement returnMessage = buildAck().build();

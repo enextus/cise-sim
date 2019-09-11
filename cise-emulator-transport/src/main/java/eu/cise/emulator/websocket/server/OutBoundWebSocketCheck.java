@@ -1,11 +1,13 @@
 package eu.cise.emulator.websocket.server;
+
 import com.codahale.metrics.health.HealthCheck;
 
 public class OutBoundWebSocketCheck extends HealthCheck {
 
-    private final String Version;
-    public OutBoundWebSocketCheck(String version ) {
-        this.Version=version;
+    private final String version;
+
+    public OutBoundWebSocketCheck(String version) {
+        this.version = version;
     }
 
     @Override

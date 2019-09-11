@@ -23,31 +23,28 @@ import java.util.Set;
 @Timed
 @ExceptionMetered
 @ServerEndpoint("/websocket")
-public class OutBoundWebSocketService  {
+public class OutBoundWebSocketService {
 
-    private final static Logger logger = (Logger) LoggerFactory.getLogger(OutBoundWebSocketService.class);
-    private HashMap<Session, User> users = new HashMap<Session,User>();
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(OutBoundWebSocketService.class);
+    private HashMap<Session, User> users = new HashMap<Session, User>();
     private Set<Session> sessions = new HashSet<Session>();
-
 
 
     @OnOpen
     public void myOnOpen(final Session session) throws IOException {
         sessions.add(session);
-        logger.debug(" client Called @OnOpen  " + session.toString() );
+        LOGGER.debug(" client Called @OnOpen  " + session.toString());
     }
-
-
 
 
     @OnMessage
     public void myOnMsg(final Session session, String message) {
 
-        logger.debug(" client Called @OnMessage with following content " + message.toString() );
+        LOGGER.debug(" client Called @OnMessage with following content " + message.toString());
         ObjectMapper mapper = new ObjectMapper();
         try {
             WebSocketMessage msg = mapper.readValue(message, WebSocketMessage.class);
-            logger.debug("@OnMessage method traduce it to  msg:Data"+msg.getData()+"msg.Type"+msg.getType()+"msg.User"+msg.getUser() );
+            LOGGER.debug("@OnMessage method traduce it to  msg:Data" + msg.getData() + "msg.Type" + msg.getType() + "msg.User" + msg.getUser());
             switch (msg.getType()) {
                 case MEMBER_JOINED:
                     addUser(new User(msg.getUser().getName()), session);
@@ -61,7 +58,7 @@ public class OutBoundWebSocketService  {
 
 
         } catch (IOException e) {
-            logger.error("Wrong message format.");
+            LOGGER.error("Wrong message format.");
             // return error message to user
         }
     }
@@ -69,17 +66,16 @@ public class OutBoundWebSocketService  {
 
     @OnClose
     public void myOnClose(final Session session, CloseReason cr) {
-        logger.debug(" client Called @OnClose with following reason " + cr.toString() );
+        LOGGER.debug(" client Called @OnClose with following reason " + cr.toString());
         sessions.remove(session);
         try {
             broadcastUserActivityMessage(WebSocketMessageType.MEMBER_LEFT);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        logger.info("Connection closed to: " + session.getUserPrincipal());
+        LOGGER.info("Connection closed to: " + session.getUserPrincipal());
 
     }
-
 
 
     private void broadcastMessage(WebSocketMessage msg) {
@@ -90,10 +86,9 @@ public class OutBoundWebSocketService  {
                 session.getAsyncRemote().sendText(messageJson);
             }
         } catch (JsonProcessingException e) {
-            logger.error("Cannot convert message to json.");
+            LOGGER.error("Cannot convert message to json.");
         }
     }
-
 
 
     private void addUser(User user, Session session) throws JsonProcessingException {
@@ -123,7 +118,6 @@ public class OutBoundWebSocketService  {
         newWebSocketMessage.setType(webSocketMessageType);
         broadcastMessage(newWebSocketMessage);
     }
-
 
 
 }

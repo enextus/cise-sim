@@ -1,4 +1,5 @@
 package eu.cise.emulator.httptransport.Validation;
+
 import eu.cise.emulator.httptransport.Exception.CiseTransportException;
 import eu.cise.servicemodel.v1.message.Message;
 
@@ -18,7 +19,7 @@ public interface SubmissionAgent {
      * The unique entry point of the object that will check the incoming message
      *
      * @param message the payload to be parsed, validated, enriched and
-     *                   processed
+     *                processed
      * @throws CiseTransportException in case of any error
      */
     void forward(Message message);

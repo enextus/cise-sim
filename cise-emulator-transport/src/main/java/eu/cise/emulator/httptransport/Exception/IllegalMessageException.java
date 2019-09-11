@@ -3,7 +3,7 @@ package eu.cise.emulator.httptransport.Exception;
 import static java.lang.String.format;
 
 @SuppressWarnings("unused")
-public class IllegalMessageException  extends RuntimeException {
+public class IllegalMessageException extends RuntimeException {
 
     public static final String NULL_MESSAGE =
             "A Gateway MUST process only not null messages but\n" +
@@ -47,22 +47,23 @@ public class IllegalMessageException  extends RuntimeException {
         super(cause);
     }
 
-    public IllegalMessageException(String message, Throwable t, Object...args) {
+    public IllegalMessageException(String message, Throwable t, Object... args) {
         super(format(message, args), t);
     }
 
     public IllegalMessageException(String message) {
         super(message);
     }
-/**
-    public IllegalMessageException(String message, Throwable t, Object... args) {
-        super(message, t, args);
-    }
 
-    public IllegalMessageException(String message, Throwable t, Object...args) {
-        super(format(message, args), t);
-    }
-**/
+    /**
+     * public IllegalMessageException(String message, Throwable t, Object... args) {
+     * super(message, t, args);
+     * }
+     * <p>
+     * public IllegalMessageException(String message, Throwable t, Object...args) {
+     * super(format(message, args), t);
+     * }
+     **/
     @Override
     public String toString() {
         return format("[%s]=%s", getClass().getSimpleName(), getMessage());

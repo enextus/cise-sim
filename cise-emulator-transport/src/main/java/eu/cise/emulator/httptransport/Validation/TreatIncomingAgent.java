@@ -2,6 +2,6 @@ package eu.cise.emulator.httptransport.Validation;
 
 
 @SuppressWarnings("WeakerAccess")
-public interface treatIncomingAgent {
+public interface TreatIncomingAgent {
     AcceptanceResponse accept(String parameter);
 }

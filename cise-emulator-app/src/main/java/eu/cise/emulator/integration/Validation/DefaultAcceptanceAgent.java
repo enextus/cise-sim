@@ -1,6 +1,6 @@
 package eu.cise.emulator.integration.Validation;
 
-import eu.cise.emulator.httptransport.treatIncomingAgent;
+import eu.cise.emulator.httptransport.TreatIncomingAgent;
 import eu.cise.emulator.integration.Exception.IllegalMessageException;
 import eu.cise.emulator.integration.Exception.InvalidMessageSignatureException;
 import eu.cise.servicemodel.v1.message.*;
@@ -22,7 +22,7 @@ import static eu.eucise.helpers.AckBuilder.newAck;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 import static java.lang.String.format;
 
-public class DefaultAcceptanceAgent implements treatIncomingAgent {
+public class DefaultAcceptanceAgent implements TreatIncomingAgent {
 
     private final Logger gatewayLogger = LoggerFactory.getLogger("eu.cise.sim.transport.DefaultAcceptanceAgent");
     ;

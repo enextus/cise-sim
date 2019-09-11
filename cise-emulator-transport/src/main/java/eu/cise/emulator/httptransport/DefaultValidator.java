@@ -9,19 +9,19 @@ import java.util.function.Consumer;
 class DefaultValidator<T extends Message> extends AbsValidator {
 
     DefaultValidator(T message) {
-        super( message);
+        super(message);
     }
 
     @Override
     public void validates(Message message, Consumer validator) {
-        if (isServiceIdNull(message.getRecipient())){
+        if (isServiceIdNull(message.getRecipient())) {
 
         }
     }
 
     @Override
     public void destinationAddressingCheck() {
-        if (isServiceIdNull(message.getRecipient())){
+        if (isServiceIdNull(message.getRecipient())) {
 
         }
     }

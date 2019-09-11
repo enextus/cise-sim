@@ -34,32 +34,30 @@ public class WebSocketMessage implements Serializable {
         this.user = user;
     }
 
-    public void setData(String data) {
-
-        this.data = data;
-    }
-
     public String getData() {
         return data;
 
     }
 
+    public void setData(String data) {
 
-    public void setAcknowledgment(String acknowledgment) {
-        this.acknowledgment = acknowledgment;
+        this.data = data;
     }
-
 
     public String getAcknowledgment() {
         return acknowledgment;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAcknowledgment(String acknowledgment) {
+        this.acknowledgment = acknowledgment;
     }
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 

@@ -18,49 +18,44 @@ import javax.ws.rs.core.UriInfo;
 @Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.APPLICATION_XML)
 public class ServerRestConcrete implements ServerRest {
-     public static ServerRestConcrete instance;
+    public static ServerRestConcrete instance;
 
     @Context
-     UriInfo uriInfo;
-     @Context
-     Request request;
-     String id;
-    AcceptanceAgent messageManager ;
-
-    public void SetupServerRestConcrete(String id, AcceptanceAgent messageManager) {
-        instance = this;
-        if (! instance.isStarted()){
-        instance.id = id;
-        this.messageManager = messageManager;
-        this.isStarted();
-        }
-    }
-
-
+    UriInfo uriInfo;
+    @Context
+    Request request;
+    String id;
+    AcceptanceAgent messageManager;
 
     public ServerRestConcrete(String id, AcceptanceAgent messageManager) {
-        SetupServerRestConcrete(id,messageManager);
-    }
-
-
-
-
-    // for the browser
-    @POST()
-    @Path("/sec/messages")
-    public Acknowledgement Create(Message receivedMessage) {
-
-        Acknowledgement returnnmessage = messageManager.treatIncomingMessage(receivedMessage);
-
-        if(receivedMessage==null)
-            throw new RuntimeException("Error with Post: message body not found");
-        if(returnnmessage==null)
-            throw new RuntimeException("Error with Post: treated message result in non valid body");
-        return returnnmessage;
+        setupServerRestConcrete(id, messageManager);
     }
 
     static ServerRestConcrete getInstance() {
         return instance;
+    }
+
+    public void setupServerRestConcrete(String id, AcceptanceAgent messageManager) {
+        instance = this;
+        if (!instance.isStarted()) {
+            instance.id = id;
+            this.messageManager = messageManager;
+            this.isStarted();
+        }
+    }
+
+    // for the browser
+    @POST()
+    @Path("/sec/messages")
+    public Acknowledgement create(Message receivedMessage) {
+
+        Acknowledgement returnnmessage = messageManager.treatIncomingMessage(receivedMessage);
+
+        if (receivedMessage == null)
+            throw new RuntimeException("Error with Post: message body not found");
+        if (returnnmessage == null)
+            throw new RuntimeException("Error with Post: treated message result in non valid body");
+        return returnnmessage;
     }
 
     @Override

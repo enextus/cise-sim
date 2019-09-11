@@ -20,8 +20,3 @@ public interface Dispatcher {
     DispatchResult send(Message message, String address);
 
 }
-
-
-//*REPENTIR **/
-//*package jrc.cise.gw.sending;**/
-//* from jrc.cise.transport.  class RestDispatcher need;*//

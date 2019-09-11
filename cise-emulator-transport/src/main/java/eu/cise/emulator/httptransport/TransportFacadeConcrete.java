@@ -3,13 +3,13 @@ package eu.cise.emulator.httptransport;
 public class TransportFacadeConcrete implements TransportFacade {
     @Override
     public ServerRest getServerRest() {
-        ServerRest myserver=(ServerRest) ServerRestConcrete.getInstance();
+        ServerRest myserver = (ServerRest) ServerRestConcrete.getInstance();
         return (ServerRest) myserver;
     }
 
     @Override
     public ServerSoap getServerSoap() {
-        ServerSoap myserver=(ServerSoap) ServerSoapConcrete.getInstance();
+        ServerSoap myserver = (ServerSoap) ServerSoapConcrete.getInstance();
         return (ServerSoap) myserver;
     }
 
