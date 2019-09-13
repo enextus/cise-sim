@@ -17,7 +17,7 @@ The project consist of the following component
 ### web interface
 #### start the java api 
 ~~~bash
-java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-web.jar  server ./cise-emulator-assembly/src/main/conf/config.yml
+  java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-web.jar  server ./cise-emulator-assembly/src/main/conf/config.yml
 ~~~
 
 #### init the nodejs server 
@@ -28,8 +28,6 @@ in that part we assume the npm / nodejs tool and framework are installed in lts 
    npm run build --scripts-prepend-node-path=auto  
    ~~~
 #### start the nodejs server 
-   ~~~bash
-  
+~~~bash
    npm run start --scripts-prepend-node-path=auto  
-   
-   ~~~
+~~~
