@@ -1,24 +1,54 @@
 package eu.cise.emulator;
 
+import eu.cise.servicemodel.v1.message.Push;
+import org.junit.Before;
 import org.junit.Test;
 
+import static eu.eucise.helpers.PushBuilder.newPush;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
+/**
+ * requestAck
+ */
 public class EmulatorEngineTest {
-    @Test
-    public void it_xxx() {
-        assertThat(1).isEqualTo(1);
+
+    private EmulatorEngine engine;
+
+    @Before
+    public void before() {
+        engine = new DefaultEmulatorEngine();
     }
 
     @Test
-    public void it_mocks() {
-        EmulatorEngine engine = mock(EmulatorEngine.class);
+    public void it_substitutes_the_requiresAck() {
+        Push actual = newPush().isRequiresAck(false).build();
 
-        engine.send(null);
+        SendParam paramTrueAck = new SendParam(true, "n/a", "n/a");
 
-        verify(engine).send(any());
+        Push expected = engine.prepare(actual, paramTrueAck);
+
+        assertThat(expected.isRequiresAck()).isTrue();
+    }
+
+    @Test
+    public void it_substitutes_the_messageId() {
+        Push actual = newPush().id("to-be-overridden").build();
+
+        SendParam paramMsgId = new SendParam(false, "new-message-id", "n/a");
+
+        Push expected = engine.prepare(actual, paramMsgId);
+
+        assertThat(expected.getMessageID()).isEqualTo("new-message-id");
+    }
+
+    @Test
+    public void it_substitutes_the_correlationId() {
+        Push actual = newPush().correlationId("to-be-overridden").build();
+
+        SendParam paramMsgId = new SendParam(false, "n/a", "new-message-id");
+
+        Push expected = engine.prepare(actual, paramMsgId);
+
+        assertThat(expected.getCorrelationID()).isEqualTo("new-message-id");
     }
 }
