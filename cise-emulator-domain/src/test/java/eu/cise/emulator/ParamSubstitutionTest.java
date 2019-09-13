@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import eu.cise.emulator.exceptions.NullSendParamEx;
 import eu.cise.servicemodel.v1.message.Push;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +24,9 @@ public class ParamSubstitutionTest {
     public void it_checks_nullability_of_SendParam() {
         Push actual = newPush().build();
 
-        assertThatExceptionOfType(SendParamNullEx.class)
-                .isThrownBy(() -> engine.prepare(actual, null));
+        assertThatExceptionOfType(NullSendParamEx.class)
+                .isThrownBy(() -> engine.prepare(actual, null))
+                .withMessageContaining("SendParam");
     }
 
     @Test
