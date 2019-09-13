@@ -1,5 +1,6 @@
-package eu.cise.emulator;
+package eu.cise.emulator.utils;
 
+import eu.cise.emulator.SignatureService;
 import eu.cise.servicemodel.v1.message.Message;
 
 public class FakeSignatureService implements SignatureService {

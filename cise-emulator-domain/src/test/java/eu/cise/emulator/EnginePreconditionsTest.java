@@ -1,15 +1,16 @@
 package eu.cise.emulator;
 
+import eu.cise.emulator.exceptions.NullSenderEx;
 import eu.cise.servicemodel.v1.message.Push;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.Before;
 import org.junit.Test;
 
 import static eu.eucise.helpers.PushBuilder.newPush;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
-public class AddingSignatureTest {
+public class EnginePreconditionsTest {
 
     private EmulatorEngine engine;
     private SignatureService signature;
@@ -21,16 +22,18 @@ public class AddingSignatureTest {
         signature = mock(SignatureService.class);
         engine = new DefaultEmulatorEngine(signature, config);
         push = newPush().build();
+
     }
 
     @Test
-    public void it_signs_the_message() {
-        engine.prepare(push, params());
-
-        verify(signature).sign(push);
+    public void it_must_have_a_sender() {
+        assertThatExceptionOfType(NullSenderEx.class)
+                .isThrownBy(() -> engine.prepare(push, params()))
+                .withMessageContaining("sender");
     }
 
     private SendParam params() {
-        return new SendParam(false, "msgId", "corrId");
+        return new SendParam(false, "n/a", "n/a");
     }
+
 }

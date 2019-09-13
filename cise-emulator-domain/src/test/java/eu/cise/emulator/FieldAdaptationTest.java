@@ -1,6 +1,7 @@
 package eu.cise.emulator;
 
 import eu.cise.emulator.exceptions.NullSendParamEx;
+import eu.cise.emulator.utils.FakeSignatureService;
 import eu.cise.servicemodel.v1.message.Push;
 import org.junit.Before;
 import org.junit.Test;
