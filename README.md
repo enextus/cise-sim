@@ -17,13 +17,13 @@ The project consist of the following component
 ### web interface
 #### start the java api 
 ~~~bash
-  java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-web.jar  server ./cise-emulator-assembly/src/main/conf/config.yml
+  java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-web.jar  server ./cise-emulator-assembly/src/main/conf/config.yml &
 ~~~
 
 #### init the nodejs server 
 in that part we assume the npm / nodejs tool and framework are installed in lts version (see https://webgate.ec.europa.eu/CITnet/confluence/display/OCNET/Ubuntu+Workstations)
 ~~~bash
-   cd /cise-emulator-react/src
+   cd cise-emulator-react/
    npm install
    npm run build --scripts-prepend-node-path=auto  
    ~~~
