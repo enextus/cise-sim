@@ -40,4 +40,15 @@ public class EmulatorEngineTest {
 
         assertThat(expected.getMessageID()).isEqualTo("new-message-id");
     }
+
+    @Test
+    public void it_substitutes_the_correlationId() {
+        Push actual = newPush().correlationId("to-be-overridden").build();
+
+        SendParam paramMsgId = new SendParam(false, "n/a", "new-message-id");
+
+        Push expected = engine.prepare(actual, paramMsgId);
+
+        assertThat(expected.getCorrelationID()).isEqualTo("new-message-id");
+    }
 }
