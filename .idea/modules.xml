@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cise-emulator.iml" filepath="$PROJECT_DIR$/cise-emulator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cise-emulator-app/cise-emulator-app.iml" filepath="$PROJECT_DIR$/cise-emulator-app/cise-emulator-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cise-emulator-assembly/cise-emulator-assembly.iml" filepath="$PROJECT_DIR$/cise-emulator-assembly/cise-emulator-assembly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cise-emulator-domain/cise-emulator-domain.iml" filepath="$PROJECT_DIR$/cise-emulator-domain/cise-emulator-domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cise-emulator-transport/cise-emulator-transport.iml" filepath="$PROJECT_DIR$/cise-emulator-transport/cise-emulator-transport.iml" />
+    </modules>
+  </component>
+</project>
