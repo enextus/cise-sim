@@ -10,18 +10,18 @@ package eu.cise.emulator;
  */
 public class SendParam {
 
-    private boolean requireAck;
+    private boolean requiresAck;
     private String messageId;
     private String correlationId;
 
-    public SendParam(boolean requireAck, String messageId, String correlationId) {
-        this.requireAck = requireAck;
+    public SendParam(boolean requiresAck, String messageId, String correlationId) {
+        this.requiresAck = requiresAck;
         this.messageId = messageId;
         this.correlationId = correlationId;
     }
 
-    public boolean isRequireAck() {
-        return requireAck;
+    public boolean isRequiresAck() {
+        return requiresAck;
     }
 
     public String getMessageId() {
