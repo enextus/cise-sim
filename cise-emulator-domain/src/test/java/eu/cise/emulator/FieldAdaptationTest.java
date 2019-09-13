@@ -26,7 +26,7 @@ public class FieldAdaptationTest {
     @Before
     public void before() {
         Clock clockFiveMay2019 = Clock.fixed(fiveMay2019(), ZoneId.systemDefault());
-        engine = new DefaultEmulatorEngine(mock(SignatureService.class), clockFiveMay2019);
+        engine = new DefaultEmulatorEngine(new FakeSignatureService(), clockFiveMay2019);
     }
 
     @Test
