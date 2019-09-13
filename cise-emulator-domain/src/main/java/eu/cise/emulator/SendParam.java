@@ -1,5 +1,9 @@
 package eu.cise.emulator;
 
+import eu.cise.emulator.exceptions.NullSendParamEx;
+
+import static eu.cise.emulator.helpers.Asserts.notNull;
+
 /**
  * This class is a value object that contains the xml elements
  * to be overridden in the message.
@@ -16,7 +20,7 @@ public class SendParam {
 
     public SendParam(boolean requiresAck, String messageId, String correlationId) {
         this.requiresAck = requiresAck;
-        this.messageId = messageId;
+        this.messageId = notNull(messageId, NullSendParamEx.class);
         this.correlationId = correlationId;
     }
 
