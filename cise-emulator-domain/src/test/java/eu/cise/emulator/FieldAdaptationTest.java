@@ -11,6 +11,8 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Date;
 
+import static eu.cise.servicemodel.v1.service.ServiceType.CARGO_SERVICE;
+import static eu.cise.servicemodel.v1.service.ServiceType.DOCUMENT_SERVICE;
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
@@ -109,6 +111,17 @@ public class FieldAdaptationTest {
         Push expected = engine.prepare(actual, params());
 
         assertThat(expected.getSender().getServiceID()).isEqualTo("new-service-id");
+    }
+
+    @Test
+    public void it_overrides_serviceType() {
+        when(config.serviceType()).thenReturn(DOCUMENT_SERVICE);
+
+        Push actual = newPush().sender(newService().type(CARGO_SERVICE)).build();
+
+        Push expected = engine.prepare(actual, params());
+
+        assertThat(expected.getSender().getServiceType()).isEqualTo(DOCUMENT_SERVICE);
     }
 
     private SendParam params() {
