@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.Sources;
@@ -16,4 +17,7 @@ public interface EmuConfig extends Config {
 
     @Key("sender.service-type")
     ServiceType serviceType();
+
+    @Key("sender.service-operation")
+    ServiceOperationType serviceOperation();
 }
