@@ -13,7 +13,7 @@ const stores = {
     messageStore: new MessageListModel()
 };
 
-stores.messageStore.createNewMessage("fake",MessageType.MASTER_IN,"reqrew","rere","false","restA","restB");
+stores.messageStore.createNewMessage("",MessageType.MASTER_IN,"","","false","","");
 render(
 
     <div>
@@ -24,7 +24,6 @@ render(
 );
 
 autorun(() => {
-
     stores.appStore.obtainXmlTemplates();
     stores.appStore.obtainXmlPayloads();
     stores.appStore.obtainSelfMember();
