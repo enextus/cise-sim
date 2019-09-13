@@ -2,8 +2,7 @@ package eu.cise.emulator;
 
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -11,7 +10,7 @@ import static org.mockito.Mockito.verify;
 public class EmulatorEngineTest {
     @Test
     public void it_xxx() {
-        assertThat(1, is(1));
+        assertThat(1).isEqualTo(1);
     }
 
     @Test
