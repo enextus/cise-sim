@@ -5,7 +5,9 @@ import eu.cise.servicemodel.v1.message.Push;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Date;
 
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
@@ -22,7 +24,8 @@ public class FieldAdaptationTest {
 
     @Before
     public void before() {
-        engine = new DefaultEmulatorEngine();
+        Clock clockFiveMay2019 = Clock.fixed(fiveMay2019(), ZoneId.systemDefault());
+        engine = new DefaultEmulatorEngine(clockFiveMay2019);
     }
 
     @Test
