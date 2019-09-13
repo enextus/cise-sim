@@ -52,6 +52,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         message.setCreationDateTime(now());
         message.getSender().setServiceID(config.serviceId());
         message.getSender().setServiceType(config.serviceType());
+        message.getSender().setServiceOperation(config.serviceOperation());
 
         // TODO improve signature to use <T extends Message> as a return type
         return (T) signature.sign(message);
