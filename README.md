@@ -19,7 +19,7 @@ The project consist of the following component
 copy the jks file to local directory
 ~~~bash
 mkdir /opt/jboss/EuciseData/sim-egn/conf -p
-cp /cise-emulator-assembly/src/main/conf/keyStore.jks /opt/jboss/EuciseData/sim-egn/conf/apache-nodecx.jks
+cp ./cise-emulator-assembly/src/main/conf/keyStore.jks /opt/jboss/EuciseData/sim-egn/conf/apache-nodecx.jks
 ~~~
 #### start the java api 
 ~~~bash
