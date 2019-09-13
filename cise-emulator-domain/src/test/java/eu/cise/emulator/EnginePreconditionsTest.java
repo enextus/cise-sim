@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import eu.cise.emulator.exceptions.NullConfigEx;
 import eu.cise.emulator.exceptions.NullSenderEx;
 import eu.cise.emulator.exceptions.NullSignatureServiceEx;
 import eu.cise.servicemodel.v1.message.Push;
@@ -28,9 +29,16 @@ public class EnginePreconditionsTest {
     }
 
     @Test
-    public void it_must_have_a_signature_service() {
+    public void it_must_have_a_signature_service_not_null() {
         assertThatExceptionOfType(NullSignatureServiceEx.class)
                 .isThrownBy(() -> new DefaultEmulatorEngine(null, config))
+                .withMessageContaining("signature");
+    }
+
+    @Test
+    public void it_must_have_a_config_not_null() {
+        assertThatExceptionOfType(NullConfigEx.class)
+                .isThrownBy(() -> new DefaultEmulatorEngine(signature, null))
                 .withMessageContaining("signature");
     }
 
