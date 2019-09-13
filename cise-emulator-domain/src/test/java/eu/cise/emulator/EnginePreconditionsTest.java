@@ -8,6 +8,8 @@ import org.aeonbits.owner.ConfigFactory;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Clock;
+
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
@@ -18,12 +20,14 @@ public class EnginePreconditionsTest {
     private SignatureService signature;
     private Push push;
     private EmuConfig config;
+    private Clock clock;
 
     @Before
     public void before() {
         config = ConfigFactory.create(EmuConfig.class);
         signature = mock(SignatureService.class);
-        engine = new DefaultEmulatorEngine(signature, config);
+        clock = Clock.systemUTC();
+        engine = new DefaultEmulatorEngine(signature, config, clock);
         push = newPush().build();
 
     }
@@ -31,14 +35,14 @@ public class EnginePreconditionsTest {
     @Test
     public void it_must_have_a_signature_service_not_null() {
         assertThatExceptionOfType(NullSignatureServiceEx.class)
-                .isThrownBy(() -> new DefaultEmulatorEngine(null, config))
+                .isThrownBy(() -> new DefaultEmulatorEngine(null, config, clock))
                 .withMessageContaining("signature");
     }
 
     @Test
     public void it_must_have_a_config_not_null() {
         assertThatExceptionOfType(NullConfigEx.class)
-                .isThrownBy(() -> new DefaultEmulatorEngine(signature, null))
+                .isThrownBy(() -> new DefaultEmulatorEngine(signature, null, clock))
                 .withMessageContaining("config");
     }
 

@@ -24,9 +24,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      * Default constructor that uses UTC as a reference clock
      */
     public DefaultEmulatorEngine(SignatureService signature, EmuConfig config) {
-        this.signature = notNull(signature, NullSignatureServiceEx.class);
-        this.config = notNull(config, NullConfigEx.class);
-        this.clock = Clock.systemUTC();
+        this(signature, config, Clock.systemUTC());
     }
 
     /**
@@ -37,8 +35,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      * @param clock the reference clock
      */
     public DefaultEmulatorEngine(SignatureService signature, EmuConfig config, Clock clock) {
-        this.signature = signature;
-        this.config = config;
+        this.signature = notNull(signature, NullSignatureServiceEx.class);
+        this.config = notNull(config, NullConfigEx.class);
         this.clock = clock;
     }
 
