@@ -39,7 +39,7 @@ public class EnginePreconditionsTest {
     public void it_must_have_a_config_not_null() {
         assertThatExceptionOfType(NullConfigEx.class)
                 .isThrownBy(() -> new DefaultEmulatorEngine(signature, null))
-                .withMessageContaining("signature");
+                .withMessageContaining("config");
     }
 
     @Test
