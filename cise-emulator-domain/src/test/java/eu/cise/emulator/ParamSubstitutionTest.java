@@ -8,9 +8,9 @@ import static eu.eucise.helpers.PushBuilder.newPush;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * requestAck
+ * requestsAck
  */
-public class EmulatorEngineTest {
+public class ParamSubstitutionTest {
 
     private EmulatorEngine engine;
 
@@ -23,7 +23,8 @@ public class EmulatorEngineTest {
     public void it_substitutes_the_requiresAck() {
         Push actual = newPush().isRequiresAck(false).build();
 
-        SendParam paramTrueAck = new SendParam(true, "n/a", "n/a");
+        SendParam paramTrueAck = new SendParam(
+                true, "n/a", "n/a");
 
         Push expected = engine.prepare(actual, paramTrueAck);
 
@@ -34,7 +35,8 @@ public class EmulatorEngineTest {
     public void it_substitutes_the_messageId() {
         Push actual = newPush().id("to-be-overridden").build();
 
-        SendParam paramMsgId = new SendParam(false, "new-message-id", "n/a");
+        SendParam paramMsgId = new SendParam(
+                false, "new-message-id", "n/a");
 
         Push expected = engine.prepare(actual, paramMsgId);
 
@@ -45,7 +47,8 @@ public class EmulatorEngineTest {
     public void it_substitutes_the_correlationId() {
         Push actual = newPush().correlationId("to-be-overridden").build();
 
-        SendParam paramMsgId = new SendParam(false, "n/a", "new-correlation-id");
+        SendParam paramMsgId = new SendParam(
+                false, "n/a", "new-correlation-id");
 
         Push expected = engine.prepare(actual, paramMsgId);
 
