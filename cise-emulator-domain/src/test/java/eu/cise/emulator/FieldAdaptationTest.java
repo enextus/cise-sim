@@ -5,13 +5,18 @@ import eu.cise.servicemodel.v1.message.Push;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Instant;
+import java.util.Date;
+
+import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 import static eu.eucise.helpers.PushBuilder.newPush;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * requestsAck
  */
-public class ParamSubstitutionTest {
+public class FieldAdaptationTest {
 
     private EmulatorEngine engine;
 
@@ -63,5 +68,25 @@ public class ParamSubstitutionTest {
         Push expected = engine.prepare(actual, paramCorId);
 
         assertThat(expected.getCorrelationID()).isEqualTo("new-correlation-id");
+    }
+
+    @Test
+    public void it_updates_the_create_date_time() {
+        Push actual = newPush().build();
+
+        SendParam param = new SendParam(
+                false, "n/a", "n/a");
+
+        Push expected = engine.prepare(actual, param);
+
+        assertThat(expected.getCreationDateTime()).isEqualTo(toXMLGregorianCalendar(dateFiveMay2019()));
+    }
+
+    private Date dateFiveMay2019() {
+        return Date.from(fiveMay2019());
+    }
+
+    private Instant fiveMay2019() {
+        return Instant.parse("2019-05-18T17:00:00.00Z");
     }
 }
