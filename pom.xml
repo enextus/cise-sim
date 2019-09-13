@@ -44,27 +44,6 @@
         <module>cise-emulator-assembly</module>
     </modules>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <cxf.version>3.2.9</cxf.version>
-        <jetty.version>9.4.11.v20180605</jetty.version>
-        <jersey.version>2.21</jersey.version>
-        <dropwizard.version>1.3.5</dropwizard.version>
-        <jackson.version>2.9.4</jackson.version>
-        <jackson.jaxrs.version>2.9.4</jackson.jaxrs.version>
-        <jodatime.version>2.5</jodatime.version>
-        <junit.version>4.11</junit.version>
-
-        <java.version>1.8</java.version>
-
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <main.basedir>${project.basedir}</main.basedir>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-    </properties>
-
     <build>
 
         <plugins>
@@ -271,6 +250,12 @@
             </dependency>
 
             <!-- Test Libraries -->
+            <dependency>
+                <artifactId>junit</artifactId>
+                <groupId>junit</groupId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
 
             <dependency>
                 <groupId>com.github.tomakehurst</groupId>
@@ -358,5 +343,22 @@
         </profile>
     </profiles>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <cxf.version>3.2.9</cxf.version>
+        <jetty.version>9.4.11.v20180605</jetty.version>
+        <jersey.version>2.21</jersey.version>
+        <dropwizard.version>1.3.5</dropwizard.version>
+        <jackson.version>2.9.4</jackson.version>
+        <jackson.jaxrs.version>2.9.4</jackson.jaxrs.version>
+        <jodatime.version>2.5</jodatime.version>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <main.basedir>${project.basedir}</main.basedir>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
 
 </project>
