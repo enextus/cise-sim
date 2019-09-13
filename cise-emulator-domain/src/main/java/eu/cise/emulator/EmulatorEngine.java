@@ -24,8 +24,9 @@ public interface EmulatorEngine {
      * It sends the message
      *
      * @param message message to be sent
+     * @param param the object holding the parameters to be modified
      * @return a sync acknowledgment received
      * TODO specify the runtime exceptions to be captured by the client
      */
-    Acknowledgement send(Message message);
+    Acknowledgement send(Message message, SendParam param);
 }
