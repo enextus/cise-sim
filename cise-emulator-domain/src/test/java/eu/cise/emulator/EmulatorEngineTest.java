@@ -20,7 +20,7 @@ public class EmulatorEngineTest {
 
         SendParam paramTrueAck = new SendParam(true, "id", "id");
 
-        Push expected = (Push) engine.prepare(actual, paramTrueAck);
+        Push expected = engine.prepare(actual, paramTrueAck);
 
         assertThat(expected.isRequiresAck()).isTrue();
 

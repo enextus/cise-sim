@@ -18,7 +18,7 @@ public interface EmulatorEngine {
      * @param param the object holding the parameters to be modified
      * @return the modified message
      */
-    Message prepare(Message message, SendParam param);
+    <T extends Message> T prepare(Message message, SendParam param);
 
     /**
      * It sends the message

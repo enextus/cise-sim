@@ -7,7 +7,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
     @Override
     public Message prepare(Message message, SendParam param) {
-        message.setRequiresAck(param.isRequireAck());
+        message.setRequiresAck(param.isRequiresAck());
         return message;
     }
 
