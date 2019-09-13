@@ -14,11 +14,13 @@ import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 public class DefaultEmulatorEngine implements EmulatorEngine {
 
     private final Clock clock;
+    private final SignatureService signature;
 
     /**
      * Default constructor that uses UTC as a reference clock
      */
-    public DefaultEmulatorEngine() {
+    public DefaultEmulatorEngine(SignatureService signature) {
+        this.signature = signature;
         this.clock = Clock.systemUTC();
     }
 
@@ -28,7 +30,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      *
      * @param clock the reference clock
      */
-    public DefaultEmulatorEngine(Clock clock) {
+    public DefaultEmulatorEngine(SignatureService signature, Clock clock) {
+        this.signature = signature;
         this.clock = clock;
     }
 
@@ -41,7 +44,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         message.setCorrelationID(param.getCorrelationId());
         message.setCreationDateTime(now());
 
-        return message;
+        // TODO improve signature to use <T extends Message> as a return type
+        return (T) signature.sign(message);
     }
 
     private XMLGregorianCalendar now() {
@@ -52,5 +56,4 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     public Acknowledgement send(Message message, SendParam param) {
         return null;
     }
-
 }

@@ -14,6 +14,7 @@ import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.Mockito.mock;
 
 /**
  * requestsAck
@@ -25,7 +26,7 @@ public class FieldAdaptationTest {
     @Before
     public void before() {
         Clock clockFiveMay2019 = Clock.fixed(fiveMay2019(), ZoneId.systemDefault());
-        engine = new DefaultEmulatorEngine(clockFiveMay2019);
+        engine = new DefaultEmulatorEngine(mock(SignatureService.class), clockFiveMay2019);
     }
 
     @Test

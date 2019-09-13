@@ -17,7 +17,7 @@ public class AddingSignatureTest {
     @Before
     public void before() {
         signature = mock(SignatureService.class);
-        engine = new DefaultEmulatorEngine();
+        engine = new DefaultEmulatorEngine(signature);
         push = newPush().build();
     }
 
