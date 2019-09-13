@@ -1,19 +1,28 @@
 package eu.cise.emulator;
 
+import eu.cise.servicemodel.v1.message.Push;
 import org.junit.Test;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static eu.eucise.helpers.PushBuilder.newPush;
+import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * requestAck
+ */
 public class EmulatorEngineTest {
 
+
     @Test
-    public void it_mocks() {
-        EmulatorEngine engine = mock(EmulatorEngine.class);
+    public void it_substitutes_the_requireAck() {
+        EmulatorEngine engine = new DefaultEmulatorEngine();
 
-        engine.send(null);
+        Push actual = newPush().build();
 
-        verify(engine).send(any());
+        SendParam paramTrueAck = new SendParam(true, "id", "id");
+
+        Push expected = (Push) engine.prepare(actual, paramTrueAck);
+
+        assertThat(expected.isRequiresAck()).isTrue();
+
     }
 }
