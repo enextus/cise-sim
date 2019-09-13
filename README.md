@@ -15,7 +15,21 @@ The project consist of the following component
   java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-cli.jar  sender -c ./cise-emulator-assembly/src/main/conf/cliconfig.yml -s ./cise-emulator-assembly/src/main/conf/xmlmessages/PushTemplate.xml
 ~~~
 ### web interface
-#### start the server 
+#### start the java api 
 ~~~bash
-  java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-web.jar server 
+java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-web.jar  server ./cise-emulator-assembly/src/main/conf/config.yml
 ~~~
+
+#### init the nodejs server 
+in that part we assume the npm / nodejs tool and framework are installed in lts version (see https://webgate.ec.europa.eu/CITnet/confluence/display/OCNET/Ubuntu+Workstations)
+~~~bash
+   cd /cise-emulator-react/src
+   npm install
+   npm run build --scripts-prepend-node-path=auto  
+   ~~~
+#### start the nodejs server 
+   ~~~bash
+  
+   npm run start --scripts-prepend-node-path=auto  
+   
+   ~~~
