@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import eu.cise.emulator.exceptions.NullClockEx;
 import eu.cise.emulator.exceptions.NullConfigEx;
 import eu.cise.emulator.exceptions.NullSenderEx;
 import eu.cise.emulator.exceptions.NullSignatureServiceEx;
@@ -44,6 +45,13 @@ public class EnginePreconditionsTest {
         assertThatExceptionOfType(NullConfigEx.class)
                 .isThrownBy(() -> new DefaultEmulatorEngine(signature, null, clock))
                 .withMessageContaining("config");
+    }
+
+    @Test
+    public void it_must_have_a_clock_not_null() {
+        assertThatExceptionOfType(NullClockEx.class)
+                .isThrownBy(() -> new DefaultEmulatorEngine(signature, config, null))
+                .withMessageContaining("clock");
     }
 
     @Test
