@@ -4,6 +4,7 @@ import eu.cise.emulator.exceptions.NullSendParamEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import static eu.cise.emulator.helpers.Asserts.*;
+
 public class DefaultEmulatorEngine implements EmulatorEngine {
 
     @Override

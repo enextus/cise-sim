@@ -3,7 +3,7 @@ package eu.cise.emulator;
 /**
  * This class is a value object that contains the xml elements
  * to be overridden in the message.
- *
+ * <p>
  * The requireAck is a mandatory field
  * The messageId is a mandatory field
  * The correlationId is optional
