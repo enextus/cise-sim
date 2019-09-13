@@ -14,7 +14,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     }
 
     @Override
-    public Acknowledgement send(Message message) {
+    public Acknowledgement send(Message message, SendParam param) {
         return null;
     }
 
