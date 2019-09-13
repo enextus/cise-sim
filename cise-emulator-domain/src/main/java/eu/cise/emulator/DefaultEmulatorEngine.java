@@ -15,6 +15,19 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
     private final Clock clock;
 
+    /**
+     * Default constructor that uses UTC as a reference clock
+     */
+    public DefaultEmulatorEngine() {
+        this.clock = Clock.systemUTC();
+    }
+
+    /**
+     * Constructor that expect a clock as a reference to
+     * compute date and time.
+     *
+     * @param clock the reference clock
+     */
     public DefaultEmulatorEngine(Clock clock) {
         this.clock = clock;
     }
