@@ -6,3 +6,4 @@
 # Nice to have 
 * toggles in the config in order to select what to override
 * toggles in the config in order to exclude the signing of the message
+* modify the cise-models to use LocalDateTime instead of XMLGregorianCalendar
