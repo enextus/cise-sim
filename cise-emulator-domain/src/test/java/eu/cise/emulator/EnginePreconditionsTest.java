@@ -1,6 +1,7 @@
 package eu.cise.emulator;
 
 import eu.cise.emulator.exceptions.NullSenderEx;
+import eu.cise.emulator.exceptions.NullSignatureServiceEx;
 import eu.cise.servicemodel.v1.message.Push;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.Before;
@@ -15,14 +16,22 @@ public class EnginePreconditionsTest {
     private EmulatorEngine engine;
     private SignatureService signature;
     private Push push;
+    private EmuConfig config;
 
     @Before
     public void before() {
-        EmuConfig config = ConfigFactory.create(EmuConfig.class);
+        config = ConfigFactory.create(EmuConfig.class);
         signature = mock(SignatureService.class);
         engine = new DefaultEmulatorEngine(signature, config);
         push = newPush().build();
 
+    }
+
+    @Test
+    public void it_must_have_a_signature_service() {
+        assertThatExceptionOfType(NullSignatureServiceEx.class)
+                .isThrownBy(() -> new DefaultEmulatorEngine(null, config))
+                .withMessageContaining("signature");
     }
 
     @Test
