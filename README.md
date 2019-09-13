@@ -15,6 +15,12 @@ The project consist of the following component
   java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-cli.jar  sender -c ./cise-emulator-assembly/src/main/conf/cliconfig.yml -s ./cise-emulator-assembly/src/main/conf/xmlmessages/PushTemplate.xml
 ~~~
 ### web interface
+
+copy the jks file to local directory
+~~~bash
+mkdir /opt/jboss/EuciseData/sim-egn/conf -p
+cp /cise-emulator-assembly/src/main/conf/keyStore.jks /opt/jboss/EuciseData/sim-egn/conf/apache-nodecx.jks
+~~~
 #### start the java api 
 ~~~bash
   java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-web.jar  server ./cise-emulator-assembly/src/main/conf/config.yml &
