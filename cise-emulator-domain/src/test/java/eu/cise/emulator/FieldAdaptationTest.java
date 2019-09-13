@@ -42,7 +42,7 @@ public class FieldAdaptationTest {
 
     @Test
     public void it_checks_nullability_of_SendParam() {
-        Push actual = newPush().build();
+        Push actual = newPush().sender(newService()).build();
 
         assertThatExceptionOfType(NullSendParamEx.class)
                 .isThrownBy(() -> engine.prepare(actual, null))
@@ -51,7 +51,9 @@ public class FieldAdaptationTest {
 
     @Test
     public void it_substitutes_param_requiresAck() {
-        Push actual = newPush().isRequiresAck(false).build();
+        Push actual = newPush().sender(newService())
+                .isRequiresAck(false)
+                .build();
 
         SendParam paramTrueAck = new SendParam(
                 true, "n/a", "n/a");
@@ -63,7 +65,9 @@ public class FieldAdaptationTest {
 
     @Test
     public void it_substitutes_param_messageId() {
-        Push actual = newPush().id("to-be-overridden").build();
+        Push actual = newPush().sender(newService())
+                .id("to-be-overridden")
+                .build();
 
         SendParam paramMsgId = new SendParam(
                 false, "new-message-id", "n/a");
@@ -75,7 +79,9 @@ public class FieldAdaptationTest {
 
     @Test
     public void it_substitutes_param_correlationId() {
-        Push actual = newPush().correlationId("to-be-overridden").build();
+        Push actual = newPush().sender(newService())
+                .correlationId("to-be-overridden")
+                .build();
 
         SendParam paramCorId = new SendParam(
                 false, "n/a", "new-correlation-id");
@@ -87,7 +93,7 @@ public class FieldAdaptationTest {
 
     @Test
     public void it_updates_the_create_date_time() {
-        Push actual = newPush().build();
+        Push actual = newPush().sender(newService()).build();
 
         Push expected = engine.prepare(actual, params());
 

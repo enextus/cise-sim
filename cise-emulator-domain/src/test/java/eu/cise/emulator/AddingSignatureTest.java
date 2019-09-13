@@ -1,11 +1,13 @@
 package eu.cise.emulator;
 
 import eu.cise.servicemodel.v1.message.Push;
+import eu.eucise.helpers.ServiceBuilder;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.Before;
 import org.junit.Test;
 
 import static eu.eucise.helpers.PushBuilder.newPush;
+import static eu.eucise.helpers.ServiceBuilder.newService;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -20,7 +22,7 @@ public class AddingSignatureTest {
         EmuConfig config = ConfigFactory.create(EmuConfig.class);
         signature = mock(SignatureService.class);
         engine = new DefaultEmulatorEngine(signature, config);
-        push = newPush().build();
+        push = newPush().sender(newService()).build();
     }
 
     @Test
