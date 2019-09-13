@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static eu.eucise.helpers.PushBuilder.newPush;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * requestsAck
@@ -20,7 +20,15 @@ public class ParamSubstitutionTest {
     }
 
     @Test
-    public void it_substitutes_the_requiresAck() {
+    public void it_checks_nullability_of_SendParam() {
+        Push actual = newPush().build();
+
+        assertThatExceptionOfType(SendParamNullEx.class)
+                .isThrownBy(() -> engine.prepare(actual, null));
+    }
+
+    @Test
+    public void it_substitutes_param_requiresAck() {
         Push actual = newPush().isRequiresAck(false).build();
 
         SendParam paramTrueAck = new SendParam(
@@ -32,7 +40,7 @@ public class ParamSubstitutionTest {
     }
 
     @Test
-    public void it_substitutes_the_messageId() {
+    public void it_substitutes_param_messageId() {
         Push actual = newPush().id("to-be-overridden").build();
 
         SendParam paramMsgId = new SendParam(
@@ -44,13 +52,13 @@ public class ParamSubstitutionTest {
     }
 
     @Test
-    public void it_substitutes_the_correlationId() {
+    public void it_substitutes_param_correlationId() {
         Push actual = newPush().correlationId("to-be-overridden").build();
 
-        SendParam paramMsgId = new SendParam(
+        SendParam paramCorId = new SendParam(
                 false, "n/a", "new-correlation-id");
 
-        Push expected = engine.prepare(actual, paramMsgId);
+        Push expected = engine.prepare(actual, paramCorId);
 
         assertThat(expected.getCorrelationID()).isEqualTo("new-correlation-id");
     }
