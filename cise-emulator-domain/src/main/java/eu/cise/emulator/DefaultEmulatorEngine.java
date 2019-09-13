@@ -1,9 +1,6 @@
 package eu.cise.emulator;
 
-import eu.cise.emulator.exceptions.NullConfigEx;
-import eu.cise.emulator.exceptions.NullSendParamEx;
-import eu.cise.emulator.exceptions.NullSenderEx;
-import eu.cise.emulator.exceptions.NullSignatureServiceEx;
+import eu.cise.emulator.exceptions.*;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 
@@ -37,7 +34,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     public DefaultEmulatorEngine(SignatureService signature, EmuConfig config, Clock clock) {
         this.signature = notNull(signature, NullSignatureServiceEx.class);
         this.config = notNull(config, NullConfigEx.class);
-        this.clock = clock;
+        this.clock = notNull(clock, NullClockEx.class);;
     }
 
     @Override
