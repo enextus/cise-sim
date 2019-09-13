@@ -12,9 +12,11 @@ import java.util.Date;
 
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 import static eu.eucise.helpers.PushBuilder.newPush;
+import static eu.eucise.helpers.ServiceBuilder.newService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * requestsAck
@@ -22,11 +24,19 @@ import static org.mockito.Mockito.mock;
 public class FieldAdaptationTest {
 
     private EmulatorEngine engine;
+    private EmuConfig config;
 
     @Before
     public void before() {
-        Clock clockFiveMay2019 = Clock.fixed(fiveMay2019(), ZoneId.systemDefault());
-        engine = new DefaultEmulatorEngine(new FakeSignatureService(), clockFiveMay2019);
+        config = mock(EmuConfig.class);
+        engine = new DefaultEmulatorEngine(
+                new FakeSignatureService(),
+                clockFiveMay2019(),
+                config);
+    }
+
+    private Clock clockFiveMay2019() {
+        return Clock.fixed(fiveMay2019(), ZoneId.systemDefault());
     }
 
     @Test
@@ -78,12 +88,24 @@ public class FieldAdaptationTest {
     public void it_updates_the_create_date_time() {
         Push actual = newPush().build();
 
-        SendParam param = new SendParam(
-                false, "n/a", "n/a");
-
-        Push expected = engine.prepare(actual, param);
+        Push expected = engine.prepare(actual, params());
 
         assertThat(expected.getCreationDateTime()).isEqualTo(toXMLGregorianCalendar(dateFiveMay2019()));
+    }
+
+    @Test
+    public void it_overrides_serviceId() {
+        when(config.serviceId()).thenReturn("new-service-id");
+
+        Push actual = newPush().sender(newService().id("to-be-overridden")).build();
+
+        Push expected = engine.prepare(actual, params());
+
+        assertThat(expected.getSender().getServiceID()).isEqualTo("new-service-id");
+    }
+
+    private SendParam params() {
+        return new SendParam(false, "n/a", "n/a");
     }
 
     private Date dateFiveMay2019() {

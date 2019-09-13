@@ -29,8 +29,9 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      * compute date and time.
      *
      * @param clock the reference clock
+     * @param config
      */
-    public DefaultEmulatorEngine(SignatureService signature, Clock clock) {
+    public DefaultEmulatorEngine(SignatureService signature, Clock clock, EmuConfig config) {
         this.signature = signature;
         this.clock = clock;
     }
