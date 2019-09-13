@@ -6,8 +6,9 @@ import eu.cise.servicemodel.v1.message.Message;
 public class DefaultEmulatorEngine implements EmulatorEngine {
 
     @Override
-    public Message prepare(Message message, SendParam param) {
+    public <T extends Message> T prepare(T message, SendParam param) {
         message.setRequiresAck(param.isRequiresAck());
+        message.setMessageID(param.getMessageId());
         return message;
     }
 
