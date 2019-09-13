@@ -36,8 +36,8 @@ public class FieldAdaptationTest {
         config = mock(EmuConfig.class);
         engine = new DefaultEmulatorEngine(
                 new FakeSignatureService(),
-                clockFiveMay2019(),
-                config);
+                config, clockFiveMay2019()
+        );
     }
 
     private Clock clockFiveMay2019() {

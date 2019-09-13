@@ -32,15 +32,14 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     /**
      * Constructor that expect a clock as a reference to
      * compute date and time.
-     *
-     * @param signature the signature service used to sign messages
-     * @param clock the reference clock
+     *  @param signature the signature service used to sign messages
      * @param config the domain configuration
+     * @param clock the reference clock
      */
-    public DefaultEmulatorEngine(SignatureService signature, Clock clock, EmuConfig config) {
+    public DefaultEmulatorEngine(SignatureService signature, EmuConfig config, Clock clock) {
         this.signature = signature;
-        this.clock = clock;
         this.config = config;
+        this.clock = clock;
     }
 
     @Override
