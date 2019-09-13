@@ -2,6 +2,7 @@ package eu.cise.emulator;
 
 import eu.cise.emulator.exceptions.NullSendParamEx;
 import eu.cise.emulator.exceptions.NullSenderEx;
+import eu.cise.emulator.exceptions.NullSignatureServiceEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 
@@ -22,7 +23,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      * Default constructor that uses UTC as a reference clock
      */
     public DefaultEmulatorEngine(SignatureService signature, EmuConfig config) {
-        this.signature = signature;
+        this.signature = notNull(signature, NullSignatureServiceEx.class);
         this.config = config;
         this.clock = Clock.systemUTC();
     }
