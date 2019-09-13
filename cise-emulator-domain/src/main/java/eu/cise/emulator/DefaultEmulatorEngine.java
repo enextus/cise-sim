@@ -9,6 +9,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     public <T extends Message> T prepare(T message, SendParam param) {
         message.setRequiresAck(param.isRequiresAck());
         message.setMessageID(param.getMessageId());
+        message.setCorrelationID(param.getCorrelationId());
         return message;
     }
 
