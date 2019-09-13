@@ -16,7 +16,7 @@ public class EmulatorEngineTest {
     public void it_substitutes_the_requireAck() {
         EmulatorEngine engine = new DefaultEmulatorEngine();
 
-        Push actual = newPush().build();
+        Push actual = newPush().isRequiresAck(false).build();
 
         SendParam paramTrueAck = new SendParam(true, "id", "id");
 
