@@ -27,9 +27,10 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     /**
      * Constructor that expect a clock as a reference to
      * compute date and time.
-     *  @param signature the signature service used to sign messages
-     * @param config the domain configuration
-     * @param clock the reference clock
+     *
+     * @param signature the signature service used to sign messages
+     * @param config    the domain configuration
+     * @param clock     the reference clock
      */
     public DefaultEmulatorEngine(SignatureService signature, EmuConfig config, Clock clock) {
         this.signature = notNull(signature, NullSignatureServiceEx.class);
@@ -50,11 +51,11 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         if (!isNullOrEmpty(config.serviceId()))
             message.getSender().setServiceID(config.serviceId());
 
-
         if (config.serviceType() != null)
             message.getSender().setServiceType(config.serviceType());
 
-        message.getSender().setServiceOperation(config.serviceOperation());
+        if (config.serviceOperation() != null)
+            message.getSender().setServiceOperation(config.serviceOperation());
 
         // TODO improve signature to use <T extends Message> as a return type
         return (T) signature.sign(message);
