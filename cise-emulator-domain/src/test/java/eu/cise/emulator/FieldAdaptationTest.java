@@ -137,6 +137,18 @@ public class FieldAdaptationTest {
         assertThat(expected.getSender().getServiceOperation()).isEqualTo(PUSH);
     }
 
+    @Test
+    public void it_doesnt_override_serviceId_for_null_value_in_config() {
+        when(config.serviceId()).thenReturn(null);
+
+        Push actual = newPush().sender(newService().id("not-to-be-overridden")).build();
+
+        Push expected = engine.prepare(actual, params());
+
+        assertThat(expected.getSender().getServiceID()).isEqualTo("not-to-be-overridden");
+    }
+
+
     private SendParam params() {
         return new SendParam(false, "n/a", "n/a");
     }
