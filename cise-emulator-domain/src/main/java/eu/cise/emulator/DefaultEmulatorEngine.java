@@ -47,7 +47,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         message.setCorrelationID(param.getCorrelationId());
         message.setCreationDateTime(now());
 
-        if (config.serviceId() != null && !config.serviceId().isEmpty()) {
+        if (!isNullOrEmpty(config.serviceId())) {
             message.getSender().setServiceID(config.serviceId());
         }
 
@@ -56,6 +56,11 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
         // TODO improve signature to use <T extends Message> as a return type
         return (T) signature.sign(message);
+    }
+
+    // TODO should be in an helper
+    private boolean isNullOrEmpty(String string) {
+        return string == null || config.serviceId().isEmpty();
     }
 
     private XMLGregorianCalendar now() {
