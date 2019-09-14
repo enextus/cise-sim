@@ -166,7 +166,7 @@ public class FieldAdaptationTest {
 
         Push expected = engine.prepare(actual, params());
 
-        assertThat(expected.getSender().getServiceID()).isEqualTo(VESSEL_SERVICE);
+        assertThat(expected.getSender().getServiceType()).isEqualTo(VESSEL_SERVICE);
     }
 
     private SendParam params() {

@@ -47,11 +47,13 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         message.setCorrelationID(param.getCorrelationId());
         message.setCreationDateTime(now());
 
-        if (!isNullOrEmpty(config.serviceId())) {
+        if (!isNullOrEmpty(config.serviceId()))
             message.getSender().setServiceID(config.serviceId());
-        }
 
-        message.getSender().setServiceType(config.serviceType());
+
+        if (config.serviceType() != null)
+            message.getSender().setServiceType(config.serviceType());
+
         message.getSender().setServiceOperation(config.serviceOperation());
 
         // TODO improve signature to use <T extends Message> as a return type
