@@ -169,6 +169,17 @@ public class FieldAdaptationTest {
         assertThat(expected.getSender().getServiceType()).isEqualTo(VESSEL_SERVICE);
     }
 
+    @Test
+    public void it_doesnt_override_serviceOperation_for_null_value_in_config() {
+        when(config.serviceOperation()).thenReturn(null);
+
+        Push actual = newPush().sender(newService().operation(PUSH)).build();
+
+        Push expected = engine.prepare(actual, params());
+
+        assertThat(expected.getSender().getServiceOperation()).isEqualTo(PUSH);
+    }
+
     private SendParam params() {
         return new SendParam(false, "n/a", "n/a");
     }
