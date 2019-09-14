@@ -46,7 +46,11 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         message.setMessageID(param.getMessageId());
         message.setCorrelationID(param.getCorrelationId());
         message.setCreationDateTime(now());
-        message.getSender().setServiceID(config.serviceId());
+
+        if (config.serviceId() != null) {
+            message.getSender().setServiceID(config.serviceId());
+        }
+
         message.getSender().setServiceType(config.serviceType());
         message.getSender().setServiceOperation(config.serviceOperation());
 
