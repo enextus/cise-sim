@@ -13,8 +13,7 @@ import java.util.Date;
 
 import static eu.cise.servicemodel.v1.service.ServiceOperationType.PULL;
 import static eu.cise.servicemodel.v1.service.ServiceOperationType.PUSH;
-import static eu.cise.servicemodel.v1.service.ServiceType.CARGO_SERVICE;
-import static eu.cise.servicemodel.v1.service.ServiceType.DOCUMENT_SERVICE;
+import static eu.cise.servicemodel.v1.service.ServiceType.*;
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
@@ -157,6 +156,17 @@ public class FieldAdaptationTest {
         Push expected = engine.prepare(actual, params());
 
         assertThat(expected.getSender().getServiceID()).isEqualTo("not-to-be-overridden");
+    }
+
+    @Test
+    public void it_doesnt_override_serviceType_for_null_value_in_config() {
+        when(config.serviceType()).thenReturn(null);
+
+        Push actual = newPush().sender(newService().type(VESSEL_SERVICE)).build();
+
+        Push expected = engine.prepare(actual, params());
+
+        assertThat(expected.getSender().getServiceID()).isEqualTo(VESSEL_SERVICE);
     }
 
     private SendParam params() {
