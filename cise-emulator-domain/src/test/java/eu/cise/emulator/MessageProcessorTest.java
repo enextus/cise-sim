@@ -1,16 +1,9 @@
 package eu.cise.emulator;
 
 import eu.cise.emulator.utils.FakeSignatureService;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.internal.matchers.Any;
-
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.util.Date;
 
 import static eu.cise.servicemodel.v1.service.ServiceType.VESSEL_SERVICE;
 import static eu.eucise.helpers.PushBuilder.newPush;
@@ -67,7 +60,7 @@ public class MessageProcessorTest {
 
         messageProcessor.send(message, param);
 
-        verify(engine).send(preparedMessage, param);
+        verify(engine).send(preparedMessage);
     }
 
 }

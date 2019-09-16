@@ -80,7 +80,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     }
 
     @Override
-    public Acknowledgement send(Message message, SendParam param) {
+    public Acknowledgement send(Message message) {
         return null;
     }
 }

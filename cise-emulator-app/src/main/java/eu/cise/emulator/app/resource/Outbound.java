@@ -127,7 +127,7 @@ public class Outbound {
         SendParam sendParam = new SendParam(requestAsyncAck, messageId, consolidationId);
         Message preparedMessage = emulator.prepare(loadedMessage, sendParam);
         // TODO-GK modified by GK to make it compile
-        Message result = emulator.send(preparedMessage, sendParam);
+        Message result = emulator.send(preparedMessage);
         return (new MessageReturn("").build("", xmlMapper.toXML(preparedMessage), xmlMapper.toXML(result)));
     }
 

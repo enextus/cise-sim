@@ -23,7 +23,7 @@ public class DefaultMessageProcessor implements MessageProcessor {
     @Override
     public Acknowledgement send(Message message, SendParam param) {
         Message preparedMessage = emulatorEngine.prepare(message, param);
-        Acknowledgement acknowledgement = emulatorEngine.send(preparedMessage, param);
+        Acknowledgement acknowledgement = emulatorEngine.send(preparedMessage);
         return acknowledgement;
     }
 }
