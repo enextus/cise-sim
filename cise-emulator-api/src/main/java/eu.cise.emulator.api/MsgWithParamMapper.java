@@ -15,8 +15,8 @@ public class MsgWithParamMapper {
         return new SendParam(requiresAck, messageId, correlationId);
     }
 
-    public String extractMessageTemplateHash(JsonNode msgWithParams) {
-        return null;
+    public String extractMessageTemplateHash(JsonNode json) {
+        return json.at("/message-template").textValue();
     }
 }
 

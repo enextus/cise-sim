@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.SendParam;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,9 +38,8 @@ public class MsgWithParamTest {
         assertThat(actual.isRequiresAck()).isEqualTo(true);
     }
 
-    @Ignore
     @Test
-    public void it_extracts_from_the_json_message_the_MessageContent_value() {
+    public void it_extracts_from_the_json_message_the_MessageTemplateHash_value() {
         String actual = msgWithParamMapper.extractMessageTemplateHash(msgWithParams());
         assertThat(actual).isEqualTo("hash-msg-template");
     }
