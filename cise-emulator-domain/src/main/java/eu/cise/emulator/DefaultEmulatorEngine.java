@@ -45,7 +45,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
         message.setRequiresAck(param.isRequiresAck());
         message.setMessageID(param.getMessageId());
-        message.setCorrelationID(param.getCorrelationId());
+        message.setCorrelationID(param.getCorrelationId() == null ? param.getMessageId() : param.getCorrelationId());
         message.setCreationDateTime(now());
 
         if (!isNullOrEmpty(config.serviceId()))
