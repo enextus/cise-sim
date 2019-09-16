@@ -45,17 +45,26 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
         message.setRequiresAck(param.isRequiresAck());
         message.setMessageID(param.getMessageId());
-        message.setCorrelationID(param.getCorrelationId() == null ? param.getMessageId() : param.getCorrelationId());
+
+        if (isNullOrEmpty(param.getCorrelationId())) {
+            message.setCorrelationID(param.getMessageId());
+        } else {
+            message.setCorrelationID(param.getCorrelationId());
+        }
+
         message.setCreationDateTime(now());
 
-        if (!isNullOrEmpty(config.serviceId()))
+        if (!isNullOrEmpty(config.serviceId())) {
             message.getSender().setServiceID(config.serviceId());
+        }
 
-        if (config.serviceType() != null)
+        if (config.serviceType() != null) {
             message.getSender().setServiceType(config.serviceType());
+        }
 
-        if (config.serviceOperation() != null)
+        if (config.serviceOperation() != null) {
             message.getSender().setServiceOperation(config.serviceOperation());
+        }
 
         // TODO improve signature to use <T extends Message> as a return type
         return (T) signature.sign(message);
@@ -63,7 +72,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
     // TODO should be in an helper
     private boolean isNullOrEmpty(String string) {
-        return string == null || config.serviceId().isEmpty();
+        return string == null || string.isEmpty();
     }
 
     private XMLGregorianCalendar now() {
