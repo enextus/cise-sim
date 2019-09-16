@@ -14,6 +14,10 @@ public class MsgWithParamMapper {
         LOGGER.debug("is called");
         return sendParam;
     }
+
+    public String extractMessageTemplateHash(JsonNode msgWithParams) {
+        return null;
+    }
 }
 
 
