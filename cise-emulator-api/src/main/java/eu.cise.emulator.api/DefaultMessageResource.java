@@ -18,8 +18,11 @@ import javax.ws.rs.core.Response;
 public class DefaultMessageResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultMessageResource.class);
+    private final MsgWitParamMapper msgWitParamMapper;
 
-    DefaultMessageResource(MsgWitParamMapper messageProcessor) {
+
+    DefaultMessageResource(MsgWitParamMapper msgWitParamMapper) {
+        this.msgWitParamMapper = msgWitParamMapper;
         LOGGER.info("DefaultMessageResource");
     }
 
@@ -27,6 +30,7 @@ public class DefaultMessageResource {
     @Path("/messages")
     public Response messageCreate(JsonNode msgWithParams) {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
+        msgWitParamMapper.map(msgWithParams);
         return Response.status(Response.Status.CREATED).build();
     }
 

@@ -45,7 +45,6 @@ public class MessageResourceTest {
     }
 
     @Test
-    @Ignore
     public void it_invokes_the_send_and_pass_the_message_to_the_facade() {
         resources.target("/api/messages")
                 .request()
