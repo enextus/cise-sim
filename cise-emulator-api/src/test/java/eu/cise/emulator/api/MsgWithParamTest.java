@@ -33,7 +33,6 @@ public class MsgWithParamTest {
         assertThat(actual.getCorrelationId()).isEqualTo("7777-666666-666666-5555");
     }
 
-    @Ignore
     @Test
     public void it_extracts_from_the_json_message_the_RequireAck_value() {
         SendParam actual = msgWithParamMapper.extractSendParams(msgWithParams());
@@ -51,7 +50,7 @@ public class MsgWithParamTest {
     private JsonNode msgWithParams() {
         ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
         ObjectNode params = jsonMapper.createObjectNode();
-        params.put("requires-ack", "true");
+        params.put("requires-ack", true);
         params.put("message-id", "1234-123411-123411-1234");
         params.put("correlation-id", "7777-666666-666666-5555");
 

@@ -11,7 +11,8 @@ public class MsgWithParamMapper {
     public SendParam extractSendParams(JsonNode json) {
         String messageId = json.at("/params/message-id").textValue();
         String correlationId = json.at("/params/correlation-id").textValue();
-        return new SendParam(false, messageId, correlationId);
+        boolean requiresAck = json.at("/params/requires-ack").booleanValue();
+        return new SendParam(requiresAck, messageId, correlationId);
     }
 
     public String extractMessageTemplateHash(JsonNode msgWithParams) {
