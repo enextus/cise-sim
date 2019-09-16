@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.Entity;
@@ -13,11 +14,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class MessageResourceTest {
+
+    private static MsgWitParamMapper msgWithParamMapper = mock(MsgWitParamMapper.class);
+
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new DefaultMessageResource())
+            .addResource(new DefaultMessageResource(msgWithParamMapper))
+            .bootstrapLogging(false)
             .build();
 
     private ObjectMapper jsonMapper;
@@ -25,7 +33,6 @@ public class MessageResourceTest {
     @Before
     public void before() {
         jsonMapper = new ObjectMapper();
-
     }
 
     @Test
@@ -35,6 +42,16 @@ public class MessageResourceTest {
                 .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
 
         assertThat(response.getStatus()).isEqualTo(201);
+    }
+
+    @Test
+    @Ignore
+    public void it_invokes_the_send_and_pass_the_message_to_the_facade() {
+        resources.target("/api/messages")
+                .request()
+                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
+
+        verify(msgWithParamMapper).map(any(JsonNode.class));
     }
 
     private JsonNode msgTemplateWithParams() {
