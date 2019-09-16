@@ -95,6 +95,21 @@ public class FieldAdaptationTest {
     }
 
     @Test
+    public void it_substitutes_param_correlationId_with_messageId_when_coorrelationID_is_null() {
+        Push actual = newPush().sender(newService())
+                .correlationId("to-be-overridden")
+                .build();
+
+        SendParam paramCorId = new SendParam(
+                false, "messageId", null);
+
+        Push expected = engine.prepare(actual, paramCorId);
+
+        assertThat(expected.getCorrelationID()).isEqualTo("messageId");
+    }
+
+
+    @Test
     public void it_updates_the_create_date_time() {
         Push actual = newPush().sender(newService()).build();
 
@@ -113,6 +128,7 @@ public class FieldAdaptationTest {
 
         assertThat(expected.getSender().getServiceID()).isEqualTo("new-service-id");
     }
+
 
     @Test
     public void it_overrides_serviceType() {
