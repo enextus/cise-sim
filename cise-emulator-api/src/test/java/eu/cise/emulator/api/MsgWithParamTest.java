@@ -20,17 +20,15 @@ public class MsgWithParamTest {
         msgWithParamMapper = new MsgWithParamMapper();
     }
 
-    @Test
-    public void it_extracts_from_the_json_message_in_a_type_of_SendParams() {
-        assertThat(msgWithParamMapper.extractSendParams(msgWithParams())).isInstanceOf(SendParam.class);
-    }
+
 
     @Test
-
     public void it_extracts_from_the_json_message_the_SendParams_values() {
         SendParam actual = msgWithParamMapper.extractSendParams(msgWithParams());
         assertThat(actual.getMessageId()).isEqualTo("1234-123411-123411-1234");
     }
+
+
 
     private JsonNode msgWithParams() {
         ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
