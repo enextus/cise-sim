@@ -29,12 +29,12 @@ public class MessageResourceTest {
     }
 
     @Test
-    public void it_invokes_the_send_the_http_is_successful_202() {
+    public void it_invokes_the_send_the_http_is_successful_201() {
         Response response = resources.target("/api/messages")
                 .request()
                 .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
 
-        assertThat(response.getStatus()).isEqualTo(202);
+        assertThat(response.getStatus()).isEqualTo(201);
     }
 
     private JsonNode msgTemplateWithParams() {
