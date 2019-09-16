@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.Entity;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.verify;
 
 public class MessageResourceTest {
 
-    private static MsgWitParamMapper msgWithParamMapper = mock(MsgWitParamMapper.class);
+    private static MsgWithParamMapper msgWithParamMapper = mock(MsgWithParamMapper.class);
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
@@ -50,7 +49,7 @@ public class MessageResourceTest {
                 .request()
                 .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
 
-        verify(msgWithParamMapper).map(any(JsonNode.class));
+        verify(msgWithParamMapper).extractSendParams(any(JsonNode.class));
     }
 
     private JsonNode msgTemplateWithParams() {
