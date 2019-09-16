@@ -14,7 +14,7 @@ public class CiseEmulatorApi extends Application<CiseEmulatorConf> {
 
     @Override
     public void initialize(final Bootstrap<CiseEmulatorConf> bootstrap) {
-//        CiseEmulatorApp.init(bootstrap);
+//        CiseEmulatorApp.init(bootstrap); (method to init with reference)
 
     }
 
