@@ -2,14 +2,12 @@ package eu.cise.emulator.app.resource;
 
 import ch.qos.logback.classic.Logger;
 import com.codahale.metrics.annotation.Metric;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.EmulatorEngine;
 import eu.cise.emulator.SendParam;
-import eu.cise.emulator.app.core.XmlFileReference;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.eucise.xml.XmlMapper;
@@ -19,6 +17,8 @@ import javax.ws.rs.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+//import eu.cise.emulator.api.XmlFileReference;TODO-GK modified by GK to make it compile
 
 
 @Path("webapi")
@@ -52,7 +52,9 @@ public class Outbound {
     @Produces("application/json")
     @Path("/template")
     public String getListTemplate() throws Exception {
+        // TODO-GK modified by GK to make it compile
 
+/*
         List<File> activelistFile = deleguate.getListOfTemplates();
         List<XmlFileReference> activeListFileReference = new ArrayList<>();
         activelistFile.forEach(s -> {
@@ -65,12 +67,16 @@ public class Outbound {
             LOGGER.error("json exception: " + ex.getMessage());
         }
         return (messageJson);
+*/
+        return "[]";
     }
 
     @GET
     @Produces("application/json")
     @Path("/payload")
     public String getListPayload() throws Exception {
+        // TODO-GK modified by GK to make it compile
+/*
 
         List<File> activelistFile = deleguate.getListOfPayloads();
         List<XmlFileReference> activeListFileReference = new ArrayList<XmlFileReference>();
@@ -84,6 +90,8 @@ public class Outbound {
             LOGGER.error("json exception: " + ex.getMessage());
         }
         return (messageJson);
+*/
+        return "{}";
     }
 
 
@@ -117,8 +125,10 @@ public class Outbound {
 
         Message loadedMessage = loadMessage(service, payload);
         SendParam sendParam = new SendParam(requestAsyncAck, messageId, consolidationId);
-        Message result = emulator.send(loadedMessage, sendParam);
-        return (new MessageReturn("").build("", xmlMapper.toXML(loadedMessage), xmlMapper.toXML(result)));
+        Message preparedMessage = emulator.prepare(loadedMessage, sendParam);
+        // TODO-GK modified by GK to make it compile
+        Message result = emulator.send(preparedMessage);
+        return (new MessageReturn("").build("", xmlMapper.toXML(preparedMessage), xmlMapper.toXML(result)));
     }
 
     /*!--inner class to distribute --*/
