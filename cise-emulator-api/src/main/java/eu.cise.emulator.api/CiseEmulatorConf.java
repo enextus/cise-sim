@@ -1,7 +1,7 @@
 package eu.cise.emulator.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import eu.cise.emulator.app.core.InstanceID;
+//import eu.cise.emulator.app.core.InstanceID;
 import io.dropwizard.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -28,10 +28,9 @@ class CiseEmulatorConf extends Configuration {
     }
 
 
-    public InstanceID buildInstance() {
-
-        return new InstanceID(instanceName, instanceName);
-    }
+//    public InstanceID buildInstance() {
+//        return new InstanceID(instanceName, instanceName);
+//    }
 
     /*----------operation-----------*/
     //operation x 8
