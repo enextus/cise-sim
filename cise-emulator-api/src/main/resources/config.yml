@@ -1,0 +1,18 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 18080
+  adminConnectors:
+    - type: http
+      port: 18081
+logging:
+  level: INFO
+  loggers:
+    "eu.cise.emulator.api.DefaultMessageResource": DEBUG
+  appenders:
+    - type: console
+      threshold: ALL
+      queueSize: 512
+      discardingThreshold: 0
+      timeZone: UTC
+      target: stdout

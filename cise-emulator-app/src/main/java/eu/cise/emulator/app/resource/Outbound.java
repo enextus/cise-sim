@@ -2,15 +2,12 @@ package eu.cise.emulator.app.resource;
 
 import ch.qos.logback.classic.Logger;
 import com.codahale.metrics.annotation.Metric;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.EmulatorEngine;
 import eu.cise.emulator.SendParam;
-import eu.cise.emulator.api.XmlFileReference;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.eucise.xml.XmlMapper;
@@ -21,7 +18,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.time.Instant.now;
+//import eu.cise.emulator.api.XmlFileReference;TODO-GK modified by GK to make it compile
 
 
 @Path("webapi")
@@ -31,14 +28,14 @@ public class Outbound {
 
     private DelegateFileAccess deleguate;
     private EmulatorEngine emulator;
-    private ObjectMapper jsonMapper ;
+    private ObjectMapper jsonMapper;
     private XmlMapper xmlMapper;
 
-    public Outbound(DelegateFileAccess deleguate, EmulatorEngine emulator,XmlMapper xmlMapper) {
-     this.deleguate   = deleguate;
-     this.emulator = emulator;
-     this.xmlMapper =xmlMapper;
-     this.jsonMapper = new ObjectMapper();
+    public Outbound(DelegateFileAccess deleguate, EmulatorEngine emulator, XmlMapper xmlMapper) {
+        this.deleguate = deleguate;
+        this.emulator = emulator;
+        this.xmlMapper = xmlMapper;
+        this.jsonMapper = new ObjectMapper();
     }
 
 
@@ -47,7 +44,7 @@ public class Outbound {
     @Produces("application/json")
     @Path("/member/{ref}")
     public String getReturnParticipantName(@PathParam("ref") String ref) throws Exception {
-        return (new Participant("").build("it.sim.egn","REST")).toString();
+        return (new Participant("").build("it.sim.egn", "REST")).toString();
     }
 
 
@@ -55,7 +52,9 @@ public class Outbound {
     @Produces("application/json")
     @Path("/template")
     public String getListTemplate() throws Exception {
+        // TODO-GK modified by GK to make it compile
 
+/*
         List<File> activelistFile = deleguate.getListOfTemplates();
         List<XmlFileReference> activeListFileReference = new ArrayList<>();
         activelistFile.forEach(s -> {
@@ -68,11 +67,16 @@ public class Outbound {
             LOGGER.error("json exception: " + ex.getMessage());
         }
         return (messageJson);
+*/
+        return "[]";
     }
+
     @GET
     @Produces("application/json")
     @Path("/payload")
     public String getListPayload() throws Exception {
+        // TODO-GK modified by GK to make it compile
+/*
 
         List<File> activelistFile = deleguate.getListOfPayloads();
         List<XmlFileReference> activeListFileReference = new ArrayList<XmlFileReference>();
@@ -86,6 +90,8 @@ public class Outbound {
             LOGGER.error("json exception: " + ex.getMessage());
         }
         return (messageJson);
+*/
+        return "{}";
     }
 
 
@@ -99,10 +105,10 @@ public class Outbound {
             @DefaultValue("false") @QueryParam("request_async_ack") boolean requestAsyncAck,
             @DefaultValue("") @QueryParam("consolidation_id") String consolidationId) {
 
-       Message loadedMessage =  loadMessage(service, payload));
-       SendParam sendParam= new SendParam(requestAsyncAck, messageId, consolidationId);
-        Message result = emulator.prepare(loadedMessage,sendParam );
-       return (new MessageReturn("").build("", xmlMapper.toXML(result),""));
+        Message loadedMessage = loadMessage(service, payload);
+        SendParam sendParam = new SendParam(requestAsyncAck, messageId, consolidationId);
+        Message result = emulator.prepare(loadedMessage, sendParam);
+        return (new MessageReturn("").build("", xmlMapper.toXML(result), ""));
     }
 
 
@@ -117,15 +123,16 @@ public class Outbound {
             @DefaultValue("false") @QueryParam("request_async_ack") boolean requestAsyncAck,
             @DefaultValue("") @QueryParam("consolidation_id") String consolidationId) {
 
-        Message loadedMessage =  loadMessage(service, payload);
-        SendParam sendParam= new SendParam(requestAsyncAck, messageId, consolidationId);
+        Message loadedMessage = loadMessage(service, payload);
+        SendParam sendParam = new SendParam(requestAsyncAck, messageId, consolidationId);
         Message preparedMessage = emulator.prepare(loadedMessage, sendParam);
+        // TODO-GK modified by GK to make it compile
         Message result = emulator.send(preparedMessage);
         return (new MessageReturn("").build("", xmlMapper.toXML(preparedMessage), xmlMapper.toXML(result)));
     }
 
     /*!--inner class to distribute --*/
-    public Message loadMessage(String refTemplate, String refPayload){
+    public Message loadMessage(String refTemplate, String refPayload) {
         return new Push();
     }
 
@@ -154,7 +161,9 @@ public class Outbound {
         final ObjectMapper jsonmapper = new ObjectMapper();
         final ArrayNode jsonmapperarrayNode = jsonmapper.createArrayNode();
 
-        private Participant(String source) {this.source = source;}
+        private Participant(String source) {
+            this.source = source;
+        }
 
         public ArrayNode build(String participantId, String mode) {
             ObjectNode objectNode1 = jsonmapper.createObjectNode();
@@ -167,11 +176,11 @@ public class Outbound {
 
     private class DelegateFileAccess {
 
-        private List<File> getListOfTemplates (){
+        private List<File> getListOfTemplates() {
             return new ArrayList<File>();
         }
 
-        private List<File> getListOfPayloads (){
+        private List<File> getListOfPayloads() {
             return new ArrayList<File>();
         }
 
