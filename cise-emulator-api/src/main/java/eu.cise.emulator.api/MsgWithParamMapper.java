@@ -10,9 +10,8 @@ public class MsgWithParamMapper {
 
     public SendParam extractSendParams(JsonNode json) {
         String messageId = json.at("/params/message-id").textValue();
-        SendParam sendParam = new SendParam(false,messageId,null);
-        LOGGER.debug("is called");
-        return sendParam;
+        String correlationId = json.at("/params/correlation-id").textValue();
+        return new SendParam(false, messageId, correlationId);
     }
 
     public String extractMessageTemplateHash(JsonNode msgWithParams) {

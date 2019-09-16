@@ -21,8 +21,6 @@ public class MsgWithParamTest {
         msgWithParamMapper = new MsgWithParamMapper();
     }
 
-
-
     @Test
     public void it_extracts_from_the_json_message_the_messageId_value() {
         SendParam actual = msgWithParamMapper.extractSendParams(msgWithParams());
