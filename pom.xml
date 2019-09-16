@@ -250,6 +250,25 @@
                 <version>2.9.2</version>
             </dependency>
 
+            <!-- property file handling -->
+            <dependency>
+                <groupId>org.aeonbits.owner</groupId>
+                <artifactId>owner</artifactId>
+                <version>1.0.10</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aeonbits.owner</groupId>
+                <artifactId>owner-java8</artifactId>
+                <version>1.0.10</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aeonbits.owner</groupId>
+                <artifactId>owner-java8-extras</artifactId>
+                <version>1.0.10</version>
+            </dependency>
+
             <!-- Test Libraries -->
             <dependency>
                 <artifactId>junit</artifactId>
@@ -262,6 +281,7 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>3.0.0</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -275,7 +295,7 @@
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>3.13.2</version>
-                <type>bundle</type>
+                <scope>test</scope>
             </dependency>
         </dependencies>
 
