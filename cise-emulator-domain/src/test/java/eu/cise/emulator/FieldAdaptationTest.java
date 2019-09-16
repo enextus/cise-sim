@@ -95,7 +95,7 @@ public class FieldAdaptationTest {
     }
 
     @Test
-    public void it_substitutes_param_correlationId_with_messageId_when_coorrelationID_is_null() {
+    public void it_substitutes_param_correlationId_with_messageId_when_correlationID_is_null() {
         Push actual = newPush().sender(newService())
                 .correlationId("to-be-overridden")
                 .build();
