@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class AppContextTest {
 
-
     @Test
     public void it_builds_message_processor() {
         AppContext appContext = new DefaultAppContext();

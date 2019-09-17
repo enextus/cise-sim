@@ -1,5 +1,7 @@
 package eu.cise.emulator;
 
+import eu.cise.dispatcher.Dispatcher;
+import eu.cise.dispatcher.RestDispatcher;
 import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
 
@@ -21,7 +23,12 @@ public class DefaultAppContext implements AppContext {
     //TODO - implement makeDispatcher
     @Override
     public DefaultEmulatorEngine makeEmulatorEngine() {
-        return new DefaultEmulatorEngine(makeSignatureService(), null, this.emuConfig);
+        return new DefaultEmulatorEngine(makeSignatureService(), makeDispatcher(), this.emuConfig);
+    }
+
+    @Override
+    public Dispatcher makeDispatcher() {
+        return new RestDispatcher();
     }
 
     @Override

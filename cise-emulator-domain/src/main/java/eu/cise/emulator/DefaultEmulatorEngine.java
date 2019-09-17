@@ -39,6 +39,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     public DefaultEmulatorEngine(SignatureService signature, EmuConfig config, Dispatcher dispatcher, Clock clock) {
         this.signature = notNull(signature, NullSignatureServiceEx.class);
         this.config = notNull(config, NullConfigEx.class);
+        this.dispatcher = notNull(dispatcher, NullDispatcherEx.class);
         this.clock = notNull(clock, NullClockEx.class);
     }
 
