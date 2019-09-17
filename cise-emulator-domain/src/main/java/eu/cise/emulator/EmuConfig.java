@@ -20,4 +20,7 @@ public interface EmuConfig extends Config {
 
     @Key("sender.service-operation")
     ServiceOperationType serviceOperation();
+
+    @Key("destination.endpoint-url")
+    String endpointUrl();
 }

@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import eu.cise.dispatcher.Dispatcher;
 import eu.cise.emulator.exceptions.*;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
@@ -21,7 +22,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     /**
      * Default constructor that uses UTC as a reference clock
      */
-    public DefaultEmulatorEngine(SignatureService signature, EmuConfig config) {
+    public DefaultEmulatorEngine(SignatureService signature, Dispatcher dispatcher, EmuConfig config) {
         this(signature, config, Clock.systemUTC());
     }
 

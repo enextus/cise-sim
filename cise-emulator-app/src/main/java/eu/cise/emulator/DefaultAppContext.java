@@ -18,9 +18,10 @@ public class DefaultAppContext implements AppContext {
         return new DefaultMessageProcessor(makeEmulatorEngine());
     }
 
+    //TODO - implement makeDispatcher
     @Override
     public DefaultEmulatorEngine makeEmulatorEngine() {
-        return new DefaultEmulatorEngine(makeSignatureService(), this.emuConfig);
+        return new DefaultEmulatorEngine(makeSignatureService(), null, this.emuConfig);
     }
 
     @Override
