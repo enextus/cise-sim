@@ -38,11 +38,12 @@
     <description>main aggregation for sim project</description>
 
     <modules>
+        <module>cise-emulator-api</module>
         <module>cise-emulator-app</module>
         <module>cise-emulator-domain</module>
-        <module>cise-emulator-api</module>
         <module>cise-emulator-transport</module>
         <module>cise-emulator-assembly</module>
+        <module>cise-dispatcher</module>
     </modules>
 
     <build>
