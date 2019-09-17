@@ -135,7 +135,7 @@
                                 </transformer>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>eu.europa.ec.jrc.marex.CiseEmulatorApplication</mainClass>
+                                    <mainClass>eu.cise.emulator.deprecated.cli.CiseEmulatorApplication</mainClass>
                                 </transformer>
                             </transformers>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
@@ -156,7 +156,7 @@
                                     <resource>META-INF/cxf/bus-extensions.txt</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>eu.cise.emulator.app.CiseEmuApplication</mainClass>
+                                    <mainClass>eu.cise.emulator.deprecated.web.app.CiseEmuApplication</mainClass>
                                 </transformer>
                             </transformers>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
