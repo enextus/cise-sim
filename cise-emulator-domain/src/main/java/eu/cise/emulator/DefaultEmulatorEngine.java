@@ -18,12 +18,14 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     private final Clock clock;
     private final EmuConfig config;
     private final SignatureService signature;
+    private Dispatcher dispatcher;
 
     /**
      * Default constructor that uses UTC as a reference clock
      */
     public DefaultEmulatorEngine(SignatureService signature, Dispatcher dispatcher, EmuConfig config) {
         this(signature, config, Clock.systemUTC());
+        this.dispatcher = dispatcher;
     }
 
     /**
@@ -83,6 +85,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
     @Override
     public Acknowledgement send(Message message) {
+        dispatcher.send(message, config.endpointUrl());
         return null;
     }
 }
