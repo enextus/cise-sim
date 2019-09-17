@@ -32,7 +32,6 @@ public class CrossOriginSupport {
     public void setup() {
         final FilterRegistration.Dynamic cors =
                 environment.servlets().addFilter("CORS", CrossOriginFilter.class);
-
         // Configure CORS parameters
         cors.setInitParameter("allowedOrigins", "*");
         cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");

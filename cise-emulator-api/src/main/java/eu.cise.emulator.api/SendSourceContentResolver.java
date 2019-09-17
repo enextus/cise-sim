@@ -2,7 +2,7 @@ package eu.cise.emulator.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class SendMessageSourceReader {
+public class SendSourceContentResolver {
 
 
     public boolean asPayload(JsonNode json) {
