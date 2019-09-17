@@ -42,3 +42,5 @@ target/**
 /cise-emulator-react/build/
 generated-sources
 tmp/**
+
+bundle.js

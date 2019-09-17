@@ -17,13 +17,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class MessageResourceTest {
+public class MessageResourceRestTest {
 
-    private static MsgWithParamMapper msgWithParamMapper = mock(MsgWithParamMapper.class);
+    private static MessageAPI messageAPI = mock(MessageAPI.class);
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new DefaultMessageResource(msgWithParamMapper))
+            .addResource(new DefaultMessageResource(messageAPI))
             .bootstrapLogging(false)
             .build();
 
@@ -49,18 +49,18 @@ public class MessageResourceTest {
                 .request()
                 .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
 
-        verify(msgWithParamMapper).extractSendParams(any(JsonNode.class));
+        verify(messageAPI).send(any(JsonNode.class));
     }
 
     private JsonNode msgTemplateWithParams() {
         ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
 
         ObjectNode params = jsonMapper.createObjectNode();
-        params.put("requires-ack", "false");
-        params.put("message-id", "1234-123411-123411-1234");
-        params.put("correlation-id", "7777-666666-666666-5555");
+        params.put("requires_ack", "false");
+        params.put("message_id", "1234-123411-123411-1234");
+        params.put("correlation_id", "7777-666666-666666-5555");
 
-        msgTemplateWithParamObject.put("message-template", "hash-msg-template");
+        msgTemplateWithParamObject.put("message_template", "hash-msg-template");
         msgTemplateWithParamObject.set("params", params);
 
         return jsonMapper.valueToTree(msgTemplateWithParamObject);

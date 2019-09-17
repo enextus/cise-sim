@@ -6,8 +6,8 @@ var messageCandidate = observable({
     messageState : "virtual",
     correlationId : "",
     messageType : MessageType.MASTER_OUT,
-    templateService : "#none",
-    templatePayload : "#none",
+    templateService : "#None",
+    templatePayload : "#None",
     asyncAcknowledge : false
 });
 export default messageCandidate;
