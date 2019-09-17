@@ -1,9 +1,9 @@
 package eu.cise.emulator;
 
-import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
-
 import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
+
+import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 
 public class DefaultAppContext implements AppContext {
 
@@ -15,17 +15,21 @@ public class DefaultAppContext implements AppContext {
 
     @Override
     public MessageProcessor makeMessageProcessor() {
-        return new DefaultMessageProcessor(
-            new DefaultEmulatorEngine(makeSignatureService(), this.emuConfig),
-            makeSignatureService(), this.emuConfig);
+        return new DefaultMessageProcessor(makeEmulatorEngine());
     }
 
-    private SignatureService makeSignatureService() {
+    @Override
+    public DefaultEmulatorEngine makeEmulatorEngine() {
+        return new DefaultEmulatorEngine(makeSignatureService(), this.emuConfig);
+    }
+
+    @Override
+    public SignatureService makeSignatureService() {
         return newSignatureService()
-            .withKeyStoreName("adaptor.jks")
-            .withKeyStorePassword("eucise")
-            .withPrivateKeyAlias("sim1-node01.node01.eucise.fr")
-            .withPrivateKeyPassword("eucise")
-            .build();
+                .withKeyStoreName("adaptor.jks")
+                .withKeyStorePassword("eucise")
+                .withPrivateKeyAlias("sim1-node01.node01.eucise.fr")
+                .withPrivateKeyPassword("eucise")
+                .build();
     }
 }
