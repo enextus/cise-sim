@@ -7,13 +7,15 @@ import org.slf4j.LoggerFactory;
 
 public class DefaultMessageAPI implements MessageAPI {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultMessageResource.class);
+    private MessageProcessor messageProcessor;
 
     public DefaultMessageAPI(MessageProcessor messageProcessor) {
-        LOGGER.info("DefaultMessageAPI");
+        this.messageProcessor = messageProcessor;
+        LOGGER.debug(" Initialize the MessageAPI with default type implementation {} using message processor of type {}", this.getClass(), (messageProcessor != null ? messageProcessor.getClass() : ""));
     }
 
     @Override
     public void send(JsonNode json) {
-        LOGGER.debug("passed through");
+        LOGGER.debug("send is passed through api : {}", json);
     }
 }

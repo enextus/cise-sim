@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class SendSourceContentResolverTest {
     private SendSourceContentResolver sourceReader;
     private ObjectMapper jsonMapper;
@@ -23,31 +25,29 @@ public class SendSourceContentResolverTest {
     }
 
 
-
     @Test
-    public void  it_provide_Message_Content_from_msgWithParam() {
+    public void it_provide_Message_Content_from_msgWithParam() {
         String content = sourceReader.extractMessage(msgWithParams());
-        assert(!content.isEmpty());
-        assert(content.contains("xmlns:ns4=\"http://www.cise.eu/servicemodel/v1/message/\""));
+        assertThat(content).contains("xmlns:ns4=\"http://www.cise.eu/servicemodel/v1/message/\"");
     }
 
     @Test
-    public void  it_provide_Message_Valid_Content_from_msgWithParam() {
+    public void it_provide_Message_Valid_Content_from_msgWithParam() {
         String content = sourceReader.extractMessage(msgWithParams());
-        Message message =null;
-        try{
-            message = xmlMapper.fromXML(content);}
-        catch (Exception e) {
+        Message message = null;
+        try {
+            message = xmlMapper.fromXML(content);
+        } catch (Exception e) {
 
         }
-        assert(message!=null);
+        assertThat(message).isNotNull();
     }
 
 
     @Ignore
     @Test
     public void it_return_asPayload_true_when_exist() {
-        assert(false);
+        assert (false);
     }
 
     private JsonNode msgWithParams() {

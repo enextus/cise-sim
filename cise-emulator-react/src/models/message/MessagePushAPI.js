@@ -11,7 +11,7 @@ export default class MessagePushAPI {
         header: {
             'Content-Type': 'application/json'
         }};
-    defaultPostURL ='http://localhost:8080/api/messages';
+    defaultPostURL ='http://localhost:18080/api/messages';
     defaultPostData = {
     'message_template': '',
     'params': {
