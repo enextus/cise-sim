@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import eu.cise.dispatcher.Dispatcher;
 import eu.cise.emulator.exceptions.NullSendParamEx;
 import eu.cise.emulator.utils.FakeSignatureService;
 import eu.cise.servicemodel.v1.message.Push;
@@ -29,13 +30,15 @@ public class FieldAdaptationTest {
 
     private EmulatorEngine engine;
     private EmuConfig config;
+    private Dispatcher dispatcher;
 
     @Before
     public void before() {
         config = mock(EmuConfig.class);
+        dispatcher = mock(Dispatcher.class);
         engine = new DefaultEmulatorEngine(
                 new FakeSignatureService(),
-                config, clockFiveMay2019()
+                config, dispatcher, clockFiveMay2019()
         );
     }
 

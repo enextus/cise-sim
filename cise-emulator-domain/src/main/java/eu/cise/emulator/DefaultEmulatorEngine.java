@@ -24,19 +24,19 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      * Default constructor that uses UTC as a reference clock
      */
     public DefaultEmulatorEngine(SignatureService signature, Dispatcher dispatcher, EmuConfig config) {
-        this(signature, config, Clock.systemUTC());
+        this(signature, config, dispatcher, Clock.systemUTC());
         this.dispatcher = dispatcher;
     }
 
     /**
      * Constructor that expect a clock as a reference to
      * compute date and time.
-     *
-     * @param signature the signature service used to sign messages
+     *  @param signature the signature service used to sign messages
      * @param config    the domain configuration
+     * @param dispatcher
      * @param clock     the reference clock
      */
-    public DefaultEmulatorEngine(SignatureService signature, EmuConfig config, Clock clock) {
+    public DefaultEmulatorEngine(SignatureService signature, EmuConfig config, Dispatcher dispatcher, Clock clock) {
         this.signature = notNull(signature, NullSignatureServiceEx.class);
         this.config = notNull(config, NullConfigEx.class);
         this.clock = notNull(clock, NullClockEx.class);

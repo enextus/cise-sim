@@ -1,9 +1,7 @@
 package eu.cise.emulator;
 
-import eu.cise.emulator.exceptions.NullClockEx;
-import eu.cise.emulator.exceptions.NullConfigEx;
-import eu.cise.emulator.exceptions.NullSenderEx;
-import eu.cise.emulator.exceptions.NullSignatureServiceEx;
+import eu.cise.dispatcher.Dispatcher;
+import eu.cise.emulator.exceptions.*;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
@@ -23,13 +21,15 @@ public class EnginePreconditionsTest {
     private Push push;
     private EmuConfig config;
     private Clock clock;
+    private Dispatcher dispatcher;
 
     @Before
     public void before() {
         config = ConfigFactory.create(EmuConfig.class);
         signature = mock(SignatureService.class);
         clock = Clock.systemUTC();
-        engine = new DefaultEmulatorEngine(signature, config, clock);
+        dispatcher = mock(Dispatcher.class);
+        engine = new DefaultEmulatorEngine(signature, config, dispatcher, clock);
         push = newPush().build();
 
     }
@@ -37,22 +37,29 @@ public class EnginePreconditionsTest {
     @Test
     public void it_must_have_a_signature_service_not_null() {
         assertThatExceptionOfType(NullSignatureServiceEx.class)
-                .isThrownBy(() -> new DefaultEmulatorEngine(null, config, clock))
+                .isThrownBy(() -> new DefaultEmulatorEngine(null, config, dispatcher, clock))
                 .withMessageContaining("signature");
     }
 
     @Test
     public void it_must_have_a_config_not_null() {
         assertThatExceptionOfType(NullConfigEx.class)
-                .isThrownBy(() -> new DefaultEmulatorEngine(signature, null, clock))
+                .isThrownBy(() -> new DefaultEmulatorEngine(signature, null, dispatcher, clock))
                 .withMessageContaining("config");
     }
 
     @Test
     public void it_must_have_a_clock_not_null() {
         assertThatExceptionOfType(NullClockEx.class)
-                .isThrownBy(() -> new DefaultEmulatorEngine(signature, config, null))
+                .isThrownBy(() -> new DefaultEmulatorEngine(signature, config, dispatcher, null))
                 .withMessageContaining("clock");
+    }
+
+    @Test
+    public void it_must_have_a_dispatcher_not_null() {
+        assertThatExceptionOfType(NullDispatcherEx.class)
+                .isThrownBy(() -> new DefaultEmulatorEngine(signature, config, null, clock))
+                .withMessageContaining("dispatcher");
     }
 
     @Test
