@@ -1,9 +1,11 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './MainApp';
+import MainApp from './MainApp';
 
-it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
+describe("renders without crashing", () => {
+    test("Matches the snapshot", () => {
+        const div = document.create('MainApp');
+        ReactDOM.render(  <MainApp />);
+    });
 });

@@ -94,6 +94,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                        <linkXRef>false</linkXRef>
                     <failsOnError>true</failsOnError>
                     <configLocation>checkstyle.xml</configLocation>
                     <consoleOutput>true</consoleOutput>

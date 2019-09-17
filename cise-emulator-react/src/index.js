@@ -28,11 +28,13 @@ autorun(() => {
     stores.appStore.obtainXmlPayloads();
     stores.appStore.obtainSelfMember();
     stores.appStore.registerSocket();
+
        });
 
 setInterval(() => {
-    if (stores.appStore.IsConnected
-        && stores.appStore.IsModalOpened )
+    //stores.appStore.IsConnected
+    //         &&
+    if (stores.appStore.IsModalOpened )
 {
     stores.appStore.closeModal();
 }

@@ -5,7 +5,7 @@ import ReceiveMessage from './ReceiveMessage/ReceiveMessage';
 import {Grid, Paper} from '@material-ui/core';
 import { observer } from 'mobx-react';
 import messageCandidate from "../../models/message/MessageCandidate";
-import MessagePreview from "../../models/message/MessagePreview";
+import MessagePushAPI from "../../models/message/MessagePushAPI";
 
 @observer
 export default class Panels extends Component {
@@ -46,7 +46,7 @@ export default class Panels extends Component {
 
 
 
-        const messagePreview = new MessagePreview();
+        const messagePreview = new MessagePushAPI();
 
         return (
             <div style= {windowStyle}>
