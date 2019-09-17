@@ -3,6 +3,7 @@ package eu.cise.emulator;
 import eu.cise.emulator.exceptions.*;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.signature.SignatureService;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;

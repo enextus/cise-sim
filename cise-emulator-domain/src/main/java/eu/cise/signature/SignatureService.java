@@ -1,4 +1,4 @@
-package eu.cise.emulator;
+package eu.cise.signature;
 
 import eu.cise.servicemodel.v1.message.Message;
 

@@ -5,6 +5,7 @@ import eu.cise.emulator.exceptions.NullConfigEx;
 import eu.cise.emulator.exceptions.NullSenderEx;
 import eu.cise.emulator.exceptions.NullSignatureServiceEx;
 import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.Before;
 import org.junit.Test;

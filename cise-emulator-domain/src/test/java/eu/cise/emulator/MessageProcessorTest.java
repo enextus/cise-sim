@@ -2,6 +2,7 @@ package eu.cise.emulator;
 
 import eu.cise.emulator.utils.FakeSignatureService;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.signature.SignatureService;
 import org.junit.Before;
 import org.junit.Test;
 
