@@ -14,5 +14,5 @@ public interface AppContext {
 
     SignatureService makeSignatureService();
 
-    CiseEmulatorAPI makeEmulatorApi();
+    CiseEmulatorAPI makeEmulatorApi(MessageProcessor messageProcessor);
 }
