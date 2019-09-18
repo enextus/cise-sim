@@ -2,6 +2,7 @@ package eu.cise.emulator;
 
 import eu.cise.emulator.utils.FakeSignatureService;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.signature.SignatureService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,7 +10,6 @@ import static eu.cise.servicemodel.v1.service.ServiceType.VESSEL_SERVICE;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class MessageProcessorTest {
@@ -24,7 +24,7 @@ public class MessageProcessorTest {
         signatureService = new FakeSignatureService();
         config = mock(EmuConfig.class);
         engine = mock(EmulatorEngine.class);
-        messageProcessor = new DefaultMessageProcessor(engine, signatureService, config);
+        messageProcessor = new DefaultMessageProcessor(engine);
     }
 
     @Test

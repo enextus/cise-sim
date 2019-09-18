@@ -1,6 +1,8 @@
 package eu.cise.emulator;
 
+import eu.cise.dispatcher.Dispatcher;
 import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,12 +17,14 @@ public class AddingSignatureTest {
     private EmulatorEngine engine;
     private SignatureService signatureService;
     private Push push;
+    private Dispatcher dispatcher;
 
     @Before
     public void before() {
         EmuConfig config = ConfigFactory.create(EmuConfig.class);
         signatureService = mock(SignatureService.class);
-        engine = new DefaultEmulatorEngine(signatureService, config);
+        dispatcher = mock(Dispatcher.class);
+        engine = new DefaultEmulatorEngine(signatureService, dispatcher, config);
         push = newPush().sender(newService()).build();
     }
 

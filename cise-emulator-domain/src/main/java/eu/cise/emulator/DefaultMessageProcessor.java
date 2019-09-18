@@ -6,12 +6,8 @@ import eu.cise.servicemodel.v1.message.Message;
 public class DefaultMessageProcessor implements MessageProcessor {
 
     private final EmulatorEngine emulatorEngine;
-    private final SignatureService signatureService;
-    private final EmuConfig config;
 
-    public DefaultMessageProcessor(EmulatorEngine emulatorEngine, SignatureService signatureService, EmuConfig config) {
-        this.signatureService = signatureService;
-        this.config = config;
+    public DefaultMessageProcessor(EmulatorEngine emulatorEngine) {
         this.emulatorEngine = emulatorEngine;
     }
 
