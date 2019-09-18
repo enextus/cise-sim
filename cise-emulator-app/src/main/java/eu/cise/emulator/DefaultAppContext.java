@@ -2,6 +2,7 @@ package eu.cise.emulator;
 
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.RestDispatcher;
+import eu.cise.emulator.api.CiseEmulatorApi;
 import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
 
@@ -39,5 +40,10 @@ public class DefaultAppContext implements AppContext {
                 .withPrivateKeyAlias("sim1-node01.node01.eucise.fr")
                 .withPrivateKeyPassword("eucise")
                 .build();
+    }
+
+    @Override
+    public CiseEmulatorApi makeEmulatorApi() {
+        return null;
     }
 }
