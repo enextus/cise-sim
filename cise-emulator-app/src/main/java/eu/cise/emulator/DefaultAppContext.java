@@ -2,9 +2,12 @@ package eu.cise.emulator;
 
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.RestDispatcher;
-import eu.cise.emulator.api.CiseEmulatorApi;
+import eu.cise.emulator.api.CiseDropWizardServerBuilder;
+import eu.cise.emulator.api.CiseEmulatorAPI;
 import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
+
+import java.io.File;
 
 import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 
@@ -43,7 +46,14 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public CiseEmulatorApi makeEmulatorApi() {
-        return null;
+    public CiseEmulatorAPI makeEmulatorApi() {
+        CiseEmulatorAPI server = null;
+        try {
+            File configFile = new File("/tmp/config.yml");
+            server = CiseDropWizardServerBuilder.createServer(configFile, CiseEmulatorAPI.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return server;
     }
 }
