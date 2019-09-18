@@ -4,6 +4,7 @@ import com.codahale.metrics.MetricRegistry;
 import io.dropwizard.Application;
 import io.dropwizard.cli.ServerCommand;
 import io.dropwizard.configuration.ConfigurationFactory;
+import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.server.Server;
@@ -23,7 +24,7 @@ public class CiseDropWizardServerBuilder {
     public static File tmpConfigFile;
 
     public static <T extends CiseEmulatorDropwizardConf> DropWizardServer<T> createServer(
-            File configFile,
+            String configFile,
             Class<? extends Application<T>> applicationClass) throws Exception {
         // Create application
         final Application<T> application = applicationClass.getConstructor().newInstance();
@@ -34,7 +35,7 @@ public class CiseDropWizardServerBuilder {
         bootstrap.addCommand(serverCommand);
 
         // Write a temporary config file
-
+        bootstrap.setConfigurationSourceProvider(new ResourceConfigurationSourceProvider());
         ConfigurationFactory<T> configurationFactory
                 = bootstrap.getConfigurationFactoryFactory()
                 .create((Class<T>) CiseEmulatorDropwizardConf.class,
@@ -42,7 +43,7 @@ public class CiseDropWizardServerBuilder {
                         bootstrap.getObjectMapper(),
                         "dw");
         final T builtConfig = configurationFactory.build(
-                bootstrap.getConfigurationSourceProvider(), configFile.getAbsolutePath());
+                bootstrap.getConfigurationSourceProvider(), configFile);
 
         // Configure logging
         builtConfig.getLoggingFactory()

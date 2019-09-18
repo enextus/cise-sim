@@ -7,8 +7,6 @@ import eu.cise.emulator.api.CiseEmulatorAPI;
 import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
 
-import java.io.File;
-
 import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 
 public class DefaultAppContext implements AppContext {
@@ -46,10 +44,10 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public CiseEmulatorAPI makeEmulatorApi() {
+    public CiseEmulatorAPI makeEmulatorApi(MessageProcessor messageProcessor) {
         CiseEmulatorAPI server = null;
         try {
-            File configFile = new File("/tmp/config.yml");
+            String configFile = (this.emuConfig.webapiConfig());
             server = CiseDropWizardServerBuilder.createServer(configFile, CiseEmulatorAPI.class);
         } catch (Exception e) {
             e.printStackTrace();

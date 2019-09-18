@@ -8,8 +8,8 @@ import org.aeonbits.owner.Config.Sources;
 /**
  * This file is containing the emulator application configuration
  */
-@Sources({"file:${conf.dir}ais-adaptor.properties",
-        "classpath:ais-adaptor.properties"})
+@Sources({"file:${conf.dir}emulator.properties",
+        "classpath:emulator.properties"})
 public interface EmuConfig extends Config {
 
     @Key("sender.service-id")
@@ -23,4 +23,8 @@ public interface EmuConfig extends Config {
 
     @Key("destination.endpoint-url")
     String endpointUrl();
+
+    @Key("webapi.config")
+    String webapiConfig();
+
 }
