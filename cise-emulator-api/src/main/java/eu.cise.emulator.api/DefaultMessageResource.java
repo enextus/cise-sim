@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -27,7 +30,7 @@ public class DefaultMessageResource {
     public Response send(JsonNode msgWithParams) {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
 
-        JsonNode responseObject= messageAPI.send(msgWithParams);
+        JsonNode responseObject = messageAPI.send(msgWithParams);
         return Response.status(Response.Status.CREATED).build();
 
     }
