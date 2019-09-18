@@ -48,7 +48,7 @@ public class DefaultAppContext implements AppContext {
         CiseEmulatorAPI server = null;
         try {
             String configFile = (this.emuConfig.webapiConfig());
-            server = CiseDropWizardServerBuilder.createServer(configFile, CiseEmulatorAPI.class);
+            server = CiseDropWizardServerBuilder.createServer(configFile, CiseEmulatorAPI.class, messageProcessor);
         } catch (Exception e) {
             e.printStackTrace();
         }

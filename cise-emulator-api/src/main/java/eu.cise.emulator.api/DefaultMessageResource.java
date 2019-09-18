@@ -20,7 +20,7 @@ public class DefaultMessageResource {
     private final MessageAPI messageAPI;
 
 
-    DefaultMessageResource(MessageAPI messageAPI) {
+    public DefaultMessageResource(MessageAPI messageAPI) {
         this.messageAPI = messageAPI;
 
     }

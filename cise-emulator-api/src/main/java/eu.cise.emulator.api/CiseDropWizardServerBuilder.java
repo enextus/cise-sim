@@ -1,6 +1,7 @@
 package eu.cise.emulator.api;
 
 import com.codahale.metrics.MetricRegistry;
+import eu.cise.emulator.MessageProcessor;
 import io.dropwizard.Application;
 import io.dropwizard.cli.ServerCommand;
 import io.dropwizard.configuration.ConfigurationFactory;
@@ -25,7 +26,7 @@ public class CiseDropWizardServerBuilder {
 
     public static <T extends CiseEmulatorDropwizardConf> DropWizardServer<T> createServer(
             String configFile,
-            Class<? extends Application<T>> applicationClass) throws Exception {
+            Class<? extends Application<T>> applicationClass, MessageProcessor messageProcessor) throws Exception {
         // Create application
         final Application<T> application = applicationClass.getConstructor().newInstance();
 
@@ -69,8 +70,9 @@ public class CiseDropWizardServerBuilder {
             }
         });
 
-        return new DropWizardServer((CiseEmulatorDropwizardConf) builtConfig, bootstrap, application, environment, server, environment.metrics());
+        return new DropWizardServer((CiseEmulatorDropwizardConf) builtConfig, bootstrap, application, environment, server, environment.metrics(),messageProcessor);
     }
+
 
     public static class DropWizardServer<T extends CiseEmulatorDropwizardConf> extends CiseEmulatorAPI {
         private final T builtConfig;
@@ -86,13 +88,15 @@ public class CiseDropWizardServerBuilder {
                          Application<T> application,
                          Environment environment,
                          Server jettyServer,
-                         MetricRegistry metricRegistry) {
+                         MetricRegistry metricRegistry,
+                         MessageProcessor messageProcessor) {
             this.builtConfig = builtConfig;
             this.bootstrap = bootstrap;
             this.application = application;
             this.environment = environment;
             this.jettyServer = jettyServer;
             this.metricRegistry = metricRegistry;
+            this.builtConfig.setMessageProcessor(messageProcessor);
         }
 
         /**
