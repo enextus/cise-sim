@@ -1,15 +1,14 @@
-import {observable, computed, action} from "mobx";
-//import axios from "axios";
-import Singleton from "../transport/socket";
+import {action, computed, observable} from "mobx";
+import ciseWebsocket from "../transport/ciseWebsocket";
 import MessageType from "../components/Panels/SendMessage/MessageType";
 import FileRef from "./FileRef";
 
 export default class MainAppModel {
-    @observable socket;
+    @observable ciseWebsocketInstance;
     @observable modalOpen = true;
     @observable memberId = "#TobeLoaded#";
     @observable memberList = [];
-    @observable options = [];
+    @observable optionsTemplate = [];
     @observable optionsPayload = [];
 
     //@observable TimerSinceWithoutConnected = observable({secondsPassed: 0});
@@ -27,9 +26,9 @@ export default class MainAppModel {
     @computed
     get IsConnected() {
         return (
-            this.socket != undefined
-            && this.socket != null
-            && this.options.length > 0
+            this.ciseWebsocketInstance != undefined
+            && this.ciseWebsocketInstance != null
+            && this.optionsTemplate.length > 0
             && this.optionsPayload.length > 0
         );
     }
@@ -37,8 +36,8 @@ export default class MainAppModel {
 
     @computed get templateOptions() {
         if (!this.IsConnected) return [{label: "#None", value: "#None"}];
-        console.log("giveOptions", this.options);
-        return this.options.map(x => ({label: x.name, value: x.hash}));
+        console.log("giveOptions", this.optionsTemplate);
+        return this.optionsTemplate.map(x => ({label: x.name, value: x.hash}));
     }
 
     @computed get payloadOptions() {
@@ -74,11 +73,11 @@ export default class MainAppModel {
 
     @action
     obtainXmlTemplates() {
-        this.options = [];
-        this.options.push(
+        this.optionsTemplate = [];
+        this.optionsTemplate.push(
             new FileRef("#None", "/None", "#None")
         );
-        this.options.push(
+        this.optionsTemplate.push(
             new FileRef("pushTemplate.xml", "/tmp/pushTemplate.xml", "345435345")
         );
         //
@@ -128,103 +127,104 @@ export default class MainAppModel {
     @action
     registerSocket() {
         let self = this;
-        this.socket = Singleton.getInstance();
-
-        this.socket.onmessage = (response) => {
-            let message = JSON.parse(response.data);
-            let users;
-
-            switch (message.type) {
-                case MessageType.TEXT_MESSAGE:
-                    self.messageReceived(message.data);
-                    break;
-                case MessageType.MEMBER_JOINED:
-                    users = JSON.parse(message.data);
-                    self.userJoined(users);
-                    break;
-                case MessageType.MEMBER_LEFT:
-                    users = JSON.parse(message.data);
-                    self.userLeft(users);
-                    break;
-                case MessageType.MEMBER_JOINED_ACK:
-                    let thisUser = message.user;
-                    self.userJoinedAck(thisUser);
-                    break;
-                default:
-            }
+         this.ciseWebsocketInstance = "nonSocket";
+        //         // this.ciseWebsocketInstance = ciseWebsocket.getInstance();
+        //
+        // this.ciseWebsocketInstance.onmessage = (response) => {
+        //     let message = JSON.parse(response.data);
+        //     let users;
+        //
+        //     switch (message.type) {
+        //         case MessageType.TEXT_MESSAGE:
+        //             self.messageReceived(message.data);
+        //             break;
+        //         case MessageType.MEMBER_JOINED:
+        //             users = JSON.parse(message.data);
+        //             self.userJoined(users);
+        //             break;
+        //         case MessageType.MEMBER_LEFT:
+        //             users = JSON.parse(message.data);
+        //             self.userLeft(users);
+        //             break;
+        //         case MessageType.MEMBER_JOINED_ACK:
+        //             let thisUser = message.user;
+        //             self.userJoinedAck(thisUser);
+        //             break;
+        //         default:
+        //     }
         };
 
-        this.socket.onopen = () => {
-            this.sendJoinedMessage();
-        };
+        // this.ciseWebsocketInstance.onopen = () => {
+        //     this.sendJoinedMessage();
+        // };
 
-        window.onbeforeunload = () => {
-            let messageDto = JSON.stringify({
-                member: this.memberId,
-                type: MessageType.MEMBER_LEFT,
-                data: '',
-                acknowledgment: '',
-                status: 'Success'
-            });
-            this.socket.send(messageDto);
-        }
+    //     window.onbeforeunload = () => {
+    //         let messageDto = JSON.stringify({
+    //             member: this.memberId,
+    //             type: MessageType.MEMBER_LEFT,
+    //             data: '',
+    //             acknowledgment: '',
+    //             status: 'Success'
+    //         });
+    //         this.ciseWebsocketInstance.send(messageDto);
+    //     }
+    //
+    // }
 
-    }
-
-    @action
-    sendJoinedMessage(message) {
-        let messageDto = JSON.stringify({
-            member: this.memberId,
-            type: MessageType.MEMBER_JOINED,
-            data: '',
-            acknowledgment: '',
-            status: 'Success'
-        });
-        this.socket.send(messageDto);
-    }
-
-    @action
-    userJoinedAck(users) {
-        let messageDto = JSON.stringify({
-            member: this.memberId,
-            type: MessageType.MEMBER_JOINED_ACK,
-            data: '',
-            acknowledgment: '',
-            status: 'Success'
-        });
-        this.socket.send(messageDto);
-    }
-
-    @action
-    userJoined(users) {
-        let messageDto = JSON.stringify({
-            member: this.memberId,
-            type: MessageType.MEMBER_JOINED_ACK,
-            data: '',
-            acknowledgment: '',
-            status: 'Success'
-        });
-        this.socket.send(messageDto);
-    }
-
-    @action
-    userLeft(users) {
-        let messageDto = JSON.stringify({
-            member: this.memberId,
-            type: MessageType.MEMBER_LEFT,
-            data: '',
-            acknowledgment: '',
-            status: 'Success'
-        });
-        this.socket.send(messageDto);
-    }
-
-    @action
-    messageReceived(message) {
-        //let messageDto = JSON.stringify({ member: this.memberId, type: MessageType.MEMBER_LEFT, data: message ,acknowledgment:'',status:'Success'});
-        console.log("received :" + message);
-        alert(message);
-
-    }
+    // @action
+    // sendJoinedMessage(message) {
+    //     let messageDto = JSON.stringify({
+    //         member: this.memberId,
+    //         type: MessageType.MEMBER_JOINED,
+    //         data: '',
+    //         acknowledgment: '',
+    //         status: 'Success'
+    //     });
+    //     this.ciseWebsocketInstance.send(messageDto);
+    // }
+    //
+    // @action
+    // userJoinedAck(users) {
+    //     let messageDto = JSON.stringify({
+    //         member: this.memberId,
+    //         type: MessageType.MEMBER_JOINED_ACK,
+    //         data: '',
+    //         acknowledgment: '',
+    //         status: 'Success'
+    //     });
+    //     this.ciseWebsocketInstance.send(messageDto);
+    // }
+    //
+    // @action
+    // userJoined(users) {
+    //     let messageDto = JSON.stringify({
+    //         member: this.memberId,
+    //         type: MessageType.MEMBER_JOINED_ACK,
+    //         data: '',
+    //         acknowledgment: '',
+    //         status: 'Success'
+    //     });
+    //     this.ciseWebsocketInstance.send(messageDto);
+    // }
+    //
+    // @action
+    // userLeft(users) {
+    //     let messageDto = JSON.stringify({
+    //         member: this.memberId,
+    //         type: MessageType.MEMBER_LEFT,
+    //         data: '',
+    //         acknowledgment: '',
+    //         status: 'Success'
+    //     });
+    //     this.ciseWebsocketInstance.send(messageDto);
+    // }
+    //
+    // @action
+    // messageReceived(message) {
+    //     //let messageDto = JSON.stringify({ member: this.memberId, type: MessageType.MEMBER_LEFT, data: message ,acknowledgment:'',status:'Success'});
+    //     console.log("received :" + message);
+    //     alert(message);
+    //
+    // }
 
 }
