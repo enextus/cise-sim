@@ -26,7 +26,8 @@ public class DefaultMessageResource {
     @Path("/messages")
     public Response send(JsonNode msgWithParams) {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
-        messageAPI.send(msgWithParams);
+
+        JsonNode responseObject= messageAPI.send(msgWithParams);
         return Response.status(Response.Status.CREATED).build();
 
     }

@@ -52,6 +52,7 @@ public class MessageResourceRestTest {
         verify(messageAPI).send(any(JsonNode.class));
     }
 
+
     private JsonNode msgTemplateWithParams() {
         ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
 

@@ -1,12 +1,9 @@
 import DevTools from "mobx-react-devtools";
 import React from "react";
-import { observer } from "mobx-react";
-import ReactDOM from 'react-dom';
-import Singleton from '../transport/socket';
+import {observer} from "mobx-react";
 import Panels from '../components/Panels/Panels';
 import NavBar from '../components/NavBar/NavBar';
 import WaitModal from '../components/WaitModal';
-import MainAppModel from "../models/MainAppModel";
 
 @observer
 export default class MainApp extends React.Component {

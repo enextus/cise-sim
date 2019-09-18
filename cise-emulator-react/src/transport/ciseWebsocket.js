@@ -12,7 +12,7 @@ const AppConfig = {
 
 
 
-const Singleton = (function () {
+const ciseWebsocket = (function () {
     let instance;
 
     function createInstance() {
@@ -32,4 +32,4 @@ const Singleton = (function () {
     };
 })();
 
-export default Singleton;
+export default ciseWebsocket;
