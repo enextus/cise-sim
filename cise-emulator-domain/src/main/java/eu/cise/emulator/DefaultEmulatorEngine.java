@@ -7,6 +7,8 @@ import eu.cise.emulator.exceptions.*;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
+import eu.eucise.xml.DefaultXmlMapper;
+import eu.eucise.xml.XmlMapper;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
@@ -21,6 +23,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     private final EmuConfig config;
     private final SignatureService signature;
     private Dispatcher dispatcher;
+    private XmlMapper xmlMapper;
 
     /**
      * Default constructor that uses UTC as a reference clock
@@ -28,6 +31,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     public DefaultEmulatorEngine(SignatureService signature, Dispatcher dispatcher, EmuConfig config) {
         this(signature, config, dispatcher, Clock.systemUTC());
         this.dispatcher = dispatcher;
+        xmlMapper = new DefaultXmlMapper();
     }
 
     /**
@@ -89,12 +93,17 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
     @Override
     public Acknowledgement send(Message message) throws EndpointNotFoundEx {
+        Acknowledgement response;
         try {
-            DispatchResult send = dispatcher.send(message, config.endpointUrl());
+            DispatchResult sendResult = dispatcher.send(message, config.endpointUrl());
+
+            String result = sendResult.getResult();
+
+            response = xmlMapper.fromXML(result);
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();
         }
 
-        return null;
+        return response;
     }
 }
