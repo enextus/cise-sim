@@ -25,7 +25,7 @@ public class DefaultMessageAPI implements MessageAPI {
     }
 
     @Override
-    public JsonNode send(JsonNode json) {
+    public JsonNode send(JsonNode json) throws Exception {
         LOGGER.debug("send is passed through api : {}", json);
         String xmlContent = new SendSourceContentResolver().extractMessage(json);
         SendParam sendParam = new SendParamsReader().extractParams(json);
