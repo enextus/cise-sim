@@ -22,7 +22,6 @@ public class MainApp implements Runnable {
                 appContext.makeDispatcher(),
                 appContext.makeSignatureService(),
                 appContext.makeEmulatorApi(messageProcessor));
-
     }
 
     @Override
