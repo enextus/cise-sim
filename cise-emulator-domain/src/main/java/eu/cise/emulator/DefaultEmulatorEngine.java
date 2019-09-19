@@ -100,9 +100,14 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
             String result = sendResult.getResult();
 
             response = xmlMapper.fromXML(result);
+
+            signature.verify(response);
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();
         }
+//        catch (SignatureEx e){
+//
+//        }
 
         return response;
     }
