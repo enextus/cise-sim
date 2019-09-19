@@ -121,7 +121,7 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>cise-emu-cli</id>
+                        <id>cise-emu</id>
                         <goals>
                             <goal>shade</goal>
                         </goals>
@@ -135,32 +135,11 @@
                                 </transformer>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>eu.cise.emulator.deprecated.cli.CiseEmulatorApplication</mainClass>
+                                    <mainClass>eu.cise.emulator.MainApp</mainClass>
                                 </transformer>
                             </transformers>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <shadedClassifierName>cli</shadedClassifierName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>cise-emu-web</id>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                    <resource>META-INF/cxf/bus-extensions.txt</resource>
-                                </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>eu.cise.emulator.deprecated.web.app.CiseEmuApplication</mainClass>
-                                </transformer>
-                            </transformers>
-                            <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <shadedClassifierName>web</shadedClassifierName>
+                            <finalName>cise-emulator</finalName>
                         </configuration>
                     </execution>
                 </executions>

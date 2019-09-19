@@ -37,8 +37,12 @@
     </formats>
     <files>
         <file>
-            <source>${project.parent.basedir}/cise-emulator-api/src/main/resources/config.yml</source>
+            <source>${project.parent.basedir}/cise-emulator-app/src/main/resources/emulator.properties</source>
             <outputDirectory>/conf</outputDirectory>
+        </file>
+        <file>
+            <source>${project.parent.basedir}/cise-emulator-app/target/cise-emulator.jar</source>
+            <outputDirectory>/</outputDirectory>
         </file>
     </files>
     <fileSets>

@@ -61,8 +61,7 @@ public class AppContextTest {
         CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor);
 
         Client client = ClientBuilder.newClient();
-        WebTarget webTarget = client.target("http://localhost:8080/api/messages");
-
+        WebTarget webTarget = client.target("http://localhost:47080/api/messages");
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         JsonNode json=msgTemplateWithParams();
         Response response = invocationBuilder.post(Entity.entity(json, MediaType.APPLICATION_JSON));
