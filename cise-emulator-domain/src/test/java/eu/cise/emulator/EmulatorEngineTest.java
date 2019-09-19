@@ -153,7 +153,7 @@ public class EmulatorEngineTest {
 
     @Before
     public void before() {
-        signatureService = new FakeSignatureService();
+        signatureService = mock(SignatureService.class);//new FakeSignatureService();
         config = mock(EmuConfig.class);
         dispatcher = mock(Dispatcher.class);
         engine = new DefaultEmulatorEngine(signatureService, dispatcher, config);
@@ -191,7 +191,7 @@ public class EmulatorEngineTest {
     }
 
     @Test
-    public void it_returns_a_sync_ack_with_an_ack_code_successful() {
+    public void it_sends_a_message_getting_a_successful_response_and_returns_the_acknowledge() {
         DispatchResult dispatchResult = new DispatchResult(true, ACKNOWLEDGEMENT_MSG_SECCEDEED);
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
 
@@ -204,5 +204,22 @@ public class EmulatorEngineTest {
 
         assertThat(ack.getAckCode()).isEqualTo(SUCCESS);
     }
+
+
+    @Test
+    public void it_sends_a_message_getting_a_response_and_validates_the_signature() {
+        DispatchResult dispatchResult = new DispatchResult(true, ACKNOWLEDGEMENT_MSG_SECCEDEED);
+        when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
+
+        Acknowledgement ack = null;
+        try {
+            ack = engine.send(message);
+        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+            // do nothing
+        }
+
+        verify(signatureService).verify(ack);
+    }
+
 
 }
