@@ -13,8 +13,6 @@ import java.sql.Date;
 import java.time.Clock;
 
 import static eu.cise.emulator.helpers.Asserts.notNull;
-import static eu.cise.servicemodel.v1.message.AcknowledgementType.END_POINT_NOT_FOUND;
-import static eu.eucise.helpers.AckBuilder.newAck;
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 
 public class DefaultEmulatorEngine implements EmulatorEngine {
@@ -90,11 +88,11 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     }
 
     @Override
-    public Acknowledgement send(Message message) {
+    public Acknowledgement send(Message message) throws EndpointNotFoundEx {
         try {
             DispatchResult send = dispatcher.send(message, config.endpointUrl());
         } catch (DispatcherException e) {
-            return newAck().ackCode(END_POINT_NOT_FOUND).build();
+            throw new EndpointNotFoundEx();
         }
 
         return null;
