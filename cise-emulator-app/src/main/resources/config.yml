@@ -17,3 +17,8 @@ logging:
       discardingThreshold: 0
       timeZone: UTC
       target: stdout
+assets:
+  mappings:
+    /assets: /
+  overrides:
+    /: /teeny-tiny-react-app/build
