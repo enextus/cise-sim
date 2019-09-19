@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.emulator.utils.FakeSignatureService;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
@@ -44,7 +45,11 @@ public class MessageProcessorTest {
         Message message = newPush().sender(newService().type(VESSEL_SERVICE)).build();
         SendParam param = new SendParam(true, "messageId", "correlationId");
 
-        messageProcessor.send(message, param);
+        try {
+            messageProcessor.send(message, param);
+        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+            // do nothing
+        }
 
         verify(engine).prepare(message, param);
     }
@@ -58,9 +63,13 @@ public class MessageProcessorTest {
 
         when(engine.prepare(message, param)).thenReturn(preparedMessage);
 
-        messageProcessor.send(message, param);
+        try {
+            messageProcessor.send(message, param);
 
-        verify(engine).send(preparedMessage);
+            verify(engine).send(preparedMessage);
+        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+            // do nothing
+        }
     }
 
 }

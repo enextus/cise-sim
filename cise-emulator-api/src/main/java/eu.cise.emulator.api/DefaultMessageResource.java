@@ -29,10 +29,12 @@ public class DefaultMessageResource {
     public Response send(JsonNode msgWithParams) {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
 
-        JsonNode responseObject = messageAPI.send(msgWithParams);
+        try {
+            JsonNode responseObject = messageAPI.send(msgWithParams);
+        } catch (Exception e) {
+            //TODO propagate the exception in the message response
+        }
         return Response.status(Response.Status.CREATED).build();
-
     }
-
 
 }

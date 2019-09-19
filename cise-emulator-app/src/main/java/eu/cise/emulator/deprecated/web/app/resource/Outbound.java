@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.EmulatorEngine;
 import eu.cise.emulator.SendParam;
+import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.eucise.xml.XmlMapper;
@@ -127,7 +128,12 @@ public class Outbound {
         SendParam sendParam = new SendParam(requestAsyncAck, messageId, consolidationId);
         Message preparedMessage = emulator.prepare(loadedMessage, sendParam);
         // TODO-GK modified by GK to make it compile
-        Message result = emulator.send(preparedMessage);
+        Message result = null;
+        try {
+            result = emulator.send(preparedMessage);
+        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+            // do nothing
+        }
         return (new MessageReturn("").build("", xmlMapper.toXML(preparedMessage), xmlMapper.toXML(result)));
     }
 
