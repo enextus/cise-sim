@@ -70,7 +70,9 @@ public class CiseDropWizardServerBuilder {
             }
         });
 
-        return new DropWizardServer((CiseEmulatorDropwizardConf) builtConfig, bootstrap, application, environment, server, environment.metrics(),messageProcessor);
+        DropWizardServer serverReady = new DropWizardServer((CiseEmulatorDropwizardConf) builtConfig, bootstrap, application, environment, server, environment.metrics(), messageProcessor);
+        serverReady.start();
+        return serverReady;
     }
 
 

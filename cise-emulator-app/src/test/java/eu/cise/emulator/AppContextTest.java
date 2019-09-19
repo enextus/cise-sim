@@ -4,23 +4,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.api.CiseEmulatorAPI;
-import eu.cise.emulator.api.DefaultMessageAPI;
-import eu.cise.emulator.api.DefaultMessageResource;
-import eu.cise.emulator.api.MessageAPI;
-import eu.cise.emulator.deprecated.web.app.transport.JerseyRestClient;
-import eu.cise.servicemodel.v1.message.Message;
-import io.dropwizard.testing.junit.ResourceTestRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import sun.net.www.http.HttpClient;
+//import eu.cise.emulator.deprecated.web.app.transport.JerseyRestClient;
+import javax.ws.rs.client.*;
 
-import javax.ws.rs.client.Entity;
+import eu.cise.servicemodel.v1.message.Message;
+import org.junit.Before;
+import org.junit.Test;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import java.io.IOException;
-import java.net.URL;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -65,22 +57,32 @@ public class AppContextTest {
 
         AppContext appContext = new DefaultAppContext();
         CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor);
-        String[] command = {"server", "config.yml"};
-        try {
-            resourceApi.run(command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        String[] command = {"server", "config.yml"};
+//        try {
+//            resourceApi.run(command);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 //        ResourceTestRule resources = ResourceTestRule.builder().addResource(new DefaultMessageResource(messageAPI))
 //                .bootstrapLogging(false)
 //                .build();
 //        Response response = resources.target("/api/messages").request().post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
 
-        JerseyRestClient jerseyRestClient = new JerseyRestClient();
-        jerseyRestClient.post("http://localhost:8080/api/messages", msgTemplateWithParams().asText());
+//        JerseyRestClient jerseyRestClient = new JerseyRestClient();
+//
+//        jerseyRestClient.post("http://localhost:8080/api/messages", msgTemplateWithParams().asText());
 
-        verify(engine).send(any(Message.class));
+
+        Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target("http://localhost:8080/api/messages");
+
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        JsonNode json=msgTemplateWithParams();
+        Response response = invocationBuilder.post(Entity.entity(json, MediaType.APPLICATION_JSON));
+
+
+        verify(engine).prepare(any(Message.class), any(SendParam.class));
     }
 
     private JsonNode msgTemplateWithParams() {
