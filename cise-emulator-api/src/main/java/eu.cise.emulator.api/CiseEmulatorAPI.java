@@ -31,12 +31,12 @@ public class CiseEmulatorAPI extends Application<CiseEmulatorDropwizardConf> {
                         new EnvironmentVariableSubstitutor(false)
                 )
         );
-        bootstrap.addBundle(new ConfiguredAssetsBundle("/assets/", "/", "index.html"));
+        bootstrap.addBundle(new ConfiguredAssetsBundle("/assets/", "/base/", "index.html"));
     }
 
     @Override
     public void run(final CiseEmulatorDropwizardConf configuration, final Environment environment) {
-        environment.jersey().setUrlPattern("/api/*");
+        environment.jersey().setUrlPattern("/*");
         MessageProcessor messageProcessor = configuration.getMessageProcessor();
         MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor);
 
