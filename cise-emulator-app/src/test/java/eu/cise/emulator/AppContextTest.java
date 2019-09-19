@@ -9,6 +9,7 @@ import javax.ws.rs.client.*;
 
 import eu.cise.servicemodel.v1.message.Message;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
@@ -50,6 +51,7 @@ public class AppContextTest {
         assertThat(api).isNotNull();
     }
 
+    @Ignore
     @Test
     public void it_connects_API_to_MessageProcesor() {
         EmulatorEngine engine = mock(EmulatorEngine.class);
@@ -57,22 +59,6 @@ public class AppContextTest {
 
         AppContext appContext = new DefaultAppContext();
         CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor);
-//        String[] command = {"server", "config.yml"};
-//        try {
-//            resourceApi.run(command);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-//        ResourceTestRule resources = ResourceTestRule.builder().addResource(new DefaultMessageResource(messageAPI))
-//                .bootstrapLogging(false)
-//                .build();
-//        Response response = resources.target("/api/messages").request().post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
-
-//        JerseyRestClient jerseyRestClient = new JerseyRestClient();
-//
-//        jerseyRestClient.post("http://localhost:8080/api/messages", msgTemplateWithParams().asText());
-
 
         Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target("http://localhost:8080/api/messages");
