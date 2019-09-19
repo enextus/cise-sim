@@ -4,6 +4,7 @@ package eu.cise.emulator;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
+import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.emulator.utils.FakeSignatureService;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Push;
@@ -13,10 +14,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static eu.cise.servicemodel.v1.message.AcknowledgementType.END_POINT_NOT_FOUND;
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.SUCCESS;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.*;
 
 public class EmulatorEngineTest {
@@ -53,12 +54,11 @@ public class EmulatorEngineTest {
     }
 
     @Test
-    public void it_sends_a_message_failing_the_dispatch() {
-        doThrow(dispatcherException()).when(dispatcher).send(any(), any());
+    public void it_sends_a_message_failing_the_dispatch_for_end_point_not_found() {
+        assertThatExceptionOfType(EndpointNotFoundEx.class)
+                .isThrownBy(() -> engine.send(message))
+                .withMessageContaining("endpoint not found");
 
-        Acknowledgement ack = engine.send(message);
-
-        assertThat(ack.getAckCode()).isEqualTo(END_POINT_NOT_FOUND);
     }
 
     @Ignore
