@@ -51,9 +51,9 @@ export default class MessagePushAPI {
         axios.post(this.defaultPostURL,valuePostData,this.defaultPostConfig)
             .then((response) => {
                 console.debug("PREVIEW CALL SUCCESS !!! status : ", response.data[0].status," /--/  body :  " , response.data[0].body," /--/ ack :   " , response.data[0].ack," /--/   "  );
-                this.previewContent= response.data[0].body;
-                this.acknowledgeContent = response.data[0].ack;
-                this.errorContent = response.data[0].status;
+                this.previewContent= response.data.body;
+                this.acknowledgeContent = response.data.ack;
+                this.errorContent = response.data.status;
             })
             .catch((err) => {
                 let errortxt= ("Errors occur in PREVIEW phase \"web api call\"; with detail... \n" +
@@ -82,9 +82,9 @@ export default class MessagePushAPI {
         axios.post(this.defaultPostURL,valuePostData,this.defaultPostConfig)
             .then((response) => {
                 console.debug("SEND CALL SUCCESS !!! status : ", response.data[0].status," /--/  body :  " , response.data[0].body," /--/ ack :   " , response.data[0].ack," /--/   "  );
-                this.previewContent= response.data[0].body;
-                this.acknowledgeContent = response.data[0].ack;
-                this.errorContent = response.data[0].status;
+                this.previewContent= response.data.body;
+                this.acknowledgeContent = response.data.ack;
+                this.errorContent = response.data.status;
             })
             .catch((err) => {
                 let errortxt= ("Errors occur in SEND phase \"web api call\"; with detail... \n" +
@@ -92,7 +92,6 @@ export default class MessagePushAPI {
                 console.error(errortxt);
                 this.errorContent = errortxt;
                 this.acknowledgeContent = "";
-                this.errorContent = "";
             })
     }
 
