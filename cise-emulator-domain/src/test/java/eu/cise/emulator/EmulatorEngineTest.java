@@ -5,7 +5,6 @@ import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
 import eu.cise.emulator.exceptions.EndpointNotFoundEx;
-import eu.cise.emulator.utils.FakeSignatureService;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.signature.SignatureService;

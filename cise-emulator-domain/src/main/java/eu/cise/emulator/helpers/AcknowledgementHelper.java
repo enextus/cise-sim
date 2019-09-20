@@ -1,4 +1,4 @@
-package eu.cise.emulator.deprecated.cli.emulator;
+package eu.cise.emulator.helpers;
 
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.eucise.xml.XmlMapper;
@@ -28,7 +28,7 @@ public class AcknowledgementHelper {
         return ackCode;
     }
 
-    public String increaseAckCodeWithSender(String inicialContent) {
+    public static String increaseAckCodeWithSender(String inicialContent) {
         String serviceSenderDescriptor = "<Sender>\n" +
                 "        <ServiceID>cx.simlsa1-nodecx.vessel.push.provider</ServiceID>\n" +
                 "        <ServiceOperation>Push</ServiceOperation>\n" +

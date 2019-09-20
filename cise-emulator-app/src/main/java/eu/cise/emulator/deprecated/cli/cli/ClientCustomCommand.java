@@ -10,7 +10,7 @@ import eu.cise.emulator.deprecated.cli.core.Executor;
 import eu.cise.emulator.deprecated.cli.core.sub.MessageValidator;
 import eu.cise.emulator.deprecated.cli.core.sub.Sender;
 import eu.cise.emulator.deprecated.cli.core.sub.SourceStreamProcessor;
-import eu.cise.emulator.deprecated.cli.emulator.AcknowledgementHelper;
+import eu.cise.emulator.helpers.AcknowledgementHelper;
 import eu.cise.emulator.deprecated.cli.transport.CiseMessageSoapServiceClient;
 import eu.cise.emulator.deprecated.cli.util.ConfigManager;
 import eu.cise.emulator.deprecated.cli.util.InteractIOFile;

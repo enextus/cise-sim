@@ -4,6 +4,7 @@ import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
 import eu.cise.emulator.exceptions.*;
+import eu.cise.emulator.helpers.AcknowledgementHelper;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
@@ -19,6 +20,7 @@ import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 
 public class DefaultEmulatorEngine implements EmulatorEngine {
 
+    private static final String SENDER_TAG = "<Sender>";
     private final Clock clock;
     private final EmuConfig config;
     private final SignatureService signature;
@@ -98,7 +100,11 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
             DispatchResult sendResult = dispatcher.send(message, config.endpointUrl());
 
             String result = sendResult.getResult();
-         /*WA-01 : xsd require a sender if not present add it to the string before xmlmapper*/
+
+            if (!result.contains(SENDER_TAG)) {
+                result = AcknowledgementHelper.increaseAckCodeWithSender(result);
+            }
+
             response = xmlMapper.fromXML(result);
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();

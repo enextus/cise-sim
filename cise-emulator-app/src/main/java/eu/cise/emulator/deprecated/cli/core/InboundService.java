@@ -6,7 +6,7 @@ import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import eu.cise.emulator.deprecated.cli.core.sub.MessageValidator;
 import eu.cise.emulator.deprecated.cli.core.sub.ValidationResult;
-import eu.cise.emulator.deprecated.cli.emulator.AcknowledgementHelper;
+import eu.cise.emulator.helpers.AcknowledgementHelper;
 import eu.cise.emulator.deprecated.cli.util.InteractIOFile;
 import org.slf4j.LoggerFactory;
 
