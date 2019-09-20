@@ -29,11 +29,11 @@ public class DefaultMessageResource {
     public Response send(JsonNode msgWithParams) {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
 
-        JsonNode messageReturn = messageAPI.send(msgWithParams);
-
+        JsonNode resultMessage = messageAPI.send(msgWithParams);
+        Response.StatusType resultStatusType = (resultMessage.at("/status").textValue().contains("SUCCESS") ? Response.Status.CREATED : Response.Status.BAD_REQUEST);
         return Response
-                .status(Response.Status.CREATED)
-                .entity(messageReturn)
+                .status(resultStatusType)
+                .entity(resultMessage)
                 .build();
     }
 

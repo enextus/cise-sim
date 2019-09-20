@@ -98,7 +98,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
             DispatchResult sendResult = dispatcher.send(message, config.endpointUrl());
 
             String result = sendResult.getResult();
-
+         /*WA-01 : xsd require a sender if not present add it to the string before xmlmapper*/
             response = xmlMapper.fromXML(result);
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();

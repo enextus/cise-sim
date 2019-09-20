@@ -75,7 +75,7 @@ export default class MainAppModel {
     obtainXmlTemplates() {
         this.optionsTemplate = [];
         this.optionsTemplate.push(
-            new FileRef("#None", "/None", "#None")
+            new FileRef("Choose a template", "/None", "#None")
         );
         this.optionsTemplate.push(
             new FileRef("pushTemplate.xml", "/tmp/pushTemplate.xml", "345435345")
@@ -102,7 +102,7 @@ export default class MainAppModel {
     obtainXmlPayloads() {
         this.optionsPayload = [];
         this.optionsPayload.push(
-            new FileRef("#None", "/None", "#None")
+            new FileRef("Choose a payload", "/None", "#None")
         );
         this.optionsPayload.push(
             new FileRef("vessel.xml", "/tmp/vessel.xml", "875474554")
