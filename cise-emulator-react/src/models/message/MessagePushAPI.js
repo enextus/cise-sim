@@ -50,7 +50,7 @@ export default class MessagePushAPI {
         console.debug("ready preview: ", valuePostData);
         axios.post(this.defaultPostURL,valuePostData,this.defaultPostConfig)
             .then((response) => {
-                console.debug("PREVIEW CALL SUCCESS !!! status : ", response.data[0].status," /--/  body :  " , response.data[0].body," /--/ ack :   " , response.data[0].ack," /--/   "  );
+                console.debug("PREVIEW CALL SUCCESS !!! status : ", response.data.status," /--/  body :  " , response.data.body," /--/ ack :   " , response.data.ack," /--/   "  );
                 this.previewContent= response.data.body;
                 this.acknowledgeContent = response.data.ack;
                 this.errorContent = response.data.status;
@@ -81,7 +81,7 @@ export default class MessagePushAPI {
         console.debug("ready send: ", valuePostData);
         axios.post(this.defaultPostURL,valuePostData,this.defaultPostConfig)
             .then((response) => {
-                console.debug("SEND CALL SUCCESS !!! status : ", response.data[0].status," /--/  body :  " , response.data[0].body," /--/ ack :   " , response.data[0].ack," /--/   "  );
+                console.debug("SEND CALL SUCCESS !!! status : ", response.data.status," /--/  body :  " , response.data.body," /--/ ack :   " , response.data.ack," /--/   "  );
                 this.previewContent= response.data.body;
                 this.acknowledgeContent = response.data.ack;
                 this.errorContent = response.data.status;
