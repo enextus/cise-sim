@@ -18,38 +18,60 @@ public class SendSourceContentResolver {
         return EXAMPLAR_TEMPLATE_MESSAGE_XML;
     }
 
-    static final String EXAMPLAR_TEMPLATE_MESSAGE_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+    static final String EXAMPLAR_TEMPLATE_MESSAGE_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
             "<ns4:Push xmlns:ns2=\"http://www.cise.eu/servicemodel/v1/authority/\" xmlns:ns4=\"http://www.cise.eu/servicemodel/v1/message/\" xmlns:ns3=\"http://www.cise.eu/servicemodel/v1/service/\">\n" +
-            "\t<CorrelationID>476d949d-5aa4-44cc-8e20-c1a2288fe098</CorrelationID>\n" +
-            "\t<CreationDateTime>2018-01-18T13:45:29.590+01:00</CreationDateTime>\n" +
-            "\t<MessageID>2657a510-5469-429f-ad00-7c96daa7c7a2</MessageID>\n" +
-            "\t<Priority>Low</Priority>\n" +
-            "\t<Sender>\n" +
-            "\t\t<SeaBasin>NorthSea</SeaBasin>\n" +
-            "\t\t<ServiceID>de.sim1-node01.vessel.push.provider</ServiceID>\n" +
-            "\t\t<ServiceOperation>Push</ServiceOperation>\n" +
-            "\t\t<ServiceRole>Provider</ServiceRole>\n" +
-            "\t\t<ServiceStatus>Online</ServiceStatus>\n" +
-            "\t\t<ServiceType>VesselService</ServiceType>\n" +
-            "\t</Sender>\n" +
-            "\t<Recipient>\n" +
-            "\t\t<SeaBasin>NorthSea</SeaBasin>\n" +
-            "\t\t<ServiceID>de.sim2-node01.vessel.push.consumer</ServiceID>\n" +
-            "\t\t<ServiceOperation>Push</ServiceOperation>\n" +
-            "\t\t<ServiceRole>Consumer</ServiceRole>\n" +
-            "\t\t<ServiceStatus>Online</ServiceStatus>\n" +
-            "\t\t<ServiceType>VesselService</ServiceType>\n" +
-            "\t</Recipient>\n" +
-            "\t<Payload xsi:type=\"ns4:XmlEntityPayload\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
-            "\t\t<InformationSecurityLevel>NonClassified</InformationSecurityLevel>\n" +
-            "\t\t<InformationSensitivity>Green</InformationSensitivity>\n" +
-            "\t\t<IsPersonalData>false</IsPersonalData>\n" +
-            "\t\t<Purpose>NonSpecified</Purpose>\n" +
-            "\t\t<EnsureEncryption>false</EnsureEncryption>\n" +
-            "\t\t<Vessel>\n" +
-            "\t\t\t<IMONumber>7710525</IMONumber>\n" +
-            "\t\t</Vessel>\n" +
-            "\t</Payload>\n" +
-            "</ns4:Push>\n";
+            "    <CorrelationID>476d949d-5aa4-44cc-8e20-c1a2288fe098</CorrelationID>\n" +
+            "    <CreationDateTime>2019-09-20T07:49:56.323Z</CreationDateTime>\n" +
+            "    <MessageID>f4f07849-4cb5-4913-a1ec-2e5e66685714</MessageID>\n" +
+            "    <Priority>High</Priority>\n" +
+            "    <RequiresAck>true</RequiresAck>\n" +
+            "    <Sender>\n" +
+            "        <SeaBasin>NorthSea</SeaBasin>\n" +
+            "        <ServiceID>cx.simlsa2-nodecx.action.push.provider</ServiceID>\n" +
+            "        <ServiceOperation>Push</ServiceOperation>\n" +
+            "        <ServiceRole>Provider</ServiceRole>\n" +
+            "        <ServiceStatus>Online</ServiceStatus>\n" +
+            "        <ServiceType>ActionService</ServiceType>\n" +
+            "    </Sender>\n" +
+            "    <Payload xsi:type=\"ns4:XmlEntityPayload\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+            "        <InformationSecurityLevel>NonClassified</InformationSecurityLevel>\n" +
+            "        <InformationSensitivity>Red</InformationSensitivity>\n" +
+            "        <IsPersonalData>false</IsPersonalData>\n" +
+            "        <Purpose>FisheriesMonitoring</Purpose>\n" +
+            "        <EnsureEncryption>false</EnsureEncryption>\n" +
+            "        <Action>\n" +
+            "            <Identifier>\n" +
+            "                <GeneratedBy xsi:type=\"ns3:FormalOrganization\" xmlns:ns3=\"http://www.cise.eu/datamodel/v1/entity/organization/\">\n" +
+            "                    <LegalName>A1</LegalName>\n" +
+            "\t\t\t\t</GeneratedBy>\n" +
+            "                <UUID>65d2a363-74f6-415a-99d1-af7f6cd1525c</UUID>\n" +
+            "\t\t\t</Identifier>\n" +
+            "            <ImpliedRiskRel>\n" +
+            "                <Risk>\n" +
+            "                    <Identifier>\n" +
+            "                        <GeneratedBy xsi:type=\"ns3:FormalOrganization\" xmlns:ns3=\"http://www.cise.eu/datamodel/v1/entity/organization/\">\n" +
+            "                            <LegalName>A1</LegalName>\n" +
+            "\t\t\t\t\t\t</GeneratedBy>\n" +
+            "                        <UUID>6afa2072-2237-44b3-b5c0-1bb895e00c8c</UUID>\n" +
+            "\t\t\t\t\t</Identifier>\n" +
+            "                    <RiskType>IllegalFishing</RiskType>\n" +
+            "\t\t\t\t</Risk>\n" +
+            "\t\t\t</ImpliedRiskRel>\n" +
+            "            <InvolvedObjectRel>\n" +
+            "                <Object xsi:type=\"ns3:Vessel\" xmlns:ns3=\"http://www.cise.eu/datamodel/v1/entity/vessel/\">\n" +
+            "                    <MMSI>636014356</MMSI>\n" +
+            "\t\t\t\t</Object>\n" +
+            "\t\t\t</InvolvedObjectRel>\n" +
+            "            <ActionType>Inspection</ActionType>\n" +
+            "            <Mission>OPR</Mission>\n" +
+            "            <Priority>High</Priority>\n" +
+            "\t\t</Action>\n" +
+            "    </Payload>\n" +
+            "    <DiscoveryProfiles>\n" +
+            "        <ServiceOperation>Push</ServiceOperation>\n" +
+            "        <ServiceRole>Consumer</ServiceRole>\n" +
+            "        <ServiceType>ActionService</ServiceType>\n" +
+            "    </DiscoveryProfiles>\n" +
+            "</ns4:Push>";
 
 }
