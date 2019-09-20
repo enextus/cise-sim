@@ -43,4 +43,3 @@ target/**
 generated-sources
 tmp/**
 
-bundle.js

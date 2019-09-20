@@ -36,10 +36,10 @@ public class DefaultAppContext implements AppContext {
     @Override
     public SignatureService makeSignatureService() {
         return newSignatureService()
-                .withKeyStoreName("adaptor.jks")
-                .withKeyStorePassword("eucise")
-                .withPrivateKeyAlias("sim1-node01.node01.eucise.fr")
-                .withPrivateKeyPassword("eucise")
+                .withKeyStoreName(this.emuConfig.keyStoreFileName())
+                .withKeyStorePassword(this.emuConfig.keyStorePassword())
+                .withPrivateKeyAlias(this.emuConfig.privateKeyAlias())
+                .withPrivateKeyPassword(this.emuConfig.privateKeyPassword())
                 .build();
     }
 

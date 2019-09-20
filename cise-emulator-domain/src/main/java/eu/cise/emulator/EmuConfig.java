@@ -27,4 +27,16 @@ public interface EmuConfig extends Config {
     @Key("webapi.config")
     String webapiConfig();
 
+    @Key("signature.keyStoreFileName")
+    String keyStoreFileName();
+
+    @Key("signature.keyStorePassword")
+    String keyStorePassword();
+
+    @Key("signature.privateKeyAlias")
+    String privateKeyAlias();
+
+    @Key("signature.privateKeyPassword")
+    String privateKeyPassword();
+
 }
