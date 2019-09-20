@@ -1,8 +1,12 @@
 package eu.cise.emulator.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Entity;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -26,15 +30,15 @@ public class DefaultMessageResource {
 
     @POST
     @Path("/messages")
-    public Response send(JsonNode msgWithParams) {
+    public Response send(JsonNode msgWithParams)  {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
 
-        try {
-            JsonNode responseObject = messageAPI.send(msgWithParams);
-        } catch (Exception e) {
-            //TODO propagate the exception in the message response
-        }
-        return Response.status(Response.Status.CREATED).build();
+        JsonNode messageReturn = messageAPI.send(msgWithParams);
+
+        return Response
+                .status(Response.Status.CREATED)
+                .entity(messageReturn)
+                .build();
     }
 
 }

@@ -4,5 +4,5 @@ import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 
 public interface MessageAPI {
-    JsonNode send(JsonNode json) throws EndpointNotFoundEx, Exception;
+    JsonNode send(JsonNode json) ;
 }

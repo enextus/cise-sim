@@ -2,9 +2,11 @@ package eu.cise.emulator.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.SendParam;
+import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -25,15 +27,45 @@ public class DefaultMessageAPI implements MessageAPI {
     }
 
     @Override
-    public JsonNode send(JsonNode json) throws Exception {
+    public JsonNode send(JsonNode json)  {
         LOGGER.debug("send is passed through api : {}", json);
         String xmlContent = new SendSourceContentResolver().extractMessage(json);
         SendParam sendParam = new SendParamsReader().extractParams(json);
         Message message = xmlMapper.fromXML(xmlContent);
-        final Acknowledgement send = messageProcessor.send(message, sendParam);
-        ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
+        MessageReturn messageReturn=new MessageReturn("");
+        try {
+            Acknowledgement acknowledgement = messageProcessor.send(message, sendParam);
+            messageReturn.build( "SUCCESS", xmlMapper.toXML(acknowledgement), "");
+        } catch (Exception e) {
+            messageReturn.build( "ERROR: "+e.getClass() +" : " + e.getMessage(), "", "");
+        }
 
-        return jsonMapper.valueToTree(msgTemplateWithParamObject);
+        return jsonMapper.valueToTree(messageReturn);
+    }
+
+    private class MessageReturn {
+        final String source;
+        final ObjectMapper jsonmapper = new ObjectMapper();
+        final ArrayNode jsonmapperarrayNode = jsonmapper.createArrayNode();
+        boolean errorFlag = true;
+
+        private MessageReturn(String source) {
+            this.source = source;
+        }
+
+
+        public boolean isError(){
+            return errorFlag;
+        }
+        public ArrayNode build(String refError, String refAcknowledge, String refMessageString) {
+            if (refError.isEmpty()) this.errorFlag = false;
+            ObjectNode objectNode1 = jsonmapper.createObjectNode();
+            objectNode1.put("status", refError);
+            objectNode1.put("body", refMessageString);
+            objectNode1.put("ack", refAcknowledge);
+            jsonmapperarrayNode.add(objectNode1);
+            return (jsonmapperarrayNode);
+        }
     }
 }
 
