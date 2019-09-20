@@ -10,6 +10,8 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
@@ -21,6 +23,7 @@ import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 public class DefaultEmulatorEngine implements EmulatorEngine {
 
     private static final String SENDER_TAG = "<Sender>";
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultEmulatorEngine.class);
     private final Clock clock;
     private final EmuConfig config;
     private final SignatureService signature;
@@ -100,7 +103,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
             DispatchResult sendResult = dispatcher.send(message, config.endpointUrl());
 
             String result = sendResult.getResult();
-
+            LOGGER.debug("send in DefaultEmulatorEngine receive result {}", result);
             if (!result.contains(SENDER_TAG)) {
                 result = AcknowledgementHelper.increaseAckCodeWithSender(result);
             }

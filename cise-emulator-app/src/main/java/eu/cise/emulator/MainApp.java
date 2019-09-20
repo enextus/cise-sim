@@ -1,6 +1,9 @@
 package eu.cise.emulator;
 
 import org.aeonbits.owner.ConfigFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * The MainApp class is the application entry point. It accepts the
@@ -8,13 +11,17 @@ import org.aeonbits.owner.ConfigFactory;
  */
 public class MainApp implements Runnable {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainApp.class);
     private CiseEmulatorApp ciseEmulatorApp;
 
     public MainApp() {
         EmuConfig emuConfig = ConfigFactory.create(EmuConfig.class);
         AppContext appContext = new DefaultAppContext();
         MessageProcessor messageProcessor = appContext.makeMessageProcessor();
+        if (System.getProperty("conf.dir") != null) {
 
+            LOGGER.warn("conf.dir set to {} at startup, using {} endpoint", System.getProperty("conf.dir"), emuConfig.endpointUrl());
+        }
         this.ciseEmulatorApp = new CiseEmulatorApp(
                 emuConfig,
                 messageProcessor,

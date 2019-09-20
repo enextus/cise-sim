@@ -35,12 +35,6 @@
     <formats>
         <format>tar.gz</format>
     </formats>
-    <files>
-        <file>
-            <source>${project.parent.basedir}/cise-emulator-app/src/main/resources/emulator.properties</source>
-            <outputDirectory>/conf</outputDirectory>
-        </file>
-    </files>
     <fileSets>
         <fileSet>
             <directory>${project.parent.basedir}</directory>
