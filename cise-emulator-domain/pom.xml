@@ -60,6 +60,11 @@
             <groupId>eu.europa.ec.jrc.marex</groupId>
         </dependency>
 
+        <dependency>
+            <artifactId>cise-signature</artifactId>
+            <groupId>eu.europa.ec.jrc.marex</groupId>
+        </dependency>
+
         <!-- property file handling -->
         <dependency>
             <groupId>org.aeonbits.owner</groupId>
