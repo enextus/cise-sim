@@ -23,7 +23,7 @@ public class EmulatorEngineTest {
 
     private static final String ENDPOINT_URL = "endpointUrl";
 
-    private static final String ACKNOWLEDGEMENT_MSG_SECCEDEED = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+    private static final String ASYNC_ACKNOWLEDGEMENT_MSG_SECCEDEED = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
             "<ns4:Acknowledgement xmlns:ns2=\"http://www.cise.eu/servicemodel/v1/authority/\" xmlns:ns4=\"http://www.cise.eu/servicemodel/v1/message/\" xmlns:ns3=\"http://www.cise.eu/servicemodel/v1/service/\">\n" +
             "    <CorrelationID>c1d19e40-e4db-460a-a924-3ada68bb260b</CorrelationID>\n" +
             "    <CreationDateTime>2019-08-16T10:20:38.011Z</CreationDateTime>\n" +
@@ -144,6 +144,27 @@ public class EmulatorEngineTest {
             "    <AckDetail>Push message received</AckDetail>\n" +
             "</ns4:Acknowledgement>";
 
+    private static final String SYNCH_ACKNOWLEDGEMENT_MSG_SUCCESS = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+            "<ns4:Acknowledgement xmlns:ns2=\"http://www.cise.eu/servicemodel/v1/authority/\" xmlns:ns4=\"http://www.cise.eu/servicemodel/v1/message/\" xmlns:ns3=\"http://www.cise.eu/servicemodel/v1/service/\">\n" +
+            "    <CorrelationID>addb96b1-00b2-4a0a-928e-446bfd7a0ffc</CorrelationID>\n" +
+            "    <CreationDateTime>2019-08-22T13:31:57.884Z</CreationDateTime>\n" +
+            "    <MessageID>addb96b1-00b2-4a0a-928e-446bfd7a0ffc_be72e828-f851-46a4-a44e-bb6372aa54a6</MessageID>\n" +
+            "    <Priority>High</Priority>\n" +
+            "    <RequiresAck>false</RequiresAck>\n" +
+            "    <Sender><!--Required--> " +
+            "       <ServiceID>legacysystem.test1.Acknowledgement</ServiceID>" +
+            "       <ServiceOperation>Acknowledgement</ServiceOperation>" +
+            "       <ServiceStatus>Draft</ServiceStatus>" +
+            "       <ServiceType>VesselService</ServiceType>" +
+            "       <Participant>" +
+            "           <Id>legacysystem.capgemini</Id>" +
+            "           <EndpointType>SOAP</EndpointType>" +
+            "       </Participant>" +
+            "    </Sender>" +
+            "    <AckCode>Success</AckCode>\n" +
+            "    <AckDetail>Message delivered</AckDetail>\n" +
+            "</ns4:Acknowledgement>";
+
     private SignatureService signatureService;
     private EmuConfig config;
     private MessageProcessor messageProcessor;
@@ -170,7 +191,7 @@ public class EmulatorEngineTest {
 
     @Test
     public void it_sends_message_successfully() {
-        DispatchResult dispatchResult = new DispatchResult(true, ACKNOWLEDGEMENT_MSG_SECCEDEED);
+        DispatchResult dispatchResult = new DispatchResult(true, SYNCH_ACKNOWLEDGEMENT_MSG_SUCCESS);
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
         try {
             engine.send(message);
@@ -192,7 +213,7 @@ public class EmulatorEngineTest {
 
     @Test
     public void it_sends_a_message_getting_a_successful_response_and_returns_the_acknowledge() {
-        DispatchResult dispatchResult = new DispatchResult(true, ACKNOWLEDGEMENT_MSG_SECCEDEED);
+        DispatchResult dispatchResult = new DispatchResult(true, SYNCH_ACKNOWLEDGEMENT_MSG_SUCCESS);
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
 
         Acknowledgement ack = null;
@@ -206,20 +227,6 @@ public class EmulatorEngineTest {
     }
 
 
-    @Test
-    public void it_sends_a_message_getting_a_response_and_validates_the_signature() {
-        DispatchResult dispatchResult = new DispatchResult(true, ACKNOWLEDGEMENT_MSG_SECCEDEED);
-        when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
-
-        Acknowledgement ack = null;
-        try {
-            ack = engine.send(message);
-        } catch (EndpointNotFoundEx endpointNotFoundEx) {
-            // do nothing
-        }
-
-        verify(signatureService).verify(ack);
-    }
 
 
 }
