@@ -228,16 +228,6 @@ public class EmulatorEngineTest {
         DispatchResult dispatchResult = new DispatchResult(true, SYNCH_ACKNOWLEDGEMENT_MSG_SUCCESS);
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
 
-        assertThatExceptionOfType(EndpointErrorEx.class)
-                .isThrownBy(() -> engine.send(message))
-                .withMessageContaining("endpoint returned an error");
-    }
-
-    @Test
-    public void it_sends_a_message_getting_an_unsuccessful_response() {
-        DispatchResult dispatchResult = new DispatchResult(false, null);
-        when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
-
         Acknowledgement ack = null;
         try {
             ack = engine.send(message);
@@ -246,6 +236,16 @@ public class EmulatorEngineTest {
         }
 
         assertThat(ack.getAckCode()).isEqualTo(SUCCESS);
+    }
+
+    @Test
+    public void it_sends_a_message_getting_an_unsuccessful_response() {
+        DispatchResult dispatchResult = new DispatchResult(false, "");
+        when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
+
+        assertThatExceptionOfType(EndpointErrorEx.class)
+                .isThrownBy(() -> engine.send(message))
+                .withMessageContaining("endpoint returned an error");
     }
 
 
