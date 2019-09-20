@@ -25,8 +25,6 @@ COMMAND
     debug-run   starts the cli - emulator in foreground launching the application
                 in debug mode (port ${DEBUG_PORT}).
     status      show the current status the emulator (started or stopped).
-    sender      start the cli - emulator in sender mode (as client to send a template.xml file)
-    cliserver      start the cli - emulator in server mode (as server to receive)
 EOF
 }
 
