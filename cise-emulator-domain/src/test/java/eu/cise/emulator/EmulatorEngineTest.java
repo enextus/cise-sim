@@ -165,6 +165,18 @@ public class EmulatorEngineTest {
             "    <AckDetail>Message delivered</AckDetail>\n" +
             "</ns4:Acknowledgement>";
 
+    private static final String SYNCH_ACKNOWLEDGEMENT_MSG_SUCCESS_NO_SENDER = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+            "<ns4:Acknowledgement xmlns:ns2=\"http://www.cise.eu/servicemodel/v1/authority/\" xmlns:ns4=\"http://www.cise.eu/servicemodel/v1/message/\" xmlns:ns3=\"http://www.cise.eu/servicemodel/v1/service/\">\n" +
+            "    <CorrelationID>addb96b1-00b2-4a0a-928e-446bfd7a0ffc</CorrelationID>\n" +
+            "    <CreationDateTime>2019-08-22T13:31:57.884Z</CreationDateTime>\n" +
+            "    <MessageID>addb96b1-00b2-4a0a-928e-446bfd7a0ffc_be72e828-f851-46a4-a44e-bb6372aa54a6</MessageID>\n" +
+            "    <Priority>High</Priority>\n" +
+            "    <RequiresAck>false</RequiresAck>\n" +
+            "    <AckCode>Success</AckCode>\n" +
+            "    <AckDetail>Message delivered</AckDetail>\n" +
+            "</ns4:Acknowledgement>";
+
+
     private SignatureService signatureService;
     private EmuConfig config;
     private MessageProcessor messageProcessor;
@@ -227,6 +239,19 @@ public class EmulatorEngineTest {
     }
 
 
+    @Test
+    public void it_adds_a_sender_upon_a_successful_response_without_the_sender_tag() {
+        DispatchResult dispatchResult = new DispatchResult(true, SYNCH_ACKNOWLEDGEMENT_MSG_SUCCESS_NO_SENDER);
+        when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
 
+        Acknowledgement ack = null;
+        try {
+            ack = engine.send(message);
+        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+            // do nothing
+        }
+
+        assertThat(ack.getAckCode()).isEqualTo(SUCCESS);
+    }
 
 }
