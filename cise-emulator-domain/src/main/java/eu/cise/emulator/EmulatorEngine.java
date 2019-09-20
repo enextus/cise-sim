@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import eu.cise.emulator.exceptions.EndpointErrorEx;
 import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
@@ -28,5 +29,5 @@ public interface EmulatorEngine {
      * @return a sync acknowledgment received
      * TODO specify the runtime exceptions to be captured by the client
      */
-    Acknowledgement send(Message message) throws EndpointNotFoundEx;
+    Acknowledgement send(Message message) throws EndpointNotFoundEx, EndpointErrorEx;
 }

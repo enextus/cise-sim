@@ -207,7 +207,7 @@ public class EmulatorEngineTest {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
         try {
             engine.send(message);
-        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
             // do nothing
         }
 
@@ -231,7 +231,7 @@ public class EmulatorEngineTest {
         Acknowledgement ack = null;
         try {
             ack = engine.send(message);
-        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
             // do nothing
         }
 
@@ -258,7 +258,7 @@ public class EmulatorEngineTest {
         Acknowledgement ack = null;
         try {
             ack = engine.send(message);
-        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
             // do nothing
         }
 

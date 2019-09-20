@@ -94,10 +94,14 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     }
 
     @Override
-    public Acknowledgement send(Message message) throws EndpointNotFoundEx {
+    public Acknowledgement send(Message message) throws EndpointNotFoundEx, EndpointErrorEx {
         Acknowledgement response;
         try {
             DispatchResult sendResult = dispatcher.send(message, config.endpointUrl());
+
+            if (!sendResult.isOK()) {
+                throw new EndpointErrorEx();
+            }
 
             String result = sendResult.getResult();
 
