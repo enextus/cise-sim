@@ -31,7 +31,7 @@ public class InboundRESTMessageService {
     private final MessageValidator validator;
     private final Logger mylogger;
     private final XmlMapper mapper;
-    private  SignatureService signature;
+    private SignatureService signature;
     private final OutBoundWebSocketClient outRestMessageclient;
     CiseEmuConfiguration config;
     InstanceID instanceID;

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.EmulatorEngine;
 import eu.cise.emulator.SendParam;
+import eu.cise.emulator.exceptions.EndpointErrorEx;
 import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
@@ -131,7 +132,7 @@ public class Outbound {
         Message result = null;
         try {
             result = emulator.send(preparedMessage);
-        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
             // do nothing
         }
         return (new MessageReturn("").build("", xmlMapper.toXML(preparedMessage), xmlMapper.toXML(result)));

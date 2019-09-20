@@ -1,8 +1,8 @@
 package eu.cise.emulator.deprecated.cli.util;
 
 import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.signature.SignatureService;
 import eu.cise.emulator.deprecated.cli.core.sub.SubmissionAgent;
+import eu.cise.signature.SignatureService;
 
 
 public class SignatureDecorator implements SubmissionAgent {

@@ -4,6 +4,7 @@ package eu.cise.emulator;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
+import eu.cise.emulator.exceptions.EndpointErrorEx;
 import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Push;
@@ -206,7 +207,7 @@ public class EmulatorEngineTest {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
         try {
             engine.send(message);
-        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
             // do nothing
         }
 
@@ -230,12 +231,23 @@ public class EmulatorEngineTest {
         Acknowledgement ack = null;
         try {
             ack = engine.send(message);
-        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
             // do nothing
         }
 
         assertThat(ack.getAckCode()).isEqualTo(SUCCESS);
     }
+
+    @Test
+    public void it_sends_a_message_getting_an_unsuccessful_response() {
+        DispatchResult dispatchResult = new DispatchResult(false, "");
+        when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
+
+        assertThatExceptionOfType(EndpointErrorEx.class)
+                .isThrownBy(() -> engine.send(message))
+                .withMessageContaining("endpoint returned an error");
+    }
+
 
 
     @Test
@@ -246,7 +258,7 @@ public class EmulatorEngineTest {
         Acknowledgement ack = null;
         try {
             ack = engine.send(message);
-        } catch (EndpointNotFoundEx endpointNotFoundEx) {
+        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
             // do nothing
         }
 
