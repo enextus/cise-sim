@@ -61,7 +61,6 @@ export default class MessagePushAPI {
                 console.error(errortxt);
                 this.errorContent = errortxt;
                 this.acknowledgeContent = "";
-                this.errorContent = "";
             })
     }
 
