@@ -32,7 +32,7 @@ export default class NavBar extends Component {
         <AppBar title="Users" >
           <Toolbar>
             <Typography  variant="contained" style={{ textAlign: "right", font: "Liberation Sans", color: "white" }}> <Button style={{ textAlign: "right", font: "Liberation Sans", color: "white" }}>
-              <MoveToInbox />: it.sim-egn
+              <MoveToInbox />: {this.props.store.appStore.memberId}
             </Button></Typography>
 
             <Button

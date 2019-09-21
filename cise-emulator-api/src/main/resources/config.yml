@@ -1,0 +1,25 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 47080
+  adminConnectors:
+    - type: http
+      port: 47081
+logging:
+  level: INFO
+  loggers:
+    "io.dropwizard.bundles.assets": DEBUG
+    "eu.cise.emulator.api": DEBUG
+  appenders:
+    - type: console
+      threshold: ALL
+      queueSize: 512
+      discardingThreshold: 0
+      timeZone: UTC
+      target: stdout
+assets:
+  mappings:
+    /assets: /base/
+  overrides:
+    /base/: ${project.basedir}/cise-emulator-react
+    /base/static:  ${project.basedir}/cise-emulator-react/dist
