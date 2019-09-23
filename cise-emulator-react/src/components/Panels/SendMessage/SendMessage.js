@@ -1,23 +1,15 @@
 import React, {Component} from "react";
-import {
-    Button,
-    Checkbox,
-    FormControl,
-    FormGroup,
-    Grid,
-    TextField
-    } from "@material-ui/core";
+import {Button, Checkbox, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
 import Select from 'react-select';
 import {observer} from "mobx-react";
-
-
 
 @observer
 export default class SendMessage extends Component {
 
-    state =  {
+    state = {
         selectedOption: null,
     };
+
 
     constructor(props) {
         super(props);
@@ -36,58 +28,46 @@ export default class SendMessage extends Component {
 
 
     handleChangeTemplateService = templateservice => {
-        this.props.messageCandidate.templateService=templateservice;
+        this.props.messageCandidate.templateService = templateservice;
         console.log(`Option selected:`, templateservice);
     };
 
-    handleChangeTemplatePayload = atemplatepayload => {
-        this.props.messageCandidate.templatePayload=atemplatepayload;
-        console.log(`Option selected:`, atemplatepayload);
-    };
-
     handleChangeAsyncAcknowledge = atemplatepayload => {
-        this.props.messageCandidate.asyncAcknowledge=!this.props.messageCandidate.asyncAcknowledge;
+        this.props.messageCandidate.asyncAcknowledge = !this.props.messageCandidate.asyncAcknowledge;
         console.log(`Option handleChangeAsyncAcknowledge:`, this.props.messageCandidate.asyncAcknowledge);
     };
 
-
-    send () {
-        this.props.messageCandidate.messageId=this.getId();
+    send() {
+        this.props.messageCandidate.messageId = this.getId();
         this.props.messagePreview.send(this.props.messageCandidate);
     }
 
-    preview () {
-        this.props.messageCandidate.messageId= this.getId();
+    preview() {
+        this.props.messageCandidate.messageId = this.getId();
         this.props.messagePreview.preview(this.props.messageCandidate);
     }
 
 
-
     render() {
-        // always refer to first message in list
-
         const customStyles = {
             option: (provided, state) => ({
                 ...provided,
                 font: 'Liberation Sans',
                 fontFamily: 'Liberation Sans',
-                borderBottom: '1px dotted grey',
-                color: state.isSelected ? 'grey' : 'blue',
-                padding: 5,
+                padding: 0,
             }),
             control: () => ({
                 // none of react-select's styles are passed to <Control />
-                width: 200,
+                width: 250,
                 font: 'Liberation Sans',
                 fontFamily: 'Liberation Sans',
             }),
             singleValue: (provided, state) => {
-                const opacity = state.isDisabled ? 0.5 : 1;
-                const transition = 'opacity 300ms';
-                return { ...provided, opacity, transition };
+                const opacity = state.isDisabled ? 0.7 : 1;
+                const transition = 'opacity 500ms';
+                return {...provided, opacity, transition};
             }
         };
-
 
 
         const fieldStyle = {
@@ -95,16 +75,11 @@ export default class SendMessage extends Component {
             font: "Liberation Sans",
             fontFamily: "Liberation Sans"
         };
-        const relativeButtonTableStyle = {
-            margin: '2px auto' ,
-            position:'relative' ,
-            left:'100px',
-            font: "Liberation Sans",
-        };
+
         const buttonStyle = {
-            margin: '10px auto' ,
+            margin: '10px auto',
             backgroundColor: "rgb(205,205,205)",
-            left:'160px',
+            left: '160px',
             font: "Liberation Sans",
         };
         const formstyle = {
@@ -128,8 +103,8 @@ export default class SendMessage extends Component {
 
 
         return (
-            <FormGroup style={formstyle} >
-                <Grid container spacing={3}>
+            <FormGroup style={formstyle}>
+                <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <TextField
                             name="messageId"
@@ -144,69 +119,65 @@ export default class SendMessage extends Component {
                             }}
                         /> </Grid>
                     <Grid item xs={6}>
-                        <TextField  name="correlationId"
-                            label="correlationId"
-                            style={fieldStyle}
-                            placeholder="Identifier you can used to follow related messages"
-                            margin="normal"
-                            variant="filled"
-                            value={this.props.messageCandidate.correlationId}
-                            onChange={this.onChange}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
+                        <TextField name="correlationId"
+                                   label="correlationId"
+                                   style={fieldStyle}
+                                   placeholder="Identifier you can used to follow related messages"
+                                   margin="normal"
+                                   variant="filled"
+                                   value={this.props.messageCandidate.correlationId}
+                                   onChange={this.onChange}
+                                   InputLabelProps={{
+                                       shrink: true,
+                                   }}
                         />
                     </Grid>
 
-                    <Grid item xs={6}>
-                            <Select
-                                styles={customStyles}
-                                name="templateService"
-                                label="templateService"
-                                placeholder={"message template * (required)"}
-                                options={this.props.store.appStore.templateOptions}
-                                value={this.props.messageCandidate.templateService}
-                                onChange={this.handleChangeTemplateService}
-                            />
-
+                    <Grid item xs={4}>
+                                    <Select
+                                    styles={customStyles}
+                                    name="templateService"
+                                    label="templateService"
+                                    placeholder={"templateFile *required"}
+                                    options={this.props.store.appStore.templateOptions}
+                                    value={this.props.messageCandidate.templateService}
+                                    onChange={this.handleChangeTemplateService}
+                                />
                     </Grid>
 
-                    <Grid item xs={6}>
-                            <Select
-                                styles={customStyles}
-                                name="templatePayload"
-                                label="templatePayload"
-                                placeholder={"... the optional payload to include into."}
-                                options={this.props.store.appStore.payloadOptions}
-                                value={this.props.messageCandidate.templatePayload}
-                                onChange={this.handleChangeTemplatePayload}
-                            />
-                    </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={4}>
 
                         <FormControl>
-                            <table><tbody>
-                            <tr><td> <Checkbox name={"asyncAcknowledge"} style={fieldStyle} value={this.props.messageCandidate.asyncAcknowledge} checked={this.props.messageCandidate.asyncAcknowledge} onChange={this.handleChangeAsyncAcknowledge}/></td>
-                                <td style={fieldStyle}>Asynchronous Acknoledgement</td></tr></tbody></table>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td><Checkbox name={"asyncAcknowledge"} style={fieldStyle}
+                                                  value={this.props.messageCandidate.asyncAcknowledge}
+                                                  checked={this.props.messageCandidate.asyncAcknowledge}
+                                                  onChange={this.handleChangeAsyncAcknowledge}/></td>
+                                    <td style={fieldStyle}>Require Asynchronous Acknowledgement</td>
+                                </tr>
+                                </tbody>
+                            </table>
 
 
                         </FormControl>
 
                     </Grid>
-                    <Grid item xs={7}>
+                    <Grid item xs={4}>
                         <span>   </span>
-                        <Button disabled={this.props.messageCandidate.templateService=="#none"}
+                        <Button disabled={this.props.messageCandidate.templateService == "#none"}
                                 style={buttonStyle} id="preview"
-                                onClick={() => this.preview() }>
+                                onClick={() => this.preview()}>
                             Preview
                         </Button>
                         <span>   </span>
-
-                        <Button  disabled={this.props.messageCandidate.templateService=="#none"}
-                                 style={buttonStyle} id="send"
-                                 onClick={() => this.send() }>
+                        <Button disabled={this.props.messageCandidate.templateService == "#none"}
+                                style={buttonStyle} id="send"
+                                onClick={() => this.send()}>
                             Send
                         </Button>
+                        <span>   </span>
                     </Grid>
                 </Grid>
             </FormGroup>
