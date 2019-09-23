@@ -40,7 +40,7 @@ public class MessageResourceRestTest {
     public void it_invokes_the_send_the_http_is_successful_201() {
 
         try {
-            Response response = resources.target("/api/messages")
+            Response response = resources.target("/webapi/messages")
                 .request()
                 .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
             assertThat(response.getStatus()).isEqualTo(201);
@@ -52,7 +52,7 @@ public class MessageResourceRestTest {
 
     @Test
     public void it_invokes_the_send_and_pass_the_message_to_the_facade() {
-        try { Response test = resources.target("/api/messages")
+        try { Response test = resources.target("/webapi/messages")
                 .request()
                 .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
         } catch (Exception e) {
