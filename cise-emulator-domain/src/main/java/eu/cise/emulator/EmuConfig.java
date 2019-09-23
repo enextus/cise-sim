@@ -4,10 +4,12 @@ import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.Sources;
+import org.aeonbits.owner.Preprocessor;
 
 /**
  * This file is containing the emulator application configuration
  */
+@Config.PreprocessorClasses({EmuConfig.Trim.class})
 @Sources({"file:${conf.dir}emulator.properties",
         "classpath:emulator.properties"})
 public interface EmuConfig extends Config {
@@ -39,4 +41,10 @@ public interface EmuConfig extends Config {
     @Key("signature.privateKeyPassword")
     String privateKeyPassword();
 
+    // preprocessors implementation
+    class Trim implements Preprocessor {
+        public String process(String input) {
+            return input.trim();
+        }
+    }
 }
