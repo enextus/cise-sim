@@ -1,6 +1,7 @@
 package eu.cise.emulator;
 
 
+import org.aeonbits.owner.Config;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -25,6 +26,7 @@ public class EmuConfigTest {
         assertThat(cfg.testProperty()).isEqualTo("test-property");
     }
 
+    @Config.PreprocessorClasses({EmuConfig.Trim.class})
     public interface ConfigWithPreprocessorsTest extends EmuConfig {
         @DefaultValue("   test-property  ")
         String testProperty();
