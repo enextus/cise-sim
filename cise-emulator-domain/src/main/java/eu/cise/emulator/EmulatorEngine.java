@@ -4,7 +4,6 @@ import eu.cise.emulator.exceptions.EndpointErrorEx;
 import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.servicemodel.v1.message.Push;
 
 /**
  * This is the engine of the emulator that holds all the main

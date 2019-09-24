@@ -122,5 +122,6 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
     @Override
     public void receive(Message message) {
+        notNull(message, NullMessageEx.class);
     }
 }
