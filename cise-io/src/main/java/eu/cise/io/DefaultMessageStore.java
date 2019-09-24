@@ -8,7 +8,7 @@ public class DefaultMessageStore implements MessageStorage {
 
     @Override
     public void store(Object object) {
-
+        this.object = object;
     }
 
     @Override
