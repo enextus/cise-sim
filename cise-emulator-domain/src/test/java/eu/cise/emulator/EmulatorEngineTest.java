@@ -15,8 +15,7 @@ import org.junit.Test;
 
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.SUCCESS;
 import static eu.eucise.helpers.PushBuilder.newPush;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class EmulatorEngineTest {
@@ -249,7 +248,6 @@ public class EmulatorEngineTest {
     }
 
 
-
     @Test
     public void it_adds_a_sender_upon_a_successful_response_without_the_sender_tag() {
         DispatchResult dispatchResult = new DispatchResult(true, SYNCH_ACKNOWLEDGEMENT_MSG_SUCCESS_NO_SENDER);
@@ -263,6 +261,15 @@ public class EmulatorEngineTest {
         }
 
         assertThat(ack.getAckCode()).isEqualTo(SUCCESS);
+    }
+
+    @Test
+    public void it_receives_a_valid_message() {
+        try {
+            engine.receive(message);
+        } catch (Exception e) {
+            fail("Receive raised an exception");
+        }
     }
 
 }

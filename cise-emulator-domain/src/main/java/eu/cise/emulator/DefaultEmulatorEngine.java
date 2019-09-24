@@ -119,4 +119,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
         return response;
     }
+
+    @Override
+    public void receive(Message message) {
+    }
 }
