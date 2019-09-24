@@ -12,12 +12,12 @@ import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.signature.SignatureService;
-import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.datatype.XMLGregorianCalendar;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.SUCCESS;
@@ -280,12 +280,12 @@ public class EmulatorEngineTest {
     }
 
     @Test
-    public void it_receives_with_wrong_creation_date_in_the_past() {
+    public void it_receives_a_message_with_wrong_creation_date_in_the_past() {
         Message message = newPush().build();
         GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(DateTime.now().minusHours(4).toDate());
-        XMLGregorianCalendar xmlGregorianCalendar = new XMLGregorianCalendarImpl(cal);
-        message.setCreationDateTime(xmlGregorianCalendar);
+        cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant()));
+
+        message.setCreationDateTime(new XMLGregorianCalendarImpl(cal));
 
         assertThatExceptionOfType(CreationDateErrorEx.class)
                 .isThrownBy(() -> engine.receive(message))
