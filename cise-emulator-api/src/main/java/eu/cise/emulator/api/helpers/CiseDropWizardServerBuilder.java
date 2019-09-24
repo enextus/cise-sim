@@ -1,7 +1,9 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.api.helpers;
 
 import com.codahale.metrics.MetricRegistry;
 import eu.cise.emulator.MessageProcessor;
+import eu.cise.emulator.api.CiseEmulatorAPI;
+import eu.cise.emulator.api.CiseEmulatorDropwizardConf;
 import io.dropwizard.Application;
 import io.dropwizard.cli.ServerCommand;
 import io.dropwizard.configuration.ConfigurationFactory;

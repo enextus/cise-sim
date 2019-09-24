@@ -1,6 +1,7 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.api.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import eu.cise.emulator.api.MessageAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,12 +15,12 @@ import javax.ws.rs.core.Response;
 @Path("/webapi")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class DefaultMessageResource {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultMessageResource.class);
+public class WebAPIMessageResource {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebAPIMessageResource.class);
     private final MessageAPI messageAPI;
 
 
-    public DefaultMessageResource(MessageAPI messageAPI) {
+    public WebAPIMessageResource(MessageAPI messageAPI) {
         this.messageAPI = messageAPI;
 
     }

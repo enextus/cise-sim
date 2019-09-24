@@ -1,4 +1,4 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.api.helpers;
 
 import ch.qos.logback.classic.Logger;
 import io.dropwizard.setup.Environment;

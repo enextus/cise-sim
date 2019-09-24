@@ -1,4 +1,5 @@
 package eu.cise.emulator.api;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eu.cise.emulator.MessageProcessor;
 import io.dropwizard.Configuration;
@@ -8,10 +9,10 @@ import io.dropwizard.bundles.assets.AssetsConfiguration;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-/**CiseEmulatorDropwizardConf
+/**
+ * CiseEmulatorDropwizardConf
  * general purpose class
  * extending Configuration (dropwizard)
- *
  */
 
 //TODO:create a subclass for WebApi correlated modality

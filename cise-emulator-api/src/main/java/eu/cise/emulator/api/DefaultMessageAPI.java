@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.SendParam;
+import eu.cise.emulator.api.helpers.SendParamsReader;
+import eu.cise.emulator.api.helpers.SendSourceContentResolver;
+import eu.cise.emulator.api.resources.WebAPIMessageResource;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -15,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 public class DefaultMessageAPI implements MessageAPI {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultMessageResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebAPIMessageResource.class);
     private MessageProcessor messageProcessor;
     private ObjectMapper jsonMapper;
     private XmlMapper xmlMapper;
@@ -42,6 +45,22 @@ public class DefaultMessageAPI implements MessageAPI {
             jsonReturn = jsonReturnBuilder.build("ERROR: " + e.getClass() + " : " + e.getMessage(), "", "");
         }
         return jsonReturn;
+    }
+
+    @Override
+    public CiseMessageResponse receive(String content) {
+        LOGGER.debug("receive is receiving through api : {}", content.substring(0, 200));
+        MessageReturn jsonReturnBuilder = new MessageReturn("");
+        CiseMessageResponse ciseMessageResponse = null;
+        try {
+            Message message = xmlMapper.fromXML(content);
+            Acknowledgement acknowledgement = null; // messageProcessor.receive(message);
+            ciseMessageResponse = new CiseMessageResponse(xmlMapper, acknowledgement, message);
+        } catch (Exception e) {
+            LOGGER.error("error in Api send {}", e);
+            ciseMessageResponse = new CiseMessageResponse(content);
+        }
+        return ciseMessageResponse;
     }
 
     private class MessageReturn {
@@ -74,4 +93,3 @@ public class DefaultMessageAPI implements MessageAPI {
         }
     }
 }
-

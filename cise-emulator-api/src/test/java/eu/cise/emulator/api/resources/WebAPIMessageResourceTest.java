@@ -1,8 +1,9 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.api.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.cise.emulator.api.MessageAPI;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -18,13 +19,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class MessageResourceRestTest {
+public class WebAPIMessageResourceTest {
 
     private static MessageAPI messageAPI = mock(MessageAPI.class);
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new DefaultMessageResource(messageAPI))
+            .addResource(new WebAPIMessageResource(messageAPI))
             .bootstrapLogging(false)
             .build();
 

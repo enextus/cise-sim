@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.SendParam;
+import eu.cise.emulator.api.helpers.SendParamsReader;
 import org.junit.Before;
 import org.junit.Test;
 
