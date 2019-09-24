@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -283,7 +284,7 @@ public class EmulatorEngineTest {
     public void it_receives_a_message_with_wrong_creation_date_in_the_past() {
         Message message = newPush().build();
         GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant()));
+        cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant().minus(4, ChronoUnit.HOURS)));
 
         message.setCreationDateTime(new XMLGregorianCalendarImpl(cal));
 
