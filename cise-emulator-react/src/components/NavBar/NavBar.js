@@ -12,7 +12,6 @@ export default class NavBar extends Component {
         super(props);
     }
 
-
     render() {
         this.myuser = this.props.store.appStore.memberId;
         this.memberList = this.props.store.appStore.memberList;
@@ -24,16 +23,20 @@ export default class NavBar extends Component {
             <div style={{textAlign: "right", font: "Liberation Sans"}}>
                 <AppBar title="Users">
                     <Toolbar>
-                        <Typography
-                                    style={{textAlign: "right", font: "Liberation Sans", color: "white"}}> <Button
-                            style={{textAlign: "right", font: "Liberation Sans", color: "white"}}>
-                            <MoveToInbox/>: {this.props.store.appStore.memberId}
-                        </Button></Typography>
 
-                        <Button
-                            variant="contained"
-                            color={this.props.store.appStore.connected ? "secondary" : "primary"}
-                        >Mode: REST</Button>
+                        <Typography
+                            style={{textAlign: "right", font: "Liberation Sans", color: "white"}}>
+                            <Button
+                                style={{textAlign: "right", font: "Liberation Sans", color: "white"}}>
+                                <MoveToInbox/>: {this.props.store.appStore.memberId}
+                            </Button>
+                        </Typography>
+
+                        <Button variant="contained"
+                                color={this.props.store.appStore.connected ? "secondary" : "primary"}>
+                            Mode: REST
+                        </Button>
+
                     </Toolbar>
                 </AppBar>
             </div>

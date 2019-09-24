@@ -1,15 +1,40 @@
 import React, {Component} from "react";
-import {Button, Checkbox, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
-import Select from 'react-select';
+import {
+    Button,
+    Checkbox,
+    FormControlLabel,
+    FormControl,
+    FormGroup,
+    Grid,
+    TextField,
+    Select,
+    InputLabel
+} from "@material-ui/core";
 import {observer} from "mobx-react";
+import {makeStyles} from '@material-ui/core/styles';
+import withStyles from "@material-ui/styles/withStyles/withStyles";
+
+const styles = makeStyles(theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+        width: 200,
+    },
+}));
 
 @observer
-export default class SendMessage extends Component {
+class SendMessage extends Component {
 
     state = {
         selectedOption: null,
     };
-
 
     constructor(props) {
         super(props);
@@ -21,11 +46,9 @@ export default class SendMessage extends Component {
         this.props.messageCandidate[key] = value
     }
 
-
     onChange(event) {
         this.updateProperty(event.target.name, event.target.value)
     }
-
 
     handleChangeTemplateService = templateservice => {
         this.props.messageCandidate.templateService = templateservice;
@@ -47,143 +70,94 @@ export default class SendMessage extends Component {
         this.props.messagePreview.preview(this.props.messageCandidate);
     }
 
-
     render() {
-        const customStyles = {
-            option: (provided, state) => ({
-                ...provided,
-                font: 'Liberation Sans',
-                fontFamily: 'Liberation Sans',
-                padding: 0,
-            }),
-            control: () => ({
-                // none of react-select's styles are passed to <Control />
-                width: 250,
-                font: 'Liberation Sans',
-                fontFamily: 'Liberation Sans',
-            }),
-            singleValue: (provided, state) => {
-                const opacity = state.isDisabled ? 0.7 : 1;
-                const transition = 'opacity 500ms';
-                return {...provided, opacity, transition};
-            }
-        };
-
-
-        const fieldStyle = {
-            width: "100%",
-            font: "Liberation Sans",
-            fontFamily: "Liberation Sans"
-        };
-
-        const buttonStyle = {
-            margin: '10px auto',
-            backgroundColor: "rgb(205,205,205)",
-            left: '160px',
-            font: "Liberation Sans",
-        };
-        const formstyle = {
-            width: "90%",
-            height: "50%",
-            top: "20",
-            margin: "20px auto",
-            color: "#555555",
-            font: "Liberation Sans"
-        };
-
-        const field = [
-            {
-                name: 'asyncAcknowledge',
-                label: 'asyncAcknowledge: ',
-                type: 'checkbox',
-                rules: 'boolean',
-                fieldStyle: "font: \"Liberation Sans\""
-            },
-        ];
-
-
+        const {classes} = this.props;
         return (
-            <FormGroup style={formstyle}>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <TextField
-                            name="messageId"
-                            label="messageId"
-                            style={fieldStyle}
-                            margin="normal"
-                            variant="filled"
-                            placeholder="set at first sending intent"
-                            value={this.props.messageCandidate.messageId}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        /> </Grid>
-                    <Grid item xs={6}>
-                        <TextField name="correlationId"
-                                   label="correlationId"
-                                   style={fieldStyle}
-                                   placeholder="Identifier you can used to follow related messages"
-                                   margin="normal"
-                                   variant="filled"
-                                   value={this.props.messageCandidate.correlationId}
-                                   onChange={this.onChange}
-                                   InputLabelProps={{
-                                       shrink: true,
-                                   }}
-                        />
-                    </Grid>
+            <form className={classes.root} autoComplete="off">
+                <FormGroup row>
+                    <Grid container
+                          spacing={2}
+                          direction="row"
+                          justify="space-evenly"
+                          alignContent="stretch"
+                          alignItems="center">
 
-                    <Grid item xs={4}>
-                                    <Select
-                                    styles={customStyles}
-                                    name="templateService"
-                                    label="templateService"
-                                    placeholder={"templateFile *required"}
+                        <Grid item xs={4}>
+                            <TextField
+                                name="messageId"
+                                label="Message Id"
+                                color="primary"
+                                value={this.props.messageCandidate.messageId}/>
+                        </Grid>
+
+                        <Grid item xs={4}>
+                            <TextField name="correlationId"
+                                       label="Correlation Id"
+                                       color="primary"
+                                       value={this.props.messageCandidate.correlationId}
+                                       onChange={this.onChange}/>
+                        </Grid>
+
+                        <Grid item xs={9}>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel forHtml="templateService">XML Message Template</InputLabel>
+                                <Select
+                                    label="XML Message Template"
+                                    placeholder="XML Message Template"
+                                    className={classes.selectEmpty}
                                     options={this.props.store.appStore.templateOptions}
                                     value={this.props.messageCandidate.templateService}
                                     onChange={this.handleChangeTemplateService}
-                                />
+                                    inputProps={{
+                                        name: 'templateService',
+                                        id: 'templateService'
+                                    }}
+                                    />
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        id="asyncAcknowledge"
+                                        name="asyncAcknowledge"
+                                        onChange={this.handleChangeAsyncAcknowledge}
+                                        checked={this.props.messageCandidate.asyncAcknowledge}
+                                        value={this.props.messageCandidate.asyncAcknowledge}/>
+                                }
+                                label="Require Async Ack"
+                            />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                            <Button id="preview"
+                                    onClick={() => this.preview()}
+                                    color="primary"
+                                    variant="contained"
+                                    disabled={this.isDisabled()}>
+                                Preview
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Button
+                                id="send"
+                                color="secondary"
+                                variant="contained"
+                                onClick={() => this.send()}
+                                disabled={this.isDisabled()}>
+                                Send
+                            </Button>
+                        </Grid>
                     </Grid>
-
-                    <Grid item xs={4}>
-
-                        <FormControl>
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td><Checkbox name={"asyncAcknowledge"} style={fieldStyle}
-                                                  value={this.props.messageCandidate.asyncAcknowledge}
-                                                  checked={this.props.messageCandidate.asyncAcknowledge}
-                                                  onChange={this.handleChangeAsyncAcknowledge}/></td>
-                                    <td style={fieldStyle}>Require Asynchronous Acknowledgement</td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-
-                        </FormControl>
-
-                    </Grid>
-                    <Grid item xs={4}>
-                        <span>   </span>
-                        <Button disabled={this.props.messageCandidate.templateService == "#none"}
-                                style={buttonStyle} id="preview"
-                                onClick={() => this.preview()}>
-                            Preview
-                        </Button>
-                        <span>   </span>
-                        <Button disabled={this.props.messageCandidate.templateService == "#none"}
-                                style={buttonStyle} id="send"
-                                onClick={() => this.send()}>
-                            Send
-                        </Button>
-                        <span>   </span>
-                    </Grid>
-                </Grid>
-            </FormGroup>
+                </FormGroup>
+            </form>
         );
     }
 
+    isDisabled() {
+        return this.props.messageCandidate.templateService === "#none";
+    }
 
     getId() {
         let d = new Date().getTime();
@@ -198,5 +172,4 @@ export default class SendMessage extends Component {
     }
 }
 
-
-
+export default withStyles(styles)(SendMessage)
