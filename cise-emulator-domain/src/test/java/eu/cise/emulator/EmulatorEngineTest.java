@@ -1,17 +1,24 @@
 package eu.cise.emulator;
 
 
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
+import eu.cise.emulator.exceptions.CreationDateErrorEx;
 import eu.cise.emulator.exceptions.EndpointErrorEx;
 import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.signature.SignatureService;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.GregorianCalendar;
 
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.SUCCESS;
 import static eu.eucise.helpers.PushBuilder.newPush;
@@ -270,6 +277,19 @@ public class EmulatorEngineTest {
         } catch (Exception e) {
             fail("Receive raised an exception");
         }
+    }
+
+    @Test
+    public void it_receives_with_wrong_creation_date_in_the_past() {
+        Message message = newPush().build();
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(DateTime.now().minusHours(4).toDate());
+        XMLGregorianCalendar xmlGregorianCalendar = new XMLGregorianCalendarImpl(cal);
+        message.setCreationDateTime(xmlGregorianCalendar);
+
+        assertThatExceptionOfType(CreationDateErrorEx.class)
+                .isThrownBy(() -> engine.receive(message))
+                .withMessageContaining("outside the allowed range");
     }
 
 }
