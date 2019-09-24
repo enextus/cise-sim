@@ -199,6 +199,11 @@ public class EmulatorEngineTest {
         engine = new DefaultEmulatorEngine(signatureService, dispatcher, config);
         message = newPush().build();
 
+        // set the message creation datetime to a valid value
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant()));
+        message.setCreationDateTime(new XMLGregorianCalendarImpl(cal));
+
         when(config.serviceId()).thenReturn("service-id");
         when(config.endpointUrl()).thenReturn(ENDPOINT_URL);
     }

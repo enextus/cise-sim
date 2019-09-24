@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
@@ -13,9 +14,12 @@ import eu.eucise.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
 import java.time.Clock;
+import java.time.ZoneId;
+import java.util.GregorianCalendar;
 
 import static eu.cise.emulator.helpers.Asserts.notNull;
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
@@ -123,5 +127,16 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     @Override
     public void receive(Message message) {
         notNull(message, NullMessageEx.class);
+
+        XMLGregorianCalendar messageXmlGregorianCalendar = message.getCreationDateTime();
+
+        GregorianCalendar currentGregorianCalendar = new GregorianCalendar();
+        currentGregorianCalendar.setTime(java.util.Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).minusHours(3).toInstant()));
+        XMLGregorianCalendar currentXmlGregorianCalendar = new XMLGregorianCalendarImpl(currentGregorianCalendar);
+
+        if (messageXmlGregorianCalendar.compare(currentXmlGregorianCalendar) == DatatypeConstants.LESSER) {
+            throw new CreationDateErrorEx();
+        }
+
     }
 }
