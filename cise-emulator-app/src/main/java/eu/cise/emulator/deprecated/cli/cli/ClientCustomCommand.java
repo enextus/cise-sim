@@ -1,6 +1,7 @@
 package eu.cise.emulator.deprecated.cli.cli;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.cise.emulator.deprecated.cli.util.AcknowledgementHelper;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
@@ -10,7 +11,6 @@ import eu.cise.emulator.deprecated.cli.core.Executor;
 import eu.cise.emulator.deprecated.cli.core.sub.MessageValidator;
 import eu.cise.emulator.deprecated.cli.core.sub.Sender;
 import eu.cise.emulator.deprecated.cli.core.sub.SourceStreamProcessor;
-import eu.cise.emulator.helpers.AcknowledgementHelper;
 import eu.cise.emulator.deprecated.cli.transport.CiseMessageSoapServiceClient;
 import eu.cise.emulator.deprecated.cli.util.ConfigManager;
 import eu.cise.emulator.deprecated.cli.util.InteractIOFile;

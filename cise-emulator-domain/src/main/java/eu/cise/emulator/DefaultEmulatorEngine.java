@@ -1,12 +1,13 @@
 package eu.cise.emulator;
 
+import com.google.common.base.Strings;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
 import eu.cise.emulator.exceptions.*;
-import eu.cise.emulator.helpers.AcknowledgementHelper;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.signature.SignatureService;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
@@ -19,6 +20,7 @@ import java.time.Clock;
 
 import static eu.cise.emulator.helpers.Asserts.notNull;
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
+import static eu.eucise.helpers.ServiceBuilder.newService;
 
 public class DefaultEmulatorEngine implements EmulatorEngine {
 
@@ -108,11 +110,16 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
             String result = sendResult.getResult();
             LOGGER.debug("send in DefaultEmulatorEngine receive result {}", result);
-            if (!result.contains(SENDER_TAG)) {
-                result = AcknowledgementHelper.increaseAckCodeWithSender(result);
-            }
+            DefaultXmlMapper notValidatingXmlMapper = new DefaultXmlMapper.NotValidating();
+            Acknowledgement acknowledgement = notValidatingXmlMapper.fromXML(result);
 
-            response = xmlMapper.fromXML(result);
+            if (acknowledgement.getSender() == null ||
+                    Strings.isNullOrEmpty(acknowledgement.getSender().getServiceID()) ||
+                    acknowledgement.getSender().getServiceOperation() == null
+            ) {
+                acknowledgement.setSender(newService().id("").operation(ServiceOperationType.PUSH).build());
+            }
+            response = acknowledgement;
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();
         }
