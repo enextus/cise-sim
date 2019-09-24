@@ -17,6 +17,6 @@ public class DefaultMessageStore implements MessageStorage {
     }
 
     protected boolean isObjectNull() {
-        return object==null;
+        return object == null;
     }
 }
