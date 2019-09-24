@@ -30,4 +30,6 @@ public interface EmulatorEngine {
      * TODO specify the runtime exceptions to be captured by the client
      */
     Acknowledgement send(Message message) throws EndpointNotFoundEx, EndpointErrorEx;
+
+    void receive(Message message);
 }
