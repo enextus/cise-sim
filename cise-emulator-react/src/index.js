@@ -6,18 +6,39 @@ import MainAppModel from "./models/MainAppModel";
 import MessageType from "./models/MessageType";
 import MainApp from "./app/MainApp";
 import {autorun, when} from "mobx";
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import {blue, pink} from "@material-ui/core/colors";
 
 const stores = {
     appStore: new MainAppModel(),
     messageStore: new MessageListModel()
 };
 
-stores.messageStore.createNewMessage("", MessageType.MASTER_IN, "", "", "false", "", "");
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+        secondary: pink,
+        type: 'light'
+    },
+});
+
+stores.messageStore.createNewMessage(
+    "",
+    MessageType.MASTER_IN,
+    "",
+    "",
+    "false",
+    "",
+    "");
+
 render(
-    <div>
+    <React.Fragment>
         <DevTools/>
-        <MainApp store={stores}/>
-    </div>,
+        <ThemeProvider theme={theme}>
+            <MainApp store={stores}/>
+        </ThemeProvider>
+    </React.Fragment>,
     document.getElementById("root")
 );
 

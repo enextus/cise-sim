@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 import {Button, Checkbox, FormControl, FormControlLabel, InputLabel, Select, TextField} from "@material-ui/core";
 import {observer} from "mobx-react";
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import MenuItem from "@material-ui/core/MenuItem";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import PropTypes from 'prop-types';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
-import { withStyles } from '@material-ui/styles';
 
 const styles = makeStyles(theme => ({
     root: {
@@ -36,9 +36,8 @@ const styles = makeStyles(theme => ({
     },
 }));
 
-@withStyles(styles)
 @observer
-export default class SendMessage extends Component {
+class SendMessage extends Component {
 
     state = {
         selectedOption: null,
@@ -213,3 +212,9 @@ export default class SendMessage extends Component {
         };
     }
 }
+
+SendMessage.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(SendMessage)
