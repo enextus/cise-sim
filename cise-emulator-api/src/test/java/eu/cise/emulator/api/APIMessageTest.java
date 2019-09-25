@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.api.resources.WebAPIMessageResource;
+import eu.cise.io.MessageStorage;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -17,45 +18,38 @@ import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class APIMessageTest {
 
-    public static final MessageProcessor messageProcessor = mock (MessageProcessor.class);
-
+    public static MessageProcessor messageProcessor;
+    public static MessageStorage messageStorage;
 
     private ObjectMapper jsonMapper;
 
     @Before
     public void before() {
+        messageProcessor = mock (MessageProcessor.class);
+        messageStorage = mock (MessageStorage.class);
         jsonMapper = new ObjectMapper();
     }
 
 
     @Test
-    public void it_calls_MessageProcessor_to_obtain_last_stored_message() {
-
-        try {
-            MessageAPI test = new DefaultMessageAPI(messageProcessor);
-            test.getLastStoredMessage();
-        } catch (Exception e) {
-            // do nothing
-        }
-        verify(messageProcessor).getLastStoredMessage();
+    public void it_calls_MessageStorage_to_obtain_last_stored_message() {
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage);
+        messageAPI.getLastStoredMessage();
+        verify(messageStorage).read();
     }
 
-    @Ignore
     @Test
     public void it_return_empty_when_NO_stored_message() {
-        JsonNode returnedJson = null;
-        try {
-            MessageAPI test = new DefaultMessageAPI(messageProcessor);
-            returnedJson = test.getLastStoredMessage();
-        } catch (Exception e) {
-            // do nothing
-        }
-        verify(messageProcessor).getLastStoredMessage();
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor , messageStorage );
+        when(messageStorage.read()).thenReturn(null);
+
+        MessageApiDto response = messageAPI.getLastStoredMessage();
+
+        assertThat(response).isNull();
     }
 
     @Ignore

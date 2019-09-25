@@ -23,8 +23,4 @@ public class DefaultMessageProcessor implements MessageProcessor {
         return acknowledgement;
     }
 
-    @Override
-    public void getLastStoredMessage() {
-
-    }
 }
