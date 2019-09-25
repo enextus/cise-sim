@@ -6,6 +6,7 @@ import eu.cise.emulator.SendParam;
 import eu.cise.emulator.api.helpers.SendParamsReader;
 import eu.cise.emulator.api.helpers.SendSourceContentResolver;
 import eu.cise.emulator.api.resources.WebAPIMessageResource;
+import eu.cise.io.MessageStorage;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -18,10 +19,12 @@ import javax.ws.rs.core.Response;
 public class DefaultMessageAPI implements MessageAPI {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebAPIMessageResource.class);
     private MessageProcessor messageProcessor;
+    private final MessageStorage messageStorage;
     private XmlMapper xmlMapper;
 
-    public DefaultMessageAPI(MessageProcessor messageProcessor) {
+    public DefaultMessageAPI(MessageProcessor messageProcessor, MessageStorage messageStorage) {
         this.messageProcessor = messageProcessor;
+        this.messageStorage = messageStorage;
         xmlMapper = new DefaultXmlMapper();
         LOGGER.debug(" Initialize the MessageAPI with default type implementation {} using message processor of type {}", this.getClass(), (messageProcessor != null ? messageProcessor.getClass() : ""));
     }
@@ -61,8 +64,9 @@ public class DefaultMessageAPI implements MessageAPI {
     }
 
     @Override
-    public void getLastStoredMessage() {
-        messageProcessor.getLastStoredMessage();
+    public MessageApiDto getLastStoredMessage() {
+        messageStorage.read();
+        return null;
     }
 
 

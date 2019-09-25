@@ -7,5 +7,5 @@ public interface MessageAPI {
 
     CiseMessageResponse receive(String inputXmlMessage) throws Exception;
 
-    void getLastStoredMessage();
+    MessageApiDto getLastStoredMessage();
 }
