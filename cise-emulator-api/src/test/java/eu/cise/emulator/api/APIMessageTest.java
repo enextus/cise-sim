@@ -61,20 +61,6 @@ public class APIMessageTest {
         MessageApiDto response = messageAPI.getLastStoredMessage();
 
         assertThat(response).isEqualTo(mockedMessageApiDto);
-
     }
 
-    private JsonNode msgTemplateWithParams() {
-        ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
-
-        ObjectNode params = jsonMapper.createObjectNode();
-        params.put("requires_ack", "false");
-        params.put("message_id", "1234-123411-123411-1234");
-        params.put("correlation_id", "7777-666666-666666-5555");
-
-        msgTemplateWithParamObject.put("message_template", "hash-msg-template");
-        msgTemplateWithParamObject.set("params", params);
-
-        return jsonMapper.valueToTree(msgTemplateWithParamObject);
-    }
 }

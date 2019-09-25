@@ -65,8 +65,7 @@ public class DefaultMessageAPI implements MessageAPI {
 
     @Override
     public MessageApiDto getLastStoredMessage() {
-        messageStorage.read();
-        return null;
+        return (MessageApiDto) messageStorage.read();
     }
 
 
