@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Button, Checkbox, FormControl, FormControlLabel, InputLabel, Select, TextField} from "@material-ui/core";
 import {observer} from "mobx-react";
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import MenuItem from "@material-ui/core/MenuItem";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import PropTypes from 'prop-types';
@@ -10,13 +10,12 @@ import Grid from "@material-ui/core/Grid";
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
 import DescriptionIcon from '@material-ui/icons/Description';
 
-const styles = makeStyles(theme => ({
+const styles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
     },
     formControl: {
-        margin: theme.spacing(1),
         minWidth: 120,
     },
     selectEmpty: {
@@ -24,18 +23,17 @@ const styles = makeStyles(theme => ({
     },
     button: {
         margin: theme.spacing(1),
-        width: 200,
     },
     leftIcon: {
         marginRight: theme.spacing(1),
     },
     rightIcon: {
-        marginLeft: 100,
+        marginLeft: theme.spacing(1),
     },
     iconSmall: {
         fontSize: 20,
     },
-}));
+});
 
 @observer
 class SendMessage extends Component {
@@ -168,7 +166,7 @@ class SendMessage extends Component {
                                     className={classes.button}
                                     variant="contained"
                                     disabled={this.isDisabled()}>
-                                Preview&nbsp;
+                                Preview
                                 <DescriptionIcon className={classes.rightIcon}/>
                             </Button>
                         </Grid>
@@ -180,7 +178,7 @@ class SendMessage extends Component {
                                 className={classes.button}
                                 onClick={() => this.send()}
                                 disabled={this.isDisabled()}>
-                                Send&nbsp;
+                                Send
                                 <SendRoundedIcon className={classes.rightIcon}/>
                             </Button>
                         </Grid>

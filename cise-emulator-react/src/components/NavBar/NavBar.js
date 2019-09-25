@@ -16,6 +16,9 @@ const styles = theme => ({
     chip: {
         marginRight: theme.spacing(2),
     },
+    logoIcon: {
+        marginRight: theme.spacing(1),
+    }
 });
 
 @observer
@@ -31,7 +34,7 @@ class NavBar extends Component {
             <AppBar className={classes.root}>
                 <Toolbar>
                     <Typography variant="h5" type="title" color="inherit" style={{flex: 1, fontWeight: "bold"}}>
-                        <DirectionsBoatIcon/>&nbsp;CISE Emu
+                        <DirectionsBoatIcon className={classes.logoIcon}/>CISE Emu
                     </Typography>
                     <div>
                         <Chip
@@ -63,6 +66,5 @@ class NavBar extends Component {
 NavBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
 
 export default withStyles(styles)(NavBar)
