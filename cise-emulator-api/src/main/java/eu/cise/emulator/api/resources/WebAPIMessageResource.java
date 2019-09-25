@@ -5,14 +5,11 @@ import eu.cise.emulator.api.MessageAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/webapi")
+@Path("/webapi/messages")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class WebAPIMessageResource {
@@ -26,7 +23,6 @@ public class WebAPIMessageResource {
     }
 
     @POST
-    @Path("/messages")
     public Response send(JsonNode msgWithParams) {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
 
@@ -35,6 +31,17 @@ public class WebAPIMessageResource {
         return Response
                 .status(resultStatusType)
                 .entity(resultMessage)
+                .build();
+    }
+
+    @GET
+    public Response receive() {
+        LOGGER.info("messagePull from UI");
+
+
+
+        return Response
+                .status(Response.Status.OK)
                 .build();
     }
 

@@ -63,6 +63,11 @@ public class DefaultMessageAPI implements MessageAPI {
         return ciseMessageResponse;
     }
 
+    @Override
+    public void getLastStoredMessage() {
+
+    }
+
     private class MessageReturn {
         final String source;
         final ObjectMapper jsonMapper = new ObjectMapper();

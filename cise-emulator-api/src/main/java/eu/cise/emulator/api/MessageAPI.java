@@ -6,4 +6,6 @@ public interface MessageAPI {
     JsonNode send(JsonNode json);
 
     CiseMessageResponse receive(String inputXmlMessage) throws Exception;
+
+    void getLastStoredMessage();
 }

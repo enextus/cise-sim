@@ -42,25 +42,41 @@ public class WebAPIMessageResourceTest {
 
         try {
             Response response = resources.target("/webapi/messages")
-                .request()
-                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
+                    .request()
+                    .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
             assertThat(response.getStatus()).isEqualTo(201);
 
         } catch (Exception e) {
             // do nothing
         }
-            }
+    }
 
     @Test
     public void it_invokes_the_send_and_pass_the_message_to_the_facade() {
-        try { Response test = resources.target("/webapi/messages")
-                .request()
-                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
+        try {
+            Response test = resources.target("/webapi/messages")
+                    .request()
+                    .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
         } catch (Exception e) {
             // do nothing
         }
 
-            verify(messageAPI).send(any(JsonNode.class));
+        verify(messageAPI).send(any(JsonNode.class));
+
+    }
+
+    @Test
+    public void it_returns_the_message_from_the_storage_to_the_UI() {
+
+        try {
+            Response test = resources.target("/webapi/messages")
+                    .request()
+                    .get();
+        } catch (Exception e) {
+            // do nothing
+        }
+
+        verify(messageAPI).getLastStoredMessage();
 
     }
 
