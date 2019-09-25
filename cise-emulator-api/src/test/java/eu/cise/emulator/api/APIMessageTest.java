@@ -45,17 +45,16 @@ public class APIMessageTest {
         verify(messageProcessor).getLastStoredMessage();
     }
 
+
     @Ignore
     @Test
     public void it_return_empty_when_NO_stored_message() {
-        JsonNode returnedJson = null;
         try {
             MessageAPI test = new DefaultMessageAPI(messageProcessor);
-            returnedJson = test.getLastStoredMessage();
+            test.getLastStoredMessage();
         } catch (Exception e) {
             // do nothing
         }
-        verify(messageProcessor).getLastStoredMessage();
     }
 
     @Ignore

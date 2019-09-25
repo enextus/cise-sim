@@ -2,6 +2,7 @@ package eu.cise.emulator.api.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.emulator.api.MessageAPI;
+import eu.cise.emulator.api.MessageApiDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +26,8 @@ public class WebAPIMessageResource {
     @POST
     public Response send(JsonNode msgWithParams) {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
-
-        JsonNode resultMessage = messageAPI.send(msgWithParams);
-        Response.StatusType resultStatusType = (resultMessage.at("/status").textValue().contains("SUCCESS") ? Response.Status.CREATED : Response.Status.BAD_REQUEST);
+        MessageApiDto resultMessage = messageAPI.send(msgWithParams);
+        Response.StatusType resultStatusType = resultMessage.getStatus();
         return Response
                 .status(resultStatusType)
                 .entity(resultMessage)
@@ -37,10 +37,9 @@ public class WebAPIMessageResource {
     @GET
     public Response receive() {
         LOGGER.info("messagePull from UI");
-        JsonNode content = messageAPI.getLastStoredMessage();
+        messageAPI.getLastStoredMessage();
         return Response
                 .status(Response.Status.OK)
-                .entity(content)
                 .build();
     }
 

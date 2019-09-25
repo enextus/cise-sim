@@ -1,6 +1,5 @@
 package eu.cise.emulator;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 
