@@ -1,14 +1,15 @@
 import React, {Component} from "react";
 import {Button, Checkbox, FormControl, FormControlLabel, InputLabel, Select, TextField} from "@material-ui/core";
 import {observer} from "mobx-react";
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import MenuItem from "@material-ui/core/MenuItem";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import {Send} from "@material-ui/icons";
+import SendRoundedIcon from "@material-ui/icons/SendRounded";
+import { withStyles } from '@material-ui/styles';
 
-const myStyles = makeStyles(theme => ({
+const styles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -16,28 +17,28 @@ const myStyles = makeStyles(theme => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
-        backgroundColor: "#ff0000",
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
     button: {
         margin: theme.spacing(1),
-        backgroundColor: "#00ff00",
+        width: 200,
     },
     leftIcon: {
         marginRight: theme.spacing(1),
     },
     rightIcon: {
-        marginLeft: theme.spacing(1),
+        marginLeft: 100,
     },
     iconSmall: {
         fontSize: 20,
     },
 }));
 
+@withStyles(styles)
 @observer
-class SendMessage extends Component {
+export default class SendMessage extends Component {
 
     state = {
         selectedOption: null,
@@ -184,7 +185,7 @@ class SendMessage extends Component {
                                 onClick={() => this.send()}
                                 disabled={this.isDisabled()}>
                                 Send
-                                <Send className={classes.rightIcon}/>
+                                <SendRoundedIcon className={classes.rightIcon}/>
                             </Button>
                         </Grid>
                     </Grid>
@@ -212,5 +213,3 @@ class SendMessage extends Component {
         };
     }
 }
-
-export default withStyles(myStyles)(SendMessage)
