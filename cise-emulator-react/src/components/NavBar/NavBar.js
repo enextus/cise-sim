@@ -6,6 +6,7 @@ import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
+import IconButton from "@material-ui/core/IconButton";
 
 const styles = theme => ({
     root: {
@@ -16,9 +17,13 @@ const styles = theme => ({
     chip: {
         marginRight: theme.spacing(2),
     },
-    logoIcon: {
-        marginRight: theme.spacing(1),
-    }
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+        fontWeight: "bold",
+    },
 });
 
 @observer
@@ -31,10 +36,13 @@ class NavBar extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <AppBar className={classes.root}>
+            <AppBar position="static" className={classes.root}>
                 <Toolbar>
-                    <Typography variant="h5" type="title" color="inherit" style={{flex: 1, fontWeight: "bold"}}>
-                        <DirectionsBoatIcon className={classes.logoIcon}/>CISE Emu
+                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        <DirectionsBoatIcon/>
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        CISE Emu
                     </Typography>
                     <div>
                         <Chip

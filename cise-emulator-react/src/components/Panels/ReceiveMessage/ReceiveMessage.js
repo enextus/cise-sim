@@ -59,15 +59,13 @@ export default class ReceiveMessage extends Component {
             <div style={rootStyle}>
                 <ExpansionPanel   defaultExpanded={this.props.messagePreview.status == "preview"} >
                     <ExpansionPanelSummary >
-                        Message ({this.props.messagePreview.status}) <ExpandMore />
+                        Received ({""}) <ExpandMore />
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails style={subdetailsStyle}>
                         <TextField
                             id="previewContent"
                             multiline
-                            label="xml format"
-                            value={this.formattedXmlpreviewContent}
-                            style={textfieldStyle}
+                            value={""}
                             margin="none"
                             variant="filled"
                             InputProps={{
@@ -84,11 +82,10 @@ export default class ReceiveMessage extends Component {
                     <ExpansionPanelDetails style={subdetailsStyle} >
                         <TextField
                             id="acknowledgeContent"
-                            label="Acknowledgement Content"
-                            style={textfieldStyle}
                             multiline
-                            value={this.formattedXmlAcknowledgeContent}
+                            value={""}
                             margin="normal"
+                            variant="filled"
                             InputProps={{
                                 readOnly: true
                             }}

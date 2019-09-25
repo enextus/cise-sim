@@ -6,9 +6,10 @@ import MainAppModel from "./models/MainAppModel";
 import MessageType from "./models/MessageType";
 import MainApp from "./app/MainApp";
 import {autorun, when} from "mobx";
-import ThemeProvider from "@material-ui/styles/ThemeProvider";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {blue, pink} from "@material-ui/core/colors";
+import {CssBaseline} from "@material-ui/core";
 
 const stores = {
     appStore: new MainAppModel(),
@@ -19,7 +20,10 @@ const theme = createMuiTheme({
     palette: {
         primary: blue,
         secondary: pink,
-        type: 'light'
+        type: 'light',
+        background: {
+            default: "#eeeeee"
+        },
     },
 });
 
@@ -35,23 +39,22 @@ stores.messageStore.createNewMessage(
 render(
     <React.Fragment>
         <DevTools/>
-        <ThemeProvider theme={theme}>
+        <MuiThemeProvider theme={theme}>
+            <CssBaseline />
             <MainApp store={stores}/>
-        </ThemeProvider>
+        </MuiThemeProvider>
     </React.Fragment>,
     document.getElementById("root")
 );
 
 autorun(() => {
-    stores.appStore.obtainXmlTemplates();
-    stores.appStore.obtainSelfMember();
+    stores.appStore.loadXmlTemplates();
+    stores.appStore.loadServiceId();
 });
 
 
 when(
-    // predicate
-    () => stores.appStore.IsConnected,
-    // effect
+    () => stores.appStore.isConnected,
     () => stores.appStore.closeModal()
 );
 

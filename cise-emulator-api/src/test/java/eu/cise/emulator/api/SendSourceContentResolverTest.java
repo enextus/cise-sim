@@ -3,6 +3,7 @@ package eu.cise.emulator.api;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.cise.emulator.api.helpers.SendSourceContentResolver;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;

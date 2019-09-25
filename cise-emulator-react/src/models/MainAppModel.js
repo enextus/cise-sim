@@ -6,40 +6,37 @@ export default class MainAppModel {
     @observable memberId = "#TobeLoaded#";
     @observable optionsTemplate = [];
 
-    //@observable TimerSincePullRequested = observable({secondsPassed: 0});
-
     @computed
     get isModClosed() {
-        return this.modalOpen == false;
+        return this.modalOpen === false;
     }
 
     @computed
-    get IsConnected() {
+    get isConnected() {
         return (
-            this.memberId != "#TobeLoaded#" && this.optionsTemplate.length > 0
+            this.memberId !== "#TobeLoaded#" && this.optionsTemplate.length > 0
         );
     }
 
-
     @computed get templateOptions() {
-        if (!this.IsConnected) return [{label: "#None", value: "#None"}];
+        if (!this.isConnected) return [{label: "#None", value: "#None"}];
+
         console.log("giveOptions", this.optionsTemplate);
+
         return this.optionsTemplate.map(x => ({label: x.name, value: x.hash}));
     }
-
 
     @action
     closeModal() {
         this.modalOpen = false;
     }
 
-
     @action
-    obtainSelfMember() {
+    loadServiceId() {
         this.memberId = "fake-nodecx.nodecx.europa.cx";
         // axios.get(("/webapi/members/0"))
         //     .then((response) => {
-        //         console.log("obtainSelfMember SUCCESS !!! @axios call ", response.data);
+        //         console.log("loadServiceId SUCCESS !!! @axios call ", response.data);
         //         this.memberId = (response.data.name);
         //     })
         //     .catch((err) => {
@@ -48,7 +45,7 @@ export default class MainAppModel {
     }
 
     @action
-    obtainXmlTemplates() {
+    loadXmlTemplates() {
         this.optionsTemplate.push(
             new FileRef("Choose a template", "/None", "#None")
         );
@@ -58,7 +55,7 @@ export default class MainAppModel {
 
         // axios.get(("/webapi/templates"))
         //     .then((response) => {
-        //         console.log("obtainXmlTemplates SUCCESS !!! @axios call ", response.data);
+        //         console.log("loadXmlTemplates SUCCESS !!! @axios call ", response.data);
         //         this.optionsTemplate = [];
         //         for (let itXmlFile of response.data) {
         //             this.optionsTemplate.push( //FIFO

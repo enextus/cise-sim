@@ -1,14 +1,13 @@
 import React, {Component} from "react";
-import {Button, Checkbox, FormControl, FormControlLabel, InputLabel, Select, TextField} from "@material-ui/core";
+import {Button, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, Select, TextField} from "@material-ui/core";
 import {observer} from "mobx-react";
 import {withStyles} from '@material-ui/core/styles';
-import MenuItem from "@material-ui/core/MenuItem";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import PropTypes from 'prop-types';
 import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
 import DescriptionIcon from '@material-ui/icons/Description';
+import format from "xml-formatter";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const styles = theme => ({
     root: {
@@ -37,7 +36,9 @@ const styles = theme => ({
 
 @observer
 class SendMessage extends Component {
-
+    messagePreview;
+    formattedXmlPreviewContent;
+    formattedXmlAcknowledgeContent;
     state = {
         selectedOption: null,
     };
@@ -56,9 +57,9 @@ class SendMessage extends Component {
         this.updateProperty(event.target.name, event.target.value)
     }
 
-    handleChangeTemplateService = templateservice => {
-        this.props.messageCandidate.templateService = templateservice;
-        console.log(`Option selected:`, templateservice);
+    onMessageTemplateChange = messageTemplate => {
+        this.props.messageCandidate.templateService = messageTemplate.target.value;
+        console.log(`Option selected:`, messageTemplate);
     };
 
     handleChangeAsyncAcknowledge = atemplatepayload => {
@@ -77,10 +78,14 @@ class SendMessage extends Component {
     }
 
     render() {
+        this.formattedXmlPreviewContent = format(this.props.messagePreview.previewContent, {});
+        this.formattedXmlAcknowledgeContent = format(this.props.messagePreview.acknowledgeContent, {});
+        console.log("this.props.store", this.props.store.appStore.templateOptions)
+
         const {classes} = this.props;
+
         return (
             <div style={{padding: 16, margin: 'auto', maxWidth: 800}}>
-                <CssBaseline/>
                 <Paper style={{padding: 16}}>
                     <Grid container alignItems="flex-start" spacing={2}>
                         <Grid item xs={6}>
@@ -105,20 +110,13 @@ class SendMessage extends Component {
                                 <Select
                                     label="Message Template"
                                     placeholder="select the template"
-                                    className={classes.selectEmpty}
-                                    // options={this.props.store.appStore.templateOptions}
                                     value={this.props.messageCandidate.templateService}
-                                    onChange={this.handleChangeTemplateService}
+                                    onChange={this.onMessageTemplateChange}
                                     inputProps={{
                                         name: 'templateService',
                                         id: 'templateService'
                                     }}>
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    {this.getMessageTemplateItems().map(this.buildMenuItem)}
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -129,21 +127,14 @@ class SendMessage extends Component {
                                 <InputLabel htmlFor="payloadService">Payload Template</InputLabel>
                                 <Select
                                     label="Payload Template"
-                                    // placeholder="XML Payload Template"
+                                    placeholder="select the template"
                                     className={classes.selectEmpty}
-                                    // options={this.props.store.appStore.templateOptions}
                                     value={this.props.messageCandidate.templateService}
-                                    onChange={this.handleChangeTemplateService}
+                                    onChange={this.onMessageTemplateChange}
                                     inputProps={{
                                         name: 'payloadService',
                                         id: 'payloadService'
                                     }}>
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -161,10 +152,10 @@ class SendMessage extends Component {
                         </Grid>
                         <Grid item style={{marginTop: 16}}>
                             <Button id="preview"
+                                    variant="contained"
                                     onClick={() => this.preview()}
                                     color="primary"
                                     className={classes.button}
-                                    variant="contained"
                                     disabled={this.isDisabled()}>
                                 Preview
                                 <DescriptionIcon className={classes.rightIcon}/>
@@ -182,9 +173,44 @@ class SendMessage extends Component {
                                 <SendRoundedIcon className={classes.rightIcon}/>
                             </Button>
                         </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="previewContent"
+                                multiline
+                                label="Message Preview"
+                                fullWidth
+                                value={this.formattedXmlPreviewContent.substring(0, 200)}
+                                margin="none"
+                                InputProps={{
+                                    readOnly: true
+                                }}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="acknowledgeContent"
+                                label="Acknowledgement"
+                                fullWidth
+                                multiline
+                                value={this.formattedXmlAcknowledgeContent.substring(0, 200)}
+                                margin="none"
+                                InputProps={{
+                                    readOnly: true
+                                }}/>
+                        </Grid>
                     </Grid>
                 </Paper>
             </div>
+        );
+
+    }
+
+    getMessageTemplateItems() {
+        return this.props.store.appStore.templateOptions;
+    }
+
+    buildMenuItem(item) {
+        return (
+            <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
         );
     }
 

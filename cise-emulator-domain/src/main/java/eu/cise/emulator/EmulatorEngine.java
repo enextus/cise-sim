@@ -1,7 +1,5 @@
 package eu.cise.emulator;
 
-import eu.cise.emulator.exceptions.EndpointErrorEx;
-import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 
@@ -17,7 +15,7 @@ public interface EmulatorEngine {
      * properties of it
      *
      * @param message the template message
-     * @param param the object holding the parameters to be modified
+     * @param param   the object holding the parameters to be modified
      * @return the modified message
      */
     <T extends Message> T prepare(T message, SendParam param);
@@ -29,5 +27,14 @@ public interface EmulatorEngine {
      * @return a sync acknowledgment received
      * TODO specify the runtime exceptions to be captured by the client
      */
-    Acknowledgement send(Message message) throws EndpointNotFoundEx, EndpointErrorEx;
+    Acknowledgement send(Message message);
+
+    /**
+     * It receive the message
+     *
+     * @param message message received
+     * @return a sync acknowledgment
+     * TODO specify the runtime exceptions to be captured by the client
+     */
+    Acknowledgement receive(Message message);
 }

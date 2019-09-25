@@ -11,7 +11,7 @@ export default class MessagePushAPI {
         header: {
             'Content-Type': 'application/json'
         }};
-    defaultPostURL ='/webapi/messages';
+
     defaultPostData = {
     'message_template': '',
     'params': {
@@ -19,6 +19,10 @@ export default class MessagePushAPI {
         'requires_ack': false
     }
     };
+    defaultServiceUrl ="/webapi/";
+
+
+
 
     @computed
     get status() {
@@ -46,9 +50,11 @@ export default class MessagePushAPI {
             valuePostData.params.requires_ack = aSourceValue;
         }
 
+        this.defaultPortUrl= getDefaultPostURL();
+
 
         console.debug("ready preview: ", valuePostData);
-        axios.post(this.defaultPostURL,valuePostData,this.defaultPostConfig)
+        axios.post(this.getDefaultPostURL(),valuePostData,this.defaultPostConfig)
             .then((response) => {
                 console.debug("PREVIEW CALL SUCCESS !!! status : ", response.data.status," /--/  body :  " , response.data.body," /--/ ack :   " , response.data.ack," /--/   "  );
                 this.previewContent= response.data.body;
@@ -66,6 +72,7 @@ export default class MessagePushAPI {
 
     @action
     send(messageCandidate) {
+        const serviceUrl =(( document.location.hostname == "localhost") ? 'http://localhost:47080'+this.defaultServiceUrl+'messages': 'http://'+document.location.host +this.defaultServiceUrl+ 'messages');
         const valuePostData = JSON.parse(JSON.stringify(this.defaultPostData))
         valuePostData.message_template = messageCandidate.templateService.value;
         if (messageCandidate.templatePayload.value != "#none")    valuePostData.message_payload = messageCandidate.templatePayload.value;
@@ -79,7 +86,7 @@ export default class MessagePushAPI {
 
 
         console.debug("ready send: ", valuePostData);
-        axios.post(this.defaultPostURL,valuePostData,this.defaultPostConfig)
+        axios.post(serviceUrl,valuePostData,this.defaultPostConfig)
             .then((response) => {
                 console.debug("SEND CALL SUCCESS !!! status : ", response.data.status," /--/  body :  " , response.data.body," /--/ ack :   " , response.data.ack," /--/   "  );
                 this.previewContent= response.data.body;

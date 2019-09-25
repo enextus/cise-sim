@@ -2,7 +2,7 @@ package eu.cise.emulator;
 
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.RestDispatcher;
-import eu.cise.emulator.api.CiseDropWizardServerBuilder;
+import eu.cise.emulator.api.helpers.CiseDropWizardServerBuilder;
 import eu.cise.emulator.api.CiseEmulatorAPI;
 import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
