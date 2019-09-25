@@ -43,8 +43,8 @@ public class APIMessageTest {
     }
 
     @Test
-    public void it_return_empty_when_NO_stored_message() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor , messageStorage );
+    public void it_returns_empty_when_NO_stored_message() {
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor , messageStorage);
         when(messageStorage.read()).thenReturn(null);
 
         MessageApiDto response = messageAPI.getLastStoredMessage();
@@ -52,9 +52,15 @@ public class APIMessageTest {
         assertThat(response).isNull();
     }
 
-    @Ignore
     @Test
-    public void it_return_last_stored_message() {
+    public void it_returns_last_stored_message() {
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor , messageStorage);
+        MessageApiDto mockedMessageApiDto = mock(MessageApiDto.class);
+        when(messageStorage.read()).thenReturn(mockedMessageApiDto);
+
+        MessageApiDto response = messageAPI.getLastStoredMessage();
+
+        assertThat(response).isEqualTo(mockedMessageApiDto);
 
     }
 
