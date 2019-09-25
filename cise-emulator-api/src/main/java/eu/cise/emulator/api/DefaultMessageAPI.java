@@ -40,6 +40,7 @@ public class DefaultMessageAPI implements MessageAPI {
             Acknowledgement acknowledgement = messageProcessor.send(message, sendParam);
             jsonReturn = jsonReturnBuilder.build("SUCCESS", xmlMapper.toXML(acknowledgement), "");
         } catch (Exception e) {
+            //TODO: interpret the exception to show the right error to the UI
             LOGGER.error("error in Api send {}", e);
             jsonReturn = jsonReturnBuilder.build("ERROR: " + e.getClass() + " : " + e.getMessage(), "", "");
         }

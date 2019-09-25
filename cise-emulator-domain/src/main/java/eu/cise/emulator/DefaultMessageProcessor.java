@@ -1,7 +1,5 @@
 package eu.cise.emulator;
 
-import eu.cise.emulator.exceptions.EndpointErrorEx;
-import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 
@@ -19,7 +17,7 @@ public class DefaultMessageProcessor implements MessageProcessor {
     }
 
     @Override
-    public Acknowledgement send(Message message, SendParam param) throws EndpointNotFoundEx, EndpointErrorEx {
+    public Acknowledgement send(Message message, SendParam param) {
         Message preparedMessage = emulatorEngine.prepare(message, param);
         Acknowledgement acknowledgement = emulatorEngine.send(preparedMessage);
         return acknowledgement;

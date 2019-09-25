@@ -15,7 +15,6 @@ import eu.cise.servicemodel.v1.message.Push;
 import eu.eucise.xml.XmlMapper;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,7 +132,7 @@ public class Outbound {
         try {
             result = emulator.send(preparedMessage);
         } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
-            // do nothing
+            //TODO: pass the error to the UI
         }
         return (new MessageReturn("").build("", xmlMapper.toXML(preparedMessage), xmlMapper.toXML(result)));
     }

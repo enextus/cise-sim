@@ -217,11 +217,8 @@ public class EmulatorEngineTest {
     public void it_sends_message_successfully() {
         DispatchResult dispatchResult = new DispatchResult(true, SYNCH_ACKNOWLEDGEMENT_MSG_SUCCESS);
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
-        try {
-            engine.send(message);
-        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
-            // do nothing
-        }
+
+        engine.send(message);
 
         verify(dispatcher).send(message, ENDPOINT_URL);
     }
@@ -241,11 +238,7 @@ public class EmulatorEngineTest {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
 
         Acknowledgement ack = null;
-        try {
-            ack = engine.send(message);
-        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
-            // do nothing
-        }
+        ack = engine.send(message);
 
         assertThat(ack.getAckCode()).isEqualTo(SUCCESS);
     }
@@ -267,11 +260,7 @@ public class EmulatorEngineTest {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
 
         Acknowledgement ack = null;
-        try {
-            ack = engine.send(message);
-        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
-            // do nothing
-        }
+        ack = engine.send(message);
 
         assertThat(ack.getAckCode()).isEqualTo(SUCCESS);
     }
