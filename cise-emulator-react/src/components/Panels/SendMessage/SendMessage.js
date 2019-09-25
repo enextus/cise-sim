@@ -178,7 +178,7 @@ class SendMessage extends Component {
                             <TextField
                                 id="previewContent"
                                 multiline
-                                label="xml format"
+                                label="Message Preview"
                                 fullWidth
                                 value={this.formattedXmlpreviewContent.substring(0, 200)}
                                 margin="none"
@@ -189,7 +189,7 @@ class SendMessage extends Component {
                         <Grid item xs={12}>
                             <TextField
                                 id="acknowledgeContent"
-                                label="Acknowledgement Content"
+                                label="Acknowledgement"
                                 fullWidth
                                 multiline
                                 value={this.formattedXmlAcknowledgeContent.substring(0, 200)}
