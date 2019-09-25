@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.api.MessageAPI;
+import eu.cise.emulator.api.MessageApiDto;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -16,8 +17,7 @@ import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class WebAPIMessageResourceTest {
 
@@ -39,46 +39,38 @@ public class WebAPIMessageResourceTest {
     @Ignore //TODO: solve the response
     @Test
     public void it_invokes_the_send_the_http_is_successful_201() {
-
-        try {
-            Response response = resources.target("/webapi/messages")
-                    .request()
-                    .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
-            assertThat(response.getStatus()).isEqualTo(201);
-
-        } catch (Exception e) {
-            // do nothing
-        }
+        Response response = resources.target("/webapi/messages")
+                .request()
+                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
+        assertThat(response.getStatus()).isEqualTo(201);
     }
 
     @Test
     public void it_invokes_the_send_and_pass_the_message_to_the_facade() {
-        try {
-            Response test = resources.target("/webapi/messages")
-                    .request()
-                    .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
-        } catch (Exception e) {
-            // do nothing
-        }
-
+        Response test = resources.target("/webapi/messages")
+                .request()
+                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
         verify(messageAPI).send(any(JsonNode.class));
-
     }
 
     @Test
-    public void it_calls_messageAPI_to_obtain_last_stored_message() {
-
-        try {
-            Response test = resources.target("/webapi/messages")
-                    .request()
-                    .get();
-        } catch (Exception e) {
-            // do nothing
-        }
-
+    public void it_invokes_the_receive_and_makes_a_call_to_MessageAPI_to_get_the_last_stored_message() {
+        Response test = resources.target("/webapi/messages")
+                .request()
+                .get();
         verify(messageAPI).getLastStoredMessage();
-
     }
+
+    @Test
+    public void it_invokes_the_receive_and_obtains_the_last_stored_message_from_MessageAPI_with_success() {
+        MessageApiDto storedMessage = mock(MessageApiDto.class);
+        when(messageAPI.getLastStoredMessage()).thenReturn(storedMessage);
+        Response resourceResponse = resources.target("/webapi/messages")
+                .request()
+                .get();
+        assertThat(resourceResponse.getEntity()).isEqualTo(storedMessage);
+    }
+
 
 
     private JsonNode msgTemplateWithParams() {
