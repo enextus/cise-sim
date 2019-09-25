@@ -66,7 +66,7 @@ public class WebAPIMessageResourceTest {
     }
 
     @Test
-    public void it_returns_the_message_from_the_storage_to_the_UI() {
+    public void it_calls_messageAPI_to_obtain_last_stored_message() {
 
         try {
             Response test = resources.target("/webapi/messages")
