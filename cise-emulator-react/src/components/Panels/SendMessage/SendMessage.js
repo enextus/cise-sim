@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
+import DescriptionIcon from '@material-ui/icons/Description';
 
 const styles = makeStyles(theme => ({
     root: {
@@ -82,11 +83,6 @@ class SendMessage extends Component {
         return (
             <div style={{padding: 16, margin: 'auto', maxWidth: 800}}>
                 <CssBaseline/>
-                {/*
-                <Typography variant="h6" align="center" component="h2" gutterBottom>
-                    emu serviceId: emu1-nodecx.nodecx.eucise.cx
-                </Typography>
-*/}
                 <Paper style={{padding: 16}}>
                     <Grid container alignItems="flex-start" spacing={2}>
                         <Grid item xs={6}>
@@ -110,7 +106,7 @@ class SendMessage extends Component {
                                 <InputLabel htmlFor="templateService">Message Template</InputLabel>
                                 <Select
                                     label="Message Template"
-                                    // placeholder="XML Message Template"
+                                    placeholder="select the template"
                                     className={classes.selectEmpty}
                                     // options={this.props.store.appStore.templateOptions}
                                     value={this.props.messageCandidate.templateService}
@@ -173,6 +169,7 @@ class SendMessage extends Component {
                                     variant="contained"
                                     disabled={this.isDisabled()}>
                                 Preview
+                                <DescriptionIcon className={classes.rightIcon}/>
                             </Button>
                         </Grid>
                         <Grid item style={{marginTop: 16}}>
