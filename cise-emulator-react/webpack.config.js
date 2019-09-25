@@ -5,7 +5,7 @@ module.exports = {
   devtool: 'eval',
   mode: 'development',
   entry: [
-    './src/index'
+    './src/index.js'
   ],
   output: {
     path: path.join(__dirname, 'dist'),

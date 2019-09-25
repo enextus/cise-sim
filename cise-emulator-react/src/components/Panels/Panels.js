@@ -56,11 +56,6 @@ export default class Panels extends Component {
                         <Paper style={commandPaneStyle}>
                             <SendMessage store={this.props.store} messageCandidate={messageCandidate}
                                          messagePreview={messagePreview}/>
-                                         <span>
-
-                                         </span>
-                            <ReceiveMessage store={this.props.store} messageCandidate={messageCandidate}
-                                            messagePreview={messagePreview}/>
                         </Paper>
 
                     </Grid>

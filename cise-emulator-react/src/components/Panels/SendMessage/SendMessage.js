@@ -1,11 +1,14 @@
 import React, {Component} from "react";
-import {Button, Checkbox, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
+import {Button, Checkbox, ExpansionPanel, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
 import Select from 'react-select';
 import {observer} from "mobx-react";
+import format from "xml-formatter";
 
 @observer
 export default class SendMessage extends Component {
-
+    messagePreview;
+    formattedXmlpreviewContent;
+    formattedXmlAcknowledgeContent;
     state = {
         selectedOption: null,
     };
@@ -40,11 +43,6 @@ export default class SendMessage extends Component {
     send() {
         this.props.messageCandidate.messageId = this.getId();
         this.props.messagePreview.send(this.props.messageCandidate);
-    }
-
-    preview() {
-        this.props.messageCandidate.messageId = this.getId();
-        this.props.messagePreview.preview(this.props.messageCandidate);
     }
 
 
@@ -101,87 +99,156 @@ export default class SendMessage extends Component {
             },
         ];
 
+        const rootStyle = {
+            width: "100%",
+            fontFamily: 'Liberation Sans',
+            font: 'Liberation'
+        };
+        const headingStyle = {
+            fontSize: "18px",
+            margin: "5px auto",
+            backgroundColor: "#cdcdcd"
+        };
+        const chipStyle = {
+            verticalAlign: "bottom",
+            height: 20,
+            width: 20
+        };
+        const detailsStyle = {
+            alignItems: "center"
+        };
+        const subdetailsStyle = {
+            alignItems: "center"
+        };
+
+        const contentStyle = {
+            flexBasis: "93.33%"
+        };
+        const textfieldStyle = {
+            width: "100%",
+            borderLeft: `4px solid 2`,
+            padding: `2px 4px`,
+            fontFamily: 'Liberation Sans'
+        };
+        this.formattedXmlpreviewContent = format(this.props.messagePreview.previewContent);
+        this.formattedXmlAcknowledgeContent = format(this.props.messagePreview.acknowledgeContent);
 
         return (
             <FormGroup style={formstyle}>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <TextField
-                            name="messageId"
-                            label="messageId"
-                            style={fieldStyle}
-                            margin="normal"
-                            variant="filled"
-                            placeholder="set at first sending intent"
-                            value={this.props.messageCandidate.messageId}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        /> </Grid>
-                    <Grid item xs={6}>
-                        <TextField name="correlationId"
-                                   label="correlationId"
-                                   style={fieldStyle}
-                                   placeholder="Identifier you can used to follow related messages"
-                                   margin="normal"
-                                   variant="filled"
-                                   value={this.props.messageCandidate.correlationId}
-                                   onChange={this.onChange}
-                                   InputLabelProps={{
-                                       shrink: true,
-                                   }}
-                        />
-                    </Grid>
 
-                    <Grid item xs={4}>
-                                    <Select
-                                    styles={customStyles}
-                                    name="templateService"
-                                    label="templateService"
-                                    placeholder={"templateFile *required"}
-                                    options={this.props.store.appStore.templateOptions}
-                                    value={this.props.messageCandidate.templateService}
-                                    onChange={this.handleChangeTemplateService}
+
+
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <TextField
+                                name="messageId"
+                                label="messageId"
+                                style={fieldStyle}
+                                margin="normal"
+                                variant="filled"
+                                placeholder="set at first sending intent"
+                                value={this.props.messageCandidate.messageId}
+                                onChange={this.onChange}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            /> </Grid>
+                        <Grid item xs={6}>
+                            <TextField name="correlationId"
+                                       label="correlationId"
+                                       style={fieldStyle}
+                                       placeholder="Identifier you can used to follow related messages"
+                                       margin="normal"
+                                       variant="filled"
+                                       value={this.props.messageCandidate.correlationId}
+                                       onChange={this.onChange}
+                                       InputLabelProps={{
+                                           shrink: true,
+                                       }}
+                            />
+                        </Grid>
+
+                        <Grid item xs={4}>
+                            <Select
+                                styles={customStyles}
+                                name="templateService"
+                                label="templateService"
+                                placeholder={"templateFile *required"}
+                                options={this.props.store.appStore.templateOptions}
+                                value={this.props.messageCandidate.templateService}
+                                onChange={this.handleChangeTemplateService}
+                            />
+                        </Grid>
+
+                        <Grid item xs={4}>
+
+                            <FormControl>
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td><Checkbox name={"asyncAcknowledge"} style={fieldStyle}
+                                                      value={this.props.messageCandidate.asyncAcknowledge}
+                                                      checked={this.props.messageCandidate.asyncAcknowledge}
+                                                      onChange={this.handleChangeAsyncAcknowledge}/></td>
+                                        <td style={fieldStyle}>Require Asynchronous Acknowledgement</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </FormControl>
+
+                        </Grid>
+                        <Grid item xs={4}>
+                            <span>   </span>
+                            <Button disabled={this.props.messageCandidate.templateService == "#none"}
+                                    style={buttonStyle} id="preview"
+                                    onClick={() => this.preview()}>
+                                Preview
+                            </Button>
+                            <span>   </span>
+                            <Button disabled={this.props.messageCandidate.templateService == "#none"}
+                                    style={buttonStyle} id="send"
+                                    onClick={() => this.send()}>
+                                Send
+                            </Button>
+                            <span>   </span>
+                        </Grid>
+                        <Grid xs={6}>
+                                <TextField
+                                    id="previewContent"
+                                    multiline
+                                    label="xml format"
+                                    value={this.formattedXmlpreviewContent.substring(0, 200)}
+                                    style={textfieldStyle}
+                                    margin="none"
+                                    InputProps={{
+                                        readOnly: true
+                                    }}
                                 />
+                        </Grid>
+                        <Grid xs={6}>
+                                <span></span>
+                                <TextField
+                                    id="acknowledgeContent"
+                                    label="Acknowledgement Content"
+                                    style={textfieldStyle}
+                                    multiline
+                                    value={this.formattedXmlAcknowledgeContent.substring(0, 200)}
+                                    margin="none"
+                                    InputProps={{
+                                        readOnly: true
+                                    }}
+                                />
+                        </Grid>
                     </Grid>
 
-                    <Grid item xs={4}>
-
-                        <FormControl>
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td><Checkbox name={"asyncAcknowledge"} style={fieldStyle}
-                                                  value={this.props.messageCandidate.asyncAcknowledge}
-                                                  checked={this.props.messageCandidate.asyncAcknowledge}
-                                                  onChange={this.handleChangeAsyncAcknowledge}/></td>
-                                    <td style={fieldStyle}>Require Asynchronous Acknowledgement</td>
-                                </tr>
-                                </tbody>
-                            </table>
 
 
-                        </FormControl>
-
-                    </Grid>
-                    <Grid item xs={4}>
-                        <span>   </span>
-                        <Button disabled={this.props.messageCandidate.templateService == "#none"}
-                                style={buttonStyle} id="preview"
-                                onClick={() => this.preview()}>
-                            Preview
-                        </Button>
-                        <span>   </span>
-                        <Button disabled={this.props.messageCandidate.templateService == "#none"}
-                                style={buttonStyle} id="send"
-                                onClick={() => this.send()}>
-                            Send
-                        </Button>
-                        <span>   </span>
-                    </Grid>
-                </Grid>
             </FormGroup>
+
         );
+
     }
 
 

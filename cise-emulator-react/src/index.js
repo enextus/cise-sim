@@ -16,7 +16,7 @@ stores.messageStore.createNewMessage("", MessageType.MASTER_IN, "", "", "false",
 render(
     <div>
         <DevTools/>
-        <MainApp store={stores}/>
+        <MainApp store={stores} />
     </div>,
     document.getElementById("root")
 );

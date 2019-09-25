@@ -5,7 +5,8 @@
   "scripts": {
     "start": "webpack-dev-server --hot --open",
     "build": "webpack",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,8 @@
     "webpack-dev-server": "^3.7.2",
     "mobx-react-devtools": "^6.0.1",
     "react-test-renderer": "^16.9.0",
-    "eslint": "^6.4.0"
+    "eslint": "^6.4.0",
+    "jest": "^24.9.0"
   },
   "dependencies": {
     "@material-ui/core": "^4.1.3",
