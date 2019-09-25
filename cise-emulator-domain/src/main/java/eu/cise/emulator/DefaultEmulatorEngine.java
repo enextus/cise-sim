@@ -139,7 +139,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     @Override
     public Acknowledgement receive(Message message) {
         notNull(message, NullMessageEx.class);
-        
+
+        // check creation datetime
         if ((message.getCreationDateTime()).compare(getDatetime(3)) == DatatypeConstants.LESSER ||
                 (message.getCreationDateTime()).compare(getDatetime(0)) == DatatypeConstants.GREATER) {
             throw new CreationDateErrorEx();
