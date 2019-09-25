@@ -1,20 +1,14 @@
 import React, {Component} from "react";
-import {
-    Button,
-    Checkbox,
-    FormControlLabel,
-    FormControl,
-    FormGroup,
-    Grid,
-    TextField,
-    Select,
-    InputLabel
-} from "@material-ui/core";
+import {Button, Checkbox, FormControl, FormControlLabel, InputLabel, Select, TextField} from "@material-ui/core";
 import {observer} from "mobx-react";
-import {makeStyles} from '@material-ui/core/styles';
-import withStyles from "@material-ui/styles/withStyles/withStyles";
+import {makeStyles, withStyles} from '@material-ui/core/styles';
+import MenuItem from "@material-ui/core/MenuItem";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import {Send} from "@material-ui/icons";
 
-const styles = makeStyles(theme => ({
+const myStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -22,10 +16,23 @@ const styles = makeStyles(theme => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
+        backgroundColor: "#ff0000",
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
-        width: 200,
+    },
+    button: {
+        margin: theme.spacing(1),
+        backgroundColor: "#00ff00",
+    },
+    leftIcon: {
+        marginRight: theme.spacing(1),
+    },
+    rightIcon: {
+        marginLeft: theme.spacing(1),
+    },
+    iconSmall: {
+        fontSize: 20,
     },
 }));
 
@@ -73,49 +80,79 @@ class SendMessage extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <form className={classes.root} autoComplete="off">
-                <FormGroup row>
-                    <Grid container
-                          spacing={2}
-                          direction="row"
-                          justify="space-evenly"
-                          alignContent="stretch"
-                          alignItems="center">
-
-                        <Grid item xs={4}>
+            <div style={{padding: 16, margin: 'auto', maxWidth: 800}}>
+                <CssBaseline/>
+                {/*
+                <Typography variant="h6" align="center" component="h2" gutterBottom>
+                    emu serviceId: emu1-nodecx.nodecx.eucise.cx
+                </Typography>
+*/}
+                <Paper style={{padding: 16}}>
+                    <Grid container alignItems="flex-start" spacing={2}>
+                        <Grid item xs={6}>
                             <TextField
                                 name="messageId"
                                 label="Message Id"
+                                fullWidth={true}
                                 color="primary"
                                 value={this.props.messageCandidate.messageId}/>
                         </Grid>
-
-                        <Grid item xs={4}>
+                        <Grid item xs={6}>
                             <TextField name="correlationId"
                                        label="Correlation Id"
+                                       fullWidth={true}
                                        color="primary"
                                        value={this.props.messageCandidate.correlationId}
                                        onChange={this.onChange}/>
                         </Grid>
-
-                        <Grid item xs={9}>
-                            <FormControl className={classes.formControl}>
-                                <InputLabel forHtml="templateService">XML Message Template</InputLabel>
+                        <Grid item xs={6}>
+                            <FormControl className={classes.formControl} fullWidth={true}>
+                                <InputLabel htmlFor="templateService">Message Template</InputLabel>
                                 <Select
-                                    label="XML Message Template"
-                                    placeholder="XML Message Template"
+                                    label="Message Template"
+                                    // placeholder="XML Message Template"
                                     className={classes.selectEmpty}
-                                    options={this.props.store.appStore.templateOptions}
+                                    // options={this.props.store.appStore.templateOptions}
                                     value={this.props.messageCandidate.templateService}
                                     onChange={this.handleChangeTemplateService}
                                     inputProps={{
                                         name: 'templateService',
                                         id: 'templateService'
-                                    }}
-                                    />
+                                    }}>
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>Ten</MenuItem>
+                                    <MenuItem value={20}>Twenty</MenuItem>
+                                    <MenuItem value={30}>Thirty</MenuItem>
+                                </Select>
                             </FormControl>
                         </Grid>
-
+                        <Grid item xs={6}>
+                            <FormControl className={classes.formControl}
+                                         fullWidth={true}
+                                         disabled={true}>
+                                <InputLabel htmlFor="payloadService">Payload Template</InputLabel>
+                                <Select
+                                    label="Payload Template"
+                                    // placeholder="XML Payload Template"
+                                    className={classes.selectEmpty}
+                                    // options={this.props.store.appStore.templateOptions}
+                                    value={this.props.messageCandidate.templateService}
+                                    onChange={this.handleChangeTemplateService}
+                                    inputProps={{
+                                        name: 'payloadService',
+                                        id: 'payloadService'
+                                    }}>
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>Ten</MenuItem>
+                                    <MenuItem value={20}>Twenty</MenuItem>
+                                    <MenuItem value={30}>Thirty</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={
@@ -126,32 +163,33 @@ class SendMessage extends Component {
                                         checked={this.props.messageCandidate.asyncAcknowledge}
                                         value={this.props.messageCandidate.asyncAcknowledge}/>
                                 }
-                                label="Require Async Ack"
-                            />
+                                label="Require Async Ack"/>
                         </Grid>
-
-                        <Grid item xs={6}>
+                        <Grid item style={{marginTop: 16}}>
                             <Button id="preview"
                                     onClick={() => this.preview()}
                                     color="primary"
+                                    className={classes.button}
                                     variant="contained"
                                     disabled={this.isDisabled()}>
                                 Preview
                             </Button>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item style={{marginTop: 16}}>
                             <Button
                                 id="send"
                                 color="secondary"
                                 variant="contained"
+                                className={classes.button}
                                 onClick={() => this.send()}
                                 disabled={this.isDisabled()}>
                                 Send
+                                <Send className={classes.rightIcon}/>
                             </Button>
                         </Grid>
                     </Grid>
-                </FormGroup>
-            </form>
+                </Paper>
+            </div>
         );
     }
 
@@ -163,13 +201,16 @@ class SendMessage extends Component {
         let d = new Date().getTime();
         //TODO extend uuid to form "ba6f94e3-2004-439b-a09f-a6f1f96ea34c"
         //TODO validate "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxyx"
-        const uuid = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxyx'.replace(/[xy]/g, function (c) {
+        return 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxyx'.replace(/[xy]/g, this.getReplacer(d))
+    }
+
+    getReplacer(d) {
+        return function (c) {
             const r = ((d + Math.random() * 16) % 16) | 0;
             d = Math.floor(d / 16);
             return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
-        });
-        return uuid
+        };
     }
 }
 
-export default withStyles(styles)(SendMessage)
+export default withStyles(myStyles)(SendMessage)
