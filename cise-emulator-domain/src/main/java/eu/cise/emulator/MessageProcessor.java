@@ -7,4 +7,7 @@ public interface MessageProcessor {
     Message preview(Message message, SendParam param);
 
     Acknowledgement send(Message message, SendParam param);
+
+    Acknowledgement receive(Message message);
+
 }

@@ -23,4 +23,9 @@ public class DefaultMessageProcessor implements MessageProcessor {
         return acknowledgement;
     }
 
+    @Override
+    public Acknowledgement receive(Message message) {
+        Acknowledgement acknowledgement = emulatorEngine.receive(message);
+        return acknowledgement;
+    }
 }

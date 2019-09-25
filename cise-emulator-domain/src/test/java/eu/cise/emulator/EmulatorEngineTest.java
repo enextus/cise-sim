@@ -11,6 +11,8 @@ import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.servicemodel.v1.service.Service;
+import eu.cise.servicemodel.v1.service.ServiceType;
 import eu.cise.signature.SignatureService;
 import org.junit.After;
 import org.junit.Before;
@@ -204,7 +206,14 @@ public class EmulatorEngineTest {
         cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant()));
         message.setCreationDateTime(new XMLGregorianCalendarImpl(cal));
 
+        // assign a service
+        Service service = new Service();
+        service.setServiceID("id");
+        service.setServiceType(ServiceType.VESSEL_SERVICE);
+        message.setSender(service);
+
         when(config.serviceId()).thenReturn("service-id");
+        when(config.serviceType()).thenReturn(ServiceType.VESSEL_SERVICE);
         when(config.endpointUrl()).thenReturn(ENDPOINT_URL);
     }
 
@@ -287,4 +296,11 @@ public class EmulatorEngineTest {
                 .withMessageContaining("outside the allowed range");
     }
 
+    @Test
+    public void it_receives_a_valid_message_and_returns_the_acknowledge() {
+        Acknowledgement ack = null;
+        ack = engine.receive(message);
+
+        assertThat(ack.getAckCode()).isEqualTo(SUCCESS);
+    }
 }

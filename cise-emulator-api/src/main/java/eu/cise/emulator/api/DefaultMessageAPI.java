@@ -53,7 +53,7 @@ public class DefaultMessageAPI implements MessageAPI {
         CiseMessageResponse ciseMessageResponse;
         try {
             Message message = xmlMapper.fromXML(content);
-            Acknowledgement acknowledgement = null;
+            Acknowledgement acknowledgement = messageProcessor.receive(message);
             //TODO: call to message processor returning acknowledgement
             ciseMessageResponse = new CiseMessageResponse(xmlMapper, acknowledgement, message);
         } catch (Exception e) {

@@ -29,5 +29,12 @@ public interface EmulatorEngine {
      */
     Acknowledgement send(Message message);
 
-    void receive(Message message);
+    /**
+     * It receive the message
+     *
+     * @param message message received
+     * @return a sync acknowledgment
+     * TODO specify the runtime exceptions to be captured by the client
+     */
+    Acknowledgement receive(Message message);
 }
