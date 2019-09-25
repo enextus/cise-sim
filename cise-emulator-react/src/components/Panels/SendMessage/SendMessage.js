@@ -168,7 +168,7 @@ class SendMessage extends Component {
                                     className={classes.button}
                                     variant="contained"
                                     disabled={this.isDisabled()}>
-                                Preview
+                                Preview&nbsp;
                                 <DescriptionIcon className={classes.rightIcon}/>
                             </Button>
                         </Grid>
@@ -180,7 +180,7 @@ class SendMessage extends Component {
                                 className={classes.button}
                                 onClick={() => this.send()}
                                 disabled={this.isDisabled()}>
-                                Send
+                                Send&nbsp;
                                 <SendRoundedIcon className={classes.rightIcon}/>
                             </Button>
                         </Grid>

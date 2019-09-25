@@ -2,37 +2,48 @@ import React, {Component} from "react";
 import {AppBar, Button, Toolbar, Typography} from "@material-ui/core";
 import {observer} from "mobx-react";
 import DirectionsBoatIcon from '@material-ui/icons/DirectionsBoat';
+import Chip from "@material-ui/core/Chip";
+import Avatar from "@material-ui/core/Avatar";
+import withStyles from "@material-ui/core/styles/withStyles";
+import PropTypes from "prop-types";
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+    },
+    chip: {
+        marginRight: theme.spacing(2),
+    },
+});
 
 @observer
-export default class NavBar extends Component {
-    member = "";
-    memberList = {};
+class NavBar extends Component {
 
     constructor(props) {
         super(props);
     }
 
     render() {
-        this.myuser = this.props.store.appStore.memberId;
-        this.memberList = this.props.store.appStore.memberList;
-        if (this.myuser === "") {
-            return ("");
-        }
-
+        const {classes} = this.props;
         return (
-            <AppBar>
+            <AppBar className={classes.root}>
                 <Toolbar>
                     <Typography variant="h5" type="title" color="inherit" style={{flex: 1, fontWeight: "bold"}}>
-                        <DirectionsBoatIcon/>&nbsp;
-                        CISE Emu
+                        <DirectionsBoatIcon/>&nbsp;CISE Emu
                     </Typography>
                     <div>
+                        <Chip
+                            avatar={<Avatar>ID</Avatar>}
+                            label={this.getServiceId()}
+                            className={classes.chip}
+                            color="secondary"
+                        />
                         <Button
                             variant="contained"
                             disabled={!this.isConnected()}
-                            color="secondary">
-
-                            Mode: REST
+                            color="secondary"> REST
                         </Button>
                     </div>
                 </Toolbar>
@@ -40,7 +51,18 @@ export default class NavBar extends Component {
         );
     }
 
+    getServiceId() {
+        return this.props.store.appStore.memberId;
+    }
+
     isConnected() {
         return this.props.store.appStore.connected;
     }
 }
+
+NavBar.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+
+export default withStyles(styles)(NavBar)

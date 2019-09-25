@@ -36,7 +36,7 @@ export default class MainAppModel {
 
     @action
     obtainSelfMember() {
-        this.memberId = "fake.id.debug";
+        this.memberId = "fake-nodecx.nodecx.europa.cx";
         // axios.get(("/webapi/members/0"))
         //     .then((response) => {
         //         console.log("obtainSelfMember SUCCESS !!! @axios call ", response.data);
