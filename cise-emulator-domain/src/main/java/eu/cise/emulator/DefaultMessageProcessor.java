@@ -22,4 +22,10 @@ public class DefaultMessageProcessor implements MessageProcessor {
         Acknowledgement acknowledgement = emulatorEngine.send(preparedMessage);
         return acknowledgement;
     }
+
+    @Override
+    public Acknowledgement receive(Message message) {
+        Acknowledgement acknowledgement = emulatorEngine.receive(message);
+        return acknowledgement;
+    }
 }
