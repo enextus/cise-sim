@@ -1,24 +1,35 @@
 package eu.cise.emulator;
 
+import com.google.common.base.Strings;
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
 import eu.cise.emulator.exceptions.*;
-import eu.cise.emulator.helpers.AcknowledgementHelper;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.signature.SignatureService;
+import eu.eucise.helpers.AckBuilder;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
 import java.time.Clock;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.GregorianCalendar;
+import java.util.UUID;
 
 import static eu.cise.emulator.helpers.Asserts.notNull;
+import static eu.eucise.helpers.AckBuilder.newAck;
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
+import static eu.eucise.helpers.ServiceBuilder.newService;
 
 public class DefaultEmulatorEngine implements EmulatorEngine {
 
@@ -97,7 +108,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     }
 
     @Override
-    public Acknowledgement send(Message message) throws EndpointNotFoundEx, EndpointErrorEx {
+    public Acknowledgement send(Message message) {
         Acknowledgement response;
         try {
             DispatchResult sendResult = dispatcher.send(message, config.endpointUrl());
@@ -108,15 +119,82 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
             String result = sendResult.getResult();
             LOGGER.debug("send in DefaultEmulatorEngine receive result {}", result);
-            if (!result.contains(SENDER_TAG)) {
-                result = AcknowledgementHelper.increaseAckCodeWithSender(result);
-            }
+            DefaultXmlMapper notValidatingXmlMapper = new DefaultXmlMapper.NotValidating();
+            Acknowledgement acknowledgement = notValidatingXmlMapper.fromXML(result);
 
-            response = xmlMapper.fromXML(result);
+            if (acknowledgement.getSender() == null ||
+                    Strings.isNullOrEmpty(acknowledgement.getSender().getServiceID()) ||
+                    acknowledgement.getSender().getServiceOperation() == null
+            ) {
+                acknowledgement.setSender(newService().id("").operation(ServiceOperationType.PUSH).build());
+            }
+            response = acknowledgement;
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();
         }
 
         return response;
+    }
+
+    @Override
+    public Acknowledgement receive(Message message) {
+        notNull(message, NullMessageEx.class);
+
+        // check creation datetime
+        if ((message.getCreationDateTime()).compare(getDatetime(3)) == DatatypeConstants.LESSER ||
+                (message.getCreationDateTime()).compare(getDatetime(0)) == DatatypeConstants.GREATER) {
+            throw new CreationDateErrorEx();
+        }
+
+        // check sender exists
+        if (message.getSender() == null) {
+            throw new NullSenderEx();
+        }
+
+        // verify signature
+        signature.verify(message);
+
+        // send back the acknowledgement
+        Acknowledgement acknowledgement = buildAcknowledgeMessage(message);
+
+        return acknowledgement;
+    }
+
+    private XMLGregorianCalendar getDatetime(long hours) {
+        GregorianCalendar datetime = new GregorianCalendar();
+        datetime.setTime(java.util.Date.from(ZonedDateTime.now(ZoneId.of("UTC")).minusHours(hours).toInstant()));
+        return new XMLGregorianCalendarImpl(datetime);
+    }
+
+    private Acknowledgement buildAcknowledgeMessage(Message message) {
+        AcknowledgementType acknowledgementType;
+        String acknowledgementDetail;
+
+        // define the acknowledgementType
+        if (!message.getSender().getServiceType().equals(config.serviceType())) {
+            acknowledgementType = AcknowledgementType.SERVICE_TYPE_NOT_SUPPORTED;
+            acknowledgementDetail = "Supported service type is " + message.getSender().getServiceType().value();
+        } else {
+            acknowledgementType = AcknowledgementType.SUCCESS;
+            acknowledgementDetail = "Message delivered";
+        }
+
+        // build the acknowledgement
+        AckBuilder ackBuilder = newAck()
+                .id(UUID.randomUUID().toString())
+                .sender(newService()
+                        .id(message.getSender().getServiceID())
+                        .operation(ServiceOperationType.ACKNOWLEDGEMENT))
+                .creationDateTime(java.util.Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant()))
+                .informationSecurityLevel(message.getPayload().getInformationSecurityLevel())
+                .informationSensitivity(message.getPayload().getInformationSensitivity())
+                .purpose(message.getPayload().getPurpose())
+                .priority(message.getPriority())
+                .ackCode(acknowledgementType)
+                .ackDetail(acknowledgementDetail)
+                .isRequiresAck(false);
+
+        Acknowledgement acknowledgement = ackBuilder.build();
+        return acknowledgement;
     }
 }

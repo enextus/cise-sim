@@ -55,31 +55,15 @@ export default class Panels extends Component {
                     <Grid item xs={12}>
                         <SendMessage store={this.props.store} messageCandidate={messageCandidate}
                                      messagePreview={messagePreview}/>
+{/*
                         <ReceiveMessage store={this.props.store} messageCandidate={messageCandidate}
                                         messagePreview={messagePreview}/>
-
+*/}
                     </Grid>
-
                 </Grid>
             </div>
         );
     }
-
-    obtainPreview(messageCandidate) {
-        console.log("messageCandidate.asyncAcknowledge" + messageCandidate.asyncAcknowledge
-            + "messageCandidate.templateService" + messageCandidate.templateService
-            + "messageCandidate.correlationId" + messageCandidate.correlationId
-            + "messageCandidate.templatePayload" + messageCandidate.templatePayload);
-    }
-
-    sendMessage(messageCandidate) {
-        console.log("messageCandidate.asyncAcknowledge" + messageCandidate.asyncAcknowledge
-            + "messageCandidate.templateService" + messageCandidate.templateService
-            + "messageCandidate.correlationId" + messageCandidate.correlationId
-            + "messageCandidate.templatePayload" + messageCandidate.templatePayload);
-        // create a virtual message to send to the server
-    }
-
 }
 
 
