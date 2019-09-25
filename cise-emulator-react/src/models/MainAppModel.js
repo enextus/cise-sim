@@ -8,13 +8,13 @@ export default class MainAppModel {
 
     @computed
     get isModClosed() {
-        return this.modalOpen == false;
+        return this.modalOpen === false;
     }
 
     @computed
     get isConnected() {
         return (
-            this.memberId != "#TobeLoaded#" && this.optionsTemplate.length > 0
+            this.memberId !== "#TobeLoaded#" && this.optionsTemplate.length > 0
         );
     }
 
@@ -30,7 +30,6 @@ export default class MainAppModel {
     closeModal() {
         this.modalOpen = false;
     }
-
 
     @action
     loadServiceId() {
