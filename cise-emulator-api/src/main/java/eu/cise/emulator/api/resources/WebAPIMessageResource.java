@@ -38,7 +38,7 @@ public class WebAPIMessageResource {
     public Response receive() {
         LOGGER.info("messagePull from UI");
 
-
+        messageAPI.getLastStoredMessage();
 
         return Response
                 .status(Response.Status.OK)
