@@ -1,24 +1,30 @@
 package eu.cise.emulator;
 
+import com.google.common.base.Strings;
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
 import eu.cise.emulator.exceptions.*;
-import eu.cise.emulator.helpers.AcknowledgementHelper;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.signature.SignatureService;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
 import java.time.Clock;
+import java.time.ZoneId;
+import java.util.GregorianCalendar;
 
 import static eu.cise.emulator.helpers.Asserts.notNull;
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
+import static eu.eucise.helpers.ServiceBuilder.newService;
 
 public class DefaultEmulatorEngine implements EmulatorEngine {
 
@@ -97,7 +103,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     }
 
     @Override
-    public Acknowledgement send(Message message) throws EndpointNotFoundEx, EndpointErrorEx {
+    public Acknowledgement send(Message message) {
         Acknowledgement response;
         try {
             DispatchResult sendResult = dispatcher.send(message, config.endpointUrl());
@@ -108,15 +114,36 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
             String result = sendResult.getResult();
             LOGGER.debug("send in DefaultEmulatorEngine receive result {}", result);
-            if (!result.contains(SENDER_TAG)) {
-                result = AcknowledgementHelper.increaseAckCodeWithSender(result);
-            }
+            DefaultXmlMapper notValidatingXmlMapper = new DefaultXmlMapper.NotValidating();
+            Acknowledgement acknowledgement = notValidatingXmlMapper.fromXML(result);
 
-            response = xmlMapper.fromXML(result);
+            if (acknowledgement.getSender() == null ||
+                    Strings.isNullOrEmpty(acknowledgement.getSender().getServiceID()) ||
+                    acknowledgement.getSender().getServiceOperation() == null
+            ) {
+                acknowledgement.setSender(newService().id("").operation(ServiceOperationType.PUSH).build());
+            }
+            response = acknowledgement;
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();
         }
 
         return response;
+    }
+
+    @Override
+    public void receive(Message message) {
+        notNull(message, NullMessageEx.class);
+
+        XMLGregorianCalendar messageXmlGregorianCalendar = message.getCreationDateTime();
+
+        GregorianCalendar currentGregorianCalendar = new GregorianCalendar();
+        currentGregorianCalendar.setTime(java.util.Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).minusHours(3).toInstant()));
+        XMLGregorianCalendar currentXmlGregorianCalendar = new XMLGregorianCalendarImpl(currentGregorianCalendar);
+
+        if (messageXmlGregorianCalendar.compare(currentXmlGregorianCalendar) == DatatypeConstants.LESSER) {
+            throw new CreationDateErrorEx();
+        }
+
     }
 }

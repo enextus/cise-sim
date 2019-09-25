@@ -14,7 +14,6 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -23,8 +22,6 @@ import java.util.List;
  * A utility to run DropWizard (http://dropwizard.io/) applications in-process.
  */
 public class CiseDropWizardServerBuilder {
-
-    public static File tmpConfigFile;
 
     public static <T extends CiseEmulatorDropwizardConf> DropWizardServer<T> createServer(
             String configFile,

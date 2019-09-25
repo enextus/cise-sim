@@ -20,7 +20,6 @@ import java.io.IOException;
 public class DefaultMessageAPI implements MessageAPI {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebAPIMessageResource.class);
     private MessageProcessor messageProcessor;
-    private ObjectMapper jsonMapper;
     private XmlMapper xmlMapper;
 
     public DefaultMessageAPI(MessageProcessor messageProcessor) {
@@ -41,6 +40,7 @@ public class DefaultMessageAPI implements MessageAPI {
             Acknowledgement acknowledgement = messageProcessor.send(message, sendParam);
             jsonReturn = jsonReturnBuilder.build("SUCCESS", xmlMapper.toXML(acknowledgement), "");
         } catch (Exception e) {
+            //TODO: interpret the exception to show the right error to the UI
             LOGGER.error("error in Api send {}", e);
             jsonReturn = jsonReturnBuilder.build("ERROR: " + e.getClass() + " : " + e.getMessage(), "", "");
         }
@@ -50,11 +50,11 @@ public class DefaultMessageAPI implements MessageAPI {
     @Override
     public CiseMessageResponse receive(String content) {
         LOGGER.debug("receive is receiving through api : {}", content.substring(0, 200));
-        MessageReturn jsonReturnBuilder = new MessageReturn("");
-        CiseMessageResponse ciseMessageResponse = null;
+        CiseMessageResponse ciseMessageResponse;
         try {
             Message message = xmlMapper.fromXML(content);
-            Acknowledgement acknowledgement = null; // messageProcessor.receive(message);
+            Acknowledgement acknowledgement = null;
+            //TODO: call to message processor returning acknowledgement
             ciseMessageResponse = new CiseMessageResponse(xmlMapper, acknowledgement, message);
         } catch (Exception e) {
             LOGGER.error("error in Api send {}", e);
@@ -65,9 +65,8 @@ public class DefaultMessageAPI implements MessageAPI {
 
     private class MessageReturn {
         final String source;
-        final ObjectMapper jsonmapper = new ObjectMapper();
-        final ObjectNode innerRootJsonNode = jsonmapper.createObjectNode();
-        boolean errorFlag = true;
+        final ObjectMapper jsonMapper = new ObjectMapper();
+        final ObjectNode innerRootJsonNode = jsonMapper.createObjectNode();
 
         private MessageReturn(String source) {
             this.source = source;
@@ -75,21 +74,20 @@ public class DefaultMessageAPI implements MessageAPI {
 
 
         public boolean isError() {
-            return errorFlag;
+            return !(innerRootJsonNode.get("status").asText().isEmpty());
         }
 
-        public JsonNode build(String refError, String refAcknowledge, String refMessageString) {
-            if (refError.isEmpty()) this.errorFlag = false;
-            innerRootJsonNode.put("status", refError);
-            innerRootJsonNode.put("body", refMessageString);
-            innerRootJsonNode.put("ack", refAcknowledge);
-            JsonNode suportedNode = null;
+        public JsonNode build(String status, String contentAcknowledge, String contentMessageString) {
+            innerRootJsonNode.put("status", status);
+            innerRootJsonNode.put("body", contentMessageString);
+            innerRootJsonNode.put("ack", contentAcknowledge);
+            JsonNode jsonResult = null;
             try {
-                suportedNode = (JsonNode) jsonmapper.readTree(innerRootJsonNode.toString());
+                jsonResult = jsonMapper.readTree(innerRootJsonNode.toString());
             } catch (IOException e) {
 
             }
-            return (suportedNode);
+            return (jsonResult);
         }
     }
 }

@@ -1,4 +1,4 @@
-package eu.cise.emulator.helpers;
+package eu.cise.emulator.deprecated.cli.util;
 
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.eucise.xml.XmlMapper;
@@ -11,6 +11,19 @@ public class AcknowledgementHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(AcknowledgementHelper.class);
 
     public AcknowledgementHelper() {
+    }
+
+    public static String increaseAckCodeWithSender(String inicialContent) {
+        String serviceSenderDescriptor = "<Sender>\n" +
+                "        <ServiceID>cx.simlsa1-nodecx.vessel.push.provider</ServiceID>\n" +
+                "        <ServiceOperation>Push</ServiceOperation>\n" +
+                "</Sender>";
+
+        int positionAckCodeTag = inicialContent.indexOf("<AckCode>");
+        String correctedContent = inicialContent.substring(0, positionAckCodeTag)
+                + serviceSenderDescriptor
+                + inicialContent.substring(positionAckCodeTag);
+        return correctedContent;
     }
 
     public String getAckCode(XmlMapper xmlMapper, String inicialContent) {
@@ -26,18 +39,5 @@ public class AcknowledgementHelper {
             LOGGER.error("unable to evaluated the returned ACK : [" + correctedContent + "]", e);
         }
         return ackCode;
-    }
-
-    public static String increaseAckCodeWithSender(String inicialContent) {
-        String serviceSenderDescriptor = "<Sender>\n" +
-                "        <ServiceID>cx.simlsa1-nodecx.vessel.push.provider</ServiceID>\n" +
-                "        <ServiceOperation>Push</ServiceOperation>\n" +
-                "</Sender>";
-
-        int positionAckCodeTag = inicialContent.indexOf("<AckCode>");
-        String correctedContent = inicialContent.substring(0, positionAckCodeTag)
-                + serviceSenderDescriptor
-                + inicialContent.substring(positionAckCodeTag);
-        return correctedContent;
     }
 }

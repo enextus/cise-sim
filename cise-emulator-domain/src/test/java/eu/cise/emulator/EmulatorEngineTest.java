@@ -1,22 +1,29 @@
 package eu.cise.emulator;
 
 
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
+import eu.cise.emulator.exceptions.CreationDateErrorEx;
 import eu.cise.emulator.exceptions.EndpointErrorEx;
 import eu.cise.emulator.exceptions.EndpointNotFoundEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.signature.SignatureService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.SUCCESS;
 import static eu.eucise.helpers.PushBuilder.newPush;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class EmulatorEngineTest {
@@ -192,6 +199,11 @@ public class EmulatorEngineTest {
         engine = new DefaultEmulatorEngine(signatureService, dispatcher, config);
         message = newPush().build();
 
+        // set the message creation datetime to a valid value
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant()));
+        message.setCreationDateTime(new XMLGregorianCalendarImpl(cal));
+
         when(config.serviceId()).thenReturn("service-id");
         when(config.endpointUrl()).thenReturn(ENDPOINT_URL);
     }
@@ -205,11 +217,8 @@ public class EmulatorEngineTest {
     public void it_sends_message_successfully() {
         DispatchResult dispatchResult = new DispatchResult(true, SYNCH_ACKNOWLEDGEMENT_MSG_SUCCESS);
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
-        try {
-            engine.send(message);
-        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
-            // do nothing
-        }
+
+        engine.send(message);
 
         verify(dispatcher).send(message, ENDPOINT_URL);
     }
@@ -229,11 +238,7 @@ public class EmulatorEngineTest {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
 
         Acknowledgement ack = null;
-        try {
-            ack = engine.send(message);
-        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
-            // do nothing
-        }
+        ack = engine.send(message);
 
         assertThat(ack.getAckCode()).isEqualTo(SUCCESS);
     }
@@ -249,20 +254,37 @@ public class EmulatorEngineTest {
     }
 
 
-
     @Test
     public void it_adds_a_sender_upon_a_successful_response_without_the_sender_tag() {
         DispatchResult dispatchResult = new DispatchResult(true, SYNCH_ACKNOWLEDGEMENT_MSG_SUCCESS_NO_SENDER);
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(dispatchResult);
 
         Acknowledgement ack = null;
-        try {
-            ack = engine.send(message);
-        } catch (EndpointNotFoundEx | EndpointErrorEx endpointNotFoundEx) {
-            // do nothing
-        }
+        ack = engine.send(message);
 
         assertThat(ack.getAckCode()).isEqualTo(SUCCESS);
+    }
+
+    @Test
+    public void it_receives_a_valid_message() {
+        try {
+            engine.receive(message);
+        } catch (Exception e) {
+            fail("Receive raised an exception");
+        }
+    }
+
+    @Test
+    public void it_receives_a_message_with_wrong_creation_date_in_the_past() {
+        Message message = newPush().build();
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant().minus(4, ChronoUnit.HOURS)));
+
+        message.setCreationDateTime(new XMLGregorianCalendarImpl(cal));
+
+        assertThatExceptionOfType(CreationDateErrorEx.class)
+                .isThrownBy(() -> engine.receive(message))
+                .withMessageContaining("outside the allowed range");
     }
 
 }
