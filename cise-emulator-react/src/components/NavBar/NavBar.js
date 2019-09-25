@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import {MoveToInbox} from "@material-ui/icons";
 import {AppBar, Button, Toolbar, Typography} from "@material-ui/core";
 import {observer} from "mobx-react";
+import DirectionsBoatIcon from '@material-ui/icons/DirectionsBoat';
 
 @observer
 export default class NavBar extends Component {
@@ -20,40 +20,27 @@ export default class NavBar extends Component {
         }
 
         return (
-            <div style={{textAlign: "right", font: "Liberation Sans"}}>
-                <AppBar title="Users">
-                    <Toolbar>
+            <AppBar>
+                <Toolbar>
+                    <Typography variant="h5" type="title" color="inherit" style={{flex: 1, fontWeight: "bold"}}>
+                        <DirectionsBoatIcon/>&nbsp;
+                        CISE Emu
+                    </Typography>
+                    <div>
+                        <Button
+                            variant="contained"
+                            disabled={!this.isConnected()}
+                            color="secondary">
 
-                        <Typography
-                            style={{textAlign: "right", font: "Liberation Sans", color: "white"}}>
-                            <Button
-                                style={{textAlign: "right", font: "Liberation Sans", color: "white"}}>
-                                <MoveToInbox/>: {this.props.store.appStore.memberId}
-                            </Button>
-                        </Typography>
-
-                        <Button variant="contained"
-                                color={this.props.store.appStore.connected ? "secondary" : "primary"}>
                             Mode: REST
                         </Button>
-
-                    </Toolbar>
-                </AppBar>
-            </div>
+                    </div>
+                </Toolbar>
+            </AppBar>
         );
     }
 
-    renderUser() {
-        // todo put condition to return all except the user
-        return this.userList.map(user => (
-            <Button>
-                <MoveToInbox/> {user}
-            </Button>
-        ));
+    isConnected() {
+        return this.props.store.appStore.connected;
     }
 }
-
-function handleChange(event) {
-    //this.props.connect= false;
-}
-

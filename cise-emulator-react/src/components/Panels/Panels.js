@@ -53,21 +53,13 @@ export default class Panels extends Component {
                         <Paper style={headerStyle}></Paper>
                     </Grid>
                     <Grid item xs={12}>
-                            <SendMessage store={this.props.store} messageCandidate={messageCandidate}
-                                         messagePreview={messagePreview}/>
-                            <span>
-
-                                         </span>
-                            <ReceiveMessage store={this.props.store} messageCandidate={messageCandidate}
-                                            messagePreview={messagePreview}/>
+                        <SendMessage store={this.props.store} messageCandidate={messageCandidate}
+                                     messagePreview={messagePreview}/>
+                        <ReceiveMessage store={this.props.store} messageCandidate={messageCandidate}
+                                        messagePreview={messagePreview}/>
 
                     </Grid>
 
-                    {/*    <Grid item xs={4}>*/}
-                    {/*    <Paper style= {HistoricalPaneStyle}>*/}
-                    {/*      <History store={this.props.store}  messageCandidate={messageCandidate} messagePreview={messagePreview} />*/}
-                    {/*    </Paper>*/}
-                    {/*</Grid>*/}
                 </Grid>
             </div>
         );
