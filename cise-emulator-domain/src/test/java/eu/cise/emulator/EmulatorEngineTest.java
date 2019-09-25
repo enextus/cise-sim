@@ -8,7 +8,9 @@ import eu.cise.dispatcher.DispatcherException;
 import eu.cise.emulator.exceptions.CreationDateErrorEx;
 import eu.cise.emulator.exceptions.EndpointErrorEx;
 import eu.cise.emulator.exceptions.EndpointNotFoundEx;
+import eu.cise.emulator.exceptions.NullSenderEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.servicemodel.v1.service.Service;
@@ -284,7 +286,7 @@ public class EmulatorEngineTest {
     }
 
     @Test
-    public void it_receives_a_message_with_wrong_creation_date_in_the_past() {
+    public void it_receives_a_message_with_creation_datetime_equals_to_current_time_minus_3_hours() {
         Message message = newPush().build();
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant().minus(4, ChronoUnit.HOURS)));
@@ -294,6 +296,43 @@ public class EmulatorEngineTest {
         assertThatExceptionOfType(CreationDateErrorEx.class)
                 .isThrownBy(() -> engine.receive(message))
                 .withMessageContaining("outside the allowed range");
+    }
+
+    @Test
+    public void it_receives_a_message_with_creation_datetime_after_5_minutes_of_current_time() {
+        Message message = newPush().build();
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant().plus(5, ChronoUnit.MINUTES)));
+
+        message.setCreationDateTime(new XMLGregorianCalendarImpl(cal));
+
+        assertThatExceptionOfType(CreationDateErrorEx.class)
+                .isThrownBy(() -> engine.receive(message))
+                .withMessageContaining("outside the allowed range");
+    }
+
+    @Test
+    public void it_receives_a_valid_message_with_wrong_service_type() {
+        when(config.serviceType()).thenReturn(ServiceType.EVENT_DOCUMENT_SERVICE);
+
+        Acknowledgement ack = null;
+        ack = engine.receive(message);
+
+        assertThat(ack.getAckCode()).isEqualTo(AcknowledgementType.SERVICE_TYPE_NOT_SUPPORTED);
+        assertThat(ack.getAckDetail()).isEqualTo("Supported service type is VesselService");
+    }
+
+    @Test
+    public void it_receives_a_valid_message_without_sender() {
+        // prepare a message without sender service
+        Push message = newPush().build();
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant()));
+        message.setCreationDateTime(new XMLGregorianCalendarImpl(cal));
+
+        assertThatExceptionOfType(NullSenderEx.class)
+                .isThrownBy(() -> engine.receive(message))
+                .withMessageContaining("The sender of the message passed can't be null.");
     }
 
     @Test
