@@ -49,27 +49,32 @@ export default class MainAppModel {
 
     @action
     obtainXmlTemplates() {
+        this.optionsTemplate = [];
         this.optionsTemplate.push(
             new FileRef("Choose a template", "/None", "#None")
         );
-        this.optionsTemplate.push(
-            new FileRef("pushTemplate.xml", "/tmp/pushTemplate.xml", "345435345")
-        );
 
-        // axios.get(("/webapi/templates"))
-        //     .then((response) => {
-        //         console.log("obtainXmlTemplates SUCCESS !!! @axios call ", response.data);
-        //         this.optionsTemplate = [];
-        //         for (let itXmlFile of response.data) {
-        //             this.optionsTemplate.push( //FIFO
-        //                 new FileRef(itXmlFile.name, itXmlFile.path, itXmlFile.hash)
-        //             );
-        //         }
-        //         console.log("this optionService:" + this.optionsTemplate);
-        //     })
-        //     .catch((err) => {
-        //         console.log("ERROR !!! @axios call ", err)
-        //     })
+        try{
+         axios.get(("/webapi/templates"))
+             .then((response) => {
+                 console.log("obtainXmlTemplates SUCCESS !!! @axios call ", response.data);
+
+                 for (let itXmlFile of response.data) {
+                     this.optionsTemplate.push( //FIFO
+                         new FileRef(itXmlFile.name, itXmlFile.path, itXmlFile.hash)
+                     );
+                 }
+                 console.log("this optionService:" + this.optionsTemplate);
+             })
+             .catch((err) => {
+                 console.log("ERROR !!! @axios call ", err)
+
+             })
+        }catch (e) {
+            this.optionsTemplate.push(
+                new FileRef("pushTemplate.xml", "/tmp/pushTemplate.xml", "345435345")
+            );
+        }
     }
 
 }

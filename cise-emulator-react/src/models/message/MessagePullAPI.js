@@ -1,38 +1,45 @@
-import {computed, observable, action} from 'mobx'
+import {action, computed, observable} from 'mobx'
 import axios from "axios";
 
 export default class MessagePullAPI {
-    @observable   body= "";
-    @observable   acknowledgement="";
-    @observable   status= "";
+    @observable  timer = 0;
+    @observable  counter = 0;
+    @observable   body = "";
+    @observable   acknowledgement = "";
+    @observable   status = "";
     defaultGetConfig = {
         method: 'get',
         header: {
             'Content-Type': 'application/json'
         }
     };
-    defaultServiceUrl ="/webapi/messages";
+    defaultServiceUrl = "/webapi/";
 
 
     @computed
     get isEmpty() {
-        return (body==="");
+        return (body === "");
     }
 
 
     @action
     pull() {
-        axios.get(this.defaultServiceUrl(),this.defaultGetConfig)
+        const serviceUrl = ((document.location.hostname == "localhost") ? 'http://localhost:47080' + this.defaultServiceUrl + 'messages' : 'http://' + document.location.host + this.defaultServiceUrl + 'messages');
+
+        axios.get(serviceUrl, this.defaultGetConfig)
             .then((response) => {
-                console.debug("PULL CALL SUCCESS !!! status : ", response.data.status," /--/  body :  " , response.data.body," /--/ acknowledgement :   " , response.data.ack," /--/   "  );
+
+                console.debug("PULL CALL SUCCESS !!! status : ", response.data.status, " /--/  body :  ", response.data.body, " /--/ acknowledgement :   ", response.data.ack, " /--/   ");
                 this.body = response.data.body;
                 this.acknowledgement = response.data.ack;
                 this.status = response.data.status;
+                this.timer = 0;
+                this.counter ++;
             })
             .catch((err) => {
-                let errortxt= ("Errors occur in PREVIEW phase \"web api pull call\"; with detail... \n" +
-                " proposed url "+valuePostData.url+"reject the call with :", err);
-                console.error(errortxt);
+                let errortxt = ("Errors occur in PREVIEW phase \"web api pull call\"; with detail... \n" +
+                " proposed url " + this.defaultServiceUrl + "reject the call with :", err);
+
             })
 
     }

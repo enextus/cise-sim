@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-import {Button, Checkbox, ExpansionPanel, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
+import {Button, Checkbox, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
 import Select from 'react-select';
 import {observer} from "mobx-react";
-import format from "xml-formatter";
 
 @observer
 export default class SendMessage extends Component {
@@ -12,39 +11,36 @@ export default class SendMessage extends Component {
     state = {
         selectedOption: null,
     };
-
-
     constructor(props) {
         super(props);
         this.updateProperty = this.updateProperty.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.props.messageCandidate.messageId = this.getId();
     }
 
     updateProperty(key, value) {
         this.props.messageCandidate[key] = value
     }
 
-
     onChange(event) {
         this.updateProperty(event.target.name, event.target.value)
     }
-
 
     handleChangeTemplateService = templateservice => {
         this.props.messageCandidate.templateService = templateservice;
         console.log(`Option selected:`, templateservice);
     };
 
-    handleChangeAsyncAcknowledge = atemplatepayload => {
-        this.props.messageCandidate.asyncAcknowledge = !this.props.messageCandidate.asyncAcknowledge;
+    handleChangeAsyncAcknowledge = aasyncAcknowledge => {
+        this.props.messageCandidate.asyncAcknowledge=!this.props.messageCandidate.asyncAcknowledge;
         console.log(`Option handleChangeAsyncAcknowledge:`, this.props.messageCandidate.asyncAcknowledge);
     };
 
-    send() {
-        this.props.messageCandidate.messageId = this.getId();
-        this.props.messagePreview.send(this.props.messageCandidate);
-    }
 
+    send() {
+        this.props.messagePreview.send(this.props.messageCandidate);
+        this.props.messageCandidate.messageId = this.getId();
+    }
 
     render() {
         const customStyles = {
@@ -66,14 +62,11 @@ export default class SendMessage extends Component {
                 return {...provided, opacity, transition};
             }
         };
-
-
         const fieldStyle = {
             width: "100%",
             font: "Liberation Sans",
             fontFamily: "Liberation Sans"
         };
-
         const buttonStyle = {
             margin: '10px auto',
             backgroundColor: "rgb(205,205,205)",
@@ -84,61 +77,18 @@ export default class SendMessage extends Component {
             width: "90%",
             height: "50%",
             top: "20",
-            margin: "20px auto",
+            margin: "10px auto",
             color: "#555555",
             font: "Liberation Sans"
         };
 
-        const field = [
-            {
-                name: 'asyncAcknowledge',
-                label: 'asyncAcknowledge: ',
-                type: 'checkbox',
-                rules: 'boolean',
-                fieldStyle: "font: \"Liberation Sans\""
-            },
-        ];
 
-        const rootStyle = {
-            width: "100%",
-            fontFamily: 'Liberation Sans',
-            font: 'Liberation'
-        };
-        const headingStyle = {
-            fontSize: "18px",
-            margin: "5px auto",
-            backgroundColor: "#cdcdcd"
-        };
-        const chipStyle = {
-            verticalAlign: "bottom",
-            height: 20,
-            width: 20
-        };
-        const detailsStyle = {
-            alignItems: "center"
-        };
-        const subdetailsStyle = {
-            alignItems: "center"
-        };
-
-        const contentStyle = {
-            flexBasis: "93.33%"
-        };
-        const textfieldStyle = {
-            width: "100%",
-            borderLeft: `4px solid 2`,
-            padding: `2px 4px`,
-            fontFamily: 'Liberation Sans'
-        };
-        this.formattedXmlpreviewContent = format(this.props.messagePreview.previewContent);
-        this.formattedXmlAcknowledgeContent = format(this.props.messagePreview.acknowledgeContent);
 
         return (
             <FormGroup style={formstyle}>
 
 
-
-                    <Grid container spacing={2}>
+                <Grid container spacing={1}>
                         <Grid item xs={6}>
                             <TextField
                                 name="messageId"
@@ -168,7 +118,7 @@ export default class SendMessage extends Component {
                             />
                         </Grid>
 
-                        <Grid item xs={4}>
+                        <Grid item xs={5}>
                             <Select
                                 styles={customStyles}
                                 name="templateService"
@@ -180,8 +130,7 @@ export default class SendMessage extends Component {
                             />
                         </Grid>
 
-                        <Grid item xs={4}>
-
+                        <Grid item xs={3}>
                             <FormControl>
                                 <table>
                                     <tbody>
@@ -190,61 +139,27 @@ export default class SendMessage extends Component {
                                                       value={this.props.messageCandidate.asyncAcknowledge}
                                                       checked={this.props.messageCandidate.asyncAcknowledge}
                                                       onChange={this.handleChangeAsyncAcknowledge}/></td>
-                                        <td style={fieldStyle}>Require Asynchronous Acknowledgement</td>
+                                        <td style={fieldStyle}>Asynchronous Acknoledgement</td>
                                     </tr>
                                     </tbody>
                                 </table>
 
-
                             </FormControl>
-
                         </Grid>
                         <Grid item xs={4}>
-                            <span>   </span>
+
                             <Button disabled={this.props.messageCandidate.templateService == "#none"}
                                     style={buttonStyle} id="preview"
                                     onClick={() => this.preview()}>
                                 Preview
-                            </Button>
-                            <span>   </span>
+                            </Button>   <span>   </span>
                             <Button disabled={this.props.messageCandidate.templateService == "#none"}
                                     style={buttonStyle} id="send"
                                     onClick={() => this.send()}>
                                 Send
                             </Button>
-                            <span>   </span>
-                        </Grid>
-                        <Grid xs={6}>
-                                <TextField
-                                    id="previewContent"
-                                    multiline
-                                    label="xml format"
-                                    value={this.formattedXmlpreviewContent.substring(0, 200)}
-                                    style={textfieldStyle}
-                                    margin="none"
-                                    InputProps={{
-                                        readOnly: true
-                                    }}
-                                />
-                        </Grid>
-                        <Grid xs={6}>
-                                <span></span>
-                                <TextField
-                                    id="acknowledgeContent"
-                                    label="Acknowledgement Content"
-                                    style={textfieldStyle}
-                                    multiline
-                                    value={this.formattedXmlAcknowledgeContent.substring(0, 200)}
-                                    margin="none"
-                                    InputProps={{
-                                        readOnly: true
-                                    }}
-                                />
                         </Grid>
                     </Grid>
-
-
-
             </FormGroup>
 
         );

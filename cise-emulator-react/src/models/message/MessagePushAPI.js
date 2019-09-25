@@ -1,101 +1,75 @@
-import {computed, observable, action} from 'mobx'
+import {action, computed, observable} from 'mobx'
 import axios from "axios";
 
 export default class MessagePushAPI {
 
-    @observable   previewContent= "";
-    @observable   acknowledgeContent="";
-    @observable   errorContent= "";
+    @observable   previewContent = "";
+    @observable   acknowledgeContent = "";
+    @observable   errorContent = "";
     defaultPostConfig = {
         method: 'post',
         header: {
             'Content-Type': 'application/json'
-        }};
+        }
+    };
 
     defaultPostData = {
-    'message_template': '',
-    'params': {
-        'message_id': '',
-        'requires_ack': false
-    }
+        'message_template': '',
+        'params': {
+            'message_id': '',
+            'requires_ack': false
+        }
     };
-    defaultServiceUrl ="/webapi/";
-
-
+    defaultServiceUrl = "/webapi/";
 
 
     @computed
+    get isError() {
+        if (this.errorContent >= 400) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @computed
     get status() {
-        if (this.errorContent=="") {
-            if (this.acknowledgeContent=="") {
+        if (this.isError) {
+            return "error";
+        } else {
+            if (acknowledgeContent.isEmpty()) {
                 return "preview";
             } else {
                 return "sent";
             }
-        } else {
-            return "error";
         }
     }
 
-    @action
-    preview(messageCandidate) {
-        const valuePostData = JSON.parse(JSON.stringify(this.defaultPostData))
-        valuePostData.message_template = messageCandidate.templateService.value;
-        if (messageCandidate.templatePayload.value != "#none")    valuePostData.message_payload = messageCandidate.templatePayload.value;
-        valuePostData.params.message_id = messageCandidate.messageId;
-        valuePostData.params.correlation_id = (messageCandidate.correlationId=""? messageId : messageCandidate.correlationId);
-
-        if (messageCandidate.asyncAcknowledge !== undefined && messageCandidate.asyncAcknowledge.value !== undefined ){
-            aSourceValue == messageCandidate.asyncAcknowledge.valueOf()
-            valuePostData.params.requires_ack = aSourceValue;
-        }
-
-        this.defaultPortUrl= getDefaultPostURL();
-
-
-        console.debug("ready preview: ", valuePostData);
-        axios.post(this.getDefaultPostURL(),valuePostData,this.defaultPostConfig)
-            .then((response) => {
-                console.debug("PREVIEW CALL SUCCESS !!! status : ", response.data.status," /--/  body :  " , response.data.body," /--/ ack :   " , response.data.ack," /--/   "  );
-                this.previewContent= response.data.body;
-                this.acknowledgeContent = response.data.ack;
-                this.errorContent = response.data.status;
-            })
-            .catch((err) => {
-                let errortxt= ("Errors occur in PREVIEW phase \"web api call\"; with detail... \n" +
-                " proposed url "+valuePostData.url+"reject the call with :", err);
-                console.error(errortxt);
-                this.errorContent = errortxt;
-                this.acknowledgeContent = "";
-            })
-    }
 
     @action
     send(messageCandidate) {
-        const serviceUrl =(( document.location.hostname == "localhost") ? 'http://localhost:47080'+this.defaultServiceUrl+'messages': 'http://'+document.location.host +this.defaultServiceUrl+ 'messages');
+
+        const serviceUrl = ((document.location.hostname == "localhost") ? 'http://localhost:47080' + this.defaultServiceUrl + 'messages' : 'http://' + document.location.host + this.defaultServiceUrl + 'messages');
         const valuePostData = JSON.parse(JSON.stringify(this.defaultPostData))
         valuePostData.message_template = messageCandidate.templateService.value;
-        if (messageCandidate.templatePayload.value != "#none")    valuePostData.message_payload = messageCandidate.templatePayload.value;
+        if (messageCandidate.templatePayload.value != "#none") valuePostData.message_payload = messageCandidate.templatePayload.value;
         valuePostData.params.message_id = messageCandidate.messageId;
-        valuePostData.params.correlation_id = (messageCandidate.correlationId=""? messageId : messageCandidate.correlationId);
-
-        if (messageCandidate.asyncAcknowledge !== undefined && messageCandidate.asyncAcknowledge.value !== undefined ){
+        valuePostData.params.correlation_id = (messageCandidate.correlationId = "" ? messageId : messageCandidate.correlationId);
+        if (messageCandidate.asyncAcknowledge !== undefined && messageCandidate.asyncAcknowledge.value !== undefined) {
             aSourceValue == messageCandidate.asyncAcknowledge.valueOf()
             valuePostData.params.requires_ack = aSourceValue;
         }
 
-
-        console.debug("ready send: ", valuePostData);
-        axios.post(serviceUrl,valuePostData,this.defaultPostConfig)
+        axios.post(serviceUrl, valuePostData, this.defaultPostConfig)
             .then((response) => {
-                console.debug("SEND CALL SUCCESS !!! status : ", response.data.status," /--/  body :  " , response.data.body," /--/ ack :   " , response.data.ack," /--/   "  );
-                this.previewContent= response.data.body;
-                this.acknowledgeContent = response.data.ack;
+                console.debug("SEND SUCCESS  :status: ", response.data.status, " /--/  :body:  ", response.data.body, " /--/ :acknowledge:   ", response.data.acknowledge, " /--/   ");
+                this.previewContent = response.data.body;
+                this.acknowledgeContent = response.data.acknowledge;
                 this.errorContent = response.data.status;
             })
             .catch((err) => {
-                let errortxt= ("Errors occur in SEND phase \"web api call\"; with detail... \n" +
-                " proposed url "+valuePostData.url+"reject the call with :", err);
+                let errortxt = ("Errors occur in SEND phase \"web api call\"; with detail... \n" +
+                " proposed url " + valuePostData.url + "reject the call with :", err);
                 console.error(errortxt);
                 this.errorContent = errortxt;
                 this.acknowledgeContent = "";
@@ -113,11 +87,11 @@ export default class MessagePushAPI {
         this.previewContent = "";
         this.acknowledgeContent = "";
         this.errorContent = "Some errors occur * ; with detail... "
-            +"\n proposed message "+messageCandidate.messageId
-            +"\n asyncAcknowledge:"+ asyncAcknowledge
-            +"\n correlationId:"+ correlationId
-            +"\n templateService:"+ template.value + " / "+template.label
-            +"\n templatePayload:"+ payload.value + " / "+payload.label ;
+            + "\n proposed message " + messageCandidate.messageId
+            + "\n asyncAcknowledge:" + asyncAcknowledge
+            + "\n correlationId:" + correlationId
+            + "\n templateService:" + template.value + " / " + template.label
+            + "\n templatePayload:" + payload.value + " / " + payload.label;
     }
 }
 
