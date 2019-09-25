@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 
@@ -7,4 +8,6 @@ public interface MessageProcessor {
     Message preview(Message message, SendParam param);
 
     Acknowledgement send(Message message, SendParam param);
+
+    void getLastStoredMessage();
 }

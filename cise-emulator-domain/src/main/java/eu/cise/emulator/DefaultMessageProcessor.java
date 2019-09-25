@@ -22,4 +22,9 @@ public class DefaultMessageProcessor implements MessageProcessor {
         Acknowledgement acknowledgement = emulatorEngine.send(preparedMessage);
         return acknowledgement;
     }
+
+    @Override
+    public void getLastStoredMessage() {
+
+    }
 }

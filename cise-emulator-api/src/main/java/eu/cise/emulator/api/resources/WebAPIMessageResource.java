@@ -37,9 +37,10 @@ public class WebAPIMessageResource {
     @GET
     public Response receive() {
         LOGGER.info("messagePull from UI");
-        messageAPI.getLastStoredMessage();
+        JsonNode content = messageAPI.getLastStoredMessage();
         return Response
                 .status(Response.Status.OK)
+                .entity(content)
                 .build();
     }
 
