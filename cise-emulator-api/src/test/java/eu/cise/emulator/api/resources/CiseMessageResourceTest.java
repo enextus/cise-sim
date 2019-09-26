@@ -50,7 +50,7 @@ public class CiseMessageResourceTest {
         CiseMessageResource ciseMessageResource = new CiseMessageResource(messageAPI, messageStorage);
         ciseMessageResource.receive(message);
 
-        verify(messageStorage).store(acknowledgement);
+        verify(messageStorage).store(any());
     }
 
 }
