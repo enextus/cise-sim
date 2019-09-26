@@ -49,7 +49,7 @@ public class CiseEmulatorAPI extends Application<CiseEmulatorDropwizardConf> {
         MessageAPI messageAPI = new DefaultMessageAPI(configuration.getMessageProcessor(), configuration.getMessageStorage());
         LOGGER.info("Registering REST resources ");
         environment.jersey().register(new WebAPIMessageResource(messageAPI));
-        environment.jersey().register(new CiseMessageResource(messageAPI));
+        environment.jersey().register(new CiseMessageResource(messageAPI, configuration.getMessageStorage()));
         environment.jersey().register(new DefaultMessageResource());
     }
 }

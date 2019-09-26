@@ -48,19 +48,20 @@ public class DefaultMessageAPI implements MessageAPI {
     }
 
     @Override
-    public CiseMessageResponse receive(String content) {
+    public Acknowledgement receive(String content) {
         LOGGER.debug("receive is receiving through api : {}", content.substring(0, 200));
         CiseMessageResponse ciseMessageResponse;
+        Acknowledgement acknowledgement = null;
         try {
             Message message = xmlMapper.fromXML(content);
-            Acknowledgement acknowledgement = messageProcessor.receive(message);
+            acknowledgement = messageProcessor.receive(message);
             //TODO: call to message processor returning acknowledgement
             ciseMessageResponse = new CiseMessageResponse(xmlMapper, acknowledgement, message);
         } catch (Exception e) {
             LOGGER.error("error in Api send {}", e);
             ciseMessageResponse = new CiseMessageResponse(content);
         }
-        return ciseMessageResponse;
+        return acknowledgement;
     }
 
     @Override

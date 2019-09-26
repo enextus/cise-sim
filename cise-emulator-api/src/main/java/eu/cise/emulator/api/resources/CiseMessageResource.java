@@ -1,7 +1,8 @@
 package eu.cise.emulator.api.resources;
 
-import eu.cise.emulator.api.CiseMessageResponse;
 import eu.cise.emulator.api.MessageAPI;
+import eu.cise.io.MessageStorage;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ public class CiseMessageResource {
     private XmlMapper xmlMapper = new DefaultXmlMapper();
 
 
-    public CiseMessageResource(MessageAPI messageAPI) {
+    public CiseMessageResource(MessageAPI messageAPI, MessageStorage messageStorage) {
         this.messageAPI = messageAPI;
     }
 
@@ -31,16 +32,12 @@ public class CiseMessageResource {
     @Consumes("text/plain,text/xml,application/xml")
     @Produces("text/xml")
     @Path("/api/cisemessage")
-    public Response receive(String inputXmlMessage) throws Exception {
-        CiseMessageResponse receivedCiseMessage = messageAPI.receive(inputXmlMessage);
-        //String createdreffile = InteractIOFile.createRelativeRef(fileNameTemplate, filePost, createdFile, MESSAGE_MODAL, new StringBuffer(ackMessage));
-        Response.Status status = (receivedCiseMessage.isUnmarshallableMessage() ?
-                Response.Status.EXPECTATION_FAILED
-                : Response.Status.ACCEPTED);
+    public Response receive(String inputXmlMessage) {
+        Acknowledgement acknowledgement = messageAPI.receive(inputXmlMessage);
 
         return Response
-                .status(status)
-                .entity(receivedCiseMessage.getAcknowledgementContent())
+                .status(Response.Status.CREATED)
+                .entity(acknowledgement)
                 .build();
     }
 }
