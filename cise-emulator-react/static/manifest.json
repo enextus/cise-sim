@@ -1,5 +1,10 @@
 {
  "name": "App",
+  "theme_color": "#2196f3",
+  "background_color": "#2196f3",
+  "display": "browser",
+  "Scope": "/",
+  "start_url": "/",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
@@ -37,5 +42,6 @@
    "type": "image\/png",
    "density": "4.0"
   }
- ]
+ ],
+ "splash_pages": null,
 }
