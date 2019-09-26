@@ -1,6 +1,5 @@
 package eu.cise.emulator.api;
 
-import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.api.helpers.CrossOriginSupport;
 import eu.cise.emulator.api.helpers.ServerExceptionMapper;
 import eu.cise.emulator.api.resources.CiseMessageResource;
@@ -53,9 +52,8 @@ public class CiseEmulatorAPI extends Application<CiseEmulatorDropwizardConf> {
         environment.jersey().register(new CiseMessageResource(messageAPI));
         environment.jersey().register(new DefaultMessageResource());
     }
-
-
 }
+
 
 
 

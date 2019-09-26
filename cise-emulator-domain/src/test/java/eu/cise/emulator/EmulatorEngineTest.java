@@ -299,7 +299,6 @@ public class EmulatorEngineTest {
                 .withMessageContaining("outside the allowed range");
     }
 
-    @Ignore
     @Test
     public void it_receives_a_message_with_creation_datetime_after_5_minutes_of_current_time() {
         Message message = newPush().build();
