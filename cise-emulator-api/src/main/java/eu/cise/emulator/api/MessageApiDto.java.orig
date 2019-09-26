@@ -2,12 +2,30 @@ package eu.cise.emulator.api;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+<<<<<<< HEAD
+=======
 
+>>>>>>> feature/OCNET-161-API
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
 
 public class MessageApiDto implements Serializable {
 
+<<<<<<< HEAD
+
+    @JsonProperty("status")
+    final int status;
+
+    @JsonProperty("body")
+    final String body;
+
+    @JsonProperty("acknowledge")
+    final String acknowledge;
+
+
+    public int getStatus() {
+        return status;
+=======
     @JsonProperty("status")
     int status;
     @JsonProperty("errorDetail")
@@ -21,6 +39,7 @@ public class MessageApiDto implements Serializable {
 
     public MessageApiDto() {
 
+>>>>>>> feature/OCNET-161-API
     }
 
     public MessageApiDto(Response.StatusType status, String errorDetail, String contentAcknowledge, String contentMessageString) {
@@ -50,16 +69,28 @@ public class MessageApiDto implements Serializable {
         return status;
     }
 
+<<<<<<< HEAD
+    public MessageApiDto(Response.StatusType status, String contentAcknowledge, String contentMessageString) {
+        this.status = status.getStatusCode();
+        this.body = contentMessageString;
+        this.acknowledge = contentAcknowledge;
+=======
     public void setStatus(int status) {
         this.status = status;
+>>>>>>> feature/OCNET-161-API
     }
 
     public String getBody() {
         return body;
     }
 
+<<<<<<< HEAD
+    public boolean isError() {
+        return (status >= 400);
+=======
     public void setBody(String body) {
         this.body = body;
+>>>>>>> feature/OCNET-161-API
     }
 
     public String getAcknowledge() {
