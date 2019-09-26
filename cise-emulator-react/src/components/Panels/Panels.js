@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import SendMessage from './SendMessage/SendMessage';
-import ReceiveMessage from './ReceiveMessage/ReceiveMessage';
+import PushedMessage from './SendMessage/PushedMessage';
+import PulledMessage from './ReceiveMessage/PulledMessage';
 import {Grid, Paper} from '@material-ui/core';
 import {observer} from 'mobx-react';
 import messageCandidate from "../../models/message/MessageCandidate";
 import MessagePushAPI from "../../models/message/MessagePushAPI";
+import MessagePullAPI from "../../models/message/MessagePullAPI";
 
 @observer
 export default class Panels extends Component {
@@ -18,20 +20,8 @@ export default class Panels extends Component {
             position: 'relative'
         };
         const commandPaneStyle = {
-            height: '270px',
+            height: '170px',
             width: '95%',
-            margin: '5px auto',
-            position: 'relative'
-        };
-        const ResultPaneStyle = {
-            height: '330px',
-            width: '95%',
-            margin: '5px auto',
-            position: 'relative'
-        };
-        const HistoricalPaneStyle = {
-            height: '100% ',
-            width: '100%',
             margin: '5px auto',
             position: 'relative'
         };
@@ -43,8 +33,13 @@ export default class Panels extends Component {
             backgroundColor: "rgba(205,205,205,0.6)"
         };
 
-
         const messagePreview = new MessagePushAPI();
+        const messageReceived = new MessagePullAPI();
+
+        setInterval(function() {
+            messageReceived.timer += 1;
+            messageReceived.pull();
+        }, 3000);
 
         return (
             <div style={windowStyle}>
@@ -53,38 +48,18 @@ export default class Panels extends Component {
                         <Paper style={headerStyle}></Paper>
                     </Grid>
                     <Grid item xs={12}>
-                        <Paper style={commandPaneStyle}>
-                            <SendMessage store={this.props.store} messageCandidate={messageCandidate}
-                                         messagePreview={messagePreview}/>
-                        </Paper>
+                        <Paper style={commandPaneStyle}><SendMessage store={this.props.store}
+                                                                     messageCandidate={messageCandidate}
+                                                                     messagePreview={messagePreview}/> </Paper>
 
+                        <PushedMessage store={this.props.store} messageCandidate={messageCandidate}
+                                       messagePreview={messagePreview}/>
+                        <PulledMessage store={this.props.store} messageReceived={messageReceived}/>
                     </Grid>
-
-                    {/*    <Grid item xs={4}>*/}
-                    {/*    <Paper style= {HistoricalPaneStyle}>*/}
-                    {/*      <History store={this.props.store}  messageCandidate={messageCandidate} messagePreview={messagePreview} />*/}
-                    {/*    </Paper>*/}
-                    {/*</Grid>*/}
                 </Grid>
             </div>
         );
     }
-
-    obtainPreview(messageCandidate) {
-        console.log("messageCandidate.asyncAcknowledge" + messageCandidate.asyncAcknowledge
-            + "messageCandidate.templateService" + messageCandidate.templateService
-            + "messageCandidate.correlationId" + messageCandidate.correlationId
-            + "messageCandidate.templatePayload" + messageCandidate.templatePayload);
-    }
-
-    sendMessage(messageCandidate) {
-        console.log("messageCandidate.asyncAcknowledge" + messageCandidate.asyncAcknowledge
-            + "messageCandidate.templateService" + messageCandidate.templateService
-            + "messageCandidate.correlationId" + messageCandidate.correlationId
-            + "messageCandidate.templatePayload" + messageCandidate.templatePayload);
-        // create a virtual message to send to the server
-    }
-
 }
 
 

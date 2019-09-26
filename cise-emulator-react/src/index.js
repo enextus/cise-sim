@@ -21,17 +21,16 @@ render(
     document.getElementById("root")
 );
 
-autorun(() => {
-    stores.appStore.obtainXmlTemplates();
-    stores.appStore.obtainSelfMember();
-});
-
 
 when(
-    // predicate
     () => stores.appStore.IsConnected,
     // effect
     () => stores.appStore.closeModal()
 );
+
+autorun(() => {
+    stores.appStore.obtainXmlTemplates();
+    stores.appStore.obtainSelfMember();
+});
 
 window.store = stores;

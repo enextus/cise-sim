@@ -1,16 +1,24 @@
 package eu.cise.emulator.api;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
 
 public class MessageApiDto implements Serializable {
 
-    final Response.StatusType status;
+
+    @JsonProperty("status")
+    final int status;
+
+    @JsonProperty("body")
     final String body;
+
+    @JsonProperty("acknowledge")
     final String acknowledge;
 
-    public Response.StatusType getStatus() {
+
+    public int getStatus() {
         return status;
     }
 
@@ -24,14 +32,14 @@ public class MessageApiDto implements Serializable {
 
 
     public MessageApiDto(Response.StatusType status, String contentAcknowledge, String contentMessageString) {
-        this.status = status;
+        this.status = status.getStatusCode();
         this.body = contentMessageString;
         this.acknowledge = contentAcknowledge;
     }
 
 
     public boolean isError() {
-        return (status.getStatusCode() >= 400);
+        return (status >= 400);
     }
 
 
