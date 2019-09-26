@@ -22,6 +22,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
 import java.time.Clock;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 
@@ -139,14 +140,9 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     public Acknowledgement receive(Message message) {
         notNull(message, NullMessageEx.class);
 
-        // verify message creation datetime is not older than 3 hours
-        XMLGregorianCalendar messageXmlGregorianCalendar = message.getCreationDateTime();
-
-        GregorianCalendar currentGregorianCalendar = new GregorianCalendar();
-        currentGregorianCalendar.setTime(java.util.Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).minusHours(3).toInstant()));
-        XMLGregorianCalendar currentXmlGregorianCalendar = new XMLGregorianCalendarImpl(currentGregorianCalendar);
-
-        if (messageXmlGregorianCalendar.compare(currentXmlGregorianCalendar) == DatatypeConstants.LESSER) {
+        // check creation datetime
+        if ((message.getCreationDateTime()).compare(getDatetime(3)) == DatatypeConstants.LESSER ||
+                (message.getCreationDateTime()).compare(getDatetime(0)) == DatatypeConstants.GREATER) {
             throw new CreationDateErrorEx();
         }
 
@@ -162,7 +158,12 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         Acknowledgement acknowledgement = buildAcknowledgeMessage(message);
 
         return acknowledgement;
+    }
 
+    private XMLGregorianCalendar getDatetime(long hours) {
+        GregorianCalendar datetime = new GregorianCalendar();
+        datetime.setTime(java.util.Date.from(ZonedDateTime.now(ZoneId.of("UTC")).minusHours(hours).toInstant()));
+        return new XMLGregorianCalendarImpl(datetime);
     }
 
     private Acknowledgement buildAcknowledgeMessage(Message message) {
@@ -170,15 +171,12 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         String acknowledgementDetail;
 
         // define the acknowledgementType
-        if (message.getSender() == null) {
-            acknowledgementType = AcknowledgementType.SERVICE_TYPE_NOT_SUPPORTED;
-            acknowledgementDetail = "Supported service type is " + message.getSender().getServiceType().value();
-        } else if (!message.getSender().getServiceType().equals(config.serviceType())) {
+        if (!message.getSender().getServiceType().equals(config.serviceType())) {
             acknowledgementType = AcknowledgementType.SERVICE_TYPE_NOT_SUPPORTED;
             acknowledgementDetail = "Supported service type is " + message.getSender().getServiceType().value();
         } else {
             acknowledgementType = AcknowledgementType.SUCCESS;
-            acknowledgementDetail = "";
+            acknowledgementDetail = "Message delivered";
         }
 
         // build the acknowledgement

@@ -43,8 +43,8 @@ public class APIMessageTest {
     }
 
     @Test
-    public void it_return_empty_when_NO_stored_message() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor , messageStorage );
+    public void it_returns_empty_when_NO_stored_message() {
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor , messageStorage);
         when(messageStorage.read()).thenReturn(null);
 
         MessageApiDto response = (MessageApiDto) messageAPI.getLastStoredMessage();
@@ -52,23 +52,15 @@ public class APIMessageTest {
         assertThat(response).isNull();
     }
 
-    @Ignore
     @Test
-    public void it_return_last_stored_message() {
+    public void it_returns_last_stored_message() {
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor , messageStorage);
+        MessageApiDto mockedMessageApiDto = mock(MessageApiDto.class);
+        when(messageStorage.read()).thenReturn(mockedMessageApiDto);
 
+        MessageApiDto response = messageAPI.getLastStoredMessage();
+
+        assertThat(response).isEqualTo(mockedMessageApiDto);
     }
 
-    private JsonNode msgTemplateWithParams() {
-        ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
-
-        ObjectNode params = jsonMapper.createObjectNode();
-        params.put("requires_ack", "false");
-        params.put("message_id", "1234-123411-123411-1234");
-        params.put("correlation_id", "7777-666666-666666-5555");
-
-        msgTemplateWithParamObject.put("message_template", "hash-msg-template");
-        msgTemplateWithParamObject.set("params", params);
-
-        return jsonMapper.valueToTree(msgTemplateWithParamObject);
-    }
 }

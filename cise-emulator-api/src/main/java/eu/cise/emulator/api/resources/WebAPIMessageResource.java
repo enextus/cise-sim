@@ -43,6 +43,7 @@ public class WebAPIMessageResource {
             LOGGER.debug("message Pulled from UI to " +
                     "Ressource with content : "
             );
+            resultMessage =  (MessageApiDto) messageAPI.getLastStoredMessage();
         } else {
             return Response
                     .status(Response.Status.NO_CONTENT)
@@ -54,5 +55,8 @@ public class WebAPIMessageResource {
                 .entity(resultMessage)
                 .build();
     }
+
+
+
 
 }
