@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.api.MessageApiDto;
 import io.dropwizard.testing.junit.ResourceTestRule;
-import org.eclipse.jetty.http.HttpStatus;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -62,18 +61,16 @@ public class WebAPIMessageResourceTest {
         verify(messageAPI).getLastStoredMessage();
     }
 
-    @Ignore
     @Test
     public void it_invokes_the_receive_and_obtains_the_last_stored_message_from_MessageAPI_with_success() {
-        MessageApiDto storedMessage = new MessageApiDto(Response.Status.OK, "","");
+        MessageApiDto storedMessage = new MessageApiDto(Response.Status.OK, "error-for-test", "","");
         when(messageAPI.getLastStoredMessage()).thenReturn(storedMessage);
         Response resourceResponse = resources.target("/webapi/messages")
                 .request()
                 .get();
-
         MessageApiDto entity = resourceResponse.readEntity(MessageApiDto.class);
 
-        assertThat(entity).isEqualTo(storedMessage);
+        assertThat(entity.getErrorDetail()).isEqualTo(storedMessage.getErrorDetail());
     }
 
 
