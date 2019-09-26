@@ -4,6 +4,8 @@ import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.RestDispatcher;
 import eu.cise.emulator.api.helpers.CiseDropWizardServerBuilder;
 import eu.cise.emulator.api.CiseEmulatorAPI;
+import eu.cise.io.DefaultMessageStorage;
+import eu.cise.io.MessageStorage;
 import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
 
@@ -44,14 +46,19 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public CiseEmulatorAPI makeEmulatorApi(MessageProcessor messageProcessor) {
+    public CiseEmulatorAPI makeEmulatorApi(MessageProcessor messageProcessor, MessageStorage messageStorage) {
         CiseEmulatorAPI server = null;
         try {
             String configFile = (this.emuConfig.webapiConfig());
-            server = CiseDropWizardServerBuilder.createServer(configFile, CiseEmulatorAPI.class, messageProcessor);
+            server = CiseDropWizardServerBuilder.createServer(configFile, CiseEmulatorAPI.class, messageProcessor, messageStorage);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return server;
+    }
+
+    @Override
+    public MessageStorage makeMessageStorage() {
+        return new DefaultMessageStorage();
     }
 }

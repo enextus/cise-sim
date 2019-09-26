@@ -2,6 +2,7 @@ package eu.cise.emulator.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eu.cise.emulator.MessageProcessor;
+import eu.cise.io.MessageStorage;
 import io.dropwizard.Configuration;
 import io.dropwizard.bundles.assets.AssetsBundleConfiguration;
 import io.dropwizard.bundles.assets.AssetsConfiguration;
@@ -20,12 +21,21 @@ import javax.validation.constraints.NotNull;
 public class CiseEmulatorDropwizardConf extends Configuration implements AssetsBundleConfiguration {
 
 
-    MessageProcessor messageProcessor;
-
     @Valid
     @NotNull
     @JsonProperty
     private final AssetsConfiguration assets = AssetsConfiguration.builder().build();
+
+    private MessageProcessor messageProcessor;
+    private MessageStorage messageStorage;
+
+    public MessageStorage getMessageStorage() {
+        return messageStorage;
+    }
+
+    public void setMessageStorage(MessageStorage messageStorage) {
+        this.messageStorage = messageStorage;
+    }
 
     public AssetsConfiguration getAssets() {
         return assets;

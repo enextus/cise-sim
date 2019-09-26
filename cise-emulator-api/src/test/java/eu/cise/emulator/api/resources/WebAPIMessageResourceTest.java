@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 public class WebAPIMessageResourceTest {
 
-    private static MessageAPI messageAPI = mock(MessageAPI.class);
+    private static MessageAPI messageAPI;
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
@@ -33,10 +33,10 @@ public class WebAPIMessageResourceTest {
 
     @Before
     public void before() {
+        messageAPI = mock(MessageAPI.class);
         jsonMapper = new ObjectMapper();
     }
 
-    @Ignore //TODO: solve the response
     @Test
     public void it_invokes_the_send_the_http_is_successful_201() {
         Response response = resources.target("/webapi/messages")
@@ -54,7 +54,7 @@ public class WebAPIMessageResourceTest {
     }
 
     @Test
-    public void it_invokes_the_receive_and_makes_a_call_to_MessageAPI_to_get_the_last_stored_message() {
+    public void it_invokes_the_pull_and_makes_a_call_to_MessageAPI_to_get_the_last_stored_message() {
         Response test = resources.target("/webapi/messages")
                 .request()
                 .get();
@@ -62,7 +62,7 @@ public class WebAPIMessageResourceTest {
     }
 
     @Test
-    public void it_invokes_the_receive_and_obtains_the_last_stored_message_from_MessageAPI_with_success() {
+    public void it_invokes_the_pull_and_obtains_the_last_stored_message_from_MessageAPI_with_success() {
         MessageApiDto storedMessage = new MessageApiDto(Response.Status.OK, "error-for-test", "","");
         when(messageAPI.getLastStoredMessage()).thenReturn(storedMessage);
         Response resourceResponse = resources.target("/webapi/messages")
@@ -72,8 +72,6 @@ public class WebAPIMessageResourceTest {
 
         assertThat(entity.getErrorDetail()).isEqualTo(storedMessage.getErrorDetail());
     }
-
-
 
     private JsonNode msgTemplateWithParams() {
         ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();

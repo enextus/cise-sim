@@ -46,7 +46,7 @@ public class AppContextTest {
         AppContext appContext = new DefaultAppContext();
         MessageProcessor messageProcessor = mock(MessageProcessor.class);
 
-        CiseEmulatorAPI api = appContext.makeEmulatorApi(messageProcessor);
+        CiseEmulatorAPI api = appContext.makeEmulatorApi(messageProcessor, );
 
         assertThat(api).isNotNull();
     }
@@ -58,7 +58,7 @@ public class AppContextTest {
         MessageProcessor messageProcessor = new DefaultMessageProcessor(engine);
 
         AppContext appContext = new DefaultAppContext();
-        CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor);
+        CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor, );
 
         Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target("http://localhost:47080/webapi/messages");
