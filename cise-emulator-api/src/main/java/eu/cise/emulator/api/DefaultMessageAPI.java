@@ -18,8 +18,8 @@ import javax.ws.rs.core.Response;
 
 public class DefaultMessageAPI implements MessageAPI {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebAPIMessageResource.class);
-    private MessageProcessor messageProcessor;
     private final MessageStorage messageStorage;
+    private MessageProcessor messageProcessor;
     private XmlMapper xmlMapper;
 
     public DefaultMessageAPI(MessageProcessor messageProcessor, MessageStorage messageStorage) {
@@ -38,11 +38,11 @@ public class DefaultMessageAPI implements MessageAPI {
         MessageApiDto returnedApiDto = null;
         try {
             Acknowledgement acknowledgement = messageProcessor.send(message, sendParam);
-            returnedApiDto = new MessageApiDto(Response.Status.ACCEPTED, null, xmlMapper.toXML(acknowledgement), "");
+            returnedApiDto = new MessageApiDto(Response.Status.ACCEPTED.getStatusCode(), null, xmlMapper.toXML(acknowledgement), "");
         } catch (Exception e) {
             //TODO: interpret the exception to show the right error to the UI
             LOGGER.error("error in Api send {}", e);
-            returnedApiDto = new MessageApiDto(Response.Status.BAD_REQUEST, "Error in Api send", "", "");
+            returnedApiDto = new MessageApiDto(Response.Status.BAD_REQUEST.getStatusCode(), "Error in Api send", "", "");
         }
         return returnedApiDto;
     }
@@ -65,9 +65,11 @@ public class DefaultMessageAPI implements MessageAPI {
 
     @Override
     public MessageApiDto getLastStoredMessage() {
-        MessageApiDto returnApiDto;
-        if (messageStorage != null) return (MessageApiDto) messageStorage.read();
-        return null;
+        MessageApiDto returnApiDto = null;
+        if (messageStorage != null) {
+            returnApiDto = (MessageApiDto) messageStorage.read();
+        }
+        return returnApiDto;
     }
 
 

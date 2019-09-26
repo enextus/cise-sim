@@ -2,6 +2,7 @@ package eu.cise.emulator;
 
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.emulator.api.CiseEmulatorAPI;
+import eu.cise.io.MessageStorage;
 import eu.cise.signature.SignatureService;
 
 public interface AppContext {
@@ -14,5 +15,7 @@ public interface AppContext {
 
     SignatureService makeSignatureService();
 
-    CiseEmulatorAPI makeEmulatorApi(MessageProcessor messageProcessor);
+    CiseEmulatorAPI makeEmulatorApi(MessageProcessor messageProcessor, MessageStorage messageStorage);
+
+    MessageStorage makeMessageStorage();
 }

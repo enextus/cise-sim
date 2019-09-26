@@ -28,13 +28,13 @@ public class WebAPIMessageResource {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
         MessageApiDto resultMessage = messageAPI.send(msgWithParams);
         return Response
-                .status(Response.Status.OK)
+                .status(Response.Status.CREATED)
                 .entity(resultMessage)
                 .build();
     }
 
     @GET
-    public Response receive() {
+    public Response pull() {
         LOGGER.info("messagePull from UI");
         MessageApiDto lastStoredMessage = messageAPI.getLastStoredMessage();
         return Response

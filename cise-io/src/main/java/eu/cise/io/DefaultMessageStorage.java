@@ -1,9 +1,9 @@
 package eu.cise.io;
 
-public class DefaultMessageStore implements MessageStorage {
+public class DefaultMessageStorage implements MessageStorage {
     private Object object;
 
-    public DefaultMessageStore() {
+    public DefaultMessageStorage() {
     }
 
     @Override

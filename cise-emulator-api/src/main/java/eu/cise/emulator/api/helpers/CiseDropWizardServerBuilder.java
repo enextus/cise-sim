@@ -4,6 +4,7 @@ import com.codahale.metrics.MetricRegistry;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.api.CiseEmulatorAPI;
 import eu.cise.emulator.api.CiseEmulatorDropwizardConf;
+import eu.cise.io.MessageStorage;
 import io.dropwizard.Application;
 import io.dropwizard.cli.ServerCommand;
 import io.dropwizard.configuration.ConfigurationFactory;
@@ -25,7 +26,7 @@ public class CiseDropWizardServerBuilder {
 
     public static <T extends CiseEmulatorDropwizardConf> DropWizardServer<T> createServer(
             String configFile,
-            Class<? extends Application<T>> applicationClass, MessageProcessor messageProcessor) throws Exception {
+            Class<? extends Application<T>> applicationClass, MessageProcessor messageProcessor, MessageStorage messageStorage) throws Exception {
         // Create application
         final Application<T> application = applicationClass.getConstructor().newInstance();
 
@@ -69,7 +70,7 @@ public class CiseDropWizardServerBuilder {
             }
         });
 
-        DropWizardServer serverReady = new DropWizardServer((CiseEmulatorDropwizardConf) builtConfig, bootstrap, application, environment, server, environment.metrics(), messageProcessor);
+        DropWizardServer serverReady = new DropWizardServer((CiseEmulatorDropwizardConf) builtConfig, bootstrap, application, environment, server, environment.metrics(), messageProcessor, messageStorage);
         serverReady.start();
         return serverReady;
     }
@@ -82,6 +83,7 @@ public class CiseDropWizardServerBuilder {
         private final Environment environment;
         private final Server jettyServer;
         private final MetricRegistry metricRegistry;
+        private final MessageStorage messageStorage;
 
 
         DropWizardServer(T builtConfig,
@@ -90,13 +92,15 @@ public class CiseDropWizardServerBuilder {
                          Environment environment,
                          Server jettyServer,
                          MetricRegistry metricRegistry,
-                         MessageProcessor messageProcessor) {
+                         MessageProcessor messageProcessor,
+                         MessageStorage messageStorage) {
             this.builtConfig = builtConfig;
             this.bootstrap = bootstrap;
             this.application = application;
             this.environment = environment;
             this.jettyServer = jettyServer;
             this.metricRegistry = metricRegistry;
+            this.messageStorage = messageStorage;
             this.builtConfig.setMessageProcessor(messageProcessor);
         }
 

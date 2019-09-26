@@ -9,7 +9,7 @@ public class MessageStorageTest {
     @Test
     public void it_saves_the_value_to_store() {
         Object object = new Object();
-        DefaultMessageStore messageStore = new DefaultMessageStore();
+        DefaultMessageStorage messageStore = new DefaultMessageStorage();
         messageStore.store(object);
 
         assertFalse(messageStore.isObjectNull());
@@ -18,7 +18,7 @@ public class MessageStorageTest {
     @Test
     public void it_reads_the_value_from_store() {
         Object object = new Object();
-        DefaultMessageStore messageStore = new DefaultMessageStore();
+        DefaultMessageStorage messageStore = new DefaultMessageStorage();
         messageStore.store(object);
 
         assertEquals(messageStore.read(), object);

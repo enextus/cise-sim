@@ -45,9 +45,9 @@ public class CiseEmulatorAPI extends Application<CiseEmulatorDropwizardConf> {
         environment.jersey().setUrlPattern("/*"); // api/(rest/soap) and apiweb can then defined by specific resources
         LOGGER.info("Registering REST resources with crossOriginSupport");
         CrossOriginSupport.setup(environment);
+
         // delegate the principal application configurations interfaces (IOC)
-        MessageProcessor messageProcessor = configuration.getMessageProcessor();
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, null);
+        MessageAPI messageAPI = new DefaultMessageAPI(configuration.getMessageProcessor(), configuration.getMessageStorage());
         LOGGER.info("Registering REST resources ");
         environment.jersey().register(new WebAPIMessageResource(messageAPI));
         environment.jersey().register(new CiseMessageResource(messageAPI));

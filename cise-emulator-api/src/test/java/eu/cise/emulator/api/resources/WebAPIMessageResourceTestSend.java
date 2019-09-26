@@ -19,9 +19,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class WebAPIMessageResourceTest {
+public class WebAPIMessageResourceTestSend {
 
-    private static MessageAPI messageAPI = mock(MessageAPI.class);
+    private static MessageAPI messageAPI = mock(MessageAPI.class);;
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
@@ -33,10 +33,10 @@ public class WebAPIMessageResourceTest {
 
     @Before
     public void before() {
+//        messageAPI = mock(MessageAPI.class);
         jsonMapper = new ObjectMapper();
     }
 
-    @Ignore //TODO: solve the response
     @Test
     public void it_invokes_the_send_the_http_is_successful_201() {
         Response response = resources.target("/webapi/messages")
@@ -52,28 +52,6 @@ public class WebAPIMessageResourceTest {
                 .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
         verify(messageAPI).send(any(JsonNode.class));
     }
-
-    @Test
-    public void it_invokes_the_receive_and_makes_a_call_to_MessageAPI_to_get_the_last_stored_message() {
-        Response test = resources.target("/webapi/messages")
-                .request()
-                .get();
-        verify(messageAPI).getLastStoredMessage();
-    }
-
-    @Test
-    public void it_invokes_the_receive_and_obtains_the_last_stored_message_from_MessageAPI_with_success() {
-        MessageApiDto storedMessage = new MessageApiDto(Response.Status.OK, "error-for-test", "","");
-        when(messageAPI.getLastStoredMessage()).thenReturn(storedMessage);
-        Response resourceResponse = resources.target("/webapi/messages")
-                .request()
-                .get();
-        MessageApiDto entity = resourceResponse.readEntity(MessageApiDto.class);
-
-        assertThat(entity.getErrorDetail()).isEqualTo(storedMessage.getErrorDetail());
-    }
-
-
 
     private JsonNode msgTemplateWithParams() {
         ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
