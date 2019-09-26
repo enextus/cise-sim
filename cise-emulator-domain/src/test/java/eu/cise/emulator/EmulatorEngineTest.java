@@ -289,7 +289,7 @@ public class EmulatorEngineTest {
     public void it_receives_a_message_with_creation_datetime_equals_to_current_time_minus_3_hours() {
         Message message = newPush().build();
         GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant().minus(4, ChronoUnit.HOURS)));
+        cal.setTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant().minus(3, ChronoUnit.HOURS)));
 
         message.setCreationDateTime(new XMLGregorianCalendarImpl(cal));
 
