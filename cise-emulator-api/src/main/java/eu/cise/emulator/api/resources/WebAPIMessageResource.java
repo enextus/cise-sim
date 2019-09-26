@@ -15,7 +15,6 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class WebAPIMessageResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebAPIMessageResource.class);
-    private static final MessageApiDto DEFAULTRETURNPULL = new MessageApiDto(Response.Status.NO_CONTENT, "", "");
     private final MessageAPI messageAPI;
 
 
@@ -28,35 +27,20 @@ public class WebAPIMessageResource {
     public Response send(JsonNode msgWithParams) {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
         MessageApiDto resultMessage = messageAPI.send(msgWithParams);
-        int resultStatusType = resultMessage.getStatus();
         return Response
-                .status(resultStatusType)
+                .status(Response.Status.OK)
                 .entity(resultMessage)
                 .build();
     }
 
     @GET
-    public Response pull() {
-        MessageApiDto resultMessage = DEFAULTRETURNPULL;
-
-        if (messageAPI.getLastStoredMessage() != null) {
-            LOGGER.debug("message Pulled from UI to " +
-                    "Ressource with content : "
-            );
-            resultMessage =  (MessageApiDto) messageAPI.getLastStoredMessage();
-        } else {
-            return Response
-                    .status(Response.Status.NO_CONTENT)
-                    .build();
-        }
-
+    public Response receive() {
+        LOGGER.info("messagePull from UI");
+        MessageApiDto lastStoredMessage = messageAPI.getLastStoredMessage();
         return Response
-                .status(resultMessage.getStatus())
-                .entity(resultMessage)
+                .status(Response.Status.OK)
+                .entity(lastStoredMessage)
                 .build();
     }
-
-
-
 
 }
