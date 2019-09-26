@@ -1,56 +1,78 @@
 import React, {Component} from "react";
-import {MoveToInbox} from "@material-ui/icons";
 import {AppBar, Button, Toolbar, Typography} from "@material-ui/core";
 import {observer} from "mobx-react";
+import DirectionsBoatIcon from '@material-ui/icons/DirectionsBoat';
+import Chip from "@material-ui/core/Chip";
+import Avatar from "@material-ui/core/Avatar";
+import withStyles from "@material-ui/core/styles/withStyles";
+import PropTypes from "prop-types";
+import IconButton from "@material-ui/core/IconButton";
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+    },
+    chip: {
+        marginRight: theme.spacing(2),
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+        fontWeight: "bold",
+    },
+});
 
 @observer
-export default class NavBar extends Component {
-    member = "";
-    memberList = {};
+class NavBar extends Component {
 
     constructor(props) {
         super(props);
     }
 
-
     render() {
-        this.myuser = this.props.store.appStore.memberId;
-        this.memberList = this.props.store.appStore.memberList;
-        if (this.myuser === "") {
-            return ("");
-        }
-
+        const {classes} = this.props;
         return (
-            <div style={{textAlign: "right", font: "Liberation Sans"}}>
-                <AppBar title="Users">
-                    <Toolbar>
-                        <Typography
-                                    style={{textAlign: "right", font: "Liberation Sans", color: "white"}}> <Button
-                            style={{textAlign: "right", font: "Liberation Sans", color: "white"}}>
-                            <MoveToInbox/>: {this.props.store.appStore.memberId}
-                        </Button></Typography>
-
+            <AppBar position="static" className={classes.root}>
+                <Toolbar>
+                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        <DirectionsBoatIcon/>
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        CISE Emu
+                    </Typography>
+                    <div>
+                        <Chip
+                            avatar={<Avatar>ID</Avatar>}
+                            label={this.getServiceId()}
+                            className={classes.chip}
+                            color="secondary"
+                        />
                         <Button
                             variant="contained"
-                            color={this.props.store.appStore.connected ? "secondary" : "primary"}
-                        >Mode: REST</Button>
-                    </Toolbar>
-                </AppBar>
-            </div>
+                            disabled={!this.isConnected()}
+                            color="secondary"> REST
+                        </Button>
+                    </div>
+                </Toolbar>
+            </AppBar>
         );
     }
 
-    renderUser() {
-        // todo put condition to return all except the user
-        return this.userList.map(user => (
-            <Button>
-                <MoveToInbox/> {user}
-            </Button>
-        ));
+    getServiceId() {
+        return this.props.store.appStore.memberId;
+    }
+
+    isConnected() {
+        return this.props.store.appStore.connected;
     }
 }
 
-function handleChange(event) {
-    //this.props.connect= false;
-}
+NavBar.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
 
+export default withStyles(styles)(NavBar)

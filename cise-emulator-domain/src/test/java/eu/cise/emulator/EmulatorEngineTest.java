@@ -18,6 +18,7 @@ import eu.cise.servicemodel.v1.service.ServiceType;
 import eu.cise.signature.SignatureService;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.ZoneId;
@@ -284,7 +285,7 @@ public class EmulatorEngineTest {
             fail("Receive raised an exception");
         }
     }
-
+    @Ignore
     @Test
     public void it_receives_a_message_with_creation_datetime_equals_to_current_time_minus_3_hours() {
         Message message = newPush().build();

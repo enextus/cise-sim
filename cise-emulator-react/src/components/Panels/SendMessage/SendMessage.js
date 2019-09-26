@@ -1,16 +1,47 @@
 import React, {Component} from "react";
-import {Button, Checkbox, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
-import Select from 'react-select';
+import {Button, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, Select, TextField} from "@material-ui/core";
 import {observer} from "mobx-react";
+import PropTypes from 'prop-types';
+import {withStyles} from '@material-ui/core/styles';
+import Paper from "@material-ui/core/Paper";
+import SendRoundedIcon from "@material-ui/icons/SendRounded";
+import DescriptionIcon from '@material-ui/icons/Description';
+import MenuItem from "@material-ui/core/MenuItem";
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+    button: {
+        margin: theme.spacing(1),
+    },
+    leftIcon: {
+        marginRight: theme.spacing(1),
+    },
+    rightIcon: {
+        marginLeft: theme.spacing(1),
+    },
+    iconSmall: {
+        fontSize: 20,
+    },
+});
+
 
 @observer
-export default class SendMessage extends Component {
+class SendMessage extends Component {
     messagePreview;
-    formattedXmlpreviewContent;
     formattedXmlAcknowledgeContent;
     state = {
         selectedOption: null,
     };
+
     constructor(props) {
         super(props);
         this.updateProperty = this.updateProperty.bind(this);
@@ -26,13 +57,14 @@ export default class SendMessage extends Component {
         this.updateProperty(event.target.name, event.target.value)
     }
 
-    handleChangeTemplateService = templateservice => {
-        this.props.messageCandidate.templateService = templateservice;
-        console.log(`Option selected:`, templateservice);
+    onMessageTemplateChange = messageTemplate => {
+        this.props.messageCandidate.templateService = messageTemplate.target.value;
+        console.log(`Option selected:`, messageTemplate);
     };
 
+
     handleChangeAsyncAcknowledge = aasyncAcknowledge => {
-        this.props.messageCandidate.asyncAcknowledge=!this.props.messageCandidate.asyncAcknowledge;
+        this.props.messageCandidate.asyncAcknowledge = !this.props.messageCandidate.asyncAcknowledge;
         console.log(`Option handleChangeAsyncAcknowledge:`, this.props.messageCandidate.asyncAcknowledge);
     };
 
@@ -43,142 +75,132 @@ export default class SendMessage extends Component {
     }
 
     render() {
-        const customStyles = {
-            option: (provided, state) => ({
-                ...provided,
-                font: 'Liberation Sans',
-                fontFamily: 'Liberation Sans',
-                padding: 0,
-            }),
-            control: () => ({
-                // none of react-select's styles are passed to <Control />
-                width: 250,
-                font: 'Liberation Sans',
-                fontFamily: 'Liberation Sans',
-            }),
-            singleValue: (provided, state) => {
-                const opacity = state.isDisabled ? 0.7 : 1;
-                const transition = 'opacity 500ms';
-                return {...provided, opacity, transition};
-            }
-        };
-        const fieldStyle = {
-            width: "100%",
-            font: "Liberation Sans",
-            fontFamily: "Liberation Sans"
-        };
-        const buttonStyle = {
-            margin: '10px auto',
-            backgroundColor: "rgb(205,205,205)",
-            left: '160px',
-            font: "Liberation Sans",
-        };
-        const formstyle = {
-            width: "90%",
-            height: "50%",
-            top: "20",
-            margin: "10px auto",
-            color: "#555555",
-            font: "Liberation Sans"
-        };
-
-
-
+        console.log("this.props.store", this.props.store.appStore.templateOptions)
+        const {classes} = this.props;
         return (
-            <FormGroup style={formstyle}>
+            <div style={{padding: 16, margin: 'auto', maxWidth: 800}}>
+                <Paper style={{padding: 16}}>
+                    <Grid container alignItems="flex-start" spacing={2}>
 
-
-                <Grid container spacing={1}>
                         <Grid item xs={6}>
                             <TextField
                                 name="messageId"
-                                label="messageId"
-                                style={fieldStyle}
-                                margin="normal"
-                                variant="filled"
-                                placeholder="set at first sending intent"
+                                label="Message Id"
+                                fullWidth={true}
+                                color="primary"
                                 value={this.props.messageCandidate.messageId}
                                 onChange={this.onChange}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            /> </Grid>
+                            />
+                        </Grid>
                         <Grid item xs={6}>
-                            <TextField name="correlationId"
-                                       label="correlationId"
-                                       style={fieldStyle}
-                                       placeholder="Identifier you can used to follow related messages"
-                                       margin="normal"
-                                       variant="filled"
-                                       value={this.props.messageCandidate.correlationId}
-                                       onChange={this.onChange}
-                                       InputLabelProps={{
-                                           shrink: true,
-                                       }}
+                            <TextField
+                                name="correlationId"
+                                label="correlation Id"
+                                color="Primary"
+                                fullWidth={true}
+                                value={this.props.messageCandidate.correlationId}
+                                onChange={this.onChange}
                             />
                         </Grid>
 
                         <Grid item xs={5}>
-                            <Select
-                                styles={customStyles}
-                                name="templateService"
-                                label="templateService"
-                                placeholder={"templateFile *required"}
-                                options={this.props.store.appStore.templateOptions}
-                                value={this.props.messageCandidate.templateService}
-                                onChange={this.handleChangeTemplateService}
-                            />
-                        </Grid>
-
-                        <Grid item xs={3}>
-                            <FormControl>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td><Checkbox name={"asyncAcknowledge"} style={fieldStyle}
-                                                      value={this.props.messageCandidate.asyncAcknowledge}
-                                                      checked={this.props.messageCandidate.asyncAcknowledge}
-                                                      onChange={this.handleChangeAsyncAcknowledge}/></td>
-                                        <td style={fieldStyle}>Asynchronous Acknoledgement</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
+                            <FormControl className={classes.formControl} fullWidth={true}>
+                                    <FormControl className={classes.formControl} fullWidth={true}>
+                                        <InputLabel htmlFor="templateService">Message Template</InputLabel>
+                                        <Select
+                                            label="Message Template"
+                                            placeholder="select the template"
+                                            value={this.props.messageCandidate.templateService}
+                                            onChange={this.onMessageTemplateChange}
+                                            inputProps={{
+                                                name: 'templateService',
+                                                id: 'templateService'
+                                            }}>
+                                            {this.getMessageTemplateItems().map(this.buildMenuItem)}
+                                        </Select>
+                                    </FormControl>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={4}>
 
-                            <Button disabled={this.props.messageCandidate.templateService == "#none"}
-                                    style={buttonStyle} id="preview"
-                                    onClick={() => this.preview()}>
-                                Preview
-                            </Button>   <span>   </span>
-                            <Button disabled={this.props.messageCandidate.templateService == "#none"}
-                                    style={buttonStyle} id="send"
-                                    onClick={() => this.send()}>
-                                Send
-                            </Button>
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        id="asyncAcknowledge"
+                                        name="asyncAcknowledge"
+                                        onChange={this.handleChangeAsyncAcknowledge}
+                                        checked={this.props.messageCandidate.asyncAcknowledge}
+                                        value={this.props.messageCandidate.asyncAcknowledge}/>
+                                }
+                                label="Require Async Ack"/>
                         </Grid>
+                        <Grid item style={{marginTop: 16}}>
+                            <Button id="preview"
+                                    variant="contained"
+                                    onClick={() => this.preview()}
+                                    color="primary"
+                                    className={classes.button}
+                                    disabled={this.isDisabled()}>
+                                Preview
+                                <DescriptionIcon className={classes.rightIcon}/>
+                            </Button>
+
+                        </Grid>
+                        <Grid item style={{marginTop: 16}}>
+                            <Button
+                                id="send"
+                                color="secondary"
+                                variant="contained"
+                                className={classes.button}
+                                onClick={() => this.send()}
+                                disabled={this.isDisabled()}>
+                                Send
+                                <SendRoundedIcon className={classes.rightIcon}/>
+                            </Button>
+                            <span>   </span>
+                        </Grid>
+
                     </Grid>
-            </FormGroup>
 
+                </Paper>
+            </div>
         );
-
     }
 
+    getMessageTemplateItems() {
+        return this.props.store.appStore.templateOptions;
+    }
+
+    buildMenuItem(item) {
+        return (
+            <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
+        );
+    }
+
+    isDisabled() {
+        return this.props.messageCandidate.templateService === "#none";
+    }
 
     getId() {
         let d = new Date().getTime();
         //TODO extend uuid to form "ba6f94e3-2004-439b-a09f-a6f1f96ea34c"
         //TODO validate "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxyx"
-        const uuid = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxyx'.replace(/[xy]/g, function (c) {
+        return 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxyx'.replace(/[xy]/g, this.getReplacer(d))
+    }
+
+    getReplacer(d) {
+        return function (c) {
             const r = ((d + Math.random() * 16) % 16) | 0;
             d = Math.floor(d / 16);
             return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
-        });
-        return uuid
-    }
+        };
+    };
+
 }
 
+SendMessage.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
 
 
+export default withStyles(styles)(SendMessage)

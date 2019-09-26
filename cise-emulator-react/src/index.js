@@ -6,31 +6,50 @@ import MainAppModel from "./models/MainAppModel";
 import MessageType from "./models/MessageType";
 import MainApp from "./app/MainApp";
 import {autorun, when} from "mobx";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import {blue, pink} from "@material-ui/core/colors";
+import {CssBaseline} from "@material-ui/core";
 
 const stores = {
     appStore: new MainAppModel(),
     messageStore: new MessageListModel()
 };
 
-stores.messageStore.createNewMessage("", MessageType.MASTER_IN, "", "", "false", "", "");
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+        secondary: pink,
+        type: 'light',
+        background: {
+            default: "#eeeeee"
+        },
+    },
+});
+
 render(
-    <div>
+    <React.Fragment>
         <DevTools/>
-        <MainApp store={stores} />
-    </div>,
+        <MuiThemeProvider theme={theme}>
+            <CssBaseline />
+            <MainApp store={stores}/>
+        </MuiThemeProvider>
+    </React.Fragment>,
     document.getElementById("root")
 );
 
 
+
+autorun(() => {
+    stores.appStore.loadXmlTemplates();
+    stores.appStore.loadServiceId();
+});
+
 when(
-    () => stores.appStore.IsConnected,
-    // effect
+    () => stores.appStore.isConnected,
     () => stores.appStore.closeModal()
 );
 
-autorun(() => {
-    stores.appStore.obtainXmlTemplates();
-    stores.appStore.obtainSelfMember();
-});
+
 
 window.store = stores;

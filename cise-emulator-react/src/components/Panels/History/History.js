@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import messageCandidate from "../../../models/message/MessageCandidate";
-import SendMessage from "../SendMessage/SendMessage";
+import React, {Component} from 'react';
 
 export default class History extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
     }
@@ -20,8 +18,6 @@ export default class History extends Component {
             font: 'Liberation Sans',
             fontFamily: 'Liberation Sans'
         };
-        //appStore
-        //messageStore
         const msgs = this.props.store.messageStore.messages.map((message, i) =>
             this.renderMessages(message, i)
         );
@@ -31,12 +27,20 @@ export default class History extends Component {
         return (
             <table style={style}>
                 <tbody>
-                <tr><td>{"  -----------------  "}</td></tr>
+                <tr>
+                    <td>{"  -----------------  "}</td>
+                </tr>
                 {msgs}
 
-                <tr><td>{"  -----------------  "}</td></tr>
-                <tr><td>{lastMsg.source}{"  -  "}{lastMsg.destination}</td></tr>
-                <tr><td>{lastMsg.correlationId}</td></tr>
+                <tr>
+                    <td>{"  -----------------  "}</td>
+                </tr>
+                <tr>
+                    <td>{lastMsg.source}{"  -  "}{lastMsg.destination}</td>
+                </tr>
+                <tr>
+                    <td>{lastMsg.correlationId}</td>
+                </tr>
                 </tbody>
             </table>
         )
@@ -72,17 +76,19 @@ export default class History extends Component {
         };
 
         return (
-            <tr><td>
+            <tr>
+                <td>
 
-            <div key={i} style={style}>
+                    <div key={i} style={style}>
                 <span style={textStyle}>
                     <span style={nameStyle}>{message.source}</span>{" - "}
                     <span> {message.destination}</span>
-                    <br />
+                    <br/>
                     {message.correlationId}
                 </span>
-            </div>
-            </td></tr>
+                    </div>
+                </td>
+            </tr>
         );
     }
 }

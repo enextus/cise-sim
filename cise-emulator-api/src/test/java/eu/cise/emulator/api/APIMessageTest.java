@@ -58,7 +58,7 @@ public class APIMessageTest {
         MessageApiDto mockedMessageApiDto = mock(MessageApiDto.class);
         when(messageStorage.read()).thenReturn(mockedMessageApiDto);
 
-        MessageApiDto response = messageAPI.getLastStoredMessage();
+        MessageApiDto response = (MessageApiDto) messageAPI.getLastStoredMessage();
 
         assertThat(response).isEqualTo(mockedMessageApiDto);
     }
