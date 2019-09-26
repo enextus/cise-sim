@@ -1,34 +1,41 @@
 package eu.cise.emulator.api;
 
 
+//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.ws.rs.core.Response;
 import java.io.Serializable;
 
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class MessageApiDto implements Serializable {
 
     @JsonProperty("status")
-    int status;
+    private Integer status;
+
     @JsonProperty("errorDetail")
-    String errorDetail;
+    private String errorDetail;
+
     @JsonProperty("body")
-    String body;
+    private String body;
+
     @JsonProperty("acknowledge")
-    String acknowledge;
+    private String acknowledge;
+
     @JsonProperty("error")
-    Boolean error;
+    private Boolean error;
 
     public MessageApiDto() {
 
     }
 
-    public MessageApiDto(Response.StatusType status, String errorDetail, String contentAcknowledge, String contentMessageString) {
-        this.status = status.getStatusCode();
+    public MessageApiDto(Integer status, String errorDetail, String acknowledge, String body) {
+        this.status = status;
         this.errorDetail = errorDetail;
-        this.body = contentMessageString;
-        this.acknowledge = contentAcknowledge;
+        this.body = body;
+        this.acknowledge = acknowledge;
     }
+
 
     public Boolean getError() {
         return status >= 400;
@@ -46,11 +53,11 @@ public class MessageApiDto implements Serializable {
         this.errorDetail = errorDetail;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -70,3 +77,5 @@ public class MessageApiDto implements Serializable {
         this.acknowledge = acknowledge;
     }
 }
+
+

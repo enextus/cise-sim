@@ -7,6 +7,7 @@ import eu.cise.emulator.api.CiseEmulatorAPI;
 //import eu.cise.emulator.deprecated.web.app.transport.JerseyRestClient;
 import javax.ws.rs.client.*;
 
+import eu.cise.io.MessageStorage;
 import eu.cise.servicemodel.v1.message.Message;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -45,8 +46,9 @@ public class AppContextTest {
     public void it_builds_web_api() {
         AppContext appContext = new DefaultAppContext();
         MessageProcessor messageProcessor = mock(MessageProcessor.class);
+        MessageStorage messageStorage = mock(MessageStorage.class);
 
-        CiseEmulatorAPI api = appContext.makeEmulatorApi(messageProcessor, );
+        CiseEmulatorAPI api = appContext.makeEmulatorApi(messageProcessor, messageStorage);
 
         assertThat(api).isNotNull();
     }
@@ -56,9 +58,10 @@ public class AppContextTest {
     public void it_connects_API_to_MessageProcesor() {
         EmulatorEngine engine = mock(EmulatorEngine.class);
         MessageProcessor messageProcessor = new DefaultMessageProcessor(engine);
+        MessageStorage messageStorage = mock(MessageStorage.class);
 
         AppContext appContext = new DefaultAppContext();
-        CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor, );
+        CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor, messageStorage);
 
         Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target("http://localhost:47080/webapi/messages");

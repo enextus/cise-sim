@@ -38,11 +38,11 @@ public class DefaultMessageAPI implements MessageAPI {
         MessageApiDto returnedApiDto = null;
         try {
             Acknowledgement acknowledgement = messageProcessor.send(message, sendParam);
-            returnedApiDto = new MessageApiDto(Response.Status.ACCEPTED, null, xmlMapper.toXML(acknowledgement), "");
+            returnedApiDto = new MessageApiDto(Response.Status.ACCEPTED.getStatusCode(), null, xmlMapper.toXML(acknowledgement), "");
         } catch (Exception e) {
             //TODO: interpret the exception to show the right error to the UI
             LOGGER.error("error in Api send {}", e);
-            returnedApiDto = new MessageApiDto(Response.Status.BAD_REQUEST, "Error in Api send", "", "");
+            returnedApiDto = new MessageApiDto(Response.Status.BAD_REQUEST.getStatusCode(), "Error in Api send", "", "");
         }
         return returnedApiDto;
     }
