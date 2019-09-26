@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class WebAPIMessageResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebAPIMessageResource.class);
+    private static final MessageApiDto DEFAULTRETURNPULL = new MessageApiDto(Response.Status.NO_CONTENT, "", "");
     private final MessageAPI messageAPI;
 
 
@@ -35,12 +36,21 @@ public class WebAPIMessageResource {
     }
 
     @GET
-    public Response receive() {
-        LOGGER.info("messagePull from UI");
-        //messageAPI.getLastStoredMessage();
-        MessageApiDto resultMessage = new MessageApiDto(Response.Status.OK, "<xml></xml>", "<xml></xml>");
+    public Response pull() {
+        MessageApiDto resultMessage = DEFAULTRETURNPULL;
+
+        if (messageAPI.getLastStoredMessage() != null) {
+            LOGGER.debug("message Pulled from UI to " +
+                    "Ressource with content : "
+            );
+        } else {
+            return Response
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
+        }
+
         return Response
-                .status(Response.Status.OK)
+                .status(resultMessage.getStatus())
                 .entity(resultMessage)
                 .build();
     }

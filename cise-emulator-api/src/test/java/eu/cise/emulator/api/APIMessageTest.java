@@ -47,7 +47,7 @@ public class APIMessageTest {
         MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor , messageStorage );
         when(messageStorage.read()).thenReturn(null);
 
-        MessageApiDto response = messageAPI.getLastStoredMessage();
+        MessageApiDto response = (MessageApiDto) messageAPI.getLastStoredMessage();
 
         assertThat(response).isNull();
     }

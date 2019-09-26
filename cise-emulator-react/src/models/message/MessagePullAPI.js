@@ -30,11 +30,12 @@ export default class MessagePullAPI {
             .then((response) => {
 
                 console.debug("PULL CALL SUCCESS !!! status : ", response.data.status, " /--/  body :  ", response.data.body, " /--/ acknowledgement :   ", response.data.ack, " /--/   ");
+                if (response.status != 204) {
                 this.body = response.data.body;
-                this.acknowledgement = response.data.ack;
+                this.acknowledgement = response.data.acknowledge;
                 this.status = response.data.status;
                 this.timer = 0;
-                this.counter ++;
+                }
             })
             .catch((err) => {
                 let errortxt = ("Errors occur in PREVIEW phase \"web api pull call\"; with detail... \n" +

@@ -28,7 +28,7 @@ export default class PulledMessage extends Component {
         }));
 
         const rootStyle = {
-            width: "99%",
+            width: "100%",
             alignContent: "center",
             fontFamily: 'Liberation Sans',
             font: 'Liberation'

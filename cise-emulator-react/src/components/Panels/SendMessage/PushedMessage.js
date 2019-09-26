@@ -33,8 +33,7 @@ export default class PushedMessage extends Component {
         }
 
         const rootStyle = {
-            width: "99%",
-            alignContent: "center",
+            width: "100%",
             fontFamily: 'Liberation Sans',
             font: 'Liberation'
         };
