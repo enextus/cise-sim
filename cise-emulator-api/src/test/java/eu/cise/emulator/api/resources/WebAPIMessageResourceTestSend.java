@@ -41,7 +41,7 @@ public class WebAPIMessageResourceTestSend {
     public void it_invokes_the_send_the_http_is_successful_201() {
         Response response = resources.target("/webapi/messages")
                 .request()
-                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
+                .method("PATCH", Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
         assertThat(response.getStatus()).isEqualTo(201);
     }
 
@@ -49,7 +49,7 @@ public class WebAPIMessageResourceTestSend {
     public void it_invokes_the_send_and_pass_the_message_to_the_facade() {
         Response test = resources.target("/webapi/messages")
                 .request()
-                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
+                .method("PATCH", Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
         verify(messageAPI).send(any(JsonNode.class));
     }
 

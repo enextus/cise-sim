@@ -23,7 +23,7 @@ public class WebAPIMessageResource {
 
     }
 
-    @POST
+    @PATCH
     public Response send(JsonNode msgWithParams) {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
         MessageApiDto resultMessage = messageAPI.send(msgWithParams);
