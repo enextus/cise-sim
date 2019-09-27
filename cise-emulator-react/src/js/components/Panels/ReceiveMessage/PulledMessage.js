@@ -16,9 +16,20 @@ export default class PulledMessage extends Component {
         super(props);
     }
     render() {
+        const rootStyle = {
+            width: "100%",
+            fontFamily: 'Liberation Sans',
+            font: 'Liberation'
+        };
+        const textfieldStyle = {
+            width: "100%",
+            borderLeft: `6px solid 4`,
+            padding: `4px 6px`,
+            fontFamily: 'Liberation Sans'
+        };
         this.formattedXmlMessageContent = format(this.props.messageReceived.body);
         return (
-            <div >
+            <div style = {rootStyle}>
                 <ExpansionPanel disabled={this.formattedXmlMessageContent===""} >
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}
@@ -35,6 +46,7 @@ export default class PulledMessage extends Component {
                             multiline
                             value={this.formattedXmlMessageContent}
                             margin="none"
+                            style={textfieldStyle}
                             InputProps={{
                                 readOnly: true
                             }}
