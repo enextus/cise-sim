@@ -43,4 +43,13 @@ public class WebAPIMessageResource {
                 .build();
     }
 
+    @POST
+    public Response preview(JsonNode msgWithParams) {
+        LOGGER.info("Preview message with param: {}", msgWithParams);
+        return Response
+                .status(Response.Status.OK)
+                .build();
+    }
+
+
 }
