@@ -1,4 +1,4 @@
-package eu.cise.emulator.api.resources;
+package eu.cise.emulator.api.representation;
 
 import eu.cise.emulator.SendParam;
 

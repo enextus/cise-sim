@@ -3,6 +3,7 @@ package eu.cise.emulator.api.resources;
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.api.MessageApiDto;
+import eu.cise.emulator.api.representation.SendingDataWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
