@@ -14,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+@Path("/api/cisemessages")
 public class CiseMessageResource {
     public static final String ERROR = "ERROR";
     public static final String ACK = "ACK";
@@ -34,7 +35,6 @@ public class CiseMessageResource {
     @POST
     @Consumes("text/plain,text/xml,application/xml")
     @Produces("text/xml")
-    @Path("/api/cisemessage")
     public Response receive(String inputXmlMessage) {
         Acknowledgement acknowledgement = messageAPI.receive(inputXmlMessage);
 
