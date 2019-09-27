@@ -73,5 +73,10 @@ public class DefaultMessageAPI implements MessageAPI {
         return returnApiDto;
     }
 
+    @Override
+    public void preview(SendParam jsonNode) {
+
+    }
+
 
 }

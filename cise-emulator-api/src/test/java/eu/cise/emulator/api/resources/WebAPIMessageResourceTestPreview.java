@@ -3,6 +3,7 @@ package eu.cise.emulator.api.resources;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.cise.emulator.SendParam;
 import eu.cise.emulator.api.MessageAPI;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.verify;
 public class WebAPIMessageResourceTestPreview {
 
     private static MessageAPI messageAPI = mock(MessageAPI.class);;
+    private SendParam sendParam;
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
@@ -33,6 +35,7 @@ public class WebAPIMessageResourceTestPreview {
 
     @Before
     public void before() {
+        sendParam = new SendParam(true, "message-id", null);
         jsonMapper = new ObjectMapper();
     }
 
@@ -40,30 +43,17 @@ public class WebAPIMessageResourceTestPreview {
     public void it_invokes_the_preview_the_http_is_successful_200() {
         Response response = resources.target("/webapi/messages")
                 .request()
-                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
+                .post(Entity.entity(sendParam, MediaType.APPLICATION_JSON_TYPE));
         assertThat(response.getStatus()).isEqualTo(200);
     }
 
-    @Ignore
     @Test
-    public void it_invokes_the_send_and_pass_the_message_to_the_facade() {
+    public void it_invokes_the_preview_and_pass_the_sendParam_to_the_facade() {
+
         Response test = resources.target("/webapi/messages")
                 .request()
-                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
-        verify(messageAPI).send(any(JsonNode.class));
+                .post(Entity.entity(sendParam, MediaType.APPLICATION_JSON_TYPE));
+        verify(messageAPI).preview(sendParam);
     }
 
-    private JsonNode msgTemplateWithParams() {
-        ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
-
-        ObjectNode params = jsonMapper.createObjectNode();
-        params.put("requires_ack", "false");
-        params.put("message_id", "1234-123411-123411-1234");
-        params.put("correlation_id", "7777-666666-666666-5555");
-
-        msgTemplateWithParamObject.put("message_template", "hash-msg-template");
-        msgTemplateWithParamObject.set("params", params);
-
-        return jsonMapper.valueToTree(msgTemplateWithParamObject);
-    }
 }
