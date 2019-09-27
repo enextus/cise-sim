@@ -61,21 +61,21 @@ export default class MainAppModel {
             'http://' + document.location.host + this.defaultServiceUrl + 'templates');
 
         try {
-            axios.get(serviceUrl, this.defaultGetConfig)
-                .then((response) => {
-                    console.log("loadXmlTemplates SUCCESS !!! @axios call ", response.data);
-
-                    for (let itXmlFile of response.data) {
-                        this.optionsTemplate.push( //FIFO
-                            new FileRef(itXmlFile.name, itXmlFile.path, itXmlFile.hash)
-                        );
-                    }
-                    console.log("this optionService:" + this.optionsTemplate);
-                })
-                .catch((err) => {
-                    console.log("ERROR !!! @axios call ", err)
-
-                })
+            // axios.get(serviceUrl, this.defaultGetConfig)
+            //     .then((response) => {
+            //         console.log("loadXmlTemplates SUCCESS !!! @axios call ", response.data);
+            //
+            //         for (let itXmlFile of response.data) {
+            //             this.optionsTemplate.push( //FIFO
+            //                 new FileRef(itXmlFile.name, itXmlFile.path, itXmlFile.hash)
+            //             );
+            //         }
+            //         console.log("this optionService:" + this.optionsTemplate);
+            //     })
+            //     .catch((err) => {
+            //         console.log("ERROR !!! @axios call ", err)
+            //
+            //     })
         } catch (e) {
             this.optionsTemplate.push(
                 new FileRef("pushTemplate.xml", "/tmp/pushTemplate.xml", "345435345")
