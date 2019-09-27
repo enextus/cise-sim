@@ -44,8 +44,11 @@ public class WebAPIMessageResource {
     }
 
     @POST
-    public Response preview(JsonNode msgWithParams) {
-        LOGGER.info("Preview message with param: {}", msgWithParams);
+    public Response preview(SendingDataWrapper dataWrapper) {
+        LOGGER.info("Preview message with param: {}", dataWrapper);
+        if (dataWrapper != null) {
+            messageAPI.preview(dataWrapper.getParam(), dataWrapper.getTemplateHash());
+        }
         return Response
                 .status(Response.Status.OK)
                 .build();

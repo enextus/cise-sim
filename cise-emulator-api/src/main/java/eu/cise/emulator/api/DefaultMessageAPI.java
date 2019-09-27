@@ -74,7 +74,7 @@ public class DefaultMessageAPI implements MessageAPI {
     }
 
     @Override
-    public void preview(SendParam jsonNode) {
+    public void preview(SendParam jsonNode, String templateHash) {
 
     }
 

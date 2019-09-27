@@ -11,5 +11,5 @@ public interface MessageAPI {
 
     MessageApiDto getLastStoredMessage();
 
-    void preview(SendParam jsonNode);
+    void preview(SendParam jsonNode, String templateHash);
 }
