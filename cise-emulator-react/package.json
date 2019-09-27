@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Boilerplate for MobX + React project with JSX, ES6 and decorator compilation",
   "scripts": {
-    "start": "webpack-dev-server --hot --open",
+    "start": "webpack-dev-server --content-base src --hot --open",
     "build": "webpack",
     "lint": "eslint src",
     "test": "jest"

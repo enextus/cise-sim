@@ -1,10 +1,18 @@
 import {action, computed, observable} from "mobx";
 import FileRef from "./FileRef";
+import axios from "axios";
 
 export default class MainAppModel {
     @observable modalOpen = true;
     @observable memberId = "#TobeLoaded#";
     @observable optionsTemplate = [];
+    defaultGetConfig = {
+        method: 'get',
+        header: {
+            'Content-Type': 'application/json'
+        }
+    };
+    defaultServiceUrl = "/webapi/";
 
     @computed
     get isModClosed() {
@@ -48,9 +56,12 @@ export default class MainAppModel {
         this.optionsTemplate.push(
             new FileRef("Choose a template", "/None", "#None")
         );
+        const serviceUrl = ((document.location.hostname === "localhost") ?
+            'http://localhost:47080' + this.defaultServiceUrl + 'templates' :
+            'http://' + document.location.host + this.defaultServiceUrl + 'templates');
 
         try {
-            axios.get(("/webapi/templates"))
+            axios.get(serviceUrl, this.defaultGetConfig)
                 .then((response) => {
                     console.log("loadXmlTemplates SUCCESS !!! @axios call ", response.data);
 
