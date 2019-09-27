@@ -141,10 +141,10 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         notNull(message, NullMessageEx.class);
 
         // check creation datetime
-        if ((message.getCreationDateTime()).compare(getDatetime(3)) == DatatypeConstants.LESSER ||
-                (message.getCreationDateTime()).compare(getDatetime(0)) == DatatypeConstants.GREATER) {
-            throw new CreationDateErrorEx();
-        }
+//        if ((message.getCreationDateTime()).compare(getDatetime(3)) == DatatypeConstants.LESSER ||
+//                (message.getCreationDateTime()).compare(getDatetime(0)) == DatatypeConstants.GREATER) {
+//            throw new CreationDateErrorEx();
+//        }
 
         // check sender exists
         if (message.getSender() == null) {
