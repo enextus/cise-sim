@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Response;
 
+import static eu.eucise.helpers.PushBuilder.newPush;
+
 public class DefaultMessageAPI implements MessageAPI {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebAPIMessageResource.class);
     private final MessageStorage messageStorage;
@@ -74,8 +76,11 @@ public class DefaultMessageAPI implements MessageAPI {
     }
 
     @Override
-    public void preview(SendParam jsonNode, String templateHash) {
-
+    public MessageApiDto preview(SendParam param, String templateHash) {
+        //TODO: read the template from fileStorage
+        Message message = newPush().build();
+        Message preview = messageProcessor.preview(message, param);
+        return new MessageApiDto(Response.Status.OK.getStatusCode(), "", "", xmlMapper.toXML(preview));
     }
 
 

@@ -12,8 +12,7 @@ import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class WebAPIMessageResourcePreviewTest {
 
@@ -46,6 +45,9 @@ public class WebAPIMessageResourcePreviewTest {
 
     @Test
     public void it_invokes_the_preview_and_returns_the_prepared_message() {
+        MessageApiDto dtoToReturn = mock(MessageApiDto.class);
+        when(messageAPI.preview(any(), any())).thenReturn(dtoToReturn);
+
         Response response = webAPIMessageResource.preview(dataWrapper);
 
         MessageApiDto responseEntity = (MessageApiDto)response.getEntity();

@@ -47,11 +47,13 @@ public class WebAPIMessageResource {
     @POST
     public Response preview(SendingDataWrapper dataWrapper) {
         LOGGER.info("Preview message with param: {}", dataWrapper);
+        MessageApiDto previewMesageApiDto = null;
         if (dataWrapper != null) {
-            messageAPI.preview(dataWrapper.getParam(), dataWrapper.getTemplateHash());
+            previewMesageApiDto = messageAPI.preview(dataWrapper.getParam(), dataWrapper.getTemplateHash());
         }
         return Response
                 .status(Response.Status.OK)
+                .entity(previewMesageApiDto)
                 .build();
     }
 
