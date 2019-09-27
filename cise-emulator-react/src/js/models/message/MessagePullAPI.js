@@ -29,7 +29,7 @@ export default class MessagePullAPI {
         axios.get(serviceUrl, this.defaultGetConfig)
             .then((response) => {
 
-                console.debug("PULL CALL SUCCESS !!! status : ", response.data.status, " /--/  body :  ", response.data.body, " /--/ acknowledgement :   ", response.data.ack, " /--/   ");
+                console.debug("PULL CALL SUCCESS !!! status : ", response.data.status, " /--/  body :  ", response.data.body, " /--/ acknowledge :   ", response.data.acknowledge, " /--/   ");
                 if (response.status != 204) {
                 this.body = response.data.body;
                 this.acknowledgement = response.data.acknowledge;
