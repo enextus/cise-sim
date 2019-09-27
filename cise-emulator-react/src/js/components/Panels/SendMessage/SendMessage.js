@@ -63,7 +63,7 @@ class SendMessage extends Component {
     };
 
 
-    handleChangeAsyncAcknowledge = aasyncAcknowledge => {
+    onAsyncAcknowledgeChange = asyncAcknowledge => {
         this.props.messageCandidate.asyncAcknowledge = !this.props.messageCandidate.asyncAcknowledge;
         console.log(`Option handleChangeAsyncAcknowledge:`, this.props.messageCandidate.asyncAcknowledge);
     };
@@ -128,9 +128,9 @@ class SendMessage extends Component {
                                     <Checkbox
                                         id="asyncAcknowledge"
                                         name="asyncAcknowledge"
-                                        onChange={this.handleChangeAsyncAcknowledge}
+                                        onChange={this.onAsyncAcknowledgeChange}
                                         checked={this.props.messageCandidate.asyncAcknowledge}
-                                        value={this.props.messageCandidate.asyncAcknowledge}/>
+                                        value={this.props.messageCandidate.asyncAcknowledge.valueOf()}/>
                                 }
                                 label="Require Async Ack"/>
                         </Grid>
