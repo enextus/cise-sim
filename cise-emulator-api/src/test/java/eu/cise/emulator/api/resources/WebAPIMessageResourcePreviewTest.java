@@ -3,6 +3,8 @@ package eu.cise.emulator.api.resources;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.cise.emulator.SendParam;
 import eu.cise.emulator.api.MessageAPI;
+import eu.cise.emulator.api.MessageApiDto;
+import eu.cise.emulator.api.representation.SendingDataWrapper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,6 +42,15 @@ public class WebAPIMessageResourcePreviewTest {
     public void it_invokes_the_preview_and_pass_the_sendParam_to_the_facade() {
         webAPIMessageResource.preview(dataWrapper);
         verify(messageAPI).preview(any(), any());
+    }
+
+    @Test
+    public void it_invokes_the_preview_and_returns_the_prepared_message() {
+        Response response = webAPIMessageResource.preview(dataWrapper);
+
+        MessageApiDto responseEntity = (MessageApiDto)response.getEntity();
+
+        assertThat(responseEntity).isNotNull();
     }
 
 }
