@@ -55,9 +55,8 @@ export default class MessagePushAPI {
         if (messageCandidate.templatePayload.value != "#none") valuePostData.message_payload = messageCandidate.templatePayload.value;
         valuePostData.params.message_id = messageCandidate.messageId;
         valuePostData.params.correlation_id = (messageCandidate.correlationId = "" ? messageId : messageCandidate.correlationId);
-        if (messageCandidate.asyncAcknowledge !== undefined && messageCandidate.asyncAcknowledge.value !== undefined) {
-            aSourceValue == messageCandidate.asyncAcknowledge.valueOf()
-            valuePostData.params.requires_ack = aSourceValue;
+        if (messageCandidate.asyncAcknowledge !== undefined) {
+            valuePostData.params.requires_ack = messageCandidate.asyncAcknowledge;
         }
 
         axios.post(serviceUrl, valuePostData, this.defaultPostConfig)

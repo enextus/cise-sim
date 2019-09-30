@@ -37,7 +37,6 @@ const styles = theme => ({
 @observer
 class SendMessage extends Component {
     messagePreview;
-    formattedXmlAcknowledgeContent;
     state = {
         selectedOption: null,
     };
@@ -63,7 +62,7 @@ class SendMessage extends Component {
     };
 
 
-    handleChangeAsyncAcknowledge = aasyncAcknowledge => {
+    onAsyncAcknowledgeChange = asyncAcknowledge => {
         this.props.messageCandidate.asyncAcknowledge = !this.props.messageCandidate.asyncAcknowledge;
         console.log(`Option handleChangeAsyncAcknowledge:`, this.props.messageCandidate.asyncAcknowledge);
     };
@@ -75,7 +74,6 @@ class SendMessage extends Component {
     }
 
     render() {
-        console.log("this.props.store", this.props.store.appStore.templateOptions)
         const {classes} = this.props;
         return (
             <div style={{padding: 16, margin: 'auto', maxWidth: 800}}>
@@ -128,7 +126,7 @@ class SendMessage extends Component {
                                     <Checkbox
                                         id="asyncAcknowledge"
                                         name="asyncAcknowledge"
-                                        onChange={this.handleChangeAsyncAcknowledge}
+                                        onChange={this.onAsyncAcknowledgeChange}
                                         checked={this.props.messageCandidate.asyncAcknowledge}
                                         value={this.props.messageCandidate.asyncAcknowledge}/>
                                 }

@@ -1,9 +1,9 @@
 import DevTools from "mobx-react-devtools";
 import React from "react";
 import {observer} from "mobx-react";
-import Panels from '../components/Panels/Panels';
-import NavBar from '../components/NavBar/NavBar';
-import WaitModal from '../components/WaitModal';
+import Panels from './components/Panels/Panels';
+import NavBar from './components/NavBar/NavBar';
+import WaitModal from './components/WaitModal';
 
 @observer
 export default class MainApp extends React.Component {

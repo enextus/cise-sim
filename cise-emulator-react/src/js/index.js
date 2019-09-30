@@ -3,14 +3,12 @@ import {render} from "react-dom";
 import DevTools from "mobx-react-devtools";
 import MessageListModel from "./models/MessageListModel";
 import MainAppModel from "./models/MainAppModel";
-import MessageType from "./models/MessageType";
-import MainApp from "./app/MainApp";
+import MainApp from "./MainApp";
 import {autorun, when} from "mobx";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {blue, pink} from "@material-ui/core/colors";
 import {CssBaseline} from "@material-ui/core";
-
 const stores = {
     appStore: new MainAppModel(),
     messageStore: new MessageListModel()
@@ -25,6 +23,14 @@ const theme = createMuiTheme({
             default: "#eeeeee"
         },
     },
+    overrides: {
+        // Style sheet name to overrides⚛️
+        MuiExpansionPanelDetails: {
+            root:{
+                display: 'grow' 
+            }
+        }
+    }    
 });
 
 render(

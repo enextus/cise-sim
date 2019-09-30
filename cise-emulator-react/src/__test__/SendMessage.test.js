@@ -1,6 +1,6 @@
 import {render, cleanup} from "react-testing-library";
 import "jest-dom/extend-expect";
-import "../js/components/Panels/SendMessage/XmlFileRef";
+import "../components/Panels/SendMessage/XmlFileRef";
 
 
 describe("SendMessage", ()=> {
