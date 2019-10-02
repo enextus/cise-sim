@@ -37,12 +37,15 @@ public class TemplateResource {
 
     @GET
     @Path("{templateId}")
-    public Response getTemplateById(@PathParam("templateId") String templateId) {
-        templateAPI.preview(new TemplateParams());
+    public Response getTemplateById(
+            @PathParam("templateId") String templateId,
+            @QueryParam("messageId") String messageId,
+            @QueryParam("correlationId") String correlationId,
+            @QueryParam("requestAck") boolean requestAck) {
+        templateAPI.preview(new TemplateParams(templateId, messageId, correlationId, requestAck));
         return Response
                 .ok()
                 .build();
     }
-
 
 }

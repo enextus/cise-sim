@@ -8,10 +8,7 @@ import eu.cise.emulator.api.TemplateAPI;
 import eu.cise.emulator.api.representation.SendingDataWrapper;
 import eu.cise.emulator.api.representation.TemplateParams;
 import io.dropwizard.testing.junit.ResourceTestRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 import javax.ws.rs.core.Response;
 
@@ -23,10 +20,11 @@ public class GetTemplateTest {
 
 
     private static TemplateAPI templateAPI = mock(TemplateAPI.class);
-    private static MessageAPI MessageAPI = mock(MessageAPI.class);
+    private static MessageAPI messageAPI = mock(MessageAPI.class);
+
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new TemplateResource(MessageAPI, templateAPI))
+            .addResource(new TemplateResource(messageAPI, templateAPI))
             .bootstrapLogging(false)
             .build();
     private WebAPIMessageResource webAPIMessageResource;
@@ -42,6 +40,11 @@ public class GetTemplateTest {
         dataWrapper = new SendingDataWrapper(sendParam, "template-hash");
     }
 
+    @After
+    public void after() {
+        reset(templateAPI);
+        reset(messageAPI);
+    }
     /*
         private String templateHash;
         private boolean requiresAck;
@@ -58,25 +61,29 @@ public class GetTemplateTest {
 
         assertThat(response.getStatus()).isEqualTo(200);
     }
-//MessageApiDto preview(SendParam jsonNode, String templateHash);
 
     // MessageApiDto preview(TemplateParams params)
     @Test
     public void it_invokes_the_api_templates_for_preview() {
         resources.target("/api/templates/1234567")
-                .queryParam("requiresAck", false)
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
+                .queryParam("requiresAck", false)
                 .request().get();
 
         verify(templateAPI).preview(any(TemplateParams.class));
     }
 
+    // MessageApiDto preview(TemplateParams params)
     @Test
-    @Ignore
-    public void it_invokes_the_preview_and_pass_the_sendParam_to_the_facade() {
-        webAPIMessageResource.preview(dataWrapper);
-        verify(templateAPI).preview(any());
+    public void it_invokes_the_api_templates_for_preview_with_a_valued_templateParams() {
+        resources.target("/api/templates/1234567")
+                .queryParam("messageId", "message-id-#1")
+                .queryParam("correlationId", "correlation-id-#1")
+                .queryParam("requiresAck", false)
+                .request().get();
+
+        verify(templateAPI).preview(new TemplateParams("1234567", "message-id-#1", "correlation-id-#1", false));
     }
 
     @Test
