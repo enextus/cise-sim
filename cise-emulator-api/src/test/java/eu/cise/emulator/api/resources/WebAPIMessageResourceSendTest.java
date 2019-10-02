@@ -21,7 +21,6 @@ import static org.mockito.Mockito.verify;
 public class WebAPIMessageResourceSendTest {
 
     private static MessageAPI messageAPI = mock(MessageAPI.class);
-    ;
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()

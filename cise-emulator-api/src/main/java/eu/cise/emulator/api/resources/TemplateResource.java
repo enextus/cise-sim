@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/api")
+@Path("/api/templates")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class TemplateResource {
@@ -21,7 +21,6 @@ public class TemplateResource {
         this.messageAPI = messageAPI;
     }
 
-    @Path("/templates")
     @GET
     public Response getTemplates() {
         LOGGER.info("messagePull from UI");
@@ -31,5 +30,14 @@ public class TemplateResource {
                 .entity(lastStoredMessage)
                 .build();
     }
+
+    @GET
+    @Path("{templateId}")
+    public Response getTemplateById(@PathParam("templateId") String templateId) {
+        return Response
+                .ok()
+                .build();
+    }
+
 
 }

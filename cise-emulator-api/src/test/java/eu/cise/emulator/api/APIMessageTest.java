@@ -1,23 +1,12 @@
 package eu.cise.emulator.api;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.MessageProcessor;
-import eu.cise.emulator.api.resources.WebAPIMessageResource;
 import eu.cise.io.MessageStorage;
-import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class APIMessageTest {
