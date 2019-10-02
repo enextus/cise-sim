@@ -128,7 +128,7 @@ class SendMessage extends Component {
                                         name="asyncAcknowledge"
                                         onChange={this.onAsyncAcknowledgeChange}
                                         checked={this.props.messageCandidate.asyncAcknowledge}
-                                        value={this.props.messageCandidate.asyncAcknowledge}/>
+                                        value={this.props.messageCandidate.asyncAcknowledge.valueOf()}/>
                                 }
                                 label="Require Async Ack"/>
                         </Grid>
