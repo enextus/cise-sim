@@ -37,7 +37,6 @@ const styles = theme => ({
 @observer
 class SendMessage extends Component {
     messagePreview;
-    formattedXmlAcknowledgeContent;
     state = {
         selectedOption: null,
     };
@@ -75,7 +74,6 @@ class SendMessage extends Component {
     }
 
     render() {
-        console.log("this.props.store", this.props.store.appStore.templateOptions)
         const {classes} = this.props;
         return (
             <div style={{padding: 16, margin: 'auto', maxWidth: 800}}>

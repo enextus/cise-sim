@@ -7,17 +7,24 @@ import {observer} from 'mobx-react';
 import messageCandidate from "../../models/message/MessageCandidate";
 import MessagePushAPI from "../../models/message/MessagePushAPI";
 import MessagePullAPI from "../../models/message/MessagePullAPI";
+import {Event,EventStore} from "../../models/EventStore";
 
 @observer
 export default class Panels extends Component {
-
+    LastReceivePull;
+    PrevReceivePull;
     render() {
         const messagePreview = new MessagePushAPI();
         const messageReceived = new MessagePullAPI();
+        const messageStore = new EventStore();
 
         setInterval(function() {
             messageReceived.timer += 1;
-            messageReceived.pull();
+            this.LastReceivePull= messageReceived.pull(); //TODO: include comparison prev/last in messageStore 
+            if (this.LastReceivePull!=="" && this.PrevReceivePull!==this.LastReceivePull) {
+                messageStore.createEvent(this.LastReceivePull); 
+                this.PrevReceivePull=this.LastReceivePull
+            }
         }, 3000);
 
         return (

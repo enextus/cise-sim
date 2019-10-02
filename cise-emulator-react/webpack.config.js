@@ -1,48 +1,60 @@
-var path = require('path');
-var webpack = require("webpack");
+var path = require('path'); 
+var webpack = require('webpack');
 var debug = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-    context: path.join(__dirname, 'src'),
-    devtool: debug ? 'inline-sourcemap' : null,
-    mode: 'development',
-    entry: [
-        './js/index.js'
-    ],
-    output: {
-        path: path.join(__dirname, 'dist'),
-        filename: 'bundle.js',
-        publicPath: '/static/'
-    },
-    devServer: {
-        proxy: {
-            '/webapi': {
-                bypass: (req, res) => {
-                  console.log("called {}",req.url);
-                  if (req.url.indexOf('messages')!==-1){
-                    res.send({'status':204, 'body':'<xml>body</xml>','acknowledge':'<xml>acknowledge</xml>'})
+  context: path.join(__dirname, 'src'),
+  devtool: debug ? 'inline-sourcemap' : null,
+  entry: './js/index.js',
+  devServer: {
+    proxy: {
+      '/webapi': {
+       bypass: (req, res) => {
+         if (req.url.indexOf('/webapi/messages')!== -1){
+            console.log('.')
+            res.send({
+            'status':200,
+            'body':'<?xml version="1.0"?><!--{"id":"34840-34534-943443", "requireAck":false, "correlationId":"23434-3443-434"}--> <xsl:stylesheet xmlns:xsl="http://www.w3.org/TR/WD-xsl"><ExpansionPanelDetails><span className={classes.message}><Highlight></Highlight></span></xsl:stylesheet>',
+            'acknowledge':'<?xml version="1.0"?><!--{"id":"34840-34534-943443", "requireAck":false, "correlationId":"23434-3443-434"}--> <xsl:stylesheet xmlns:xsl="http://www.w3.org/TR/WD-xsl"><ExpansionPanelDetails><span className={classes.acknowledgement}><Highlight></Highlight></span></xsl:stylesheet>'});
+         }''
+         if (req.url.indexOf('/webapi/templates')!== -1){
+                     console.log('bypass.0TemplateList.')
+                     res.send({
+                     'status':200,
+                     'body':
+                     '<?xml version="1.0"?> ',
+                     'acknowledge':
+                     '<?xml version="1.0"?> '});
                   }
-                  if (req.url.indexOf('templates')!==-1){
-                        res.send([{"path":"/opt/jboss/EuciseData/sim-lsa/messageXmlFiles/Operations/PushTemplate.xml","name":"PushTemplate.xml","hash":350191154},
-                      {"path":"/opt/jboss/EuciseData/sim-lsa/messageXmlFiles/Operations/FeedbackTemplate.xml","name":"FeedbackTemplate.xml","hash":-955324643},
-                      {"path":"/opt/jboss/EuciseData/sim-lsa/messageXmlFiles/Operations/AcknowledgementTemplate.xml","name":"AcknowledgementTemplate.xml","hash":524802278}])
-                    }
-                }
-            }
-        }
-    },
-    plugins: [],
-    resolve:
-        {
-            extensions: ['.js', '.jsx']
-        }
-    ,
-    module: {
-        rules: [{
-            test: /\.jsx?$/,
-            use: ['babel-loader'],
-            include: path.join(__dirname, 'src')
-        }]
+       } 
+      }
     }
-}
-;
+  },
+  output: {
+      path: path.join(__dirname, 'dist'),
+      filename: 'bundle.js',
+      publicPath: '/static/'
+  },
+  plugins: [
+  ],
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  module: {
+    rules: [{
+      test: /\.js?/,
+      exclude: /(node_modules|bower_components)/,
+      use: [{
+        loader: 'babel-loader',
+        options:{
+          plugins: [
+            ["@babel/plugin-proposal-decorators", { "legacy": true }],
+            ["@babel/plugin-proposal-class-properties", { "loose": true }]
+          ],
+          presets:['@babel/preset-env','@babel/preset-react'],
+        }
+    }],
+      include: path.join(__dirname, 'src')
+    }]
+  },
+};

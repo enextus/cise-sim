@@ -18,7 +18,6 @@ export default class MainApp extends React.Component {
         const panels = this.props.store.appStore.isModClosed ? <Panels store={this.props.store}/> : '';
 
         return (
-
             <span style={{font: 'Liberation Sans'}}>
                 <DevTools/>
                 {includeModal}

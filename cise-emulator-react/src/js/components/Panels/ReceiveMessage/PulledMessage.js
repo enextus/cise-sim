@@ -1,63 +1,127 @@
 import React, {Component} from "react";
-import {TextField} from "@material-ui/core";
 import {observer} from "mobx-react";
+import {observable} from "mobx";
 import format from "xml-formatter";
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-
+import {Tabs,Tab,Paper,ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,Typography} from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Highlight from 'react-highlight.js';
+import PropTypes from 'prop-types';
+
+const pulledMessageStyle = makeStyles( theme => ({
+    root: {
+        flexGrow: 1,
+        flexBasis: '99.0%'
+      },
+      pullPanel_tab_heading: {
+        fontSize: '16px',
+        flexGrow: 1,
+        flexBasis: '98.0%'
+      },
+      pullPanel: {
+          padding: 16, 
+          margin: 'auto', 
+          maxWidth: 1000,
+       flexGrow: 1,
+        flexBasis: '97.0%'
+        },
+        pullPanel_paper:{
+        fontSize: '11px',
+        width: "100%", 
+        minWidth: '300px'
+      },
+      pullPanel_tabs:{
+        flexGrow: 1,
+        fontSize: '9px',
+        flexBasis: '95.0%'
+      },
+      pullPanel_tab:{ 
+      },
+       textfieldStyle : {
+        width: "100%",
+        borderLeft: `6px solid 4`,
+        padding: `4px 6px`
+    }
+    }));
 
 @observer
-export default class PulledMessage extends Component {
-    formattedXmlMessageContent;
+class PulledMessage extends Component {
+
     constructor(props) {
         super(props);
     }
+
+    @observable  tabPullState = {
+                                         value: 0
+                                     };
+
+
+
+    handleChange = (event, newValue) => {
+        this.tabPullState.value=newValue
+    };
+
+
     render() {
-        const rootStyle = {
-            width: "100%",
-            fontFamily: 'Liberation Sans',
-            font: 'Liberation'
-        };
-        const textfieldStyle = {
-            width: "100%",
-            borderLeft: `6px solid 4`,
-            padding: `4px 6px`,
-            fontFamily: 'Liberation Sans'
-        };
-        this.formattedXmlMessageContent = format(this.props.messageReceived.body);
+        const {classes} = this.props;
         return (
-            <div style = {rootStyle}>
-                <ExpansionPanel disabled={this.formattedXmlMessageContent===""} >
+            <div className={classes.root} >
+              <ExpansionPanel disabled={(this.props.messageReceived.body==="")&&(this.props.messageReceived.acknowledgement==="")} >
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}
-                        aria-controls="panel2a-content"
+                        aria-controls="receiveMessagecontent"
                         id="ReceivedMessage"
                     >
-                        <Typography>
-                            Received Message(s) : {(this.formattedXmlMessageContent !== "")? this.props.messageReceived.counter + ", last since ":"none in"}  {this.props.messageReceived.timer * 3} seconds
-                        </Typography>
+                    <Typography className={classes.pullPanel_tab_heading}>
+                    Received Message :
+                    </Typography>
                     </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        <TextField
-                            id="ReceivedMessageContent"
-                            multiline
-                            value={this.formattedXmlMessageContent}
-                            margin="none"
-                            style={textfieldStyle}
-                            InputProps={{
-                                readOnly: true
-                            }}
+                    <ExpansionPanelDetails className={classes.pullPanel_tabs}>
+                    <Paper className={classes.pullPanel_paper}>
+
+               <Tabs className={classes.pullPanel_tabs}
+                    value={this.tabPullState.value}
+                    onChange={this.handleChange}
+                    aria-label="simple-tabpanel"
+                    indicatorColor="primary"
+                    textColor="primary">
+                     <Tab className={classes.pullPanel_tab}
+                     label="message"
+                     id='simple-tab-1'
+                     aria-controls= 'simple-tabpanel-1'
                         />
+                     <Tab label="acknowledgement"
+                     label="acknowledgement"
+                     id='simple-tab-2'
+                     aria-controls= 'simple-tabpanel-2'
+                        />
+
+                   </Tabs>
+                  <div hidden={this.props.messageReceived.body==="" || this.tabPullState.value===1} className={classes.textfieldStyle}>
+                  <Highlight language={"xml"}>
+                {format(this.props.messageReceived.body,{stripComments: true})}
+                   </Highlight>
+                   </div>
+                   <div hidden={this.props.messageReceived.acknowledgement==="" || this.tabPullState.value===0} className={classes.textfieldStyle}>
+                  <Highlight language={"xml"}>
+                {format(this.props.messageReceived.acknowledgement,{stripComments: true})}
+                   </Highlight>
+                   </div>
+                 </Paper>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
+
             </div>
         );
     }
 }
 
+
+PulledMessage.propTypes = {
+    classes: PropTypes.object.isRequired
+};
+
+export default withStyles(pulledMessageStyle)(PulledMessage)
 
 
 
