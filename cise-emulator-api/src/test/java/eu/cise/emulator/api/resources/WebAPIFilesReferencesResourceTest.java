@@ -1,6 +1,6 @@
 package eu.cise.emulator.api.resources;
 
-import eu.cise.emulator.api.helpers.XmlFileDirectoryList;
+/*import eu.cise.emulator.api.helpers.XmlFileDirectoryList;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -14,10 +14,12 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+*/
 public class WebAPIFilesReferencesResourceTest {
 
-    File folder;
+    //File folder;
+
+    /*
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
             .addResource(new WebAPIFilesReferencesResource())
@@ -80,4 +82,5 @@ public class WebAPIFilesReferencesResourceTest {
         assertThat(listXmlFileNames).contains("my2dxml.xml");
         assertThat(listXmlFileNames.size()).isEqualTo(2);
     }
+    */
 }
