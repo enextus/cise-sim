@@ -9,27 +9,27 @@ import org.junit.Test;
 import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
-public class DefaultMessageResourceTest {
+public class AssetRedirectionResourceTest {
 
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new DefaultMessageResource())
+            .addResource(new AssetRedirectionResource())
             .bootstrapLogging(false)
             .addProvider(new ServerExceptionMapper())
             .build();
-    @Ignore
-    @Test
-    public void it_always_return_http_temporary_redirect_302() {
 
+    @Test
+    @Ignore
+    public void it_always_return_http_temporary_redirect_302() {
         try {
-            Response test = resources.target("/index.html")
-                    .request()
-                    .get();
+            Response test = resources.target("/").request().get();
+
             assertThat(test.getStatus()).isEqualTo(302);
         } catch (Exception e) {
-            // do nothing
+            fail("an exception has been thrown instead of redirecting to the /base/index.html");
         }
     }
 

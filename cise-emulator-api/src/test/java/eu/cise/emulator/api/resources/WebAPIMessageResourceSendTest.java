@@ -4,11 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.api.MessageAPI;
-import eu.cise.emulator.api.MessageApiDto;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.Entity;
@@ -17,11 +15,12 @@ import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-public class WebAPIMessageResourceTestSend {
+public class WebAPIMessageResourceSendTest {
 
-    private static MessageAPI messageAPI = mock(MessageAPI.class);;
+    private static MessageAPI messageAPI = mock(MessageAPI.class);
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
@@ -33,7 +32,6 @@ public class WebAPIMessageResourceTestSend {
 
     @Before
     public void before() {
-//        messageAPI = mock(MessageAPI.class);
         jsonMapper = new ObjectMapper();
     }
 
@@ -41,7 +39,7 @@ public class WebAPIMessageResourceTestSend {
     public void it_invokes_the_send_the_http_is_successful_201() {
         Response response = resources.target("/webapi/messages")
                 .request()
-                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
+                .method("PATCH", Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
         assertThat(response.getStatus()).isEqualTo(201);
     }
 
@@ -49,7 +47,7 @@ public class WebAPIMessageResourceTestSend {
     public void it_invokes_the_send_and_pass_the_message_to_the_facade() {
         Response test = resources.target("/webapi/messages")
                 .request()
-                .post(Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
+                .method("PATCH", Entity.entity(msgTemplateWithParams(), MediaType.APPLICATION_JSON_TYPE));
         verify(messageAPI).send(any(JsonNode.class));
     }
 
