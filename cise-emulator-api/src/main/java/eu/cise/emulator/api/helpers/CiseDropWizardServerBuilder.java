@@ -1,6 +1,7 @@
 package eu.cise.emulator.api.helpers;
 
 import com.codahale.metrics.MetricRegistry;
+import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.api.CiseEmulatorAPI;
 import eu.cise.emulator.api.CiseEmulatorDropwizardConf;
@@ -26,7 +27,8 @@ public class CiseDropWizardServerBuilder {
 
     public static <T extends CiseEmulatorDropwizardConf> DropWizardServer<T> createServer(
             String configFile,
-            Class<? extends Application<T>> applicationClass, MessageProcessor messageProcessor, MessageStorage messageStorage) throws Exception {
+            Class<? extends Application<T>> applicationClass, MessageProcessor messageProcessor, MessageStorage messageStorage,
+            EmuConfig emuConfig) throws Exception {
         // Create application
         final Application<T> application = applicationClass.getConstructor().newInstance();
 
@@ -60,7 +62,7 @@ public class CiseDropWizardServerBuilder {
 
         // Initialize environment
         builtConfig.getMetricsFactory().configure(environment.lifecycle(), bootstrap.getMetricRegistry());
-
+        builtConfig.setEmuConfig(emuConfig);
         // Server
         final Server server = builtConfig.getServerFactory().build(environment);
         server.addLifeCycleListener(new AbstractLifeCycle.AbstractLifeCycleListener() {
