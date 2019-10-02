@@ -47,6 +47,7 @@ public class AppContextTest {
         AppContext appContext = new DefaultAppContext();
         MessageProcessor messageProcessor = mock(MessageProcessor.class);
         MessageStorage messageStorage = mock(MessageStorage.class);
+        EmuConfig emuConfig = mock(EmuConfig.class);
 
         CiseEmulatorAPI api = appContext.makeEmulatorApi(messageProcessor, messageStorage);
 

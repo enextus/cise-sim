@@ -41,6 +41,9 @@ public interface EmuConfig extends Config {
     @Key("signature.privateKeyPassword")
     String privateKeyPassword();
 
+    @Key("template.messages.directory")
+    String templateMessagesDirectory();
+
     // preprocessors implementation
     class Trim implements Preprocessor {
         public String process(String input) {

@@ -1,6 +1,7 @@
 package eu.cise.emulator.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.io.MessageStorage;
 import io.dropwizard.Configuration;
@@ -20,14 +21,13 @@ import javax.validation.constraints.NotNull;
 
 public class CiseEmulatorDropwizardConf extends Configuration implements AssetsBundleConfiguration {
 
-
     @Valid
     @NotNull
     @JsonProperty
     private final AssetsConfiguration assets = AssetsConfiguration.builder().build();
-
     private MessageProcessor messageProcessor;
     private MessageStorage messageStorage;
+    private EmuConfig emuConfig;
 
     public MessageStorage getMessageStorage() {
         return messageStorage;
@@ -56,5 +56,11 @@ public class CiseEmulatorDropwizardConf extends Configuration implements AssetsB
         return assets;
     }
 
+    public EmuConfig getEmuConfig() {
+        return this.emuConfig;
+    }
+    public void setEmuConfig(EmuConfig emuConfig) {
+        this.emuConfig = emuConfig;
+    }
 
 }
