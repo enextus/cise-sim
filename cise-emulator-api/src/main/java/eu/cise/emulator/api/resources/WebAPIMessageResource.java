@@ -39,7 +39,7 @@ public class WebAPIMessageResource {
         LOGGER.info("messagePull from UI");
         MessageApiDto lastStoredMessage = messageAPI.getLastStoredMessage();
         return Response
-                .status(Response.Status.OK)
+                .status(lastStoredMessage != null ? Response.Status.OK : Response.Status.NO_CONTENT)
                 .entity(lastStoredMessage)
                 .build();
     }

@@ -57,7 +57,6 @@ public class DefaultMessageAPI implements MessageAPI {
         try {
             Message message = xmlMapper.fromXML(content);
             acknowledgement = messageProcessor.receive(message);
-            //TODO: call to message processor returning acknowledgement
             ciseMessageResponse = new CiseMessageResponse(xmlMapper, acknowledgement, message);
         } catch (Exception e) {
             LOGGER.error("error in Api send {}", e);

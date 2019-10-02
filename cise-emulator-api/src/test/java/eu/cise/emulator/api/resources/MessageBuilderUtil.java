@@ -1,11 +1,9 @@
 package eu.cise.emulator.api.resources;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.Service;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
-import eu.cise.signature.SignatureServiceBuilder;
 import eu.eucise.helpers.AckBuilder;
 import eu.eucise.xml.DefaultXmlMapper;
 
@@ -20,7 +18,7 @@ import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 
 public class MessageBuilderUtil {
-    static final String EXAMPLAR_TEMPLATE_MESSAGE_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+    static final String TEST_MESSAGE_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
             "<ns4:Push xmlns:ns2=\"http://www.cise.eu/servicemodel/v1/authority/\" xmlns:ns4=\"http://www.cise.eu/servicemodel/v1/message/\" xmlns:ns3=\"http://www.cise.eu/servicemodel/v1/service/\">\n" +
             "    <CorrelationID>476d949d-5aa4-44cc-8e20-c1a2288fe098</CorrelationID>\n" +
             "    <CreationDateTime>2019-09-20T07:49:56.323Z</CreationDateTime>\n" +
@@ -78,7 +76,7 @@ public class MessageBuilderUtil {
 
 
     static String create() {
-        return EXAMPLAR_TEMPLATE_MESSAGE_XML;
+        return TEST_MESSAGE_XML;
     }
 
     static String createMessageString() {

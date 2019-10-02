@@ -83,7 +83,6 @@ public class CiseDropWizardServerBuilder {
         private final Environment environment;
         private final Server jettyServer;
         private final MetricRegistry metricRegistry;
-        private final MessageStorage messageStorage;
 
 
         DropWizardServer(T builtConfig,
@@ -100,8 +99,8 @@ public class CiseDropWizardServerBuilder {
             this.environment = environment;
             this.jettyServer = jettyServer;
             this.metricRegistry = metricRegistry;
-            this.messageStorage = messageStorage;
             this.builtConfig.setMessageProcessor(messageProcessor);
+            this.builtConfig.setMessageStorage(messageStorage);
         }
 
         /**
