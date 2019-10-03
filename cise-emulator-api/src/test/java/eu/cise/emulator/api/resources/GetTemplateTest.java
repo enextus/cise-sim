@@ -1,6 +1,7 @@
 package eu.cise.emulator.api.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.SendParam;
 import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.api.MessageApiDto;
@@ -21,10 +22,11 @@ public class GetTemplateTest {
 
     private static TemplateAPI templateAPI = mock(TemplateAPI.class);
     private static MessageAPI messageAPI = mock(MessageAPI.class);
+    private static EmuConfig emuConfig = mock(EmuConfig.class);
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new TemplateResource(messageAPI, templateAPI))
+            .addResource(new TemplateResource(messageAPI, templateAPI, emuConfig))
             .bootstrapLogging(false)
             .build();
     private WebAPIMessageResource webAPIMessageResource;
