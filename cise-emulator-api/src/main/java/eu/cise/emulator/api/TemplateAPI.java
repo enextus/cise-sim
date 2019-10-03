@@ -15,6 +15,11 @@ public class TemplateAPI {
     }
 
     public TemplateListResponse getTemplates() {
-        return new TemplateListResponse(templateLoader.loadTemplateList());
+        try {
+
+            return new TemplateListResponse(templateLoader.loadTemplateList());
+        } catch (Exception e) {
+            return new TemplateListResponse.KO(e.getMessage());
+        }
     }
 }
