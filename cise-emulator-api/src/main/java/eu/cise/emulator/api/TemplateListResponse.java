@@ -8,12 +8,16 @@ public class TemplateListResponse {
 
     private final List<Template> templates;
 
+    public TemplateListResponse(List<Template> templates) {
+        this.templates = templates;
+    }
+
     public List<Template> getTemplates() {
         return templates;
     }
 
-    public TemplateListResponse(List<Template> templates) {
-        this.templates = templates;
+    public boolean isOk() {
+        return true;
     }
 
     public String getError() {
@@ -28,6 +32,12 @@ public class TemplateListResponse {
             this.errorMessage = errorMessage;
         }
 
+        @Override
+        public boolean isOk() {
+            return false;
+        }
+
+        @Override
         public String getError() {
             return this.errorMessage;
         }

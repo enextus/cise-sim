@@ -33,10 +33,15 @@ public class TemplateResource {
     @GET
     public Response getTemplates() {
         LOGGER.info("getTemplates");
+
         TemplateListResponse templateListResponse = templateAPI.getTemplates();
+
         List<Template> templateList = templateListResponse.getTemplates();
-        if (templateListResponse instanceof TemplateListResponse.KO)
+
+        if (!templateListResponse.isOk()) {
             return Response.status(Response.Status.OK).entity(new APIError(templateListResponse.getError())).build();
+        }
+
         return Response.status(Response.Status.OK)
                 .entity(templateList)
                 .build();
