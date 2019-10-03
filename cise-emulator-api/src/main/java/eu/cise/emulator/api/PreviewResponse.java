@@ -1,0 +1,35 @@
+package eu.cise.emulator.api;
+
+import eu.cise.emulator.api.representation.Template;
+
+import java.io.Serializable;
+import java.util.Objects;
+
+public class PreviewResponse implements Serializable {
+
+    private static final long serialVersionUID = 42L;
+
+    private final Template template;
+
+    public PreviewResponse(Template template) {
+
+        this.template = template;
+    }
+
+    public Template getTemplate() {
+        return template;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PreviewResponse that = (PreviewResponse) o;
+        return Objects.equals(template, that.template);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(template);
+    }
+}
