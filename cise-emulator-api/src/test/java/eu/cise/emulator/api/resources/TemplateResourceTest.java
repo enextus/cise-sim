@@ -9,11 +9,9 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-
 import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,37 +31,28 @@ public class TemplateResourceTest {
 
     @Before
     public void before() {
+        // get the template test folder absolute path
+        File templatesMessagesDirectory = new File("src/test/resources/templatesMessages");
+        File[] templatesMessagesFiles = templatesMessagesDirectory.listFiles();
+        String templatesMessagesDirectoryAbsolutePathPath = templatesMessagesDirectory.getAbsolutePath();
 
-        File resourcesDirectory = new File("src/test/resources");
-        //String fileDir = getFileFromURL().getAbsolutePath();
-        //when(emuConfig.templateMessagesDirectory()).thenReturn(fileDir);
-        //new File(this.getClass().getResource("/templateDir/").getFile()).;
-        //File folder = new File(path);
-        //File[] listOfFiles = folder.listFiles();
+        when(emuConfig.templateMessagesDirectory()).thenReturn(templatesMessagesDirectoryAbsolutePathPath);
     }
 
-    @Ignore
     @Test
     public void it_retrieve_list() {
-        Response resourceResponse = resources.target("/api/templates")
+
+        Response response = resources.target("/api/templates")
                 .request()
                 .get();
+        List<String> listFiles
+                = response.readEntity(new GenericType<List<String>>() {});
 
-        Object listFiles = resourceResponse.getEntity();
+        boolean resultAcceptedAndContainFiles = response.getStatus() == Response.Status.OK.getStatusCode() &&
+                listFiles.size() > 0;
 
-        assertThat(listFiles instanceof List);
+        assertThat(resultAcceptedAndContainFiles);
     }
 
-    private File getFileFromURL() {
-        URL url = this.getClass().getClassLoader().getResource("/templateDir");
-        File file = null;
-        try {
-            file = new File(url.toURI());
-        } catch (URISyntaxException e) {
-            file = new File(url.getPath());
-        } finally {
-            return file;
-        }
-    }
 
 }
