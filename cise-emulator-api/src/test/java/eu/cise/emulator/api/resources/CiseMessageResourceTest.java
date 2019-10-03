@@ -21,7 +21,7 @@ public class CiseMessageResourceTest {
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new CiseMessageResource(messageAPI, messageStorage))
+            .addResource(new MessageResource(messageAPI, messageStorage))
             .bootstrapLogging(false)
             .build();
 
@@ -36,7 +36,7 @@ public class CiseMessageResourceTest {
         Acknowledgement acknowledgement = newAck().build();
         when(messageAPI.receive(message)).thenReturn(acknowledgement);
 
-        CiseMessageResource ciseMessageResource = new CiseMessageResource(messageAPI, messageStorage);
+        MessageResource ciseMessageResource = new MessageResource(messageAPI, messageStorage);
         Response response = ciseMessageResource.receive(message);
         assertThat(response.getStatus()).isEqualTo(201);
     }
@@ -47,7 +47,7 @@ public class CiseMessageResourceTest {
         Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
         when(messageAPI.receive(message)).thenReturn(acknowledgement);
 
-        CiseMessageResource ciseMessageResource = new CiseMessageResource(messageAPI, messageStorage);
+        MessageResource ciseMessageResource = new MessageResource(messageAPI, messageStorage);
         ciseMessageResource.receive(message);
 
         verify(messageStorage).store(any());

@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 
 //TODO:create a subclass for WebApi correlated modality
 
-public class CiseEmulatorDropwizardConf extends Configuration implements AssetsBundleConfiguration {
+public class EmulatorDropwizardConf extends Configuration implements AssetsBundleConfiguration {
 
     @Valid
     @NotNull

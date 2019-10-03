@@ -30,12 +30,12 @@ public class GetTemplatesTest {
             .bootstrapLogging(false)
             .build();
 
-    private Template expectedTemplate;
+    private List<Template> expectedTemplateList;
 
     @Before
     public void before() {
-        expectedTemplate = new Template("template-id-#1");
-
+        expectedTemplateList = asList(new Template("id1"), new Template("id2"));
+        when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse.OK(expectedTemplateList));
     }
 
     @After
@@ -46,8 +46,6 @@ public class GetTemplatesTest {
 
     @Test
     public void it_checks_the_route_to_get_templates_exists() {
-        List<Template> expectedTemplateList = asList(new Template("id1"), new Template("id1"));
-        when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse(expectedTemplateList));
         Response response = resources.target("/api/templates").request().get();
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
@@ -55,10 +53,6 @@ public class GetTemplatesTest {
 
     @Test
     public void it_returns_a_template_list_for_templateListResponse_is_ok() {
-        List<Template> expectedTemplateList = asList(new Template("id1"), new Template("id1"));
-
-        when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse(expectedTemplateList));
-
         Response response = resources.target("/api/templates").request().get();
 
         List<Template> actualTemplateList = response.readEntity(genericTemplateList());
