@@ -5,6 +5,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -27,8 +30,8 @@ public class TemplateAPITest {
     }
 
     @Test
-    public void it_should_return_a_response_Ko_when_throwing_an_exception() {
-        when(templateLoader.loadTemplateList()).thenThrow(new RuntimeException("badThingsHappens"));
+    public void it_should_return_a_response_Ko_when_throwing_an_IOLoaderexception() {
+        when(templateLoader.loadTemplateList()).thenThrow(new IOLoaderException());
 
         TemplateListResponse templateListResponse = templateAPI.getTemplates();
 
