@@ -5,7 +5,7 @@ import eu.cise.emulator.api.representation.Template;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class PreviewResponse implements Serializable {
+public abstract class PreviewResponse implements Serializable {
 
     private static final long serialVersionUID = 42L;
 
@@ -47,6 +47,13 @@ public class PreviewResponse implements Serializable {
             super(null);
             this.ok = false;
             this.errorMessage = message;
+        }
+    }
+
+    public static class OK extends PreviewResponse {
+        public OK(Template template) {
+            super(template);
+            this.errorMessage = null;
         }
     }
 }

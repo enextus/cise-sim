@@ -35,7 +35,7 @@ public class GetTemplateTest {
     @Before
     public void before() {
         expectedTemplate = new Template("template-id-#1");
-        when(templateAPI.preview(any())).thenReturn(new PreviewResponse(expectedTemplate));
+        when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(expectedTemplate));
     }
 
     @After
