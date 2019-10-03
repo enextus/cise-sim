@@ -1,7 +1,9 @@
 package eu.cise.emulator.api.resources;
 
 import eu.cise.emulator.EmuConfig;
+import eu.cise.emulator.api.APIError;
 import eu.cise.emulator.api.MessageAPI;
+import eu.cise.emulator.api.PreviewResponse;
 import eu.cise.emulator.api.TemplateAPI;
 import eu.cise.emulator.api.helpers.TemplatesResolver;
 import eu.cise.emulator.api.representation.TemplateParams;
@@ -14,6 +16,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/api/templates")
+@Produces(MediaType.APPLICATION_JSON)
 public class TemplateResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TemplateResource.class);
@@ -30,10 +33,9 @@ public class TemplateResource {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getTemplates() {
         LOGGER.info("getTemplates");
-
+        
         List<String> filesList = templatesResolver.listMessages();
 
         return Response
@@ -50,10 +52,14 @@ public class TemplateResource {
             @QueryParam("messageId") String messageId,
             @QueryParam("correlationId") String correlationId,
             @QueryParam("requestAck") boolean requestAck) {
-        templateAPI.preview(new TemplateParams(templateId, messageId, correlationId, requestAck));
-        return Response
-                .ok()
-                .build();
+        PreviewResponse previewResponse = templateAPI.preview(new TemplateParams(templateId, messageId, correlationId, requestAck));
+
+        if (!previewResponse.isOk()) {
+            APIError apiError = new APIError(previewResponse.getErrorMessage());
+            return Response.serverError().entity(apiError).build();
+        }
+
+        return Response.ok().entity(previewResponse.getTemplate()).build();
     }
 
 }
