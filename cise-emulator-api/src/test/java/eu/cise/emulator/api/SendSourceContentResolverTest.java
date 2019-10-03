@@ -4,12 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.EmuConfig;
-import eu.cise.emulator.api.helpers.TemplatesResolver;
-import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.emulator.api.helpers.DefaultTemplateLoader;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -20,7 +18,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class SendSourceContentResolverTest {
-    private TemplatesResolver sourceReader;
+    private DefaultTemplateLoader sourceReader;
     private ObjectMapper jsonMapper;
     private XmlMapper xmlMapper;
     private EmuConfig emuConfig;
@@ -33,7 +31,7 @@ public class SendSourceContentResolverTest {
         emuConfig = mock(EmuConfig.class);
         when(emuConfig.templateMessagesDirectory()).thenReturn(folder.getAbsolutePath() + File.separator);
         jsonMapper = new ObjectMapper();
-        sourceReader = new TemplatesResolver(emuConfig);
+        sourceReader = new DefaultTemplateLoader(emuConfig);
         xmlMapper = new DefaultXmlMapper();
     }
 

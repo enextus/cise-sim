@@ -10,11 +10,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TemplatesResolver {
+public class DefaultTemplateLoader {
 
     private final EmuConfig emuConfig;
 
-    public TemplatesResolver(EmuConfig emuConfig) {
+    public DefaultTemplateLoader(EmuConfig emuConfig) {
         this.emuConfig = emuConfig;
     }
 
@@ -28,6 +28,7 @@ public class TemplatesResolver {
             throw new RuntimeException("file not found :" + filePath, e);
         }
     }
+
 
     public List<String> listMessages() {
         List<String> filesList = new ArrayList<>();

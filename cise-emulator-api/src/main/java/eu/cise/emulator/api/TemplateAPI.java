@@ -6,4 +6,8 @@ public class TemplateAPI {
     public PreviewResponse preview(TemplateParams templateParams) {
         return null;
     }
+
+    public TemplateListResponse getTemplates() {
+        return null;
+    }
 }
