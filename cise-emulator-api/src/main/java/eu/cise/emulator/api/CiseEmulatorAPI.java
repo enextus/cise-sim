@@ -47,7 +47,7 @@ public class CiseEmulatorAPI extends Application<CiseEmulatorDropwizardConf> {
         CrossOriginSupport.setup(environment);
 
         // delegate the principal application configurations interfaces (IOC)
-        MessageAPI messageAPI = new DefaultMessageAPI(configuration.getMessageProcessor(), configuration.getMessageStorage());
+        MessageAPI messageAPI = new DefaultMessageAPI(configuration.getMessageProcessor(), configuration.getMessageStorage(), configuration.getEmuConfig());
         LOGGER.info("Registering REST resources ");
         environment.jersey().register(new WebAPIMessageResource(messageAPI));
         environment.jersey().register(new CiseMessageResource(messageAPI, configuration.getMessageStorage()));
@@ -56,7 +56,6 @@ public class CiseEmulatorAPI extends Application<CiseEmulatorDropwizardConf> {
 
     }
 }
-
 
 
 
