@@ -52,7 +52,7 @@ public class CiseEmulatorAPI extends Application<CiseEmulatorDropwizardConf> {
         environment.jersey().register(new WebAPIMessageResource(messageAPI));
         environment.jersey().register(new CiseMessageResource(messageAPI, configuration.getMessageStorage()));
         environment.jersey().register(new AssetRedirectionResource());
-        environment.jersey().register(new TemplateResource(messageAPI, new TemplateAPI(), configuration.getEmuConfig()));
+        environment.jersey().register(new TemplateResource(messageAPI, new TemplateAPI(null), configuration.getEmuConfig()));
 
     }
 }
