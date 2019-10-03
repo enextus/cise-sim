@@ -1,6 +1,7 @@
 package eu.cise.emulator.api.resources;
 
 import eu.cise.emulator.EmuConfig;
+import eu.cise.emulator.api.APIError;
 import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.api.PreviewResponse;
 import eu.cise.emulator.api.TemplateAPI;
@@ -35,7 +36,6 @@ public class GetTemplateTest {
     public void before() {
         expectedTemplate = new Template("template-id-#1");
         when(templateAPI.preview(any())).thenReturn(new PreviewResponse(expectedTemplate));
-
     }
 
     @After
@@ -88,7 +88,26 @@ public class GetTemplateTest {
         Template actualTemplate = response.readEntity(Template.class);
 
         assertThat(actualTemplate).isEqualTo(expectedTemplate);
+    }
 
+    @Test
+    public void it_returns_a_apiError_when_previewResponse_is_ko() {
+        when(templateAPI.preview(any())).thenReturn(new PreviewResponse.KO("exception"));
+
+        Response response = resources.target("/api/templates/1234567")
+                .queryParam("messageId", "message-id-#1")
+                .queryParam("correlationId", "correlation-id-#1")
+                .queryParam("requiresAck", false)
+                .request().get();
+
+        APIError actualApiError = response.readEntity(APIError.class);
+
+        APIError expectedApiError = new APIError("exception");
+        assertThat(actualApiError).isEqualTo(expectedApiError);
+    }
+
+    private Template aTemplate() {
+        return new Template();
     }
 
     private TemplateParams aTemplateParams() {

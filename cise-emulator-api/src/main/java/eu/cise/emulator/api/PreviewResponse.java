@@ -10,10 +10,19 @@ public class PreviewResponse implements Serializable {
     private static final long serialVersionUID = 42L;
 
     private final Template template;
+    protected String errorMessage;
+    protected boolean ok = true;
 
     public PreviewResponse(Template template) {
-
         this.template = template;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public boolean isOk() {
+        return ok;
     }
 
     public Template getTemplate() {
@@ -31,5 +40,13 @@ public class PreviewResponse implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(template);
+    }
+
+    public static class KO extends PreviewResponse {
+        public KO(String message) {
+            super(null);
+            this.ok = false;
+            this.errorMessage = message;
+        }
     }
 }

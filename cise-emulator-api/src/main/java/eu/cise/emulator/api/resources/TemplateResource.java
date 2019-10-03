@@ -1,6 +1,7 @@
 package eu.cise.emulator.api.resources;
 
 import eu.cise.emulator.EmuConfig;
+import eu.cise.emulator.api.APIError;
 import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.api.PreviewResponse;
 import eu.cise.emulator.api.TemplateAPI;
@@ -64,10 +65,12 @@ public class TemplateResource {
             @QueryParam("requestAck") boolean requestAck) {
         PreviewResponse previewResponse = templateAPI.preview(new TemplateParams(templateId, messageId, correlationId, requestAck));
 
-        return Response
-                .ok()
-                .entity(previewResponse.getTemplate())
-                .build();
+        if (!previewResponse.isOk()) {
+            APIError apiError = new APIError(previewResponse.getErrorMessage());
+            return Response.serverError().entity(apiError).build();
+        }
+
+        return Response.ok().entity(previewResponse.getTemplate()).build();
     }
 
 }
