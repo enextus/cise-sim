@@ -1,14 +1,15 @@
 package eu.cise.emulator.api;
 
 import eu.cise.emulator.MessageProcessor;
-import eu.cise.emulator.SendParam;
 import eu.cise.emulator.api.representation.TemplateParams;
 import eu.cise.emulator.io.MessageStorage;
+import eu.cise.emulator.templates.DefaultTemplateLoader;
+import eu.cise.emulator.templates.Template;
+import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Message;
 import org.junit.Before;
 import org.junit.Test;
 
-import static eu.eucise.helpers.PushBuilder.newPush;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -18,16 +19,19 @@ public class TemplateAPIPreviewTest {
     public static MessageStorage messageStorage;
     private TemplateAPI templateAPI;
     private TemplateParams templateParams;
+    private TemplateLoader templateLoader;
 
 
     @Before
     public void before() {
+        templateLoader = mock(DefaultTemplateLoader.class);
         messageProcessor = mock(MessageProcessor.class);
         messageStorage = mock(MessageStorage.class);
-        templateAPI = new TemplateAPI(messageProcessor);
+        templateAPI = new TemplateAPI(messageProcessor, templateLoader);
         templateParams = new TemplateParams("template-id", "message-id", "correlation-id", false);
+        when(messageProcessor.preview(any(), any())).thenReturn(mock(Message.class));
+        when(templateLoader.loadTemplate(any())).thenReturn(mock(Template.class));
     }
-
 
     /*
      public PreviewResponse preview(TemplateParams templateParams) {
@@ -50,9 +54,15 @@ public class TemplateAPIPreviewTest {
 
     @Test
     public void it_calls_the_messageProcecssor_to_prepare_the_message() {
-        when(messageProcessor.preview(any(), any())).thenReturn(mock(Message.class));
-        templateAPI.preview(new TemplateParams("template-id", "message-id", "correlation-id", false));
+        templateAPI.preview(templateParams);
         verify(messageProcessor).preview(any(), any());
     }
 
+    @Test
+    public void it_loads_the_message_to_pass_to_the_message_processor() {
+        templateAPI.preview(templateParams);
+        verify(templateLoader).loadTemplate(any());
+    }
+
 }
+

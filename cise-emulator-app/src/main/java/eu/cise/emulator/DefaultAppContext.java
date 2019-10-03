@@ -2,6 +2,8 @@ package eu.cise.emulator;
 
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.RestDispatcher;
+import eu.cise.emulator.templates.DefaultTemplateLoader;
+import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.emulator.api.helpers.CiseDropWizardServerBuilder;
 import eu.cise.emulator.api.CiseEmulatorAPI;
 import eu.cise.emulator.io.DefaultMessageStorage;
@@ -46,11 +48,11 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public CiseEmulatorAPI makeEmulatorApi(MessageProcessor messageProcessor, MessageStorage messageStorage) {
+    public CiseEmulatorAPI makeEmulatorApi(MessageProcessor messageProcessor, MessageStorage messageStorage, TemplateLoader templateLoader) {
         CiseEmulatorAPI server = null;
         try {
             String configFile = (this.emuConfig.webapiConfig());
-            server = CiseDropWizardServerBuilder.createServer(configFile, CiseEmulatorAPI.class, messageProcessor, messageStorage, emuConfig);
+            server = CiseDropWizardServerBuilder.createServer(configFile, CiseEmulatorAPI.class, messageProcessor, messageStorage, emuConfig, templateLoader);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,5 +62,10 @@ public class DefaultAppContext implements AppContext {
     @Override
     public MessageStorage makeMessageStorage() {
         return new DefaultMessageStorage();
+    }
+
+    @Override
+    public TemplateLoader makeTemplateLoader() {
+        return new DefaultTemplateLoader();
     }
 }

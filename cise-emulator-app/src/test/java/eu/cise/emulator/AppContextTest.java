@@ -8,6 +8,7 @@ import eu.cise.emulator.api.CiseEmulatorAPI;
 import javax.ws.rs.client.*;
 
 import eu.cise.emulator.io.MessageStorage;
+import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Message;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -48,8 +49,9 @@ public class AppContextTest {
         MessageProcessor messageProcessor = mock(MessageProcessor.class);
         MessageStorage messageStorage = mock(MessageStorage.class);
         EmuConfig emuConfig = mock(EmuConfig.class);
+        TemplateLoader templateLoader = mock(TemplateLoader.class);
 
-        CiseEmulatorAPI api = appContext.makeEmulatorApi(messageProcessor, messageStorage);
+        CiseEmulatorAPI api = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader);
 
         assertThat(api).isNotNull();
     }
@@ -60,9 +62,10 @@ public class AppContextTest {
         EmulatorEngine engine = mock(EmulatorEngine.class);
         MessageProcessor messageProcessor = new DefaultMessageProcessor(engine);
         MessageStorage messageStorage = mock(MessageStorage.class);
+        TemplateLoader templateLoader = mock(TemplateLoader.class);
 
         AppContext appContext = new DefaultAppContext();
-        CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor, messageStorage);
+        CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader);
 
         Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target("http://localhost:47080/webapi/messages");

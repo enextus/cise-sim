@@ -5,7 +5,7 @@ import eu.cise.emulator.api.APIError;
 import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.api.PreviewResponse;
 import eu.cise.emulator.api.TemplateAPI;
-import eu.cise.emulator.api.representation.Template;
+import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.api.representation.TemplateParams;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.After;
