@@ -2,7 +2,7 @@ package eu.cise.emulator.api;
 
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.api.representation.TemplateParams;
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.MessageStorage;
 import org.junit.Before;
 import org.junit.Test;
 

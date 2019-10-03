@@ -7,7 +7,7 @@ import eu.cise.emulator.api.CiseEmulatorAPI;
 //import eu.cise.emulator.deprecated.web.app.transport.JerseyRestClient;
 import javax.ws.rs.client.*;
 
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.MessageStorage;
 import eu.cise.servicemodel.v1.message.Message;
 import org.junit.Before;
 import org.junit.Ignore;

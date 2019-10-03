@@ -6,7 +6,7 @@ import eu.cise.emulator.SendParam;
 import eu.cise.emulator.api.helpers.SendParamsReader;
 import eu.cise.emulator.api.helpers.SendSourceContentResolver;
 import eu.cise.emulator.api.resources.WebAPIMessageResource;
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.MessageStorage;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;

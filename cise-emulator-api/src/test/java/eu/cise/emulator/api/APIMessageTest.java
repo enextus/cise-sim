@@ -2,7 +2,7 @@ package eu.cise.emulator.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.cise.emulator.MessageProcessor;
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.MessageStorage;
 import org.junit.Before;
 import org.junit.Test;
 

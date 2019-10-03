@@ -4,8 +4,8 @@ import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.RestDispatcher;
 import eu.cise.emulator.api.helpers.CiseDropWizardServerBuilder;
 import eu.cise.emulator.api.CiseEmulatorAPI;
-import eu.cise.io.DefaultMessageStorage;
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.DefaultMessageStorage;
+import eu.cise.emulator.io.MessageStorage;
 import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
 

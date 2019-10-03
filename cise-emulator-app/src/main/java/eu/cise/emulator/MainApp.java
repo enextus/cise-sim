@@ -1,6 +1,6 @@
 package eu.cise.emulator;
 
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.MessageStorage;
 import org.aeonbits.owner.ConfigFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

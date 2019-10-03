@@ -1,7 +1,7 @@
 package eu.cise.emulator.api.resources;
 
 import eu.cise.emulator.api.MessageAPI;
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.MessageStorage;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;

@@ -5,7 +5,7 @@ import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.api.CiseEmulatorAPI;
 import eu.cise.emulator.api.CiseEmulatorDropwizardConf;
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.MessageStorage;
 import io.dropwizard.Application;
 import io.dropwizard.cli.ServerCommand;
 import io.dropwizard.configuration.ConfigurationFactory;

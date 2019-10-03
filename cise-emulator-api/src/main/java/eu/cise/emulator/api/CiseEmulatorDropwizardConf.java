@@ -3,7 +3,7 @@ package eu.cise.emulator.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.MessageProcessor;
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.MessageStorage;
 import io.dropwizard.Configuration;
 import io.dropwizard.bundles.assets.AssetsBundleConfiguration;
 import io.dropwizard.bundles.assets.AssetsConfiguration;
