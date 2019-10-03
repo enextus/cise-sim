@@ -2,8 +2,8 @@ package eu.cise.emulator.api;
 
 import eu.cise.emulator.api.helpers.CrossOriginSupport;
 import eu.cise.emulator.api.helpers.ServerExceptionMapper;
+import eu.cise.emulator.api.resources.AssetRedirectionResource;
 import eu.cise.emulator.api.resources.CiseMessageResource;
-import eu.cise.emulator.api.resources.DefaultMessageResource;
 import eu.cise.emulator.api.resources.TemplateResource;
 import eu.cise.emulator.api.resources.WebAPIMessageResource;
 import io.dropwizard.Application;
@@ -51,8 +51,8 @@ public class CiseEmulatorAPI extends Application<CiseEmulatorDropwizardConf> {
         LOGGER.info("Registering REST resources ");
         environment.jersey().register(new WebAPIMessageResource(messageAPI));
         environment.jersey().register(new CiseMessageResource(messageAPI, configuration.getMessageStorage()));
-        environment.jersey().register(new DefaultMessageResource());
-        environment.jersey().register(new TemplateResource(messageAPI, configuration.getEmuConfig()));
+        environment.jersey().register(new AssetRedirectionResource());
+        environment.jersey().register(new TemplateResource(messageAPI, new TemplateAPI(), configuration.getEmuConfig()));
 
     }
 }
