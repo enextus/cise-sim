@@ -1,4 +1,4 @@
-package eu.cise.io;
+package eu.cise.emulator.io;
 
 import org.junit.Test;
 

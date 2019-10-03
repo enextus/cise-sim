@@ -3,8 +3,8 @@ package eu.cise.emulator.api.resources;
 import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.api.*;
 import eu.cise.emulator.api.helpers.DefaultTemplateLoader;
-import eu.cise.emulator.api.representation.Template;
 import eu.cise.emulator.api.representation.TemplateParams;
+import eu.cise.emulator.templates.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

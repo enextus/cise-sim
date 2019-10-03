@@ -1,6 +1,4 @@
-package eu.cise.emulator.api.helpers;
-
-import eu.cise.emulator.api.representation.Template;
+package eu.cise.emulator.templates;
 
 import java.util.List;
 

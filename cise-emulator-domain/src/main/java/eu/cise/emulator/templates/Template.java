@@ -1,4 +1,6 @@
-package eu.cise.emulator.api.representation;
+package eu.cise.emulator.templates;
+
+import eu.cise.servicemodel.v1.message.Message;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,6 +10,8 @@ public class Template implements Serializable {
     private static final long serialVersionUID = 42L;
 
     private String templateId;
+
+    private Message templateContent;
 
     public Template() {
     }
@@ -31,5 +35,13 @@ public class Template implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(templateId);
+    }
+
+    public Message getTemplateContent() {
+        return templateContent;
+    }
+
+    public void setTemplateContent(Message templateContent) {
+        this.templateContent = templateContent;
     }
 }

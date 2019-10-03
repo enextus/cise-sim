@@ -2,7 +2,7 @@ package eu.cise.emulator.api.resources;
 
 import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.api.*;
-import eu.cise.emulator.api.representation.Template;
+import eu.cise.emulator.templates.Template;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.After;
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class GetTemplatesTest {
     @Before
     public void before() {
         expectedTemplate = new Template("template-id-#1");
-        when(templateAPI.preview(any())).thenReturn(new PreviewResponse(expectedTemplate));
+
     }
 
     @After

@@ -1,6 +1,7 @@
 package eu.cise.emulator;
 
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.templates.TemplateLoader;
+import eu.cise.emulator.io.MessageStorage;
 import org.aeonbits.owner.ConfigFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ public class MainApp implements Runnable {
         AppContext appContext = new DefaultAppContext();
         MessageProcessor messageProcessor = appContext.makeMessageProcessor();
         MessageStorage messageStorage = appContext.makeMessageStorage();
+        TemplateLoader templateLoader = appContext.makeTemplateLoader();
         if (System.getProperty("conf.dir") != null) {
 
             LOGGER.warn("conf.dir set to {} at startup, using {} endpoint", System.getProperty("conf.dir"), emuConfig.endpointUrl());
@@ -30,7 +32,7 @@ public class MainApp implements Runnable {
                 appContext.makeEmulatorEngine(),
                 appContext.makeDispatcher(),
                 appContext.makeSignatureService(),
-                appContext.makeEmulatorApi(messageProcessor, messageStorage));
+                appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader));
     }
 
     @Override

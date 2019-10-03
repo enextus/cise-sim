@@ -5,7 +5,8 @@ import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.api.CiseEmulatorAPI;
 import eu.cise.emulator.api.CiseEmulatorDropwizardConf;
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.MessageStorage;
+import eu.cise.emulator.templates.TemplateLoader;
 import io.dropwizard.Application;
 import io.dropwizard.cli.ServerCommand;
 import io.dropwizard.configuration.ConfigurationFactory;
@@ -27,8 +28,11 @@ public class CiseDropWizardServerBuilder {
 
     public static <T extends CiseEmulatorDropwizardConf> DropWizardServer<T> createServer(
             String configFile,
-            Class<? extends Application<T>> applicationClass, MessageProcessor messageProcessor, MessageStorage messageStorage,
-            EmuConfig emuConfig) throws Exception {
+            Class<? extends Application<T>> applicationClass,
+            MessageProcessor messageProcessor,
+            MessageStorage messageStorage,
+            EmuConfig emuConfig,
+            TemplateLoader templateLoader) throws Exception {
         // Create application
         final Application<T> application = applicationClass.getConstructor().newInstance();
 
@@ -72,7 +76,16 @@ public class CiseDropWizardServerBuilder {
             }
         });
 
-        DropWizardServer serverReady = new DropWizardServer((CiseEmulatorDropwizardConf) builtConfig, bootstrap, application, environment, server, environment.metrics(), messageProcessor, messageStorage);
+        DropWizardServer serverReady = new DropWizardServer(
+                (CiseEmulatorDropwizardConf) builtConfig,
+                bootstrap,
+                application,
+                environment,
+                server,
+                environment.metrics(),
+                messageProcessor,
+                messageStorage,
+                templateLoader);
         serverReady.start();
         return serverReady;
     }
@@ -94,7 +107,8 @@ public class CiseDropWizardServerBuilder {
                          Server jettyServer,
                          MetricRegistry metricRegistry,
                          MessageProcessor messageProcessor,
-                         MessageStorage messageStorage) {
+                         MessageStorage messageStorage,
+                         TemplateLoader templateLoader) {
             this.builtConfig = builtConfig;
             this.bootstrap = bootstrap;
             this.application = application;
@@ -103,6 +117,7 @@ public class CiseDropWizardServerBuilder {
             this.metricRegistry = metricRegistry;
             this.builtConfig.setMessageProcessor(messageProcessor);
             this.builtConfig.setMessageStorage(messageStorage);
+            this.builtConfig.setTemplateLoader(templateLoader);
         }
 
         /**

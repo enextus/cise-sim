@@ -1,12 +1,9 @@
 package eu.cise.emulator.api;
 
-import eu.cise.emulator.api.helpers.TemplateLoader;
-import org.assertj.core.api.Assertions;
+import eu.cise.emulator.MessageProcessor;
+import eu.cise.emulator.templates.TemplateLoader;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -18,8 +15,9 @@ public class TemplateAPITest {
 
     @Before
     public void setUp() throws Exception {
+        MessageProcessor messageProcessor = mock(MessageProcessor.class);
         templateLoader = mock(TemplateLoader.class);
-        templateAPI = new TemplateAPI(templateLoader);
+        templateAPI = new TemplateAPI(messageProcessor, templateLoader);
     }
 
     @Test

@@ -1,4 +1,4 @@
-package eu.cise.io;
+package eu.cise.emulator.io;
 
 public class DefaultMessageStorage implements MessageStorage {
     private Object object;

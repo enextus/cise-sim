@@ -2,7 +2,7 @@ package eu.cise.emulator.api.resources;
 
 import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.api.MessageApiDto;
-import eu.cise.io.MessageStorage;
+import eu.cise.emulator.io.MessageStorage;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;

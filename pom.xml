@@ -44,7 +44,7 @@
         <module>cise-emulator-transport</module>
         <module>cise-emulator-assembly</module>
         <module>cise-dispatcher</module>
-        <module>cise-io</module>
+        <module>cise-emulator-io</module>
     </modules>
 
     <build>
