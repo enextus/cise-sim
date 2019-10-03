@@ -42,6 +42,13 @@ public abstract class PreviewResponse implements Serializable {
         return Objects.hash(template);
     }
 
+    public static class OK extends PreviewResponse {
+        public OK(Template template) {
+            super(template);
+            this.errorMessage = null;
+        }
+    }
+
     public static class KO extends PreviewResponse {
         public KO(String message) {
             super(null);
@@ -50,10 +57,5 @@ public abstract class PreviewResponse implements Serializable {
         }
     }
 
-    public static class OK extends PreviewResponse {
-        public OK(Template template) {
-            super(template);
-            this.errorMessage = null;
-        }
-    }
+
 }
