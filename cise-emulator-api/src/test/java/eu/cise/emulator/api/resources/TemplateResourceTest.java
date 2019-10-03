@@ -27,7 +27,7 @@ public class TemplateResourceTest {
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new TemplateResource(messageAPI, new TemplateAPI(), emuConfig))
+            .addResource(new TemplateResource(messageAPI, new TemplateAPI(null), emuConfig))
             .bootstrapLogging(false)
             .build();
 
