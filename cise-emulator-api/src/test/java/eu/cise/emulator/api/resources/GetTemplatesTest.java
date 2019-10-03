@@ -45,7 +45,7 @@ public class GetTemplatesTest {
     }
 
     @Test
-    public void it_checks_the_route_to_get_tempplates_exists() {
+    public void it_checks_the_route_to_get_templates_exists() {
         List<Template> expectedTemplateList = asList(new Template("id1"), new Template("id1"));
         when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse(expectedTemplateList));
         Response response = resources.target("/api/templates").request().get();
@@ -78,6 +78,16 @@ public class GetTemplatesTest {
 
         assertThat(actualApiError).isEqualTo(expectedApiError);
     }
+
+    @Test
+    public void it_checks_HTTP_code_to_server_error_when_templateListResponse_is_ko() {
+        when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse.KO("exception"));
+
+        Response response = resources.target("/api/templates").request().get();
+
+        assertThat(response.getStatus()).isEqualTo(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+    }
+
 
     private GenericType<List<Template>> genericTemplateList() {
         return new GenericType<List<Template>>() {
