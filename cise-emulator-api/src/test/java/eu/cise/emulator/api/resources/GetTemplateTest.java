@@ -7,6 +7,10 @@ import eu.cise.emulator.api.PreviewResponse;
 import eu.cise.emulator.api.TemplateAPI;
 import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.api.representation.TemplateParams;
+import eu.cise.servicemodel.v1.message.*;
+import eu.cise.servicemodel.v1.service.ServiceOperationType;
+import eu.eucise.xml.DefaultXmlMapper;
+import eu.eucise.xml.XmlMapper;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.After;
 import org.junit.Before;
@@ -15,6 +19,10 @@ import org.junit.Test;
 
 import javax.ws.rs.core.Response;
 
+import java.util.Date;
+
+import static eu.eucise.helpers.PushBuilder.newPush;
+import static eu.eucise.helpers.ServiceBuilder.newService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -25,6 +33,8 @@ public class GetTemplateTest {
     private static MessageAPI messageAPI = mock(MessageAPI.class);
     private static EmuConfig emuConfig = mock(EmuConfig.class);
 
+    private XmlMapper xmlMapper;
+
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
             .addResource(new TemplateResource(messageAPI, templateAPI, emuConfig))
@@ -34,7 +44,8 @@ public class GetTemplateTest {
 
     @Before
     public void before() {
-        expectedTemplate = new Template("template-id-#1");
+        xmlMapper = new DefaultXmlMapper();
+        expectedTemplate = new Template("template-id-#1", "name-#1");
         when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(expectedTemplate));
     }
 
@@ -106,9 +117,66 @@ public class GetTemplateTest {
         assertThat(actualApiError).isEqualTo(expectedApiError);
     }
 
-    private Template aTemplate() {
-        return new Template();
+    @Test
+    public void it_returns_template_which_contains_the_template_body_as_a_string() {
+        Message fakePreparedMessage = newPush()
+                .id("mesageId")
+                .correlationId("correlation-id")
+                .creationDateTime(new Date())
+                .priority(PriorityType.HIGH)
+                .informationSecurityLevel(InformationSecurityLevelType.NON_CLASSIFIED)
+                .informationSensitivity(InformationSensitivityType.GREEN)
+                .setEncryptedPayload("false")
+                .isPersonalData(false)
+                .purpose(PurposeType.NON_SPECIFIED)
+                .sender(newService().id("service-id").operation(ServiceOperationType.PUSH).build())
+                .build();
+
+        Template template = new Template("template-id-#1", "name-#1", xmlMapper.toXML(fakePreparedMessage));
+        when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(template));
+        Response response = resources.target("/api/templates/1234567")
+                .queryParam("messageId", "message-id-#1")
+                .queryParam("correlationId", "correlation-id-#1")
+                .queryParam("requiresAck", false)
+                .request().get();
+
+        Template actualTemplate = response.readEntity(Template.class);
+
+        assertThat(actualTemplate.getTemplateContent()).isInstanceOf(String.class);
     }
+
+
+    @Test
+    public void it_returns_template_which_contains_the_template_body_an_xml() {
+        Message fakePreparedMessage = newPush()
+                .id("mesageId")
+                .correlationId("correlation-id")
+                .creationDateTime(new Date())
+                .priority(PriorityType.HIGH)
+                .informationSecurityLevel(InformationSecurityLevelType.NON_CLASSIFIED)
+                .informationSensitivity(InformationSensitivityType.GREEN)
+                .setEncryptedPayload("false")
+                .isPersonalData(false)
+                .purpose(PurposeType.NON_SPECIFIED)
+                .sender(newService().id("service-id").operation(ServiceOperationType.PUSH).build())
+                .build();
+
+        Template template = new Template("template-id-#1", "name-#1", xmlMapper.toXML(fakePreparedMessage));
+
+        when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(template));
+
+        Response response = resources.target("/api/templates/1234567")
+                .queryParam("messageId", "message-id-#1")
+                .queryParam("correlationId", "correlation-id-#1")
+                .queryParam("requiresAck", false)
+                .request().get();
+
+        Template actualTemplate = response.readEntity(Template.class);
+        String expectedXMLMessage = xmlMapper.toXML(fakePreparedMessage);
+        String actualXMLMessage = actualTemplate.getTemplateContent();
+        assertThat(actualXMLMessage).isEqualTo(expectedXMLMessage);
+    }
+
 
     private TemplateParams aTemplateParams() {
         return new TemplateParams("1234567", "message-id-#1", "correlation-id-#1", false);

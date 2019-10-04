@@ -2,7 +2,6 @@ package eu.cise.emulator.api.resources;
 
 import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.api.*;
-import eu.cise.emulator.api.helpers.DefaultTemplateLoader;
 import eu.cise.emulator.api.representation.TemplateParams;
 import eu.cise.emulator.templates.Template;
 import org.slf4j.Logger;
@@ -21,13 +20,11 @@ public class TemplateResource {
     private final MessageAPI messageAPI;
     private final TemplateAPI templateAPI;
     private final EmuConfig emuConfig;
-    private final DefaultTemplateLoader templateLoader;
 
     public TemplateResource(MessageAPI messageAPI, TemplateAPI templateAPI, EmuConfig emuConfig) {
         this.messageAPI = messageAPI;
         this.templateAPI = templateAPI;
         this.emuConfig = emuConfig;
-        templateLoader = new DefaultTemplateLoader(emuConfig);
     }
 
     @GET

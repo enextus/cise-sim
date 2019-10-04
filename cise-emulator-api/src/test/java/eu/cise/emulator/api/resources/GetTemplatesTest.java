@@ -1,7 +1,10 @@
 package eu.cise.emulator.api.resources;
 
 import eu.cise.emulator.EmuConfig;
-import eu.cise.emulator.api.*;
+import eu.cise.emulator.api.APIError;
+import eu.cise.emulator.api.MessageAPI;
+import eu.cise.emulator.api.TemplateAPI;
+import eu.cise.emulator.api.TemplateListResponse;
 import eu.cise.emulator.templates.Template;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.After;
@@ -15,7 +18,6 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class GetTemplatesTest {
@@ -34,7 +36,7 @@ public class GetTemplatesTest {
 
     @Before
     public void before() {
-        expectedTemplateList = asList(new Template("id1"), new Template("id2"));
+        expectedTemplateList = asList(new Template("id1", "name1"), new Template("id2", "name2"));
         when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse.OK(expectedTemplateList));
     }
 
