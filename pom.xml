@@ -92,7 +92,7 @@
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>8.8</version>
+                        <version>8.18</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -313,35 +313,6 @@
 
     </dependencyManagement>
 
-    <repositories>
-        <repository>
-            <id>cise-mvn-repo.embedded.snapshots</id>
-            <url>file://${project.basedir}/cise-mvn-repo/snapshots</url>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-                <enabled>true</enabled>
-                <checksumPolicy>ignore</checksumPolicy>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-
-        <repository>
-            <id>cise-mvn-repo.embedded.releases</id>
-            <url>file://${project.basedir}/cise-mvn-repo/releases</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-
     <profiles>
         <profile>
             <id>ciBuild</id>
@@ -358,7 +329,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <testcase.excludedGroups></testcase.excludedGroups>
+                <testcase.excludedGroups/>
                 <useFile>true</useFile>
             </properties>
         </profile>
