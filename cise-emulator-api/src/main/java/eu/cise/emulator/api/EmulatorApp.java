@@ -63,7 +63,7 @@ public class EmulatorApp extends Application<EmulatorDropwizardConf> {
         environment.jersey().register(new WebAPIMessageResource(messageAPI));
         environment.jersey().register(new MessageResource(messageAPI, conf.getMessageStorage()));
 
-        environment.jersey().register(new TemplateResource(messageAPI, new TemplateAPI(conf.getMessageProcessor(), conf.getTemplateLoader()),
+        environment.jersey().register(new TemplateResource(messageAPI, new TemplateAPI(conf.getMessageProcessor(), conf.getTemplateLoader(), conf.getXmlMapper()),
             conf.getEmuConfig()));
         environment.jersey().register(new AssetRedirectionResource());
 

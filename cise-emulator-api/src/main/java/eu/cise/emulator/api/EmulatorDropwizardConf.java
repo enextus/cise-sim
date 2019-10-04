@@ -5,6 +5,7 @@ import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.TemplateLoader;
+import eu.eucise.xml.XmlMapper;
 import io.dropwizard.Configuration;
 import io.dropwizard.bundles.assets.AssetsBundleConfiguration;
 import io.dropwizard.bundles.assets.AssetsConfiguration;
@@ -30,6 +31,7 @@ public class EmulatorDropwizardConf extends Configuration implements AssetsBundl
     private MessageStorage messageStorage;
     private TemplateLoader templateLoader;
     private EmuConfig emuConfig;
+    private XmlMapper xmlMapper;
 
     public MessageStorage getMessageStorage() {
         return messageStorage;
@@ -72,5 +74,13 @@ public class EmulatorDropwizardConf extends Configuration implements AssetsBundl
 
     public void setTemplateLoader(TemplateLoader templateLoader) {
         this.templateLoader = templateLoader;
+    }
+
+    public XmlMapper getXmlMapper() {
+        return xmlMapper;
+    }
+
+    public void setXmlMapper(XmlMapper xmlMapper) {
+        this.xmlMapper = xmlMapper;
     }
 }

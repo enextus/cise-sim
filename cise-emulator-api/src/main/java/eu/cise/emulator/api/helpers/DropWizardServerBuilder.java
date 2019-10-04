@@ -7,6 +7,7 @@ import eu.cise.emulator.api.EmulatorApp;
 import eu.cise.emulator.api.EmulatorDropwizardConf;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.TemplateLoader;
+import eu.eucise.xml.XmlMapper;
 import io.dropwizard.Application;
 import io.dropwizard.cli.ServerCommand;
 import io.dropwizard.configuration.ConfigurationFactory;
@@ -31,7 +32,9 @@ public class DropWizardServerBuilder {
         MessageProcessor messageProcessor,
         MessageStorage messageStorage,
         EmuConfig emuConfig,
-        TemplateLoader templateLoader) throws Exception {
+        TemplateLoader templateLoader,
+        XmlMapper xmlMapper
+    ) throws Exception {
         // Create application
         final Application<T> application = applicationClass.getConstructor().newInstance();
 
@@ -85,7 +88,8 @@ public class DropWizardServerBuilder {
             environment.metrics(),
             messageProcessor,
             messageStorage,
-            templateLoader);
+            templateLoader,
+            xmlMapper);
         serverReady.start();
         return serverReady;
     }
@@ -102,14 +106,15 @@ public class DropWizardServerBuilder {
 
 
         DropWizardServer(T builtConfig,
-            Bootstrap<T> bootstrap,
-            Application<T> application,
-            Environment environment,
-            Server jettyServer,
-            MetricRegistry metricRegistry,
-            MessageProcessor messageProcessor,
-            MessageStorage messageStorage,
-            TemplateLoader templateLoader) {
+                         Bootstrap<T> bootstrap,
+                         Application<T> application,
+                         Environment environment,
+                         Server jettyServer,
+                         MetricRegistry metricRegistry,
+                         MessageProcessor messageProcessor,
+                         MessageStorage messageStorage,
+                         TemplateLoader templateLoader,
+                         XmlMapper xmlMapper) {
             this.builtConfig = builtConfig;
             this.bootstrap = bootstrap;
             this.application = application;
@@ -119,6 +124,7 @@ public class DropWizardServerBuilder {
             this.builtConfig.setMessageProcessor(messageProcessor);
             this.builtConfig.setMessageStorage(messageStorage);
             this.builtConfig.setTemplateLoader(templateLoader);
+            this.builtConfig.setXmlMapper(xmlMapper);
         }
 
         /**

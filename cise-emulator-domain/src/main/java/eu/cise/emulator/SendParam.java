@@ -2,6 +2,8 @@ package eu.cise.emulator;
 
 import eu.cise.emulator.exceptions.NullMessageIdEx;
 
+import java.util.Objects;
+
 import static eu.cise.emulator.helpers.Asserts.notNull;
 
 /**
@@ -34,5 +36,20 @@ public class SendParam {
 
     public String getCorrelationId() {
         return correlationId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SendParam sendParam = (SendParam) o;
+        return requiresAck == sendParam.requiresAck &&
+                Objects.equals(messageId, sendParam.messageId) &&
+                Objects.equals(correlationId, sendParam.correlationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(requiresAck, messageId, correlationId);
     }
 }
