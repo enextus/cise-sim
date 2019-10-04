@@ -1,5 +1,6 @@
 package eu.cise.emulator.io;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
@@ -8,14 +9,17 @@ import static org.mockito.Mockito.when;
 
 import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.exceptions.DirectoryNotFoundEx;
+import eu.cise.emulator.exceptions.TemplateNotFoundEx;
 import eu.cise.emulator.templates.DefaultTemplateLoader;
 import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.templates.TemplateLoader;
-import eu.eucise.xml.DefaultXmlMapper;
-import eu.eucise.xml.XmlMapper;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
@@ -25,13 +29,11 @@ public class TemplateLoaderTest {
 
     private TemplateLoader templateLoader;
     private EmuConfig emuConfig;
-    private XmlMapper xmlMapper;
 
     @Before
     public void before() {
         emuConfig = mock(EmuConfig.class);
-        xmlMapper = new DefaultXmlMapper();
-        templateLoader = new DefaultTemplateLoader(xmlMapper, emuConfig);
+        templateLoader = new DefaultTemplateLoader(emuConfig);
 
         when(emuConfig.messageTemplateDir())
             .thenReturn(getAbsPathFromResourceDir("templateDir"));
@@ -72,11 +74,53 @@ public class TemplateLoaderTest {
             .isThrownBy(() -> templateLoader.loadTemplateList());
     }
 
-    private String getAbsPathFromResourceDir(String resourceDir) {
-        return new File(getTemplateDirURL(resourceDir)).getAbsolutePath();
+    @Test
+    public void it_returns_a_templateId() {
+        Template template = templateLoader.loadTemplate("COM_01_Vessel_a.xml");
+
+        assertThat(template.getTemplateId()).isEqualTo("COM_01_Vessel_a.xml");
     }
 
-    private URI getTemplateDirURL(String resourceDir) {
+    @Test
+    public void it_returns_a_templateName() {
+        Template template = templateLoader.loadTemplate("COM_01_Vessel_a.xml");
+
+        assertThat(template.getTemplateName()).isEqualTo("COM_01_Vessel_a.xml");
+    }
+
+    @Test
+    public void it_returns_a_templateContent() throws IOException {
+        Template template = templateLoader.loadTemplate("COM_01_Vessel_a.xml");
+
+        assertThat(template.getTemplateContent())
+            .isEqualTo(readResource("templateDir/COM_01_Vessel_a.xml"));
+    }
+
+    @Test
+    public void it_throw_an_exception_when_the_file_missing() {
+        assertThatExceptionOfType(TemplateNotFoundEx.class)
+            .isThrownBy(() -> templateLoader.loadTemplate("not_existing_file.xml"))
+            .withMessageContaining("not_existing_file.xml");
+    }
+
+    @Test
+    public void it_throw_an_exception_when_the_templateId_is_null() {
+        assertThatExceptionOfType(TemplateNotFoundEx.class)
+            .isThrownBy(() -> templateLoader.loadTemplate(null))
+            .withMessageContaining("null");
+    }
+
+    private String readResource(String resourceName) throws IOException {
+        Path path = Paths.get(getResourceURI(resourceName));
+
+        return new String(Files.readAllBytes(path), UTF_8);
+    }
+
+    private String getAbsPathFromResourceDir(String resourceDir) {
+        return new File(getResourceURI(resourceDir)).getAbsolutePath();
+    }
+
+    private URI getResourceURI(String resourceDir) {
         try {
             return this.getClass().getClassLoader().getResource(resourceDir).toURI();
         } catch (URISyntaxException e) {

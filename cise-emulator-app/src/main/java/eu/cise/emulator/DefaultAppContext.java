@@ -73,7 +73,7 @@ public class DefaultAppContext implements AppContext {
 
     @Override
     public TemplateLoader makeTemplateLoader() {
-        return new DefaultTemplateLoader(xmlMapper, emuConfig);
+        return new DefaultTemplateLoader(emuConfig);
     }
 
     @Override
