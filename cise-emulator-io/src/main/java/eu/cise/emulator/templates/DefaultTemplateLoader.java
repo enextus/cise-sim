@@ -1,5 +1,8 @@
 package eu.cise.emulator.templates;
 
+import eu.cise.emulator.exceptions.IOLoaderException;
+
+import java.io.IOException;
 import java.util.List;
 
 import static eu.eucise.helpers.PushBuilder.newPush;
@@ -14,7 +17,7 @@ public class DefaultTemplateLoader implements TemplateLoader {
     }
 
     @Override
-    public List<Template> loadTemplateList() {
+    public List<Template> loadTemplateList() throws IOLoaderException {
         return null;
     }
 }

@@ -2,6 +2,7 @@ package eu.cise.emulator.api;
 
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.api.representation.TemplateParams;
+import eu.cise.emulator.exceptions.IOLoaderException;
 import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Message;
@@ -25,7 +26,7 @@ public class TemplateAPI {
     public TemplateListResponse getTemplates() {
         try {
             return new TemplateListResponse.OK(templateLoader.loadTemplateList());
-        } catch (Exception e) {
+        } catch (IOLoaderException e) {
             return new TemplateListResponse.KO(e.getMessage());
         }
     }
