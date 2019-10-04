@@ -1,8 +1,8 @@
 package eu.cise.emulator.io;
 
 import eu.cise.emulator.EmuConfig;
-import eu.cise.emulator.exceptions.IOLoaderDirectoryEmptyException;
-import eu.cise.emulator.exceptions.IOLoaderDirectoryNotFoundException;
+import eu.cise.emulator.exceptions.EmptyDirectoryEx;
+import eu.cise.emulator.exceptions.DirectoryNotFoundEx;
 import eu.cise.emulator.templates.DefaultTemplateLoader;
 import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.templates.TemplateLoader;
@@ -60,7 +60,7 @@ public class TemplateLoaderTest {
         } catch (Exception ereal) {
             eref = ereal;
         }
-        assertThat(eref).isInstanceOf(IOLoaderDirectoryNotFoundException.class);
+        assertThat(eref).isInstanceOf(DirectoryNotFoundEx.class);
     }
 
     @Ignore
@@ -74,7 +74,7 @@ public class TemplateLoaderTest {
         } catch (Exception ereal) {
             eref = ereal;
         }
-        assertThat(eref).isInstanceOf(IOLoaderDirectoryEmptyException.class);
+        assertThat(eref).isInstanceOf(EmptyDirectoryEx.class);
     }
 
     private File getIncorrectFolderFromUrl() {

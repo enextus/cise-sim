@@ -1,5 +1,6 @@
 package eu.cise.emulator.api;
 
+import eu.cise.emulator.exceptions.LoaderEx;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
@@ -14,7 +15,7 @@ public class IOLoaderException extends UncheckedIOException  {
         super("IO error while loading template " + message,  e);
     }
 
-    public IOLoaderException(String message, eu.cise.emulator.exceptions.IOLoaderException e) {
+    public IOLoaderException(String message, LoaderEx e) {
         super("IO error while loading template " + message,  new IOException(e.getMessage()));
     }
 

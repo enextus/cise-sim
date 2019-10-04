@@ -1,7 +1,7 @@
 package eu.cise.emulator.api;
 
 import eu.cise.emulator.MessageProcessor;
-import eu.cise.emulator.exceptions.IOLoaderException;
+import eu.cise.emulator.exceptions.LoaderEx;
 import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.templates.TemplateLoader;
 import org.junit.Before;
@@ -56,7 +56,7 @@ public class TemplateAPITest {
     @Ignore
     @Test
     public void it_returns_a_ko_response_when_throwing_an_IOLoaderException() throws IOException {
-        when(templateLoader.loadTemplateList()).thenThrow(new IOLoaderException());
+        when(templateLoader.loadTemplateList()).thenThrow(new LoaderEx());
 
         TemplateListResponse templateListResponse = templateAPI.getTemplates();
 
