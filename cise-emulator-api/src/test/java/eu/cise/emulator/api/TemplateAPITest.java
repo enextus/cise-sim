@@ -1,21 +1,19 @@
 package eu.cise.emulator.api;
 
-import static java.util.Arrays.asList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.exceptions.IOLoaderException;
 import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.templates.TemplateLoader;
-
-import java.io.IOException;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 public class TemplateAPITest {
 
@@ -58,14 +56,12 @@ public class TemplateAPITest {
     @Ignore
     @Test
     public void it_returns_a_ko_response_when_throwing_an_IOLoaderException() throws IOException {
-        when(templateLoader.loadTemplateList()).thenThrow(new IOLoaderException("unknow",new IOException("unknow")));
-        Exception eref = new RuntimeException();
+        when(templateLoader.loadTemplateList()).thenThrow(new IOLoaderException());
 
-            TemplateListResponse templateListResponse = templateAPI.getTemplates();
+        TemplateListResponse templateListResponse = templateAPI.getTemplates();
 
         assertThat(templateAPI.getTemplates()).isInstanceOf(TemplateListResponse.KO.class);
     }
-
 
 
 }
