@@ -36,7 +36,9 @@ const styles = theme => ({
 
 @observer
 class SendMessage extends Component {
+
     messagePreview;
+
     state = {
         selectedOption: null,
     };
@@ -71,6 +73,10 @@ class SendMessage extends Component {
     send() {
         this.props.messagePreview.send(this.props.messageCandidate);
         this.props.messageCandidate.messageId = this.getId();
+    }
+
+    preview(){
+        this.props.messagePreview.preview(this.props.messageCandidate);
     }
 
     render() {

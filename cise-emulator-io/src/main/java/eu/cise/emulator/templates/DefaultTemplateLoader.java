@@ -1,11 +1,11 @@
 package eu.cise.emulator.templates;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.exceptions.DirectoryNotFoundEx;
 import eu.cise.emulator.exceptions.LoaderEx;
 import eu.cise.emulator.exceptions.TemplateNotFoundEx;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +14,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class DefaultTemplateLoader implements TemplateLoader {
 
@@ -32,11 +34,11 @@ public class DefaultTemplateLoader implements TemplateLoader {
     public List<Template> loadTemplateList() throws LoaderEx {
         try {
             return Files.list(messageTemplatePath(emuConfig.messageTemplateDir()))
-                .filter(s -> s.toString().endsWith(".xml"))
-                .sorted()
-                .map(e -> e.toFile().getName())
-                .map(e -> new Template(e, e))
-                .collect(Collectors.toList());
+                    .filter(s -> s.toString().endsWith(".xml"))
+                    .sorted()
+                    .map(e -> e.toFile().getName())
+                    .map(e -> new Template(e, e))
+                    .collect(Collectors.toList());
 
         } catch (NoSuchFileException e) {
             throw new DirectoryNotFoundEx(e);
