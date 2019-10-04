@@ -27,26 +27,33 @@ public class TemplateLoaderTest {
     public void before() {
         emuConfig = mock(EmuConfig.class);
 
-        when(emuConfig.templateMessagesDirectory()).thenReturn(getFileFromURL().getAbsolutePath().toString());
+
         templateLoader = new DefaultTemplateLoader(emuConfig);
     }
 
 
     @Test
     public void it_return_the_filelist_of_templatedir() {
+        when(emuConfig.templateMessagesDirectory()).thenReturn(getCorrectFolderFromUrl().getAbsolutePath().toString());
+
         List<Template> templateList = templateLoader.loadTemplateList();
         assertThat(templateList).isInstanceOf(List.class);
     }
 
     @Test
     public void it_load_a_nonEmpty_filelist_of_templatedir() {
+        when(emuConfig.templateMessagesDirectory()).thenReturn(getCorrectFolderFromUrl().getAbsolutePath().toString());
+
         List<Template> templateList = templateLoader.loadTemplateList();
         assertThat(templateList.size()).isGreaterThan(0);
     }
 
-    @Ignore
+
     @Test
     public void it_returns_an_exception_when_requested_directory_doesNotExist() {
+        when(emuConfig.templateMessagesDirectory()).thenReturn("inexistentTemplateDir");
+
+
         Exception eref = new RuntimeException();
         try {
             List<Template> templateList = templateLoader.loadTemplateList();
@@ -59,6 +66,8 @@ public class TemplateLoaderTest {
     @Ignore
     @Test
     public void it_returns_an_exception_when_requested_directory_isEmpty() {
+        when(emuConfig.templateMessagesDirectory()).thenReturn(getIncorrectFolderFromUrl().getAbsolutePath().toString());
+
         Exception eref = new RuntimeException();
         try {
             List<Template> templateList = templateLoader.loadTemplateList();
@@ -68,8 +77,19 @@ public class TemplateLoaderTest {
         assertThat(eref).isInstanceOf(IOLoaderDirectoryEmptyException.class);
     }
 
+    private File getIncorrectFolderFromUrl() {
+        URL url = this.getClass().getClassLoader().getResource("templateEmptyDir");
+        File file = null;
+        try {
+            file = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            file = new File(url.getPath());
+        } finally {
+            return file;
+        }
+    }
 
-    private File getFileFromURL() {
+    private File getCorrectFolderFromUrl() {
         URL url = this.getClass().getClassLoader().getResource("templateDir");
         File file = null;
         try {

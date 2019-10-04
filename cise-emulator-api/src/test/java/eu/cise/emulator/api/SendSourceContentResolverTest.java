@@ -8,6 +8,7 @@ import eu.cise.emulator.api.helpers.DefaultTemplateLoader;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;

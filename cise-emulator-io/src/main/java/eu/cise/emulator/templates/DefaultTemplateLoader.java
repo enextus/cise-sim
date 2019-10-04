@@ -26,6 +26,14 @@ public class DefaultTemplateLoader implements TemplateLoader {
     public Template loadTemplate(String templateId) {
         Template template = new Template(templateId);
         template.setTemplateContent(newPush().id("messageId").correlationId("correlationId").build());
+        /* as copied from original resolveMessage(JsonNode json) method */
+//        String actualMessageName = json.at("/message_template").textValue();
+//        String filePath = emuConfig.templateMessagesDirectory() + actualMessageName;
+//        try {
+//            return String.join("\n", Files.readAllLines(Paths.get(filePath)));
+//        } catch (IOException e) {
+//            throw new RuntimeException("file not found :" + filePath, e);
+//        }
         return template;
     }
 
