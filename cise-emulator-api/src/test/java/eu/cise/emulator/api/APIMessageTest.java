@@ -24,7 +24,7 @@ public class APIMessageTest {
         messageStorage = mock(MessageStorage.class);
         jsonMapper = new ObjectMapper();
         emuConfig = mock(EmuConfig.class);
-        when(emuConfig.templateMessagesDirectory()).thenReturn("cise-emulator-assembly/src/main/resources/templates/messages");
+        when(emuConfig.messageTemplateDir()).thenReturn("cise-emulator-assembly/src/main/resources/templates/messages");
     }
 
 

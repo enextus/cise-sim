@@ -42,7 +42,7 @@ public interface EmuConfig extends Config {
     String privateKeyPassword();
 
     @Key("template.messages.directory")
-    String templateMessagesDirectory();
+    String messageTemplateDir();
 
     // preprocessors implementation
     class Trim implements Preprocessor {

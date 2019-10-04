@@ -1,7 +1,6 @@
 package eu.cise.emulator.templates;
 
-import eu.cise.servicemodel.v1.message.Message;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,37 +10,59 @@ public class Template implements Serializable {
 
     private String templateId;
 
-    private Message templateContent;
+    private String templateContent;
+    private String templateName;
 
     public Template() {
     }
 
-    public Template(String templateId) {
+    public Template(String templateId, String templateName) {
         this.templateId = templateId;
+        this.templateName = templateName;
+        this.templateContent = null;
     }
 
+    public Template(String templateId, String templateName, String templateContent) {
+        this.templateId = templateId;
+        this.templateContent = templateContent;
+        this.templateName = templateName;
+    }
+
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    @JsonProperty("templateId")
     public String getTemplateId() {
         return templateId;
     }
 
+    public String getTemplateContent() {
+        return templateContent;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Template template = (Template) o;
-        return Objects.equals(templateId, template.templateId);
+        return templateId.equals(template.templateId) &&
+            Objects.equals(templateContent, template.templateContent) &&
+            templateName.equals(template.templateName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(templateId);
+        return Objects.hash(templateId, templateContent, templateName);
     }
 
-    public Message getTemplateContent() {
-        return templateContent;
-    }
-
-    public void setTemplateContent(Message templateContent) {
-        this.templateContent = templateContent;
+    @Override
+    public String toString() {
+        return "Template{" +
+            "templateId='" + templateId + '\'' +
+            ", templateName='" + templateName + '\'' +
+            '}';
     }
 }

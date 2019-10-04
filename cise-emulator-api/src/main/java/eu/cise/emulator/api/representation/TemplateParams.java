@@ -1,5 +1,7 @@
 package eu.cise.emulator.api.representation;
 
+import eu.cise.emulator.SendParam;
+
 import java.util.Objects;
 
 public class TemplateParams {
@@ -30,6 +32,11 @@ public class TemplateParams {
 
     public boolean isRequestAck() {
         return requestAck;
+    }
+
+    public SendParam getSendParams() {
+        SendParam sendParam = new SendParam(this.requestAck, this.messageId, this.correlationId);
+        return sendParam;
     }
 
     @Override

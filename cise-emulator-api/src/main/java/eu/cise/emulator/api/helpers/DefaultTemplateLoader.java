@@ -21,7 +21,7 @@ public class DefaultTemplateLoader {
 
     public String resolveMessage(JsonNode json) {
         String actualMessageName = json.at("/message_template").textValue();
-        String filePath = emuConfig.templateMessagesDirectory() + actualMessageName;
+        String filePath = emuConfig.messageTemplateDir() + actualMessageName;
         try {
             return String.join("\n", Files.readAllLines(Paths.get(filePath)));
         } catch (IOException e) {
@@ -33,7 +33,7 @@ public class DefaultTemplateLoader {
     public List<String> listMessages() {
         List<String> filesList = new ArrayList<>();
         try {
-            File folder = new File(emuConfig.templateMessagesDirectory());
+            File folder = new File(emuConfig.messageTemplateDir());
             Files.list(Paths.get(folder.getAbsolutePath()))
                     .filter(s -> s.toString().endsWith(".xml"))
                     .sorted()

@@ -2,6 +2,7 @@ package eu.cise.emulator;
 
 import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.emulator.io.MessageStorage;
+import eu.eucise.xml.XmlMapper;
 import org.aeonbits.owner.ConfigFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ public class MainApp implements Runnable {
         AppContext appContext = new DefaultAppContext();
         MessageProcessor messageProcessor = appContext.makeMessageProcessor();
         MessageStorage messageStorage = appContext.makeMessageStorage();
+        XmlMapper xmlMapper = appContext.makeXmlMapper();
         TemplateLoader templateLoader = appContext.makeTemplateLoader();
         if (System.getProperty("conf.dir") != null) {
 
@@ -32,7 +34,7 @@ public class MainApp implements Runnable {
                 appContext.makeEmulatorEngine(),
                 appContext.makeDispatcher(),
                 appContext.makeSignatureService(),
-                appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader));
+                appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader, xmlMapper));
     }
 
     @Override

@@ -8,7 +8,6 @@ import eu.cise.emulator.api.helpers.DefaultTemplateLoader;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -30,7 +29,7 @@ public class SendSourceContentResolverTest {
         File folder = new File(classLoader.getResource("templateDir").getFile());
         System.out.println();
         emuConfig = mock(EmuConfig.class);
-        when(emuConfig.templateMessagesDirectory()).thenReturn(folder.getAbsolutePath() + File.separator);
+        when(emuConfig.messageTemplateDir()).thenReturn(folder.getAbsolutePath() + File.separator);
         jsonMapper = new ObjectMapper();
         sourceReader = new DefaultTemplateLoader(emuConfig);
         xmlMapper = new DefaultXmlMapper();

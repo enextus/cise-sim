@@ -9,6 +9,8 @@ import eu.cise.emulator.api.EmulatorApp;
 import eu.cise.emulator.io.DefaultMessageStorage;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.signature.SignatureService;
+import eu.eucise.xml.DefaultXmlMapper;
+import eu.eucise.xml.XmlMapper;
 import org.aeonbits.owner.ConfigFactory;
 
 import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
@@ -16,9 +18,11 @@ import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 public class DefaultAppContext implements AppContext {
 
     private final EmuConfig emuConfig;
+    private final XmlMapper xmlMapper;
 
     DefaultAppContext() {
         this.emuConfig = ConfigFactory.create(EmuConfig.class);
+        this.xmlMapper = new DefaultXmlMapper();
     }
 
     @Override
@@ -48,14 +52,16 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public EmulatorApp makeEmulatorApi(MessageProcessor messageProcessor, MessageStorage messageStorage, TemplateLoader templateLoader) {
+    public EmulatorApp makeEmulatorApi(MessageProcessor messageProcessor, MessageStorage messageStorage, TemplateLoader templateLoader, XmlMapper xmlMapper) {
         EmulatorApp server = null;
         try {
             String configFile = (this.emuConfig.webapiConfig());
             server = DropWizardServerBuilder
-                .createServer(configFile, EmulatorApp.class, messageProcessor, messageStorage, emuConfig, templateLoader);
+                .createServer(configFile, EmulatorApp.class, messageProcessor, messageStorage, emuConfig, templateLoader, xmlMapper);
+
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
         return server;
     }
@@ -67,6 +73,12 @@ public class DefaultAppContext implements AppContext {
 
     @Override
     public TemplateLoader makeTemplateLoader() {
-        return new DefaultTemplateLoader(emuConfig);
+        return new DefaultTemplateLoader(xmlMapper, emuConfig);
     }
+
+    @Override
+    public XmlMapper makeXmlMapper() {
+        return new DefaultXmlMapper();
+    }
+
 }

@@ -10,6 +10,7 @@ import javax.ws.rs.client.*;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.eucise.xml.XmlMapper;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -28,11 +29,14 @@ public class AppContextTest {
 
     private ObjectMapper jsonMapper;
 
+    private XmlMapper xmlMapper;
+
 
     @Before
     public void before() {
         jsonMapper = new ObjectMapper();
         appContext = new DefaultAppContext();
+        xmlMapper = mock(XmlMapper.class);
     }
 
 
@@ -51,7 +55,7 @@ public class AppContextTest {
         EmuConfig emuConfig = mock(EmuConfig.class);
         TemplateLoader templateLoader = mock(TemplateLoader.class);
 
-        EmulatorApp api = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader);
+        EmulatorApp api = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader, xmlMapper);
 
         assertThat(api).isNotNull();
     }
@@ -65,7 +69,7 @@ public class AppContextTest {
         TemplateLoader templateLoader = mock(TemplateLoader.class);
 
         AppContext appContext = new DefaultAppContext();
-        EmulatorApp resourceApi = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader);
+        EmulatorApp resourceApi = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader, xmlMapper);
 
         Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target("http://localhost:47080/webapi/messages");

@@ -5,26 +5,31 @@ import static eu.eucise.helpers.PushBuilder.newPush;
 import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.exceptions.DirectoryNotFoundEx;
 import eu.cise.emulator.exceptions.LoaderEx;
+import eu.cise.servicemodel.v1.message.Push;
+import eu.eucise.xml.XmlMapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DefaultTemplateLoader implements TemplateLoader {
 
     private final EmuConfig emuConfig;
+    private final XmlMapper xmlMapper;
 
-    public DefaultTemplateLoader(EmuConfig emuConfig) {
+    public DefaultTemplateLoader(XmlMapper xmlMapper, EmuConfig emuConfig) {
         this.emuConfig = emuConfig;
+        this.xmlMapper = xmlMapper;
     }
 
     @Override
     public Template loadTemplate(String templateId) {
-        Template template = new Template(templateId);
-        template.setTemplateContent(
-            newPush().id("messageId").correlationId("correlationId").build());
+        Push fakeMessage = newPush().id("messageId").correlationId("correlationId").build();
+        Template template = new Template(templateId, "templateName", xmlMapper.toXML(fakeMessage));
         /* as copied from original resolveMessage(JsonNode json) method */
 //        String actualMessageName = json.at("/message_template").textValue();
 //        String filePath = emuConfig.templateMessagesDirectory() + actualMessageName;
@@ -34,23 +39,29 @@ public class DefaultTemplateLoader implements TemplateLoader {
 //            throw new RuntimeException("file not found :" + filePath, e);
 //        }
         return template;
+
+//        XmlMapper nonValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
+//        return new Template(templateId, "templateName", nonValidatingXmlMapper.toXML(fakeMessage));
     }
 
     @Override
     public List<Template> loadTemplateList() throws LoaderEx {
-        List<Template> filesList = new ArrayList<>();
         try {
-            File folder = new File(emuConfig.templateMessagesDirectory());
-            Files.list(Paths.get(folder.getAbsolutePath()))
+            return Files.list(messageTemplatePath(emuConfig.messageTemplateDir()))
                 .filter(s -> s.toString().endsWith(".xml"))
                 .sorted()
-                .forEach(e -> filesList.add(new Template(e.toFile().getName())));
+                .map(e -> e.toFile().getName())
+                .map(e -> new Template(e, e))
+                .collect(Collectors.toList());
+
+        } catch (NoSuchFileException e) {
+            throw new DirectoryNotFoundEx(e);
         } catch (IOException e) {
-            if (e instanceof java.nio.file.NoSuchFileException) {
-                throw new DirectoryNotFoundEx(e);
-            }
             throw new LoaderEx(e);
         }
-        return filesList;
+    }
+
+    private Path messageTemplatePath(String pathname) {
+        return Paths.get(new File(pathname).getAbsolutePath());
     }
 }
