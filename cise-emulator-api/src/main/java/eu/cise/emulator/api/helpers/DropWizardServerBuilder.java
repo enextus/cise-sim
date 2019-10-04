@@ -3,8 +3,8 @@ package eu.cise.emulator.api.helpers;
 import com.codahale.metrics.MetricRegistry;
 import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.MessageProcessor;
-import eu.cise.emulator.api.CiseEmulatorAPI;
-import eu.cise.emulator.api.CiseEmulatorDropwizardConf;
+import eu.cise.emulator.api.EmulatorApp;
+import eu.cise.emulator.api.EmulatorDropwizardConf;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.TemplateLoader;
 import io.dropwizard.Application;
@@ -13,26 +13,25 @@ import io.dropwizard.configuration.ConfigurationFactory;
 import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import java.lang.reflect.Field;
+import java.util.List;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle;
-
-import java.lang.reflect.Field;
-import java.util.List;
 
 
 /**
  * A utility to run DropWizard (http://dropwizard.io/) applications in-process.
  */
-public class CiseDropWizardServerBuilder {
+public class DropWizardServerBuilder {
 
-    public static <T extends CiseEmulatorDropwizardConf> DropWizardServer<T> createServer(
-            String configFile,
-            Class<? extends Application<T>> applicationClass,
-            MessageProcessor messageProcessor,
-            MessageStorage messageStorage,
-            EmuConfig emuConfig,
-            TemplateLoader templateLoader) throws Exception {
+    public static <T extends EmulatorDropwizardConf> DropWizardServer<T> createServer(
+        String configFile,
+        Class<? extends Application<T>> applicationClass,
+        MessageProcessor messageProcessor,
+        MessageStorage messageStorage,
+        EmuConfig emuConfig,
+        TemplateLoader templateLoader) throws Exception {
         // Create application
         final Application<T> application = applicationClass.getConstructor().newInstance();
 
@@ -44,28 +43,29 @@ public class CiseDropWizardServerBuilder {
         // Write a temporary config file
         bootstrap.setConfigurationSourceProvider(new ResourceConfigurationSourceProvider());
         ConfigurationFactory<T> configurationFactory
-                = bootstrap.getConfigurationFactoryFactory()
-                .create((Class<T>) CiseEmulatorDropwizardConf.class,
-                        bootstrap.getValidatorFactory().getValidator(),
-                        bootstrap.getObjectMapper(),
-                        "dw");
+            = bootstrap.getConfigurationFactoryFactory()
+            .create((Class<T>) EmulatorDropwizardConf.class,
+                bootstrap.getValidatorFactory().getValidator(),
+                bootstrap.getObjectMapper(),
+                "dw");
         final T builtConfig = configurationFactory.build(
-                bootstrap.getConfigurationSourceProvider(), configFile);
+            bootstrap.getConfigurationSourceProvider(), configFile);
 
         // Configure logging
         builtConfig.getLoggingFactory()
-                .configure(bootstrap.getMetricRegistry(),
-                        bootstrap.getApplication().getName());
+            .configure(bootstrap.getMetricRegistry(),
+                bootstrap.getApplication().getName());
 
         // Environment
         final Environment environment = new Environment(bootstrap.getApplication().getName(),
-                bootstrap.getObjectMapper(),
-                bootstrap.getValidatorFactory().getValidator(),
-                bootstrap.getMetricRegistry(),
-                bootstrap.getClassLoader());
+            bootstrap.getObjectMapper(),
+            bootstrap.getValidatorFactory().getValidator(),
+            bootstrap.getMetricRegistry(),
+            bootstrap.getClassLoader());
 
         // Initialize environment
-        builtConfig.getMetricsFactory().configure(environment.lifecycle(), bootstrap.getMetricRegistry());
+        builtConfig.getMetricsFactory()
+            .configure(environment.lifecycle(), bootstrap.getMetricRegistry());
         builtConfig.setEmuConfig(emuConfig);
         // Server
         final Server server = builtConfig.getServerFactory().build(environment);
@@ -77,21 +77,22 @@ public class CiseDropWizardServerBuilder {
         });
 
         DropWizardServer serverReady = new DropWizardServer(
-                (CiseEmulatorDropwizardConf) builtConfig,
-                bootstrap,
-                application,
-                environment,
-                server,
-                environment.metrics(),
-                messageProcessor,
-                messageStorage,
-                templateLoader);
+            builtConfig,
+            bootstrap,
+            application,
+            environment,
+            server,
+            environment.metrics(),
+            messageProcessor,
+            messageStorage,
+            templateLoader);
         serverReady.start();
         return serverReady;
     }
 
 
-    public static class DropWizardServer<T extends CiseEmulatorDropwizardConf> extends CiseEmulatorAPI {
+    public static class DropWizardServer<T extends EmulatorDropwizardConf> extends EmulatorApp {
+
         private final T builtConfig;
         private final Bootstrap<T> bootstrap;
         private final Application<T> application;
@@ -101,14 +102,14 @@ public class CiseDropWizardServerBuilder {
 
 
         DropWizardServer(T builtConfig,
-                         Bootstrap<T> bootstrap,
-                         Application<T> application,
-                         Environment environment,
-                         Server jettyServer,
-                         MetricRegistry metricRegistry,
-                         MessageProcessor messageProcessor,
-                         MessageStorage messageStorage,
-                         TemplateLoader templateLoader) {
+            Bootstrap<T> bootstrap,
+            Application<T> application,
+            Environment environment,
+            Server jettyServer,
+            MetricRegistry metricRegistry,
+            MessageProcessor messageProcessor,
+            MessageStorage messageStorage,
+            TemplateLoader templateLoader) {
             this.builtConfig = builtConfig;
             this.bootstrap = bootstrap;
             this.application = application;
@@ -148,9 +149,11 @@ public class CiseDropWizardServerBuilder {
 
         @SuppressWarnings("unchecked")
         private void toggleManagedObjects(boolean start) throws Exception {
-            Field managedObjectsField = environment.lifecycle().getClass().getDeclaredField("managedObjects");
+            Field managedObjectsField = environment.lifecycle().getClass()
+                .getDeclaredField("managedObjects");
             managedObjectsField.setAccessible(true);
-            List<LifeCycle> managedObjects = (List<LifeCycle>) managedObjectsField.get(environment.lifecycle());
+            List<LifeCycle> managedObjects = (List<LifeCycle>) managedObjectsField
+                .get(environment.lifecycle());
             for (LifeCycle managedObject : managedObjects) {
                 if (start) {
                     managedObject.start();

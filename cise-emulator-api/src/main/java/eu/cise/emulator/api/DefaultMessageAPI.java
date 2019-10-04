@@ -1,10 +1,11 @@
 package eu.cise.emulator.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.SendParam;
 import eu.cise.emulator.api.helpers.SendParamsReader;
-import eu.cise.emulator.api.helpers.SendSourceContentResolver;
+import eu.cise.emulator.api.helpers.DefaultTemplateLoader;
 import eu.cise.emulator.api.resources.WebAPIMessageResource;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
@@ -23,18 +24,21 @@ public class DefaultMessageAPI implements MessageAPI {
     private final MessageStorage messageStorage;
     private MessageProcessor messageProcessor;
     private XmlMapper xmlMapper;
+    private EmuConfig emuConfig;
+    private DefaultTemplateLoader templateResolver;
 
-    public DefaultMessageAPI(MessageProcessor messageProcessor, MessageStorage messageStorage) {
+    public DefaultMessageAPI(MessageProcessor messageProcessor, MessageStorage messageStorage, EmuConfig emuConfig) {
         this.messageProcessor = messageProcessor;
         this.messageStorage = messageStorage;
         xmlMapper = new DefaultXmlMapper();
+        templateResolver = new DefaultTemplateLoader(emuConfig);
         LOGGER.debug(" Initialize the MessageAPI with default type implementation {} using message processor of type {}", this.getClass(), (messageProcessor != null ? messageProcessor.getClass() : ""));
     }
 
     @Override
     public MessageApiDto send(JsonNode json) {
         LOGGER.debug("send is passed through api : {}", json);
-        String xmlContent = new SendSourceContentResolver().extractMessage(json);
+        String xmlContent = templateResolver.resolveMessage(json);
         SendParam sendParam = new SendParamsReader().extractParams(json);
         Message message = xmlMapper.fromXML(xmlContent);
         MessageApiDto returnedApiDto = null;

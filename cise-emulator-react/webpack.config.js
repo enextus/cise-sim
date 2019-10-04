@@ -17,14 +17,15 @@ module.exports = {
             'body':'<?xml version="1.0"?><!--{"id":"34840-34534-943443", "requireAck":false, "correlationId":"23434-3443-434"}--> <xsl:stylesheet xmlns:xsl="http://www.w3.org/TR/WD-xsl"><ExpansionPanelDetails><span className={classes.message}><Highlight></Highlight></span></xsl:stylesheet>',
             'acknowledge':'<?xml version="1.0"?><!--{"id":"34840-34534-943443", "requireAck":false, "correlationId":"23434-3443-434"}--> <xsl:stylesheet xmlns:xsl="http://www.w3.org/TR/WD-xsl"><ExpansionPanelDetails><span className={classes.acknowledgement}><Highlight></Highlight></span></xsl:stylesheet>'});
          }''
-         if (req.url.indexOf('/webapi/templates')!== -1){
+         if (req.url.indexOf('/api/templates')!== -1){
                      console.log('bypass.0TemplateList.')
-                     res.send({
-                     'status':200,
-                     'body':
-                     '<?xml version="1.0"?> ',
-                     'acknowledge':
-                     '<?xml version="1.0"?> '});
+                     res.send([
+                      "Pull_requestTemplate.xml",
+                      "Pull_responseTemplate.xml",
+                      "PushTemplate.xml",
+                      "PushTemplatefail.xml",
+                      "SubscribeTemplate.xml"
+                  ]);
                   }
        } 
       }

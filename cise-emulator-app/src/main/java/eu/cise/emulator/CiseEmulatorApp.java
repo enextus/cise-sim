@@ -1,7 +1,7 @@
 package eu.cise.emulator;
 
 import eu.cise.dispatcher.Dispatcher;
-import eu.cise.emulator.api.CiseEmulatorAPI;
+import eu.cise.emulator.api.EmulatorApp;
 import eu.cise.signature.SignatureService;
 
 public class CiseEmulatorApp implements Runnable {
@@ -11,14 +11,14 @@ public class CiseEmulatorApp implements Runnable {
     private final EmulatorEngine emulatorEngine;
     private final Dispatcher dispatcher;
     private final SignatureService signatureService;
-    private final CiseEmulatorAPI emulatorApi;
+    private final EmulatorApp emulatorApi;
 
     public CiseEmulatorApp(EmuConfig emuConfig,
                            MessageProcessor messageProcessor,
                            EmulatorEngine emulatorEngine,
                            Dispatcher dispatcher,
                            SignatureService signatureService,
-                           CiseEmulatorAPI emulatorApi
+                           EmulatorApp emulatorApi
                            ) {
 
         this.emuConfig = emuConfig;

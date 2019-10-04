@@ -3,7 +3,7 @@ package eu.cise.emulator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.cise.emulator.api.CiseEmulatorAPI;
+import eu.cise.emulator.api.EmulatorApp;
 //import eu.cise.emulator.deprecated.web.app.transport.JerseyRestClient;
 import javax.ws.rs.client.*;
 
@@ -51,7 +51,7 @@ public class AppContextTest {
         EmuConfig emuConfig = mock(EmuConfig.class);
         TemplateLoader templateLoader = mock(TemplateLoader.class);
 
-        CiseEmulatorAPI api = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader);
+        EmulatorApp api = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader);
 
         assertThat(api).isNotNull();
     }
@@ -65,7 +65,7 @@ public class AppContextTest {
         TemplateLoader templateLoader = mock(TemplateLoader.class);
 
         AppContext appContext = new DefaultAppContext();
-        CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader);
+        EmulatorApp resourceApi = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader);
 
         Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target("http://localhost:47080/webapi/messages");
