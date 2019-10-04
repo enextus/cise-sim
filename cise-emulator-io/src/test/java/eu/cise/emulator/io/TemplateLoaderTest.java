@@ -28,7 +28,7 @@ public class TemplateLoaderTest {
         List<Template> templateList = templateLoader.loadTemplateList();
         assertThat(templateList).isInstanceOf(List.class);
     }
-    @Ignore
+
     @Test
     public void it_load_a_nonEmpty_filelist_of_templatedir() {
         List<Template> templateList = templateLoader.loadTemplateList();
