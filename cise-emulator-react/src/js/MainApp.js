@@ -14,16 +14,16 @@ export default class MainApp extends React.Component {
 
     render() {
         const includeModal = this.props.store.appStore.isModClosed ? '' : <WaitModal/>;
-        const navbar = this.props.store.appStore.isModClosed ? <NavBar store={this.props.store}/> : '';
+        const navBar = this.props.store.appStore.isModClosed ? <NavBar store={this.props.store}/> : '';
         const panels = this.props.store.appStore.isModClosed ? <Panels store={this.props.store}/> : '';
 
         return (
-            <span style={{font: 'Liberation Sans'}}>
+            <React.Fragment>
                 <DevTools/>
                 {includeModal}
-                {navbar}
+                {navBar}
                 {panels}
-            </span>
+            </React.Fragment>
         );
     }
 

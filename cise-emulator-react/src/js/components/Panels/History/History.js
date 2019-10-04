@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class History extends Component {
+class History extends Component {
 
     constructor(props) {
         super(props);
@@ -14,9 +14,7 @@ export default class History extends Component {
             height: '100%',
             overflowY: 'scroll',
             display: 'flex',
-            flexDirection: 'column',
-            font: 'Liberation Sans',
-            fontFamily: 'Liberation Sans'
+            flexDirection: 'column'
         };
         const msgs = this.props.store.messageStore.messages.map((message, i) =>
             this.renderMessages(message, i)
@@ -64,15 +62,11 @@ export default class History extends Component {
             borderRadius: '15px',
             margin: margin,
             textAlign: 'left',
-            font: 'Liberation Sans',
-            fontFamily: 'Liberation Sans'
         };
 
         const nameStyle = {
             color: nameColor,
             float: floatDirection,
-            font: 'Liberation Sans',
-            fontFamily: 'Liberation Sans'
         };
 
         return (

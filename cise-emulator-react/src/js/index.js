@@ -9,6 +9,7 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {blue, pink} from "@material-ui/core/colors";
 import {CssBaseline} from "@material-ui/core";
+
 const stores = {
     appStore: new MainAppModel(),
     messageStore: new MessageListModel()
