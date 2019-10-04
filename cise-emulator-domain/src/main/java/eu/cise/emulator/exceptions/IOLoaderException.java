@@ -9,11 +9,11 @@ public class IOLoaderException extends UncheckedIOException {
     }
 
     public IOLoaderException(IOException e) {
-        super("IO error while loading template", e);
+        super("IO error while loading template : unknow ", e);
     }
 
     public IOLoaderException(String message, IOException e) {
-        super("IO error while loading template", e);
+        super("IO error while loading template : " + message, e);
     }
 }
 

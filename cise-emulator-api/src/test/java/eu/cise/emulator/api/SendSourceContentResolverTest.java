@@ -49,7 +49,7 @@ public class SendSourceContentResolverTest {
         params.put("message_id", "1234-123411-123411-1234");
         params.put("correlation_id", "7777-666666-666666-5555");
 
-        msgTemplateWithParamObject.put("message_template", "COM_01_Vessel_Feedback_03.xml");
+        msgTemplateWithParamObject.put("message_template", "COM_01_Vessel_a.xml");
         msgTemplateWithParamObject.set("params", params);
 
         return jsonMapper.valueToTree(msgTemplateWithParamObject);
