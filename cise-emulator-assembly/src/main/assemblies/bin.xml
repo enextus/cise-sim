@@ -73,12 +73,20 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-emulator-assembly/src/main/conf/</directory>
+            <directory>${project.parent.basedir}/cise-emulator-assembly/src/main/resources/conf/</directory>
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>*</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>${project.parent.basedir}/cise-emulator-assembly/src/main/resources/templates/</directory>
+            <outputDirectory>/templates</outputDirectory>
+            <includes>
+                <include>*/**</include>
+            </includes>
+        </fileSet>
+
 
         <fileSet>
             <directory>.</directory>

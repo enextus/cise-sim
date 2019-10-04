@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:Feedback xmlns:ns2="http://www.cise.eu/servicemodel/v1/service/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/">
+
+    <CreationDateTime>2017-04-24T15:41:24.461+01:00</CreationDateTime><!--Required-->
+    <MessageID>476d949d-5aa4-44cc-8e20-c1a2288fe098</MessageID><!--Required-->
+    <Priority>Low</Priority><!--Required-->
+    <RequiresAck>false</RequiresAck>
+    <Sender>
+        <ServiceID>it.sim1-node02.vessel.feedback.provider</ServiceID>
+        <ServiceOperation>Feedback</ServiceOperation>
+        <ServiceType>VesselService</ServiceType>
+    </Sender>
+
+    <Recipient>
+        <ServiceID>it.sim2-node02.vessel.feedback.consumer</ServiceID>
+        <ServiceOperation>Feedback</ServiceOperation>
+        <ServiceType>VesselService</ServiceType>
+    </Recipient>
+ <Payload xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:XmlEntityPayload">
+        <InformationSecurityLevel>NonClassified</InformationSecurityLevel><!--Required-->
+        <InformationSensitivity>Green</InformationSensitivity><!--Required-->
+        <Purpose>NonSpecified</Purpose><!--Required-->
+ <Vessel>
+	<Metadata>
+		<ValidityPeriod>
+                	<EndDate>2017-11-02+01:00</EndDate>
+                	<StartDate>2017-07-25+02:00</StartDate>
+		</ValidityPeriod><!--Required-->
+	</Metadata>
+        <Identifier>
+            <UUID>111</UUID>
+	    <GeneratedIn>2017-07-14T14:19:54.682Z</GeneratedIn>
+	    <GeneratedBy>it.sima-node01</GeneratedBy>
+        </Identifier>
+        <Name>ABEILLE LANGUEDOC</Name>
+        <IMONumber>7710525</IMONumber>
+        <MMSI>228002000</MMSI>
+        <ShipType>PassengerShip</ShipType>
+
+    </Vessel>
+
+ </Payload>
+    <RefMessageID>c17671dc-428f-49bd-a1b5-637af921b981</RefMessageID><!--Required-->
+    <FeedbackType>info</FeedbackType><!--Required-->
+    <Reason>ShipTypeChange</Reason>
+
+
+
+</ns4:Feedback>

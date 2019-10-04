@@ -44,6 +44,7 @@
         <module>cise-emulator-transport</module>
         <module>cise-emulator-assembly</module>
         <module>cise-dispatcher</module>
+        <module>cise-emulator-io</module>
     </modules>
 
     <build>
@@ -171,6 +172,13 @@
                 <artifactId>cise-signature</artifactId>
                 <version>1.1-SNAPSHOT</version>
             </dependency>
+
+            <dependency>
+                <groupId>eu.europa.ec.jrc.marex</groupId>
+                <artifactId>cise-io</artifactId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+
             <!-- ext Dependencies -->
             <dependency>
                 <artifactId>guava</artifactId>

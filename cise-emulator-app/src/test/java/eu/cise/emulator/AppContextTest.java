@@ -3,11 +3,14 @@ package eu.cise.emulator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.cise.emulator.api.CiseEmulatorAPI;
+import eu.cise.emulator.api.EmulatorApp;
 //import eu.cise.emulator.deprecated.web.app.transport.JerseyRestClient;
 import javax.ws.rs.client.*;
 
+import eu.cise.emulator.io.MessageStorage;
+import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.eucise.xml.XmlMapper;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -26,11 +29,14 @@ public class AppContextTest {
 
     private ObjectMapper jsonMapper;
 
+    private XmlMapper xmlMapper;
+
 
     @Before
     public void before() {
         jsonMapper = new ObjectMapper();
         appContext = new DefaultAppContext();
+        xmlMapper = mock(XmlMapper.class);
     }
 
 
@@ -45,8 +51,11 @@ public class AppContextTest {
     public void it_builds_web_api() {
         AppContext appContext = new DefaultAppContext();
         MessageProcessor messageProcessor = mock(MessageProcessor.class);
+        MessageStorage messageStorage = mock(MessageStorage.class);
+        EmuConfig emuConfig = mock(EmuConfig.class);
+        TemplateLoader templateLoader = mock(TemplateLoader.class);
 
-        CiseEmulatorAPI api = appContext.makeEmulatorApi(messageProcessor);
+        EmulatorApp api = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader, xmlMapper);
 
         assertThat(api).isNotNull();
     }
@@ -56,9 +65,11 @@ public class AppContextTest {
     public void it_connects_API_to_MessageProcesor() {
         EmulatorEngine engine = mock(EmulatorEngine.class);
         MessageProcessor messageProcessor = new DefaultMessageProcessor(engine);
+        MessageStorage messageStorage = mock(MessageStorage.class);
+        TemplateLoader templateLoader = mock(TemplateLoader.class);
 
         AppContext appContext = new DefaultAppContext();
-        CiseEmulatorAPI resourceApi = appContext.makeEmulatorApi(messageProcessor);
+        EmulatorApp resourceApi = appContext.makeEmulatorApi(messageProcessor, messageStorage, templateLoader, xmlMapper);
 
         Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target("http://localhost:47080/webapi/messages");
