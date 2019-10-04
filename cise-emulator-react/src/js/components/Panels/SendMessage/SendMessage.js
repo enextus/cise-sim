@@ -155,11 +155,8 @@ class SendMessage extends Component {
                                 Send
                                 <SendRoundedIcon className={classes.rightIcon}/>
                             </Button>
-                            <span>   </span>
                         </Grid>
-
                     </Grid>
-
                 </Paper>
             </div>
         );

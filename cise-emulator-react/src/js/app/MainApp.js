@@ -6,27 +6,27 @@ import NavBar from '../components/NavBar/NavBar';
 import WaitModal from '../components/WaitModal';
 
 @observer
-export default class MainApp extends React.Component {
+class MainApp extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        const includeModal = this.props.store.appStore.isModClosed ? '' : <WaitModal/>;
-        const navbar = this.props.store.appStore.isModClosed ? <NavBar store={this.props.store}/> : '';
-        const panels = this.props.store.appStore.isModClosed ? <Panels store={this.props.store}/> : '';
+  render() {
+    const includeModal = this.props.store.appStore.isModClosed ? '' :
+        <WaitModal/>;
+    const navBar = this.props.store.appStore.isModClosed ? <NavBar
+        store={this.props.store}/> : '';
+    const panels = this.props.store.appStore.isModClosed ? <Panels
+        store={this.props.store}/> : '';
 
-        return (
-            <span style={{font: 'Liberation Sans'}}>
-                <DevTools/>
-                {includeModal}
-                {navbar}
-                {panels}
-            </span>
-        );
-    }
-
-
+    return (
+        <React.Fragment>
+          <DevTools/>
+          {includeModal}
+          {navBar}
+          {panels}
+        </React.Fragment>
+    );
+  }
 }
-
