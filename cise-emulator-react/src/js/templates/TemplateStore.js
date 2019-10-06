@@ -14,6 +14,11 @@ export default class TemplateStore {
         return this.templateList.map(t => ({label: t.name, value: t.id}));
     }
 
+    @computed get isTemplateSelected() {
+        return !(this.selected === "empty");
+    }
+
+
     @action
     createNewMessageId() {
         this.messageId = this.uuidv4();

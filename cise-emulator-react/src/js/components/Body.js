@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SendMessage from './SendForm';
+import SendForm from './SendForm';
 import PushedMessage from './PushedMessage';
 import PulledMessage from './ReceiveMessage/PulledMessage';
 import {Grid} from '@material-ui/core';
@@ -31,7 +31,7 @@ export default class Body extends Component {
         return (
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <SendMessage
+                    <SendForm
                         store={this.props.store}
                         messageCandidate={messageCandidate}
                         messagePreview={messagePreview}/>

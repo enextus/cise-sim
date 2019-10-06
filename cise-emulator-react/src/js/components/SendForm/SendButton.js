@@ -1,5 +1,5 @@
 import {Button, withStyles} from "@material-ui/core";
-import DescriptionIcon from "@material-ui/icons/Description";
+import SendRoundedIcon from "@material-ui/icons/SendRounded";
 import React from "react";
 import PropTypes from "prop-types";
 import {observer} from "mobx-react";
@@ -14,36 +14,38 @@ const styles = theme => ({
 });
 
 @observer
-class PreviewButton extends React.Component {
+class SendButton extends React.Component {
 
     isDisabled() {
         return !this.props.store.isTemplateSelected;
     }
 
-    preview() {
-        this.props.store.preview();
+    send() {
+        this.props.store.send();
     }
+
 
     render() {
         const {classes} = this.props;
 
         return (
-            <Button id="preview"
-                    variant="contained"
-                    onClick={() => this.preview()}
-                    color="primary"
-                    className={classes.button}
-                    disabled={this.isDisabled()}>
-                Preview
-                <DescriptionIcon className={classes.rightIcon}/>
+            <Button
+                id="send"
+                color="secondary"
+                variant="contained"
+                className={classes.button}
+                onClick={() => this.send()}
+                disabled={this.isDisabled()}>
+                Send
+                <SendRoundedIcon className={classes.rightIcon}/>
             </Button>
         );
     }
 }
 
-PreviewButton.propTypes = {
+SendButton.propTypes = {
     store: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PreviewButton)
+export default withStyles(styles)(SendButton)
