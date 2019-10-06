@@ -5,7 +5,6 @@ export default class Template {
     content = "";
 
     constructor(props) {
-        console.log("Template",props);
         this.id = props.templateId;
         this.name = props.templateName;
         this.content = props.templateContent;

@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const get = async (service, params) => {
-    console.log("trying to make a get...")
     try {
         let response = await axios.get(
             getServiceURL(service),

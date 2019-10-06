@@ -1,13 +1,38 @@
-import {getTemplateList} from "./TemplateService";
+import {getTemplateById, getTemplateList} from "./TemplateService";
 import {action, computed, observable} from "mobx";
 
 export default class TemplateStore {
 
     @observable templateList = [];
+    @observable selected = "empty"; // selectedTemplateId
+    @observable messageId = this.uuidv4();
+    @observable correlationId = "";
+    @observable requiresAck = false;
+    @observable template;
 
     @computed get templateOptions() {
-        console.log("templateList", this.templateList);
         return this.templateList.map(t => ({label: t.name, value: t.id}));
+    }
+
+    @action
+    createNewMessageId() {
+        this.messageId = this.uuidv4();
+    }
+
+    @action
+    async loadTemplateList() {
+        const templates = await getTemplateList();
+        templates.forEach(t => this.templateList.push(t));
+    }
+
+    @action
+    toggleRequiresAck() {
+        this.requiresAck = !this.requiresAck;
+    }
+
+    @action
+    async preview() {
+        this.template = await getTemplateById(this.selected, this.messageId, this.correlationId, this.requiresAck);
     }
 
     uuidv4() {
@@ -15,12 +40,4 @@ export default class TemplateStore {
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
         );
     }
-
-    @action
-    async loadTemplateList() {
-        console.log("getTemplateList()", getTemplateList());
-        const templates = await getTemplateList();
-        templates.forEach(t => this.templateList.push(t));
-    }
-
 }

@@ -41,9 +41,7 @@ class NavBar extends Component {
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <DirectionsBoatIcon/>
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        CISE Emu
-                    </Typography>
+                    <Typography variant="h6" className={classes.title}> CISE Emu </Typography>
                     <div>
                         <Chip
                             avatar={<Avatar>ID</Avatar>}
