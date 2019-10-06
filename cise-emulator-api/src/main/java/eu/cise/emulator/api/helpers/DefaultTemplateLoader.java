@@ -18,7 +18,6 @@ public class DefaultTemplateLoader {
         this.emuConfig = emuConfig;
     }
 
-
     public String resolveMessage(JsonNode json) {
         String actualMessageName = json.at("/message_template").textValue();
         String filePath = emuConfig.messageTemplateDir() + actualMessageName;

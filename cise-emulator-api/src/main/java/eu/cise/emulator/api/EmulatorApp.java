@@ -38,12 +38,12 @@ public class EmulatorApp extends Application<EmulatorDropwizardConf> {
             bootstrap.setConfigurationSourceProvider(new ResourceConfigurationSourceProvider());
         }
         bootstrap.setConfigurationSourceProvider(
-            new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
-                new EnvironmentVariableSubstitutor(false)
-            )
+                new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
+                        new EnvironmentVariableSubstitutor(false)
+                )
         );
         bootstrap.addBundle(new ConfiguredAssetsBundle("/assets/", "/base/",
-            "index.html")); // imply redirect from root ?
+                "index.html")); // imply redirect from root ?
     }
 
     @Override
@@ -56,17 +56,17 @@ public class EmulatorApp extends Application<EmulatorDropwizardConf> {
 
         // delegate the principal application configurations interfaces (IOC)
         MessageAPI messageAPI = new DefaultMessageAPI(
-            conf.getMessageProcessor(),
-            conf.getMessageStorage(),
-            conf.getEmuConfig());
+                conf.getMessageProcessor(),
+                conf.getMessageStorage(),
+                conf.getTemplateLoader());
 
         environment.jersey().register(new WebAPIMessageResource(messageAPI));
         environment.jersey().register(new MessageResource(messageAPI, conf.getMessageStorage()));
 
         environment.jersey().register(
-            new TemplateResource(messageAPI,
-                new TemplateAPI(conf.getMessageProcessor(), conf.getTemplateLoader(),
-                    conf.getXmlMapper()), conf.getEmuConfig()));
+                new TemplateResource(messageAPI,
+                        new TemplateAPI(conf.getMessageProcessor(), conf.getTemplateLoader(),
+                                conf.getXmlMapper()), conf.getEmuConfig()));
 
         environment.jersey().register(new AssetRedirectionResource());
     }

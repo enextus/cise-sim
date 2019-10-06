@@ -5,7 +5,7 @@ export const get = async (service, params) => {
         let response = await axios.get(
             getServiceURL(service),
             {
-                header: {
+                headers: {
                     'Content-Type': 'application/json'
                 },
                 params: params
@@ -19,10 +19,29 @@ export const get = async (service, params) => {
     }
 };
 
-export const getServiceURL = service => {
+export const post = async (service, data) => {
+    try {
+        let response = await axios.post(
+            getServiceURL(service),
+            data,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+        return response.data;
+
+    } catch (error) {
+        console.error("request GET " + getServiceURL(service) + " failed.");
+        console.error(error);
+    }
+};
+
+const getServiceURL = service => {
     return getHost().concat("/api/").concat(service);
 };
 
-export const getHost = () => {
+const getHost = () => {
     return location.protocol.concat("//").concat(window.location.hostname).concat(":47080");
 };

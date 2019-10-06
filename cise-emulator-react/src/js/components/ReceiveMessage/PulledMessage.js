@@ -11,12 +11,12 @@ import {
     Tabs,
     Typography
 } from '@material-ui/core';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Highlight from 'react-highlight.js';
 import PropTypes from 'prop-types';
 
-const pulledMessageStyle = makeStyles(theme => ({
+const styles = () => ({
     root: {
         flexGrow: 1,
         flexBasis: '99.0%'
@@ -49,7 +49,7 @@ const pulledMessageStyle = makeStyles(theme => ({
         borderLeft: `6px solid 4`,
         padding: `4px 6px`
     }
-}));
+});
 
 @observer
 class PulledMessage extends Component {
@@ -123,7 +123,7 @@ PulledMessage.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(pulledMessageStyle)(PulledMessage)
+export default withStyles(styles)(PulledMessage)
 
 
 

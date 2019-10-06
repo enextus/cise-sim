@@ -1,5 +1,7 @@
 import {getTemplateById, getTemplateList} from "./TemplateService";
 import {action, computed, observable} from "mobx";
+import axios from "axios";
+import {sendMessage} from "../messages/MessageService";
 
 export default class TemplateStore {
 
@@ -37,7 +39,21 @@ export default class TemplateStore {
 
     @action
     async preview() {
-        this.template = await getTemplateById(this.selected, this.messageId, this.correlationId, this.requiresAck);
+        this.template = await getTemplateById(
+            this.selected,
+            this.messageId,
+            this.correlationId,
+            this.requiresAck);
+    }
+
+    // TODO To be moved into another store?
+    @action
+    send() {
+        const message = sendMessage(
+            this.selected,
+            this.messageId,
+            this.correlationId,
+            this.requiresAck);
     }
 
     uuidv4() {

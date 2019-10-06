@@ -24,7 +24,6 @@ class SendButton extends React.Component {
         this.props.store.send();
     }
 
-
     render() {
         const {classes} = this.props;
 
