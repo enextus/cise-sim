@@ -6,13 +6,15 @@
     "build": "webpack",
     "test": "jest"
   },
-  "author": "Cise Team",
+  "author": "CISE Team",
   "devDependencies": {
     "@babel/core": "^7.1.0",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "enzyme": "^3.10.0",
     "eslint": "^6.4.0",
@@ -20,12 +22,12 @@
     "mobx-react-devtools": "^6.0.1",
     "react-addons-test-utils": "^15.3.0",
     "react-test-renderer": "^16.9.0",
-    "babel-jest": "^24.9.0",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
+    "@babel/runtime": "^7.6.2",
     "@material-ui/core": "^4.1.3",
     "@material-ui/icons": "^4.2.0",
     "@material-ui/styles": "^4.1.3",

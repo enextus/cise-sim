@@ -53,7 +53,7 @@ class NavBar extends Component {
                         />
                         <Button
                             variant="contained"
-                            disabled={!this.isConnected()}
+                            // disabled={!this.isConnected()}
                             color="secondary"> REST
                         </Button>
                     </div>

@@ -1,18 +1,20 @@
 import React from "react";
 import {render} from "react-dom";
 import DevTools from "mobx-react-devtools";
-import MessageListModel from "./models/MessageListModel";
-import MainAppModel from "./models/MainAppModel";
-import MainApp from "./MainApp";
-import {autorun, when} from "mobx";
+import MessageStore from "./js/models/MessageStore";
+import AppStore from "./js/models/AppStore";
+import TemplateStore from "./js/templates/TemplateStore";
+import MainApp from "./js/MainApp";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {blue, pink} from "@material-ui/core/colors";
 import {CssBaseline} from "@material-ui/core";
+import {autorun} from "mobx";
 
 const stores = {
-    appStore: new MainAppModel(),
-    messageStore: new MessageListModel()
+    appStore: new AppStore(),
+    templateStore: new TemplateStore(),
+    messageStore: new MessageStore()
 };
 
 const theme = createMuiTheme({
@@ -34,6 +36,10 @@ const theme = createMuiTheme({
     }    
 });
 
+autorun(() => {
+    stores.appStore.loadServiceId();
+});
+
 render(
     <React.Fragment>
         <DevTools/>
@@ -44,19 +50,3 @@ render(
     </React.Fragment>,
     document.getElementById("root")
 );
-
-
-
-autorun(() => {
-    stores.appStore.loadXmlTemplates();
-    stores.appStore.loadServiceId();
-});
-
-when(
-    () => stores.appStore.isConnected,
-    () => stores.appStore.closeModal()
-);
-
-
-
-window.store = stores;

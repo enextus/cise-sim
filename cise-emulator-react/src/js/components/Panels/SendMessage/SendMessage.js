@@ -47,7 +47,12 @@ class SendMessage extends Component {
         super(props);
         this.updateProperty = this.updateProperty.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.props.messageCandidate.messageId = this.getId();
+        this.props.messageCandidate.messageId = this.getStore().uuidv4();
+        this.props.messageCandidate.templateService = "empty";
+    }
+
+    componentDidMount() {
+        this.getStore().loadTemplateList();
     }
 
     updateProperty(key, value) {
@@ -72,10 +77,10 @@ class SendMessage extends Component {
 
     send() {
         this.props.messagePreview.send(this.props.messageCandidate);
-        this.props.messageCandidate.messageId = this.getId();
+        this.props.messageCandidate.messageId = this.getStore().generateMessageId();
     }
 
-    preview(){
+    preview() {
         this.props.messagePreview.preview(this.props.messageCandidate);
     }
 
@@ -85,7 +90,6 @@ class SendMessage extends Component {
             <div style={{padding: 16, margin: 'auto', maxWidth: 800}}>
                 <Paper style={{padding: 16}}>
                     <Grid container alignItems="flex-start" spacing={2}>
-
                         <Grid item xs={6}>
                             <TextField
                                 name="messageId"
@@ -109,20 +113,20 @@ class SendMessage extends Component {
 
                         <Grid item xs={5}>
                             <FormControl className={classes.formControl} fullWidth={true}>
-                                    <FormControl className={classes.formControl} fullWidth={true}>
-                                        <InputLabel htmlFor="templateService">Message Template</InputLabel>
-                                        <Select
-                                            label="Message Template"
-                                            placeholder="select the template"
-                                            value={this.props.messageCandidate.templateService}
-                                            onChange={this.onMessageTemplateChange}
-                                            inputProps={{
-                                                name: 'templateService',
-                                                id: 'templateService'
-                                            }}>
-                                            {this.getMessageTemplateItems().map(this.buildMenuItem)}
-                                        </Select>
-                                    </FormControl>
+                                <FormControl className={classes.formControl} fullWidth={true}>
+                                    <InputLabel htmlFor="templateService">Message Template</InputLabel>
+                                    <Select
+                                        label="Message Template"
+                                        value={this.props.messageCandidate.templateService}
+                                        onChange={this.onMessageTemplateChange}
+                                        inputProps={{
+                                            name: 'templateService',
+                                            id: 'templateService'
+                                        }}>
+                                        <MenuItem selected={true} value="empty"><em>select template</em></MenuItem>
+                                        {this.getMessageTemplateItems()}
+                                    </Select>
+                                </FormControl>
                             </FormControl>
                         </Grid>
 
@@ -168,13 +172,14 @@ class SendMessage extends Component {
         );
     }
 
-    getMessageTemplateItems() {
-        return this.props.store.appStore.templateOptions;
-    }
+    getStore() {
+        return this.props.store.templateStore
+    };
 
-    buildMenuItem(item) {
-        return (
-            <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
+    getMessageTemplateItems() {
+        console.log(this.getStore().templateOptions);
+        return this.getStore().templateOptions.map((item, idx) => (
+            <MenuItem key={idx} value={item.value}>{item.label}</MenuItem>)
         );
     }
 
@@ -182,26 +187,10 @@ class SendMessage extends Component {
         return this.props.messageCandidate.templateService === "#none";
     }
 
-    getId() {
-        let d = new Date().getTime();
-        //TODO extend uuid to form "ba6f94e3-2004-439b-a09f-a6f1f96ea34c"
-        //TODO validate "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxyx"
-        return 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxyx'.replace(/[xy]/g, this.getReplacer(d))
-    }
-
-    getReplacer(d) {
-        return function (c) {
-            const r = ((d + Math.random() * 16) % 16) | 0;
-            d = Math.floor(d / 16);
-            return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
-        };
-    };
-
 }
 
 SendMessage.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
 
 export default withStyles(styles)(SendMessage)

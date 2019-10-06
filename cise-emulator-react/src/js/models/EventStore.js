@@ -34,6 +34,6 @@ export class EventStore {
   }
 }
 
-export default new EventStore 
+export default EventStore
 
 
