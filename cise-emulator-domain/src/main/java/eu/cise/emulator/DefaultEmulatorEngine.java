@@ -154,9 +154,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         signature.verify(message);
 
         // send back the acknowledgement
-        Acknowledgement acknowledgement = buildAcknowledgeMessage(message);
-
-        return acknowledgement;
+        return buildAcknowledgeMessage(message);
     }
 
     private XMLGregorianCalendar getDatetime(long hours) {
@@ -193,7 +191,6 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
                 .ackDetail(acknowledgementDetail)
                 .isRequiresAck(false);
 
-        Acknowledgement acknowledgement = ackBuilder.build();
-        return acknowledgement;
+        return ackBuilder.build();
     }
 }

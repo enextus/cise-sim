@@ -1,6 +1,5 @@
 package eu.cise.emulator.api.resources;
 
-import eu.cise.emulator.api.helpers.ServerExceptionMapper;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -18,7 +17,6 @@ public class AssetRedirectionResourceTest {
     public static final ResourceTestRule resources = ResourceTestRule.builder()
             .addResource(new AssetRedirectionResource())
             .bootstrapLogging(false)
-            .addProvider(new ServerExceptionMapper())
             .build();
 
     @Test

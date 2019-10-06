@@ -43,5 +43,8 @@ const getServiceURL = service => {
 };
 
 const getHost = () => {
-    return location.protocol.concat("//").concat(window.location.hostname).concat(":47080");
+    if (window.location.hostname.includes("localhost"))
+        return window.location.protocol.concat("//").concat(window.location.hostname).concat(":47080");
+    else
+        return window.location.protocol.concat("//").concat(window.location.host);
 };

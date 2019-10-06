@@ -59,26 +59,18 @@ public class DefaultMessageAPI implements MessageAPI {
     @Override
     public Acknowledgement receive(String content) {
         LOGGER.debug("receive is receiving through api : {}", content.substring(0, 200));
-        CiseMessageResponse ciseMessageResponse;
-        Acknowledgement acknowledgement = null;
         try {
             Message message = xmlMapper.fromXML(content);
-            acknowledgement = messageProcessor.receive(message);
-            ciseMessageResponse = new CiseMessageResponse(xmlMapper, acknowledgement, message);
+            return messageProcessor.receive(message);
         } catch (Exception e) {
-            LOGGER.error("error in Api send {}", e);
-            ciseMessageResponse = new CiseMessageResponse(content);
+            LOGGER.error("error in api send", e);
+            throw new RuntimeException("Exception while receiving a message that should be handled.", e);
         }
-        return acknowledgement;
     }
 
     @Override
     public MessageApiDto getLastStoredMessage() {
-        MessageApiDto returnApiDto = null;
-        if (messageStorage != null) {
-            returnApiDto = (MessageApiDto) messageStorage.read();
-        }
-        return returnApiDto;
+        return (MessageApiDto) messageStorage.read();
     }
 
     @Override
