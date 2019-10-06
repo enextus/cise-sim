@@ -1,30 +1,67 @@
 package eu.cise.emulator.templates;
 
-import eu.cise.servicemodel.v1.message.Push;
-import eu.eucise.xml.DefaultXmlMapper;
-import eu.eucise.xml.XmlMapper;
 
+import eu.cise.emulator.EmuConfig;
+import eu.cise.emulator.exceptions.DirectoryNotFoundEx;
+import eu.cise.emulator.exceptions.LoaderEx;
+import eu.cise.emulator.exceptions.TemplateNotFoundEx;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static eu.eucise.helpers.PushBuilder.newPush;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class DefaultTemplateLoader implements TemplateLoader {
 
-    private final XmlMapper xmlMapper;
+    private final EmuConfig emuConfig;
 
-    public DefaultTemplateLoader(XmlMapper xmlMapper) {
-        this.xmlMapper = xmlMapper;
+    public DefaultTemplateLoader(EmuConfig emuConfig) {
+        this.emuConfig = emuConfig;
     }
 
     @Override
     public Template loadTemplate(String templateId) {
-        Push fakeMessage = newPush().id("messageId").correlationId("correlationId").build();
-        XmlMapper nonValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
-        return new Template(templateId, "templateName", nonValidatingXmlMapper.toXML(fakeMessage));
+        return new Template(templateId, templateId, readFile(templateId));
     }
 
     @Override
-    public List<Template> loadTemplateList() {
-        return null;
+    public List<Template> loadTemplateList() throws LoaderEx {
+        try {
+            return Files.list(messageTemplatePath(emuConfig.messageTemplateDir()))
+                    .filter(s -> s.toString().endsWith(".xml"))
+                    .sorted()
+                    .map(e -> e.toFile().getName())
+                    .map(e -> new Template(e, e))
+                    .collect(Collectors.toList());
+
+        } catch (NoSuchFileException e) {
+            throw new DirectoryNotFoundEx(e);
+        } catch (IOException e) {
+            throw new LoaderEx(e);
+        }
+    }
+
+    // TODO add the support to read a file also if the path is absolute without
+    //  using the emuConfig.messageTemplateDir
+    private String readFile(String fileName) {
+        try {
+            return new String(Files.readAllBytes(getFilePath(fileName)), UTF_8);
+        } catch (IOException e) {
+            throw new TemplateNotFoundEx(fileName);
+        }
+    }
+
+    private Path getFilePath(String fileName) {
+        return Paths.get(emuConfig.messageTemplateDir() + "/" + fileName);
+    }
+
+    private Path messageTemplatePath(String pathname) {
+        return Paths.get(new File(pathname).getAbsolutePath());
     }
 }

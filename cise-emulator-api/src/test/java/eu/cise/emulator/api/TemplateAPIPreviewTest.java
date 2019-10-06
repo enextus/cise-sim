@@ -84,7 +84,5 @@ public class TemplateAPIPreviewTest {
 
         verify(messageProcessor).preview(any(), eq(sendParams));
     }
-
-
 }
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:PullResponse xmlns:ns2="http://www.cise.eu/servicemodel/v1/service/"
+                  xmlns:ns3="http://www.cise.eu/servicemodel/v1/authority/"
+                  xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/">
+
+    <!--Push Message Section-->
+    <MessageID>476d949d-5aa4-44cc-8e20-c1a228dfe098</MessageID><!--Required-->
+    <CorrelationID>4308be42-dfdb-4f9f-9657-daa7d10690da</CorrelationID>
+    <CreationDateTime>2017-04-24T15:41:24.461+01:00</CreationDateTime><!--Required-->
+    <Priority>Low</Priority><!--Required-->
+    <RequiresAck>true</RequiresAck>
+
+    <Sender>
+        <ServiceID>it.sim1-node02.vessel.pull.provider</ServiceID>
+        <ServiceOperation>Pull</ServiceOperation>
+        <ServiceType>VesselService</ServiceType>  
+    </Sender>
+
+    <Recipient>     
+        <ServiceID>it.sim2-node02.vessel.pull.consumer</ServiceID>
+        <ServiceOperation>Pull</ServiceOperation>
+        <ServiceType>VesselService</ServiceType>  
+    </Recipient>
+
+    <Payload xsi:type="ns4:XmlEntityPayload" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<IsPersonalData>true</IsPersonalData>
+	
+	<Purpose>NonSpecified</Purpose><!--Required-->
+	<RetentionPeriod>2017-09-01T1:50:00.272+02:00</RetentionPeriod>
+        <InformationSecurityLevel>NonClassified</InformationSecurityLevel><!--Required-->
+        <InformationSensitivity>Green</InformationSensitivity><!--Required-->
+         
+        
+        <Vessel>
+	<Metadata>
+		<ValidityPeriod>
+                	<EndDate>2017-11-02+01:00</EndDate>
+                	<StartDate>2017-07-25+02:00</StartDate>
+		</ValidityPeriod><!--Required-->
+	</Metadata>
+        <Identifier>
+            <UUID>111</UUID>
+	    <GeneratedIn>2017-07-14T14:19:54.682Z</GeneratedIn>
+	    <GeneratedBy>it.sima-node01</GeneratedBy>
+        </Identifier>
+        <Name>ABEILLE LANGUEDOC</Name>
+        <IMONumber>7710525</IMONumber>
+        <MMSI>228002000</MMSI>
+        <ShipType>FishingVessel</ShipType>
+
+    </Vessel>
+
+   
+
+    </Payload>
+    <Reliability>
+      <RetryStrategy>NoRetry</RetryStrategy>
+   </Reliability>
+   <ResultCode>Success</ResultCode>
+
+</ns4:PullResponse>

@@ -54,7 +54,7 @@ public class TemplateResourceTest {
         assertThat(listFiles instanceof List);
     }
 
-    private File getFileFromURL() {
+    private File getFilePath() {
         URL url = this.getClass().getClassLoader().getResource("/templateDir");
         File file = null;
         try {
