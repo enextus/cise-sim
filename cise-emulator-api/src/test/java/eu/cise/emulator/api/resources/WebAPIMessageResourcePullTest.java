@@ -31,12 +31,14 @@ public class WebAPIMessageResourcePullTest {
 
     @Test
     public void it_invokes_the_pull_and_obtains_the_last_stored_message_from_MessageAPI_with_success() {
-        MessageApiDto storedMessage = new MessageApiDto(Response.Status.OK.getStatusCode(), "error-for-test", "", "");
-        when(messageAPI.getLastStoredMessage()).thenReturn(storedMessage);
-        Response resourceResponse = webAPIMessageResource.pull();
-        MessageApiDto entity = (MessageApiDto) resourceResponse.getEntity();
+        MessageApiDto expectedMessage = new MessageApiDto(Response.Status.OK.getStatusCode(), "error-for-test", "", "");
 
-        assertThat(entity.getErrorDetail()).isEqualTo(storedMessage.getErrorDetail());
+        when(messageAPI.getLastStoredMessage()).thenReturn(expectedMessage);
+
+        Response resourceResponse = webAPIMessageResource.pull();
+        MessageApiDto actualMessage = (MessageApiDto) resourceResponse.getEntity();
+
+        assertThat(actualMessage).isEqualTo(expectedMessage);
     }
 
 }
