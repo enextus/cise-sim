@@ -45,7 +45,8 @@ public interface EmuConfig extends Config {
     String messageTemplateDir();
 
     @Key("validation.rule.date")
-    boolean dateValidation();
+    @DefaultValue("false")
+    Boolean dateValidation();
 
 
 
