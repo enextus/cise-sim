@@ -9,7 +9,7 @@ import org.aeonbits.owner.Preprocessor;
 /**
  * This file is containing the emulator application configuration
  */
-@Config.PreprocessorClasses({EmuConfig.Trim.class})
+@Config.PreprocessorClasses({EmuConfig.TrimAndInsureBoolean.class})
 @Sources({"file:${conf.dir}emulator.properties",
         "classpath:emulator.properties"})
 public interface EmuConfig extends Config {
@@ -44,10 +44,21 @@ public interface EmuConfig extends Config {
     @Key("template.messages.directory")
     String messageTemplateDir();
 
-    // preprocessors implementation
-    class Trim implements Preprocessor {
+    @Key("validation.rule.date")
+    @DefaultValue("false")
+    Boolean dateValidation();
+
+
+
+    class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {
-            return input.trim();
+            if (input.trim().toUpperCase().equals("TRUE")) {
+                return "true";
+            } else if (input.trim().toUpperCase().equals("FALSE")) {
+                return "false";
+            } else {
+                return input.trim();
+            }
         }
     }
 }
