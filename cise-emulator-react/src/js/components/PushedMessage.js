@@ -15,6 +15,7 @@ import {makeStyles, withStyles} from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Highlight from 'react-highlight.js';
 import PropTypes from 'prop-types';
+import ShowXmlMessage from "./common/ShowXmlMessage";
 
 const pushedMessageStyle = makeStyles(theme => ({
     root: {
@@ -73,12 +74,11 @@ class PushedMessage extends Component {
         console.log("templateContent: ", this.props.store.templateStore.template);
         return (
             <div className={classes.root}>
-                 <ExpansionPanel
-                      disabled={(this.props.store.templateStore.template.content === "")}>                        
+                 <ExpansionPanel disabled={(this.props.store.templateStore.template.content === "")}>                        
                      <ExpansionPanelSummary
-                        expandIcon={<ExpandMoreIcon/>}
-                        aria-controls="SentMessagecontent"
-                        id="SentMessage">
+                            expandIcon={<ExpandMoreIcon/>}
+                            aria-controls="SentMessagecontent"
+                            id="SentMessage">
                         <Typography className={classes.pullPanel_tab_heading}>
                             Message Sent
                         </Typography>
@@ -102,37 +102,21 @@ class PushedMessage extends Component {
                                      aria-controls='simple-tabpanel-2'
                                 />
                             </Tabs>
- {/*
-                             <div hidden={(this.props.messagePreview.previewContent === "")
-                            || this.tabPushState.value === 1}
-                                 className={classes.textfieldStyle}>
-                                     alert("dentro la view per il template");
-                                <Highlight language={"xml"}>
-                                    {format(this.props.messagePreview.previewContent,
-                                        {stripComments: true})}
-                                </Highlight>
-                            </div>  
- */}                
 
-                             <div hidden={(this.props.store.templateStore.template.content === "")
-                            || this.tabPushState.value === 1}
+                            <ShowXmlMessage content = {this.props.store.templateStore.template.content} 
+                                            hidden = {this.tabPushState.value === 1} 
+                                            textfieldStyle = {classes.textfieldStyle} />
+{/* 
+                            <div hidden={(this.props.store.templateStore.template.content === "") || this.tabPushState.value === 1}
                                  className={classes.textfieldStyle}>
-
                                 <Highlight language={"xml"}> 
                                     {format(
                                         this.props.store.templateStore.template.content,
                                         {stripComments: true})}
                                   </Highlight>
-
-                                {/* <Highlight> 
-                                    {this.props.store.templateStore.template.content}
-                                </Highlight> */}
-
-
                             </div> 
-
-                            <div hidden={(this.props.messagePreview.acknowledgeContent
-                                === "") || this.tabPushState.value === 0}
+ */}
+                            <div hidden={(this.props.messagePreview.acknowledgeContent === "") || this.tabPushState.value === 0}
                                  className={classes.textfieldStyle}>
                                 <Highlight language={"xml"}>
                                     {format(this.props.messagePreview.acknowledgeContent,

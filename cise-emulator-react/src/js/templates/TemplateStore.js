@@ -21,7 +21,6 @@ export default class TemplateStore {
         return !(this.selected === "empty");
     }
 
-
     @action
     createNewMessageId() {
         this.messageId = this.uuidv4();
