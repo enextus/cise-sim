@@ -6,6 +6,7 @@ import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.servicemodel.v1.service.ServiceType;
 import eu.cise.signature.SignatureService;
 import org.aeonbits.owner.ConfigFactory;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,16 +26,22 @@ public class AddingSignatureTest {
     private SignatureService signatureService;
     private Push push;
     private Dispatcher dispatcher;
-    private EmuConfig config = mock(EmuConfig.class);
+    private EmuConfig config ;
 
     @Before
     public void before() {
-        EmuConfig config = ConfigFactory.create(EmuConfig.class);
+        config = mock(EmuConfig.class);
         signatureService = mock(SignatureService.class);
         dispatcher = mock(Dispatcher.class);
         engine = new DefaultEmulatorEngine(signatureService, dispatcher, config);
         push = newPush().sender(newService()).build();
         push.setCreationDateTime(getUTCDatetime());
+    }
+    @After
+    public void after() {
+        reset(config);
+        reset(signatureService);
+        reset(dispatcher);
     }
 
     @Test
@@ -46,8 +53,9 @@ public class AddingSignatureTest {
 
     @Test
     public void it_verify_the_signature() {
-        when(config.serviceType()).thenReturn(ServiceType.VESSEL_SERVICE);
-        push.getSender().setServiceType(config.serviceType());
+        when(config.dateValidation()).thenReturn(Boolean.FALSE);
+
+        push.getSender().setServiceType(ServiceType.VESSEL_SERVICE);
 
         engine.receive(push);
 
