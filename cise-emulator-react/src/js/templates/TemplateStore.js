@@ -2,6 +2,7 @@ import {getTemplateById, getTemplateList} from "./TemplateService";
 import {action, computed, observable} from "mobx";
 import axios from "axios";
 import {sendMessage} from "../messages/MessageService";
+import Template from "./Template";
 
 export default class TemplateStore {
 
@@ -10,7 +11,7 @@ export default class TemplateStore {
     @observable messageId = this.uuidv4();
     @observable correlationId = "";
     @observable requiresAck = false;
-    @observable template;
+    @observable template = new Template({ templateId: "", templateName: "", templateContent: "" });
 
     @computed get templateOptions() {
         return this.templateList.map(t => ({label: t.name, value: t.id}));
