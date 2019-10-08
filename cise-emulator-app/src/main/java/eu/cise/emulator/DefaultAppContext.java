@@ -20,7 +20,8 @@ public class DefaultAppContext implements AppContext {
 
     public DefaultAppContext() {
         this.emuConfig = ConfigFactory.create(EmuConfig.class);
-        this.xmlMapper = new DefaultXmlMapper();
+        this.xmlMapper = new DefaultXmlMapper.Pre
+    tty();
     }
 
     @Override
