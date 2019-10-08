@@ -70,8 +70,6 @@ class PushedMessage extends Component {
     render() {
         const {classes} = this.props;
         this.value = 0;
-        console.log("Props for PushedMessage: ", this.props.store.templateStore);
-        console.log("templateContent: ", this.props.store.templateStore.template);
         return (
             <div className={classes.root}>
                  <ExpansionPanel disabled={(this.props.store.templateStore.template.content === "")}>                        
@@ -104,26 +102,11 @@ class PushedMessage extends Component {
                             </Tabs>
 
                             <ShowXmlMessage content = {this.props.store.templateStore.template.content} 
+                                            hidden = {this.tabPushState.value === 0} 
+                                            textfieldStyle = {classes.textfieldStyle} />
+                            <ShowXmlMessage content = {this.props.messagePreview.acknowledgeContent} 
                                             hidden = {this.tabPushState.value === 1} 
                                             textfieldStyle = {classes.textfieldStyle} />
-{/* 
-                            <div hidden={(this.props.store.templateStore.template.content === "") || this.tabPushState.value === 1}
-                                 className={classes.textfieldStyle}>
-                                <Highlight language={"xml"}> 
-                                    {format(
-                                        this.props.store.templateStore.template.content,
-                                        {stripComments: true})}
-                                  </Highlight>
-                            </div> 
- */}
-                            <div hidden={(this.props.messagePreview.acknowledgeContent === "") || this.tabPushState.value === 0}
-                                 className={classes.textfieldStyle}>
-                                <Highlight language={"xml"}>
-                                    {format(this.props.messagePreview.acknowledgeContent,
-                                        {stripComments: true})}
-                                </Highlight>
-                            </div>
-
                         </Paper>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
