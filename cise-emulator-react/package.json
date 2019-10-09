@@ -4,7 +4,7 @@
   "scripts": {
     "start": "webpack-dev-server --content-base src --hot --open",
     "build": "webpack",
-    "test": "react-scripts test"
+    "test": "react-scripts test --watch-all"
   },
   "author": "CISE Team",
   "devDependencies": {

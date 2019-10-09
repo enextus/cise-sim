@@ -18,7 +18,7 @@ export async function getTemplateById(templateId, messageId, correlationId, requ
     );
     console.log("getTemplateById", template);
 
-    if(template.errorCode !== undefined){
+    if(template.code !== undefined){
         return template;
     }
 

@@ -1,5 +1,6 @@
 import axios from "axios";
-import Notification from "../notifications/Notification.js"
+import Error from "../errors/error";
+
 
 
 export const get = async (service, params) => {
@@ -17,7 +18,7 @@ export const get = async (service, params) => {
     } catch (error) {
         console.error("request GET " + getServiceURL(service) + " failed.");
         console.error(error);
-        return new Notification(error.response.status, error.response.data.error);
+        return new Error(error.response.status, error.response.data.error);
     }
 };
 
