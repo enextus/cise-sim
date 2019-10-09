@@ -29,8 +29,10 @@ class PreviewButton extends React.Component {
         return !this.props.store.isTemplateSelected;
     }
 
-    preview() {
-        const response = this.props.store.preview();
+    async preview() {
+        console.log("TemplateStore.preview call... ");
+        const response = await this.props.store.preview();
+        console.log("TemplateStore.preview response: ", response);
         if(response.errorCode){
             this.props.enqueueSnackbar(response.errorMessage, {
                 variant: 'error',

@@ -21,11 +21,10 @@ module.exports = {
                     ''
                     if (req.url.indexOf('/api/templates/') !== -1) {
                         console.log('bypass.0TemplateById.')
+                        res.status = 500
                         res.send({
-                            'errorCode' : '500',
-                            'errorMessage': 'test'
+                            'error': 'test error 500'
                         });
-                        return false;
                     }
                     if (req.url.indexOf('/api/templates') !== -1) {
                         console.log('bypass.0TemplateList.')

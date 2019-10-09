@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useSnackbar } from 'notistack';
-
+import Notification from "../notifications/Notification.js"
 
 
 export const get = async (service, params) => {
@@ -18,7 +17,7 @@ export const get = async (service, params) => {
     } catch (error) {
         console.error("request GET " + getServiceURL(service) + " failed.");
         console.error(error);
-        return new Notification(response.status, response.data.error);
+        return new Notification(error.response.status, error.response.data.error);
     }
 };
 
@@ -51,3 +50,24 @@ const getHost = () => {
     else
         return window.location.protocol.concat("//").concat(window.location.host);
 };
+
+
+/* if (error.response) {
+    /*
+     * The request was made and the server responded with a
+     * status code that falls out of the range of 2xx
+     * /
+    console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers);
+} else if (error.request) {
+    /*
+     * The request was made but no response was received, `error.request`
+     * is an instance of XMLHttpRequest in the browser and an instance
+     * of http.ClientRequest in Node.js
+     * /
+    console.log(error.request);
+} else {
+    // Something happened in setting up the request and triggered an Error
+    console.log('Error', error.message);
+} */

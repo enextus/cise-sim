@@ -39,11 +39,22 @@ export default class TemplateStore {
 
     @action
     async preview() {
-        this.template = await getTemplateById(
+        const getTemplateByIdResposnse = await getTemplateById(
             this.selected,
             this.messageId,
             this.correlationId,
             this.requiresAck);
+
+        console.log("getTemplateByIdResposnse:", getTemplateByIdResposnse);
+
+        if(getTemplateByIdResposnse.errorCode){
+            console.log("TemplateStore preview return error");
+        }
+        else {
+            console.log("TemplateStore preview success ");
+            this.template = getTemplateByIdResposnse;
+        }
+        return getTemplateByIdResposnse;
     }
 
     // TODO To be moved into another store?
