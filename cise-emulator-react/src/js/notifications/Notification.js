@@ -1,9 +1,9 @@
-import {SnackbarContent} from "@material-ui/core";
+export default class Notification  {
+    errorCode;
+    errorMessage;
 
-export default class Notification extends SnackbarContent {
-    key = "";
-    constructor(props) {
-        super(props);
-        this.key = props.key;
+    constructor(errorCode, errorMessage) {
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
     }
 }

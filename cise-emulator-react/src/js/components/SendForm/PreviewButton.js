@@ -1,8 +1,11 @@
-import {Button, withStyles} from "@material-ui/core";
+import {Button, withStyles, Fragment} from "@material-ui/core";
 import DescriptionIcon from "@material-ui/icons/Description";
 import React from "react";
 import PropTypes from "prop-types";
 import {observer} from "mobx-react";
+import { withSnackbar } from 'notistack';
+
+
 
 const styles = theme => ({
     button: {
@@ -13,6 +16,12 @@ const styles = theme => ({
     },
 });
 
+const action = (key) => (
+    <Button onClick={() => { props.closeSnackbar(key) }}>
+        {'Dismiss'}
+    </Button>
+);
+
 @observer
 class PreviewButton extends React.Component {
 
@@ -21,7 +30,21 @@ class PreviewButton extends React.Component {
     }
 
     preview() {
-        this.props.store.preview();
+        const response = this.props.store.preview();
+        if(response.errorCode){
+            this.props.enqueueSnackbar(response.errorMessage, {
+                variant: 'error',
+                persist: true,
+                action: (key) => (
+                    <Button onClick={() => { this.props.closeSnackbar(key) }}>
+                        {'Dismiss'}
+                    </Button>
+                ),
+            });
+        } else {
+            this.props.enqueueSnackbar('Preview generated', {variant: 'success',});
+        }
+
     }
 
     render() {
@@ -39,11 +62,13 @@ class PreviewButton extends React.Component {
             </Button>
         );
     }
+
 }
+
 
 PreviewButton.propTypes = {
     store: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PreviewButton)
+export default withStyles(styles)(withSnackbar(PreviewButton))

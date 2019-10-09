@@ -36,6 +36,7 @@
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "mobx-utils": "^5.0.3",
+    "notistack": "^0.9.3",
     "prop-types": "^15.7.2",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",

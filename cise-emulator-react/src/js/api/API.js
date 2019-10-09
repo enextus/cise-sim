@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useSnackbar } from 'notistack';
+
+
 
 export const get = async (service, params) => {
     try {
@@ -12,10 +15,10 @@ export const get = async (service, params) => {
             });
 
         return response.data;
-
     } catch (error) {
         console.error("request GET " + getServiceURL(service) + " failed.");
         console.error(error);
+        return new Notification(response.status, response.data.error);
     }
 };
 

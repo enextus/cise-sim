@@ -8,6 +8,7 @@ import TemplateStore from "./templates/TemplateStore";
 import MessageStore from "./models/MessageStore";
 import {autorun} from "mobx";
 
+
 const stores = {
     appStore: new AppStore(),
     templateStore: new TemplateStore(),
@@ -28,9 +29,9 @@ export default class MainApp extends React.Component {
     render() {
         return (
             <>
-                <DevTools/>
-                <NavBar store={stores}/>
-                <Body store={stores}/>
+                    <DevTools/>
+                    <NavBar store={stores}/>
+                    <Body store={stores}/>
             </>
         );
     }

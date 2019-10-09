@@ -71,4 +71,5 @@ SendForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SendForm)
+export default withStyles(styles)(SendForm);
+
