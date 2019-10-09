@@ -2,12 +2,10 @@ package eu.cise.emulator;
 
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.RestDispatcher;
-import eu.cise.emulator.templates.DefaultTemplateLoader;
-import eu.cise.emulator.templates.TemplateLoader;
-import eu.cise.emulator.api.helpers.DropWizardServerBuilder;
-import eu.cise.emulator.api.EmulatorApp;
 import eu.cise.emulator.io.DefaultMessageStorage;
 import eu.cise.emulator.io.MessageStorage;
+import eu.cise.emulator.templates.DefaultTemplateLoader;
+import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.signature.SignatureService;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
@@ -18,9 +16,11 @@ import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 public class DefaultAppContext implements AppContext {
 
     private final EmuConfig emuConfig;
+    private final XmlMapper xmlMapper;
 
-    DefaultAppContext() {
+    public DefaultAppContext() {
         this.emuConfig = ConfigFactory.create(EmuConfig.class);
+        this.xmlMapper = new DefaultXmlMapper.Pretty();
     }
 
     @Override
@@ -28,9 +28,7 @@ public class DefaultAppContext implements AppContext {
         return new DefaultMessageProcessor(makeEmulatorEngine());
     }
 
-    //TODO - implement makeDispatcher
-    @Override
-    public DefaultEmulatorEngine makeEmulatorEngine() {
+    private DefaultEmulatorEngine makeEmulatorEngine() {
         return new DefaultEmulatorEngine(makeSignatureService(), makeDispatcher(), this.emuConfig);
     }
 
@@ -50,31 +48,22 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public EmulatorApp makeEmulatorApi(MessageProcessor messageProcessor, MessageStorage messageStorage, TemplateLoader templateLoader, XmlMapper xmlMapper) {
-        EmulatorApp server = null;
-        try {
-            String configFile = (this.emuConfig.webapiConfig());
-            server = DropWizardServerBuilder
-                .createServer(configFile, EmulatorApp.class, messageProcessor, messageStorage, emuConfig, templateLoader, xmlMapper);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return server;
-    }
-
-    @Override
     public MessageStorage makeMessageStorage() {
         return new DefaultMessageStorage();
     }
 
     @Override
-    public TemplateLoader makeTemplateLoader(XmlMapper xmlMapper) {
-        return new DefaultTemplateLoader(xmlMapper);
+    public TemplateLoader makeTemplateLoader() {
+        return new DefaultTemplateLoader(emuConfig);
     }
 
     @Override
     public XmlMapper makeXmlMapper() {
-        return new DefaultXmlMapper();
+        return xmlMapper;
     }
 
+    @Override
+    public EmuConfig makeEmuConfig() {
+        return emuConfig;
+    }
 }

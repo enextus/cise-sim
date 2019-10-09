@@ -6,6 +6,7 @@ import eu.cise.emulator.io.MessageStorage;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -26,8 +27,8 @@ public class MessageResource {
     }
 
     @POST
-    @Consumes("text/plain,text/xml,application/xml")
-    @Produces("text/xml")
+    @Consumes({"application/xml", "text/plain", "text/xml"})
+    @Produces("application/xml")
     public Response receive(String inputXmlMessage) {
         Acknowledgement acknowledgement = messageAPI.receive(inputXmlMessage);
 
@@ -36,14 +37,14 @@ public class MessageResource {
         String acknowledgementXml = xmlMapper.toXML(acknowledgement);
 
         MessageApiDto messageApiDto = new MessageApiDto(
-            Response.Status.CREATED.getStatusCode(),
-            "", acknowledgementXml, inputXmlMessage);
+                Response.Status.CREATED.getStatusCode(),
+                "", acknowledgementXml, inputXmlMessage);
 
         messageStorage.store(messageApiDto);
 
         return Response
-            .status(Response.Status.CREATED)
-            .entity(acknowledgement)
-            .build();
+                .status(Response.Status.CREATED)
+                .entity(acknowledgement)
+                .build();
     }
 }

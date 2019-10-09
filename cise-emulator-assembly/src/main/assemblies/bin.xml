@@ -46,7 +46,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-emulator-app/target</directory>
+            <directory>${project.parent.basedir}/cise-emulator-api/target</directory>
             <outputDirectory>/lib</outputDirectory>
             <includes>
                 <include>cise-emulator.jar</include>
@@ -64,6 +64,13 @@
                 <include>*</include>
             </includes>
             <fileMode>7775</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${project.parent.basedir}/cise-emulator-api/src/main/resources</directory>
+            <outputDirectory>/conf</outputDirectory>
+            <includes>
+                <include>config.yml</include>
+            </includes>
         </fileSet>
         <fileSet>
             <directory>${project.parent.basedir}/cise-emulator-app/src/test/resources</directory>

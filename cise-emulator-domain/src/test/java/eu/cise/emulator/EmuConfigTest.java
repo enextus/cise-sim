@@ -26,10 +26,19 @@ public class EmuConfigTest {
         assertThat(cfg.testProperty()).isEqualTo("test-property");
     }
 
-    @Config.PreprocessorClasses({EmuConfig.Trim.class})
+    @Test
+    public void it_returns_a_boolean_value() {
+        ConfigWithPreprocessorsTest cfg = ConfigFactory.create(ConfigWithPreprocessorsTest.class);
+        assertThat(cfg.testPrimitiveTypeBoolean()).isTrue();
+    }
+
+    @Config.PreprocessorClasses({EmuConfig.TrimAndInsureBoolean.class})
     public interface ConfigWithPreprocessorsTest extends EmuConfig {
         @DefaultValue("   test-property  ")
         String testProperty();
+
+        @DefaultValue("   TrUe  ")
+        boolean testPrimitiveTypeBoolean();
     }
 
 }

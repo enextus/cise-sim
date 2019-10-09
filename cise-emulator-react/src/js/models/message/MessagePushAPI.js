@@ -20,7 +20,14 @@ export default class MessagePushAPI {
             'requires_ack': false
         }
     };
-    defaultServiceUrl = "/webapi/";
+    defaultGetConfig = {
+        method: 'get',
+        header: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    defaultServiceUrl = "/api/";
 
 
     @computed
@@ -49,7 +56,7 @@ export default class MessagePushAPI {
     @action
     send(messageCandidate) {
 
-        const serviceUrl = ((document.location.hostname == "localhost") ? 'http://localhost:47080' + this.defaultServiceUrl + 'messages' : 'http://' + document.location.host + this.defaultServiceUrl + 'messages');
+        const serviceUrl = ((document.location.hostname == "localhost") ? 'http://localhost:47080' + this.defaultServiceUrl + 'templates' : 'http://' + document.location.host + this.defaultServiceUrl + 'templates');
         const valuePostData = JSON.parse(JSON.stringify(this.defaultPostData))
         valuePostData.message_template = messageCandidate.templateService.value;
         if (messageCandidate.templatePayload.value != "#none") valuePostData.message_payload = messageCandidate.templatePayload.value;
@@ -74,6 +81,26 @@ export default class MessagePushAPI {
                 this.acknowledgeContent = "";
             })
     }
+
+    @action
+    preview() {
+        const serviceUrl = ((document.location.hostname == "localhost") ? 'http://localhost:47080' + this.defaultServiceUrl + 'templates/12345?messageId=msg-id&correlationId=corrId&requestAck=false' : 'http://' + document.location.host + this.defaultServiceUrl + 'templates/12345?messageId=msg-id&correlationId=corrId&requestAck=false');
+
+        axios.get(serviceUrl, this.defaultGetConfig)
+            .then((response) => {
+                if (response.status !== 204) {
+                    this.body = response.data.templateContent;
+                    this.id = response.data.templateId;
+                    this.name = response.data.templateName;
+                    this.timer = 0;
+                    return ((this.body.substr(10, 30) !== returnjsonpart) ? this.body.substr(27, 30) : "")
+                }
+            })
+            .catch((err) => {
+                return (" \"templates api \" error call to :" + this.defaultServiceUrl + ":", err);
+            });
+    }
+
 
     @action
     error(messageCandidate) {

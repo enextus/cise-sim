@@ -1,5 +1,6 @@
 package eu.cise.emulator.api.resources;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.api.*;
 import eu.cise.emulator.api.representation.TemplateParams;
@@ -53,7 +54,8 @@ public class TemplateResource {
             @QueryParam("correlationId") String correlationId,
             @QueryParam("requestAck") boolean requestAck) {
 
-        PreviewResponse previewResponse = templateAPI.preview(new TemplateParams(templateId, messageId, correlationId, requestAck));
+        PreviewResponse previewResponse = templateAPI.preview(
+                new TemplateParams(templateId, messageId, correlationId, requestAck));
 
         if (!previewResponse.isOk()) {
             APIError apiError = new APIError(previewResponse.getErrorMessage());
@@ -61,6 +63,16 @@ public class TemplateResource {
         }
 
         return Response.ok().entity(previewResponse.getTemplate()).build();
+    }
+
+    @POST
+    public Response send(JsonNode msgWithParams) {
+        LOGGER.info("messageCreate with param: {}", msgWithParams);
+        MessageApiDto resultMessage = messageAPI.send(msgWithParams);
+        return Response
+                .status(Response.Status.CREATED)
+                .entity(resultMessage)
+                .build();
     }
 
 }

@@ -17,6 +17,7 @@ import eu.eucise.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
 import java.time.Clock;
@@ -35,7 +36,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     private static final String SENDER_TAG = "<Sender>";
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultEmulatorEngine.class);
     private final Clock clock;
-    private final EmuConfig config;
+    private final EmuConfig emuConfig;
     private final SignatureService signature;
     private Dispatcher dispatcher;
     private XmlMapper xmlMapper;
@@ -43,8 +44,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     /**
      * Default constructor that uses UTC as a reference clock
      */
-    public DefaultEmulatorEngine(SignatureService signature, Dispatcher dispatcher, EmuConfig config) {
-        this(signature, config, dispatcher, Clock.systemUTC());
+    public DefaultEmulatorEngine(SignatureService signature, Dispatcher dispatcher, EmuConfig emuConfig) {
+        this(signature, emuConfig, dispatcher, Clock.systemUTC());
         this.dispatcher = dispatcher;
         xmlMapper = new DefaultXmlMapper();
     }
@@ -54,13 +55,13 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      * compute date and time.
      *
      * @param signature  the signature service used to sign messages
-     * @param config     the domain configuration
+     * @param emuConfig  the domain configuration
      * @param dispatcher
      * @param clock      the reference clock
      */
-    public DefaultEmulatorEngine(SignatureService signature, EmuConfig config, Dispatcher dispatcher, Clock clock) {
+    public DefaultEmulatorEngine(SignatureService signature, EmuConfig emuConfig, Dispatcher dispatcher, Clock clock) {
         this.signature = notNull(signature, NullSignatureServiceEx.class);
-        this.config = notNull(config, NullConfigEx.class);
+        this.emuConfig = notNull(emuConfig, NullConfigEx.class);
         this.dispatcher = notNull(dispatcher, NullDispatcherEx.class);
         this.clock = notNull(clock, NullClockEx.class);
     }
@@ -81,16 +82,16 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
         message.setCreationDateTime(now());
 
-        if (!isNullOrEmpty(config.serviceId())) {
-            message.getSender().setServiceID(config.serviceId());
+        if (!isNullOrEmpty(emuConfig.serviceId())) {
+            message.getSender().setServiceID(emuConfig.serviceId());
         }
 
-        if (config.serviceType() != null) {
-            message.getSender().setServiceType(config.serviceType());
+        if (emuConfig.serviceType() != null) {
+            message.getSender().setServiceType(emuConfig.serviceType());
         }
 
-        if (config.serviceOperation() != null) {
-            message.getSender().setServiceOperation(config.serviceOperation());
+        if (emuConfig.serviceOperation() != null) {
+            message.getSender().setServiceOperation(emuConfig.serviceOperation());
         }
 
         // TODO improve signature to use <T extends Message> as a return type
@@ -110,7 +111,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     public Acknowledgement send(Message message) {
         Acknowledgement response;
         try {
-            DispatchResult sendResult = dispatcher.send(message, config.endpointUrl());
+            DispatchResult sendResult = dispatcher.send(message, emuConfig.endpointUrl());
 
             if (!sendResult.isOK()) {
                 throw new EndpointErrorEx();
@@ -140,23 +141,23 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         notNull(message, NullMessageEx.class);
 
         // check creation datetime
-//        if ((message.getCreationDateTime()).compare(getDatetime(3)) == DatatypeConstants.LESSER ||
-//                (message.getCreationDateTime()).compare(getDatetime(0)) == DatatypeConstants.GREATER) {
-//            throw new CreationDateErrorEx();
-//        }
-
-        // check sender exists
-        if (message.getSender() == null) {
-            throw new NullSenderEx();
+        if (emuConfig.dateValidation()) {
+            if ((message.getCreationDateTime()).compare(getDatetime(3)) == DatatypeConstants.LESSER ||
+                    (message.getCreationDateTime()).compare(getDatetime(0)) == DatatypeConstants.GREATER) {
+                throw new CreationDateErrorEx();
+            }
         }
+        // check sender exists
+            if (message.getSender() == null) {
+                throw new NullSenderEx();
+            }
+
 
         // verify signature
         signature.verify(message);
 
         // send back the acknowledgement
-        Acknowledgement acknowledgement = buildAcknowledgeMessage(message);
-
-        return acknowledgement;
+        return buildAcknowledgeMessage(message);
     }
 
     private XMLGregorianCalendar getDatetime(long hours) {
@@ -170,7 +171,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         String acknowledgementDetail;
 
         // define the acknowledgementType
-        if (!message.getSender().getServiceType().equals(config.serviceType())) {
+        if (!message.getSender().getServiceType().equals(emuConfig.serviceType())) {
             acknowledgementType = AcknowledgementType.SERVICE_TYPE_NOT_SUPPORTED;
             acknowledgementDetail = "Supported service type is " + message.getSender().getServiceType().value();
         } else {
@@ -193,7 +194,6 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
                 .ackDetail(acknowledgementDetail)
                 .isRequiresAck(false);
 
-        Acknowledgement acknowledgement = ackBuilder.build();
-        return acknowledgement;
+        return ackBuilder.build();
     }
 }
