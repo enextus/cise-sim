@@ -1,6 +1,5 @@
 import {getTemplateById, getTemplateList} from "./TemplateService";
 import {action, computed, observable} from "mobx";
-import axios from "axios";
 import {sendMessage} from "../messages/MessageService";
 import Template from "./Template";
 

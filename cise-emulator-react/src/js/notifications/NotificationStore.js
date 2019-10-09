@@ -1,10 +1,11 @@
-import {action, observable} from 'mobx';
+import { observable, action, decorate } from "mobx";
+import React from 'react';
 
 export default class NotificationStore {
 
-    @observable notifications   = [];
+    notifications   = [];
 
-    @action
+
     enqueue(notification) {
         this.notifications.push({
             key: new Date().getTime() + Math.random(),
@@ -12,17 +13,28 @@ export default class NotificationStore {
         });
     };
 
-    @action
+
     remove(notification) {
         this.notifications.remove(notification);
     };
 
-    @action
+
     removeByKey(key) {
         let selectedNotification = this.notifications.find(function (element) {
             key === element.key;
         });
+        let existingValue = (selectedNotification !== undefined )
         this.remove(selectedNotification);
-    };
+        return existingValue;
+};
+
+
 
 }
+decorate(NotificationStore, {
+    notifications: observable,
+    enqueue: action,
+    remove: action,
+    removeByKey: action
+});
+

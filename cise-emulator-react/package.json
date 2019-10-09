@@ -21,10 +21,9 @@
     "jest": "^24.9.0",
     "mobx-react-devtools": "^6.0.1",
     "react-addons-test-utils": "^15.3.0",
+    "react-scripts": "^3.2.0",
     "react-test-renderer": "^16.9.0",
-    "webpack": "^4.16.1",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.8.2"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
@@ -45,8 +44,6 @@
     "xml-formatter": "^1.1.0"
   },
   "jest": {
-    "automock": false,
-    "verbose": true,
     "transform": {
       ".*": "<rootDir>/node_modules/babel-jest"
     }
