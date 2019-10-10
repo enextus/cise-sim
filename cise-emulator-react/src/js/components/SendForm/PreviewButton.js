@@ -30,10 +30,9 @@ class PreviewButton extends React.Component {
     }
 
     async preview() {
-        console.log("TemplateStore.preview call... ");
         const response = await this.props.store.preview();
         console.log("TemplateStore.preview response: ", response);
-        if(response.code){
+        if(response.errorCode){
             this.props.enqueueSnackbar(response.message, {
                 variant: 'error',
                 persist: true,
@@ -44,9 +43,8 @@ class PreviewButton extends React.Component {
                 ),
             });
         } else {
-            this.props.enqueueSnackbar('Preview generated', {variant: 'success',});
+            this.props.enqueueSnackbar('New preview was generated.', {variant: 'success',});
         }
-
     }
 
     render() {

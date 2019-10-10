@@ -1,42 +1,42 @@
 import {getTemplateById, getTemplateList} from "./TemplateService";
-import { observable, computed, action, decorate } from "mobx";
+import { observable, computed, action } from "mobx";
 import {sendMessage} from "../messages/MessageService";
 import Template from "./Template";
 
 export default class TemplateStore {
-    templateList = [];
-    selected = "empty"; // selectedTemplateId
-    messageId = this.uuidv4();
-    correlationId = "";
-    requiresAck = false;
-    template = new Template({templateId: "", templateName: "", templateContent: ""});
+    @observable templateList = [];
+    @observable selected = "empty"; // selectedTemplateId
+    @observable messageId = this.uuidv4();
+    @observable correlationId = "";
+    @observable requiresAck = false;
+    @observable template = new Template({templateId: "", templateName: "", templateContent: ""});
 
-    //@computed
+    @computed
     get templateOptions() {
         return this.templateList.map(t => ({label: t.name, value: t.id}));
     }
-
+    @computed
     get isTemplateSelected() {
         return !(this.selected === "empty");
     }
 
-    //@action
+    @action
     createNewMessageId() {
         this.messageId = this.uuidv4();
     }
 
-    //@action
+    @action
     async loadTemplateList() {
         const templates = await getTemplateList();
         templates.forEach(t => this.templateList.push(t));
     }
 
-    //@action
+    @action
     toggleRequiresAck() {
         this.requiresAck = !this.requiresAck;
     }
 
-    //@action
+    @action
     async preview() {
         const getTemplateByIdResposnse = await getTemplateById(
             this.selected,
@@ -46,10 +46,10 @@ export default class TemplateStore {
 
         console.log("getTemplateByIdResposnse:", getTemplateByIdResposnse);
 
-        if (getTemplateByIdResposnse.code) {
-            console.log("TemplateStore preview return error");
+        if (getTemplateByIdResposnse.errorCode) {
+            console.log("TemplateStore preview returned an error.");
         } else {
-            console.log("TemplateStore preview success ");
+            console.log("TemplateStore preview returned successfully.");
             this.template = getTemplateByIdResposnse;
         }
         return getTemplateByIdResposnse;
@@ -71,19 +71,3 @@ export default class TemplateStore {
         );
     }
 }
-
-decorate(TemplateStore, {
-        templateList: observable,
-        selected: observable,
-        messageId: observable,
-        correlationId: observable,
-        requiresAck: observable,
-        templateOptions: computed,
-        isTemplateSelected: computed,
-        createNewMessageId: action,
-        loadTemplateList: action,
-        toggleRequiresAck: action,
-        preview: action,
-        send: action
-    }
-);

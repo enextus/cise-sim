@@ -1,9 +1,9 @@
 export default class Error  {
-    code;
-    message;
+    errorCode;
+    errorMessage;
 
     constructor(errorCode, errorMessage) {
-        this.code = errorCode;
-        this.message = errorMessage;
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
     }
 }
