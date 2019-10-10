@@ -15,6 +15,7 @@ import java.util.List;
 
 @Path("/api/templates")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class TemplateResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TemplateResource.class);
@@ -67,6 +68,7 @@ public class TemplateResource {
     }
 
     @POST
+    @Path("{templateId}")
     public Response send(JsonNode msgWithParams) {
         LOGGER.info("messageCreate with param: {}", msgWithParams);
         MessageApiDto resultMessage = messageAPI.send(msgWithParams);

@@ -91,20 +91,29 @@ class PushedMessage extends Component {
                                   indicatorColor="primary"
                                   textColor="primary">
                                 <Tab className={classes.pullPanel_tab}
-                                     label="message"
+                                     label="preview"
                                      id='simple-tab-1'
                                      aria-controls='simple-tabpanel-1'
                                 />
-                                <Tab label="acknowledgement"
+                                <Tab className={classes.pullPanel_tab}
+                                     label="acknowledgement"
                                      id='simple-tab-2'
                                      aria-controls='simple-tabpanel-2'
                                 />
+                                <Tab className={classes.pullPanel_tab}
+                                     label="message"
+                                     id='simple-tab-3'
+                                     aria-controls='simple-tabpanel-3'
+                                />                                
                             </Tabs>
 
                             <ShowXmlMessage content = {this.props.store.templateStore.template.content} 
                                             hidden = {this.tabPushState.value === 0} 
                                             textfieldStyle = {classes.textfieldStyle} />
-                            <ShowXmlMessage content = {this.props.messagePreview.acknowledgeContent} 
+                            <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.acknowledge} 
+                                            hidden = {this.tabPushState.value === 1} 
+                                            textfieldStyle = {classes.textfieldStyle} />
+                            <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.body} 
                                             hidden = {this.tabPushState.value === 1} 
                                             textfieldStyle = {classes.textfieldStyle} />
                         </Paper>

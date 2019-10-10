@@ -5,9 +5,7 @@ import PulledMessage from './ReceiveMessage/PulledMessage';
 import {Grid} from '@material-ui/core';
 import {observer} from 'mobx-react';
 import messageCandidate from "../models/message/MessageCandidate";
-import MessagePushAPI from "../models/message/MessagePushAPI";
 import MessagePullAPI from "../models/message/MessagePullAPI";
-import {EventStore} from "../models/EventStore";
 
 @observer
 export default class Body extends Component {
@@ -15,9 +13,7 @@ export default class Body extends Component {
     prevReceivePull;
 
     render() {
-        const messagePreview = new MessagePushAPI();
         const messageReceived = new MessagePullAPI();
-        const messageStore = new EventStore();
 
         setInterval(function () {
             messageReceived.timer += 1;
@@ -33,11 +29,9 @@ export default class Body extends Component {
                 <Grid item xs={12}>
                     <SendForm
                         store={this.props.store}
-                        messageCandidate={messageCandidate}
-                        messagePreview={messagePreview}/>
+                        messageCandidate={messageCandidate}/>
                     <PushedMessage
-                        store={this.props.store}
-                        messagePreview={messagePreview}/>
+                        store={this.props.store}/>
                     <PulledMessage
                         store={this.props.store}
                         messageReceived={messageReceived}/>

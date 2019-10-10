@@ -1,29 +1,22 @@
-// defaultPostData = {
-//     'message_template': '',
-//     'params': {
-//         'message_id': '',
-//         'requires_ack': false
-//     }
-// };
 import {post} from '../api/API'
+import Message from "./Message";
 
 export async function sendMessage(templateId, messageId, correlationId, requiresAck) {
-    try {
-        console.log("sendMessage");
-        const message = await post("templates",
-            {
-                message_template: templateId,
-                params: {
-                    message_id: messageId,
-                    correlation_id: correlationId,
-                    requires_ack: requiresAck,
-                }
-            }
-        );
-        console.log("sendMessage", message);
-        return message;
-    } catch (e) {
-        console.error("sendMessage", e);
+    console.log("sendMessage");
+    const sendMessagePostResposnse = await post("templates/" + templateId,
+        {
+            messageId: messageId,
+            correlationId: correlationId,
+            requestAck: requiresAck,
+        }
+    );
+
+    if(sendMessagePostResposnse.errorCode){
+        // return Error object
+        console.log("sendMessagePostResposnse retuned with n error: ", sendMessagePostResposnse);
+        return sendMessagePostResposnse;
     }
 
+    console.log("sendMessagePostResposnse: ", sendMessagePostResposnse);
+    return new Message(sendMessagePostResposnse);
 }

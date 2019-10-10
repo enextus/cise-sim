@@ -17,11 +17,25 @@ const styles = theme => ({
 class SendButton extends React.Component {
 
     isDisabled() {
-        return !this.props.store.isTemplateSelected;
+        return !this.props.store.templateStore.isTemplateSelected;
     }
 
-    send() {
-        this.props.store.send();
+    async send() {
+        const response = await this.props.store.messageStore.send(this.props.store.templateStore.selected);
+        if(response.errorCode){
+            this.props.enqueueSnackbar(response.message, {
+                variant: 'error',
+                persist: true,
+                action: (key) => (
+                    <Button onClick={() => { this.props.closeSnackbar(key) }}>
+                        {'Dismiss'}
+                    </Button>
+                ),
+            });
+        } else {
+            this.props.enqueueSnackbar('New message has been sent.', {variant: 'success',});
+        }
+
     }
 
     render() {

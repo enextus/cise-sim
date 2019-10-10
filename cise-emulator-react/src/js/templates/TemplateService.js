@@ -18,9 +18,9 @@ export async function getTemplateById(templateId, messageId, correlationId, requ
     );
     
 
-    if(template.erroCode){
+    if(template.errorCode){
         // return Error object
-        console.log("getTemplateById retuned an error: ", template);
+        console.log("getTemplateById retuned with an error: ", template);
         return template;
     }
 
