@@ -3,7 +3,7 @@ import Error from "../errors/Error";
 
 
 
-export const get = async (service, params) => {
+export const http_get = async (service, params) => {
     try {
         let response = await axios.get(
             getServiceURL(service),
@@ -21,7 +21,8 @@ export const get = async (service, params) => {
     }
 };
 
-export const post = async (service, data) => {
+
+export const http_post = async (service, data) => {
     try {
         let response = await axios.post(
             getServiceURL(service),
@@ -40,8 +41,26 @@ export const post = async (service, data) => {
     }
 };
 
+export const http_delete = async (service, params) => {
+    try {
+        let response = await axios.delete(
+            getServiceURL(service),
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                params: params
+            });
+
+        return response.data;
+    } catch (error) {
+        console.error("request GET " + getServiceURL(service) + " failed.");
+        return handleError(error);
+    }
+};
+
 const getServiceURL = service => {
-    return getHost().concat("/api/").concat(service);
+    return getHost().concat("/api/ui/").concat(service);
 };
 
 const getHost = () => {

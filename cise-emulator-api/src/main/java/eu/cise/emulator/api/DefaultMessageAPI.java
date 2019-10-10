@@ -81,5 +81,10 @@ public class DefaultMessageAPI implements MessageAPI {
         return new MessageApiDto(Response.Status.OK.getStatusCode(), "", "", xmlMapper.toXML(preview));
     }
 
+    public boolean consumeStoredMessage(MessageApiDto storedMessage) {
+        //TODO: read the template from fileStorage
+        return messageStorage.delete(storedMessage);
+    }
+
 
 }

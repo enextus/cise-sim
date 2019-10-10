@@ -57,7 +57,7 @@ public class GetTemplateTest {
 
     @Test
     public void it_checks_that_the_api_templates_route_exists() {
-        Response response = resources.target("/api/templates/1234567")
+        Response response = resources.target("/api/ui/templates/1234567")
                 .queryParam("requiresAck", false)
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
@@ -68,7 +68,7 @@ public class GetTemplateTest {
 
     @Test
     public void it_invokes_the_api_templates_for_preview() {
-        resources.target("/api/templates/1234567")
+        resources.target("/api/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)
@@ -79,7 +79,7 @@ public class GetTemplateTest {
 
     @Test
     public void it_invokes_the_api_templates_for_preview_with_a_valued_templateParams() {
-        resources.target("/api/templates/1234567")
+        resources.target("/api/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)
@@ -90,7 +90,7 @@ public class GetTemplateTest {
 
     @Test
     public void it_returns_a_template_when_previewResponse_is_ok() {
-        Response response = resources.target("/api/templates/1234567")
+        Response response = resources.target("/api/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)
@@ -105,7 +105,7 @@ public class GetTemplateTest {
     public void it_returns_a_apiError_when_previewResponse_is_ko() {
         when(templateAPI.preview(any())).thenReturn(new PreviewResponse.KO("exception"));
 
-        Response response = resources.target("/api/templates/1234567")
+        Response response = resources.target("/api/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)
@@ -134,7 +134,7 @@ public class GetTemplateTest {
 
         Template template = new Template("template-id-#1", "name-#1", xmlMapper.toXML(fakePreparedMessage));
         when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(template));
-        Response response = resources.target("/api/templates/1234567")
+        Response response = resources.target("/api/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)
@@ -165,7 +165,7 @@ public class GetTemplateTest {
 
         when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(template));
 
-        Response response = resources.target("/api/templates/1234567")
+        Response response = resources.target("/api/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)

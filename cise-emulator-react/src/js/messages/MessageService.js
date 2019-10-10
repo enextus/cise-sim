@@ -1,9 +1,9 @@
-import {post} from '../api/API'
+import {http_post} from '../api/API'
 import Message from "./Message";
 
 export async function sendMessage(templateId, messageId, correlationId, requiresAck) {
     console.log("sendMessage");
-    const sendMessagePostResposnse = await post("templates/" + templateId,
+    const sendMessagePostResposnse = await http_post("templates/" + templateId,
         {
             messageId: messageId,
             correlationId: correlationId,

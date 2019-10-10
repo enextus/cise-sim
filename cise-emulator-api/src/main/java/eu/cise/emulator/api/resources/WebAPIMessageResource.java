@@ -11,7 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/webapi/messages")
+@Path("/api/ui/messages")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class WebAPIMessageResource {
@@ -34,14 +34,15 @@ public class WebAPIMessageResource {
                 .build();
     }
 
-    @GET
-    public Response pull() {
+    @DELETE
+    public Response pullAndDelete() {
         LOGGER.info("messagePull from UI");
         MessageApiDto lastStoredMessage = messageAPI.getLastStoredMessage();
 
-        if (lastStoredMessage != null)
-            LOGGER.info("lastStoredMessage: " + lastStoredMessage.toString());
-
+        if (lastStoredMessage != null) {
+            boolean isConsumed = messageAPI.consumeStoredMessage(lastStoredMessage);
+            LOGGER.info("lastStoredMessage was consumed : " + isConsumed + " with content : " + lastStoredMessage.toString());
+        }
         return Response
                 .status(lastStoredMessage != null ? Response.Status.OK : Response.Status.NO_CONTENT)
                 .entity(lastStoredMessage)
