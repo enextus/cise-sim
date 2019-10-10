@@ -1,8 +1,11 @@
-import {Button, withStyles} from "@material-ui/core";
+import {Button, withStyles, Fragment} from "@material-ui/core";
 import DescriptionIcon from "@material-ui/icons/Description";
 import React from "react";
 import PropTypes from "prop-types";
 import {observer} from "mobx-react";
+import { withSnackbar } from 'notistack';
+
+
 
 const styles = theme => ({
     button: {
@@ -13,6 +16,12 @@ const styles = theme => ({
     },
 });
 
+const action = (key) => (
+    <Button onClick={() => { props.closeSnackbar(key) }}>
+        {'Dismiss'}
+    </Button>
+);
+
 @observer
 class PreviewButton extends React.Component {
 
@@ -20,8 +29,22 @@ class PreviewButton extends React.Component {
         return !this.props.store.isTemplateSelected;
     }
 
-    preview() {
-        this.props.store.preview();
+    async preview() {
+        const response = await this.props.store.preview();
+        console.log("TemplateStore.preview response: ", response);
+        if(response.errorCode){
+            this.props.enqueueSnackbar(response.message, {
+                variant: 'error',
+                persist: true,
+                action: (key) => (
+                    <Button onClick={() => { this.props.closeSnackbar(key) }}>
+                        {'Dismiss'}
+                    </Button>
+                ),
+            });
+        } else {
+            this.props.enqueueSnackbar('New preview was generated.', {variant: 'success',});
+        }
     }
 
     render() {
@@ -39,11 +62,13 @@ class PreviewButton extends React.Component {
             </Button>
         );
     }
+
 }
+
 
 PreviewButton.propTypes = {
     store: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PreviewButton)
+export default withStyles(styles)(withSnackbar(PreviewButton))

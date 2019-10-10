@@ -6,6 +6,8 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {blue, pink} from "@material-ui/core/colors";
 import {CssBaseline} from "@material-ui/core";
+import { SnackbarProvider } from 'notistack';
+import Button from '@material-ui/core/Button';
 
 const theme = createMuiTheme({
     palette: {
@@ -31,7 +33,16 @@ render(
         <DevTools/>
         <MuiThemeProvider theme={theme}>
             <CssBaseline/>
-            <MainApp/>
+            <SnackbarProvider 
+                dense
+                maxSnack={5} 
+                anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+            >
+                <MainApp/>
+            </SnackbarProvider>
         </MuiThemeProvider>
     </React.Fragment>,
     document.getElementById("root")
