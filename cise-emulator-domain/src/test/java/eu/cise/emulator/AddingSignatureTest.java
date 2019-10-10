@@ -1,24 +1,19 @@
 package eu.cise.emulator;
 
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import static eu.eucise.helpers.PushBuilder.newPush;
+import static eu.eucise.helpers.ServiceBuilder.newService;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.servicemodel.v1.service.ServiceType;
 import eu.cise.signature.SignatureService;
-import org.aeonbits.owner.ConfigFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import static eu.eucise.helpers.PushBuilder.newPush;
-import static eu.eucise.helpers.ServiceBuilder.newService;
-import static org.mockito.Mockito.*;
 
 public class AddingSignatureTest {
 
@@ -26,7 +21,7 @@ public class AddingSignatureTest {
     private SignatureService signatureService;
     private Push push;
     private Dispatcher dispatcher;
-    private EmuConfig config ;
+    private EmuConfig config;
 
     @Before
     public void before() {
@@ -34,9 +29,9 @@ public class AddingSignatureTest {
         signatureService = mock(SignatureService.class);
         dispatcher = mock(Dispatcher.class);
         engine = new DefaultEmulatorEngine(signatureService, dispatcher, config);
-        push = newPush().sender(newService()).build();
-        push.setCreationDateTime(getUTCDatetime());
+        push = newPush().id("aMessageId").sender(newService()).build();
     }
+
     @After
     public void after() {
         reset(config);
@@ -53,7 +48,7 @@ public class AddingSignatureTest {
 
     @Test
     public void it_verify_the_signature() {
-        when(config.dateValidation()).thenReturn(Boolean.FALSE);
+        when(config.isDateValidationEnabled()).thenReturn(Boolean.FALSE);
 
         push.getSender().setServiceType(ServiceType.VESSEL_SERVICE);
 
@@ -66,9 +61,4 @@ public class AddingSignatureTest {
         return new SendParam(false, "msgId", "corrId");
     }
 
-    private XMLGregorianCalendar getUTCDatetime() {
-        GregorianCalendar datetime = new GregorianCalendar();
-        datetime.setTime(java.util.Date.from(ZonedDateTime.now(ZoneId.of("UTC")).toInstant()));
-        return new XMLGregorianCalendarImpl(datetime);
-    }
 }
