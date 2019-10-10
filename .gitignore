@@ -1,4 +1,3 @@
-# Created by .ignore support plugin (hsz.mobi)
 ### Maven template
 target/
 pom.xml.tag
@@ -43,3 +42,6 @@ target/**
 generated-sources
 tmp/**
 
+cise-emulator-io/cise-mvn-repo/
+cise-emulator-transport/cise-mvn-repo/
+npm-debug.log

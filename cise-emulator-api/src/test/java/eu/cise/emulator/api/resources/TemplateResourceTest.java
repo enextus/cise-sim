@@ -18,7 +18,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class TemplateResourceTest {
     private static MessageAPI messageAPI = mock(MessageAPI.class);;
@@ -27,7 +26,7 @@ public class TemplateResourceTest {
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new TemplateResource(messageAPI, new TemplateAPI(null, null, null), emuConfig))
+            .addResource(new TemplateResource(messageAPI, new TemplateAPI(null, null, null)))
             .bootstrapLogging(false)
             .build();
 

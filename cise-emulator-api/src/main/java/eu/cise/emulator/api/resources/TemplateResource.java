@@ -1,7 +1,6 @@
 package eu.cise.emulator.api.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.api.*;
 import eu.cise.emulator.api.representation.TemplateParams;
 import eu.cise.emulator.templates.Template;
@@ -20,12 +19,10 @@ public class TemplateResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(TemplateResource.class);
     private final MessageAPI messageAPI;
     private final TemplateAPI templateAPI;
-    private final EmuConfig emuConfig;
 
-    public TemplateResource(MessageAPI messageAPI, TemplateAPI templateAPI, EmuConfig emuConfig) {
+    public TemplateResource(MessageAPI messageAPI, TemplateAPI templateAPI) {
         this.messageAPI = messageAPI;
         this.templateAPI = templateAPI;
-        this.emuConfig = emuConfig;
     }
 
     @GET
