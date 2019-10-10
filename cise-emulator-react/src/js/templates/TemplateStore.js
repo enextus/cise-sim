@@ -1,23 +1,22 @@
 import {getTemplateById, getTemplateList} from "./TemplateService";
-import {action, computed, observable} from "mobx";
-import axios from "axios";
+import { observable, computed, action } from "mobx";
 import {sendMessage} from "../messages/MessageService";
 import Template from "./Template";
 
 export default class TemplateStore {
-
     @observable templateList = [];
     @observable selected = "empty"; // selectedTemplateId
     @observable messageId = this.uuidv4();
     @observable correlationId = "";
     @observable requiresAck = false;
-    @observable template = new Template({ templateId: "", templateName: "", templateContent: "" });
+    @observable template = new Template({templateId: "", templateName: "", templateContent: ""});
 
-    @computed get templateOptions() {
+    @computed
+    get templateOptions() {
         return this.templateList.map(t => ({label: t.name, value: t.id}));
     }
-
-    @computed get isTemplateSelected() {
+    @computed
+    get isTemplateSelected() {
         return !(this.selected === "empty");
     }
 
@@ -39,15 +38,25 @@ export default class TemplateStore {
 
     @action
     async preview() {
-        this.template = await getTemplateById(
+        const getTemplateByIdResposnse = await getTemplateById(
             this.selected,
             this.messageId,
             this.correlationId,
             this.requiresAck);
+
+        console.log("getTemplateByIdResposnse:", getTemplateByIdResposnse);
+
+        if (getTemplateByIdResposnse.errorCode) {
+            console.log("TemplateStore preview returned an error.");
+        } else {
+            console.log("TemplateStore preview returned successfully.");
+            this.template = getTemplateByIdResposnse;
+        }
+        return getTemplateByIdResposnse;
     }
 
+
     // TODO To be moved into another store?
-    @action
     send() {
         const message = sendMessage(
             this.selected,

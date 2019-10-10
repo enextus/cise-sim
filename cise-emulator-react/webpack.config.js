@@ -19,6 +19,13 @@ module.exports = {
                         });
                     }
                     ''
+                    if (req.url.indexOf('/api/templates/') !== -1) {
+                        console.log('bypass.0TemplateById.')
+                        res.status = 500
+                        res.send({
+                            'error': 'test error 500'
+                        });
+                    }
                     if (req.url.indexOf('/api/templates') !== -1) {
                         console.log('bypass.0TemplateList.')
                         res.send([
@@ -29,6 +36,7 @@ module.exports = {
                             "SubscribeTemplate.xml"
                         ]);
                     }
+
                 }
             }
         }

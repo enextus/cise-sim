@@ -54,6 +54,7 @@ public class TemplateResource {
             @QueryParam("correlationId") String correlationId,
             @QueryParam("requestAck") boolean requestAck) {
 
+
         PreviewResponse previewResponse = templateAPI.preview(
                 new TemplateParams(templateId, messageId, correlationId, requestAck));
 

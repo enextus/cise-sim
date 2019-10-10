@@ -8,20 +8,23 @@ export async function getTemplateList() {
 
 // requestAck must be transformed in requiresAck
 export async function getTemplateById(templateId, messageId, correlationId, requiresAck) {
-    try {
-        console.log("getTemplateById");
-        const template = await get(`templates/${templateId}`,
-            {
-                messageId: messageId,
-                correlationId: correlationId,
-                requestAck: requiresAck
-            }
-        );
-        console.log("getTemplateById", template);
+    console.log("getTemplateById");
+    const template = await get(`templates/${templateId}`,
+        {
+            messageId: messageId,
+            correlationId: correlationId,
+            requestAck: requiresAck
+        }
+    );
+    
 
-        return new Template(template);
-    } catch (e) {
-        console.error("getTemplateById", e);
+    if(template.erroCode){
+        // return Error object
+        console.log("getTemplateById retuned an error: ", template);
+        return template;
     }
+
+    console.log("getTemplateById: ", template);
+    return new Template(template);
 
 }
