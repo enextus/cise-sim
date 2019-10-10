@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.cise.eu/servicemodel/v1/message/" version="1.0">
-
-  <xs:import namespace="http://www.cise.eu/servicemodel/v1/message/" schemaLocation="message.xsd"/>
-
-  <xs:element name="message" type="ns1:Message"/>
-
-</xs:schema>
