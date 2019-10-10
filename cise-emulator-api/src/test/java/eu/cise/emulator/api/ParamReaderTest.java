@@ -44,13 +44,9 @@ public class ParamReaderTest {
 
     private JsonNode msgWithParams() {
         ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
-        ObjectNode params = jsonMapper.createObjectNode();
-        params.put("requires_ack", true);
-        params.put("message_id", "1234-123411-123411-1234");
-        params.put("correlation_id", "7777-666666-666666-5555");
-
-        msgTemplateWithParamObject.put("message_template", "hash-msg-template");
-        msgTemplateWithParamObject.set("params", params);
+        msgTemplateWithParamObject.put("requiresAck", true);
+        msgTemplateWithParamObject.put("messageId", "1234-123411-123411-1234");
+        msgTemplateWithParamObject.put("correlationId", "7777-666666-666666-5555");
 
         return jsonMapper.valueToTree(msgTemplateWithParamObject);
     }

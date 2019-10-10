@@ -3,6 +3,7 @@ import SendRoundedIcon from "@material-ui/icons/SendRounded";
 import React from "react";
 import PropTypes from "prop-types";
 import {observer} from "mobx-react";
+import { withSnackbar } from 'notistack';
 
 const styles = theme => ({
     button: {
@@ -21,9 +22,14 @@ class SendButton extends React.Component {
     }
 
     async send() {
-        const response = await this.props.store.messageStore.send(this.props.store.templateStore.selected);
+        const response = await this.props.store.messageStore.send(
+            this.props.store.templateStore.selected,
+            this.props.store.templateStore.messageId, 
+            this.props.store.templateStore.correlationId, 
+            this.props.store.templateStore.requiresAck
+        );
         if(response.errorCode){
-            this.props.enqueueSnackbar(response.message, {
+            this.props.enqueueSnackbar(response.errorMessage, {
                 variant: 'error',
                 persist: true,
                 action: (key) => (
@@ -61,4 +67,4 @@ SendButton.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SendButton)
+export default withStyles(styles)(withSnackbar(SendButton))

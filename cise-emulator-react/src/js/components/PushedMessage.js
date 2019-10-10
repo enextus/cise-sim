@@ -60,7 +60,7 @@ class PushedMessage extends Component {
     }
 
     @observable  tabPushState = {
-        value: 1
+        value: 0
     };
 
     handleChange = (event, newValue) => {
@@ -95,13 +95,11 @@ class PushedMessage extends Component {
                                      id='simple-tab-1'
                                      aria-controls='simple-tabpanel-1'
                                 />
-                                <Tab className={classes.pullPanel_tab}
-                                     label="acknowledgement"
+                                <Tab label="message"
                                      id='simple-tab-2'
                                      aria-controls='simple-tabpanel-2'
                                 />
-                                <Tab className={classes.pullPanel_tab}
-                                     label="message"
+                                <Tab label="acknowledgement"
                                      id='simple-tab-3'
                                      aria-controls='simple-tabpanel-3'
                                 />                                
@@ -110,12 +108,13 @@ class PushedMessage extends Component {
                             <ShowXmlMessage content = {this.props.store.templateStore.template.content} 
                                             hidden = {this.tabPushState.value === 0} 
                                             textfieldStyle = {classes.textfieldStyle} />
-                            <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.acknowledge} 
-                                            hidden = {this.tabPushState.value === 1} 
-                                            textfieldStyle = {classes.textfieldStyle} />
                             <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.body} 
                                             hidden = {this.tabPushState.value === 1} 
                                             textfieldStyle = {classes.textfieldStyle} />
+                            <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.acknowledge} 
+                                            hidden = {this.tabPushState.value === 2} 
+                                            textfieldStyle = {classes.textfieldStyle} />
+
                         </Paper>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>

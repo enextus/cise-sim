@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import SendForm from './SendForm';
 import PushedMessage from './PushedMessage';
-import PulledMessage from './ReceiveMessage/PulledMessage';
+import PulledMessage from '../messages/components/PulledMessage';
 import {Grid} from '@material-ui/core';
 import {observer} from 'mobx-react';
 import messageCandidate from "../models/message/MessageCandidate";

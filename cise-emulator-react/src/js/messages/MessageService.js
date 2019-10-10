@@ -7,7 +7,7 @@ export async function sendMessage(templateId, messageId, correlationId, requires
         {
             messageId: messageId,
             correlationId: correlationId,
-            requestAck: requiresAck,
+            requiresAck: requiresAck,
         }
     );
 

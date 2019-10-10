@@ -26,21 +26,21 @@ export default class MessageStore {
         this.receivedMessage = receivedMessage;
     }
 
-    async send(seletedTemplate) {
+    async send(seletedTemplate, messageId, correlationId, requiresAck) {
         const sendMessageResponse = await sendMessage(
             seletedTemplate,
-            this.messageId,
-            this.correlationId,
-            this.requiresAck);
+            messageId,
+            correlationId,
+            requiresAck);
         console.log("sendMessageResponse:", sendMessageResponse);
 
         if (sendMessageResponse.errorCode) {
-            console.log("TemplateStore preview returned an error.");
+            console.log("Send returned an error.");
         } else {
-            console.log("TemplateStore preview returned successfully.");
+            console.log("Send returned successfully.");
             this.sentMessage = sendMessageResponse;
         }
-        return getTemplateByIdResposnse;
+        return sendMessageResponse;
     }
 
 }
