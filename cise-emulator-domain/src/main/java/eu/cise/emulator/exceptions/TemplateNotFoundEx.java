@@ -2,7 +2,7 @@ package eu.cise.emulator.exceptions;
 
 public class TemplateNotFoundEx extends RuntimeException {
 
-    private static final String EXCEPTION_MESSAGE = "The template id specified can not be found. templateId:";
+    private static final String EXCEPTION_MESSAGE = "The template id specified can not be found. templateId: ";
 
     public TemplateNotFoundEx(String templateId) {
         super(EXCEPTION_MESSAGE + safe(templateId));
