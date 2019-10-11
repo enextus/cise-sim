@@ -1,13 +1,14 @@
 package eu.cise.emulator.api.resources;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.api.MessageApiDto;
-import eu.cise.emulator.api.representation.SendingDataWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -24,16 +25,6 @@ public class WebAPIMessageResource {
 
     }
 
-    @PATCH
-    public Response send(JsonNode msgWithParams) {
-        LOGGER.info("messageCreate with param: {}", msgWithParams);
-        MessageApiDto resultMessage = messageAPI.send(msgWithParams);
-        return Response
-                .status(Response.Status.CREATED)
-                .entity(resultMessage)
-                .build();
-    }
-
     @GET
     public Response pull() {
         LOGGER.info("messagePull from UI");
@@ -47,19 +38,4 @@ public class WebAPIMessageResource {
                 .entity(lastStoredMessage)
                 .build();
     }
-
-    @POST
-    public Response preview(SendingDataWrapper dataWrapper) {
-        LOGGER.info("Preview message with param: {}", dataWrapper);
-        MessageApiDto previewMesageApiDto = null;
-        if (dataWrapper != null) {
-            previewMesageApiDto = messageAPI.preview(dataWrapper.getParam(), dataWrapper.getTemplateHash());
-        }
-        return Response
-                .status(Response.Status.OK)
-                .entity(previewMesageApiDto)
-                .build();
-    }
-
-
 }

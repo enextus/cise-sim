@@ -5,14 +5,14 @@ import Body from './components/Body';
 import NavBar from './components/NavBar';
 import AppStore from "./models/AppStore";
 import TemplateStore from "./templates/TemplateStore";
-import MessageStore from "./models/MessageStore";
+import MessageStore from "./messages/MessageStore";
 import {autorun} from "mobx";
 
 
 const stores = {
     appStore: new AppStore(),
     templateStore: new TemplateStore(),
-    messageStore: new MessageStore()
+    messageStore: new MessageStore(),
 };
 
 autorun(() => {

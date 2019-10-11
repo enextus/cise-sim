@@ -28,9 +28,14 @@ class SendForm extends Component {
         super(props);
     }
 
-    getStore() {
+    getTemplateStore() {
         return this.props.store.templateStore
     };
+
+    getAllStores() {
+        return this.props.store
+    };
+
 
     render() {
         const {classes} = this.props;
@@ -39,27 +44,27 @@ class SendForm extends Component {
             <Paper className={classes.root}>
                 <Grid container alignItems="flex-start" spacing={2}>
                     <Grid item xs={6}>
-                        <MessageIdField store={this.getStore()}/>
+                        <MessageIdField store={this.getTemplateStore()}/>
                     </Grid>
 
                     <Grid item xs={6}>
-                        <CorrelationIdField store={this.getStore()}/>
+                        <CorrelationIdField store={this.getTemplateStore()}/>
                     </Grid>
 
                     <Grid item xs={6}>
-                        <TemplateSelect store={this.getStore()}/>
+                        <TemplateSelect store={this.getTemplateStore()}/>
                     </Grid>
 
                     <Grid item xs={12}>
-                        <RequiresAckCheck store={this.getStore()}/>
+                        <RequiresAckCheck store={this.getTemplateStore()}/>
                     </Grid>
 
                     <Grid item>
-                        <PreviewButton store={this.getStore()}/>
+                        <PreviewButton store={this.getTemplateStore()}/>
                     </Grid>
 
                     <Grid item>
-                        <SendButton store={this.getStore()}/>
+                        <SendButton store={this.getAllStores()}/>
                     </Grid>
                 </Grid>
             </Paper>

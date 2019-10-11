@@ -43,7 +43,7 @@ class PreviewButton extends React.Component {
                 ),
             });
         } else {
-            this.props.enqueueSnackbar('New preview was generated.', {variant: 'success',});
+            this.props.enqueueSnackbar('New preview has been generated.', {variant: 'success',});
         }
     }
 

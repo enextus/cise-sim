@@ -15,6 +15,7 @@ import java.util.List;
 
 @Path("/api/templates")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class TemplateResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TemplateResource.class);
@@ -67,9 +68,14 @@ public class TemplateResource {
     }
 
     @POST
-    public Response send(JsonNode msgWithParams) {
-        LOGGER.info("messageCreate with param: {}", msgWithParams);
-        MessageApiDto resultMessage = messageAPI.send(msgWithParams);
+    @Path("{templateId}")
+    public Response send(@PathParam("templateId") String templateId, JsonNode msgWithParams) {
+        LOGGER.info("send called with param: {}", msgWithParams);
+        MessageApiDto resultMessage = messageAPI.send(templateId, msgWithParams);
+        if (resultMessage.getStatus() >= 300) {
+            APIError apiError = new APIError(resultMessage.getErrorDetail());
+            return Response.serverError().entity(apiError).build();
+        }
         return Response
                 .status(Response.Status.CREATED)
                 .entity(resultMessage)
