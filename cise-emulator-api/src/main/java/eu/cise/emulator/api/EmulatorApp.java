@@ -48,8 +48,8 @@ public class EmulatorApp extends Application<EmulatorConf> {
                         new TemplateAPI(
                                 appCtx.makeMessageProcessor(),
                                 appCtx.makeTemplateLoader(),
-                                appCtx.makeXmlMapper()),
-                        appCtx.makeEmuConfig()));
+                                appCtx.makeXmlMapper())
+                ));
 
         environment.jersey().register(new AssetRedirectionResource());
     }

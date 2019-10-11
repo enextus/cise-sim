@@ -26,9 +26,6 @@ public interface EmuConfig extends Config {
     @Key("destination.endpoint-url")
     String endpointUrl();
 
-    @Key("webapi.config")
-    String webapiConfig();
-
     @Key("signature.keyStoreFileName")
     String keyStoreFileName();
 
@@ -46,9 +43,7 @@ public interface EmuConfig extends Config {
 
     @Key("validation.rule.date")
     @DefaultValue("false")
-    Boolean dateValidation();
-
-
+    boolean isDateValidationEnabled();
 
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {

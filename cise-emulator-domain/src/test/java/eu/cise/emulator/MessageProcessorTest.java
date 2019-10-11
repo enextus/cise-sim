@@ -1,28 +1,24 @@
 package eu.cise.emulator;
 
-import eu.cise.emulator.utils.FakeSignatureService;
-import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.signature.SignatureService;
-import org.junit.Before;
-import org.junit.Test;
-
 import static eu.cise.servicemodel.v1.service.ServiceType.VESSEL_SERVICE;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import eu.cise.servicemodel.v1.message.Message;
+import org.junit.Before;
+import org.junit.Test;
 
 public class MessageProcessorTest {
 
-    private SignatureService signatureService;
-    private EmuConfig config;
     private MessageProcessor messageProcessor;
     private EmulatorEngine engine;
 
     @Before
     public void before() {
-        signatureService = new FakeSignatureService();
-        config = mock(EmuConfig.class);
         engine = mock(EmulatorEngine.class);
         messageProcessor = new DefaultMessageProcessor(engine);
     }
