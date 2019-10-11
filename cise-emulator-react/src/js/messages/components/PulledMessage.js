@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Highlight from 'react-highlight.js';
 import PropTypes from 'prop-types';
 import {withSnackbar} from 'notistack';
+import Error from '../../errors/Error';
 import ShowXmlMessage from "../../components/common/ShowXmlMessage";
 
 const styles = () => ({
@@ -57,13 +58,6 @@ const styles = () => ({
     }
 });
 
-const action = (key) => (
-    <Button onClick={() => {
-        props.closeSnackbar(key)
-    }}>
-        {'Dismiss'}
-    </Button>
-); // ODOT: no used
 
 
 @observer
@@ -71,6 +65,10 @@ class PulledMessage extends Component {
     constructor(props) {
         super(props);
     }
+
+
+
+    prevReceivedMessageError = new Error("","");
 
     @observable
     tabPullState = {
@@ -94,6 +92,8 @@ class PulledMessage extends Component {
     showErrorMessage = (event, newValue) => {
         if (this.props.store.messageStore.receivedMessageError){
             console.log("Error in PulledMessage", this.props.store.messageStore.receivedMessageError);
+            if (this.props.store.messageStore.receivedMessageError.errorMessage != this.prevReceivedMessageError.errorMessage) {
+            this.prevReceivedMessageError= this.props.store.messageStore.receivedMessageError;
             this.props.enqueueSnackbar(this.props.store.messageStore.receivedMessageError.errorMessage, {
                 variant: 'error',
                 persist: true,
@@ -105,7 +105,7 @@ class PulledMessage extends Component {
                     </Button>
                 ),
             });
-            //this.props.store.messageStore.receivedMessageError= null;
+            }
         }
     }
 
