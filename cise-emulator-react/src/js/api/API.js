@@ -41,20 +41,20 @@ export const http_post = async (service, data) => {
     }
 };
 
-export const http_delete = async (service, params) => {
+export const http_delete = async (service) => {
     try {
-        let response = await axios.delete(
+        let response =  await axios.delete(
             getServiceURL(service),
             {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                params: params
+                params: {}
             });
 
         return response.data;
     } catch (error) {
-        console.error("request GET " + getServiceURL(service) + " failed.");
+        console.error("request DELETE " + getServiceURL(service) + " failed.");
         return handleError(error);
     }
 };

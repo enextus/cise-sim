@@ -1,18 +1,17 @@
 package eu.cise.emulator.api.resources;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import eu.cise.emulator.api.APIError;
 import eu.cise.emulator.api.MessageAPI;
-import eu.cise.emulator.api.MessageApiDto;
-import eu.cise.emulator.api.representation.SendingDataWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.*;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/api/ui/messages")
-@Consumes(MediaType.APPLICATION_JSON)
+@Path("/api/ui/messages/latest")
 @Produces(MediaType.APPLICATION_JSON)
 public class WebAPIMessageResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebAPIMessageResource.class);
@@ -24,43 +23,28 @@ public class WebAPIMessageResource {
 
     }
 
-    @PATCH
-    public Response send(JsonNode msgWithParams) {
-        LOGGER.info("messageCreate with param: {}", msgWithParams);
-        MessageApiDto resultMessage = messageAPI.send(msgWithParams);
-        return Response
-                .status(Response.Status.CREATED)
-                .entity(resultMessage)
-                .build();
-    }
-
     @DELETE
     public Response pullAndDelete() {
         LOGGER.info("messagePull from UI");
-        MessageApiDto lastStoredMessage = messageAPI.getLastStoredMessage();
-
-        if (lastStoredMessage != null) {
-            boolean isConsumed = messageAPI.consumeStoredMessage(lastStoredMessage);
-            LOGGER.info("lastStoredMessage was consumed : " + isConsumed + " with content : " + lastStoredMessage.toString());
-        }
         return Response
-                .status(lastStoredMessage != null ? Response.Status.OK : Response.Status.NO_CONTENT)
-                .entity(lastStoredMessage)
+                .status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new APIError("test"))
                 .build();
-    }
 
-    @POST
-    public Response preview(SendingDataWrapper dataWrapper) {
-        LOGGER.info("Preview message with param: {}", dataWrapper);
-        MessageApiDto previewMesageApiDto = null;
-        if (dataWrapper != null) {
-            previewMesageApiDto = messageAPI.preview(dataWrapper.getParam(), dataWrapper.getTemplateHash());
-        }
-        return Response
-                .status(Response.Status.OK)
-                .entity(previewMesageApiDto)
-                .build();
+//        MessageApiDto lastStoredMessage = messageAPI.getLastStoredMessage();
+//
+//        if (lastStoredMessage == null) {
+//            return Response
+//                    .status(Response.Status.NO_CONTENT)
+//                    .build();
+//        }
+//        boolean isConsumed = messageAPI.consumeStoredMessage(lastStoredMessage);
+//        LOGGER.info("lastStoredMessage was consumed : " + isConsumed + " with content : " + lastStoredMessage.toString());
+//
+//        return Response
+//                .status(Response.Status.OK)
+//                .entity(lastStoredMessage)
+//                .build();
     }
-
 
 }

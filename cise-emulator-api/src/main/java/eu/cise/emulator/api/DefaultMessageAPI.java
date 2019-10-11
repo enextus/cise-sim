@@ -39,9 +39,8 @@ public class DefaultMessageAPI implements MessageAPI {
     }
 
     @Override
-    public MessageApiDto send(JsonNode json) {
-        LOGGER.debug("send is passed through api : {}", json);
-        String templateId = json.at("/message_template").textValue();
+    public MessageApiDto send(String templateId, JsonNode json) {
+        LOGGER.debug("send is passed through api templateId: {}, params: {}", templateId, json);
         Template template = templateLoader.loadTemplate(templateId);
         String xmlContent = template.getTemplateContent();
         SendParam sendParam = new SendParamsReader().extractParams(json);
@@ -52,7 +51,7 @@ public class DefaultMessageAPI implements MessageAPI {
             return new MessageApiDto(Response.Status.ACCEPTED.getStatusCode(), null, xmlMapper.toXML(acknowledgement), "");
         } catch (Exception e) {
             LOGGER.error("error in Api send", e);
-            return new MessageApiDto(Response.Status.BAD_REQUEST.getStatusCode(), "Error in Api send", "", "");
+            return new MessageApiDto(Response.Status.BAD_REQUEST.getStatusCode(), "Send Error: " + e.getMessage(), "", "");
         }
     }
 

@@ -5,7 +5,7 @@ import eu.cise.emulator.SendParam;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 
 public interface MessageAPI {
-    MessageApiDto send(JsonNode json);
+    MessageApiDto send(String templateId, JsonNode json);
 
     Acknowledgement receive(String inputXmlMessage);
 

@@ -1,6 +1,8 @@
+import {observable} from "mobx";
+
 export default class Error  {
-    errorCode;
-    errorMessage;
+    @observable errorCode;
+    @observable errorMessage;
 
     constructor(errorCode, errorMessage) {
         this.errorCode = errorCode;

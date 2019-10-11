@@ -3,18 +3,20 @@ import {observer} from "mobx-react";
 import {observable} from "mobx";
 import format from "xml-formatter";
 import {
+    Button,
     ExpansionPanel,
     ExpansionPanelDetails,
     ExpansionPanelSummary,
     Paper,
     Tab,
     Tabs,
-    Typography
+    Typography,
+    withStyles
 } from '@material-ui/core';
-import {withStyles} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Highlight from 'react-highlight.js';
 import PropTypes from 'prop-types';
+import {withSnackbar} from 'notistack';
 
 const styles = () => ({
     root: {
@@ -51,6 +53,15 @@ const styles = () => ({
     }
 });
 
+const action = (key) => (
+    <Button onClick={() => {
+        props.closeSnackbar(key)
+    }}>
+        {'Dismiss'}
+    </Button>
+); // ODOT: no used
+
+
 @observer
 class PulledMessage extends Component {
     constructor(props) {
@@ -66,12 +77,68 @@ class PulledMessage extends Component {
         this.tabPullState.value = newValue
     };
 
+    isReceivedMessageErrorUpdated() {
+        return (this.props.store.messageStore.receivedMessageError!=null);
+    }
+
+
+    isDisabled() {
+        return !this.props.store.templateStore.isTemplateSelected;
+    }
+
+
+    // async pullIntent(props) {
+    //     if (!store) alert("no store");
+    //     const response = await props.store.messageStore.pull();
+    //
+    //     if (!response) return;
+    //
+    //     if (response.errorCode) {
+    //         this.props.enqueueSnackbar(response.errorMessage, {
+    //             variant: 'error',
+    //             persist: true,
+    //             action: (key) => (
+    //                 <Button onClick={() => {
+    //                     this.props.closeSnackbar(key)
+    //                 }}>
+    //                     {'Dismiss'}
+    //                 </Button>
+    //             ),
+    //         });
+    //     } else if (response.status === 200) {
+    //         this.props.enqueueSnackbar('New message has been received.', {variant: 'success',});
+    //     }
+    // }
+
     render() {
         const {classes} = this.props;
+        if (this.props.store.messageStore.receivedMessageError !== null) {
+            console.log("receivedError: ", this.props.store.messageStore.receivedMessageError);
+        }
+
+        // if (this.props.store.messageStore.receivedMessageError){
+        //     console.log("Error in PulledMessage", this.props.store.messageStore.receivedMessageError);
+        //     this.props.enqueueSnackbar(this.props.store.messageStore.receivedMessageError.errorMessage, {
+        //         variant: 'error',
+        //         persist: true,
+        //         action: (key) => (
+        //             <Button onClick={() => {
+        //                 this.props.closeSnackbar(key)
+        //             }}>
+        //                 {'Dismiss'}
+        //             </Button>
+        //         ),
+        //     });
+        //     this.props.store.messageStore.receivedMessageError= null;
+        // }
+
         return (
             <div className={classes.root}>
+
+                <Typography>{""+this.props.store.messageStore.receivedMessageError}</Typography>
+
                 <ExpansionPanel
-                    disabled={(this.props.messageReceived.body === "") && (this.props.messageReceived.acknowledgement === "")}>
+                    disabled={(this.props.store.messageStore.receivedMessage.body === "") && (this.props.store.messageStore.receivedMessage.acknowledge === "")}>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="receiveMessagecontent"
@@ -98,17 +165,24 @@ class PulledMessage extends Component {
                                      aria-controls='simple-tabpanel-2'/>
                             </Tabs>
 
-                            <div hidden={this.props.messageReceived.body === "" || this.tabPullState.value === 1}
-                                 className={classes.textfieldStyle}>
+                            <div
+                                hidden={this.props.store.messageStore.receivedMessage.body === "" || this.tabPullState.value === 1}
+                                className={classes.textfieldStyle}>
                                 <Highlight language={"xml"}>
-                                    {format(this.props.messageReceived.body, {stripComments: true, collapseContent: true})}
+                                    {format(this.props.store.messageStore.receivedMessage.body, {
+                                        stripComments: true,
+                                        collapseContent: true
+                                    })}
                                 </Highlight>
                             </div>
                             <div
-                                hidden={this.props.messageReceived.acknowledgement === "" || this.tabPullState.value === 0}
+                                hidden={this.props.store.messageStore.receivedMessage.acknowledge === "" || this.tabPullState.value === 0}
                                 className={classes.textfieldStyle}>
                                 <Highlight language={"xml"}>
-                                    {format(this.props.messageReceived.acknowledgement, {stripComments: true, collapseContent: true})}
+                                    {format(this.props.store.messageStore.receivedMessage.acknowledge, {
+                                        stripComments: true,
+                                        collapseContent: true
+                                    })}
                                 </Highlight>
                             </div>
                         </Paper>
@@ -120,10 +194,10 @@ class PulledMessage extends Component {
 }
 
 PulledMessage.propTypes = {
+    store: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PulledMessage)
-
+export default withStyles(styles)(withSnackbar(PulledMessage))
 
 

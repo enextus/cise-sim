@@ -1,4 +1,8 @@
 # TODO
 
+
+* when sending messages update the UI with the message sent
+
+as technical debt
 * add a coverage tool for maven
-* when sending messages update the UI with the message sent 
+* create a more generic way to handle the snackbar (common method) 
