@@ -4,7 +4,6 @@ import {
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
-  Paper,
   Typography
 } from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
@@ -40,11 +39,6 @@ const styles = () => ({
   }, pullPanel_tab: {
     fontSize: '9px'
   },
-  textfieldStyle: {
-    width: "100%",
-    borderLeft: `4px solid 2`,
-    padding: `3px 4px`
-  }
 });
 
 @observer
@@ -59,21 +53,17 @@ class PreviewMessage extends Component {
     this.value = 0;
     return (
         <div className={classes.root}>
-          <ExpansionPanel disabled={(this.isTemplateEmpty())}>
+          <ExpansionPanel expanded={!this.isTemplateEmpty()}>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="previewMessageContent"
                 id="previewMessage">
-              <Typography className={classes.pullPanel_tab_heading}>
-                Preview
-              </Typography>
+              <Typography variant={"h6"}>Message Preview</Typography>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails className={classes.pullPanel_expDetail}>
-              <Paper className={classes.pullPanel_paper}>
-                <ShowXmlMessage content={this.templateStore().template.content}
-                                hidden='false'
-                                textfieldStyle={classes.textfieldStyle}/>
-              </Paper>
+            <ExpansionPanelDetails>
+              <ShowXmlMessage
+                  content={this.templateStore().template.content}
+                              hidden='false'/>
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </div>
