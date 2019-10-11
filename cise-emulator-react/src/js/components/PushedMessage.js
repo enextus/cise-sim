@@ -101,7 +101,7 @@ class PushedMessage extends Component {
                                 />                                
                             </Tabs>
                             <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.body} 
-                                            hidden = {this.tabPushState.value === 0} 
+                                            hidden = {this.tabPushState.value === 0}
                                             textfieldStyle = {classes.textfieldStyle} />
                             <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.acknowledge} 
                                             hidden = {this.tabPushState.value === 1} 

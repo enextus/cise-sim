@@ -25,7 +25,7 @@ public class WebAPIMessageResourcePullTest {
 
     @Test
     public void it_invokes_the_pull_and_makes_a_call_to_MessageAPI_to_get_the_last_stored_message() {
-        Response test = webAPIMessageResource.pull();
+        Response test = webAPIMessageResource.pullAndDelete();
         verify(messageAPI).getLastStoredMessage();
     }
 
@@ -35,7 +35,7 @@ public class WebAPIMessageResourcePullTest {
 
         when(messageAPI.getLastStoredMessage()).thenReturn(expectedMessage);
 
-        Response resourceResponse = webAPIMessageResource.pull();
+        Response resourceResponse = webAPIMessageResource.pullAndDelete();
         MessageApiDto actualMessage = (MessageApiDto) resourceResponse.getEntity();
 
         assertThat(actualMessage).isEqualTo(expectedMessage);

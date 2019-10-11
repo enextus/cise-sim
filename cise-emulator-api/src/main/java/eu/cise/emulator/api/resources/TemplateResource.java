@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/api/templates")
+@Path("/api/ui/templates")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class TemplateResource {
@@ -51,7 +51,6 @@ public class TemplateResource {
             @QueryParam("messageId") String messageId,
             @QueryParam("correlationId") String correlationId,
             @QueryParam("requestAck") boolean requestAck) {
-
 
         PreviewResponse previewResponse = templateAPI.preview(
                 new TemplateParams(templateId, messageId, correlationId, requestAck));

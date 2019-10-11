@@ -3,18 +3,22 @@ import {observer} from "mobx-react";
 import {observable} from "mobx";
 import format from "xml-formatter";
 import {
+    Button,
     ExpansionPanel,
     ExpansionPanelDetails,
     ExpansionPanelSummary,
     Paper,
     Tab,
     Tabs,
-    Typography
+    Typography,
+    withStyles
 } from '@material-ui/core';
-import {withStyles} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Highlight from 'react-highlight.js';
 import PropTypes from 'prop-types';
+import {withSnackbar} from 'notistack';
+import Error from '../../errors/Error';
+import ShowXmlMessage from "../../components/common/ShowXmlMessage";
 
 const styles = () => ({
     root: {
@@ -48,14 +52,23 @@ const styles = () => ({
         width: "100%",
         borderLeft: `6px solid 4`,
         padding: `4px 6px`
+    },
+    hide: {
+        visibility: 'hidden',
     }
 });
+
+
 
 @observer
 class PulledMessage extends Component {
     constructor(props) {
         super(props);
     }
+
+
+
+    prevReceivedMessageError = new Error("","");
 
     @observable
     tabPullState = {
@@ -66,12 +79,54 @@ class PulledMessage extends Component {
         this.tabPullState.value = newValue
     };
 
+    isReceivedMessageErrorUpdated() {
+        return (this.props.store.messageStore.receivedMessageError!=null);
+    }
+
+
+    isDisabled() {
+        return !this.props.store.templateStore.isTemplateSelected;
+    }
+
+    showSuccessMessage = (event, newValue) => {
+        if (this.props.store.messageStore.receivedMessage){
+            this.props.enqueueSnackbar("New message has been received.", {
+                    variant: 'info'
+                });
+            }
+        }
+
+    showErrorMessage = (event, newValue) => {
+        if (this.props.store.messageStore.receivedMessageError){
+            console.log("Error in PulledMessage", this.props.store.messageStore.receivedMessageError);
+            if (this.props.store.messageStore.receivedMessageError.errorMessage != this.prevReceivedMessageError.errorMessage) {
+            this.prevReceivedMessageError= this.props.store.messageStore.receivedMessageError;
+            this.props.enqueueSnackbar(this.props.store.messageStore.receivedMessageError.errorMessage, {
+                variant: 'error',
+                persist: true,
+                action: (key) => (
+                    <Button onClick={() => {
+                        this.props.closeSnackbar(key)
+                    }}>
+                        {'Dismiss'}
+                    </Button>
+                ),
+            });
+            }
+        }
+    }
+
     render() {
         const {classes} = this.props;
-        return (
+        if (this.props.store.messageStore.receivedMessageError !== null) {
+            console.log("receivedError: ", this.props.store.messageStore.receivedMessageError);
+        }
+
+         return (
             <div className={classes.root}>
                 <ExpansionPanel
-                    disabled={(this.props.messageReceived.body === "") && (this.props.messageReceived.acknowledgement === "")}>
+                    disabled={(this.props.store.messageStore.receivedMessage.body === "") 
+                    && (this.props.store.messageStore.receivedMessage.acknowledge === "")}>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="receiveMessagecontent"
@@ -97,33 +152,27 @@ class PulledMessage extends Component {
                                      id='simple-tab-2'
                                      aria-controls='simple-tabpanel-2'/>
                             </Tabs>
-
-                            <div hidden={this.props.messageReceived.body === "" || this.tabPullState.value === 1}
-                                 className={classes.textfieldStyle}>
-                                <Highlight language={"xml"}>
-                                    {format(this.props.messageReceived.body, {stripComments: true, collapseContent: true})}
-                                </Highlight>
-                            </div>
-                            <div
-                                hidden={this.props.messageReceived.acknowledgement === "" || this.tabPullState.value === 0}
-                                className={classes.textfieldStyle}>
-                                <Highlight language={"xml"}>
-                                    {format(this.props.messageReceived.acknowledgement, {stripComments: true, collapseContent: true})}
-                                </Highlight>
-                            </div>
+                            <ShowXmlMessage content = {this.props.store.messageStore.receivedMessage.body} 
+                                            hidden = {this.tabPullState.value === 0 } 
+                                            textfieldStyle = {classes.textfieldStyle} />
+                            <ShowXmlMessage content = {this.props.store.messageStore.receivedMessage.acknowledge} 
+                                            hidden = {this.tabPullState.value === 1} 
+                                            textfieldStyle = {classes.textfieldStyle} />
                         </Paper>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
+                <Typography className={classes.hide} onChange={this.showErrorMessage()}>{""+this.props.store.messageStore.receivedMessageError}</Typography>
+                <Typography className={classes.hide} onChange={this.showSuccessMessage()}>{""+this.props.store.messageStore.receivedMessage}</Typography>
             </div>
         );
     }
 }
 
 PulledMessage.propTypes = {
+    store: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PulledMessage)
-
+export default withStyles(styles)(withSnackbar(PulledMessage))
 
 

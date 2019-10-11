@@ -13,6 +13,15 @@ public class DefaultMessageStorage implements MessageStorage {
         return object;
     }
 
+    @Override
+    public boolean delete(Object message) {
+        if (this.object.equals(object)) {
+            this.object = null;
+            return true;
+        }
+        return false;
+    }
+
     boolean isObjectNull() {
         return object == null;
     }

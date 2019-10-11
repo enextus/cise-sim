@@ -1,15 +1,15 @@
-import {get} from '../api/API'
+import {http_get} from '../api/API'
 import Template from "./Template";
 
 export async function getTemplateList() {
-    const templates = await get("templates");
+    const templates = await http_get("templates");
     return templates.map(t => new Template(t));
 }
 
 // requestAck must be transformed in requiresAck
 export async function getTemplateById(templateId, messageId, correlationId, requiresAck) {
     console.log("getTemplateById");
-    const template = await get(`templates/${templateId}`,
+    const template = await http_get(`templates/${templateId}`,
         {
             messageId: messageId,
             correlationId: correlationId,
