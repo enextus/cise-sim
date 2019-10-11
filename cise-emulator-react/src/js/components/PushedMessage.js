@@ -72,7 +72,7 @@ class PushedMessage extends Component {
         this.value = 0;
         return (
             <div className={classes.root}>
-                 <ExpansionPanel disabled={(this.props.store.templateStore.template.content === "")}>                        
+                 <ExpansionPanel disabled={(this.props.store.messageStore.sentMessage.body === "")}>                        
                      <ExpansionPanelSummary
                             expandIcon={<ExpandMoreIcon/>}
                             aria-controls="SentMessagecontent"
@@ -91,11 +91,7 @@ class PushedMessage extends Component {
                                   indicatorColor="primary"
                                   textColor="primary">
                                 <Tab className={classes.pullPanel_tab}
-                                     label="preview"
-                                     id='simple-tab-1'
-                                     aria-controls='simple-tabpanel-1'
-                                />
-                                <Tab label="message"
+                                     label="message"
                                      id='simple-tab-2'
                                      aria-controls='simple-tabpanel-2'
                                 />
@@ -104,17 +100,12 @@ class PushedMessage extends Component {
                                      aria-controls='simple-tabpanel-3'
                                 />                                
                             </Tabs>
-
-                            <ShowXmlMessage content = {this.props.store.templateStore.template.content} 
+                            <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.body} 
                                             hidden = {this.tabPushState.value === 0} 
                                             textfieldStyle = {classes.textfieldStyle} />
-                            <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.body} 
+                            <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.acknowledge} 
                                             hidden = {this.tabPushState.value === 1} 
                                             textfieldStyle = {classes.textfieldStyle} />
-                            <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.acknowledge} 
-                                            hidden = {this.tabPushState.value === 2} 
-                                            textfieldStyle = {classes.textfieldStyle} />
-
                         </Paper>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
