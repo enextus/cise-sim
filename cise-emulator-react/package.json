@@ -39,10 +39,11 @@
     "mobx-utils": "^5.0.3",
     "notistack": "^0.9.3",
     "prop-types": "^15.7.2",
-    "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
     "react-highlight.js": "^1.0.7",
     "react-select": "^3.0.4",
+    "typeface-roboto": "0.0.75",
     "xml-formatter": "^1.1.0"
   },
   "jest": {
