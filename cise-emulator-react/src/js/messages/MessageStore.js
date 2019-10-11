@@ -57,16 +57,12 @@ export default class MessageStore {
         this.interval = setInterval(async function (that)
          {
             const pullMessageResponse = await pullMessage();
-            console.log("pullMessageResponse:", pullMessageResponse);
             if (!pullMessageResponse) return;
             if (pullMessageResponse.errorCode) {
-                console.log("Pull returned an error.");
                 that.receivedMessageError = pullMessageResponse;
             } else {
-                console.log("Pull returned successfully.");
                 that.receivedMessage = pullMessageResponse;
             }
-            console.log("pullMessageResponse:", pullMessageResponse);
         }, 3000, this);
     }
 

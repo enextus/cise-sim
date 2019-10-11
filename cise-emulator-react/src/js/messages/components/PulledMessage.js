@@ -88,6 +88,13 @@ class PulledMessage extends Component {
         return !this.props.store.templateStore.isTemplateSelected;
     }
 
+    showSuccessMessage = (event, newValue) => {
+        if (this.props.store.messageStore.receivedMessage){
+            this.props.enqueueSnackbar("New message has been received.", {
+                    variant: 'info'
+                });
+            }
+        }
 
     showErrorMessage = (event, newValue) => {
         if (this.props.store.messageStore.receivedMessageError){
@@ -155,6 +162,7 @@ class PulledMessage extends Component {
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
                 <Typography className={classes.hide} onChange={this.showErrorMessage()}>{""+this.props.store.messageStore.receivedMessageError}</Typography>
+                <Typography className={classes.hide} onChange={this.showSuccessMessage()}>{""+this.props.store.messageStore.receivedMessage}</Typography>
             </div>
         );
     }

@@ -1,6 +1,5 @@
 package eu.cise.emulator.api.resources;
 
-import eu.cise.emulator.api.APIError;
 import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.api.MessageApiDto;
 import org.slf4j.Logger;
@@ -27,10 +26,6 @@ public class WebAPIMessageResource {
     @DELETE
     public Response pullAndDelete() {
         LOGGER.info("messagePull from UI");
-//        return Response
-//                .status(Response.Status.INTERNAL_SERVER_ERROR)
-//                .entity(new APIError("another test"))
-//                .build();
 
         MessageApiDto lastStoredMessage = messageAPI.getLastStoredMessage();
 
@@ -47,6 +42,6 @@ public class WebAPIMessageResource {
                 .entity(lastStoredMessage)
                 .build();
 
-   }
+    }
 
 }
