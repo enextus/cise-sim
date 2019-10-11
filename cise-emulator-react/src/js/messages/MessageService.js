@@ -23,10 +23,11 @@ export async function sendMessage(templateId, messageId, correlationId, requires
 
 
 export async function pullMessage() {
-    console.log("pullMessage");
+    
     const pullMessageDeleteResponse = await http_delete("messages/latest");
-
+    console.log("pullMessageDeleteResponse: ", pullMessageDeleteResponse);
     if (!pullMessageDeleteResponse) return;
+    console.log("pullMessageDeleteResponse: ", pullMessageDeleteResponse);
 
     if (pullMessageDeleteResponse.errorCode) {
         console.log("pullMessagePostResponse returned with n error: ", pullMessageDeleteResponse);

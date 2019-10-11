@@ -56,22 +56,18 @@ export default class MessageStore {
     startPull() {
         this.interval = setInterval(async function (that)
          {
-             if (!that.receivedMessageError){
-                 that.receivedMessageError = new Error(500,"");
-             }
-                 that.receivedMessageError.errorCode = that.count;
-             that.count ++;
             const pullMessageResponse = await pullMessage();
+            console.log("pullMessageResponse:", pullMessageResponse);
             if (!pullMessageResponse) return;
             if (pullMessageResponse.errorCode) {
                 console.log("Pull returned an error.");
- //               this.receivedMessageError = pullMessageResponse;
+                that.receivedMessageError = pullMessageResponse;
             } else {
                 console.log("Pull returned successfully.");
                 that.receivedMessage = pullMessageResponse;
             }
             console.log("pullMessageResponse:", pullMessageResponse);
-        }, 6000, this);
+        }, 3000, this);
     }
 
 }

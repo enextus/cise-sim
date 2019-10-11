@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Highlight from 'react-highlight.js';
 import PropTypes from 'prop-types';
 import {withSnackbar} from 'notistack';
+import ShowXmlMessage from "../../components/common/ShowXmlMessage";
 
 const styles = () => ({
     root: {
@@ -87,6 +88,24 @@ class PulledMessage extends Component {
     }
 
 
+    showErrorMessage = (event, newValue) => {
+        if (this.props.store.messageStore.receivedMessageError){
+            console.log("Error in PulledMessage", this.props.store.messageStore.receivedMessageError);
+            this.props.enqueueSnackbar(this.props.store.messageStore.receivedMessageError.errorMessage, {
+                variant: 'error',
+                persist: true,
+                action: (key) => (
+                    <Button onClick={() => {
+                        this.props.closeSnackbar(key)
+                    }}>
+                        {'Dismiss'}
+                    </Button>
+                ),
+            });
+            //this.props.store.messageStore.receivedMessageError= null;
+        }
+    }
+
     // async pullIntent(props) {
     //     if (!store) alert("no store");
     //     const response = await props.store.messageStore.pull();
@@ -116,29 +135,14 @@ class PulledMessage extends Component {
             console.log("receivedError: ", this.props.store.messageStore.receivedMessageError);
         }
 
-        // if (this.props.store.messageStore.receivedMessageError){
-        //     console.log("Error in PulledMessage", this.props.store.messageStore.receivedMessageError);
-        //     this.props.enqueueSnackbar(this.props.store.messageStore.receivedMessageError.errorMessage, {
-        //         variant: 'error',
-        //         persist: true,
-        //         action: (key) => (
-        //             <Button onClick={() => {
-        //                 this.props.closeSnackbar(key)
-        //             }}>
-        //                 {'Dismiss'}
-        //             </Button>
-        //         ),
-        //     });
-        //     this.props.store.messageStore.receivedMessageError= null;
-        // }
-
-        return (
+         return (
             <div className={classes.root}>
 
-                <Typography>{""+this.props.store.messageStore.receivedMessageError}</Typography>
+                <Typography onChange={this.showErrorMessage()}>{""+this.props.store.messageStore.receivedMessageError}</Typography>
 
                 <ExpansionPanel
-                    disabled={(this.props.store.messageStore.receivedMessage.body === "") && (this.props.store.messageStore.receivedMessage.acknowledge === "")}>
+                    disabled={(this.props.store.messageStore.receivedMessage.body === "") 
+                    && (this.props.store.messageStore.receivedMessage.acknowledge === "")}>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="receiveMessagecontent"
@@ -164,27 +168,12 @@ class PulledMessage extends Component {
                                      id='simple-tab-2'
                                      aria-controls='simple-tabpanel-2'/>
                             </Tabs>
-
-                            <div
-                                hidden={this.props.store.messageStore.receivedMessage.body === "" || this.tabPullState.value === 1}
-                                className={classes.textfieldStyle}>
-                                <Highlight language={"xml"}>
-                                    {format(this.props.store.messageStore.receivedMessage.body, {
-                                        stripComments: true,
-                                        collapseContent: true
-                                    })}
-                                </Highlight>
-                            </div>
-                            <div
-                                hidden={this.props.store.messageStore.receivedMessage.acknowledge === "" || this.tabPullState.value === 0}
-                                className={classes.textfieldStyle}>
-                                <Highlight language={"xml"}>
-                                    {format(this.props.store.messageStore.receivedMessage.acknowledge, {
-                                        stripComments: true,
-                                        collapseContent: true
-                                    })}
-                                </Highlight>
-                            </div>
+                            <ShowXmlMessage content = {this.props.store.messageStore.receivedMessage.body} 
+                                            hidden = {(this.tabPullState.value === 0 )||(this.props.store.messageStore.receivedMessage.body === "")} 
+                                            textfieldStyle = {classes.textfieldStyle} />
+                            <ShowXmlMessage content = {this.props.store.messageStore.receivedMessage.acknowledge} 
+                                            hidden = {(this.tabPullState.value === 1)||((this.props.store.messageStore.receivedMessage.acknowledge === ""))} 
+                                            textfieldStyle = {classes.textfieldStyle} />
                         </Paper>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
