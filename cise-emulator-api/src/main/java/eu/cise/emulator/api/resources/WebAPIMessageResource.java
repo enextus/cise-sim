@@ -29,7 +29,7 @@ public class WebAPIMessageResource {
         LOGGER.info("messagePull from UI");
 //        return Response
 //                .status(Response.Status.INTERNAL_SERVER_ERROR)
-//                .entity(new APIError("test"))
+//                .entity(new APIError("another test"))
 //                .build();
 
         MessageApiDto lastStoredMessage = messageAPI.getLastStoredMessage();
@@ -46,6 +46,7 @@ public class WebAPIMessageResource {
                 .status(Response.Status.OK)
                 .entity(lastStoredMessage)
                 .build();
-    }
+
+   }
 
 }
