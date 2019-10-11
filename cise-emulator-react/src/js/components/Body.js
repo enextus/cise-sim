@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SendForm from './SendForm';
 import PushedMessage from './PushedMessage';
+import PreviewMessage from './PreviewMessage';
 import PulledMessage from '../messages/components/PulledMessage';
 import {Grid} from '@material-ui/core';
 import {observer} from 'mobx-react';
@@ -30,6 +31,8 @@ export default class Body extends Component {
                     <SendForm
                         store={this.props.store}
                         messageCandidate={messageCandidate}/>
+                    <PreviewMessage
+                        store={this.props.store}/>
                     <PushedMessage
                         store={this.props.store}/>
                     <PulledMessage
