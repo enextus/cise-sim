@@ -101,10 +101,10 @@ class PushedMessage extends Component {
                                 />                                
                             </Tabs>
                             <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.body} 
-                                            hidden = {this.tabPushState.value === 0} 
+                                            hidden = {(this.tabPushState.value === 0)||(this.props.store.messageStore.sentMessage.body === "")}
                                             textfieldStyle = {classes.textfieldStyle} />
                             <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.acknowledge} 
-                                            hidden = {this.tabPushState.value === 1} 
+                                            hidden = {(this.tabPushState.value === 1)||(this.props.store.messageStore.sentMessage.acknowledge === "")} 
                                             textfieldStyle = {classes.textfieldStyle} />
                         </Paper>
                     </ExpansionPanelDetails>

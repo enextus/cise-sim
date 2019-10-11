@@ -51,6 +51,9 @@ const styles = () => ({
         width: "100%",
         borderLeft: `6px solid 4`,
         padding: `4px 6px`
+    },
+    hide: {
+        visibility: 'hidden',
     }
 });
 
@@ -106,29 +109,6 @@ class PulledMessage extends Component {
         }
     }
 
-    // async pullIntent(props) {
-    //     if (!store) alert("no store");
-    //     const response = await props.store.messageStore.pull();
-    //
-    //     if (!response) return;
-    //
-    //     if (response.errorCode) {
-    //         this.props.enqueueSnackbar(response.errorMessage, {
-    //             variant: 'error',
-    //             persist: true,
-    //             action: (key) => (
-    //                 <Button onClick={() => {
-    //                     this.props.closeSnackbar(key)
-    //                 }}>
-    //                     {'Dismiss'}
-    //                 </Button>
-    //             ),
-    //         });
-    //     } else if (response.status === 200) {
-    //         this.props.enqueueSnackbar('New message has been received.', {variant: 'success',});
-    //     }
-    // }
-
     render() {
         const {classes} = this.props;
         if (this.props.store.messageStore.receivedMessageError !== null) {
@@ -137,9 +117,6 @@ class PulledMessage extends Component {
 
          return (
             <div className={classes.root}>
-
-                <Typography onChange={this.showErrorMessage()}>{""+this.props.store.messageStore.receivedMessageError}</Typography>
-
                 <ExpansionPanel
                     disabled={(this.props.store.messageStore.receivedMessage.body === "") 
                     && (this.props.store.messageStore.receivedMessage.acknowledge === "")}>
@@ -169,14 +146,15 @@ class PulledMessage extends Component {
                                      aria-controls='simple-tabpanel-2'/>
                             </Tabs>
                             <ShowXmlMessage content = {this.props.store.messageStore.receivedMessage.body} 
-                                            hidden = {(this.tabPullState.value === 0 )||(this.props.store.messageStore.receivedMessage.body === "")} 
+                                            hidden = {this.tabPullState.value === 0 } 
                                             textfieldStyle = {classes.textfieldStyle} />
                             <ShowXmlMessage content = {this.props.store.messageStore.receivedMessage.acknowledge} 
-                                            hidden = {(this.tabPullState.value === 1)||((this.props.store.messageStore.receivedMessage.acknowledge === ""))} 
+                                            hidden = {this.tabPullState.value === 1} 
                                             textfieldStyle = {classes.textfieldStyle} />
                         </Paper>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
+                <Typography className={classes.hide} onChange={this.showErrorMessage()}>{""+this.props.store.messageStore.receivedMessageError}</Typography>
             </div>
         );
     }

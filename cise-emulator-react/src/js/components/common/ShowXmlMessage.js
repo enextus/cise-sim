@@ -6,7 +6,8 @@ import Highlight from 'react-highlight.js';
 export default class ShowXmlMessage extends React.Component {
 
     render() {
-        if(!this.props.hidden){
+        
+        if(this.props.content && this.props.content != ""){
             return (
                 <div hidden={!this.props.hidden} className={this.props.textfieldStyle}>
                     <Highlight language={"xml"}> 

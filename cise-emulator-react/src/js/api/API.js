@@ -87,7 +87,7 @@ const handleError = (error) => {
          * of http.ClientRequest in Node.js
          */
         console.log(error.request);
-        return new Error(0, "Unable to reach the server :"+error.message);
+        return new Error(1, "Unable to reach the server: "+error.message);
     } else {
         // Something happened in setting up the request and triggered an Error
         console.log(error.message);
