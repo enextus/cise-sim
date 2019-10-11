@@ -5,5 +5,8 @@ package eu.cise.emulator.io;
  */
 public interface MessageStorage {
     void store(Object message);
+
     Object read();
+
+    boolean delete(Object message);
 }

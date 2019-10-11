@@ -17,6 +17,7 @@ const stores = {
 
 autorun(() => {
     stores.appStore.loadServiceId();
+    stores.messageStore.startPull();
 });
 
 @observer

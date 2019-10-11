@@ -10,7 +10,7 @@ module.exports = {
         proxy: {
             '/webapi': {
                 bypass: (req, res) => {
-                    if (req.url.indexOf('/webapi/messages') !== -1) {
+                    if (req.url.indexOf('/api/ui/messages') !== -1) {
                         console.log('.')
                         res.send({
                             'status': 200,
@@ -19,14 +19,14 @@ module.exports = {
                         });
                     }
                     ''
-                    if (req.url.indexOf('/api/templates/') !== -1) {
+                    if (req.url.indexOf('/api/ui/templates/') !== -1) {
                         console.log('bypass.0TemplateById.')
                         res.status = 500
                         res.send({
                             'error': 'test error 500'
                         });
                     }
-                    if (req.url.indexOf('/api/templates') !== -1) {
+                    if (req.url.indexOf('/api/ui/templates') !== -1) {
                         console.log('bypass.0TemplateList.')
                         res.send([
                             "Pull_requestTemplate.xml",

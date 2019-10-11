@@ -12,4 +12,7 @@ public interface MessageAPI {
     MessageApiDto getLastStoredMessage();
 
     MessageApiDto preview(SendParam jsonNode, String templateHash);
+
+    boolean consumeStoredMessage(MessageApiDto storedMessage);
+
 }

@@ -1,9 +1,11 @@
+import {observable} from "mobx";
+
 export default class Message {
-    body;
-    acknowledge;
-    status;
-    errorDetail;
-    error;
+    @observable body;
+    @observable acknowledge;
+    // status;
+    // errorDetail;
+    // error;
 
     constructor(props) {
         this.body = props.body;
