@@ -67,11 +67,14 @@ public class TemplateResource {
     @Path("{templateId}")
     public Response send(@PathParam("templateId") String templateId, JsonNode msgWithParams) {
         LOGGER.info("send called with param: {}", msgWithParams);
+
         MessageApiDto resultMessage = messageAPI.send(templateId, msgWithParams);
+
         if (resultMessage.getStatus() >= 300) {
             APIError apiError = new APIError(resultMessage.getErrorDetail());
             return Response.serverError().entity(apiError).build();
         }
+
         return Response
                 .status(Response.Status.CREATED)
                 .entity(resultMessage)
