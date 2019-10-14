@@ -1,10 +1,9 @@
-import {Button, withStyles, Fragment} from "@material-ui/core";
+import {Button, withStyles} from "@material-ui/core";
 import DescriptionIcon from "@material-ui/icons/Description";
 import React from "react";
 import PropTypes from "prop-types";
 import {observer} from "mobx-react";
-import { withSnackbar } from 'notistack';
-
+import {withSnackbar} from 'notistack';
 
 
 const styles = theme => ({
@@ -17,7 +16,9 @@ const styles = theme => ({
 });
 
 const action = (key) => (
-    <Button onClick={() => { props.closeSnackbar(key) }}>
+    <Button onClick={() => {
+        props.closeSnackbar(key)
+    }}>
         {'Dismiss'}
     </Button>
 );
@@ -32,18 +33,20 @@ class PreviewButton extends React.Component {
     async preview() {
         const response = await this.props.store.preview();
         console.log("TemplateStore.preview response: ", response);
-        if(response.errorCode){
-            this.props.enqueueSnackbar(response.message, {
+        if (response.errorCode) {
+            this.props.enqueueSnackbar(response.errorMessage, {
                 variant: 'error',
                 persist: true,
                 action: (key) => (
-                    <Button onClick={() => { this.props.closeSnackbar(key) }}>
+                    <Button onClick={() => {
+                        this.props.closeSnackbar(key)
+                    }}>
                         {'Dismiss'}
                     </Button>
                 ),
             });
         } else {
-            this.props.enqueueSnackbar('New preview was generated.', {variant: 'success',});
+            this.props.enqueueSnackbar('New preview has been generated.', {variant: 'success',});
         }
     }
 

@@ -1,6 +1,5 @@
 import {getTemplateById, getTemplateList} from "./TemplateService";
 import { observable, computed, action } from "mobx";
-import {sendMessage} from "../messages/MessageService";
 import Template from "./Template";
 
 export default class TemplateStore {
@@ -53,16 +52,6 @@ export default class TemplateStore {
             this.template = getTemplateByIdResposnse;
         }
         return getTemplateByIdResposnse;
-    }
-
-
-    // TODO To be moved into another store?
-    send() {
-        const message = sendMessage(
-            this.selected,
-            this.messageId,
-            this.correlationId,
-            this.requiresAck);
     }
 
     uuidv4() {

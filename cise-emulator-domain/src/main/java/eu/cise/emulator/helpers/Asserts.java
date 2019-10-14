@@ -1,5 +1,7 @@
 package eu.cise.emulator.helpers;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 import java.lang.reflect.InvocationTargetException;
 
 @SuppressWarnings("ALL")
@@ -21,6 +23,17 @@ public class Asserts {
 
     public static <O, T extends Exception> O notNull(O reference, Class<T> ex) throws T {
         if (reference == null) {
+            generateException(ex, null);
+        }
+        return reference;
+    }
+
+    public static <T extends Exception> String notBlank(String reference) throws T {
+        return notBlank(reference, null);
+    }
+
+    public static <T extends Exception> String notBlank(String reference, Class<T> ex) throws T {
+        if (isNullOrEmpty(reference)) {
             generateException(ex, null);
         }
         return reference;

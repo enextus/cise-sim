@@ -1,29 +1,38 @@
-// defaultPostData = {
-//     'message_template': '',
-//     'params': {
-//         'message_id': '',
-//         'requires_ack': false
-//     }
-// };
-import {post} from '../api/API'
+import {http_delete, http_post} from '../api/API'
+import Message from "./Message";
 
 export async function sendMessage(templateId, messageId, correlationId, requiresAck) {
-    try {
-        console.log("sendMessage");
-        const message = await post("templates",
-            {
-                message_template: templateId,
-                params: {
-                    message_id: messageId,
-                    correlation_id: correlationId,
-                    requires_ack: requiresAck,
-                }
-            }
-        );
-        console.log("sendMessage", message);
-        return message;
-    } catch (e) {
-        console.error("sendMessage", e);
+    console.log("sendMessage");
+    const sendMessagePostResponse = await http_post("templates/" + templateId,
+        {
+            messageId: messageId,
+            correlationId: correlationId,
+            requiresAck: requiresAck,
+        }
+    );
+
+    if (sendMessagePostResponse.errorCode) {
+        // return Error object
+        console.log("sendMessagePostResposnse retuned with n error: ", sendMessagePostResponse);
+        return sendMessagePostResponse;
     }
 
+    console.log("sendMessagePostResposnse: ", sendMessagePostResponse);
+    return new Message(sendMessagePostResponse);
+}
+
+
+export async function pullMessage() {
+    
+    const pullMessageDeleteResponse = await http_delete("messages/latest");
+    console.log("pullMessageDeleteResponse: ", pullMessageDeleteResponse);
+    if (!pullMessageDeleteResponse) return;
+    console.log("pullMessageDeleteResponse: ", pullMessageDeleteResponse);
+
+    if (pullMessageDeleteResponse.errorCode) {
+        console.log("pullMessagePostResponse returned with n error: ", pullMessageDeleteResponse);
+        return pullMessageDeleteResponse;
+    }
+    console.log("pullMessagePostResponse: ", pullMessageDeleteResponse);
+    return new Message(pullMessageDeleteResponse);
 }

@@ -1,6 +1,6 @@
 package eu.cise.emulator;
 
-import eu.cise.emulator.exceptions.NullMessageIdEx;
+import eu.cise.emulator.exceptions.EmptyMessageIdEx;
 
 import java.util.Objects;
 
@@ -22,7 +22,7 @@ public class SendParam {
 
     public SendParam(boolean requiresAck, String messageId, String correlationId) {
         this.requiresAck = requiresAck;
-        this.messageId = notNull(messageId, NullMessageIdEx.class);
+        this.messageId = notNull(messageId, EmptyMessageIdEx.class);
         this.correlationId = correlationId;
     }
 

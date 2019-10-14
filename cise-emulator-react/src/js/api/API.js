@@ -3,7 +3,7 @@ import Error from "../errors/Error";
 
 
 
-export const get = async (service, params) => {
+export const http_get = async (service, params) => {
     try {
         let response = await axios.get(
             getServiceURL(service),
@@ -21,7 +21,8 @@ export const get = async (service, params) => {
     }
 };
 
-export const post = async (service, data) => {
+
+export const http_post = async (service, data) => {
     try {
         let response = await axios.post(
             getServiceURL(service),
@@ -40,8 +41,26 @@ export const post = async (service, data) => {
     }
 };
 
+export const http_delete = async (service) => {
+    try {
+        let response =  await axios.delete(
+            getServiceURL(service),
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                params: {}
+            });
+
+        return response.data;
+    } catch (error) {
+        console.error("request DELETE " + getServiceURL(service) + " failed.");
+        return handleError(error);
+    }
+};
+
 const getServiceURL = service => {
-    return getHost().concat("/api/").concat(service);
+    return getHost().concat("/api/ui/").concat(service);
 };
 
 const getHost = () => {
@@ -68,7 +87,7 @@ const handleError = (error) => {
          * of http.ClientRequest in Node.js
          */
         console.log(error.request);
-        return new Error(0, "Unable to reach the server :"+error.message);
+        return new Error(1, "Unable to reach the server: "+error.message);
     } else {
         // Something happened in setting up the request and triggered an Error
         console.log(error.message);

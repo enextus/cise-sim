@@ -1,6 +1,9 @@
 package eu.cise.emulator.api.resources;
 
-import eu.cise.servicemodel.v1.message.*;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.AcknowledgementType;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.PriorityType;
 import eu.cise.servicemodel.v1.service.Service;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
@@ -18,7 +21,7 @@ import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 
 public class MessageBuilderUtil {
-    static final String TEST_MESSAGE_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+    public static final String TEST_MESSAGE_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
             "<ns4:Push xmlns:ns2=\"http://www.cise.eu/servicemodel/v1/authority/\" xmlns:ns4=\"http://www.cise.eu/servicemodel/v1/message/\" xmlns:ns3=\"http://www.cise.eu/servicemodel/v1/service/\">\n" +
             "    <CorrelationID>476d949d-5aa4-44cc-8e20-c1a2288fe098</CorrelationID>\n" +
             "    <CreationDateTime>2019-09-20T07:49:56.323Z</CreationDateTime>\n" +
@@ -75,17 +78,17 @@ public class MessageBuilderUtil {
             "</ns4:Push>";
 
 
-    static String create() {
+    public static String create() {
         return TEST_MESSAGE_XML;
     }
 
-    static String createMessageString() {
+    public static String createMessageString() {
         Message message = createMessage();
         DefaultXmlMapper defaultXmlMapper = new DefaultXmlMapper();
         return defaultXmlMapper.toXML(message);
     }
 
-    static Message createMessage() {
+    public static Message createMessage() {
         Service service = newService().type(VESSEL_SERVICE).build();
         service.setServiceID("serviceID");
         service.setServiceType(ServiceType.VESSEL_SERVICE);
@@ -100,7 +103,7 @@ public class MessageBuilderUtil {
                 .build();
     }
 
-    static Acknowledgement createAcknowledgeMessage() {
+    public static Acknowledgement createAcknowledgeMessage() {
         Message message = createMessage();
         AcknowledgementType acknowledgementType;
         String acknowledgementDetail;

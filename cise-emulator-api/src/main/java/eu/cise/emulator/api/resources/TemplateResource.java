@@ -1,31 +1,39 @@
 package eu.cise.emulator.api.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.cise.emulator.EmuConfig;
-import eu.cise.emulator.api.*;
+import eu.cise.emulator.api.APIError;
+import eu.cise.emulator.api.MessageAPI;
+import eu.cise.emulator.api.PreviewResponse;
+import eu.cise.emulator.api.SendResponse;
+import eu.cise.emulator.api.TemplateAPI;
+import eu.cise.emulator.api.TemplateListResponse;
 import eu.cise.emulator.api.representation.TemplateParams;
 import eu.cise.emulator.templates.Template;
+import java.util.List;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.List;
-
-@Path("/api/templates")
+@Path("/api/ui/templates")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class TemplateResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TemplateResource.class);
     private final MessageAPI messageAPI;
     private final TemplateAPI templateAPI;
-    private final EmuConfig emuConfig;
 
-    public TemplateResource(MessageAPI messageAPI, TemplateAPI templateAPI, EmuConfig emuConfig) {
+    public TemplateResource(MessageAPI messageAPI, TemplateAPI templateAPI) {
         this.messageAPI = messageAPI;
         this.templateAPI = templateAPI;
-        this.emuConfig = emuConfig;
     }
 
     @GET
@@ -37,26 +45,26 @@ public class TemplateResource {
         List<Template> templateList = templateListResponse.getTemplates();
 
         if (!templateListResponse.isOk()) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new APIError(templateListResponse.getError())).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new APIError(templateListResponse.getError())).build();
         }
 
         return Response.status(Response.Status.OK)
-                .entity(templateList)
-                .build();
+            .entity(templateList)
+            .build();
     }
 
 
     @GET
     @Path("{templateId}")
     public Response getTemplateById(
-            @PathParam("templateId") String templateId,
-            @QueryParam("messageId") String messageId,
-            @QueryParam("correlationId") String correlationId,
-            @QueryParam("requestAck") boolean requestAck) {
-
+        @PathParam("templateId") String templateId,
+        @QueryParam("messageId") String messageId,
+        @QueryParam("correlationId") String correlationId,
+        @QueryParam("requestAck") boolean requestAck) {
 
         PreviewResponse previewResponse = templateAPI.preview(
-                new TemplateParams(templateId, messageId, correlationId, requestAck));
+            new TemplateParams(templateId, messageId, correlationId, requestAck));
 
         if (!previewResponse.isOk()) {
             APIError apiError = new APIError(previewResponse.getErrorMessage());
@@ -67,13 +75,19 @@ public class TemplateResource {
     }
 
     @POST
-    public Response send(JsonNode msgWithParams) {
-        LOGGER.info("messageCreate with param: {}", msgWithParams);
-        MessageApiDto resultMessage = messageAPI.send(msgWithParams);
+    @Path("{templateId}")
+    public Response send(@PathParam("templateId") String templateId, JsonNode msgWithParams) {
+        LOGGER.info("send called with param: {}", msgWithParams);
+        SendResponse sendResponse = messageAPI.send(templateId, msgWithParams);
+        if (!sendResponse.isOk()) {
+            APIError apiError = new APIError(sendResponse.getErrorMessage());
+            return Response.serverError().entity(apiError).build();
+        }
+
         return Response
-                .status(Response.Status.CREATED)
-                .entity(resultMessage)
-                .build();
+            .status(Response.Status.CREATED)
+            .entity(sendResponse.getContents())
+            .build();
     }
 
 }
