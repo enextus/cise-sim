@@ -40,6 +40,7 @@ render(
                                 vertical: 'bottom',
                                 horizontal: 'right',
                             }}
+                hideIconVariant= {true}
             >
                 <MainApp/>
             </SnackbarProvider>
