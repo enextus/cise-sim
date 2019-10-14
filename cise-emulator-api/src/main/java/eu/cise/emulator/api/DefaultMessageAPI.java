@@ -15,10 +15,6 @@ import eu.eucise.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.core.Response;
-
-import static eu.eucise.helpers.PushBuilder.newPush;
-
 public class DefaultMessageAPI implements MessageAPI {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebAPIMessageResource.class);
     private final MessageStorage messageStorage;
@@ -39,7 +35,7 @@ public class DefaultMessageAPI implements MessageAPI {
     }
 
     @Override
-    public MessageApiDto send(String templateId, JsonNode params) {
+    public SendResponse send(String templateId, JsonNode params) {
         LOGGER.debug("send is passed through api templateId: {}, params: {}", templateId, params);
 
         try {
@@ -48,10 +44,10 @@ public class DefaultMessageAPI implements MessageAPI {
             SendParam sendParam = new SendParamsReader().extractParams(params);
             Message message = xmlMapper.fromXML(xmlContent);
             Pair<Acknowledgement, Message> sendResposnse = messageProcessor.send(message, sendParam);
-            return new MessageApiDto(Response.Status.ACCEPTED.getStatusCode(), null, xmlMapper.toXML(sendResposnse.getA()), xmlMapper.toXML(sendResposnse.getB()));
+            return new SendResponse.OK(new MessageApiDto(xmlMapper.toXML(sendResposnse.getA()), xmlMapper.toXML(sendResposnse.getB())));
         } catch (Exception e) {
-            LOGGER.error("error in Api send", e);
-            return new MessageApiDto(Response.Status.BAD_REQUEST.getStatusCode(), "Send Error: " + e.getMessage(), "", "");
+            LOGGER.error("Error in Api send", e);
+            return new SendResponse.KO(e.getMessage());
         }
     }
 
@@ -69,9 +65,7 @@ public class DefaultMessageAPI implements MessageAPI {
             String acknowledgementXml = xmlMapper.toXML(acknowledgement);
             String messageXml = xmlMapper.toXML(message);
 
-            MessageApiDto messageApiDto = new MessageApiDto(
-                    Response.Status.CREATED.getStatusCode(),
-                    "", acknowledgementXml, messageXml);
+            MessageApiDto messageApiDto = new MessageApiDto(acknowledgementXml, messageXml);
 
             messageStorage.store(messageApiDto);
 
@@ -86,14 +80,6 @@ public class DefaultMessageAPI implements MessageAPI {
     @Override
     public MessageApiDto getLastStoredMessage() {
         return (MessageApiDto) messageStorage.read();
-    }
-
-    @Override
-    public MessageApiDto preview(SendParam param, String templateHash) {
-        //TODO: read the template from fileStorage
-        Message message = newPush().build();
-        Message preview = messageProcessor.preview(message, param);
-        return new MessageApiDto(Response.Status.OK.getStatusCode(), "", "", xmlMapper.toXML(preview));
     }
 
     public boolean consumeStoredMessage(MessageApiDto storedMessage) {
