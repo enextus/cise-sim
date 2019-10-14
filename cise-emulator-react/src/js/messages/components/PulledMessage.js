@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {observer} from "mobx-react";
 import {observable} from "mobx";
-import format from "xml-formatter";
 import {
     Button,
     ExpansionPanel,
@@ -14,7 +13,6 @@ import {
     withStyles
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Highlight from 'react-highlight.js';
 import PropTypes from 'prop-types';
 import {withSnackbar} from 'notistack';
 import Error from '../../errors/Error';
@@ -59,7 +57,6 @@ const styles = () => ({
 });
 
 
-
 @observer
 class PulledMessage extends Component {
     constructor(props) {
@@ -67,8 +64,8 @@ class PulledMessage extends Component {
     }
 
 
-
-    prevReceivedMessageError = new Error("","");
+    lastReceivedSuccessCheckSum = 0;
+    prevReceivedMessageError = new Error("", "");
 
     @observable
     tabPullState = {
@@ -80,7 +77,7 @@ class PulledMessage extends Component {
     };
 
     isReceivedMessageErrorUpdated() {
-        return (this.props.store.messageStore.receivedMessageError!=null);
+        return (this.props.store.messageStore.receivedMessageError != null);
     }
 
 
@@ -89,29 +86,34 @@ class PulledMessage extends Component {
     }
 
     showSuccessMessage = (event, newValue) => {
-        if (this.props.store.messageStore.receivedMessage){
-            this.props.enqueueSnackbar("New message has been received.", {
-                    variant: 'info'
-                });
-            }
+        if (this.props.store.messageStore.receivedMessage &&
+            this.props.store.messageStore.receivedMessage.checksum !== this.lastReceivedSuccessCheckSum) {
+            this.props.enqueueSnackbar("Message was received", {
+                variant: 'info',
+                innerRef: instance => {
+                    this.props.store.messageStore.receivedMessage.checksum
+                }
+            });
         }
+        this.lastReceivedSuccessCheckSum = this.props.store.messageStore.receivedMessage.checksum;
+    }
 
     showErrorMessage = (event, newValue) => {
-        if (this.props.store.messageStore.receivedMessageError){
+        if (this.props.store.messageStore.receivedMessageError) {
             console.log("Error in PulledMessage", this.props.store.messageStore.receivedMessageError);
             if (this.props.store.messageStore.receivedMessageError.errorMessage != this.prevReceivedMessageError.errorMessage) {
-            this.prevReceivedMessageError= this.props.store.messageStore.receivedMessageError;
-            this.props.enqueueSnackbar(this.props.store.messageStore.receivedMessageError.errorMessage, {
-                variant: 'error',
-                persist: true,
-                action: (key) => (
-                    <Button onClick={() => {
-                        this.props.closeSnackbar(key)
-                    }}>
-                        {'Dismiss'}
-                    </Button>
-                ),
-            });
+                this.prevReceivedMessageError = this.props.store.messageStore.receivedMessageError;
+                this.props.enqueueSnackbar(this.props.store.messageStore.receivedMessageError.errorMessage, {
+                    variant: 'error',
+                    persist: true,
+                    action: (key) => (
+                        <Button onClick={() => {
+                            this.props.closeSnackbar(key)
+                        }}>
+                            {'Dismiss'}
+                        </Button>
+                    ),
+                });
             }
         }
     }
@@ -122,10 +124,10 @@ class PulledMessage extends Component {
             console.log("receivedError: ", this.props.store.messageStore.receivedMessageError);
         }
 
-         return (
+        return (
             <div className={classes.root}>
                 <ExpansionPanel
-                    disabled={(this.props.store.messageStore.receivedMessage.body === "") 
+                    disabled={(this.props.store.messageStore.receivedMessage.body === "")
                     && (this.props.store.messageStore.receivedMessage.acknowledge === "")}>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}
@@ -152,17 +154,19 @@ class PulledMessage extends Component {
                                      id='simple-tab-2'
                                      aria-controls='simple-tabpanel-2'/>
                             </Tabs>
-                            <ShowXmlMessage content = {this.props.store.messageStore.receivedMessage.body} 
-                                            hidden = {this.tabPullState.value === 0 } 
-                                            textfieldStyle = {classes.textfieldStyle} />
-                            <ShowXmlMessage content = {this.props.store.messageStore.receivedMessage.acknowledge} 
-                                            hidden = {this.tabPullState.value === 1} 
-                                            textfieldStyle = {classes.textfieldStyle} />
+                            <ShowXmlMessage content={this.props.store.messageStore.receivedMessage.body}
+                                            hidden={this.tabPullState.value === 0}
+                                            textfieldStyle={classes.textfieldStyle}/>
+                            <ShowXmlMessage content={this.props.store.messageStore.receivedMessage.acknowledge}
+                                            hidden={this.tabPullState.value === 1}
+                                            textfieldStyle={classes.textfieldStyle}/>
                         </Paper>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-                <Typography className={classes.hide} onChange={this.showErrorMessage()}>{""+this.props.store.messageStore.receivedMessageError}</Typography>
-                <Typography className={classes.hide} onChange={this.showSuccessMessage()}>{""+this.props.store.messageStore.receivedMessage}</Typography>
+                <Typography className={classes.hide}
+                            onChange={this.showErrorMessage()}>{"" + this.props.store.messageStore.receivedMessageError}</Typography>
+                <Typography className={classes.hide}
+                            onChange={this.showSuccessMessage()}>{"" + this.props.store.messageStore.receivedMessage}</Typography>
             </div>
         );
     }
