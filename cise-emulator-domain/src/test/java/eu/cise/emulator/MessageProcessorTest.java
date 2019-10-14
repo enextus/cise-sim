@@ -59,6 +59,8 @@ public class MessageProcessorTest {
         when(engine.prepare(message, param)).thenReturn(preparedMessage);
 
         messageProcessor.send(message, param);
+
+        verify(engine).send(preparedMessage);
     }
 
 }

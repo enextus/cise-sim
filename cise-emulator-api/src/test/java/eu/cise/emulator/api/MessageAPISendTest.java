@@ -58,6 +58,22 @@ public class MessageAPISendTest {
         assertThat(sendResponse.getAcknowledge()).isEqualTo(ackAsString);
     }
 
+    @Test
+    public void it_returns_a_messageApiDto_with_the_message_sent_on_successful_send() {
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper);
+
+        Template loadedTemplate = mock(Template.class);
+        when(templateLoader.loadTemplate(any())).thenReturn(loadedTemplate);
+        when(messageProcessor.send(any(), any())).thenReturn(ackMessage);
+        when(xmlMapper.fromXML(any())).thenReturn(pushMessage);
+        String messageAsString = concreteXmlMapper.toXML(ackMessage);
+        when(xmlMapper.toXML(any())).thenReturn(messageAsString);
+
+        MessageApiDto sendResponse = messageAPI.send("template-id", msgParams());
+
+        assertThat(sendResponse.getBody()).isEqualTo(messageAsString);
+    }
+
     private JsonNode msgParams() {
         ObjectNode msgTemplateWithParamObject = jsonMapper.createObjectNode();
         msgTemplateWithParamObject.put("requiresAck", true);

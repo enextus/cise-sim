@@ -10,7 +10,6 @@ import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
-import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +47,7 @@ public class DefaultMessageAPI implements MessageAPI {
 
         try {
             Acknowledgement acknowledgement = messageProcessor.send(message, sendParam);
-            return new MessageApiDto(Response.Status.ACCEPTED.getStatusCode(), null, xmlMapper.toXML(acknowledgement), "");
+            return new MessageApiDto(Response.Status.ACCEPTED.getStatusCode(), null, xmlMapper.toXML(acknowledgement), xmlMapper.toXML(message));
         } catch (Exception e) {
             LOGGER.error("error in Api send", e);
             return new MessageApiDto(Response.Status.BAD_REQUEST.getStatusCode(), "Send Error: " + e.getMessage(), "", "");
