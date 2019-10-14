@@ -41,12 +41,12 @@ public class DefaultMessageAPI implements MessageAPI {
     @Override
     public MessageApiDto send(String templateId, JsonNode params) {
         LOGGER.debug("send is passed through api templateId: {}, params: {}", templateId, params);
-        Template template = templateLoader.loadTemplate(templateId);
-        String xmlContent = template.getTemplateContent();
-        SendParam sendParam = new SendParamsReader().extractParams(params);
-        Message message = xmlMapper.fromXML(xmlContent);
 
         try {
+            Template template = templateLoader.loadTemplate(templateId);
+            String xmlContent = template.getTemplateContent();
+            SendParam sendParam = new SendParamsReader().extractParams(params);
+            Message message = xmlMapper.fromXML(xmlContent);
             Pair<Acknowledgement, Message> sendResposnse = messageProcessor.send(message, sendParam);
             return new MessageApiDto(Response.Status.ACCEPTED.getStatusCode(), null, xmlMapper.toXML(sendResposnse.getA()), xmlMapper.toXML(sendResposnse.getB()));
         } catch (Exception e) {
