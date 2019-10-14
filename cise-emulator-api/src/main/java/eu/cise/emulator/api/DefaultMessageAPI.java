@@ -11,7 +11,6 @@ import eu.cise.emulator.utils.Pair;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.XmlMapper;
-import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +34,7 @@ public class DefaultMessageAPI implements MessageAPI {
     }
 
     @Override
-    public MessageApiDto send(String templateId, JsonNode params) {
+    public SendResponse send(String templateId, JsonNode params) {
         LOGGER.debug("send is passed through api templateId: {}, params: {}", templateId, params);
 
         try {
@@ -43,14 +42,14 @@ public class DefaultMessageAPI implements MessageAPI {
             String xmlContent = template.getTemplateContent();
             SendParam sendParam = new SendParamsReader().extractParams(params);
             Message message = xmlMapper.fromXML(xmlContent);
-            Pair<Acknowledgement, Message> sendResponse = messageProcessor
-                .send(message, sendParam);
-            return new MessageApiDto(Response.Status.ACCEPTED.getStatusCode(), null,
-                xmlMapper.toXML(sendResponse.getA()), xmlMapper.toXML(sendResponse.getB()));
+
+            Pair<Acknowledgement, Message> sendResponse = messageProcessor.send(message, sendParam);
+
+            return new SendResponse.OK(
+                new MessageApiDto(xmlMapper.toXML(sendResponse.getA()), xmlMapper.toXML(sendResponse.getB())));
         } catch (Exception e) {
-            LOGGER.error("error in Api send", e);
-            return new MessageApiDto(Response.Status.BAD_REQUEST.getStatusCode(),
-                "Send Error: " + e.getMessage(), "", "");
+            LOGGER.error("Error in Api send", e);
+            return new SendResponse.KO(e.getMessage());
         }
     }
 
@@ -67,9 +66,7 @@ public class DefaultMessageAPI implements MessageAPI {
             String acknowledgementXml = xmlMapper.toXML(acknowledgement);
             String messageXml = xmlMapper.toXML(message);
 
-            MessageApiDto messageApiDto = new MessageApiDto(
-                Response.Status.CREATED.getStatusCode(),
-                "", acknowledgementXml, messageXml);
+            MessageApiDto messageApiDto = new MessageApiDto(acknowledgementXml, messageXml);
 
             messageStorage.store(messageApiDto);
 

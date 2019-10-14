@@ -1,14 +1,13 @@
 package eu.cise.emulator.api.resources;
 
 import eu.cise.emulator.api.MessageAPI;
-import eu.cise.emulator.api.MessageApiDto;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class WebAPIMessageResourcePullTest {
 
@@ -27,18 +26,6 @@ public class WebAPIMessageResourcePullTest {
     public void it_invokes_the_pull_and_makes_a_call_to_MessageAPI_to_get_the_last_stored_message() {
         Response test = webAPIMessageResource.pullAndDelete();
         verify(messageAPI).getLastStoredMessage();
-    }
-
-    @Test
-    public void it_invokes_the_pull_and_obtains_the_last_stored_message_from_MessageAPI_with_success() {
-        MessageApiDto expectedMessage = new MessageApiDto(Response.Status.OK.getStatusCode(), "error-for-test", "", "");
-
-        when(messageAPI.getLastStoredMessage()).thenReturn(expectedMessage);
-
-        Response resourceResponse = webAPIMessageResource.pullAndDelete();
-        MessageApiDto actualMessage = (MessageApiDto) resourceResponse.getEntity();
-
-        assertThat(actualMessage).isEqualTo(expectedMessage);
     }
 
 }

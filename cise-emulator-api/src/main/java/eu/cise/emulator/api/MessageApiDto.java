@@ -1,61 +1,35 @@
 package eu.cise.emulator.api;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.io.Serializable;
+import java.util.Objects;
 
 public class MessageApiDto implements Serializable {
 
-    @JsonProperty("status")
-    private Integer status;
-
-    @JsonProperty("errorDetail")
-    private String errorDetail;
-
-    @JsonProperty("body")
+    private static final long serialVersionUID = 42L;
     private String body;
-
-    @JsonProperty("acknowledge")
     private String acknowledge;
-
-    @JsonProperty("error")
-    private Boolean error;
 
     public MessageApiDto() {
 
     }
-
-    public MessageApiDto(Integer status, String errorDetail, String acknowledge, String body) {
-        this.status = status;
-        this.errorDetail = errorDetail;
+    public MessageApiDto(String acknowledge, String body) {
         this.body = body;
         this.acknowledge = acknowledge;
     }
 
-
-    public Boolean getError() {
-        return status >= 400;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MessageApiDto that = (MessageApiDto) o;
+        return body.equals(that.body) &&
+                acknowledge.equals(that.acknowledge);
     }
 
-    public void setError(Boolean error) {
-        this.error = error;
-    }
-
-    public String getErrorDetail() {
-        return errorDetail;
-    }
-
-    public void setErrorDetail(String errorDetail) {
-        this.errorDetail = errorDetail;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
+    @Override
+    public int hashCode() {
+        return Objects.hash(body, acknowledge);
     }
 
     public String getBody() {

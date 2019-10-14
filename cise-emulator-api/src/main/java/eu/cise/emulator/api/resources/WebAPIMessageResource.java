@@ -34,6 +34,7 @@ public class WebAPIMessageResource {
                 .status(Response.Status.NO_CONTENT)
                 .build();
         }
+
         boolean isConsumed = messageAPI.consumeStoredMessage(lastStoredMessage);
         LOGGER.info("lastStoredMessage was consumed : " + isConsumed + " with content : "
             + lastStoredMessage.toString());
