@@ -12,7 +12,8 @@ import javax.ws.rs.core.Response;
 
 import static eu.eucise.helpers.AckBuilder.newAck;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CiseMessageResourceTest {
     private static MessageAPI messageAPI = mock(MessageAPI.class);
@@ -41,16 +42,5 @@ public class CiseMessageResourceTest {
         assertThat(response.getStatus()).isEqualTo(201);
     }
 
-    @Test
-    public void it_invokes_the_send_and_stores_the_acknowledge() {
-        String message = MessageBuilderUtil.TEST_MESSAGE_XML;
-        Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
-        when(messageAPI.receive(message)).thenReturn(acknowledgement);
-
-        MessageResource ciseMessageResource = new MessageResource(messageAPI, messageStorage);
-        ciseMessageResource.receive(message);
-
-        verify(messageStorage).store(any());
-    }
 
 }

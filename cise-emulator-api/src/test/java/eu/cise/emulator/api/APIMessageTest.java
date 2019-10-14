@@ -1,8 +1,14 @@
 package eu.cise.emulator.api;
 
 import eu.cise.emulator.MessageProcessor;
+import eu.cise.emulator.api.resources.MessageBuilderUtil;
+import eu.cise.emulator.io.DefaultMessageStorage;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.TemplateLoader;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.eucise.xml.DefaultXmlMapper;
+import eu.eucise.xml.XmlMapper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -52,6 +58,47 @@ public class APIMessageTest {
         MessageApiDto response = messageAPI.getLastStoredMessage();
 
         assertThat(response).isEqualTo(mockedMessageApiDto);
+    }
+
+
+    // -------  concerning the CISE api :  node to/from lsa  ---------//
+    @Test
+    public void it_stores_something_when_invoked_receive() {
+        Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
+        when(messageProcessor.receive(any())).thenReturn(acknowledgement);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader);
+        Acknowledgement response = messageAPI.receive(MessageBuilderUtil.TEST_MESSAGE_XML);
+        verify(messageStorage).store(any());
+    }
+
+    @Test
+    public void it_stores_consistent_value_of_acknowledge_when_invoked_receive() {
+        MessageStorage realMessageStorage = new DefaultMessageStorage();
+        XmlMapper xmlMapper = new DefaultXmlMapper.PrettyNotValidating();
+
+        Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
+        when(messageProcessor.receive(any())).thenReturn(acknowledgement);
+
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader);
+        Acknowledgement response = messageAPI.receive(MessageBuilderUtil.TEST_MESSAGE_XML);
+        Acknowledgement awaitedResponse = xmlMapper.fromXML(((MessageApiDto) realMessageStorage.read()).getAcknowledge());
+        assertThat(response).isEqualTo(awaitedResponse);
+    }
+
+    @Test
+    public void it_stores_consistent_value_of_message_when_invoked_receive() {
+        MessageStorage realMessageStorage = new DefaultMessageStorage();
+        XmlMapper xmlMapper = new DefaultXmlMapper.PrettyNotValidating();
+
+        Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
+        when(messageProcessor.receive(any())).thenReturn(acknowledgement);
+
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader);
+
+        Acknowledgement response = messageAPI.receive(MessageBuilderUtil.TEST_MESSAGE_XML);
+        Message sentMessage = xmlMapper.fromXML(MessageBuilderUtil.TEST_MESSAGE_XML);
+        Message storedResponse = xmlMapper.fromXML(((MessageApiDto) realMessageStorage.read()).getBody());
+        assertThat(sentMessage).isEqualTo(storedResponse);
     }
 
 }
