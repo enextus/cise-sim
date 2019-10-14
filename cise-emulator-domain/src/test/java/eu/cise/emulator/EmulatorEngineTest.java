@@ -1,6 +1,24 @@
 package eu.cise.emulator;
 
 
+import eu.cise.dispatcher.DispatchResult;
+import eu.cise.dispatcher.Dispatcher;
+import eu.cise.dispatcher.DispatcherException;
+import eu.cise.emulator.exceptions.*;
+import eu.cise.emulator.utils.Scenarios;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.servicemodel.v1.service.ServiceType;
+import eu.cise.signature.SignatureService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.time.Instant;
+import java.util.Date;
+
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.SERVICE_TYPE_NOT_SUPPORTED;
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.SUCCESS;
 import static eu.cise.servicemodel.v1.service.ServiceType.VESSEL_SERVICE;
@@ -8,35 +26,8 @@ import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.MINUTES;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.util.DateUtil.now;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import eu.cise.dispatcher.DispatchResult;
-import eu.cise.dispatcher.Dispatcher;
-import eu.cise.dispatcher.DispatcherException;
-import eu.cise.emulator.exceptions.CreationDateErrorEx;
-import eu.cise.emulator.exceptions.EmptyMessageIdEx;
-import eu.cise.emulator.exceptions.EndpointErrorEx;
-import eu.cise.emulator.exceptions.EndpointNotFoundEx;
-import eu.cise.emulator.exceptions.NullSenderEx;
-import eu.cise.emulator.utils.Scenarios;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
-import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.servicemodel.v1.message.Push;
-import eu.cise.servicemodel.v1.service.ServiceType;
-import eu.cise.signature.SignatureService;
-import java.time.Instant;
-import java.util.Date;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class EmulatorEngineTest {
 
@@ -51,9 +42,9 @@ public class EmulatorEngineTest {
         dispatcher = mock(Dispatcher.class);
         engine = new DefaultEmulatorEngine(mock(SignatureService.class), dispatcher, config);
         message = newPush()
-            .id("aMessageId")
-            .sender(newService().id("aServiceId").type(VESSEL_SERVICE))
-            .build();
+                .id("aMessageId")
+                .sender(newService().id("aServiceId").type(VESSEL_SERVICE))
+                .build();
 
         when(config.serviceId()).thenReturn("myServiceId");
         when(config.serviceType()).thenReturn(VESSEL_SERVICE);
@@ -68,7 +59,7 @@ public class EmulatorEngineTest {
     @Test
     public void it_sends_message_successfully() {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(
-            new DispatchResult(true, Scenarios.getSyncAckMsgSuccess()));
+                new DispatchResult(true, Scenarios.getSyncAckMsgSuccess()));
 
         engine.send(message);
 
@@ -80,14 +71,14 @@ public class EmulatorEngineTest {
         when(dispatcher.send(message, "endpointUrl")).thenThrow(DispatcherException.class);
 
         assertThatExceptionOfType(EndpointNotFoundEx.class)
-            .isThrownBy(() -> engine.send(message))
-            .withMessageContaining("endpoint not found");
+                .isThrownBy(() -> engine.send(message))
+                .withMessageContaining("endpoint not found");
     }
 
     @Test
     public void it_sends_a_message_getting_a_successful_response_and_returns_the_acknowledge() {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(
-            new DispatchResult(true, Scenarios.getSyncAckMsgSuccess()));
+                new DispatchResult(true, Scenarios.getSyncAckMsgSuccess()));
 
         assertThat(engine.send(message).getAckCode()).isEqualTo(SUCCESS);
     }
@@ -95,17 +86,17 @@ public class EmulatorEngineTest {
     @Test
     public void it_sends_a_message_getting_an_unsuccessful_response() {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(
-            new DispatchResult(false, ""));
+                new DispatchResult(false, ""));
 
         assertThatExceptionOfType(EndpointErrorEx.class)
-            .isThrownBy(() -> engine.send(message))
-            .withMessageContaining("endpoint returned an error");
+                .isThrownBy(() -> engine.send(message))
+                .withMessageContaining("endpoint returned an error");
     }
 
     @Test
     public void it_adds_a_sender_to_an_ack_received_without_it() {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(
-            new DispatchResult(true, Scenarios.getSyncAckMsgSuccessNoSender()));
+                new DispatchResult(true, Scenarios.getSyncAckMsgSuccessNoSender()));
 
         Acknowledgement ack = engine.send(message);
 
@@ -126,12 +117,12 @@ public class EmulatorEngineTest {
     @Test
     public void it_checks_the_messageId_exists() {
         Message message = newPush()
-            .sender(newService().id("aSender"))
-            .build();
+                .sender(newService().id("aSender"))
+                .build();
 
         assertThatExceptionOfType(EmptyMessageIdEx.class)
-            .isThrownBy(() -> engine.receive(message))
-            .withMessageContaining("empty");
+                .isThrownBy(() -> engine.receive(message))
+                .withMessageContaining("empty");
     }
 
     @Test
@@ -139,14 +130,14 @@ public class EmulatorEngineTest {
         when(config.isDateValidationEnabled()).thenReturn(true);
 
         Message message = newPush()
-            .id("aMessageId")
-            .sender(newService().id("aSender"))
-            .creationDateTime(threeHoursInThePast())
-            .build();
+                .id("aMessageId")
+                .sender(newService().id("aSender"))
+                .creationDateTime(threeHoursInThePast())
+                .build();
 
         assertThatExceptionOfType(CreationDateErrorEx.class)
-            .isThrownBy(() -> engine.receive(message))
-            .withMessageContaining("outside the allowed range");
+                .isThrownBy(() -> engine.receive(message))
+                .withMessageContaining("outside the allowed range");
     }
 
     @Test
@@ -154,14 +145,14 @@ public class EmulatorEngineTest {
         when(config.isDateValidationEnabled()).thenReturn(true);
 
         Message message = newPush()
-            .id("aMessageId")
-            .sender(newService().id("aSender"))
-            .creationDateTime(fiveMinutesInTheFuture())
-            .build();
+                .id("aMessageId")
+                .sender(newService().id("aSender"))
+                .creationDateTime(fiveMinutesInTheFuture())
+                .build();
 
         assertThatExceptionOfType(CreationDateErrorEx.class)
-            .isThrownBy(() -> engine.receive(message))
-            .withMessageContaining("outside the allowed range");
+                .isThrownBy(() -> engine.receive(message))
+                .withMessageContaining("outside the allowed range");
     }
 
     // TODO It should be understood on how to behave: should we be permissive or not on the service type
@@ -182,7 +173,7 @@ public class EmulatorEngineTest {
         when(config.serviceType()).thenReturn(ServiceType.EVENT_DOCUMENT_SERVICE);
 
         assertThat(engine.receive(message).getAckDetail())
-            .isEqualTo("Supported service type is VesselService");
+                .isEqualTo("Supported service type is VesselService");
     }
 
     @Test
@@ -190,8 +181,8 @@ public class EmulatorEngineTest {
         Push message = newPush().id("aMessageId").build();
 
         assertThatExceptionOfType(NullSenderEx.class)
-            .isThrownBy(() -> engine.receive(message))
-            .withMessageContaining("The sender of the message passed can't be null.");
+                .isThrownBy(() -> engine.receive(message))
+                .withMessageContaining("The sender of the message passed can't be null.");
     }
 
     @Test
@@ -199,12 +190,33 @@ public class EmulatorEngineTest {
         assertThat(engine.receive(message).getAckCode()).isEqualTo(SUCCESS);
     }
 
+    // --------------- correlation id related test -------------//
     @Test
     public void it_receives_a_valid_message_and_returns_an_ack_with_correlation_id() {
         Acknowledgement ack = engine.receive(message);
 
         assertThat(ack.getCorrelationID()).isNotEmpty();
     }
+
+
+    @Test
+    public void it_receives_message_it_create_acknowledge_with_new_message_id() {
+        Acknowledgement ack = engine.receive(message);
+        String previousMessageId = message.getMessageID().toString();
+        assertThat(ack.getMessageID()).isNotEqualTo(message.getMessageID().toString());
+    }
+
+    @Test
+    public void it_receives_message_without_correlation_id_then_overwrite_it_with_previous_message_id() {
+
+        message.setCorrelationID(null);
+        String previousMessageId = message.getMessageID().toString();
+        Acknowledgement ack = engine.receive(message);
+
+        assertThat(ack.getCorrelationID()).isEqualTo(previousMessageId);
+    }
+
+
 
     @Test
     public void it_answer_with_a_the_same_correlation_id_of_the_received_message() {
@@ -214,14 +226,6 @@ public class EmulatorEngineTest {
         assertThat(ack.getCorrelationID()).isEqualTo("aCorrelationId");
     }
 
-    @Test
-    public void it_answer_with_a_the_messageId_of_the_received_message_when_correlation_is_null() {
-        message.setMessageID("aMessageId");
-        message.setCorrelationID(null);
-        Acknowledgement ack = engine.receive(message);
-
-        assertThat(ack.getCorrelationID()).isEqualTo("aMessageId");
-    }
 
     private Date threeHoursInThePast() {
         return Date.from(Instant.now().minus(3, HOURS));

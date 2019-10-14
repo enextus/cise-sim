@@ -59,8 +59,24 @@ public class DefaultMessageAPI implements MessageAPI {
     public Acknowledgement receive(String content) {
         LOGGER.debug("receive is receiving through api : {}", content.substring(0, 200));
         try {
+
             Message message = xmlMapper.fromXML(content);
-            return messageProcessor.receive(message);
+
+            // store the input message and the acknowledgement
+            XmlMapper xmlMapper = new DefaultXmlMapper.PrettyNotValidating();
+            Acknowledgement acknowledgement = messageProcessor.receive(message);
+
+            String acknowledgementXml = xmlMapper.toXML(acknowledgement);
+            String messageXml = xmlMapper.toXML(message);
+
+            MessageApiDto messageApiDto = new MessageApiDto(
+                    Response.Status.CREATED.getStatusCode(),
+                    "", acknowledgementXml, messageXml);
+
+            messageStorage.store(messageApiDto);
+
+
+            return acknowledgement;
         } catch (Exception e) {
             LOGGER.error("error in api send", e);
             throw new RuntimeException("Exception while receiving a message that should be handled.", e);
