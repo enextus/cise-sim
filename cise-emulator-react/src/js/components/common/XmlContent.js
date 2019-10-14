@@ -38,7 +38,7 @@ class XmlContent extends React.Component {
 }
 
 XmlContent.propTypes = {
-  children: PropTypes.object.isRequired
+  children: PropTypes.any.isRequired
 };
 
 export default withStyles(styles)(XmlContent)

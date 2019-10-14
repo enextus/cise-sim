@@ -22,6 +22,11 @@ class PreviewMessage extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {isExpanded: false}
+  }
+
+  handleUpdate() {
+    this.setState({isExpanded: !this.state.isExpanded})
   }
 
   render() {
@@ -30,10 +35,11 @@ class PreviewMessage extends Component {
         <div className={classes.root}>
           <ExpansionPanel expanded={!this.isTemplateEmpty()}>
             <ExpansionPanelSummary
+                onClick={this.handleUpdate}
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="previewMessageContent"
                 id="previewMessage">
-              <Typography variant={"h6"}>Message Preview</Typography>
+              <Typography variant="h6">Message Preview</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <XmlContent>
