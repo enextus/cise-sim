@@ -8,6 +8,7 @@ import eu.cise.emulator.api.resources.WebAPIMessageResource;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.templates.TemplateLoader;
+import eu.cise.emulator.utils.Pair;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.XmlMapper;
@@ -46,8 +47,8 @@ public class DefaultMessageAPI implements MessageAPI {
         Message message = xmlMapper.fromXML(xmlContent);
 
         try {
-            Acknowledgement acknowledgement = messageProcessor.send(message, sendParam);
-            return new MessageApiDto(Response.Status.ACCEPTED.getStatusCode(), null, xmlMapper.toXML(acknowledgement), xmlMapper.toXML(message));
+            Pair<Acknowledgement, Message> sendResposnse = messageProcessor.send(message, sendParam);
+            return new MessageApiDto(Response.Status.ACCEPTED.getStatusCode(), null, xmlMapper.toXML(sendResposnse.getA()), xmlMapper.toXML(sendResposnse.getB()));
         } catch (Exception e) {
             LOGGER.error("error in Api send", e);
             return new MessageApiDto(Response.Status.BAD_REQUEST.getStatusCode(), "Send Error: " + e.getMessage(), "", "");

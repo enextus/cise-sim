@@ -7,6 +7,7 @@ import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.templates.TemplateLoader;
+import eu.cise.emulator.utils.Pair;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -48,7 +49,7 @@ public class MessageAPISendTest {
 
         Template loadedTemplate = mock(Template.class);
         when(templateLoader.loadTemplate(any())).thenReturn(loadedTemplate);
-        when(messageProcessor.send(any(), any())).thenReturn(ackMessage);
+        when(messageProcessor.send(any(), any())).thenReturn(new Pair(ackMessage, pushMessage));
         when(xmlMapper.fromXML(any())).thenReturn(pushMessage);
         String ackAsString = concreteXmlMapper.toXML(ackMessage);
         when(xmlMapper.toXML(any())).thenReturn(ackAsString);
@@ -64,7 +65,7 @@ public class MessageAPISendTest {
 
         Template loadedTemplate = mock(Template.class);
         when(templateLoader.loadTemplate(any())).thenReturn(loadedTemplate);
-        when(messageProcessor.send(any(), any())).thenReturn(ackMessage);
+        when(messageProcessor.send(any(), any())).thenReturn(new Pair(ackMessage, pushMessage));
         when(xmlMapper.fromXML(any())).thenReturn(pushMessage);
         String messageAsString = concreteXmlMapper.toXML(ackMessage);
         when(xmlMapper.toXML(any())).thenReturn(messageAsString);

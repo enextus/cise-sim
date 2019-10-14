@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import eu.cise.emulator.utils.Pair;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 
@@ -17,9 +18,11 @@ public class DefaultMessageProcessor implements MessageProcessor {
     }
 
     @Override
-    public Acknowledgement send(Message message, SendParam param) {
+    public Pair<Acknowledgement, Message> send(Message message, SendParam param) {
         Message preparedMessage = emulatorEngine.prepare(message, param);
-        return emulatorEngine.send(preparedMessage);
+        Acknowledgement acknowledgement = emulatorEngine.send(preparedMessage);
+        return new Pair<>(acknowledgement, preparedMessage);
+
     }
 
     @Override
