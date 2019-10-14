@@ -28,22 +28,22 @@ public class DefaultMessageAPI implements MessageAPI {
 
     DefaultMessageAPI(MessageProcessor messageProcessor,
                       MessageStorage messageStorage,
-                      TemplateLoader templateLoader) {
+                      TemplateLoader templateLoader, XmlMapper xmlMapper) {
 
         this.messageProcessor = messageProcessor;
         this.messageStorage = messageStorage;
-        this.xmlMapper = new DefaultXmlMapper();
+        this.xmlMapper = xmlMapper;
         this.templateLoader = templateLoader;
 
         LOGGER.debug(" Initialize the MessageAPI with default type implementation {} using message processor of type {}", this.getClass(), (messageProcessor != null ? messageProcessor.getClass() : ""));
     }
 
     @Override
-    public MessageApiDto send(String templateId, JsonNode json) {
-        LOGGER.debug("send is passed through api templateId: {}, params: {}", templateId, json);
+    public MessageApiDto send(String templateId, JsonNode params) {
+        LOGGER.debug("send is passed through api templateId: {}, params: {}", templateId, params);
         Template template = templateLoader.loadTemplate(templateId);
         String xmlContent = template.getTemplateContent();
-        SendParam sendParam = new SendParamsReader().extractParams(json);
+        SendParam sendParam = new SendParamsReader().extractParams(params);
         Message message = xmlMapper.fromXML(xmlContent);
 
         try {
