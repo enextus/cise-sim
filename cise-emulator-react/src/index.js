@@ -4,8 +4,10 @@ import DevTools from "mobx-react-devtools";
 import MainApp from "./js/MainApp";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import {blue, pink} from "@material-ui/core/colors";
 import {CssBaseline} from "@material-ui/core";
-import {SnackbarProvider} from 'notistack';
+import { SnackbarProvider } from 'notistack';
+import Button from '@material-ui/core/Button';
 
 const theme = createMuiTheme({
   palette: {
@@ -23,7 +25,6 @@ const theme = createMuiTheme({
         display: 'grow'
       }
     }
-  }
 });
 
 render(
@@ -38,6 +39,7 @@ render(
               vertical: 'bottom',
               horizontal: 'right',
             }}
+            hideIconVariant= {true}
         >
           <MainApp/>
         </SnackbarProvider>
