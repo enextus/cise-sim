@@ -20,5 +20,7 @@ public interface AppContext {
 
     XmlMapper getXmlMapper();
 
+    XmlMapper getPrettyNotValidatingXmlMapper();
+
     EmuConfig makeEmuConfig();
 }

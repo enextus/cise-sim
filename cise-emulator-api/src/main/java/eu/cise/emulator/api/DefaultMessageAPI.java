@@ -21,15 +21,17 @@ public class DefaultMessageAPI implements MessageAPI {
     private final MessageStorage messageStorage;
     private final MessageProcessor messageProcessor;
     private final XmlMapper xmlMapper;
+    private final XmlMapper prettyNotValidatingXmlMapper;
     private final TemplateLoader templateLoader;
 
     DefaultMessageAPI(MessageProcessor messageProcessor,
         MessageStorage messageStorage,
-        TemplateLoader templateLoader, XmlMapper xmlMapper) {
+        TemplateLoader templateLoader, XmlMapper xmlMapper, XmlMapper prettyNotValidatingXmlMapper) {
 
         this.messageProcessor = messageProcessor;
         this.messageStorage = messageStorage;
         this.xmlMapper = xmlMapper;
+        this.prettyNotValidatingXmlMapper = prettyNotValidatingXmlMapper;
         this.templateLoader = templateLoader;
     }
 
