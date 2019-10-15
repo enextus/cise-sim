@@ -24,7 +24,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
     public void initialize(final Bootstrap<EmulatorConf> bootstrap) {
         bootstrap.addBundle(
                 new ConfiguredAssetsBundle("/assets/", "/base/",
-                "index.html")); // imply redirect from root ?
+                        "index.html")); // imply redirect from root ?
     }
 
     @Override
@@ -41,7 +41,8 @@ public class EmulatorApp extends Application<EmulatorConf> {
                 appCtx.makeMessageProcessor(),
                 messageStorage,
                 appCtx.makeTemplateLoader(),
-                xmlMapper);
+                xmlMapper,
+                appCtx.getPrettyNotValidatingXmlMapper());
 
         environment.jersey().register(new WebAPIMessageResource(messageAPI));
         environment.jersey().register(new MessageResource(messageAPI, messageStorage));
