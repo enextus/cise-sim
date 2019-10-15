@@ -1,117 +1,76 @@
 import React, {Component} from "react";
 import {observer} from "mobx-react";
-import {observable} from "mobx";
-import format from "xml-formatter";
-import {
-    ExpansionPanel,
-    ExpansionPanelDetails,
-    ExpansionPanelSummary,
-    Paper,
-    Tab,
-    Tabs,
-    Typography
-} from '@material-ui/core';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Tab, Tabs, Typography} from '@material-ui/core';
+import {withStyles} from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Highlight from 'react-highlight.js';
 import PropTypes from 'prop-types';
-import ShowXmlMessage from "./common/ShowXmlMessage";
+import XmlContent from "./common/XmlContent";
+import TabPanel from "./common/TabPanel";
 
-const pushedMessageStyle = makeStyles(theme => ({
+const style = (theme) => ({
     root: {
-        margin: 'auto',
-        padding: '10px'
+        padding: theme.spacing(1),
     },
-    pullPanel_tab_heading: {
-        fontSize: '16px'
-    },
-    pullPanel: {
-        maxWidth: 1000,
-        flexGrow: 1,
-        flexBasis: '97.0%'
-    },
-    pullPanel_paper: {
-        width: "100%",
-        fontSize: '11px',
-        minWidth: '300px',
-    },
-    pullPanel_tabs: {
-        fontSize: '9px'
-    },
-    pullPanel_expDetail: {
-        maxWidth: '1000px',
-        flexGrow: 1,
-        flexBasis: '97.0%'
-    }, pullPanel_tab: {
-        fontSize: '9px'
-    },
-    textfieldStyle: {
-        width: "100%",
-        borderLeft: `4px solid 2`,
-        padding: `3px 4px`
-    }
-}));
+});
 
 @observer
 class PushedMessage extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {tabValue: 'one'};
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    @observable  tabPushState = {
-        value: 0
-    };
-
-    handleChange = (event, newValue) => {
-        this.tabPushState.value = newValue
+    handleChange(event, newValue) {
+        this.setState({tabValue: newValue})
     };
 
     render() {
         const {classes} = this.props;
-        this.value = 0;
         return (
             <div className={classes.root}>
-                 <ExpansionPanel disabled={(this.props.store.messageStore.sentMessage.body === "")}>                        
-                     <ExpansionPanelSummary
-                            expandIcon={<ExpandMoreIcon/>}
-                            aria-controls="SentMessagecontent"
-                            id="SentMessage">
-                        <Typography className={classes.pullPanel_tab_heading}>
-                            Message Sent
-                        </Typography>
+                <ExpansionPanel expanded={this.getMessageStore().sentMessage.body !== ""}>
+                    <ExpansionPanelSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="SentMessageContent"
+                        id="SentMessage">
+                        <Typography variant="h6">Message Sent</Typography>
                     </ExpansionPanelSummary>
-                    <ExpansionPanelDetails className={classes.pullPanel_expDetail}>
-                        <Paper className={classes.pullPanel_paper}>
-
-                            <Tabs className={classes.pullPanel_tabs}
-                                  value={this.tabPushState.value}
-                                  onChange={this.handleChange}
-                                  aria-label="simple-tabpanel"
-                                  indicatorColor="primary"
-                                  textColor="primary">
-                                <Tab className={classes.pullPanel_tab}
-                                     label="message"
-                                     id='simple-tab-2'
-                                     aria-controls='simple-tabpanel-2'
-                                />
-                                <Tab label="acknowledgement"
-                                     id='simple-tab-3'
-                                     aria-controls='simple-tabpanel-3'
-                                />                                
-                            </Tabs>
-                            <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.body} 
-                                            hidden = {this.tabPushState.value === 0}
-                                            textfieldStyle = {classes.textfieldStyle} />
-                            <ShowXmlMessage content = {this.props.store.messageStore.sentMessage.acknowledge} 
-                                            hidden = {this.tabPushState.value === 1} 
-                                            textfieldStyle = {classes.textfieldStyle} />
-                        </Paper>
+                    <ExpansionPanelDetails>
+                        <Tabs
+                            value={this.state.tabValue}
+                            onChange={this.handleChange}
+                            aria-label="simple-tabpanel"
+                            indicatorColor="primary"
+                            textColor="primary">
+                            <Tab value="one"
+                                 label="message"
+                                 id='simple-tab-2'
+                                 aria-controls='simple-tabpanel-2'/>
+                            <Tab value="two"
+                                 label="acknowledgement"
+                                 id='simple-tab-3'
+                                 aria-controls='simple-tabpanel-3'/>
+                        </Tabs>
+                        <TabPanel index="one" value={this.state.tabValue}>
+                            <XmlContent>
+                                {this.getMessageStore().sentMessage.body}
+                            </XmlContent>
+                        </TabPanel>
+                        <TabPanel index="two" value={this.state.tabValue}>
+                            <XmlContent>
+                                {this.getMessageStore().sentMessage.acknowledge}
+                            </XmlContent>
+                        </TabPanel>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
             </div>
-
         );
+    }
+
+    getMessageStore() {
+        return this.props.store.messageStore;
     }
 }
 
@@ -119,7 +78,7 @@ PushedMessage.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(pushedMessageStyle)(PushedMessage)
+export default withStyles(style)(PushedMessage)
 
 
 

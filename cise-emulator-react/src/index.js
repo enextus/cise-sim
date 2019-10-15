@@ -10,41 +10,40 @@ import { SnackbarProvider } from 'notistack';
 import Button from '@material-ui/core/Button';
 
 const theme = createMuiTheme({
-    palette: {
-        primary: blue,
-        secondary: pink,
-        type: 'light',
-        background: {
-            default: "#eeeeee"
-        },
+  palette: {
+    primary: {main: '#0B6192'},
+    secondary: {main: '#F1614A'},
+    type: 'light',
+    background: {
+      default: "#eeeeee"
     },
-    overrides: {
-        // Style sheet name to overrides⚛️
-        MuiExpansionPanelDetails: {
-            root: {
-                display: 'grow'
-            }
-        }
+  },
+  overrides: {
+    // Style sheet name to overrides⚛️
+    MuiExpansionPanelDetails: {
+      root: {
+        display: 'grow'
+      }
     }
 });
 
 render(
     <React.Fragment>
-        <DevTools/>
-        <MuiThemeProvider theme={theme}>
-            <CssBaseline/>
-            <SnackbarProvider 
-                dense
-                maxSnack={5} 
-                anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'right',
-                            }}
-                hideIconVariant= {true}
-            >
-                <MainApp/>
-            </SnackbarProvider>
-        </MuiThemeProvider>
+      <DevTools/>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline/>
+        <SnackbarProvider
+            dense
+            maxSnack={5}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            hideIconVariant= {true}
+        >
+          <MainApp/>
+        </SnackbarProvider>
+      </MuiThemeProvider>
     </React.Fragment>,
     document.getElementById("root")
 );

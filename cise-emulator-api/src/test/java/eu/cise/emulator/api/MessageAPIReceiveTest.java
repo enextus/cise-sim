@@ -15,14 +15,16 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class APIMessageTest {
+public class MessageAPIReceiveTest {
 
     private MessageProcessor messageProcessor;
     private MessageStorage messageStorage;
     private TemplateLoader templateLoader;
+    private XmlMapper xmlMapper;
 
     @Before
     public void before() {
+        xmlMapper = mock(XmlMapper.class);
         messageProcessor = mock(MessageProcessor.class);
         messageStorage = mock(MessageStorage.class);
         templateLoader = mock(TemplateLoader.class);
@@ -31,7 +33,7 @@ public class APIMessageTest {
 
     @Test
     public void it_calls_MessageStorage_to_obtain_last_stored_message() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper);
 
         messageAPI.getLastStoredMessage();
 
@@ -40,7 +42,7 @@ public class APIMessageTest {
 
     @Test
     public void it_returns_empty_when_NO_stored_message() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper);
         when(messageStorage.read()).thenReturn(null);
 
         MessageApiDto response = messageAPI.getLastStoredMessage();
@@ -50,7 +52,7 @@ public class APIMessageTest {
 
     @Test
     public void it_returns_last_stored_message() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper);
         MessageApiDto mockedMessageApiDto = mock(MessageApiDto.class);
 
         when(messageStorage.read()).thenReturn(mockedMessageApiDto);
@@ -66,7 +68,7 @@ public class APIMessageTest {
     public void it_stores_something_when_invoked_receive() {
         Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
         when(messageProcessor.receive(any())).thenReturn(acknowledgement);
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper);
         Acknowledgement response = messageAPI.receive(MessageBuilderUtil.TEST_MESSAGE_XML);
         verify(messageStorage).store(any());
     }
@@ -79,7 +81,7 @@ public class APIMessageTest {
         Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
         when(messageProcessor.receive(any())).thenReturn(acknowledgement);
 
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader, xmlMapper);
         Acknowledgement response = messageAPI.receive(MessageBuilderUtil.TEST_MESSAGE_XML);
         Acknowledgement awaitedResponse = xmlMapper.fromXML(((MessageApiDto) realMessageStorage.read()).getAcknowledge());
         assertThat(response).isEqualTo(awaitedResponse);
@@ -93,7 +95,7 @@ public class APIMessageTest {
         Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
         when(messageProcessor.receive(any())).thenReturn(acknowledgement);
 
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader, xmlMapper);
 
         Acknowledgement response = messageAPI.receive(MessageBuilderUtil.TEST_MESSAGE_XML);
         Message sentMessage = xmlMapper.fromXML(MessageBuilderUtil.TEST_MESSAGE_XML);

@@ -8,6 +8,7 @@ import eu.cise.emulator.api.resources.MessageResource;
 import eu.cise.emulator.api.resources.TemplateResource;
 import eu.cise.emulator.api.resources.WebAPIMessageResource;
 import eu.cise.emulator.io.MessageStorage;
+import eu.eucise.xml.XmlMapper;
 import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -33,12 +34,14 @@ public class EmulatorApp extends Application<EmulatorConf> {
         environment.jersey().setUrlPattern("/*");
 
         AppContext appCtx = new DefaultAppContext();
+        XmlMapper xmlMapper = appCtx.getXmlMapper();
         MessageStorage messageStorage = appCtx.makeMessageStorage();
 
         MessageAPI messageAPI = new DefaultMessageAPI(
                 appCtx.makeMessageProcessor(),
                 messageStorage,
-                appCtx.makeTemplateLoader());
+                appCtx.makeTemplateLoader(),
+                xmlMapper);
 
         environment.jersey().register(new WebAPIMessageResource(messageAPI));
         environment.jersey().register(new MessageResource(messageAPI, messageStorage));
@@ -48,8 +51,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
                         new TemplateAPI(
                                 appCtx.makeMessageProcessor(),
                                 appCtx.makeTemplateLoader(),
-                                appCtx.makeXmlMapper())
-                ));
+                                xmlMapper)));
 
         environment.jersey().register(new AssetRedirectionResource());
     }

@@ -1,7 +1,6 @@
 package eu.cise.dispatcher;
 
 import eu.cise.servicemodel.v1.message.Message;
-import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 
 /**
@@ -16,10 +15,12 @@ public class RestDispatcher implements Dispatcher {
 
     /**
      * This constructor is called by the class for name
+     *
+     * @param prettyNotValidatingXmlMapper
      */
     @SuppressWarnings("unused")
-    public RestDispatcher() {
-        this(new JerseyRestClient(), new DefaultXmlMapper.NotValidating());
+    public RestDispatcher(XmlMapper prettyNotValidatingXmlMapper) {
+        this(new JerseyRestClient(), prettyNotValidatingXmlMapper);
     }
 
     public RestDispatcher(RestClient client, XmlMapper xmlMapper) {

@@ -43,7 +43,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     private final EmuConfig emuConfig;
     private final SignatureService signature;
     private Dispatcher dispatcher;
-    private XmlMapper xmlMapper;
+    private XmlMapper prettyNotValidatingXmlMapper;
 
     /**
      * Default constructor that uses UTC as a reference clock
@@ -54,11 +54,12 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     public DefaultEmulatorEngine(
         SignatureService signature,
         Dispatcher dispatcher,
-        EmuConfig emuConfig) {
+        EmuConfig emuConfig,
+        XmlMapper prettyNotValidatingXmlMapper) {
 
         this(signature, emuConfig, dispatcher, Clock.systemUTC());
         this.dispatcher = dispatcher;
-        this.xmlMapper = new DefaultXmlMapper.NotValidating();
+        this.prettyNotValidatingXmlMapper = prettyNotValidatingXmlMapper;
     }
 
     /**
@@ -68,6 +69,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      * @param emuConfig  the domain configuration
      * @param dispatcher the object used to dispatch the message
      * @param clock      the reference clock
+     *
+     *  NOTE: this constructor is used only in tests so we do not pass the xml formatter from outside
      */
     DefaultEmulatorEngine(
         SignatureService signature,
@@ -80,8 +83,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         this.dispatcher = notNull(dispatcher, NullDispatcherEx.class);
         this.clock = notNull(clock, NullClockEx.class);
 
-        // TODO pass the xmlMapper from the outside
-        this.xmlMapper = new DefaultXmlMapper.NotValidating();
+        this.prettyNotValidatingXmlMapper = new DefaultXmlMapper.NotValidating();
     }
 
     @Override
@@ -122,7 +124,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
                 throw new EndpointErrorEx();
             }
 
-            Acknowledgement ack = xmlMapper.fromXML(sendResult.getResult());
+            Acknowledgement ack = prettyNotValidatingXmlMapper.fromXML(sendResult.getResult());
 
             if (areServiceIdAndOperationPresent(ack)) {
                 // TODO Check this case: where is it coming from?
