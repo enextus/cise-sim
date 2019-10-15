@@ -34,7 +34,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
         environment.jersey().setUrlPattern("/*");
 
         AppContext appCtx = new DefaultAppContext();
-        XmlMapper xmlMapper = appCtx.makeXmlMapper();
+        XmlMapper xmlMapper = appCtx.getXmlMapper();
         MessageStorage messageStorage = appCtx.makeMessageStorage();
 
         MessageAPI messageAPI = new DefaultMessageAPI(

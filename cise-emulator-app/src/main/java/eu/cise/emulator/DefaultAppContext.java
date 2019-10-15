@@ -17,10 +17,12 @@ public class DefaultAppContext implements AppContext {
 
     private final EmuConfig emuConfig;
     private final XmlMapper xmlMapper;
+    private final XmlMapper prettyNotValidatingXmlMapper;
 
     public DefaultAppContext() {
         this.emuConfig = ConfigFactory.create(EmuConfig.class);
         this.xmlMapper = new DefaultXmlMapper.Pretty();
+        this.prettyNotValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
     }
 
     @Override
@@ -29,12 +31,12 @@ public class DefaultAppContext implements AppContext {
     }
 
     private DefaultEmulatorEngine makeEmulatorEngine() {
-        return new DefaultEmulatorEngine(makeSignatureService(), makeDispatcher(), this.emuConfig);
+        return new DefaultEmulatorEngine(makeSignatureService(), makeDispatcher(), this.emuConfig, this.prettyNotValidatingXmlMapper);
     }
 
     @Override
     public Dispatcher makeDispatcher() {
-        return new RestDispatcher();
+        return new RestDispatcher(prettyNotValidatingXmlMapper);
     }
 
     @Override
@@ -58,7 +60,7 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public XmlMapper makeXmlMapper() {
+    public XmlMapper getXmlMapper() {
         return xmlMapper;
     }
 

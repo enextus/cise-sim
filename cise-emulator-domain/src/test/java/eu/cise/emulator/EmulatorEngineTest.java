@@ -11,6 +11,8 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.servicemodel.v1.service.ServiceType;
 import eu.cise.signature.SignatureService;
+import eu.eucise.xml.DefaultXmlMapper;
+import eu.eucise.xml.XmlMapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -35,12 +37,14 @@ public class EmulatorEngineTest {
     private EmulatorEngine engine;
     private Dispatcher dispatcher;
     private Push message;
+    private XmlMapper prettyNotValidatingXmlMapper;
 
     @Before
     public void before() {
         config = mock(EmuConfig.class);
         dispatcher = mock(Dispatcher.class);
-        engine = new DefaultEmulatorEngine(mock(SignatureService.class), dispatcher, config);
+        prettyNotValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
+        engine = new DefaultEmulatorEngine(mock(SignatureService.class), dispatcher, config, prettyNotValidatingXmlMapper);
         message = newPush()
                 .id("aMessageId")
                 .sender(newService().id("aServiceId").type(VESSEL_SERVICE))

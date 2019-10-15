@@ -18,7 +18,7 @@ public interface AppContext {
 
     TemplateLoader makeTemplateLoader();
 
-    XmlMapper makeXmlMapper();
+    XmlMapper getXmlMapper();
 
     EmuConfig makeEmuConfig();
 }

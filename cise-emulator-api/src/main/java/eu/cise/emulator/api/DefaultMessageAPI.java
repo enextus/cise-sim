@@ -60,7 +60,6 @@ public class DefaultMessageAPI implements MessageAPI {
             Message message = xmlMapper.fromXML(content);
 
             // store the input message and the acknowledgement
-            //XmlMapper xmlMapper = new DefaultXmlMapper.PrettyNotValidating();
             Acknowledgement acknowledgement = messageProcessor.receive(message);
 
             String acknowledgementXml = xmlMapper.toXML(acknowledgement);
