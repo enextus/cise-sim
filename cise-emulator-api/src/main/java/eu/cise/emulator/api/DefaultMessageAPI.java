@@ -48,7 +48,7 @@ public class DefaultMessageAPI implements MessageAPI {
             Pair<Acknowledgement, Message> sendResponse = messageProcessor.send(message, sendParam);
 
             return new SendResponse.OK(
-                new MessageApiDto(xmlMapper.toXML(sendResponse.getA()), xmlMapper.toXML(sendResponse.getB())));
+                new MessageApiDto(prettyNotValidatingXmlMapper.toXML(sendResponse.getA()), xmlMapper.toXML(sendResponse.getB())));
         } catch (Exception e) {
             LOGGER.error("Error in Api send", e);
             return new SendResponse.KO(e.getMessage());
