@@ -25,6 +25,7 @@ const theme = createMuiTheme({
         display: 'grow'
       }
     }
+  }
 });
 
 render(
