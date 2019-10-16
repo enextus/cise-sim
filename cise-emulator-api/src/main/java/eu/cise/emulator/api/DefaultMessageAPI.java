@@ -25,8 +25,8 @@ public class DefaultMessageAPI implements MessageAPI {
     private final TemplateLoader templateLoader;
 
     DefaultMessageAPI(MessageProcessor messageProcessor,
-        MessageStorage messageStorage,
-        TemplateLoader templateLoader, XmlMapper xmlMapper, XmlMapper prettyNotValidatingXmlMapper) {
+                      MessageStorage messageStorage,
+                      TemplateLoader templateLoader, XmlMapper xmlMapper, XmlMapper prettyNotValidatingXmlMapper) {
 
         this.messageProcessor = messageProcessor;
         this.messageStorage = messageStorage;
@@ -48,7 +48,7 @@ public class DefaultMessageAPI implements MessageAPI {
             Pair<Acknowledgement, Message> sendResponse = messageProcessor.send(message, sendParam);
 
             return new SendResponse.OK(
-                new MessageApiDto(xmlMapper.toXML(sendResponse.getA()), xmlMapper.toXML(sendResponse.getB())));
+                    new MessageApiDto(prettyNotValidatingXmlMapper.toXML(sendResponse.getA()), xmlMapper.toXML(sendResponse.getB())));
         } catch (Exception e) {
             LOGGER.error("Error in Api send", e);
             return new SendResponse.KO(e.getMessage());
@@ -75,7 +75,7 @@ public class DefaultMessageAPI implements MessageAPI {
         } catch (Exception e) {
             LOGGER.error("error in api send", e);
             throw new RuntimeException(
-                "Exception while receiving a message that should be handled.", e);
+                    "Exception while receiving a message that should be handled.", e);
         }
     }
 
