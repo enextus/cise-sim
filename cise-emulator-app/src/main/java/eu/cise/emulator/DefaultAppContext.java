@@ -38,7 +38,7 @@ public class DefaultAppContext implements AppContext {
 
     @Override
     public Dispatcher makeDispatcher() {
-        return new RestDispatcher(prettyNotValidatingXmlMapper);
+        return new RestDispatcher(xmlMapper);
     }
 
     @Override
