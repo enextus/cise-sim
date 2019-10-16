@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:Push xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/">
+	<CreationDateTime>2019-10-16T14:04:20.673Z</CreationDateTime>
+	<MessageID>a6e5daa2-40f5-423d-bb01-2cde35cec9f9</MessageID>
+	<Priority>High</Priority>
+	<RequiresAck>true</RequiresAck>
+	<Sender>
+		<SeaBasin>Mediterranean</SeaBasin>
+		<ServiceID>eu.simlsa1-nodeeu.vessel.subscribe.provider</ServiceID>
+		<ServiceOperation>Subscribe</ServiceOperation>
+		<ServiceRole>Provider</ServiceRole>
+		<ServiceStatus>Online</ServiceStatus>
+		<ServiceType>VesselService</ServiceType>
+	</Sender>
+	<Payload xsi:type="ns4:XmlEntityPayload" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<InformationSecurityLevel>NonClassified</InformationSecurityLevel>
+		<InformationSensitivity>Green</InformationSensitivity>
+		<Purpose>SAR</Purpose>
+		<Vessel>
+			<Identifier>
+				<UUID>111</UUID>
+			</Identifier>
+			<Name>ABEILLE LANGUEDOC</Name>
+			<IMONumber>7710525</IMONumber>
+			<MMSI>228002000</MMSI>
+			<ShipType>FishingVessel</ShipType>
+		</Vessel>
+		<Vessel>
+			<Identifier>
+				<UUID>222</UUID>
+			</Identifier>
+			<Name>MARY BST</Name>
+			<IMONumber>8810525</IMONumber>
+			<MMSI>448002000</MMSI>
+			<ShipType>MobileOffShoreDrillingUnit</ShipType>
+		</Vessel>
+		<Vessel>
+			<Identifier>
+				<UUID>223</UUID>
+			</Identifier>
+			<Name>SUSY BST</Name>
+			<IMONumber>9910525</IMONumber>
+			<MMSI>668002000</MMSI>
+			<ShipType>NuclearShip</ShipType>
+		</Vessel>
+	</Payload>
+</ns4:Push>
