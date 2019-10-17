@@ -21,7 +21,6 @@ import static eu.cise.emulator.helpers.Asserts.notBlank;
 import static eu.cise.emulator.helpers.Asserts.notNull;
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.SUCCESS;
 import static eu.cise.servicemodel.v1.service.ServiceOperationType.ACKNOWLEDGEMENT;
-import static eu.cise.servicemodel.v1.service.ServiceOperationType.PUSH;
 import static eu.eucise.helpers.AckBuilder.newAck;
 import static eu.eucise.helpers.DateHelper.toDate;
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
@@ -105,13 +104,6 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
             }
 
             Acknowledgement ack = prettyNotValidatingXmlMapper.fromXML(sendResult.getResult());
-
-            if (areServiceIdAndOperationPresent(ack)) {
-                // TODO Check this case: where is it coming from?
-                // it seems that when sending the sender could be null
-                // but it should have been fixed in the prepare. Is it true?
-                ack.setSender(newService().id("").operation(PUSH).build());
-            }
 
             return ack;
         } catch (DispatcherException e) {
