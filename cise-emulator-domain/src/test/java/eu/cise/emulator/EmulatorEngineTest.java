@@ -50,8 +50,6 @@ public class EmulatorEngineTest {
                 .sender(newService().id("aServiceId").type(VESSEL_SERVICE))
                 .build();
 
-        when(config.serviceId()).thenReturn("myServiceId");
-        when(config.serviceType()).thenReturn(VESSEL_SERVICE);
         when(config.endpointUrl()).thenReturn("endpointUrl");
     }
 
@@ -96,7 +94,6 @@ public class EmulatorEngineTest {
                 .isThrownBy(() -> engine.send(message))
                 .withMessageContaining("endpoint returned an error");
     }
-
 
 
     @Test
@@ -155,7 +152,6 @@ public class EmulatorEngineTest {
     @Test
     @Ignore
     public void it_returns_a_SERVICE_TYPE_NOT_SUPPORTED_when_service_type_is_wrong() {
-        when(config.serviceType()).thenReturn(ServiceType.EVENT_DOCUMENT_SERVICE);
 
         assertThat(engine.receive(message).getAckCode()).isEqualTo(SERVICE_TYPE_NOT_SUPPORTED);
     }
@@ -165,7 +161,6 @@ public class EmulatorEngineTest {
     @Test
     @Ignore
     public void it_returns_an_ack_error_description_when_service_type_is_wrong() {
-        when(config.serviceType()).thenReturn(ServiceType.EVENT_DOCUMENT_SERVICE);
 
         assertThat(engine.receive(message).getAckDetail())
                 .isEqualTo("Supported service type is VesselService");
