@@ -97,16 +97,7 @@ public class EmulatorEngineTest {
                 .withMessageContaining("endpoint returned an error");
     }
 
-    @Test
-    public void it_adds_a_sender_to_an_ack_received_without_it() {
-        when(dispatcher.send(message, config.endpointUrl())).thenReturn(
-                new DispatchResult(true, Scenarios.getSyncAckMsgSuccessNoSender()));
 
-        Acknowledgement ack = engine.send(message);
-
-        assertThat(ack.getSender()).isNotNull();
-        assertThat(ack.getSender().getServiceID()).isNotNull();
-    }
 
     @Test
     public void it_receives_a_valid_message() {
