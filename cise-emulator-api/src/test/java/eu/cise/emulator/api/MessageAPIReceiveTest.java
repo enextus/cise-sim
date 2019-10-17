@@ -21,7 +21,7 @@ public class MessageAPIReceiveTest {
     private MessageStorage messageStorage;
     private TemplateLoader templateLoader;
     private XmlMapper xmlMapper;
-    private XmlMapper PrettyXmlNotValidMapper;
+    private XmlMapper prettyXmlNotValidMapper;
 
     @Before
     public void before() {
@@ -29,13 +29,13 @@ public class MessageAPIReceiveTest {
         messageProcessor = mock(MessageProcessor.class);
         messageStorage = mock(MessageStorage.class);
         templateLoader = mock(TemplateLoader.class);
-        PrettyXmlNotValidMapper= mock(XmlMapper.class);
-    }
+        prettyXmlNotValidMapper = new DefaultXmlMapper.PrettyNotValidating();
 
+    }
 
     @Test
     public void it_calls_MessageStorage_to_obtain_last_stored_message() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper,PrettyXmlNotValidMapper);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper, prettyXmlNotValidMapper);
 
         messageAPI.getLastStoredMessage();
 
@@ -44,7 +44,7 @@ public class MessageAPIReceiveTest {
 
     @Test
     public void it_returns_empty_when_NO_stored_message() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper,PrettyXmlNotValidMapper);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper, prettyXmlNotValidMapper);
         when(messageStorage.read()).thenReturn(null);
 
         MessageApiDto response = messageAPI.getLastStoredMessage();
@@ -54,7 +54,7 @@ public class MessageAPIReceiveTest {
 
     @Test
     public void it_returns_last_stored_message() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper,PrettyXmlNotValidMapper);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper, prettyXmlNotValidMapper);
         MessageApiDto mockedMessageApiDto = mock(MessageApiDto.class);
 
         when(messageStorage.read()).thenReturn(mockedMessageApiDto);
@@ -70,7 +70,7 @@ public class MessageAPIReceiveTest {
     public void it_stores_something_when_invoked_receive() {
         Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
         when(messageProcessor.receive(any())).thenReturn(acknowledgement);
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper,PrettyXmlNotValidMapper);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, prettyXmlNotValidMapper, prettyXmlNotValidMapper);
         Acknowledgement response = messageAPI.receive(MessageBuilderUtil.TEST_MESSAGE_XML);
         verify(messageStorage).store(any());
     }
@@ -83,7 +83,7 @@ public class MessageAPIReceiveTest {
         Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
         when(messageProcessor.receive(any())).thenReturn(acknowledgement);
 
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader, xmlMapper,PrettyXmlNotValidMapper);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader, xmlMapper, prettyXmlNotValidMapper);
         Acknowledgement response = messageAPI.receive(MessageBuilderUtil.TEST_MESSAGE_XML);
         Acknowledgement awaitedResponse = xmlMapper.fromXML(((MessageApiDto) realMessageStorage.read()).getAcknowledge());
         assertThat(response).isEqualTo(awaitedResponse);
@@ -97,7 +97,7 @@ public class MessageAPIReceiveTest {
         Acknowledgement acknowledgement = MessageBuilderUtil.createAcknowledgeMessage();
         when(messageProcessor.receive(any())).thenReturn(acknowledgement);
 
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader, xmlMapper,PrettyXmlNotValidMapper);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader, xmlMapper, prettyXmlNotValidMapper);
 
         Acknowledgement response = messageAPI.receive(MessageBuilderUtil.TEST_MESSAGE_XML);
         Message sentMessage = xmlMapper.fromXML(MessageBuilderUtil.TEST_MESSAGE_XML);

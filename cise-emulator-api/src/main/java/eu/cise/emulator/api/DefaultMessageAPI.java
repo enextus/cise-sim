@@ -48,7 +48,7 @@ public class DefaultMessageAPI implements MessageAPI {
             Pair<Acknowledgement, Message> sendResponse = messageProcessor.send(message, sendParam);
 
             return new SendResponse.OK(
-                    new MessageApiDto(prettyNotValidatingXmlMapper.toXML(sendResponse.getA()), xmlMapper.toXML(sendResponse.getB())));
+                    new MessageApiDto(prettyNotValidatingXmlMapper.toXML(sendResponse.getA()), prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
         } catch (Exception e) {
             LOGGER.error("Error in Api send", e);
             return new SendResponse.KO(e.getMessage());
@@ -64,8 +64,8 @@ public class DefaultMessageAPI implements MessageAPI {
             // store the input message and the acknowledgement
             Acknowledgement acknowledgement = messageProcessor.receive(message);
 
-            String acknowledgementXml = xmlMapper.toXML(acknowledgement);
-            String messageXml = xmlMapper.toXML(message);
+            String acknowledgementXml = prettyNotValidatingXmlMapper.toXML(acknowledgement);
+            String messageXml = prettyNotValidatingXmlMapper.toXML(message);
 
             MessageApiDto messageApiDto = new MessageApiDto(acknowledgementXml, messageXml);
 

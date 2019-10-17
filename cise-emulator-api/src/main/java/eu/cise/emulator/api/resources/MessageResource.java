@@ -27,6 +27,7 @@ public class MessageResource {
     @Consumes({"application/xml", "text/plain", "text/xml"})
     @Produces("application/xml")
     public Response receive(String inputXmlMessage) {
+
         Acknowledgement acknowledgement = messageAPI.receive(inputXmlMessage);
         return Response
                 .status(Response.Status.CREATED)

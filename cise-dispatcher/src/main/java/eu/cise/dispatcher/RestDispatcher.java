@@ -40,7 +40,8 @@ public class RestDispatcher implements Dispatcher {
         String payload = xmlMapper.toXML(message);
 
         RestResult result = client.post(address, payload);
-
+        /*temp debug*/
+        System.out.println("----------------------------\n" + result.getBody() + "\n----------------------------");
         return new DispatchResult(result.isOK(), result.getBody());
     }
 

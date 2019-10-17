@@ -32,7 +32,7 @@ public class TemplateAPIPreviewTest {
         templateLoader = mock(DefaultTemplateLoader.class);
         messageProcessor = mock(MessageProcessor.class);
         messageStorage = mock(MessageStorage.class);
-        templateAPI = new TemplateAPI(messageProcessor, templateLoader, xmlMapper);
+        templateAPI = new TemplateAPI(messageProcessor, templateLoader, xmlMapper, xmlMapper);
         templateParams = new TemplateParams("template-id", "message-id", "correlation-id", false);
         when(messageProcessor.preview(any(), any())).thenReturn(mock(Message.class));
         when(templateLoader.loadTemplate(any())).thenReturn(mock(Template.class));

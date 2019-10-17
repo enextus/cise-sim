@@ -1,5 +1,21 @@
 package eu.cise.emulator;
 
+import eu.cise.dispatcher.DispatchResult;
+import eu.cise.dispatcher.Dispatcher;
+import eu.cise.dispatcher.DispatcherException;
+import eu.cise.emulator.exceptions.*;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.signature.SignatureService;
+import eu.eucise.helpers.AckBuilder;
+import eu.eucise.xml.DefaultXmlMapper;
+import eu.eucise.xml.XmlMapper;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.sql.Date;
+import java.time.Clock;
+import java.util.UUID;
+
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static eu.cise.emulator.helpers.Asserts.notBlank;
 import static eu.cise.emulator.helpers.Asserts.notNull;
@@ -12,31 +28,6 @@ import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 import static java.time.temporal.ChronoUnit.HOURS;
 
-import eu.cise.dispatcher.DispatchResult;
-import eu.cise.dispatcher.Dispatcher;
-import eu.cise.dispatcher.DispatcherException;
-import eu.cise.emulator.exceptions.CreationDateErrorEx;
-import eu.cise.emulator.exceptions.EmptyMessageIdEx;
-import eu.cise.emulator.exceptions.EndpointErrorEx;
-import eu.cise.emulator.exceptions.EndpointNotFoundEx;
-import eu.cise.emulator.exceptions.NullClockEx;
-import eu.cise.emulator.exceptions.NullConfigEx;
-import eu.cise.emulator.exceptions.NullDispatcherEx;
-import eu.cise.emulator.exceptions.NullMessageEx;
-import eu.cise.emulator.exceptions.NullSendParamEx;
-import eu.cise.emulator.exceptions.NullSenderEx;
-import eu.cise.emulator.exceptions.NullSignatureServiceEx;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
-import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.signature.SignatureService;
-import eu.eucise.helpers.AckBuilder;
-import eu.eucise.xml.DefaultXmlMapper;
-import eu.eucise.xml.XmlMapper;
-import java.sql.Date;
-import java.time.Clock;
-import java.util.UUID;
-import javax.xml.datatype.XMLGregorianCalendar;
-
 public class DefaultEmulatorEngine implements EmulatorEngine {
 
     private final Clock clock;
@@ -47,15 +38,15 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
     /**
      * Default constructor that uses UTC as a reference clock
-     *
+     * <p>
      * TODO is now clear that this class has way too many
      * responsibilities. It should be split in several classes
      */
     public DefaultEmulatorEngine(
-        SignatureService signature,
-        Dispatcher dispatcher,
-        EmuConfig emuConfig,
-        XmlMapper prettyNotValidatingXmlMapper) {
+            SignatureService signature,
+            Dispatcher dispatcher,
+            EmuConfig emuConfig,
+            XmlMapper prettyNotValidatingXmlMapper) {
 
         this(signature, emuConfig, dispatcher, Clock.systemUTC());
         this.dispatcher = dispatcher;
@@ -69,14 +60,14 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      * @param emuConfig  the domain configuration
      * @param dispatcher the object used to dispatch the message
      * @param clock      the reference clock
-     *
-     *  NOTE: this constructor is used only in tests so we do not pass the xml formatter from outside
+     *                   <p>
+     *                   NOTE: this constructor is used only in tests so we do not pass the xml formatter from outside
      */
     DefaultEmulatorEngine(
-        SignatureService signature,
-        EmuConfig emuConfig,
-        Dispatcher dispatcher,
-        Clock clock) {
+            SignatureService signature,
+            EmuConfig emuConfig,
+            Dispatcher dispatcher,
+            Clock clock) {
 
         this.signature = notNull(signature, NullSignatureServiceEx.class);
         this.emuConfig = notNull(emuConfig, NullConfigEx.class);
@@ -94,22 +85,11 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         message.setRequiresAck(param.isRequiresAck());
         message.setMessageID(param.getMessageId());
         message.setCorrelationID(
-            computeCorrelationId(param.getCorrelationId(), param.getMessageId())
+                computeCorrelationId(param.getCorrelationId(), param.getMessageId())
         );
 
         message.setCreationDateTime(now());
 
-        if (!isNullOrEmpty(emuConfig.serviceId())) {
-            message.getSender().setServiceID(emuConfig.serviceId());
-        }
-
-        if (emuConfig.serviceType() != null) {
-            message.getSender().setServiceType(emuConfig.serviceType());
-        }
-
-        if (emuConfig.serviceOperation() != null) {
-            message.getSender().setServiceOperation(emuConfig.serviceOperation());
-        }
 
         // TODO improve signature to use <T extends Message> as a return type
         return (T) signature.sign(message);
@@ -141,8 +121,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
     private boolean areServiceIdAndOperationPresent(Acknowledgement ack) {
         return ack.getSender() == null ||
-            isNullOrEmpty(ack.getSender().getServiceID()) ||
-            ack.getSender().getServiceOperation() == null;
+                isNullOrEmpty(ack.getSender().getServiceID()) ||
+                ack.getSender().getServiceOperation() == null;
     }
 
     @Override
@@ -151,7 +131,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         notBlank(message.getMessageID(), EmptyMessageIdEx.class);
 
         if (emuConfig.isDateValidationEnabled() &&
-            (isMsgDateThreeHoursInThePast(message) || isMsgDateInTheFuture(message))) {
+                (isMsgDateThreeHoursInThePast(message) || isMsgDateInTheFuture(message))) {
 
             throw new CreationDateErrorEx();
         }
@@ -190,19 +170,19 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         }
 */
         AckBuilder ackBuilder = newAck()
-            .id(UUID.randomUUID().toString())
-            .sender(newService()
-                .id(message.getSender().getServiceID())
-                .operation(ACKNOWLEDGEMENT))
-            .correlationId(computeCorrelationId(message.getCorrelationID(), message.getMessageID()))
-            .creationDateTime(Date.from(clock.instant()))
-            .informationSecurityLevel(message.getPayload().getInformationSecurityLevel())
-            .informationSensitivity(message.getPayload().getInformationSensitivity())
-            .purpose(message.getPayload().getPurpose())
-            .priority(message.getPriority())
-            .ackCode(SUCCESS)
-            .ackDetail("Message sent")
-            .isRequiresAck(false);
+                .id(UUID.randomUUID().toString())
+                .sender(newService()
+                        .id(message.getSender().getServiceID())
+                        .operation(ACKNOWLEDGEMENT))
+                .correlationId(computeCorrelationId(message.getCorrelationID(), message.getMessageID()))
+                .creationDateTime(Date.from(clock.instant()))
+                .informationSecurityLevel(message.getPayload().getInformationSecurityLevel())
+                .informationSensitivity(message.getPayload().getInformationSensitivity())
+                .purpose(message.getPayload().getPurpose())
+                .priority(message.getPriority())
+                .ackCode(SUCCESS)
+                .ackDetail("Message sent")
+                .isRequiresAck(false);
 
         return ackBuilder.build();
     }
@@ -224,7 +204,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
     private boolean isMsgDateThreeHoursInThePast(Message message) {
         return toDate(message.getCreationDateTime())
-            .before(Date.from(clock.instant().minus(3, HOURS)));
+                .before(Date.from(clock.instant().minus(3, HOURS)));
     }
 
 }

@@ -10,7 +10,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;
-
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -20,13 +19,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 public class TemplateResourceTest {
-    private static MessageAPI messageAPI = mock(MessageAPI.class);;
-    private static TemplateAPI templateAPI = mock(TemplateAPI.class);;
+    private static MessageAPI messageAPI = mock(MessageAPI.class);
+    ;
+    private static TemplateAPI templateAPI = mock(TemplateAPI.class);
+    ;
     private static EmuConfig emuConfig = mock(EmuConfig.class);
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new TemplateResource(messageAPI, new TemplateAPI(null, null, null)))
+            .addResource(new TemplateResource(messageAPI, new TemplateAPI(null, null, null, null)))
             .bootstrapLogging(false)
             .build();
 

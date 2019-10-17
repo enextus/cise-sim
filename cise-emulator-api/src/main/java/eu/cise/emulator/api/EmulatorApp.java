@@ -52,7 +52,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
                         new TemplateAPI(
                                 appCtx.makeMessageProcessor(),
                                 appCtx.makeTemplateLoader(),
-                                xmlMapper)));
+                                xmlMapper, appCtx.getPrettyNotValidatingXmlMapper())));
 
         environment.jersey().register(new AssetRedirectionResource());
     }
