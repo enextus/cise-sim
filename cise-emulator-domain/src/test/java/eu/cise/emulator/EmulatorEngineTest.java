@@ -9,6 +9,7 @@ import eu.cise.emulator.utils.Scenarios;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.servicemodel.v1.service.ServiceType;
 import eu.cise.signature.SignatureService;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
@@ -204,6 +205,7 @@ public class EmulatorEngineTest {
 
         assertThat(ack.getCorrelationID()).isEqualTo(previousMessageId);
     }
+
 
 
     @Test
