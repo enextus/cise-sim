@@ -4,7 +4,7 @@ import eu.cise.emulator.exceptions.EmptyMessageIdEx;
 
 import java.util.Objects;
 
-import static eu.cise.emulator.helpers.Asserts.notNull;
+import static eu.cise.emulator.helpers.Asserts.notBlank;
 
 /**
  * This class is a value object that contains the xml elements
@@ -22,7 +22,7 @@ public class SendParam {
 
     public SendParam(boolean requiresAck, String messageId, String correlationId) {
         this.requiresAck = requiresAck;
-        this.messageId = notNull(messageId, EmptyMessageIdEx.class);
+        this.messageId = notBlank(messageId, EmptyMessageIdEx.class);
         this.correlationId = correlationId;
     }
 
