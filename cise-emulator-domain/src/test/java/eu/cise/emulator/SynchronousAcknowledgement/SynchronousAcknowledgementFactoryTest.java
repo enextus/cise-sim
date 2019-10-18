@@ -2,7 +2,6 @@ package eu.cise.emulator.SynchronousAcknowledgement;
 
 import eu.cise.servicemodel.v1.authority.SeaBasinType;
 import eu.cise.servicemodel.v1.message.*;
-import eu.cise.servicemodel.v1.service.Service;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.eucise.helpers.PushBuilder;
 import eu.eucise.helpers.ServiceBuilder;

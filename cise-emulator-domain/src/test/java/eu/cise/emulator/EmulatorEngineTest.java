@@ -43,6 +43,7 @@ public class EmulatorEngineTest {
         message = newPush()
                 .id("aMessageId")
                 .sender(newService().id("aServiceId").type(VESSEL_SERVICE))
+                .recipient(newService().id("recipient-id"))
                 .build();
 
         when(config.endpointUrl()).thenReturn("endpointUrl");
