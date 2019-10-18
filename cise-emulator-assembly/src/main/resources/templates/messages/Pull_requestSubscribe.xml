@@ -8,7 +8,7 @@
 	<RequiresAck>true</RequiresAck>
 	<Sender>
 		<SeaBasin>Mediterranean</SeaBasin>
-		<ServiceID>cx.cisesim2-nodecx.vessel.subscribe.consumer</ServiceID>
+		<ServiceID>cx.cisesim2.1-nodecx.vessel.subscribe.consumer</ServiceID>
 		<ServiceOperation>Subscribe</ServiceOperation>
 		<ServiceRole>Consumer</ServiceRole>
 		<ServiceStatus>Online</ServiceStatus>

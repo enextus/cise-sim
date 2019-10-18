@@ -26,4 +26,7 @@
 			<IMONumber>7710525</IMONumber>
 		</Vessel>
 	</Payload>
+	<DiscoveryProfiles>
+		<SeaBasin>Atlantic</SeaBasin>
+	</DiscoveryProfiles>
 </ns4:Push>

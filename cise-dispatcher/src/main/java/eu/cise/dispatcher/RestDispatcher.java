@@ -38,7 +38,7 @@ public class RestDispatcher implements Dispatcher {
     @Override
     public DispatchResult send(Message message, String address) {
         String payload = xmlMapper.toXML(message);
-
+        System.out.println("----------------------------\n" + payload + "\n----------------------------");
         RestResult result = client.post(address, payload);
         /*temp debug*/
         System.out.println("----------------------------\n" + result.getBody() + "\n----------------------------");

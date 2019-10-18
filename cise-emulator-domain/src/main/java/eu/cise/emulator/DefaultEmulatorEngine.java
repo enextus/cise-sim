@@ -90,6 +90,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
 
         // TODO improve signature to use <T extends Message> as a return type
+
+        System.out.println("----------------------------\n" + prettyNotValidatingXmlMapper.toXML(message) + "\n----------------------------");
         return (T) signature.sign(message);
     }
 
