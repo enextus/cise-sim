@@ -3,14 +3,21 @@ package eu.cise.emulator.api;
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.SendParam;
+import eu.cise.emulator.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
+import eu.cise.emulator.SynchronousAcknowledgement.SynchronousAcknowledgementType;
 import eu.cise.emulator.api.helpers.SendParamsReader;
+import eu.cise.emulator.exceptions.NullSenderEx;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.emulator.utils.Pair;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
+import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
 import eu.eucise.xml.XmlMapper;
+import eu.eucise.xml.XmlNotParsableException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +30,7 @@ public class DefaultMessageAPI implements MessageAPI {
     private final XmlMapper xmlMapper;
     private final XmlMapper prettyNotValidatingXmlMapper;
     private final TemplateLoader templateLoader;
+    private final SynchronousAcknowledgementFactory synchronousAcknowledgementFactory = new SynchronousAcknowledgementFactory();
 
     DefaultMessageAPI(MessageProcessor messageProcessor,
                       MessageStorage messageStorage,
@@ -58,8 +66,9 @@ public class DefaultMessageAPI implements MessageAPI {
     @Override
     public Acknowledgement receive(String content) {
         LOGGER.debug("receive is receiving through api : {}", content.substring(0, 200));
+        Message message = new Push();
         try {
-            Message message = xmlMapper.fromXML(content);
+            message = xmlMapper.fromXML(content);
 
             // store the input message and the acknowledgement
             Acknowledgement acknowledgement = messageProcessor.receive(message);
@@ -72,11 +81,19 @@ public class DefaultMessageAPI implements MessageAPI {
             messageStorage.store(messageApiDto);
 
             return acknowledgement;
-        } catch (Exception e) {
-            LOGGER.error("error in api send", e);
-            throw new RuntimeException(
-                    "Exception while receiving a message that should be handled.", e);
+
+
+        } catch (InvalidMessageSignatureEx | SigningCACertInvalidSignatureEx eInvalidSignature) {
+            return synchronousAcknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.INVALID_SIGNATURE, "" + eInvalidSignature.getMessage());
+        } catch (XmlNotParsableException eXmlMalformed) {
+            return synchronousAcknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.XML_MALFORMED, "" + eXmlMalformed.getMessage());
+        } catch (NullSenderEx eSemantic) {
+            return synchronousAcknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.SEMANTIC, "" + eSemantic.getMessage());
+        } catch (Exception eAny) {
+            return synchronousAcknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.INTERNAL_ERROR, "Unknown Error : " + eAny.getMessage());
         }
+
+
     }
 
     @Override
