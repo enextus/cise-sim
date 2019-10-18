@@ -61,7 +61,7 @@ class NavBar extends Component {
     }
 
     getServiceId() {
-        return this.props.store.appStore.memberId;
+        return this.props.store.serviceStore.serviceSelf.serviceParticipantId;
     }
 
     isConnected() {

@@ -12,6 +12,9 @@ import org.aeonbits.owner.Preprocessor;
         "classpath:emulator.properties"})
 public interface EmuConfig extends Config {
 
+    @Key("service.participantid")
+    String participantId();
+
     @Key("destination.endpoint-url")
     String endpointUrl();
 
