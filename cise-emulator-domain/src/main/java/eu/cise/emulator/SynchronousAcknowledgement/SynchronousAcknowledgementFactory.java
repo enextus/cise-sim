@@ -1,10 +1,9 @@
 package eu.cise.emulator.SynchronousAcknowledgement;
 
 import eu.cise.emulator.exceptions.NullClockEx;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
-import eu.cise.servicemodel.v1.message.AcknowledgementType;
-import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.servicemodel.v1.message.PriorityType;
+import eu.cise.servicemodel.v1.message.*;
+import eu.cise.servicemodel.v1.service.Service;
+import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.eucise.helpers.AckBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
 import java.time.Clock;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -69,6 +70,17 @@ public class SynchronousAcknowledgementFactory {
             case SUCCESS:
                 ackBuilder.ackCode(AcknowledgementType.SUCCESS)
                         .ackDetail("Message delivered " + extraMessage);
+                if ((message instanceof Push) && (message.getSender().getServiceOperation() == ServiceOperationType.SUBSCRIBE)) {
+                    Push pushMessage = (Push) message;
+                    if ((pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles() == null) ||
+                            (pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles() != null)
+                    ) {
+                        List<Service> services = new ArrayList<>();
+                        services.add(newService().id("cx.cisesim-nodecx.vessel.subscribe.consumer").build());
+                        ackBuilder.addAllDiscoveredServices(services);
+                    }
+                }
+
                 break;
             case INVALID_SIGNATURE:
                 ackBuilder.recipient(newService().id("" + message.getSender().getServiceID()))
