@@ -9,7 +9,12 @@ public class AssetRedirectionResource {
 
 
     @Path("/")
-    public Response redirect() {
+    public Response redirectRoot() {
+        return Response.temporaryRedirect(getAssetBaseURI()).build();
+    }
+
+    @Path("/base/")
+    public Response redirectBase() {
         return Response.temporaryRedirect(getAssetBaseURI()).build();
     }
 
