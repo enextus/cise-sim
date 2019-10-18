@@ -90,7 +90,7 @@ public class FieldAdaptationTest {
                 .build();
 
         SendParam paramCorId = new SendParam(
-                false, "n/a", "new-correlation-id");
+                false, "messageId", "new-correlation-id");
 
         Push expected = engine.prepare(actual, paramCorId);
 

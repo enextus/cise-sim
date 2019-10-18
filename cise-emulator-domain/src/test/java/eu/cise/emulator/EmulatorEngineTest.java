@@ -4,30 +4,25 @@ package eu.cise.emulator;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
-import eu.cise.emulator.exceptions.*;
+import eu.cise.emulator.exceptions.EmptyMessageIdEx;
+import eu.cise.emulator.exceptions.EndpointErrorEx;
+import eu.cise.emulator.exceptions.EndpointNotFoundEx;
+import eu.cise.emulator.exceptions.NullSenderEx;
 import eu.cise.emulator.utils.Scenarios;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
-import eu.cise.servicemodel.v1.service.ServiceType;
 import eu.cise.signature.SignatureService;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.time.Instant;
-import java.util.Date;
-
-import static eu.cise.servicemodel.v1.message.AcknowledgementType.SERVICE_TYPE_NOT_SUPPORTED;
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.SUCCESS;
 import static eu.cise.servicemodel.v1.service.ServiceType.VESSEL_SERVICE;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
-import static java.time.temporal.ChronoUnit.HOURS;
-import static java.time.temporal.ChronoUnit.MINUTES;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -50,8 +45,6 @@ public class EmulatorEngineTest {
                 .sender(newService().id("aServiceId").type(VESSEL_SERVICE))
                 .build();
 
-        when(config.serviceId()).thenReturn("myServiceId");
-        when(config.serviceType()).thenReturn(VESSEL_SERVICE);
         when(config.endpointUrl()).thenReturn("endpointUrl");
     }
 
@@ -98,7 +91,6 @@ public class EmulatorEngineTest {
     }
 
 
-
     @Test
     public void it_receives_a_valid_message() {
         try {
@@ -120,56 +112,6 @@ public class EmulatorEngineTest {
                 .withMessageContaining("empty");
     }
 
-    @Test
-    public void it_receives_a_message_with_creation_datetime_equals_to_current_time_minus_3_hours() {
-        when(config.isDateValidationEnabled()).thenReturn(true);
-
-        Message message = newPush()
-                .id("aMessageId")
-                .sender(newService().id("aSender"))
-                .creationDateTime(threeHoursInThePast())
-                .build();
-
-        assertThatExceptionOfType(CreationDateErrorEx.class)
-                .isThrownBy(() -> engine.receive(message))
-                .withMessageContaining("outside the allowed range");
-    }
-
-    @Test
-    public void it_receives_a_message_with_creation_datetime_equals_to_current_time_plus_5_hours() {
-        when(config.isDateValidationEnabled()).thenReturn(true);
-
-        Message message = newPush()
-                .id("aMessageId")
-                .sender(newService().id("aSender"))
-                .creationDateTime(fiveMinutesInTheFuture())
-                .build();
-
-        assertThatExceptionOfType(CreationDateErrorEx.class)
-                .isThrownBy(() -> engine.receive(message))
-                .withMessageContaining("outside the allowed range");
-    }
-
-    // TODO It should be understood on how to behave: should we be permissive or not on the service type
-    // of the messages received?
-    @Test
-    @Ignore
-    public void it_returns_a_SERVICE_TYPE_NOT_SUPPORTED_when_service_type_is_wrong() {
-        when(config.serviceType()).thenReturn(ServiceType.EVENT_DOCUMENT_SERVICE);
-
-        assertThat(engine.receive(message).getAckCode()).isEqualTo(SERVICE_TYPE_NOT_SUPPORTED);
-    }
-
-    // TODO It should be understood on how to behave: should we be permissive or not on the service type
-    // of the messages received?
-    @Test
-    @Ignore
-    public void it_returns_an_ack_error_description_when_service_type_is_wrong() {
-        when(config.serviceType()).thenReturn(ServiceType.EVENT_DOCUMENT_SERVICE);
-
-        assertThat(engine.receive(message).getAckDetail())
-                .isEqualTo("Supported service type is VesselService");
-    }
 
     @Test
     public void it_receives_a_valid_message_without_sender() {
@@ -212,7 +154,6 @@ public class EmulatorEngineTest {
     }
 
 
-
     @Test
     public void it_answer_with_a_the_same_correlation_id_of_the_received_message() {
         message.setCorrelationID("aCorrelationId");
@@ -222,11 +163,4 @@ public class EmulatorEngineTest {
     }
 
 
-    private Date threeHoursInThePast() {
-        return Date.from(Instant.now().minus(3, HOURS));
-    }
-
-    private Date fiveMinutesInTheFuture() {
-        return Date.from(Instant.now().plus(3, MINUTES));
-    }
 }
