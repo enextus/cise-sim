@@ -129,8 +129,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
             throw new NullSenderEx();
         }
 
-            signature.verify(message);
-
+        signature.verify(message);
 
         return acknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.SUCCESS, "");
     }

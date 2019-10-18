@@ -70,14 +70,29 @@ public class SynchronousAcknowledgementFactory {
             case SUCCESS:
                 ackBuilder.ackCode(AcknowledgementType.SUCCESS)
                         .ackDetail("Message delivered " + extraMessage);
-                if ((message instanceof Push) && (message.getSender().getServiceOperation() == ServiceOperationType.SUBSCRIBE)) {
+
+                /* Special case of Push Subscribe pattern*/
+                if ((message instanceof Push)) {
                     Push pushMessage = (Push) message;
-                    if ((pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles() == null) ||
-                            (pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles() != null)
-                    ) {
-                        List<Service> services = new ArrayList<>();
-                        services.add(newService().id("cx.cisesim-nodecx.vessel.subscribe.consumer").build());
-                        ackBuilder.addAllDiscoveredServices(services);
+                    if (message.getSender().getServiceOperation() == ServiceOperationType.SUBSCRIBE) {
+                        if ((pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles() == null) ||
+                                (pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles() != null)
+                        ) {
+                            List<Service> services = new ArrayList<>();
+                            services.add(newService().id("cx.cisesim-nodecx.vessel.subscribe.consumer").build());
+                            ackBuilder.addAllDiscoveredServices(services);
+                            ackBuilder.ackDetail("Message delivered to all 1 recipients");
+                        }
+
+                        if (pushMessage.getRecipient() != null && pushMessage.getDiscoveryProfiles() != null) {
+                            ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
+                                    .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_007", ueid));
+                        }
+                    } else {
+                        if (pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles().size() == 0) {
+                            ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
+                                    .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_007", ueid));
+                        }
                     }
                 }
 
@@ -89,23 +104,19 @@ public class SynchronousAcknowledgementFactory {
                         .ackDetail("Message signature not validated: Signature failed core validation.[" + extraMessage.substring(0, Integer.min(extraMessage.length(), 200)) + "...] logged as event UEID:" + ueid);
                 break;
             case XML_MALFORMED:
-                ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
-                        .ackDetail("Validation error code: COM-SVC-ERR_001 \n" +
-                                " Validation error message: [" + extraMessage.substring(0, Integer.min(extraMessage.length(), 200)) + "...] logged as event UEID:" + ueid);
-                break;
             case INTERNAL_ERROR:
-                ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
-                        .ackDetail("Validation error code: COM-SVC-ERR_001 \n" +
-                                " Validation error message: [" + extraMessage.substring(0, Integer.min(extraMessage.length(), 200)) + "...] logged as event UEID:" + ueid);
-                break;
             case SEMANTIC:
                 ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
-                        .ackDetail("Validation error code: COM-SVC-ERR_001 \n" +
-                                " Validation error message: [" + extraMessage.substring(0, Integer.min(extraMessage.length(), 200)) + "...] logged as event UEID:" + ueid);
+                        .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_001", ueid));
                 break;
         }
 
         return ackBuilder.build();
+    }
+
+    private String buildAckDetail(String extraMessage, String errorCode, long ueid) {
+        return "Validation error code: " + errorCode + " \n" +
+                " Validation error message: [" + extraMessage.substring(0, Integer.min(extraMessage.length(), 200)) + "...] logged as event UEID:" + ueid;
     }
 
     private String computeCorrelationId(String correlationId, String messageId) {
