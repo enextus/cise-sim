@@ -6,6 +6,7 @@ import NavBar from './components/NavBar';
 import AppStore from "./models/AppStore";
 import TemplateStore from "./templates/TemplateStore";
 import MessageStore from "./messages/MessageStore";
+import ServiceStore from "./services/ServiceStore";
 import {autorun} from "mobx";
 
 
@@ -13,11 +14,13 @@ const stores = {
     appStore: new AppStore(),
     templateStore: new TemplateStore(),
     messageStore: new MessageStore(),
+    serviceStore: new ServiceStore(),
 };
 
 autorun(() => {
     stores.appStore.loadServiceId();
     stores.messageStore.startPull();
+    stores.serviceStore.getServiceSelf();
 });
 
 @observer
@@ -30,9 +33,9 @@ export default class MainApp extends React.Component {
     render() {
         return (
             <>
-                    <DevTools/>
-                    <NavBar store={stores}/>
-                    <Body store={stores}/>
+                <DevTools/>
+                <NavBar store={stores}/>
+                <Body store={stores}/>
             </>
         );
     }

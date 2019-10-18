@@ -20,7 +20,6 @@ public class DefaultAppContext implements AppContext {
     private final XmlMapper prettyNotValidatingXmlMapper;
 
 
-
     public DefaultAppContext() {
         this.emuConfig = ConfigFactory.create(EmuConfig.class);
         this.xmlMapper = new DefaultXmlMapper();
@@ -70,6 +69,7 @@ public class DefaultAppContext implements AppContext {
     public XmlMapper getPrettyNotValidatingXmlMapper() {
         return prettyNotValidatingXmlMapper;
     }
+
     @Override
     public EmuConfig makeEmuConfig() {
         return emuConfig;

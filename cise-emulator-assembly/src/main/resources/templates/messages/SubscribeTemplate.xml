@@ -7,7 +7,7 @@
 	<Sender>
 		<DataFreshness>RealTime</DataFreshness>
 		<SeaBasin>Atlantic</SeaBasin>
-		<ServiceID>cx.cisesim1.1-nodecx.vessel.subscribe.provider</ServiceID>
+		<ServiceID>de.sim1-node01.vessel.subscribe.provider</ServiceID>
 		<ServiceOperation>Subscribe</ServiceOperation>
 		<ServiceRole>Provider</ServiceRole>
 		<ServiceStatus>Online</ServiceStatus>

@@ -1,9 +1,10 @@
 package eu.cise.emulator.SynchronousAcknowledgement;
 
 import eu.cise.emulator.exceptions.NullClockEx;
-import eu.cise.servicemodel.v1.message.*;
-import eu.cise.servicemodel.v1.service.Service;
-import eu.cise.servicemodel.v1.service.ServiceOperationType;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.AcknowledgementType;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.PriorityType;
 import eu.eucise.helpers.AckBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
 import java.time.Clock;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -70,32 +69,6 @@ public class SynchronousAcknowledgementFactory {
             case SUCCESS:
                 ackBuilder.ackCode(AcknowledgementType.SUCCESS)
                         .ackDetail("Message delivered " + extraMessage);
-
-                /* Special case of Push Subscribe pattern*/
-                if ((message instanceof Push)) {
-                    Push pushMessage = (Push) message;
-                    if (message.getSender().getServiceOperation() == ServiceOperationType.SUBSCRIBE) {
-                        if ((pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles() == null) ||
-                                (pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles() != null)
-                        ) {
-                            List<Service> services = new ArrayList<>();
-                            services.add(newService().id("cx.cisesim-nodecx.vessel.subscribe.consumer").build());
-                            ackBuilder.addAllDiscoveredServices(services);
-                            ackBuilder.ackDetail("Message delivered to all 1 recipients");
-                        }
-
-                        if (pushMessage.getRecipient() != null && pushMessage.getDiscoveryProfiles() != null) {
-                            ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
-                                    .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_007", ueid));
-                        }
-                    } else {
-                        if (pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles().size() == 0) {
-                            ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
-                                    .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_007", ueid));
-                        }
-                    }
-                }
-
                 break;
             case INVALID_SIGNATURE:
                 ackBuilder.recipient(newService().id("" + message.getSender().getServiceID()))
@@ -104,19 +77,23 @@ public class SynchronousAcknowledgementFactory {
                         .ackDetail("Message signature not validated: Signature failed core validation.[" + extraMessage.substring(0, Integer.min(extraMessage.length(), 200)) + "...] logged as event UEID:" + ueid);
                 break;
             case XML_MALFORMED:
+                ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
+                        .ackDetail("Validation error code: COM-SVC-ERR_001 \n" +
+                                " Validation error message: [" + extraMessage.substring(0, Integer.min(extraMessage.length(), 200)) + "...] logged as event UEID:" + ueid);
+                break;
             case INTERNAL_ERROR:
+                ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
+                        .ackDetail("Validation error code: COM-SVC-ERR_001 \n" +
+                                " Validation error message: [" + extraMessage.substring(0, Integer.min(extraMessage.length(), 200)) + "...] logged as event UEID:" + ueid);
+                break;
             case SEMANTIC:
                 ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
-                        .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_001", ueid));
+                        .ackDetail("Validation error code: COM-SVC-ERR_001 \n" +
+                                " Validation error message: [" + extraMessage.substring(0, Integer.min(extraMessage.length(), 200)) + "...] logged as event UEID:" + ueid);
                 break;
         }
 
         return ackBuilder.build();
-    }
-
-    private String buildAckDetail(String extraMessage, String errorCode, long ueid) {
-        return "Validation error code: " + errorCode + " \n" +
-                " Validation error message: [" + extraMessage.substring(0, Integer.min(extraMessage.length(), 200)) + "...] logged as event UEID:" + ueid;
     }
 
     private String computeCorrelationId(String correlationId, String messageId) {

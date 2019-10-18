@@ -3,10 +3,7 @@ package eu.cise.emulator.api;
 import eu.cise.emulator.AppContext;
 import eu.cise.emulator.DefaultAppContext;
 import eu.cise.emulator.api.helpers.CrossOriginSupport;
-import eu.cise.emulator.api.resources.AssetRedirectionResource;
-import eu.cise.emulator.api.resources.MessageResource;
-import eu.cise.emulator.api.resources.TemplateResource;
-import eu.cise.emulator.api.resources.WebAPIMessageResource;
+import eu.cise.emulator.api.resources.*;
 import eu.cise.emulator.io.MessageStorage;
 import eu.eucise.xml.XmlMapper;
 import io.dropwizard.Application;
@@ -36,7 +33,6 @@ public class EmulatorApp extends Application<EmulatorConf> {
         AppContext appCtx = new DefaultAppContext();
         XmlMapper xmlMapper = appCtx.getXmlMapper();
         MessageStorage messageStorage = appCtx.makeMessageStorage();
-
         MessageAPI messageAPI = new DefaultMessageAPI(
                 appCtx.makeMessageProcessor(),
                 messageStorage,
@@ -44,7 +40,8 @@ public class EmulatorApp extends Application<EmulatorConf> {
                 xmlMapper,
                 appCtx.getPrettyNotValidatingXmlMapper());
 
-        environment.jersey().register(new WebAPIMessageResource(messageAPI));
+        environment.jersey().register(new UiMessageResource(messageAPI));
+        environment.jersey().register(new UiServiceResource(appCtx.makeEmuConfig()));
         environment.jersey().register(new MessageResource(messageAPI, messageStorage));
 
         environment.jersey().register(

@@ -90,8 +90,6 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
 
         // TODO improve signature to use <T extends Message> as a return type
-
-        System.out.println("----------------------------\n" + prettyNotValidatingXmlMapper.toXML(message) + "\n----------------------------");
         return (T) signature.sign(message);
     }
 
@@ -129,7 +127,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
             throw new NullSenderEx();
         }
 
-        signature.verify(message);
+            signature.verify(message);
+
 
         return acknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.SUCCESS, "");
     }
