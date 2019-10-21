@@ -41,6 +41,7 @@ class SendButton extends React.Component {
         } else {
             this.props.enqueueSnackbar('New message has been sent.', {variant: 'success',});
             this.props.store.templateStore.createNewMessageId();
+            this.props.store.templateStore.resetPreview();
         }
 
     }

@@ -13,53 +13,53 @@
 	<artifactId>cise-emulator-react</artifactId>
 	<version>1.1-SNAPSHOT</version>
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.6</version>
+				<configuration>
+					<installDirectory>target</installDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v10.11.0</nodeVersion>
+							<npmVersion>6.4.1</npmVersion>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>webpack build</id>
+						<goals>
+							<goal>webpack</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-	<plugins>
-		<plugin>
-			<groupId>com.github.eirslett</groupId>
-			<artifactId>frontend-maven-plugin</artifactId>
-			<version>1.6</version>
-
-			<executions>
-				<execution>
-					<id>install node and npm</id>
-					<goals>
-						<goal>install-node-and-npm</goal>
-					</goals>
-					<configuration>
-						<nodeVersion>v10.11.0</nodeVersion>
-						<npmVersion>6.4.1</npmVersion>
-					</configuration>
-					<phase>none</phase>
-				</execution>
-				<execution>
-					<id>npm install</id>
-					<goals>
-						<goal>npm</goal>
-					</goals>
-					<configuration>
-						<arguments>install</arguments>
-					</configuration>
-					<phase>none</phase>
-				</execution>
-				<execution>
-					<id>webpack build</id>
-					<goals>
-						<goal>webpack</goal>
-					</goals>
-					<phase>none</phase>
-				</execution>
-			</executions>
-		</plugin>
-	</plugins>
+		</plugins>
 	</build>
+
 	<dependencies>
 	</dependencies>
 
 	<profiles>
 
 		<profile>
-			<id>includeNpm</id>
+			<id>cibuild</id>
 			<properties>
 				<testcase.excludedGroups>eu.eucise.tests.IntegrationTests
 				</testcase.excludedGroups>
@@ -67,14 +67,15 @@
 			</properties>
 
 			<build>
+
 				<plugins>
+
+
 					<plugin>
 						<groupId>com.github.eirslett</groupId>
 						<artifactId>frontend-maven-plugin</artifactId>
 						<version>1.6</version>
-						<configuration>
-							<installDirectory>target</installDirectory>
-						</configuration>
+
 						<executions>
 							<execution>
 								<id>install node and npm</id>
@@ -85,6 +86,7 @@
 									<nodeVersion>v10.11.0</nodeVersion>
 									<npmVersion>6.4.1</npmVersion>
 								</configuration>
+								<phase>none</phase>
 							</execution>
 							<execution>
 								<id>npm install</id>
@@ -94,18 +96,20 @@
 								<configuration>
 									<arguments>install</arguments>
 								</configuration>
+								<phase>none</phase>
 							</execution>
 							<execution>
 								<id>webpack build</id>
 								<goals>
 									<goal>webpack</goal>
 								</goals>
+								<phase>none</phase>
 							</execution>
 						</executions>
 					</plugin>
-
 				</plugins>
 			</build>
+
 		</profile>
 	</profiles>
 	<properties>

@@ -24,6 +24,13 @@ export default class TemplateStore {
         this.messageId = this.uuidv4();
     }
 
+
+    @action
+    resetPreview() {
+       this.template = new Template({templateId: "", templateName: "", templateContent: ""});
+    }
+
+
     @action
     async loadTemplateList() {
         const templates = await getTemplateList();
