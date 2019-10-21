@@ -55,9 +55,6 @@ public class SynchronousAcknowledgementFactory {
                 .id(message.getMessageID() + "_" + UUID.randomUUID().toString())
                 .correlationId(computeCorrelationId(message.getCorrelationID(), message.getMessageID()))
                 .creationDateTime(Date.from(clock.instant()))
-                .informationSecurityLevel(message.getPayload().getInformationSecurityLevel())
-                .informationSensitivity(message.getPayload().getInformationSensitivity())
-                .purpose(message.getPayload().getPurpose())
                 .priority(PriorityType.HIGH)
                 .isRequiresAck(false);
         long ueid = 0L;
