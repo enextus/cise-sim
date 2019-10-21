@@ -5,6 +5,7 @@ import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.Service;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.eucise.helpers.AckBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,14 +70,14 @@ public class SynchronousAcknowledgementFactory {
         switch (syncAcknowledgmentEvent) {
             case SUCCESS:
                 ackBuilder.ackCode(AcknowledgementType.SUCCESS)
-                        .ackDetail("Message delivered " + extraMessage);
+                        .ackDetail(StringUtils.trim("Message delivered " + extraMessage));
 
                 /* Special case of Push Subscribe pattern*/
                 if ((message instanceof Push)) {
                     Push pushMessage = (Push) message;
                     if (message.getSender().getServiceOperation() == ServiceOperationType.SUBSCRIBE) {
-                        if ((pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles() == null) ||
-                                (pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles() != null)
+                        if ((pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles().size() == 0) ||
+                                (pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles().size() > 0)
                         ) {
                             List<Service> services = new ArrayList<>();
                             services.add(newService().id("cx.cisesim-nodecx.vessel.subscribe.consumer").build());
@@ -84,14 +85,14 @@ public class SynchronousAcknowledgementFactory {
                             ackBuilder.ackDetail("Message delivered to all 1 recipients");
                         }
 
-                        if (pushMessage.getRecipient() != null && pushMessage.getDiscoveryProfiles() != null) {
+                        if (pushMessage.getRecipient() != null && pushMessage.getDiscoveryProfiles().size() > 0) {
                             ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
                                     .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_007", ueid));
                         }
                     } else {
                         if (pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles().size() == 0) {
                             ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
-                                    .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_007", ueid));
+                                    .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_005", ueid));
                         }
                     }
                 }
