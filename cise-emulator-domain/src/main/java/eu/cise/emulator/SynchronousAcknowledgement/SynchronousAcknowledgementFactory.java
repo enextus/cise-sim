@@ -109,7 +109,9 @@ public class SynchronousAcknowledgementFactory {
                 break;
         }
 
-        return ackBuilder.build();
+        Acknowledgement acknowledgement = ackBuilder.build();
+        acknowledgement.setPayload(null);
+        return acknowledgement;
     }
 
     private String buildAckDetail(String extraMessage, String errorCode, long ueid) {
