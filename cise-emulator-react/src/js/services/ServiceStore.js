@@ -16,7 +16,7 @@ export default class ServiceStore {
         this.receivedMessageError = null;
     }
 
-    async getServiceSelf() {
+    async loadServiceSelf() {
         const getServiceSelfResponse = await getServiceSelf();
         console.log("getServiceSelf:", getServiceSelfResponse);
 

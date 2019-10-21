@@ -5,7 +5,6 @@ import PreviewMessage from './PreviewMessage';
 import PulledMessage from '../messages/components/PulledMessage';
 import {Grid} from '@material-ui/core';
 import {observer} from 'mobx-react';
-import messageCandidate from "../models/message/MessageCandidate";
 
 @observer
 export default class Body extends Component {

@@ -56,7 +56,7 @@ public class TemplateResourceSendTest {
 
     @Test
     public void it_invokes_the_send_the_http_is_successful_201() {
-        Response response = resources.target("/api/ui/templates/template-id")
+        Response response = resources.target("/ui/templates/template-id")
                 .request()
                 .post(Entity.entity(msgParams(), MediaType.APPLICATION_JSON_TYPE));
         assertThat(response.getStatus()).isEqualTo(201);
@@ -64,7 +64,7 @@ public class TemplateResourceSendTest {
 
     @Test
     public void it_invokes_the_send_and_pass_the_message_to_the_facade() {
-        Response test = resources.target("/api/ui/templates/template-id")
+        Response test = resources.target("/ui/templates/template-id")
                 .request()
                 .post(Entity.entity(msgParams(), MediaType.APPLICATION_JSON_TYPE));
         verify(messageAPI).send(any(), any(JsonNode.class));

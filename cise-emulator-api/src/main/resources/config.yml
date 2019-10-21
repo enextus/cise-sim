@@ -1,10 +1,10 @@
 server:
   applicationConnectors:
     - type: http
-      port: 47080
+      port: 8080
   adminConnectors:
     - type: http
-      port: 47081
+      port: 8081
 logging:
   level: INFO
   loggers:
@@ -19,7 +19,7 @@ logging:
       target: stdout
 assets:
   mappings:
-    /assets: /base/
+    /assets: /
   overrides:
     /base/: ${project.basedir}/cise-emulator-react
     /base/static:  ${project.basedir}/cise-emulator-react/dist

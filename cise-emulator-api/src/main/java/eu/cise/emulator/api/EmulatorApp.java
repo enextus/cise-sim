@@ -3,7 +3,10 @@ package eu.cise.emulator.api;
 import eu.cise.emulator.AppContext;
 import eu.cise.emulator.DefaultAppContext;
 import eu.cise.emulator.api.helpers.CrossOriginSupport;
-import eu.cise.emulator.api.resources.*;
+import eu.cise.emulator.api.resources.MessageResource;
+import eu.cise.emulator.api.resources.TemplateResource;
+import eu.cise.emulator.api.resources.UiMessageResource;
+import eu.cise.emulator.api.resources.UiServiceResource;
 import eu.cise.emulator.io.MessageStorage;
 import eu.eucise.xml.XmlMapper;
 import io.dropwizard.Application;
@@ -20,7 +23,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
     @Override
     public void initialize(final Bootstrap<EmulatorConf> bootstrap) {
         bootstrap.addBundle(
-                new ConfiguredAssetsBundle("/assets/", "/base/",
+                new ConfiguredAssetsBundle("/assets/", "/",
                         "index.html")); // imply redirect from root ?
     }
 
@@ -28,7 +31,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
     public void run(final EmulatorConf conf, final Environment environment) {
         CrossOriginSupport.setup(environment);
 
-        environment.jersey().setUrlPattern("/*");
+        environment.jersey().setUrlPattern("/api");
 
         AppContext appCtx = new DefaultAppContext();
         XmlMapper xmlMapper = appCtx.getXmlMapper();
@@ -51,7 +54,6 @@ public class EmulatorApp extends Application<EmulatorConf> {
                                 appCtx.makeTemplateLoader(),
                                 xmlMapper, appCtx.getPrettyNotValidatingXmlMapper())));
 
-        environment.jersey().register(new AssetRedirectionResource());
     }
 }
 

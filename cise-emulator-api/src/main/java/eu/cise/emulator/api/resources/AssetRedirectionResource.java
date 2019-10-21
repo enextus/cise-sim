@@ -13,14 +13,10 @@ public class AssetRedirectionResource {
         return Response.temporaryRedirect(getAssetBaseURI()).build();
     }
 
-    @Path("/base/")
-    public Response redirectBase() {
-        return Response.temporaryRedirect(getAssetBaseURI()).build();
-    }
 
     private URI getAssetBaseURI() {
         try {
-            return new URI("/base/index.html");
+            return new URI("/index.html");
         } catch (URISyntaxException e) {
             throw new RuntimeException("Should never happen. the URI of /base/index.html is correct.");
         }

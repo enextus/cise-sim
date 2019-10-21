@@ -5,8 +5,8 @@ import eu.cise.emulator.api.APIError;
 import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.api.PreviewResponse;
 import eu.cise.emulator.api.TemplateAPI;
-import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.api.representation.TemplateParams;
+import eu.cise.emulator.templates.Template;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -18,7 +18,6 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;
-
 import java.util.Date;
 
 import static eu.eucise.helpers.PushBuilder.newPush;
@@ -57,7 +56,7 @@ public class GetTemplateTest {
 
     @Test
     public void it_checks_that_the_api_templates_route_exists() {
-        Response response = resources.target("/api/ui/templates/1234567")
+        Response response = resources.target("/ui/templates/1234567")
                 .queryParam("requiresAck", false)
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
@@ -68,7 +67,7 @@ public class GetTemplateTest {
 
     @Test
     public void it_invokes_the_api_templates_for_preview() {
-        resources.target("/api/ui/templates/1234567")
+        resources.target("/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)
@@ -79,7 +78,7 @@ public class GetTemplateTest {
 
     @Test
     public void it_invokes_the_api_templates_for_preview_with_a_valued_templateParams() {
-        resources.target("/api/ui/templates/1234567")
+        resources.target("/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)
@@ -90,7 +89,7 @@ public class GetTemplateTest {
 
     @Test
     public void it_returns_a_template_when_previewResponse_is_ok() {
-        Response response = resources.target("/api/ui/templates/1234567")
+        Response response = resources.target("/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)
@@ -105,7 +104,7 @@ public class GetTemplateTest {
     public void it_returns_a_apiError_when_previewResponse_is_ko() {
         when(templateAPI.preview(any())).thenReturn(new PreviewResponse.KO("exception"));
 
-        Response response = resources.target("/api/ui/templates/1234567")
+        Response response = resources.target("/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)
@@ -134,7 +133,7 @@ public class GetTemplateTest {
 
         Template template = new Template("template-id-#1", "name-#1", xmlMapper.toXML(fakePreparedMessage));
         when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(template));
-        Response response = resources.target("/api/ui/templates/1234567")
+        Response response = resources.target("/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)
@@ -149,7 +148,7 @@ public class GetTemplateTest {
     @Test
     public void it_returns_template_which_contains_the_template_body_an_xml() {
         Message fakePreparedMessage = newPush()
-                .id("mesageId")
+                .id("messageId")
                 .correlationId("correlation-id")
                 .creationDateTime(new Date())
                 .priority(PriorityType.HIGH)
@@ -165,7 +164,7 @@ public class GetTemplateTest {
 
         when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(template));
 
-        Response response = resources.target("/api/ui/templates/1234567")
+        Response response = resources.target("/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
                 .queryParam("requiresAck", false)

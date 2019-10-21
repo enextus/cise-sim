@@ -38,10 +38,10 @@
     <description>main aggregation for sim project</description>
 
     <modules>
+        <module>cise-emulator-react</module>
         <module>cise-emulator-api</module>
         <module>cise-emulator-app</module>
         <module>cise-emulator-domain</module>
-        <module>cise-emulator-transport</module>
         <module>cise-emulator-assembly</module>
         <module>cise-dispatcher</module>
         <module>cise-emulator-io</module>
@@ -96,7 +96,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                        <linkXRef>false</linkXRef>
+                    <linkXRef>false</linkXRef>
                     <failsOnError>true</failsOnError>
                     <configLocation>checkstyle.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
