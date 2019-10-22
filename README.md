@@ -35,6 +35,8 @@ and then stop it:
 ...$ ./sim stop
 ```
 
+The application sever will start showing an application banner and 
+
 ## Configuration 
 Before using the application to test the CISE node or a CISE adaptor, the application needs to be configured accordingly to the specific required usage.
 
@@ -43,3 +45,25 @@ The ``conf/`` directory contains two configuration files:
 - ``sim.properties``: is a property file containing the parameters relative to the participant, service and signature configuration.
 - ``config.yml``: is a YAML file able to configure the application server used to run the CISE Sim application. Here you may find mainly the configuration of the port the CISE Sim will use to listen for incoming messages (**default is 8080**) and the logging configuration.
 
+```properties
+################################################################
+# CISE sim properties file
+#
+# Version 1.1 Beta
+###############################################################
+
+# The participant ID of simulator instance
+service.participantid=cisesim1-nodecx.nodecx.eucise.cx
+
+# The destination to which the simulator sends the messages
+destination.endpoint-url=http://localhost:8080/api/messages
+
+# Signature configuration
+signature.keyStoreFileName=keyStore.jks
+signature.keyStorePassword=password
+signature.privateKeyAlias=apache.nodecx.eucise.cx
+signature.privateKeyPassword=password
+
+# Directory relative to installation where the server looks for message templates
+template.messages.directory=templates/messages
+```
