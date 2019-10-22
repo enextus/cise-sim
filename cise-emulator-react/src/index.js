@@ -1,6 +1,5 @@
 import React from "react";
 import {render} from "react-dom";
-import DevTools from "mobx-react-devtools";
 import MainApp from "./js/MainApp";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
@@ -30,7 +29,6 @@ const theme = createMuiTheme({
 
 render(
     <React.Fragment>
-      <DevTools/>
       <MuiThemeProvider theme={theme}>
         <CssBaseline/>
         <SnackbarProvider

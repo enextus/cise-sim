@@ -14,62 +14,38 @@ The server should be installed with:
 
 - Java 1.8
 
-## Running the simulator server
-
-When the compilation will be finished (with a BUILD SUCCESSFUL in the standard output) it will be created a distribution package that can be used to run the software.
+## Deployment
+With the distribution package (tar.gz file) the following simple procedure can be used:
 
 ```bash
 mkdir /my/installation/path -p
 tar -xvzf cise-sim-*.tar.gz -C /my/installation/path --strip-components=1
-cd cise-sim-bin
+```
+
+## Configuration 
+Before running the distribution package must be configured accordingly to your specific needs.
+
+In _conf/_ directory you can find:
+- _sim.properties_ file that contains parameters relative to messages and signature
+```bash
+...$ cd /my/installation/path
+...$ vim conf/sim.properties
+```
+- _config.yml_ file that contains parameters relative to simulator server 
+
+All the parameters are depicted inside the files.
+
+## Execution
+After you have configured all the parameters you can run the application:
+```bash
+cd /my/installation/path
 ./sim run
 ```
-
-## Configuration of the simulator server
-
-before running ( and after compilation ) 
-distribution package can be tailored to run the software accordingly to specific needs.
-
-- by modifying the sim.properties file (common application properties)
+You can also run the application as a daemon with the command:
 ```bash
-...$ cd /my/installation/path
-...$ nano conf/sim.properties
+./sim start
 ```
-
-| Property key  | Description  | Example value |
-| :------------ |:---------------:| -----:|
-| aproperty      | some wordy text | anyValue |
-| bproperty      | centered        |   anyValue |
-| cproperty | are neat        |    anyValue |
-
-- by modifying the config.yml file (internal application yml file)
+and you can stop it with:
 ```bash
-...$ cd /my/installation/path
-...$ nano conf/sim.properties
-```
-| Property key  | Description  | Example value |
-| :------------ |:---------------:| -----:|
-| aproperty      | the server port to make accessible the web interface and cise API.  | anyValue |
-| bproperty      | centered        |   anyValue |
-| cproperty | are neat        |    anyValue |
-
-## Compilation (*)
-To compil from source source code will be also required :
-
-- Maven 3.5+
-- npm 6.4.1 / nodejs 10.11.0 tool  
-If any proxy is required by your network maven script require proxy configuration
-to compile download node.js & npm automatically (https://maven.apache.org/guides/mini/guide-proxies.html)
-
-After cloning the git repository it is possible to compile the project using maven.
-
-```bash
-...$ cd cise-emulator
-...$ mvn clean install
-```
-If npm compilation is not wanted just add the following profile directive:
-
-```bash
-...$ cd cise-emulator
-...$ mvn clean install -P cibuild
+./sim stop
 ```
