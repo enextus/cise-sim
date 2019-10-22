@@ -8,8 +8,8 @@ import org.aeonbits.owner.Preprocessor;
  * This file is containing the emulator application configuration
  */
 @Config.PreprocessorClasses({EmuConfig.TrimAndInsureBoolean.class})
-@Sources({"file:${conf.dir}emulator.properties",
-        "classpath:emulator.properties"})
+@Sources({"file:${conf.dir}sim.properties",
+        "classpath:sim.properties"})
 public interface EmuConfig extends Config {
 
     @Key("service.participantid")

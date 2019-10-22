@@ -77,7 +77,9 @@ public class SynchronousAcknowledgementFactory {
                                 (pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles().size() > 0)
                         ) {
                             List<Service> services = new ArrayList<>();
-                            services.add(newService().id("cx.cisesim-nodecx.vessel.subscribe.consumer").build());
+                            Service service = newService().id("cx.cisesim-nodecx.vessel.subscribe.consumer").build();
+                            service.setParticipant(null);
+                            services.add(service);
                             ackBuilder.addAllDiscoveredServices(services);
                             ackBuilder.ackDetail("Message delivered to all 1 recipients");
                         }
