@@ -86,9 +86,7 @@ function start {
 }
 
 function run() {
-  echo execute command : ${SW_RUN_SWR_CMD} composed from $*
   ${SW_RUN_SWR_CMD} 2>&1
-
 }
 
 function sw_run_cmd() {
@@ -116,8 +114,6 @@ for var in "$@"
     POSTFIX_CMD="$POSTFIX_CMD $var"
   fi
 done
-echo "prefix : $PREFIX_CMD"
-echo "postfix:  $POSTFIX_CMD"
 
 sw_run_cmd
 

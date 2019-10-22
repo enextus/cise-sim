@@ -1,5 +1,6 @@
 package eu.cise.emulator.api;
 
+import com.codahale.metrics.health.HealthCheck;
 import eu.cise.emulator.AppContext;
 import eu.cise.emulator.DefaultAppContext;
 import eu.cise.emulator.api.helpers.CrossOriginSupport;
@@ -17,14 +18,15 @@ import io.dropwizard.setup.Environment;
 public class EmulatorApp extends Application<EmulatorConf> {
 
     public static void main(final String[] args) throws Exception {
+        System.out.println("\n==============================================");
         new EmulatorApp().run(args);
     }
 
     @Override
     public void initialize(final Bootstrap<EmulatorConf> bootstrap) {
         bootstrap.addBundle(
-                new ConfiguredAssetsBundle("/assets/", "/",
-                        "index.html")); // imply redirect from root ?
+            new ConfiguredAssetsBundle("/assets/", "/",
+                "index.html")); // imply redirect from root ?
     }
 
     @Override
@@ -37,22 +39,32 @@ public class EmulatorApp extends Application<EmulatorConf> {
         XmlMapper xmlMapper = appCtx.getXmlMapper();
         MessageStorage messageStorage = appCtx.makeMessageStorage();
         MessageAPI messageAPI = new DefaultMessageAPI(
-                appCtx.makeMessageProcessor(),
-                messageStorage,
-                appCtx.makeTemplateLoader(),
-                xmlMapper,
-                appCtx.getPrettyNotValidatingXmlMapper());
+            appCtx.makeMessageProcessor(),
+            messageStorage,
+            appCtx.makeTemplateLoader(),
+            xmlMapper,
+            appCtx.getPrettyNotValidatingXmlMapper());
 
+        environment.healthChecks().register("noop", new HealthCheck() {
+            @Override
+            protected Result check() {
+                return Result.healthy();
+            }
+        });
         environment.jersey().register(new UiMessageResource(messageAPI));
         environment.jersey().register(new UiServiceResource(appCtx.makeEmuConfig()));
         environment.jersey().register(new MessageResource(messageAPI, messageStorage));
-
         environment.jersey().register(
-                new TemplateResource(messageAPI,
-                        new TemplateAPI(
-                                appCtx.makeMessageProcessor(),
-                                appCtx.makeTemplateLoader(),
-                                xmlMapper, appCtx.getPrettyNotValidatingXmlMapper())));
+            new TemplateResource(messageAPI,
+                new TemplateAPI(
+                    appCtx.makeMessageProcessor(),
+                    appCtx.makeTemplateLoader(),
+                    xmlMapper, appCtx.getPrettyNotValidatingXmlMapper())));
+
+        environment.lifecycle().addServerLifecycleListener(server -> {
+            System.out.println("==============================================\n");
+
+        });
 
     }
 }

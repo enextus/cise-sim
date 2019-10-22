@@ -18,8 +18,12 @@ server:
 logging:
   level: INFO
   loggers:
-    "io.dropwizard.bundles.assets": DEBUG
-    "eu.cise.emulator.api": DEBUG
+    "io.dropwizard.bundles.assets": INFO
+    "eu.cise.emulator.api": INFO
+    "org.eclipse.jetty.server.handler": WARN
+    "org.eclipse.jetty.setuid": WARN
+    "io.dropwizard.server.DefaultServerFactory": WARN
+    "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
   appenders:
     - type: console
       threshold: ALL
