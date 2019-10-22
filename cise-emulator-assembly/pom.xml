@@ -54,7 +54,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <finalName>cise-sim-1.1-Beta</finalName>
+				<finalName>cise-sim-${version}</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                             <outputDirectory>../target/</outputDirectory>
                             <descriptors>
@@ -69,7 +69,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <finalName>cise-sim-1.1-Beta-src</finalName>
+                            <finalName>cise-sim-${version}-src</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                             <outputDirectory>../target/</outputDirectory>
                             <descriptors>
