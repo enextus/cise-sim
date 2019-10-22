@@ -1,4 +1,3 @@
-import DevTools from "mobx-react-devtools";
 import React from "react";
 import {observer} from "mobx-react";
 import Body from './components/Body';
@@ -30,7 +29,6 @@ export default class MainApp extends React.Component {
     render() {
         return (
             <>
-                <DevTools/>
                 <NavBar store={stores}/>
                 <Body store={stores}/>
             </>

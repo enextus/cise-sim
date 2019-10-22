@@ -1,10 +1,20 @@
+################################################################
+# CISE sim application configuration
+#
+# Version 1.1 Beta
+###############################################################
+
+# Web server configuration
 server:
+  # Protocol and port of simulator web interface
   applicationConnectors:
     - type: http
       port: 8080
+  # Protocol and port of simulator web-application admin interface (metrics, Healthcheck ...)
   adminConnectors:
     - type: http
       port: 8081
+# Simulator log configuration, if needed you can uncomment the part below to enable logging to filesystem
 logging:
   level: INFO
   loggers:
@@ -23,6 +33,7 @@ logging:
 #      archivedFileCount: 5
 #      timeZone: UTC
 
+# Web resources mappings: these parameters should not be changed!
 assets:
   mappings:
     /assets: /
