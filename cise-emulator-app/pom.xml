@@ -138,7 +138,7 @@
         <dependency>
             <groupId>eu.europa.ec.jrc.marex</groupId>
             <artifactId>cise-dispatcher</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
 
         <dependency>
