@@ -1,19 +1,18 @@
-import TemplateService from "../__mock__/templates/TemplateService";
-import TemplateStore from "../js/templates/TemplateStore";
+import ServiceService from "../__mock__/services/ServiceService";
+import ServiceStore from "../js/services/ServiceStore";
 
-jest.mock('../js/templates/TemplateService');
+jest.mock('../js/services/ServiceService');
 
 
 
-describe("TemplateStore", () => {
+describe("ServiceStore", () => {
 
     beforeEach(() => {
-        API.mockClear();
-        get.mockClear();
+        ServiceStore.mockClear();
     });
 
-    it("return a template error",()=>{
-
+    it("return a service error",()=>{
+        getServiceSelf()
             const template  = getTemplateById("", "", "", false);
             expect(API).toHaveBeenCalledTimes(1);
         }

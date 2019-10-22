@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright CISE AIS emulator (c) 2018-2019, European Union
+  ~ Copyright CISE SIM (c) 2018-2019, European Union
   ~ All rights reserved.
   ~
   ~ Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
     <parent>
         <artifactId>cise-emulator</artifactId>
         <groupId>eu.europa.ec.jrc.marex</groupId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1-Beta</version>
     </parent>
 
     <artifactId>cise-emulator-assembly</artifactId>
@@ -54,7 +54,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <finalName>cise-emulator-bin</finalName>
+                            <finalName>cise-sim-1.1-Beta</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                             <outputDirectory>../target/</outputDirectory>
                             <descriptors>
@@ -69,7 +69,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <finalName>cise-emulator-src</finalName>
+                            <finalName>cise-sim-1.1-Beta-src</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                             <outputDirectory>../target/</outputDirectory>
                             <descriptors>
@@ -85,7 +85,7 @@
         <dependency>
             <artifactId>cise-emulator-app</artifactId>
             <groupId>eu.europa.ec.jrc.marex</groupId>
-            <version>1.1-SNAPSHOT</version>
+            <version>1.1-Beta</version>
         </dependency>
     </dependencies>
     <properties>

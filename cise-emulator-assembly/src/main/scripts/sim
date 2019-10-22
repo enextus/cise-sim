@@ -1,0 +1,172 @@
+#!/usr/bin/env bash
+
+# VARIABLES ###
+SW_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
+SW_NAME=`basename ${0:-emulator}`
+JAVA_EXEC=`which java`
+JAVA_VERSION=`${JAVA_EXEC} -version 2>&1 | head -n 1 | awk '{ print $3 }'`
+NOHUP_EXEC=`which nohup`
+PID_DIR=${SW_HOME}/tmp
+PID_FILE=${PID_DIR}/${SW_NAME}.pid
+DEBUG_PORT=9999
+
+# FUNCTIONS ###
+function print_help {
+  cat <<EOF
+Usage: ${GRE}${SW_NAME}${NOR} COMMAND
+emulator server lifecycle manager (starting, stopping, debugging).
+COMMAND
+    start       starts the cli - emulator in a detached shell using nohup command.
+    run         starts the cli - emulator in foreground.
+    stop        stops the cli - emulator running in background.
+    restart     restart the cli - emulator running in background.
+    debug-start starts the cli - emulator in a detached shell launching the application
+                in debug mode (port ${DEBUG_PORT}).
+    debug-run   starts the cli - emulator in foreground launching the application
+                in debug mode (port ${DEBUG_PORT}).
+    status      show the current status the emulator (started or stopped).
+EOF
+}
+
+function enable_colors_if_supported {
+
+  if test -t 1; then
+    # see if it supports colors...
+    NCOLOR=$(tput colors)
+
+    if test -n "$NCOLOR" && test $NCOLOR -ge 8; then
+      NOR="$(tput sgr0)"
+      RED="$(tput setaf 196)"
+      GRE="$(tput setaf 40)"
+    fi
+  fi
+
+  OK="[${GRE}ok${NOR}]"
+  KO="[${RED}ko${NOR}]"
+
+}
+
+function log_exit_msg {
+
+  E=${?}
+test ${E} -eq 0 && echo "${OK} ${SW_NAME} started at `date -Iseconds`" || \
+    echo "${KO} ${SW_NAME} not started"; exit ${E}
+}
+
+function log_start_msg {
+
+  echo "${GRE}CISE emulator${NOR}"
+  echo "Java path:    ${JAVA_EXEC}"
+  echo "Java version: ${JAVA_VERSION}"
+
+}
+
+function log_debug_start_msg {
+  log_start_msg
+  echo "DEBUG is ON listening on port ${DEBUG_PORT}"
+  echo "the server is now waiting for a connection from a java remote"
+  echo "debugger to the port ${DEBUG_PORT}"
+}
+
+function setup_debug {
+  export JAVA_OPTS="-Xdebug -agentlib:jdwp=emulator=dt_socket,address=${DEBUG_PORT},server=y,suspend=y"
+}
+
+function start {
+
+  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >${SW_HOME}/logs/localhost.log 2>&1 &
+  pid=$!
+  sleep 1
+  kill -0 ${pid} >/dev/null 2>&1
+  echo ${pid} >${PID_FILE}
+
+  echo "${GRE}tail -100f logs/localhost.log${NOR} will check the server log files"
+  log_exit_msg
+
+}
+
+function run() {
+  echo execute command : ${SW_RUN_SWR_CMD} composed from $*
+  ${SW_RUN_SWR_CMD} 2>&1
+
+}
+
+function sw_run_cmd() {
+
+  if [ "$JAVA_VERSION" == "1.9" ]; then
+    JAVA_OPTS="${JAVA_OPTS} --add-modules java.xml.bind"
+  fi
+
+  SW_RUN_SWR_CMD="${JAVA_EXEC} ${JAVA_OPTS} -Dconf.dir=${SW_HOME}/conf/ -jar ${SW_HOME}/lib/cise-emulator.jar server ${SW_HOME}/conf/config.yml"
+}
+
+# MAIN ###
+enable_colors_if_supported
+
+cd ${SW_HOME}
+PREFIX_CMD=""
+POSTFIX_CMD=""
+COUNT_VAR=0
+for var in "$@"
+ do
+  if [[ $var == -Ddw.* ]]
+  then
+    PREFIX_CMD="$PREFIX_CMD $var"
+  else
+    POSTFIX_CMD="$POSTFIX_CMD $var"
+  fi
+done
+echo "prefix : $PREFIX_CMD"
+echo "postfix:  $POSTFIX_CMD"
+
+sw_run_cmd
+
+case $1 in
+start)
+  log_start_msg
+  start
+  exit 0
+  ;;
+run)
+  log_start_msg
+  run
+  exit 0
+  ;;
+debug-start)
+  setup_debug
+  log_debug_start_msg
+  sw_run_cmd
+  start
+  exit 0
+  ;;
+debug-run)
+  setup_debug
+  log_debug_start_msg
+  sw_run_cmd
+  run
+  exit 0
+  ;;
+stop)
+        PIDS=`ps aux | grep ${SW_NAME}.jar | grep -v grep | awk '{ printf $2" " }'`
+
+        (kill -15 ${PIDS} 2>&1) > /dev/null && \
+    echo "${OK} ${SW_NAME} has been stopped" || echo "${KO} ${SW_NAME} was not running"
+
+  rm -f ${PID_FILE}
+  ;;
+restart)
+  $0 stop
+  sleep 1
+  $0 start
+  ;;
+status)
+        test `ps aux | grep ${SW_NAME}.jar | grep -v grep | wc -l` -eq 0 && \
+    echo "${KO} ${SW_NAME} is stopped" || echo "${OK} ${SW_NAME} is running"
+  ;;
+*)
+  print_help
+  exit 0
+  ;;
+esac
+
+exit 0

@@ -48,14 +48,14 @@ Let's assume the repo base dire is called ``cise-emulator``, in the following ch
 To start the CLI server in order to receive messages: 
  
 ```bash
-...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-cli.jar cliserver
+...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-Beta-cli.jar cliserver
 ```
 
 #### CLI Client Emulator
 To launch a CLI client in order to send messages:
 
 ```bash
-...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-cli.jar  sender -c ./cise-emulator-assembly/src/main/conf/cliconfig.yml -s ./cise-emulator-assembly/src/main/conf/xmlmessages/PushTemplate.xml
+...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-Beta-cli.jar  sender -c ./cise-emulator-assembly/src/main/conf/cliconfig.yml -s ./cise-emulator-assembly/src/main/conf/xmlmessages/PushTemplate.xml
 ```
 
 ### Web Application (WEB) Emulator
@@ -73,7 +73,7 @@ The web application of the emulator is composed by two different parts: the API 
 To start the web api server from the terminal:
 
 ```bash
-...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-web.jar  server ./cise-emulator-assembly/src/main/conf/config.yml &
+...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-Beta-web.jar  server ./cise-emulator-assembly/src/main/conf/config.yml &
 ```
 
 #### WEB: initialization of the nodejs server

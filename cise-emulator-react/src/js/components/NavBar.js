@@ -52,7 +52,7 @@ class NavBar extends Component {
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <DirectionsBoatIcon/>
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}> CISE Emu </Typography>
+                    <Typography variant="h6" className={classes.title}> CISE Sim (beta) </Typography>
                     <div>
                         <ButtonGroup  size="small" color="secondary" aria-label="small secondary button group">
                             <Button className={classes.participantChip} >{"ParticipantId"}</Button>

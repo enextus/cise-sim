@@ -1,20 +1,9 @@
-import {action, observable} from "mobx";
+import {action, observable,decorate} from "mobx";
 import {getServiceSelf} from "./ServiceService";
 import Service from "./Service";
 
 export default class ServiceStore {
-    @observable serviceSelf = new Service("#before#loading#");
-
-
-    @action
-    setServiceSelf(serviceSelf) {
-        this.serviceSelf = serviceSelf;
-    }
-
-    @action
-    consumeErrorMessage() {
-        this.receivedMessageError = null;
-    }
+ serviceSelf = new Service("#before#loading#");
 
     async loadServiceSelf() {
         const getServiceSelfResponse = await getServiceSelf();
@@ -28,5 +17,11 @@ export default class ServiceStore {
         }
     }
 
-
 }
+
+decorate(ServiceStore, {
+    serviceSelf: observable,
+    setServiceSelf: action,
+    consumeErrorMessage:action,
+    loadServiceSelf:action
+})
