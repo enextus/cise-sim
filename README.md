@@ -35,8 +35,15 @@ and then stop it:
 ...$ ./sim stop
 ```
 
-The application sever will start showing an banner and some information in the log. The output should 
-be similar to the following one:
+The application sever will start showing an banner and some information in the log. 
+
+**The CISE Sim web interface is now ready to be accessed by opening a browser to the address: http://localhost:8080/**.
+ 
+**The CISE Sim endpoint is ready to be contacted by a CISE Node or adaptor that can send messages to the endpoint url: ``http://localhost:8080/api/messages``.**
+
+
+### Console output example
+The output should be similar to the following one:
 ```bash
 $ ./sim run                                                                                                                      [18:10:17] 
 CISE emulator
@@ -72,9 +79,6 @@ INFO  [2019-10-22 16:10:23,779] org.eclipse.jetty.server.AbstractConnector: Star
 
 INFO  [2019-10-22 16:10:23,779] org.eclipse.jetty.server.Server: Started @2196ms
 ``` 
-
-**The CISE Sim web interface is now ready to be accessed by opening a browser to the address: http://localhost:8080/**. 
-**The CISE Sim endpoint is ready to be contacted by a CISE Node or adaptor that can send messages to the endpoint url: ``http://localhost:8080/api/messages``.**
 
 ## Configuration 
 Before connecting to a CISE node or adaptor, the application needs to be configured properly.
