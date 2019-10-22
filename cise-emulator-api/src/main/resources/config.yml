@@ -17,6 +17,12 @@ logging:
       discardingThreshold: 0
       timeZone: UTC
       target: stdout
+#    - type: file
+#      currentLogFilename: ./logs/sim.log
+#      archivedLogFilenamePattern: ./logs/sim-%d{yyyy-MM-dd}.log.gz
+#      archivedFileCount: 5
+#      timeZone: UTC
+
 assets:
   mappings:
     /assets: /
