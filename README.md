@@ -120,6 +120,57 @@ signature.privateKeyAlias=apache.nodecx.eucise.cx
 signature.privateKeyPassword=password
 ```
 
+#### config.yml content
+```yaml
+################################################################
+# CISE sim application configuration
+#
+# Version 1.1 Beta
+###############################################################
+
+# Web server configuration
+server:
+  # Protocol and port of simulator web interface
+  applicationConnectors:
+    - type: http
+      port: 8080
+  # Protocol and port of simulator web-application admin interface (metrics, Healthcheck ...)
+  adminConnectors:
+    - type: http
+      port: 8081
+# Simulator log configuration, if needed you can uncomment the part below to enable logging to filesystem
+logging:
+  level: INFO
+  loggers:
+    "io.dropwizard.bundles.assets": INFO
+    "eu.cise.emulator.api": INFO
+    "org.eclipse.jetty.server.handler": WARN
+    "org.eclipse.jetty.setuid": WARN
+    "io.dropwizard.server.DefaultServerFactory": WARN
+    "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
+  appenders:
+    - type: console
+      threshold: ALL
+      queueSize: 512
+      discardingThreshold: 0
+      timeZone: UTC
+      target: stdout
+#    - type: file
+#      currentLogFilename: ./logs/sim.log
+#      archivedLogFilenamePattern: ./logs/sim-%d{yyyy-MM-dd}.log.gz
+#      archivedFileCount: 5
+#      timeZone: UTC
+
+# Web resources mappings: these parameters should not be changed!
+assets:
+  mappings:
+    /assets: /
+  overrides:
+    /base/: ${project.basedir}/cise-emulator-react
+    /base/static:  ${project.basedir}/cise-emulator-react/dist
+
+```
+
 ### Console output example
 As a reference, when starting up the CISE Sim the output should be similar to the following one:
 ```bash
