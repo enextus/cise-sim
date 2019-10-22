@@ -30,22 +30,25 @@
 						<configuration>
 							<nodeVersion>v10.11.0</nodeVersion>
 							<npmVersion>6.4.1</npmVersion>
-						</configuration>
+							</configuration>
 					</execution>
 					<execution>
 						<id>npm install</id>
 						<goals>
 							<goal>npm</goal>
 						</goals>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
+<!--						<configuration>-->
+<!--							<arguments>install  -no-proxy</arguments>-->
+<!--						</configuration>-->
 					</execution>
 					<execution>
 						<id>webpack build</id>
 						<goals>
 							<goal>webpack</goal>
 						</goals>
+<!--						<configuration>-->
+<!--							<arguments> no-proxy</arguments>-->
+<!--						</configuration>-->
 					</execution>
 				</executions>
 			</plugin>

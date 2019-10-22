@@ -74,13 +74,13 @@ function setup_debug {
 
 function start {
 
-  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >${SW_HOME}/logs/localhost.log 2>&1 &
+  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >${SW_HOME}/logs/sim_stdout.log 2>&1 &
   pid=$!
   sleep 1
   kill -0 ${pid} >/dev/null 2>&1
   echo ${pid} >${PID_FILE}
 
-  echo "${GRE}tail -100f logs/localhost.log${NOR} will check the server log files"
+  echo "${GRE}tail -100f logs/sim_stdout.log${NOR} will check the server log files"
   log_exit_msg
 
 }

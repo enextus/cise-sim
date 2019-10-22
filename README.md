@@ -1,94 +1,75 @@
-# CISE emu
+# CISE Sim
 
-The CISE Emulator is an application to receive and send tracks messages, conform to the CISE Protocol. 
+The "CISE Sim" is an application to receive and send messages conform to the CISE Protocol.
+It simulate the node and adapter :
+-  common behaviour in message sending (messageId-CorrelationId / creationdate / signature)
+-  reception handling with synchronous acknowledgement including basic returned error  (excluded registration, security matrix related error)  
 
 ## Requirements
 
-The application should preferably installed on a linux machine.
-Theoretically should work also in any Operative System supporting Java and having a bash shell support but it has only been tested in a GNU/Linux server.
+The application must  be installed on a linux machine.
+Theoretically should work also in any Operative System supporting Java but it have only been tested in a GNU/Linux server.
 
 The server should be installed with:
 
 - Java 1.8
-- Maven 3.5+
-- npm / nodejs tool (see https://webgate.ec.europa.eu/CITnet/confluence/display/OCNET/Ubuntu+Workstations)
 
-## Compilation
+## Running the simulator server
 
-Clone the git repository:
+When the compilation will be finished (with a BUILD SUCCESSFUL in the standard output) it will be created a distribution package that can be used to run the software.
 
 ```bash
-...$ git clone https://webgate.ec.europa.eu/CITnet/stash/scm/marex/cise-emu.git
+mkdir /my/installation/path -p
+tar -xvzf cise-sim-*.tar.gz -C /my/installation/path --strip-components=1
+cd cise-sim-bin
+./sim run
 ```
 
-After cloning the git repository is possible to compile the project using maven.
+## Configuration of the simulator server
+
+before running ( and after compilation ) 
+distribution package can be tailored to run the software accordingly to specific needs.
+
+- by modifying the sim.properties file (common application properties)
+```bash
+...$ cd /my/installation/path
+...$ nano conf/sim.properties
+```
+
+| Property key  | Description  | Example value |
+| :------------ |:---------------:| -----:|
+| aproperty      | some wordy text | anyValue |
+| bproperty      | centered        |   anyValue |
+| cproperty | are neat        |    anyValue |
+
+- by modifying the config.yml file (internal application yml file)
+```bash
+...$ cd /my/installation/path
+...$ nano conf/sim.properties
+```
+| Property key  | Description  | Example value |
+| :------------ |:---------------:| -----:|
+| aproperty      | the server port to make accessible the web interface and cise API.  | anyValue |
+| bproperty      | centered        |   anyValue |
+| cproperty | are neat        |    anyValue |
+
+## Compilation (*)
+To compil from source source code will be also required :
+
+- Maven 3.5+
+- npm 6.4.1 / nodejs 10.11.0 tool  
+If any proxy is required by your network maven script require proxy configuration
+to compile download node.js & npm automatically (https://maven.apache.org/guides/mini/guide-proxies.html)
+
+After cloning the git repository it is possible to compile the project using maven.
 
 ```bash
 ...$ cd cise-emulator
 ...$ mvn clean install
 ```
-
-## Running the emulator
-
-When the compilation will be finished (with a BUILD SUCCESSFUL in the standard output) it will be created a distribution package that can be used to run the software.
+If npm compilation is not wanted just add the following profile directive:
 
 ```bash
-...$ cd target
-...$ mv cise-emulator-bin.tar.gz /my/installation/path
-...$ cd /my/installation/path
-...$ tar xvfz cise-emulator.tar.gz
-...$ cd cise-emulator-bin
-```
-
-### Command Line Interface (CLI) Emulator
-Let's assume the repo base dire is called ``cise-emulator``, in the following chapters 
-
-#### CLI Server Emulator 
-
-To start the CLI server in order to receive messages: 
- 
-```bash
-...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-Beta-cli.jar cliserver
-```
-
-#### CLI Client Emulator
-To launch a CLI client in order to send messages:
-
-```bash
-...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-Beta-cli.jar  sender -c ./cise-emulator-assembly/src/main/conf/cliconfig.yml -s ./cise-emulator-assembly/src/main/conf/xmlmessages/PushTemplate.xml
-```
-
-### Web Application (WEB) Emulator
-
-To work properly the emulator needs to refer to an absolute path where to find the Java key store.
-Therefore you need to copy the jks file to local directory:
-
-```bash
-...$ mkdir  -p /opt/jboss/EuciseData/sim-egn/conf
-...$ cp ./cise-emulator-assembly/src/main/conf/keyStore.jks /opt/jboss/EuciseData/sim-egn/conf/apache-nodecx.jks
-```
-The web application of the emulator is composed by two different parts: the API server and the react front end interface. 
-
-#### WEB API server
-To start the web api server from the terminal:
-
-```bash
-...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-Beta-web.jar  server ./cise-emulator-assembly/src/main/conf/config.yml &
-```
-
-#### WEB: initialization of the nodejs server
-The nodejs server will server the HTML and javascript file during the development. 
-To initialize it: 
-
-```bash
-...$ cd cise-emulator-react/
-...$ npm install
-...$ npm run build --scripts-prepend-node-path=auto  
-```
-
-#### WEB start the development server  
-Launching this command will open the browser, fire up a nodejs and serve the HTML+JS files:
- 
-```bash
-...$ npm run start --scripts-prepend-node-path=auto  
+...$ cd cise-emulator
+...$ mvn clean install -P cibuild
 ```
