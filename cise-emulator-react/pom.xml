@@ -38,7 +38,7 @@
 							<goal>npm</goal>
 						</goals>
 <!--						<configuration>-->
-<!--							<arguments>install  -no-proxy</arguments>-->
+<!--							<arguments>install  &#45;&#45;no-proxy</arguments>-->
 <!--						</configuration>-->
 					</execution>
 					<execution>
@@ -47,7 +47,7 @@
 							<goal>webpack</goal>
 						</goals>
 <!--						<configuration>-->
-<!--							<arguments> no-proxy</arguments>-->
+<!--							<arguments>install  &#45;&#45;no-proxy</arguments>-->
 <!--						</configuration>-->
 					</execution>
 				</executions>
