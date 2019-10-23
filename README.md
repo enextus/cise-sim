@@ -171,7 +171,7 @@ assets:
 
 ```
 
-### Console output example
+### Console output eu.cise.dispatcher.example
 As a reference, when starting up the CISE Sim the output should be similar to the following one:
 ```bash
 $ ./sim run                                                                                                                      [18:10:17] 
