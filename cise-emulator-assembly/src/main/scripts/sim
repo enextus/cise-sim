@@ -2,7 +2,7 @@
 
 # VARIABLES ###
 SW_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
-SW_NAME=`basename ${0:-emulator}`
+SW_NAME=`basename ${0:-sim}`
 JAVA_EXEC=`which java`
 JAVA_VERSION=`${JAVA_EXEC} -version 2>&1 | head -n 1 | awk '{ print $3 }'`
 NOHUP_EXEC=`which nohup`
@@ -143,12 +143,11 @@ debug-run)
   exit 0
   ;;
 stop)
-        PIDS=`ps aux | grep ${SW_NAME}.jar | grep -v grep | awk '{ printf $2" " }'`
-
-        (kill -15 ${PIDS} 2>&1) > /dev/null && \
+  PIDS=$(ps aux | grep "emulator.jar" | grep -v grep | awk '{ printf $2" " }')
+  (kill -15 "${PIDS}" 2>&1) > /dev/null && \
     echo "${OK} ${SW_NAME} has been stopped" || echo "${KO} ${SW_NAME} was not running"
 
-  rm -f ${PID_FILE}
+  rm -f "${PID_FILE}"
   ;;
 restart)
   $0 stop
@@ -156,8 +155,8 @@ restart)
   $0 start
   ;;
 status)
-        test `ps aux | grep ${SW_NAME}.jar | grep -v grep | wc -l` -eq 0 && \
-    echo "${KO} ${SW_NAME} is stopped" || echo "${OK} ${SW_NAME} is running"
+  test $(ps aux | grep "emulator.jar" | grep -v grep | wc -l) -eq 0 && \
+  echo "${KO} ${SW_NAME} is stopped" || echo "${OK} ${SW_NAME} is running"
   ;;
 *)
   print_help
