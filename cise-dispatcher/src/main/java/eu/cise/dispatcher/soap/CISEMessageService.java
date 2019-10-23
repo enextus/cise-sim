@@ -16,7 +16,7 @@ import javax.xml.ws.WebServiceFeature;
  * JAX-WS RI 2.2.9-b130926.1035
  * Generated source version: 2.2
  */
-@WebServiceClient(name = "CISEMessageService", targetNamespace = "http://www.cise.eu/accesspoint/service/v1/", wsdlLocation = "file:/home/longama/IdeaProjects/cise-emu/cise-dispatcher/src/main/resources/CISEMessageService.wsdl")
+@WebServiceClient(name = "CISEMessageService", targetNamespace = "http://www.cise.eu/accesspoint/service/v1/", wsdlLocation = "META-INF/wsdl/CISEMessageService.wsdl")
 public class CISEMessageService
         extends Service {
 
@@ -28,7 +28,8 @@ public class CISEMessageService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/home/longama/IdeaProjects/cise-emu/cise-dispatcher/src/main/resources/CISEMessageService.wsdl");
+            URL baseUrl = CISEMessageService.class.getClassLoader().getResource(".");
+            url = new URL(baseUrl,"META-INF/wsdl/CISEMessageService.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
