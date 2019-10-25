@@ -7,14 +7,19 @@ import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.ObjectFactory;
 import eu.eucise.xml.Services;
+import org.apache.cxf.interceptor.InInterceptors;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
+import javax.xml.ws.WebServiceClient;
+import javax.xml.ws.WebServiceRef;
+import javax.xml.ws.spi.WebServiceFeatureAnnotation;
 
 
 /**
@@ -35,7 +40,7 @@ public interface CISEMessageServiceSoapImpl {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "send", targetNamespace = "http://www.cise.eu/accesspoint/service/v1/", className = "eu.cise.dispatcher.soap.Send")
+   @RequestWrapper(localName = "send", targetNamespace = "http://www.cise.eu/accesspoint/service/v1/", className = "eu.cise.dispatcher.soap.Send")
     @ResponseWrapper(localName = "sendResponse", targetNamespace = "http://www.cise.eu/accesspoint/service/v1/", className = "eu.cise.dispatcher.soap.SendResponse")
     Acknowledgement send(
             @WebParam(name = "message", targetNamespace = "")
