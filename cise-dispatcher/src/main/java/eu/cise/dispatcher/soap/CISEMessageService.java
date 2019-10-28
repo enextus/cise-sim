@@ -23,12 +23,12 @@ import java.net.URL;
         name = "CISEMessageService",
         targetNamespace = "http://www.cise.eu/accesspoint/service/v1/",
         wsdlLocation = "META-INF/wsdl/CISEMessageService.wsdl")
-@SOAPBinding(
-        style = SOAPBinding.Style.DOCUMENT,
-        parameterStyle = SOAPBinding.ParameterStyle.WRAPPED,
-        use = SOAPBinding.Use.LITERAL)
-@InInterceptors(interceptors = {"eu.cise.dispatcher.soap.SoapInterceptor"})
-@OutInterceptors(interceptors = {"eu.cise.dispatcher.soap.SoapInterceptor"})
+//@SOAPBinding(
+//        style = SOAPBinding.Style.DOCUMENT,
+//        parameterStyle = SOAPBinding.ParameterStyle.WRAPPED,
+//        use = SOAPBinding.Use.LITERAL)
+//@InInterceptors(interceptors = {"eu.cise.dispatcher.soap.SoapInterceptor"})
+//@OutInterceptors(interceptors = {"eu.cise.dispatcher.soap.SoapInterceptor"})
 @HandlerChain(file = "handlers.xml")
 
 public class CISEMessageService

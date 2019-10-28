@@ -11,5 +11,4 @@
                 <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
             </jaxws:bindings>
         </jaxws:bindings>
-
     </jaxws:bindings>

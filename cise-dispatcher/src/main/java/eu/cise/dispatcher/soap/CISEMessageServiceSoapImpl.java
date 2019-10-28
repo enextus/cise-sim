@@ -15,10 +15,7 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.ws.RequestWrapper;
-import javax.xml.ws.ResponseWrapper;
-import javax.xml.ws.WebServiceClient;
-import javax.xml.ws.WebServiceRef;
+import javax.xml.ws.*;
 import javax.xml.ws.spi.WebServiceFeatureAnnotation;
 
 
@@ -42,6 +39,7 @@ public interface CISEMessageServiceSoapImpl {
     @WebResult(targetNamespace = "")
    @RequestWrapper(localName = "send", targetNamespace = "http://www.cise.eu/accesspoint/service/v1/", className = "eu.cise.dispatcher.soap.Send")
     @ResponseWrapper(localName = "sendResponse", targetNamespace = "http://www.cise.eu/accesspoint/service/v1/", className = "eu.cise.dispatcher.soap.SendResponse")
+    @RespectBinding (enabled = false)
     Acknowledgement send(
             @WebParam(name = "message", targetNamespace = "")
                     Message message);
