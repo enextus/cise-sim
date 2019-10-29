@@ -89,7 +89,7 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
     }
 
 
-    private boolean explore(SOAPElement soapElement, SOAPEnvelope env) {
+    protected Object explore(SOAPElement soapElement, SOAPEnvelope env) {
         QName subSequentQname = null;
         SOAPElement subSequentSOAPElement = null;
         String subSequentLocalName = null;
@@ -100,13 +100,14 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
                 Iterator soapElementIterator = soapElement.getChildElements();
                 while (soapElementIterator.hasNext()) {
                     Object nextElement = soapElementIterator.next();
-                    if (nextElement instanceof TextImpl) continue;
+                    if (nextElement instanceof TextImpl) {
+                        continue;
+                    }
                     subSequentSOAPElement = (SOAPElement) nextElement;
-                    boolean test = explore(subSequentSOAPElement, env);
+                    Object replaceSubSequentSOAPElement = explore(subSequentSOAPElement, env);
 
                     if (subSequentSOAPElement.getNamespaceURI() != null && subSequentSOAPElement.getLocalName() != null) {
-                        subSequentLocalName =subSequentSOAPElement.getLocalName();
-                        subSequentQname = new QName(subSequentSOAPElement.getNamespaceURI(), subSequentLocalName);
+                        subSequentLocalName = subSequentSOAPElement.getLocalName();
                         Name bodyName;
                         try {
                             bodyName = env.createName(subSequentLocalName);
@@ -118,11 +119,11 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
                     }
                 }
             }
-                return false;
-            } else {
-                return true;
-            }
+            return soapElement;
+        } else {
+            return soapElement;
         }
+    }
 
 
 }

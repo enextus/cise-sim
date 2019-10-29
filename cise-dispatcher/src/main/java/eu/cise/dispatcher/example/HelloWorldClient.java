@@ -8,11 +8,16 @@ import eu.cise.dispatcher.soap.WsHandler;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
+import eu.cise.signature.DefaultSignatureService;
+import eu.cise.signature.DomSigner;
+import eu.cise.signature.SignatureService;
+import eu.eucise.xml.DefaultXmlMapper;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 
+import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 
@@ -47,7 +52,20 @@ public class HelloWorldClient {
                 .addEntity(vessel)
                 .build();
 
-        Acknowledgement ack = service.send(pushMessage);
+        SignatureService signatureService= makeSignatureService();
+        Message signedPushMessage=  signatureService.sign(pushMessage);
+
+        Acknowledgement ack = service.send(signedPushMessage);
         System.out.println(ack);
+    }
+
+    public static SignatureService makeSignatureService() {
+        System.setProperty("conf.dir","/home/cise/IdeaProjects/cise-emu/cise-dispatcher/src/main/resources/");
+        return newSignatureService()
+                .withKeyStoreName("cisesim1-nodecx.jks")
+                .withKeyStorePassword("password")
+                .withPrivateKeyAlias("cisesim1-nodecx.nodecx.eucise.cx")
+                .withPrivateKeyPassword("password")
+                .build();
     }
 }

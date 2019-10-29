@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/eu.cise.dispatcher.soap/envelope/">
     <S:Body>
         <ns5:send xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/"
                   xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/"

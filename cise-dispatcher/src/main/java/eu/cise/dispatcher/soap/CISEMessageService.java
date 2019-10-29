@@ -1,13 +1,7 @@
 
 package eu.cise.dispatcher.soap;
 
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.interceptor.InInterceptors;
-import org.apache.cxf.interceptor.OutInterceptors;
-
 import javax.jws.HandlerChain;
-import javax.jws.soap.SOAPBinding;
 import javax.xml.namespace.QName;
 import javax.xml.ws.*;
 import java.net.MalformedURLException;
@@ -27,8 +21,8 @@ import java.net.URL;
 //        style = SOAPBinding.Style.DOCUMENT,
 //        parameterStyle = SOAPBinding.ParameterStyle.WRAPPED,
 //        use = SOAPBinding.Use.LITERAL)
-//@InInterceptors(interceptors = {"eu.cise.dispatcher.soap.SoapInterceptor"})
-//@OutInterceptors(interceptors = {"eu.cise.dispatcher.soap.SoapInterceptor"})
+//@InInterceptors(interceptors = {"java.eu.cise.dispatcher.soap.SoapInterceptor"})
+//@OutInterceptors(interceptors = {"java.eu.cise.dispatcher.soap.SoapInterceptor"})
 @HandlerChain(file = "handlers.xml")
 
 public class CISEMessageService
