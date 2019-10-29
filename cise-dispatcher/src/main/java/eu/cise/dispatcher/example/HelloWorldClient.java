@@ -1,6 +1,8 @@
 package eu.cise.dispatcher.example;
 
 
+import eu.cise.datamodel.v1.entity.Entity;
+import eu.cise.datamodel.v1.entity.cargo.Cargo;
 import eu.cise.datamodel.v1.entity.vessel.Vessel;
 import eu.cise.dispatcher.soap.CISEMessageService;
 import eu.cise.dispatcher.soap.CISEMessageServiceSoapImpl;
@@ -15,7 +17,9 @@ import eu.eucise.xml.DefaultXmlMapper;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 import static eu.eucise.helpers.PushBuilder.newPush;
@@ -27,12 +31,18 @@ public class HelloWorldClient {
         //invoke business method
         Vessel vessel = new Vessel();
         vessel.setCallSign("coucou");
-        WsHandler test ;
-        try {
-                URL baseUrl = CISEMessageService.class.getClassLoader().getResource(".");
-                URL url = new URL(baseUrl, "META-INF/wsdl/CISEMessageService.wsdl");
-                test = new WsHandler();
-        } catch (MalformedURLException murl) { throw new RuntimeException(murl); }
+        Cargo cargo = new Cargo();
+        List<Entity> entities = new ArrayList<>();
+        entities.add(vessel);
+        entities.add(cargo);
+
+//        WsHandler test ;
+//        try {
+//                URL baseUrl = CISEMessageService.class.getClassLoader().getResource(".");
+//                URL url = new URL(baseUrl, "META-INF/wsdl/CISEMessageService.wsdl");
+//                test = new WsHandler();
+//        } catch (MalformedURLException murl) { throw new RuntimeException(murl); }
+//
 
 
 
@@ -47,20 +57,21 @@ public class HelloWorldClient {
                 .setEncryptedPayload("false")
                 .isPersonalData(false)
                 .purpose(PurposeType.NON_SPECIFIED)
-                .sender(newService().id("service-id").operation(ServiceOperationType.PUSH).type(ServiceType.VESSEL_SERVICE).build())
-                .recipient(newService().id("recipient-id").operation(ServiceOperationType.PUSH).build())
-                .addEntity(vessel)
+                .sender(newService().id("cx.cisesim1-nodecx.vessel.push.provider").operation(ServiceOperationType.PUSH).type(ServiceType.VESSEL_SERVICE).build())
+                .recipient(newService().id("cx.cisesim2-nodecx.vessel.push.consumer").operation(ServiceOperationType.PUSH).build())
+                .addEntities(entities)
                 .build();
 
         SignatureService signatureService= makeSignatureService();
         Message signedPushMessage=  signatureService.sign(pushMessage);
-
         Acknowledgement ack = service.send(signedPushMessage);
+
+//        Acknowledgement ack = service.send(pushMessage);
         System.out.println(ack);
     }
 
     public static SignatureService makeSignatureService() {
-        System.setProperty("conf.dir","/home/cise/IdeaProjects/cise-emu/cise-dispatcher/src/main/resources/");
+        System.setProperty("conf.dir","/home/longama/IdeaProjects/cise-emu/cise-dispatcher/src/main/resources/");
         return newSignatureService()
                 .withKeyStoreName("cisesim1-nodecx.jks")
                 .withKeyStorePassword("password")

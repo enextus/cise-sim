@@ -106,7 +106,11 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
                     subSequentSOAPElement = (SOAPElement) nextElement;
                     Object replaceSubSequentSOAPElement = explore(subSequentSOAPElement, env);
 
-                    if (subSequentSOAPElement.getNamespaceURI() != null && subSequentSOAPElement.getLocalName() != null) {
+                    if (subSequentSOAPElement.getNamespaceURI() != null &&
+                        !subSequentSOAPElement.getNamespaceURI().contains("w3.org") &&
+                        subSequentSOAPElement.getLocalName() != null
+
+                    ) {
                         subSequentLocalName = subSequentSOAPElement.getLocalName();
                         Name bodyName;
                         try {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/accesspoint/service/v1/" xmlns:eu.cise.dispatcher.soap="http://schemas.xmlsoap.org/wsdl/eu.cise.dispatcher.soap/" xmlns:ns1="http://schemas.xmlsoap.org/eu.cise.dispatcher.soap/http" name="CISEMessageService" targetNamespace="http://www.cise.eu/accesspoint/service/v1/">
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/accesspoint/service/v1/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="CISEMessageService" targetNamespace="http://www.cise.eu/accesspoint/service/v1/">
   <wsdl:types>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.cise.eu/servicemodel/v1/service/" xmlns:ns1="http://www.cise.eu/servicemodel/v1/authority/" targetNamespace="http://www.cise.eu/servicemodel/v1/service/" version="1.0">
 
@@ -832,20 +832,20 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CISEMessageServiceSoapBinding" type="tns:CISEMessageServiceSoapImpl">
-    <eu.cise.dispatcher.soap:binding style="document" transport="http://schemas.xmlsoap.org/eu.cise.dispatcher.soap/http"/>
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="send">
-      <eu.cise.dispatcher.soap:operation soapAction="" style="document"/>
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="send">
-        <eu.cise.dispatcher.soap:body use="literal"/>
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="sendResponse">
-        <eu.cise.dispatcher.soap:body use="literal"/>
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="CISEMessageService">
     <wsdl:port binding="tns:CISEMessageServiceSoapBinding" name="CISEMessageServiceSoapPort">
-      <eu.cise.dispatcher.soap:address location="http://192.168.42.37:8180/eucise-com-services-web/CISEMessageService"/>
+      <soap:address location="http://192.168.42.37:8180/eucise-com-services-web/CISEMessageService"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
