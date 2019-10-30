@@ -1,36 +1,51 @@
-package eu.cise.dispatcher.example;
-
+package eu.cise.dispatcher;
 
 import eu.cise.datamodel.v1.entity.Entity;
 import eu.cise.datamodel.v1.entity.cargo.Cargo;
 import eu.cise.datamodel.v1.entity.vessel.Vessel;
-import eu.cise.dispatcher.soap.CISEMessageService;
-import eu.cise.dispatcher.soap.CISEMessageServiceSoapImpl;
+import eu.cise.dispatcher.DispatchResult;
+import eu.cise.dispatcher.Dispatcher;
+import eu.cise.dispatcher.SoapDispatcher;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
-import eu.cise.signature.SignatureService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 
-public class HelloWorldClient {
-    public static void main(String[] argv) {
-        URL soapEndpoint = null;
-        try {
-            soapEndpoint = new URL("http://192.168.42.37:8180/eucise-com-services-web/CISEMessageService?wsdl");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        CISEMessageServiceSoapImpl service = new CISEMessageService(soapEndpoint).getCISEMessageServiceSoapPort();
+import static org.assertj.core.api.Assertions.assertThat;
 
+
+public class SoapDispatcherTest {
+
+    @Before
+    public void before() {
+    }
+
+    @After
+    public void after() {
+    }
+
+    @Test
+    public void it_sends_the_message_to_the_specified_address_with_success() {
+        Dispatcher soapDispatcher = new SoapDispatcher();
+        Message msg = buildMessage();
+        String soapEndpointDestination = "http://192.168.42.37:8180/eucise-com-services-web/CISEMessageService?wsdl";
+        DispatchResult sendResult = soapDispatcher.send(msg, soapEndpointDestination);
+        String result = sendResult.getResult();
+
+        assertThat(result).contains("SUCCESS");
+
+    }
+
+    private Message buildMessage(){
         Vessel vessel = new Vessel();
         vessel.setIMONumber(123L);
         vessel.setCallSign("callSign");
@@ -54,21 +69,7 @@ public class HelloWorldClient {
                 .recipient(newService().id("cx.cisesim2-nodecx.vessel.push.consumer").operation(ServiceOperationType.PUSH).build())
                 .addEntities(entities)
                 .build();
-
-        SignatureService signatureService = makeSignatureService();
-        Message signedPushMessage = signatureService.sign(pushMessage);
-        Acknowledgement ack = service.send(signedPushMessage);
-
-        System.out.println(ack);
+        return pushMessage;
     }
 
-    public static SignatureService makeSignatureService() {
-        System.setProperty("conf.dir", "/home/longama/IdeaProjects/cise-emu/cise-dispatcher/src/main/resources/");
-        return newSignatureService()
-                .withKeyStoreName("cisesim1-nodecx.jks")
-                .withKeyStorePassword("password")
-                .withPrivateKeyAlias("cisesim1-nodecx.nodecx.eucise.cx")
-                .withPrivateKeyPassword("password")
-                .build();
-    }
 }

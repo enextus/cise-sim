@@ -6,6 +6,7 @@ import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
 import org.apache.cxf.common.jaxb.JAXBUtils;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ public class WsHandlerTest {
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(8089); // No-args constructor defaults to port 8089
 
-
+    @Ignore
     @Test
     public void exampleTest() {
         stubFor(get(urlEqualTo("/api/messages")) //localhost:8089/api/messages

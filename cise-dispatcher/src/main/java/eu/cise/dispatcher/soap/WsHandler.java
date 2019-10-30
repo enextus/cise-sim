@@ -1,7 +1,5 @@
 package eu.cise.dispatcher.soap;
 
-import org.w3c.dom.Document;
-
 import javax.annotation.Resource;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
@@ -17,9 +15,7 @@ import java.util.*;
 @WebService(name = "WsHandler", targetNamespace = "http://www.cise.eu/accesspoint/service/v1/")
 @HandlerChain(file = "handlers.xml")
 public class WsHandler implements SOAPHandler<SOAPMessageContext> {
-    private static final String NAMESPACE_URI = "default";
-    private static Document thisDocument;
-    private final String VALID_PROPERTY = "RANDOM";
+
     @Resource
     WebServiceContext ctx;
 
@@ -45,7 +41,7 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
                 // Grab the header of the SOAP envelop
                 SOAPPart soapPart = messageContext.getMessage().getSOAPPart();
                 SOAPEnvelope env = soapPart.getEnvelope();
-                SOAPBody soapBody = env.getBody();//get body from envelope
+                SOAPBody soapBody = env.getBody();
 
                 if (soapBody != null) {
                     SOAPElement soapElement = (SOAPElement) soapBody.getFirstChild().getFirstChild();
@@ -90,4 +86,5 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
     }
 
 }
+
 
