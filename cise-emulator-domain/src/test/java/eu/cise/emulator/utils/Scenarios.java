@@ -1,5 +1,9 @@
 package eu.cise.emulator.utils;
 
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.eucise.xml.DefaultXmlMapper;
+import eu.eucise.xml.XmlMapper;
+
 public class Scenarios {
 
     private static final String ASYNC_ACK_MSG_SUCCEEDED =
@@ -187,8 +191,9 @@ public class Scenarios {
         return SYNC_ACK_MSG_SUCCESS_NO_SENDER;
     }
 
-    public static String getSyncAckMsgSuccess() {
-        return SYNC_ACK_MSG_SUCCESS;
+    public static Acknowledgement getSyncAckMsgSuccess() {
+        XmlMapper xmlMapper = new DefaultXmlMapper();
+        return xmlMapper.fromXML(SYNC_ACK_MSG_SUCCESS);
     }
 
 

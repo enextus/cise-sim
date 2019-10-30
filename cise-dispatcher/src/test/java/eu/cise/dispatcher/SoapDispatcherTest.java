@@ -9,6 +9,7 @@ import eu.cise.dispatcher.SoapDispatcher;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
+import eu.cise.signature.SignatureService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 
@@ -36,13 +38,18 @@ public class SoapDispatcherTest {
     @Test
     public void it_sends_the_message_to_the_specified_address_with_success() {
         Dispatcher soapDispatcher = new SoapDispatcher();
+
         Message msg = buildMessage();
+        SignatureService signatureService = makeSignatureService();
+        Message signedMessage = signatureService.sign(msg);
+
         String soapEndpointDestination = "http://192.168.42.37:8180/eucise-com-services-web/CISEMessageService?wsdl";
-        DispatchResult sendResult = soapDispatcher.send(msg, soapEndpointDestination);
-        String result = sendResult.getResult();
 
-        assertThat(result).contains("SUCCESS");
+        DispatchResult sendResult = soapDispatcher.send(signedMessage, soapEndpointDestination);
+        Acknowledgement ack = sendResult.getResult();
+        System.out.println(ack);
 
+        assertThat(ack.getAckCode()).isEqualTo(AcknowledgementType.SUCCESS);
     }
 
     private Message buildMessage(){
@@ -70,6 +77,16 @@ public class SoapDispatcherTest {
                 .addEntities(entities)
                 .build();
         return pushMessage;
+    }
+
+    public static SignatureService makeSignatureService() {
+        System.setProperty("conf.dir", "/home/longama/IdeaProjects/cise-emu/cise-dispatcher/src/main/resources/");
+        return newSignatureService()
+                .withKeyStoreName("cisesim1-nodecx.jks")
+                .withKeyStorePassword("password")
+                .withPrivateKeyAlias("cisesim1-nodecx.nodecx.eucise.cx")
+                .withPrivateKeyPassword("password")
+                .build();
     }
 
 }
