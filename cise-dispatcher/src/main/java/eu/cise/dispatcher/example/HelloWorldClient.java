@@ -29,8 +29,14 @@ import static eu.eucise.helpers.ServiceBuilder.newService;
 
 public class HelloWorldClient {
     public static void main(String[] argv) {
-        CISEMessageServiceSoapImpl service = new CISEMessageService().getCISEMessageServiceSoapPort();
-        //invoke business method
+        URL soapEndpoint = null;
+        try {
+            soapEndpoint = new URL("http://192.168.42.37:8180/eucise-com-services-web/CISEMessageService?wsdl");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        CISEMessageServiceSoapImpl service = new CISEMessageService(soapEndpoint).getCISEMessageServiceSoapPort();
+
         Vessel vessel = new Vessel();
         vessel.setIMONumber(123L);
         vessel.setCallSign("callSign");
