@@ -1,6 +1,5 @@
 package eu.cise.dispatcher.soap;
 
-import com.sun.xml.messaging.saaj.soap.impl.TextImpl;
 import org.w3c.dom.Document;
 
 import javax.annotation.Resource;
@@ -13,9 +12,7 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 @WebService(name = "WsHandler", targetNamespace = "http://www.cise.eu/accesspoint/service/v1/")
 @HandlerChain(file = "handlers.xml")
@@ -45,26 +42,30 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
 
         if (outboundProperty.booleanValue()) {
             try {
-                SOAPEnvelope soapEnvelope = soapMessage.getSOAPPart().getEnvelope();
-                thisDocument = soapMessage.getSOAPPart().getOwnerDocument();
                 // Grab the header of the SOAP envelop
-                SOAPHeader soapHeader = soapEnvelope.getHeader();
-                // Attach a new header if there is none...
-                if (soapHeader == null) {
-                    soapHeader = soapEnvelope.addHeader();
-                }
                 SOAPPart soapPart = messageContext.getMessage().getSOAPPart();
                 SOAPEnvelope env = soapPart.getEnvelope();
                 SOAPBody soapBody = env.getBody();//get body from envelope
 
-                QName inicialQname = null;
                 if (soapBody != null) {
-                    Iterator nodes = soapBody.getChildElements();
-                    SOAPElement soapElement = null;
+                    SOAPElement soapElement = (SOAPElement) soapBody.getFirstChild().getFirstChild();
+                    Iterator nodes = soapElement.getChildElements();
                     while (nodes.hasNext()) {
                         soapElement = (SOAPElement) nodes.next();
-                        inicialQname = new QName(soapElement.getNamespaceURI(), soapElement.getLocalName());
-                        explore(soapElement, env);
+                        String localName = soapElement.getLocalName();
+                        if ("Payload".equals(localName)) {
+                            List<SOAPElement> newPayloadElements = new ArrayList<>();
+                            Iterator childElements = soapElement.getChildElements();
+                            while (childElements.hasNext()) {
+                                SOAPElement payloadElement = (SOAPElement) childElements.next();
+                                soapElement.removeChild(payloadElement);
+                                newPayloadElements.add(payloadElement.setElementQName(new QName(payloadElement.getLocalName())));
+                            }
+                            soapElement.removeContents();
+                            for (SOAPElement newPayloadElement : newPayloadElements) {
+                                soapElement.addChildElement(newPayloadElement);
+                            }
+                        }
                     }
                 }
 
@@ -88,49 +89,5 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
 
     }
 
-
-    protected Object explore(SOAPElement soapElement, SOAPEnvelope env) {
-        QName subSequentQname = null;
-        SOAPElement subSequentSOAPElement = null;
-        String subSequentLocalName = null;
-        if (soapElement != null && soapElement.getLocalName() != null) {
-            /**/
-            System.out.println(soapElement.getLocalName());
-            if (soapElement.hasChildNodes()) {
-                Iterator soapElementIterator = soapElement.getChildElements();
-                while (soapElementIterator.hasNext()) {
-                    Object nextElement = soapElementIterator.next();
-                    if (nextElement instanceof TextImpl) {
-                        continue;
-                    }
-                    subSequentSOAPElement = (SOAPElement) nextElement;
-                    Object replaceSubSequentSOAPElement = explore(subSequentSOAPElement, env);
-
-                    if (subSequentSOAPElement.getNamespaceURI() != null &&
-                        !subSequentSOAPElement.getNamespaceURI().contains("w3.org") &&
-                        subSequentSOAPElement.getLocalName() != null
-
-                    ) {
-                        subSequentLocalName = subSequentSOAPElement.getLocalName();
-                        Name bodyName;
-                        try {
-                            bodyName = env.createName(subSequentLocalName);
-                            soapElement.addChildElement(subSequentLocalName);
-                            soapElement.removeChild(subSequentSOAPElement);
-                        } catch (SOAPException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-            return soapElement;
-        } else {
-            return soapElement;
-        }
-    }
-
-
 }
 
-//<Payload xsi:type="ns4:XmlEntityPayload"> ->   <Payload xsi:type="ns4:XmlEntityPayload" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-// <ns5:Vessel/> -> <vessel>

@@ -3,6 +3,8 @@ package eu.cise.dispatcher.example;
 
 import eu.cise.datamodel.v1.entity.Entity;
 import eu.cise.datamodel.v1.entity.cargo.Cargo;
+import eu.cise.datamodel.v1.entity.cargo.CargoType;
+import eu.cise.datamodel.v1.entity.uniqueidentifier.UniqueIdentifier;
 import eu.cise.datamodel.v1.entity.vessel.Vessel;
 import eu.cise.dispatcher.soap.CISEMessageService;
 import eu.cise.dispatcher.soap.CISEMessageServiceSoapImpl;
@@ -30,21 +32,12 @@ public class HelloWorldClient {
         CISEMessageServiceSoapImpl service = new CISEMessageService().getCISEMessageServiceSoapPort();
         //invoke business method
         Vessel vessel = new Vessel();
-        vessel.setCallSign("coucou");
+        vessel.setIMONumber(123L);
+        vessel.setCallSign("callSign");
         Cargo cargo = new Cargo();
         List<Entity> entities = new ArrayList<>();
         entities.add(vessel);
         entities.add(cargo);
-
-//        WsHandler test ;
-//        try {
-//                URL baseUrl = CISEMessageService.class.getClassLoader().getResource(".");
-//                URL url = new URL(baseUrl, "META-INF/wsdl/CISEMessageService.wsdl");
-//                test = new WsHandler();
-//        } catch (MalformedURLException murl) { throw new RuntimeException(murl); }
-//
-
-
 
         Push pushMessage = newPush()
                 .id("messageId")
@@ -66,7 +59,6 @@ public class HelloWorldClient {
         Message signedPushMessage=  signatureService.sign(pushMessage);
         Acknowledgement ack = service.send(signedPushMessage);
 
-//        Acknowledgement ack = service.send(pushMessage);
         System.out.println(ack);
     }
 
