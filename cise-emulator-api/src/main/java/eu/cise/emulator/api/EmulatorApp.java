@@ -3,6 +3,7 @@ package eu.cise.emulator.api;
 import com.codahale.metrics.health.HealthCheck;
 import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
+import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.emulator.AppContext;
 import eu.cise.emulator.DefaultAppContext;
 import eu.cise.emulator.api.helpers.CrossOriginSupport;
@@ -41,12 +42,8 @@ public class EmulatorApp extends Application<EmulatorConf> {
         CrossOriginSupport.setup(environment);
 
         environment.jersey().setUrlPattern("/api");
-        //if (configuration.getTransportMode().toUpperCase().contains("SOAP")  ) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
-            Endpoint e = JAXWS_BUNDLE.publishEndpoint(
-                    new EndpointBuilder("messages", new CISEMessagesSOAPServiceImpl())
-                            .cxfInInterceptors(new LoggingInInterceptor())
-                            .cxfOutInterceptors(new LoggingOutInterceptor()));
-        //}
+
+
 
         AppContext appCtx = new DefaultAppContext();
         XmlMapper xmlMapper = appCtx.getXmlMapper();
@@ -74,9 +71,14 @@ public class EmulatorApp extends Application<EmulatorConf> {
                                 appCtx.makeTemplateLoader(),
                                 xmlMapper, appCtx.getPrettyNotValidatingXmlMapper())));
 
+        //SOAP rel
+        CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(messageAPI,xmlMapper);
+        //if (configuration.getTransportMode().toUpperCase().contains("SOAP")  ) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
+        Endpoint e = JAXWS_BUNDLE.publishEndpoint(
+                new EndpointBuilder("messages", ciseMessageServiceSoap));
+        //}
         environment.lifecycle().addServerLifecycleListener(server -> {
             System.out.println("==============================================\n");
-
         });
 
     }
