@@ -4,6 +4,7 @@ import com.codahale.metrics.health.HealthCheck;
 import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
+import eu.cise.dispatcher.DispatcherType;
 import eu.cise.emulator.AppContext;
 import eu.cise.emulator.DefaultAppContext;
 import eu.cise.emulator.api.helpers.CrossOriginSupport;
@@ -14,8 +15,6 @@ import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
 
 import javax.xml.ws.Endpoint;
 
@@ -44,7 +43,6 @@ public class EmulatorApp extends Application<EmulatorConf> {
         environment.jersey().setUrlPattern("/api");
 
 
-
         AppContext appCtx = new DefaultAppContext();
         XmlMapper xmlMapper = appCtx.getXmlMapper();
         MessageStorage messageStorage = appCtx.makeMessageStorage();
@@ -71,18 +69,16 @@ public class EmulatorApp extends Application<EmulatorConf> {
                                 appCtx.makeTemplateLoader(),
                                 xmlMapper, appCtx.getPrettyNotValidatingXmlMapper())));
 
-        //SOAP rel
-        CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(messageAPI,xmlMapper);
-        //if (configuration.getTransportMode().toUpperCase().contains("SOAP")  ) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
-        Endpoint e = JAXWS_BUNDLE.publishEndpoint(
-                new EndpointBuilder("messages", ciseMessageServiceSoap));
-        //}
-        environment.lifecycle().addServerLifecycleListener(server -> {
-            System.out.println("==============================================\n");
-        });
 
+        CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(messageAPI, xmlMapper);
+        if (appCtx.makeEmuConfig().dispatcherType() == DispatcherType.SOAP) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
+            Endpoint e = JAXWS_BUNDLE.publishEndpoint(
+                    new EndpointBuilder("messages", ciseMessageServiceSoap));
+            //}
+            environment.lifecycle().addServerLifecycleListener(server -> {
+                System.out.println("==============================================\n");
+            });
+
+        }
     }
 }
-
-
-

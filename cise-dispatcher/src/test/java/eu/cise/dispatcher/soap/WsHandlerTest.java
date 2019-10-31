@@ -27,7 +27,7 @@ public class WsHandlerTest {
     @Ignore
     @Test
     public void exampleTest() {
-        stubFor(get(urlEqualTo("/api/messages")) //localhost:8089/api/messages
+        wireMockRule.stubFor(get(urlEqualTo("/api/messages")) //localhost:8089/api/messages
                 .withHeader("Accept", equalTo("text/xml"))
                 .willReturn(aResponse()
                         .withStatus(200)

@@ -52,7 +52,6 @@ public class DefaultMessageAPI implements MessageAPI {
             String xmlContent = template.getTemplateContent();
             SendParam sendParam = new SendParamsReader().extractParams(params);
             Message message = xmlMapper.fromXML(xmlContent);
-
             Pair<Acknowledgement, Message> sendResponse = messageProcessor.send(message, sendParam);
 
             return new SendResponse.OK(

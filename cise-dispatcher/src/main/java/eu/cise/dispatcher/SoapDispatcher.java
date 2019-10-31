@@ -19,7 +19,7 @@ public class SoapDispatcher implements Dispatcher {
     public DispatchResult send(Message message, String address) {
         URL soapEndpoint = null;
         try {
-            soapEndpoint = new URL(address);
+            soapEndpoint = new URL(address + "?wsdl");
         } catch (MalformedURLException e) {
             LOGGER.error("Malformaed URL: ", e);
             throw new DispatcherException("Malformaed URL: ", e);

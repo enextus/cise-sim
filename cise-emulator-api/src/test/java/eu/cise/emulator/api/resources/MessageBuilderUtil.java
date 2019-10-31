@@ -77,6 +77,108 @@ public class MessageBuilderUtil {
             "    </DiscoveryProfiles>\n" +
             "</ns4:Push>";
 
+    public static final String TEST_MESSAGE_SOAP = "<?xml version='1.0' encoding='UTF-8'?>\n" +
+            "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+            "    <S:Body>\n" +
+            "        <ns5:send xmlns:ns2=\"http://www.cise.eu/servicemodel/v1/authority/\"\n" +
+            "                  xmlns:ns3=\"http://www.cise.eu/servicemodel/v1/service/\"\n" +
+            "                  xmlns:ns4=\"http://www.cise.eu/servicemodel/v1/message/\"\n" +
+            "                  xmlns:ns5=\"http://www.cise.eu/accesspoint/service/v1/\">\n" +
+            "            <message xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"ns4:PullResponse\">\n" +
+            "            <CorrelationID>0b38a1de-ef53-4174-8c48-fe6216667887</CorrelationID>\n" +
+            "    <CreationDateTime>2019-10-31T09:27:08.918Z</CreationDateTime>\n" +
+            "    <MessageID>0b38a1de-ef53-4174-8c48-fe6216667887</MessageID>\n" +
+            "    <Priority>Low</Priority>\n" +
+            "    <RequiresAck>false</RequiresAck>\n" +
+            "    <Sender>\n" +
+            "        <SeaBasin>NorthSea</SeaBasin>\n" +
+            "        <ServiceID>de.sim1-node01.vessel.pull.provider</ServiceID>\n" +
+            "        <ServiceOperation>Pull</ServiceOperation>\n" +
+            "        <ServiceRole>Provider</ServiceRole>\n" +
+            "        <ServiceStatus>Online</ServiceStatus>\n" +
+            "        <ServiceType>VesselService</ServiceType>\n" +
+            "    </Sender>\n" +
+            "    <Recipient>\n" +
+            "        <SeaBasin>NorthSea</SeaBasin>\n" +
+            "        <ServiceID>de.sim2-node01.vessel.pull.consumer</ServiceID>\n" +
+            "        <ServiceOperation>Pull</ServiceOperation>\n" +
+            "        <ServiceRole>Consumer</ServiceRole>\n" +
+            "        <ServiceStatus>Online</ServiceStatus>\n" +
+            "        <ServiceType>VesselService</ServiceType>\n" +
+            "    </Recipient>\n" +
+            "    <Payload xsi:type=\"ns4:XmlEntityPayload\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+            "        <InformationSecurityLevel>NonClassified</InformationSecurityLevel>\n" +
+            "        <InformationSensitivity>Green</InformationSensitivity>\n" +
+            "        <IsPersonalData>false</IsPersonalData>\n" +
+            "        <Purpose>NonSpecified</Purpose>\n" +
+            "        <EnsureEncryption>false</EnsureEncryption>\n" +
+            "        <Vessel>\n" +
+            "            <IMONumber>7710525</IMONumber>\n" +
+            "        </Vessel>\n" +
+            "    </Payload>\n" +
+            "    <Reliability>\n" +
+            "        <RetryStrategy>NoRetry</RetryStrategy>\n" +
+            "    </Reliability>\n" +
+            "    <Signature xmlns=\"http://www.w3.org/2000/09/xmldsig#\">\n" +
+            "        <SignedInfo>\n" +
+            "            <CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/>\n" +
+            "            <SignatureMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#rsa-sha1\"/>\n" +
+            "            <Reference URI=\"\">\n" +
+            "                <Transforms>\n" +
+            "                    <Transform Algorithm=\"http://www.w3.org/TR/1999/REC-xslt-19991116\">\n" +
+            "                        <xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" xmlns:s=\"http://www.w3.org/2000/09/xmldsig#\">\n" +
+            "                            <xsl:strip-space elements=\"*\"/>\n" +
+            "                            <xsl:output indent=\"false\" method=\"xml\" omit-xml-declaration=\"yes\"/>\n" +
+            "                            <xsl:template match=\"*[not(self::s:Signature)]\">\n" +
+            "                                <xsl:element name=\"{local-name()}\">\n" +
+            "                                    <xsl:apply-templates select=\"*|text()\"/>\n" +
+            "                                </xsl:element>\n" +
+            "                            </xsl:template>\n" +
+            "                            <xsl:template match=\"s:Signature\"/>\n" +
+            "                        </xsl:stylesheet>\n" +
+            "                    </Transform>\n" +
+            "                    <Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/>\n" +
+            "                </Transforms>\n" +
+            "                <DigestMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#sha1\"/>\n" +
+            "                <DigestValue>YqXSO6jRxBLO+siVbej3LbDZTtw=</DigestValue>\n" +
+            "            </Reference>\n" +
+            "        </SignedInfo>\n" +
+            "        <SignatureValue>zvZZlfSl9G0t3p8UtSbIg1IUJH+xUdJ6xgWn1QAGv/1bRfXLB+lXSFoevS0Jpzbo8EbENxNsEY4n\n" +
+            "JDXpUWcTrONkylUx+6sdjaDha7QU6xSbYvHM3g3cok9ErN0tiZmBr2lu0MDT1Qx9wOYsG7UkISgt\n" +
+            "ts3Hjp+NhpLoRzZ+SIhDIMqEsn7Ob9T2E3HIqveWZpfMkAEdoEjAGoA4ZTvUkKQOvCqNB05XzwKG\n" +
+            "hb0oopC0nrIZMRqxrpg5s12d9mXH3mBAbmBArIFgzt0+zEoKwDvOzJ51+jgzvU7z4W6S+0pNvDB5\n" +
+            "We/nkOi4HiTAciX1PRJeIgHoxNmZsP7phcVwYw==</SignatureValue>\n" +
+            "        <KeyInfo>\n" +
+            "            <X509Data>\n" +
+            "                <X509SubjectName>C=cx, DC=eucise, O=nodecx, OU=Participants, CN=cisesim1-nodecx.nodecx.eucise.cx</X509SubjectName>\n" +
+            "                <X509Certificate>MIIEMDCCAxigAwIBAgIIPqE2ueIVxugwDQYJKoZIhvcNAQELBQAwPTEdMBsGA1UEAwwUc2lnbmlu\n" +
+            "Zy1jYS5ldWNpc2UuY3gxDzANBgNVBAoMBmV1Y2lzZTELMAkGA1UEBhMCY3gwHhcNMTkxMDE1MTQw\n" +
+            "MDQyWhcNMjkwNTMwMTY1ODEwWjB4MSkwJwYDVQQDDCBjaXNlc2ltMS1ub2RlY3gubm9kZWN4LmV1\n" +
+            "Y2lzZS5jeDEVMBMGA1UECwwMUGFydGljaXBhbnRzMQ8wDQYDVQQKDAZub2RlY3gxFjAUBgoJkiaJ\n" +
+            "k/IsZAEZFgZldWNpc2UxCzAJBgNVBAYTAmN4MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC\n" +
+            "AQEA617q2PmVZjSgQ2KKk66vGN7V8UQBs1bvWhlOdIGLTlsaPgxILE8hILDpFZjc40Ixdhx0EHhK\n" +
+            "PcKakdJTYADyJ8xULgR7YN4V/BMkN2w/LTKKy7T4YEd+xg80XDH8PMpC0hB/hlVqB+xgYQzgyRRP\n" +
+            "HQhiQllS8Im7agEDm7otJ4a2352nN+8IfjEHRW7eQSnwMKJ/gTyyYf+nYgA0dgj5BBuVJXRvUf5y\n" +
+            "Js4Qe+eX13/pUp/xKElThLBmUh63VHorkyEXYQlfM58FkKRBZA3GWKF8Pj57vQArebipMLccuoE8\n" +
+            "PJ2vvxcj193A5eCgm2PL4qThTZdk+PXHalCRmg/1twIDAQABo4H4MIH1MAwGA1UdEwEB/wQCMAAw\n" +
+            "HwYDVR0jBBgwFoAU1ZKIVkrBZRLVTg6yR90LNU/YnxkwSQYIKwYBBQUHAQEEPTA7MDkGCCsGAQUF\n" +
+            "BzABhi1odHRwOi8vZWpiY2E6ODA4MC9lamJjYS9wdWJsaWN3ZWIvc3RhdHVzL29jc3AwKwYDVR0R\n" +
+            "BCQwIoIgY2lzZXNpbTEtbm9kZWN4Lm5vZGVjeC5ldWNpc2UuY3gwHQYDVR0lBBYwFAYIKwYBBQUH\n" +
+            "AwIGCCsGAQUFBwMBMB0GA1UdDgQWBBQAkWNAOjbTj6r9n0eRdhgMPZDPZzAOBgNVHQ8BAf8EBAMC\n" +
+            "AvwwDQYJKoZIhvcNAQELBQADggEBAMl9OBcA8aGiLjSGABbkAkT9PU9c08095gETjNGJRNodc2Fg\n" +
+            "QRWBUj+TwPrPScpPUqu+bl7yEulo2JBQ55iaIKUkrdppxVK1BoZjsoaPr/s9eZpJ2kcKQJMyaJY/\n" +
+            "Gyq95cPxyW8ZVuH+Ry5UeaozoaHE+Mhj8DRMaQNup/4E4nGI2bcfcw/W8E8pmg22T2Im0hygrb2U\n" +
+            "veg8f0nNBUb1wgCI3W2iwYs5OaCnarTE2+tGK4XuYand6ITuZ3wKg5/4yuFjzRV4k7AzXFh66lIM\n" +
+            "s8tpof3UKFfL1qknAlWfJvDVKfrpzU/c0I0WmryquNUMAmm7OpIn+N9pddXN0T2US7o=</X509Certificate>\n" +
+            "            </X509Data>\n" +
+            "        </KeyInfo>\n" +
+            "    </Signature>\n" +
+            "    <ResultCode>Success</ResultCode>\n" +
+            "            </message>\n" +
+            "        </ns5:send>\n" +
+            "    </S:Body>\n" +
+            "</S:Envelope>";
+
 
     public static String create() {
         return TEST_MESSAGE_XML;
