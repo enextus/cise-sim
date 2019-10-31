@@ -84,7 +84,7 @@ public class EmulatorEngineTest {
     @Test
     public void it_sends_a_message_getting_an_unsuccessful_response() {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(
-                new DispatchResult(false, ""));
+                new DispatchResult(false, null));
 
         assertThatExceptionOfType(EndpointErrorEx.class)
                 .isThrownBy(() -> engine.send(message))

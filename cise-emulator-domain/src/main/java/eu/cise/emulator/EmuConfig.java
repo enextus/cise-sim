@@ -1,5 +1,6 @@
 package eu.cise.emulator;
 
+import eu.cise.dispatcher.DispatcherType;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Preprocessor;
@@ -36,6 +37,11 @@ public interface EmuConfig extends Config {
     @Key("validation.rule.date")
     @DefaultValue("false")
     boolean isDateValidationEnabled();
+
+    @Key("transport.mode")
+    @DefaultValue("REST")
+    DispatcherType dispatcherType();
+
 
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {

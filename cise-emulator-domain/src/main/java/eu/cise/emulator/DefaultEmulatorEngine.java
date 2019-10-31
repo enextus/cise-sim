@@ -102,9 +102,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
                 throw new EndpointErrorEx();
             }
 
-            Acknowledgement ack = prettyNotValidatingXmlMapper.fromXML(sendResult.getResult());
-
-            return ack;
+            return sendResult.getResult();
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();
         }

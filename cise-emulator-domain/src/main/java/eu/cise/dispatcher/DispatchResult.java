@@ -1,5 +1,7 @@
 package eu.cise.dispatcher;
 
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+
 import java.io.Serializable;
 
 /**
@@ -17,7 +19,7 @@ public class DispatchResult implements Serializable {
 
     // internal state
     private final boolean ok;
-    private final String result;
+    private final Acknowledgement result;
 
     /**
      * The constructor allow to create an immutable object that will contain
@@ -27,27 +29,9 @@ public class DispatchResult implements Serializable {
      * @param ok     a boolean indicating if it's successful or not
      * @param result a result message describing the status
      */
-    public DispatchResult(boolean ok, String result) {
+    public DispatchResult(boolean ok, Acknowledgement result) {
         this.ok = ok;
         this.result = result;
-    }
-
-    /**
-     * Helper method to create a default success result
-     *
-     * @return a new instance of successful DispatchResult
-     */
-    public static DispatchResult success() {
-        return new DispatchResult(true, "SUCCESS");
-    }
-
-    /**
-     * Helper method to create a default failure result
-     *
-     * @return a new instance of failed DispatchResult
-     */
-    public static DispatchResult failure() {
-        return new DispatchResult(false, "FAILURE");
     }
 
     /**
@@ -62,7 +46,7 @@ public class DispatchResult implements Serializable {
      * @return an additional message of the results that in the failure could
      * contain a description of the error
      */
-    public String getResult() {
+    public Acknowledgement getResult() {
         return result;
     }
 

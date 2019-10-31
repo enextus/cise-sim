@@ -1,0 +1,14 @@
+<jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://cxf.apache.org/jaxws  http://cxf.apache.org/schemas/jaxws.xsd "
+                wsdlLocation="./META-INF/CISEMessageService.wsdl"
+                node="/xs:schema">
+        <jaxws:bindings wsdlLocation="./xsd/message.xsd" node="/xs:schema">
+            <jaxws:bindings node="/xs:schema:[@name='XmlEntityPayload']" >
+                <jaxws:enableWrapperStyle>true</jaxws:enableWrapperStyle>
+                <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            </jaxws:bindings>
+        </jaxws:bindings>
+    </jaxws:bindings>

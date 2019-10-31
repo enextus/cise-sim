@@ -141,7 +141,7 @@
             <artifactId>jaxp-api</artifactId>
         </dependency>
 
-        <!-- /soap service / -->
+        <!-- /eu.cise.dispatcher.soap service / -->
         <dependency>
             <groupId>com.github.roskart.dropwizard-jaxws</groupId>
             <artifactId>dropwizard-jaxws</artifactId>
