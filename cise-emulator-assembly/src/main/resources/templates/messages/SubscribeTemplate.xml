@@ -16,14 +16,6 @@
 			<MaxEntitiesPerMsg>3</MaxEntitiesPerMsg>
 		</ServiceCapability>
 	</Sender>
-	<Recipient>
-		<SeaBasin>NorthSea</SeaBasin>
-		<ServiceID>de.sim2-node01.vessel.push.consumer</ServiceID>
-		<ServiceOperation>Push</ServiceOperation>
-		<ServiceRole>Consumer</ServiceRole>
-		<ServiceStatus>Online</ServiceStatus>
-		<ServiceType>VesselService</ServiceType>
-	</Recipient>
 	<Payload xsi:type="ns4:XmlEntityPayload" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 		<InformationSecurityLevel>NonClassified</InformationSecurityLevel>
 		<InformationSensitivity>Green</InformationSensitivity>

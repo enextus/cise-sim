@@ -32,14 +32,12 @@ public class EmulatorEngineTest {
     private EmulatorEngine engine;
     private Dispatcher dispatcher;
     private Push message;
-    private XmlMapper prettyNotValidatingXmlMapper;
 
     @Before
     public void before() {
         config = mock(EmuConfig.class);
         dispatcher = mock(Dispatcher.class);
-        prettyNotValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
-        engine = new DefaultEmulatorEngine(mock(SignatureService.class), dispatcher, config, prettyNotValidatingXmlMapper);
+        engine = new DefaultEmulatorEngine(mock(SignatureService.class), dispatcher, config);
         message = newPush()
                 .id("aMessageId")
                 .sender(newService().id("aServiceId").type(VESSEL_SERVICE))
@@ -84,7 +82,7 @@ public class EmulatorEngineTest {
     @Test
     public void it_sends_a_message_getting_an_unsuccessful_response() {
         when(dispatcher.send(message, config.endpointUrl())).thenReturn(
-                new DispatchResult(false, ""));
+                new DispatchResult(false, null));
 
         assertThatExceptionOfType(EndpointErrorEx.class)
                 .isThrownBy(() -> engine.send(message))

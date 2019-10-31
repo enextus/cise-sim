@@ -66,11 +66,16 @@
                 <include>*/**</include>
             </includes>
         </fileSet>
-
-
         <fileSet>
             <directory>.</directory>
             <outputDirectory>logs</outputDirectory>
+            <excludes>
+                <exclude>*/**</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>tmp</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>
             </excludes>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns4:PullRequest xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/">
+	<ContextID>ContextId-111</ContextID>
+	<CorrelationID>60eeb924-4e5e-4925-9eba-decf28c89c61</CorrelationID>
+	<CreationDateTime>2018-01-18T13:33:46.887+01:00</CreationDateTime>
+	<MessageID>60eeb924-4e5e-4925-9eba-decf28c89c61</MessageID>
+	<Priority>High</Priority>
+	<RequiresAck>false</RequiresAck>
+	<Sender>
+		<SeaBasin>NorthSea</SeaBasin>
+		<ServiceID>de.sim2-node01.vessel.subscribe.consumer</ServiceID>
+		<ServiceOperation>Subscribe</ServiceOperation>
+		<ServiceRole>Consumer</ServiceRole>
+		<ServiceStatus>Online</ServiceStatus>
+		<ServiceType>VesselService</ServiceType>
+	</Sender>
+	<Recipient>
+		<SeaBasin>NorthSea</SeaBasin>
+		<ServiceID>de.sim1-node01.vessel.subscribe.provider</ServiceID>
+		<ServiceOperation>Subscribe</ServiceOperation>
+		<ServiceRole>Provider</ServiceRole>
+		<ServiceStatus>Online</ServiceStatus>
+		<ServiceType>VesselService</ServiceType>
+	</Recipient>
+	<PullType>Unsubscribe</PullType>
+	<ResponseTimeOut>1000</ResponseTimeOut>
+</ns4:PullRequest>

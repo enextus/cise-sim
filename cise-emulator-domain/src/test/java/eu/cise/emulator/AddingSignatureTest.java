@@ -24,15 +24,13 @@ public class AddingSignatureTest {
     private Push push;
     private Dispatcher dispatcher;
     private EmuConfig config;
-    private XmlMapper prettyNotValidatingXmlMapper;
 
     @Before
     public void before() {
         config = mock(EmuConfig.class);
         signatureService = mock(SignatureService.class);
         dispatcher = mock(Dispatcher.class);
-        prettyNotValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
-        engine = new DefaultEmulatorEngine(signatureService, dispatcher, config, prettyNotValidatingXmlMapper);
+        engine = new DefaultEmulatorEngine(signatureService, dispatcher, config);
         push = newPush().id("aMessageId").sender(newService()).build();
     }
 
