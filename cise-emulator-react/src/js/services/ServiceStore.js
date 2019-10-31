@@ -3,7 +3,7 @@ import {getServiceSelf} from "./ServiceService";
 import Service from "./Service";
 
 export default class ServiceStore {
- serviceSelf = new Service("#before#loading#");
+ serviceSelf = new Service("#wait#loading#","#wait#");
 
     async loadServiceSelf() {
         const getServiceSelfResponse = await getServiceSelf();
@@ -12,8 +12,8 @@ export default class ServiceStore {
         if (getServiceSelfResponse.errorCode) {
             console.log("getServiceSelf returned an error.");
         } else {
-            this.serviceSelf = new Service(getServiceSelfResponse.serviceParticipantId);
-            console.log("getServiceSelf returned successfully.",this.serviceSelf.serviceParticipantId);
+            this.serviceSelf = new Service(getServiceSelfResponse.serviceParticipantId, getServiceSelfResponse.serviceTransportMode);
+            console.log("getServiceSelf returned successfully.",this.serviceSelf.serviceParticipantId," - with mode  - ",this.serviceSelf.serviceTransportMode);
         }
     }
 
