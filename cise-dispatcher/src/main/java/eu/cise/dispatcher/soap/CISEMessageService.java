@@ -17,13 +17,7 @@ import java.net.URL;
         name = "CISEMessageService",
         targetNamespace = "http://www.cise.eu/accesspoint/service/v1/",
         wsdlLocation = "META-INF/wsdl/CISEMessageService.wsdl")
-//@SOAPBinding(
-//        style = SOAPBinding.Style.DOCUMENT,
-//        parameterStyle = SOAPBinding.ParameterStyle.WRAPPED,
-//        use = SOAPBinding.Use.LITERAL)
-//@InInterceptors(interceptors = {"java.eu.cise.dispatcher.soap.SoapInterceptor"})
-//@OutInterceptors(interceptors = {"java.eu.cise.dispatcher.soap.SoapInterceptor"})
-@HandlerChain(file = "handlers.xml")
+@HandlerChain(file = "/handlers.xml")
 
 public class CISEMessageService
         extends Service {
@@ -76,21 +70,6 @@ public class CISEMessageService
      */
     @WebEndpoint(name = "CISEMessageServiceSoapPort")
     public CISEMessageServiceSoapImpl getCISEMessageServiceSoapPort() {
-//        QName serviceName = new QName("http://www.cise.eu/accesspoint/service/v1/", "CISEMessageServiceSoap");
-//        Service s = Service.create(serviceName);
-//
-//        QName portName = new QName("http://www.cise.eu/accesspoint/service/v1", "CISEMessageServiceSoapPort");
-//        s.addPort(portName, "http://schemas.xmlsoap.org/soap/", "http://localhost:8080/app/message");
-//
-//
-//        CISEMessageServiceSoapImpl proxy = s.getPort(new QName("http://www.cise.eu/accesspoint/service/v1/", "CISEMessageServiceSoapPort"), CISEMessageServiceSoapImpl.class);
-//
-//
-//        Client cxfClient = ClientProxy.getClient(proxy);
-
-        //ValidateInterceptor validInterceptor = new ValidateInterceptor(); 5
-        //cxfClient.getInInterceptor().add(validInterceptor); 6
-
         return super.getPort(new QName("http://www.cise.eu/accesspoint/service/v1/", "CISEMessageServiceSoapPort"), CISEMessageServiceSoapImpl.class);
     }
 

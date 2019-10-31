@@ -32,14 +32,12 @@ public class EmulatorEngineTest {
     private EmulatorEngine engine;
     private Dispatcher dispatcher;
     private Push message;
-    private XmlMapper prettyNotValidatingXmlMapper;
 
     @Before
     public void before() {
         config = mock(EmuConfig.class);
         dispatcher = mock(Dispatcher.class);
-        prettyNotValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
-        engine = new DefaultEmulatorEngine(mock(SignatureService.class), dispatcher, config, prettyNotValidatingXmlMapper);
+        engine = new DefaultEmulatorEngine(mock(SignatureService.class), dispatcher, config);
         message = newPush()
                 .id("aMessageId")
                 .sender(newService().id("aServiceId").type(VESSEL_SERVICE))

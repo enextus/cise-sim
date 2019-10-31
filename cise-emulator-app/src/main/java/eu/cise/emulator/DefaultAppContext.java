@@ -32,7 +32,7 @@ public class DefaultAppContext implements AppContext {
     }
 
     private DefaultEmulatorEngine makeEmulatorEngine() {
-        return new DefaultEmulatorEngine(makeSignatureService(), makeDispatcher(), this.emuConfig, this.prettyNotValidatingXmlMapper);
+        return new DefaultEmulatorEngine(makeSignatureService(), makeDispatcher(), this.emuConfig);
     }
 
     @Override
