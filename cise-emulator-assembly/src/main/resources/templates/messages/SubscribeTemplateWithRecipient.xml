@@ -16,6 +16,10 @@
 			<MaxEntitiesPerMsg>3</MaxEntitiesPerMsg>
 		</ServiceCapability>
 	</Sender>
+	<Recipient>
+		<ServiceID>cx.cisesim2.1-nodecx.vessel.subscribe.consumer</ServiceID>
+		<ServiceOperation>Subscribe</ServiceOperation>
+	</Recipient>
 	<Payload xsi:type="ns4:XmlEntityPayload" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 		<InformationSecurityLevel>NonClassified</InformationSecurityLevel>
 		<InformationSensitivity>Green</InformationSensitivity>
