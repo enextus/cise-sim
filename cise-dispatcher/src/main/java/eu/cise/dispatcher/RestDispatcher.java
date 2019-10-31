@@ -11,6 +11,9 @@ import eu.eucise.xml.XmlMapper;
 public class RestDispatcher implements Dispatcher {
 
     private final RestClient client;
+    /**
+        NOTE: This mapper must be not validating
+     */
     private final XmlMapper xmlMapper;
 
     /**
@@ -40,9 +43,8 @@ public class RestDispatcher implements Dispatcher {
         String payload = xmlMapper.toXML(message);
 
         RestResult result = client.post(address, payload);
-        /*temp debug*/
-        System.out.println("----------------------------\n" + result.getBody() + "\n----------------------------");
-        return new DispatchResult(result.isOK(), result.getBody());
+
+        return new DispatchResult(result.isOK(), xmlMapper.fromXML(result.getBody()));
     }
 
 }

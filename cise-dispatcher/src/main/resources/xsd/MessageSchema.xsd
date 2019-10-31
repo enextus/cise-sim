@@ -1,0 +1,6 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" attributeFormDefault="qualified"
+>
+    <xs:import namespace="http://www.cise.eu/servicemodel/v1/message/" schemaLocation="message.xsd"/>
+    <xs:include schemaLocation="EntitySchema.xsd "/>
+</xs:schema>

@@ -1,7 +1,7 @@
 package eu.cise.emulator;
 
 import eu.cise.dispatcher.Dispatcher;
-import eu.cise.dispatcher.RestDispatcher;
+import eu.cise.dispatcher.DispatcherFactory;
 import eu.cise.emulator.io.DefaultMessageStorage;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.DefaultTemplateLoader;
@@ -32,12 +32,13 @@ public class DefaultAppContext implements AppContext {
     }
 
     private DefaultEmulatorEngine makeEmulatorEngine() {
-        return new DefaultEmulatorEngine(makeSignatureService(), makeDispatcher(), this.emuConfig, this.prettyNotValidatingXmlMapper);
+        return new DefaultEmulatorEngine(makeSignatureService(), makeDispatcher(), this.emuConfig);
     }
 
     @Override
     public Dispatcher makeDispatcher() {
-        return new RestDispatcher(xmlMapper);
+        DispatcherFactory dispatcherFactory = new DispatcherFactory();
+        return dispatcherFactory.getDispatcher(this.emuConfig.dispatcherType(), this.prettyNotValidatingXmlMapper);
     }
 
     @Override

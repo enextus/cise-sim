@@ -3,15 +3,12 @@ package eu.cise.emulator;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
-import eu.cise.emulator.exceptions.*;
 import eu.cise.emulator.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
 import eu.cise.emulator.SynchronousAcknowledgement.SynchronousAcknowledgementType;
+import eu.cise.emulator.exceptions.*;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
-
-import eu.eucise.xml.DefaultXmlMapper;
-import eu.eucise.xml.XmlMapper;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
@@ -20,7 +17,6 @@ import java.time.Clock;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static eu.cise.emulator.helpers.Asserts.notBlank;
 import static eu.cise.emulator.helpers.Asserts.notNull;
-
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
 
 
@@ -30,7 +26,6 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     private final EmuConfig emuConfig;
     private final SignatureService signature;
     private Dispatcher dispatcher;
-    private XmlMapper prettyNotValidatingXmlMapper;
     private SynchronousAcknowledgementFactory acknowledgementFactory;
 
     /**
@@ -42,12 +37,10 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     public DefaultEmulatorEngine(
             SignatureService signature,
             Dispatcher dispatcher,
-            EmuConfig emuConfig,
-            XmlMapper prettyNotValidatingXmlMapper) {
+            EmuConfig emuConfig) {
 
         this(signature, emuConfig, dispatcher, Clock.systemUTC());
         this.dispatcher = dispatcher;
-        this.prettyNotValidatingXmlMapper = prettyNotValidatingXmlMapper;
         this.acknowledgementFactory = new SynchronousAcknowledgementFactory();
     }
 
@@ -59,7 +52,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      * @param dispatcher the object used to dispatch the message
      * @param clock      the reference clock
      *                   <p>
-     *                   NOTE: this constructor is used only in tests so we do not pass the xml formatter from outside
+     *                   NOTE: this constructor is used only in tests
      */
     DefaultEmulatorEngine(
             SignatureService signature,
@@ -71,8 +64,6 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         this.emuConfig = notNull(emuConfig, NullConfigEx.class);
         this.dispatcher = notNull(dispatcher, NullDispatcherEx.class);
         this.clock = notNull(clock, NullClockEx.class);
-
-        this.prettyNotValidatingXmlMapper = new DefaultXmlMapper.NotValidating();
     }
 
     @Override
@@ -102,9 +93,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
                 throw new EndpointErrorEx();
             }
 
-            Acknowledgement ack = prettyNotValidatingXmlMapper.fromXML(sendResult.getResult());
-
-            return ack;
+            return sendResult.getResult();
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();
         }
@@ -127,12 +116,11 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
             throw new NullSenderEx();
         }
 
-            signature.verify(message);
+        signature.verify(message);
 
 
         return acknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.SUCCESS, "");
     }
-
 
 
     private String computeCorrelationId(String correlationId, String messageId) {

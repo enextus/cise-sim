@@ -3,7 +3,6 @@
 
 <module name="Checker">
     <module name="SuppressWarningsFilter"/>
-    <module name="NewlineAtEndOfFile"/>
     <module name="FileLength"/>
     <module name="FileTabCharacter"/>
 
