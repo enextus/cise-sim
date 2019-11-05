@@ -9,6 +9,7 @@ import eu.cise.emulator.AppContext;
 import eu.cise.emulator.DefaultAppContext;
 import eu.cise.emulator.api.helpers.CrossOriginSupport;
 import eu.cise.emulator.api.resources.*;
+import eu.cise.emulator.api.soap.CISEMessageServiceSoapImplDefault;
 import eu.cise.emulator.io.MessageStorage;
 import eu.eucise.xml.XmlMapper;
 import io.dropwizard.Application;
@@ -70,7 +71,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
                                 xmlMapper, appCtx.getPrettyNotValidatingXmlMapper())));
 
 
-        CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(messageAPI, xmlMapper);
+        CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(messageAPI, appCtx.getPrettyNotValidatingXmlMapper());
         if (appCtx.makeEmuConfig().dispatcherType() == DispatcherType.SOAP) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
             Endpoint e = JAXWS_BUNDLE.publishEndpoint(
                     new EndpointBuilder("messages", ciseMessageServiceSoap));

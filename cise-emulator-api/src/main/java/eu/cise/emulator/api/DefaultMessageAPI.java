@@ -67,7 +67,7 @@ public class DefaultMessageAPI implements MessageAPI {
         LOGGER.debug("receive is receiving through api : {}", content.substring(0, 200));
         Message message = new Push();
         try {
-            message = xmlMapper.fromXML(content);
+            message = prettyNotValidatingXmlMapper.fromXML(content);
 
             // store the input message and the acknowledgement
             Acknowledgement acknowledgement = messageProcessor.receive(message);

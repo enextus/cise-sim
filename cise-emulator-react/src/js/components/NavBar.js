@@ -63,7 +63,7 @@ class NavBar extends Component {
                         <Button
                             variant="contained"
                             // disabled={!this.isConnected()}
-                            color="secondary"> REST
+                            color="secondary"> {this.getServiceMode()}
                         </Button>
                     </div>
                 </Toolbar>
@@ -73,6 +73,9 @@ class NavBar extends Component {
 
     getServiceId() {
         return this.props.store.serviceStore.serviceSelf.serviceParticipantId;
+    }
+    getServiceMode() {
+        return this.props.store.serviceStore.serviceSelf.serviceTransportMode;
     }
 
     isConnected() {

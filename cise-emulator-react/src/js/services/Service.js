@@ -1,27 +1,20 @@
-//import {observable} from "mobx";
 
-export default class Message {
-    // @observable
-    // this.service_SeaBassin;
-    // @observable
-    // this.service_Type;
-    // @observable
-    // this.service_Operation;
-    // @observable
-    // this.service_Role;
-    // @observable
-    // this.service_ID;
-    // @observable
-    // this.service_participant_ID;
-    // @observable
+export default class Service {
+
     serviceParticipantId;
+    serviceTransportMode
 
-    constructor(value) {
-        this.serviceParticipantId = value;
+    constructor(serviceParticipantId,serviceTransportMode) {
+        this.serviceParticipantId = serviceParticipantId;
+        this.serviceTransportMode = serviceTransportMode;
     }
 
     getParticipantId(){
         return serviceParticipantId;
+    }
+
+    getTransportMode(){
+        return serviceTransportMode;
     }
 
 }

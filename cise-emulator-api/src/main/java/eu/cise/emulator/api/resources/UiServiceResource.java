@@ -35,7 +35,7 @@ public class UiServiceResource {
         participant.setId(emuconfig.participantId());
         Service service = new Service();
         service.setParticipant(participant);
-        ServiceDetail serviceDef = new ServiceDetail(service);
+        ServiceDetail serviceDef = new ServiceDetail(service, emuconfig.dispatcherType());
         return Response
                 .status(Response.Status.OK)
                 .entity(serviceDef)
