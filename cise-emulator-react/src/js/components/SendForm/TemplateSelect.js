@@ -3,6 +3,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import PropTypes from "prop-types";
 import {observer} from "mobx-react";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = () => ({
     formControl: {
@@ -30,9 +31,11 @@ class TemplateSelect extends React.Component {
         const {classes} = this.props;
         return (
             <FormControl className={classes.formControl} fullWidth={true}>
-                <InputLabel htmlFor="templateSelect">Message Template</InputLabel>
+                <Tooltip title={"Required reference of the template to be used to generate the message."}>
+                    <InputLabel htmlFor="templateSelect">Message Template</InputLabel>
+                </Tooltip>
                 <Select
-                    label="Message Template"
+                    label="Message Template *"
                     value={this.props.store.selected}
                     onChange={this.handleChange}
                     inputProps={{
