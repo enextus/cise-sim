@@ -21,7 +21,8 @@ export default class MessageIdField extends React.Component {
             <Tooltip title={"Required field to provide a unique identifier to the message"} >
             <TextField
                 name="messageId"
-                label="Message Id  *"
+                label="Message Id"
+                required={true}
                 fullWidth={true}
                 color="primary"
                 value={this.props.store.messageId}

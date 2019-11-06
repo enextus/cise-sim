@@ -30,12 +30,12 @@ class TemplateSelect extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <FormControl className={classes.formControl} fullWidth={true}>
+            <FormControl className={classes.formControl} fullWidth={true} required={true}>
                 <Tooltip title={"Required reference of the template to be used to generate the message."}>
                     <InputLabel htmlFor="templateSelect">Message Template</InputLabel>
                 </Tooltip>
                 <Select
-                    label="Message Template *"
+                    label="Message Template \*"
                     value={this.props.store.selected}
                     onChange={this.handleChange}
                     inputProps={{
