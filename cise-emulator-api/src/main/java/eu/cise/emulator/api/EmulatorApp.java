@@ -4,11 +4,13 @@ import com.codahale.metrics.health.HealthCheck;
 import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
-import eu.cise.dispatcher.DispatcherType;
 import eu.cise.emulator.AppContext;
 import eu.cise.emulator.DefaultAppContext;
 import eu.cise.emulator.api.helpers.CrossOriginSupport;
-import eu.cise.emulator.api.resources.*;
+import eu.cise.emulator.api.resources.MessageResource;
+import eu.cise.emulator.api.resources.TemplateResource;
+import eu.cise.emulator.api.resources.UiMessageResource;
+import eu.cise.emulator.api.resources.UiServiceResource;
 import eu.cise.emulator.api.soap.CISEMessageServiceSoapImplDefault;
 import eu.cise.emulator.io.MessageStorage;
 import eu.eucise.xml.XmlMapper;
@@ -24,9 +26,13 @@ public class EmulatorApp extends Application<EmulatorConf> {
     // JAX-WS Bundle
     private static final JAXWSBundle<Object> JAXWS_BUNDLE = new JAXWSBundle<>("/api/soap");
 
-    public static void main(final String[] args) throws Exception {
+    public static void main(final String[] args) {
         System.out.println("\n==============================================");
-        new EmulatorApp().run(args);
+        try {
+            new EmulatorApp().run(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -72,14 +78,10 @@ public class EmulatorApp extends Application<EmulatorConf> {
 
 
         CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(messageAPI, appCtx.getPrettyNotValidatingXmlMapper());
-        if (appCtx.makeEmuConfig().dispatcherType() == DispatcherType.SOAP) { // WSDL first service using server side JAX-WS handler and CXF logging interceptors
-            Endpoint e = JAXWS_BUNDLE.publishEndpoint(
-                    new EndpointBuilder("messages", ciseMessageServiceSoap));
-            //}
-            environment.lifecycle().addServerLifecycleListener(server -> {
-                System.out.println("==============================================\n");
-            });
-
-        }
+        // WSDL first service using server side JAX-WS handler and CXF logging interceptors
+        Endpoint e = JAXWS_BUNDLE.publishEndpoint(new EndpointBuilder("messages", ciseMessageServiceSoap));
+        environment.lifecycle().addServerLifecycleListener(server -> {
+            System.out.println("==============================================\n");
+        });
     }
 }

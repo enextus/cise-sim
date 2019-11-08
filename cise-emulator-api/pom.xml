@@ -94,7 +94,7 @@
                 </transformer>
               </transformers>
               <shadedArtifactAttached>true</shadedArtifactAttached>
-              <finalName>cise-emulator</finalName>
+              <finalName>cise-sim</finalName>
             </configuration>
           </execution>
         </executions>

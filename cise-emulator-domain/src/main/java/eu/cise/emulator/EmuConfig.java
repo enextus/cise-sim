@@ -19,16 +19,16 @@ public interface EmuConfig extends Config {
     @Key("destination.endpoint-url")
     String endpointUrl();
 
-    @Key("signature.keyStoreFileName")
+    @Key("signature.keystore.filename")
     String keyStoreFileName();
 
-    @Key("signature.keyStorePassword")
+    @Key("signature.keystore.password")
     String keyStorePassword();
 
-    @Key("signature.privateKeyAlias")
+    @Key("signature.privatekey.alias")
     String privateKeyAlias();
 
-    @Key("signature.privateKeyPassword")
+    @Key("signature.privatekey.password")
     String privateKeyPassword();
 
     @Key("template.messages.directory")
@@ -41,7 +41,6 @@ public interface EmuConfig extends Config {
     @Key("transport.mode")
     @DefaultValue("REST")
     DispatcherType dispatcherType();
-
 
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {

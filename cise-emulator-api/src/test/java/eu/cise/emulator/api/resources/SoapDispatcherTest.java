@@ -21,6 +21,7 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +49,8 @@ public class SoapDispatcherTest {
     }
 
     public static SignatureService makeSignatureService() {
-        System.setProperty("conf.dir", "/home/longama/IdeaProjects/cise-emu/cise-dispatcher/src/main/resources/");
+        URL systemResource = ClassLoader.getSystemResource("");
+        System.setProperty("conf.dir", systemResource.getPath());
         return newSignatureService()
                 .withKeyStoreName("cisesim1-nodecx.jks")
                 .withKeyStorePassword("password")
