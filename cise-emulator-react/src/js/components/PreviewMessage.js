@@ -19,14 +19,12 @@ const styles = (theme) => ({
 
 @observer
 class PreviewMessage extends Component {
-
   constructor(props) {
     super(props);
-    this.state = {isExpanded: false}
   }
 
   handleUpdate() {
-    this.setState({isExpanded: !this.state.isExpanded})
+    return this.templateStore().resetPreview();
   }
 
   render() {

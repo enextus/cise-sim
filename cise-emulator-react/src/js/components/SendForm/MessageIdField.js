@@ -1,4 +1,5 @@
 import {TextField} from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
 import React from "react";
 import PropTypes from "prop-types";
 import {observer} from "mobx-react";
@@ -17,14 +18,17 @@ export default class MessageIdField extends React.Component {
 
     render() {
         return (
+            <Tooltip title={"Required field to provide a unique identifier to the message"} >
             <TextField
                 name="messageId"
                 label="Message Id"
+                required={true}
                 fullWidth={true}
                 color="primary"
                 value={this.props.store.messageId}
                 onChange={this.handleChange}
             />
+            </Tooltip>
         );
     }
 }
