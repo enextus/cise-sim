@@ -42,7 +42,7 @@ class TemplateSelect extends React.Component {
         const formControlState= ((this.isSelected())?classes.formControl:classes.formControlInicial)
         return (
             <FormControl className={formControlState} fullWidth={true} required={true}>
-                <Tooltip title={"[Required] Select a template to generate the message from"}>
+                <Tooltip title={"[Required] Select the template from the list"}>
                     <InputLabel htmlFor="templateSelect">Message Template</InputLabel>
                 </Tooltip>
                 <Select
