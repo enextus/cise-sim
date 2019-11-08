@@ -29,8 +29,15 @@ class TemplateSelect extends React.Component {
     render() {
         const {classes} = this.props;
         return (
+<<<<<<< Updated upstream
             <FormControl className={classes.formControl} fullWidth={true}>
                 <InputLabel htmlFor="templateSelect">Message Template</InputLabel>
+=======
+            <FormControl className={classes.formControl} fullWidth={true} required={true}>
+                <Tooltip title={"[Required] Select a template message to generate the message."}>
+                    <InputLabel htmlFor="templateSelect">Message Template</InputLabel>
+                </Tooltip>
+>>>>>>> Stashed changes
                 <Select
                     label="Message Template"
                     value={this.props.store.selected}

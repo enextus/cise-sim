@@ -26,7 +26,7 @@ class PreviewMessage extends Component {
   }
 
   handleUpdate() {
-    this.setState({isExpanded: !this.state.isExpanded})
+    return this.templateStore().resetPreview();
   }
 
   render() {

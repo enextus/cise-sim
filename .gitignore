@@ -44,3 +44,6 @@ tmp/**
 cise-emulator-io/cise-mvn-repo/
 cise-emulator-transport/cise-mvn-repo/
 npm-debug.log
+
+bundle.js
+/cise-emulator-api/java-templates

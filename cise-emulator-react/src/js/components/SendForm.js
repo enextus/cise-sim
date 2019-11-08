@@ -44,18 +44,16 @@ class SendForm extends Component {
             <Paper className={classes.root}>
                 <Grid container alignItems="flex-start" spacing={2}>
                     <Grid item xs={6}>
+                        <TemplateSelect store={this.getTemplateStore()}/>
+                    </Grid>
+                    <Grid item xs={6}>
                         <MessageIdField store={this.getTemplateStore()}/>
                     </Grid>
-
                     <Grid item xs={6}>
                         <CorrelationIdField store={this.getTemplateStore()}/>
                     </Grid>
 
                     <Grid item xs={6}>
-                        <TemplateSelect store={this.getTemplateStore()}/>
-                    </Grid>
-
-                    <Grid item xs={12}>
                         <RequiresAckCheck store={this.getTemplateStore()}/>
                     </Grid>
 
