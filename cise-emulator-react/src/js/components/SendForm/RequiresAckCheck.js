@@ -18,7 +18,7 @@ export default class RequiresAckCheck extends React.Component {
 
     render() {
         return (
-            <Tooltip title={"Request to the receiver an Acknowledgement when one the destination have been reached"} >
+            <Tooltip title={"[Optional] Require asynchronous acknowledgement from destination node"} >
             <FormControlLabel
                 control={
                     <Checkbox

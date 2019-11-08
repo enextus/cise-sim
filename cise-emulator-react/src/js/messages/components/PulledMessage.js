@@ -106,7 +106,7 @@ class PulledMessage extends Component {
                      id='simple-tab-1'
                      value="one"
                      aria-controls='simple-tabpanel-1'/>
-                <Tab label="acknowledgement"
+                <Tab label="ack sent"
                      value="two"
                      id='simple-tab-2'
                      aria-controls='simple-tabpanel-2'/>

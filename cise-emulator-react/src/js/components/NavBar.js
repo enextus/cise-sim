@@ -15,17 +15,17 @@ const styles = theme => ({
     participantChip: {
         fontsize: '8px',
         textTransform: 'capitalize',
-        backgroundColor: 'secondary',
+        backgroundColor: 'primary',
         color: 'white',
-        height: 23,
+        height: 25,
         padding: '0 3px'
     },
     participant: {
         fontsize: '11px',
         textTransform: 'capitalize',
-        backgroundColor: 'primary',
-        color: 'secondary',
-        height: 23,
+        backgroundColor: 'secondary',
+        color: 'white',
+        height: 25,
         padding: '0 3px'
     },
     menuButton: {
@@ -47,7 +47,7 @@ class NavBar extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <AppBar position="static" className={classes.root}>
+            <AppBar position="fixed" className={classes.root}>
                 <Toolbar>
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <DirectionsBoatIcon/>
@@ -62,7 +62,6 @@ class NavBar extends Component {
 
                         <Button
                             variant="contained"
-                            // disabled={!this.isConnected()}
                             color="secondary"> {this.getServiceMode()}
                         </Button>
                     </div>

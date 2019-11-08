@@ -1,4 +1,4 @@
-import {FormControl, InputLabel, Select, withStyles} from "@material-ui/core";
+import {FormControl, InputLabel, Select, TextField, withStyles} from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import PropTypes from "prop-types";
@@ -6,13 +6,19 @@ import {observer} from "mobx-react";
 import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = () => ({
+    formControlInicial: {
+        minWidth: 120,
+        color:'secondary'
+    },
     formControl: {
         minWidth: 120,
-    },
+        color:'grey'
+    }
 });
 
 @observer
 class TemplateSelect extends React.Component {
+
 
     constructor(props) {
         super(props);
@@ -27,15 +33,20 @@ class TemplateSelect extends React.Component {
         this.props.store.loadTemplateList();
     }
 
+    isSelected() {
+        return !(this.props.store.selected === null)
+    }
+
     render() {
         const {classes} = this.props;
+        const formControlState= ((this.isSelected())?classes.formControl:classes.formControlInicial)
         return (
-            <FormControl className={classes.formControl} fullWidth={true} required={true}>
-                <Tooltip title={"Required reference of the template to be used to generate the message."}>
+            <FormControl className={formControlState} fullWidth={true} required={true}>
+                <Tooltip title={"[Required] Select the template from the list"}>
                     <InputLabel htmlFor="templateSelect">Message Template</InputLabel>
                 </Tooltip>
                 <Select
-                    label="Message Template \*"
+                    label="Message Template"
                     value={this.props.store.selected}
                     onChange={this.handleChange}
                     inputProps={{

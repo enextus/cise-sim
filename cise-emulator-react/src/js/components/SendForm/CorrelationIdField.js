@@ -18,7 +18,7 @@ export default class CorrelationIdField extends React.Component {
 
     render() {
         return (
-            <Tooltip title={"Optional field to provide a wait to identify, search and aggregate message"} >
+            <Tooltip title={"[Optional] Use this field to override the CorrelationId."} >
                 <TextField
                     name="correlationId"
                     label="Correlation Id"
