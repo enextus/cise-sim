@@ -49,7 +49,7 @@ class PushedMessage extends Component {
                                  id='simple-tab-2'
                                  aria-controls='simple-tabpanel-2'/>
                             <Tab value="two"
-                                 label="acknowledgement"
+                                 label="ack received"
                                  id='simple-tab-3'
                                  aria-controls='simple-tabpanel-3'/>
                         </Tabs>

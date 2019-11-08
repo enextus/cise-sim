@@ -2,7 +2,7 @@ import {TextField} from "@material-ui/core";
 import React from "react";
 import PropTypes from "prop-types";
 import {observer} from "mobx-react";
-import Tooltip from "@material-ui/core/Tooltip"; 
+import Tooltip from "@material-ui/core/Tooltip";
 
 @observer
 export default class CorrelationIdField extends React.Component {
@@ -18,7 +18,7 @@ export default class CorrelationIdField extends React.Component {
 
     render() {
         return (
-            <Tooltip title={"Optional field to provide a wait to identify, search and aggregate message"} >
+            <Tooltip title={"[Optional] ... to override the CorrelationId."} >
                 <TextField
                     name="correlationId"
                     label="Correlation Id"
