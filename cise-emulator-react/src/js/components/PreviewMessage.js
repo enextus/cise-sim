@@ -24,7 +24,6 @@ class PreviewMessage extends Component {
   }
 
   handleUpdate() {
-    return this.templateStore().resetPreview();
   }
 
   render() {

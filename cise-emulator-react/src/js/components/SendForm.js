@@ -13,8 +13,11 @@ import SendButton from "./SendForm/SendButton";
 const styles = theme => ({
     root: {
         display: 'flex',
-        flexWrap: 'wrap'
-    }
+        flexWrap: 'wrap',
+        padding: 16,
+        margin: '16px auto',
+        maxWidth: 800
+    },
 });
 
 @observer
@@ -37,20 +40,23 @@ class SendForm extends Component {
         const {classes} = this.props;
 
         return (
-                <Box p="4px" mt="68px" mx="100px" bgcolor="background.paper">
-                    <Paper  className={classes.root}>
-                    <Grid container alignItems="flex-start" spacing={2} >
+                <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee">
+                    <Paper  className={classes.root} >
+                    <Grid container alignItems="flex-start"  p="10px" mx="10px" >
+
                         <Grid item xs={6}>
                             <TemplateSelect store={this.getTemplateStore()}/>
                         </Grid>
-                        <Grid item xs={6}>
+
+                        <Grid item xs={6} >
                             <MessageIdField store={this.getTemplateStore()}/>
                         </Grid>
-                        <Grid item xs={6}>
+
+                        <Grid item xs={6}  >
                             <CorrelationIdField store={this.getTemplateStore()}/>
                         </Grid>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={6}  >
                             <RequiresAckCheck store={this.getTemplateStore()}/>
                         </Grid>
 
