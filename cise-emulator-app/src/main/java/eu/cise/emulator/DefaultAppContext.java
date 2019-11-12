@@ -22,7 +22,7 @@ public class DefaultAppContext implements AppContext {
 
     public DefaultAppContext() {
         this.emuConfig = ConfigFactory.create(EmuConfig.class);
-        this.xmlMapper = new DefaultXmlMapper();
+        this.xmlMapper = new DefaultXmlMapper.NotValidating();
         this.prettyNotValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
     }
 
@@ -38,12 +38,12 @@ public class DefaultAppContext implements AppContext {
     @Override
     public Dispatcher makeDispatcher() {
         DispatcherFactory dispatcherFactory = new DispatcherFactory();
-        return dispatcherFactory.getDispatcher(this.emuConfig.dispatcherType(), this.prettyNotValidatingXmlMapper);
+        return dispatcherFactory.getDispatcher(this.emuConfig.dispatcherType(), this.xmlMapper); //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
     }
 
     @Override
     public SignatureService makeSignatureService() {
-        return newSignatureService()
+        return newSignatureService(this.xmlMapper) //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
                 .withKeyStoreName(this.emuConfig.keyStoreFileName())
                 .withKeyStorePassword(this.emuConfig.keyStorePassword())
                 .withPrivateKeyAlias(this.emuConfig.privateKeyAlias())
