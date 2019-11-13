@@ -25,6 +25,7 @@ logging:
     "eu.cise.dispatcher.Dispatcher": DEBUG
     "io.dropwizard.server.DefaultServerFactory": WARN
     "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
+    "org.wiremock": INFO
   appenders:
     - type: console
       threshold: ALL
