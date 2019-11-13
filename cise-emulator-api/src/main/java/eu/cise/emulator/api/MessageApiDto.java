@@ -1,4 +1,4 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.send;
 
 
 import java.io.Serializable;

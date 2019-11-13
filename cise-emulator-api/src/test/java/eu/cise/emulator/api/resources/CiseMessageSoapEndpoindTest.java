@@ -1,11 +1,10 @@
-package eu.cise.emulator.api.resources;
+package eu.cise.emulator.send.resources;
 
 import com.roskart.dropwizard.jaxws.ClientBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import com.roskart.dropwizard.jaxws.JAXWSEnvironment;
-import eu.cise.emulator.api.MessageAPI;
+import eu.cise.emulator.send.MessageAPI;
 import eu.cise.emulator.io.MessageStorage;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -13,13 +12,10 @@ import org.junit.Test;
 
 import javax.ws.rs.core.Response;
 
-import static eu.eucise.helpers.AckBuilder.newAck;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class CiseMessageSoapEndpoindTest {
     private static MessageAPI messageAPI = mock(MessageAPI.class);

@@ -1,4 +1,4 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.send;
 
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;
@@ -225,7 +225,7 @@ public class MessageBuilderUtil {
                 .sender(newService()
                         .id(message.getSender().getServiceID())
                         .operation(ServiceOperationType.ACKNOWLEDGEMENT))
-                .creationDateTime(java.util.Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant()))
+                .creationDateTime(Date.from(java.time.ZonedDateTime.now(ZoneId.of("UTC")).toInstant()))
                 .informationSecurityLevel(message.getPayload().getInformationSecurityLevel())
                 .informationSensitivity(message.getPayload().getInformationSensitivity())
                 .purpose(message.getPayload().getPurpose())

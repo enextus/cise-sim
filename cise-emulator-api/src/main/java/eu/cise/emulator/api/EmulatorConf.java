@@ -1,4 +1,4 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.send;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;

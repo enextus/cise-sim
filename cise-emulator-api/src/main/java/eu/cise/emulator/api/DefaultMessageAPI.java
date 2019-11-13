@@ -1,11 +1,11 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.send;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.SendParam;
 import eu.cise.emulator.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
 import eu.cise.emulator.SynchronousAcknowledgement.SynchronousAcknowledgementType;
-import eu.cise.emulator.api.helpers.SendParamsReader;
+import eu.cise.emulator.send.helpers.SendParamsReader;
 import eu.cise.emulator.exceptions.NullSenderEx;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.Template;

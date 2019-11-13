@@ -1,4 +1,4 @@
-package eu.cise.emulator.api.helpers;
+package eu.cise.emulator.send.helpers;
 
 public class WebApiEmulatorException extends Exception {
     private int code;

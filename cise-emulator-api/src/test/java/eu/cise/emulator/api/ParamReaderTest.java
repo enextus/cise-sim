@@ -1,10 +1,10 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.send;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.emulator.SendParam;
-import eu.cise.emulator.api.helpers.SendParamsReader;
+import eu.cise.emulator.send.helpers.SendParamsReader;
 import org.junit.Before;
 import org.junit.Test;
 

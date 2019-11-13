@@ -1,13 +1,12 @@
-package eu.cise.emulator.api.resources;
+package eu.cise.emulator.send.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import eu.cise.emulator.EmuConfig;
-import eu.cise.emulator.api.MessageAPI;
-import eu.cise.emulator.api.MessageApiDto;
-import eu.cise.emulator.api.SendResponse;
-import eu.cise.emulator.api.TemplateAPI;
+import eu.cise.emulator.send.MessageAPI;
+import eu.cise.emulator.send.MessageApiDto;
+import eu.cise.emulator.send.SendResponse;
+import eu.cise.emulator.send.TemplateAPI;
 import eu.cise.emulator.templates.Template;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;

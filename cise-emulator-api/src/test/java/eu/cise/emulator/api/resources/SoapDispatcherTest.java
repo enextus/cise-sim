@@ -1,4 +1,4 @@
-package eu.cise.emulator.api.resources;
+package eu.cise.emulator.send.resources;
 
 import eu.cise.datamodel.v1.entity.Entity;
 import eu.cise.datamodel.v1.entity.cargo.Cargo;
@@ -9,8 +9,8 @@ import eu.cise.datamodel.v1.entity.vessel.Vessel;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.SoapDispatcher;
-import eu.cise.emulator.api.EmulatorApp;
-import eu.cise.emulator.api.EmulatorConf;
+import eu.cise.emulator.send.EmulatorApp;
+import eu.cise.emulator.send.EmulatorConf;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;

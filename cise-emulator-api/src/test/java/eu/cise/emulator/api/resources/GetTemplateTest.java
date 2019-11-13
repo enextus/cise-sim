@@ -1,11 +1,11 @@
-package eu.cise.emulator.api.resources;
+package eu.cise.emulator.send.resources;
 
 import eu.cise.emulator.EmuConfig;
-import eu.cise.emulator.api.APIError;
-import eu.cise.emulator.api.MessageAPI;
-import eu.cise.emulator.api.PreviewResponse;
-import eu.cise.emulator.api.TemplateAPI;
-import eu.cise.emulator.api.representation.TemplateParams;
+import eu.cise.emulator.send.APIError;
+import eu.cise.emulator.send.MessageAPI;
+import eu.cise.emulator.send.PreviewResponse;
+import eu.cise.emulator.send.TemplateAPI;
+import eu.cise.emulator.send.representation.TemplateParams;
 import eu.cise.emulator.templates.Template;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;

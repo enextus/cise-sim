@@ -1,4 +1,4 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.send;
 
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.exceptions.LoaderEx;

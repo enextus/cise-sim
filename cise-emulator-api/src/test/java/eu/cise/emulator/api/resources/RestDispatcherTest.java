@@ -1,18 +1,13 @@
-package eu.cise.emulator.api.resources;
+package eu.cise.emulator.send.resources;
 
 import eu.cise.datamodel.v1.entity.Entity;
 import eu.cise.datamodel.v1.entity.cargo.Cargo;
-import eu.cise.datamodel.v1.entity.incident.Incident;
-import eu.cise.datamodel.v1.entity.incident.SeverityType;
-import eu.cise.datamodel.v1.entity.location.PortLocation;
 import eu.cise.datamodel.v1.entity.vessel.Vessel;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.RestDispatcher;
-import eu.cise.dispatcher.SoapDispatcher;
-import eu.cise.emulator.MessageProcessor;
-import eu.cise.emulator.api.EmulatorApp;
-import eu.cise.emulator.api.EmulatorConf;
+import eu.cise.emulator.send.EmulatorApp;
+import eu.cise.emulator.send.EmulatorConf;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
@@ -22,7 +17,6 @@ import eu.eucise.xml.XmlMapper;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.net.URL;
@@ -56,9 +50,9 @@ public class RestDispatcherTest {
         URL systemResource = ClassLoader.getSystemResource("");
         System.setProperty("conf.dir", systemResource.getPath());
         return newSignatureService()
-                .withKeyStoreName("cisesim1-nodecx.jks")
+                .withKeyStoreName("keyStore.jks")
                 .withKeyStorePassword("password")
-                .withPrivateKeyAlias("cisesim1-nodecx.nodecx.eucise.cx")
+                .withPrivateKeyAlias("apache.nodecx.eucise.cx")
                 .withPrivateKeyPassword("password")
                 .build();
     }

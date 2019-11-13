@@ -1,11 +1,15 @@
-package eu.cise.emulator.api;
+package eu.cise.emulator.send;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import eu.cise.emulator.AppContext;
-import eu.cise.emulator.DefaultAppContext;
+import eu.cise.dispatcher.Dispatcher;
+import eu.cise.dispatcher.DispatcherFactory;
+import eu.cise.dispatcher.DispatcherType;
+import eu.cise.emulator.DefaultEmulatorEngine;
+import eu.cise.emulator.DefaultMessageProcessor;
 import eu.cise.emulator.EmuConfig;
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.io.MessageStorage;
+import eu.cise.emulator.templates.DefaultTemplateLoader;
 import eu.cise.emulator.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;
@@ -13,21 +17,21 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import wiremock.org.apache.http.HttpHeaders;
-import static org.assertj.core.api.Assertions.assertThat;
+
 import javax.ws.rs.core.MediaType;
+import java.net.URL;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * Examples on how to use WireMock with JUnit4.
@@ -41,7 +45,10 @@ public class RestMessageReceiveTest extends AbstractTestBase {
     /* Instance variable(s): */
     @Rule
     public WireMockRule mWireMockRule = new WireMockRule(HTTP_ENDPOINT_PORT);
-    private AppContext appContext= new DefaultAppContext();
+
+    XmlMapper xmlmapperNoValidNoPretty= new DefaultXmlMapper.NotValidating();
+    XmlMapper xmlmapperNoValidPretty= new DefaultXmlMapper.PrettyNotValidating();
+
 
     /**
      * Performs preparations before each test.
@@ -49,7 +56,6 @@ public class RestMessageReceiveTest extends AbstractTestBase {
     @Before
     public void setup() {
         initializeRestAssuredHttp();
-        MessageProcessor messageProcessorConcrete = appContext.makeMessageProcessor();
     }
 
     /**
@@ -85,25 +91,77 @@ public class RestMessageReceiveTest extends AbstractTestBase {
          * server is not expecting is deliberately sent and the .
          * This is done in order to examine the response in cases like this.
          */
-        MessageProcessor messageProcessor = appContext.makeMessageProcessor();
-        TemplateLoader templateLoader = appContext.makeTemplateLoader();
+
         MessageStorage messageStorage = mock(MessageStorage.class);
         String messageStr = MessageBuilderUtil.TEST_MESSAGE_XML;
-        EmuConfig emuConfig= appContext.makeEmuConfig();
-        XmlMapper xmlmapperNoValidNoPretty= new DefaultXmlMapper.NotValidating();
-        XmlMapper xmlmapperNoValidPretty= new DefaultXmlMapper.PrettyNotValidating();
+
 
         ////*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
-
         Message messageToSign =xmlmapperNoValidNoPretty.fromXML(messageStr);
-        SignatureService signatureService= appContext.makeSignatureService();
+
+        SignatureService signatureService=makeSignatureService(xmlmapperNoValidNoPretty);
         messageToSign = signatureService.sign(messageToSign);
         String messageSignStr= xmlmapperNoValidNoPretty.toXML(messageToSign);
 
-        //MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlmapperNoValidPretty, xmlmapperNoValidNoPretty);
-         Acknowledgement response =null ;//= messageAPI.receive(messageSignStr);
+        MessageProcessor messageProcessor= makeMessageProcessor(xmlmapperNoValidNoPretty);
+        TemplateLoader templateLoader= makeTemplateLoader();
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlmapperNoValidPretty, xmlmapperNoValidNoPretty);
+        Acknowledgement response =messageAPI.receive(messageSignStr);
         verify(messageStorage).store(any());
         assertThat(response.getAckCode()).isEqualTo(AcknowledgementType.SUCCESS);
 
     }
+
+
+
+    public MessageProcessor makeMessageProcessor(XmlMapper xmlMapper) {
+        return new DefaultMessageProcessor(makeEmulatorEngine(xmlMapper));
+    }
+
+    private DefaultEmulatorEngine makeEmulatorEngine(XmlMapper xmlMapper) {
+        return new DefaultEmulatorEngine(makeSignatureService(xmlMapper), makeDispatcher(), this.emuConfig);
+    }
+
+
+    public TemplateLoader makeTemplateLoader() {
+        return new DefaultTemplateLoader(emuConfig);
+    }
+
+
+    public Dispatcher makeDispatcher() {
+        DispatcherFactory dispatcherFactory = new DispatcherFactory();
+        return dispatcherFactory.getDispatcher(this.emuConfig.dispatcherType(), this.xmlmapperNoValidPretty); //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
+    }
+
+    public static SignatureService makeSignatureService(XmlMapper xmlMapper) {
+        URL systemResource = ClassLoader.getSystemResource("");
+        System.setProperty("conf.dir", systemResource.getPath());
+        return newSignatureService(xmlMapper)
+                .withKeyStoreName("keyStore.jks")
+                .withKeyStorePassword("password")
+                .withPrivateKeyAlias("apache.nodecx.eucise.cx")
+                .withPrivateKeyPassword("password")
+                .build();
+    }
+
+    EmuConfig emuConfig= new EmuConfig() {
+        @Override
+        public String participantId() { return "N/A"; }
+        @Override
+        public String endpointUrl() {return "N/A"; }
+        @Override
+        public String keyStoreFileName() {return "keyStore.jks"; }
+        @Override
+        public String keyStorePassword() {return "password"; }
+        @Override
+        public String privateKeyAlias() {return "apache.nodecx.eucise.cx"; }
+        @Override
+        public String privateKeyPassword() {return "password"; }
+        @Override
+        public String messageTemplateDir() {return "cise-emulator-assembly/src/main/resources/templates/messages";}
+        @Override
+        public boolean isDateValidationEnabled() {return false;}
+        @Override
+        public DispatcherType dispatcherType() {return DispatcherType.REST;}
+    };
 }

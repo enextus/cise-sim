@@ -1,4 +1,4 @@
-package eu.cise.emulator.api.resources;
+package eu.cise.emulator.send.resources;
 
 /*import eu.cise.emulator.api.helpers.XmlFileDirectoryList;
 import io.dropwizard.testing.junit.ResourceTestRule;
