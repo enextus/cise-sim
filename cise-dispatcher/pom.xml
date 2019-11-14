@@ -222,9 +222,24 @@
             <version>3.13.2</version>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>digit releases</id>
+            <name>DG DIGIT Repository</name>
+            <url>https://webgate.ec.europa.eu/CITnet/nexus/content/repositories/jrc
+            </url>
+        </repository>
+        <snapshotRepository>
+            <id>digit snapshots</id>
+            <name>DG DIGIT Snapshot Repository</name>
+            <url>
+                https://webgate.ec.europa.eu/CITnet/nexus/content/repositories/jrc-snapshots
+            </url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
