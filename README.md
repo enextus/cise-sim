@@ -244,3 +244,35 @@ INFO  [2019-11-08 11:12:03,034] com.roskart.dropwizard.jaxws.JAXWSEnvironment: J
 
     /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
 ``` 
+
+# How to build the CISE Sim
+To build the CISE Sim is necessary to have a JDK 1.8 and a nodeJS/npm installed on the build 
+workstation.
+
+There are mostly three steps to build the simulator:
+
+- install JavaScript dependencies
+- build with npm ReactJS frontend
+- build with maven the CISE Sim Java code
+
+# JavaScript install and build
+
+To install the JavaScript dependencies is just enough to launch an npm command to install 
+dependencies and to build an artifact of the front end: 
+
+```bash
+$ cd cise-emulator-react
+$ npm install
+$ npm run build --scripts-prepend-node-path=auto
+```
+
+# Java API server build
+
+As usual, it is possible to build the API server through maven build tool. 
+
+```bash
+$ cd <root-path-of-cise-sim-code>
+$ mvn clean install -U -P ciBuild
+```
+
+After the build succeeds, the final artifact can be found in `<root-path-of-cise-sim-code>/target` directory. 
