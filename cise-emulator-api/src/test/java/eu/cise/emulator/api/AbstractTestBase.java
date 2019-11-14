@@ -1,4 +1,4 @@
-package eu.cise.emulator.send;
+package eu.cise.emulator.api;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;

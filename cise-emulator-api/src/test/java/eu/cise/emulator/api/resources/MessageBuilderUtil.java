@@ -1,4 +1,4 @@
-package eu.cise.emulator.send.resources;
+package eu.cise.emulator.api.resources;
 
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;

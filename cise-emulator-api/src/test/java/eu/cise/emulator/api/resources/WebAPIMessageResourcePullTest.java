@@ -1,6 +1,6 @@
-package eu.cise.emulator.send.resources;
+package eu.cise.emulator.api.resources;
 
-import eu.cise.emulator.send.MessageAPI;
+import eu.cise.emulator.api.MessageAPI;
 import org.junit.Before;
 import org.junit.Test;
 

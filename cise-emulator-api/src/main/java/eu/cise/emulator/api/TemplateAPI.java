@@ -1,7 +1,7 @@
-package eu.cise.emulator.send;
+package eu.cise.emulator.api;
 
 import eu.cise.emulator.MessageProcessor;
-import eu.cise.emulator.send.representation.TemplateParams;
+import eu.cise.emulator.api.representation.TemplateParams;
 import eu.cise.emulator.exceptions.LoaderEx;
 import eu.cise.emulator.templates.Template;
 import eu.cise.emulator.templates.TemplateLoader;

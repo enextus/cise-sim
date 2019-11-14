@@ -1,4 +1,4 @@
-package eu.cise.emulator.send;
+package eu.cise.emulator.api;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.roskart.dropwizard.jaxws.EndpointBuilder;
@@ -6,12 +6,12 @@ import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.emulator.AppContext;
 import eu.cise.emulator.DefaultAppContext;
-import eu.cise.emulator.send.helpers.CrossOriginSupport;
-import eu.cise.emulator.send.resources.MessageResource;
-import eu.cise.emulator.send.resources.TemplateResource;
-import eu.cise.emulator.send.resources.UiMessageResource;
-import eu.cise.emulator.send.resources.UiServiceResource;
-import eu.cise.emulator.send.soap.CISEMessageServiceSoapImplDefault;
+import eu.cise.emulator.api.helpers.CrossOriginSupport;
+import eu.cise.emulator.api.resources.MessageResource;
+import eu.cise.emulator.api.resources.TemplateResource;
+import eu.cise.emulator.api.resources.UiMessageResource;
+import eu.cise.emulator.api.resources.UiServiceResource;
+import eu.cise.emulator.api.soap.CISEMessageServiceSoapImplDefault;
 import eu.cise.emulator.io.MessageStorage;
 import eu.eucise.xml.XmlMapper;
 import io.dropwizard.Application;

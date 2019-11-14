@@ -1,7 +1,7 @@
-package eu.cise.emulator.send;
+package eu.cise.emulator.api;
 
 import eu.cise.emulator.MessageProcessor;
-import eu.cise.emulator.send.resources.MessageBuilderUtil;
+import eu.cise.emulator.api.resources.MessageBuilderUtil;
 import eu.cise.emulator.io.DefaultMessageStorage;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.TemplateLoader;

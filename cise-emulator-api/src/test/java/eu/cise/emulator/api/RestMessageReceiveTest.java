@@ -1,4 +1,4 @@
-package eu.cise.emulator.send;
+package eu.cise.emulator.api;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import eu.cise.dispatcher.Dispatcher;

@@ -1,9 +1,9 @@
-package eu.cise.emulator.send.resources;
+package eu.cise.emulator.api.resources;
 
 import com.roskart.dropwizard.jaxws.ClientBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import com.roskart.dropwizard.jaxws.JAXWSEnvironment;
-import eu.cise.emulator.send.MessageAPI;
+import eu.cise.emulator.api.MessageAPI;
 import eu.cise.emulator.io.MessageStorage;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;

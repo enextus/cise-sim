@@ -1,8 +1,8 @@
-package eu.cise.emulator.send;
+package eu.cise.emulator.api;
 
 import eu.cise.emulator.MessageProcessor;
 import eu.cise.emulator.SendParam;
-import eu.cise.emulator.send.representation.TemplateParams;
+import eu.cise.emulator.api.representation.TemplateParams;
 import eu.cise.emulator.exceptions.NullSendParamEx;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.DefaultTemplateLoader;

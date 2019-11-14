@@ -1,4 +1,4 @@
-package eu.cise.emulator.send.resources;
+package eu.cise.emulator.api.resources;
 
 import eu.cise.ServiceDetail;
 import eu.cise.emulator.EmuConfig;

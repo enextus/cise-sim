@@ -1,10 +1,10 @@
-package eu.cise.emulator.send.resources;
+package eu.cise.emulator.api.resources;
 
 import eu.cise.emulator.EmuConfig;
-import eu.cise.emulator.send.APIError;
-import eu.cise.emulator.send.MessageAPI;
-import eu.cise.emulator.send.TemplateAPI;
-import eu.cise.emulator.send.TemplateListResponse;
+import eu.cise.emulator.api.APIError;
+import eu.cise.emulator.api.MessageAPI;
+import eu.cise.emulator.api.TemplateAPI;
+import eu.cise.emulator.api.TemplateListResponse;
 import eu.cise.emulator.templates.Template;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.After;

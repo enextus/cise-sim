@@ -15,7 +15,26 @@
     <packaging>pom</packaging>
 
     <build>
+
         <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <tasks>
+                                <replace token= "cise-emulator-assembly/src/main/resources/" value="" dir="../cise-emulator-api/target/classes">
+                                    <include name="sim.properties"/>
+                                </replace>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -52,6 +71,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
     <dependencies>

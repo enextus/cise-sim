@@ -1,8 +1,8 @@
-package eu.cise.emulator.send.resources;
+package eu.cise.emulator.api.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.cise.emulator.send.*;
-import eu.cise.emulator.send.representation.TemplateParams;
+import eu.cise.emulator.api.*;
+import eu.cise.emulator.api.representation.TemplateParams;
 import eu.cise.emulator.templates.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

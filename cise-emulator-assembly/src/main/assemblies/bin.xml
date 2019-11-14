@@ -43,7 +43,13 @@
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>config.yml</include>
-                <include>keyStore.yml</include>
+                <include>keyStore.jks</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.parent.basedir}/cise-emulator-api/target/classes</directory>
+            <outputDirectory>/conf</outputDirectory>
+            <includes>
                 <include>sim.properties</include>
             </includes>
         </fileSet>

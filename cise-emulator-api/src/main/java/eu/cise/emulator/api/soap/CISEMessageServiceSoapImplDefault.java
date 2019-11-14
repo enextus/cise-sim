@@ -1,7 +1,7 @@
-package eu.cise.emulator.send.soap;
+package eu.cise.emulator.api.soap;
 
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
-import eu.cise.emulator.send.MessageAPI;
+import eu.cise.emulator.api.MessageAPI;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.XmlMapper;

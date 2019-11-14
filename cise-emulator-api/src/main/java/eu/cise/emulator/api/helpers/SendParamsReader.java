@@ -1,4 +1,4 @@
-package eu.cise.emulator.send.helpers;
+package eu.cise.emulator.api.helpers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.emulator.SendParam;
