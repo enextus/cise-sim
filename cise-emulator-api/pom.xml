@@ -3,7 +3,7 @@
     <parent>
         <artifactId>cise-sim</artifactId>
         <groupId>eu.europa.ec.jrc.marex</groupId>
-        <version>1.2.1-beta</version>
+        <version>1.2.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -103,14 +103,14 @@
         <dependency>
             <groupId>eu.europa.ec.jrc.marex</groupId>
             <artifactId>cise-emulator-domain</artifactId>
-            <version>1.2.1-beta</version>
+            <version>1.2.2-SNAPSHOT</version>
         </dependency>
 
 
         <dependency>
             <groupId>eu.europa.ec.jrc.marex</groupId>
             <artifactId>cise-emulator-app</artifactId>
-            <version>1.2.1-beta</version>
+            <version>1.2.2-SNAPSHOT</version>
         </dependency>
 
         <!--/dropwizard/-->
