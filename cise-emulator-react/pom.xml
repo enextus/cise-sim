@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>cise-emulator</artifactId>
+    <artifactId>cise-sim</artifactId>
     <groupId>eu.europa.ec.jrc.marex</groupId>
     <version>1.2-SNAPSHOT</version>
   </parent>
