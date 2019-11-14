@@ -7,11 +7,11 @@
   <parent>
     <artifactId>cise-emulator</artifactId>
     <groupId>eu.europa.ec.jrc.marex</groupId>
-    <version>1.1-beta</version>
+    <version>1.2-SNAPSHOT</version>
   </parent>
   <groupId>eu.europa.ec.jrc.marex</groupId>
   <artifactId>cise-emulator-react</artifactId>
-  <version>1.1-beta</version>
+  <version>1.2-SNAPSHOT</version>
   <build>
     <plugins>
       <plugin>
