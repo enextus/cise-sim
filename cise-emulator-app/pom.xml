@@ -104,8 +104,8 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
-        <!-- - - - - - test related  - - - - -->
-        <!---  / source generated classes  with wsdl /  -->
+        <!-- test related -->
+        <!-- source generated classes  with wsdl -->
         <dependency>
             <groupId>org.apache.cxf.xjc-utils</groupId>
             <artifactId>cxf-xjc-runtime</artifactId>
