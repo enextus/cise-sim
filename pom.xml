@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>cise-sim</artifactId>
   <groupId>eu.europa.ec.jrc.marex</groupId>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2.1-beta</version>
   <packaging>pom</packaging>
 
   <name>cise-sim</name>
@@ -21,7 +19,7 @@
     <url>
       https://webgate.ec.europa.eu/CITnet/stash/projects/MAREX/repos/cise-emu/browse
     </url>
-    <tag>HEAD</tag>
+    <tag>v1.2.1-beta</tag>
   </scm>
 
 
@@ -129,7 +127,7 @@
       <dependency>
         <groupId>eu.europa.ec.jrc.marex</groupId>
         <artifactId>cise-emulator-domain</artifactId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.2.1-beta</version>
       </dependency>
 
       <!-- EUCISE dependencies -->
@@ -323,7 +321,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <testcase.excludedGroups/>
+        <testcase.excludedGroups />
         <useFile>true</useFile>
       </properties>
     </profile>
