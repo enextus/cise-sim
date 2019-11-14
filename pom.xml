@@ -1,280 +1,295 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>cise-emulator</artifactId>
-    <groupId>eu.europa.ec.jrc.marex</groupId>
-    <version>1.2-SNAPSHOT</version>
-    <packaging>pom</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>cise-emulator</artifactId>
+  <groupId>eu.europa.ec.jrc.marex</groupId>
+  <version>1.2-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
-    <name>cise-emulator</name>
-    <description>main aggregation for sim project</description>
+  <name>cise-sim</name>
+  <description>main aggregation for sim project</description>
+  <scm>
+    <connection>
+      scm:git:https://webgate.ec.europa.eu/CITnet/stash/scm/marex/cise-emu.git
+    </connection>
+    <developerConnection>
+      scm:git:https://webgate.ec.europa.eu/CITnet/stash/scm/marex/cise-emu.git
+    </developerConnection>
+    <url>
+      https://webgate.ec.europa.eu/CITnet/stash/projects/MAREX/repos/cise-emu/browse
+    </url>
+    <tag>HEAD</tag>
+  </scm>
 
-    <modules>
-        <module>cise-emulator-domain</module>
-        <module>cise-emulator-react</module>
-        <module>cise-emulator-api</module>
-        <module>cise-emulator-app</module>
-        <module>cise-emulator-assembly</module>
-        <module>cise-dispatcher</module>
-        <module>cise-emulator-io</module>
-    </modules>
 
-    <build>
+  <modules>
+    <module>cise-emulator-domain</module>
+    <module>cise-emulator-react</module>
+    <module>cise-emulator-api</module>
+    <module>cise-emulator-app</module>
+    <module>cise-emulator-assembly</module>
+    <module>cise-dispatcher</module>
+    <module>cise-emulator-io</module>
+  </modules>
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <generatedSourcesDirectory>${project.build.directory}/generated-sources</generatedSourcesDirectory>
-                </configuration>
-            </plugin>
+  <build>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.3</version>
-                <configuration>
-                    <createDependencyReducedPom>true</createDependencyReducedPom>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.SF</exclude>
-                                <exclude>META-INF/*.DSA</exclude>
-                                <exclude>META-INF/*.RSA</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
-                </configuration>
-            </plugin>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <generatedSourcesDirectory>${project.build.directory}/generated-sources
+          </generatedSourcesDirectory>
+        </configuration>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.5.2</version>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.3</version>
+        <configuration>
+          <createDependencyReducedPom>true</createDependencyReducedPom>
+          <filters>
+            <filter>
+              <artifact>*:*</artifact>
+              <excludes>
+                <exclude>META-INF/*.SF</exclude>
+                <exclude>META-INF/*.DSA</exclude>
+                <exclude>META-INF/*.RSA</exclude>
+              </excludes>
+            </filter>
+          </filters>
+        </configuration>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>8.18</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <linkXRef>false</linkXRef>
-                    <failsOnError>true</failsOnError>
-                    <configLocation>checkstyle.xml</configLocation>
-                    <consoleOutput>true</consoleOutput>
-                    <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>checkstyle</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.5.2</version>
+      </plugin>
 
-        </plugins>
-
-    </build>
-    <dependencyManagement>
-
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.17</version>
         <dependencies>
-            <!-- WebSocket Libraries -->
-
-            <dependency>
-                <groupId>com.liveperson</groupId>
-                <artifactId>dropwizard-websockets</artifactId>
-                <version>1.3.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty.websocket</groupId>
-                <artifactId>javax-websocket-server-impl</artifactId>
-                <version>${jetty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.java-websocket</groupId>
-                <artifactId>Java-WebSocket</artifactId>
-                <version>1.3.0</version>
-            </dependency>
-
-            <!-- inner module dependencies -->
-            <dependency>
-                <groupId>eu.europa.ec.jrc.marex</groupId>
-                <artifactId>cise-emulator-domain</artifactId>
-                <version>1.2-SNAPSHOT</version>
-            </dependency>
-
-            <!-- EUCISE dependencies -->
-            <dependency>
-                <artifactId>cise-data-model</artifactId>
-                <groupId>eu.europa.ec.jrc.marex</groupId>
-                <version>1.5.3.12</version>
-            </dependency>
-
-            <dependency>
-                <artifactId>eucise-model-helpers</artifactId>
-                <groupId>eu.europa.ec.jrc.marex</groupId>
-                <version>1.0.9</version>
-            </dependency>
-
-            <dependency>
-                <artifactId>eucise-service-model</artifactId>
-                <groupId>eu.europa.ec.jrc.marex</groupId>
-                <version>1.0.7</version>
-            </dependency>
-
-            <dependency>
-                <groupId>eu.europa.ec.jrc.marex</groupId>
-                <artifactId>cise-signature</artifactId>
-                <version>1.1-SNAPSHOT</version>
-            </dependency>
-
-            <!-- ext Dependencies -->
-            <dependency>
-                <artifactId>guava</artifactId>
-                <groupId>com.google.guava</groupId>
-                <version>22.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time</artifactId>
-                <version>${jodatime.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.25</version>
-            </dependency>
-
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>1.2.3</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>log4j-over-slf4j</artifactId>
-                <version>1.7.25</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jul-to-slf4j</artifactId>
-                <version>1.7.25</version>
-            </dependency>
-
-
-            <!-- xml manipulation -->
-
-            <dependency>
-                <groupId>javax.xml</groupId>
-                <artifactId>jaxp-api</artifactId>
-                <version>1.4.2</version>
-            </dependency>
-
-            <!-- dropwizard framework Libraries -->
-
-
-            <dependency>
-                <groupId>io.dropwizard</groupId>
-                <artifactId>dropwizard-core</artifactId>
-                <version>${dropwizard.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.dropwizard</groupId>
-                <artifactId>dropwizard-assets</artifactId>
-                <version>${dropwizard.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.dropwizard</groupId>
-                <artifactId>dropwizard-util</artifactId>
-                <version>${dropwizard.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>resources.dropwizard</groupId>
-                <artifactId>dropwizard-testing</artifactId>
-                <version>${dropwizard.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.dropwizard</groupId>
-                <artifactId>dropwizard-testing</artifactId>
-                <version>${dropwizard.version}</version>
-            </dependency>
-            <!-- Complementary library -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>2.9.2</version>
-            </dependency>
-
-            <!-- property file handling -->
-            <dependency>
-                <groupId>org.aeonbits.owner</groupId>
-                <artifactId>owner</artifactId>
-                <version>1.0.10</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.aeonbits.owner</groupId>
-                <artifactId>owner-java8</artifactId>
-                <version>1.0.10</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.aeonbits.owner</groupId>
-                <artifactId>owner-java8-extras</artifactId>
-                <version>1.0.10</version>
-            </dependency>
-
-            <!-- Test Libraries -->
-            <dependency>
-                <artifactId>junit</artifactId>
-                <groupId>junit</groupId>
-                <version>4.12</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>3.0.0</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.tomakehurst</groupId>
-                <artifactId>wiremock-jre8-standalone</artifactId>
-                <version>2.23.2</version>
-                <scope>test</scope>
-            </dependency>
-
-
-            <dependency>
-                <groupId>org.assertj</groupId>
-                <artifactId>assertj-core</artifactId>
-                <version>3.13.2</version>
-                <scope>test</scope>
-            </dependency>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.18</version>
+          </dependency>
         </dependencies>
+        <configuration>
+          <linkXRef>false</linkXRef>
+          <failsOnError>true</failsOnError>
+          <configLocation>checkstyle.xml</configLocation>
+          <consoleOutput>true</consoleOutput>
+          <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>checkstyle</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-    </dependencyManagement>
+    </plugins>
+
+  </build>
+  <dependencyManagement>
+
+    <dependencies>
+      <!-- WebSocket Libraries -->
+
+      <dependency>
+        <groupId>com.liveperson</groupId>
+        <artifactId>dropwizard-websockets</artifactId>
+        <version>1.3.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty.websocket</groupId>
+        <artifactId>javax-websocket-server-impl</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.java-websocket</groupId>
+        <artifactId>Java-WebSocket</artifactId>
+        <version>1.3.0</version>
+      </dependency>
+
+      <!-- inner module dependencies -->
+      <dependency>
+        <groupId>eu.europa.ec.jrc.marex</groupId>
+        <artifactId>cise-emulator-domain</artifactId>
+        <version>1.2-SNAPSHOT</version>
+      </dependency>
+
+      <!-- EUCISE dependencies -->
+      <dependency>
+        <artifactId>cise-data-model</artifactId>
+        <groupId>eu.europa.ec.jrc.marex</groupId>
+        <version>1.5.3.12</version>
+      </dependency>
+
+      <dependency>
+        <artifactId>eucise-model-helpers</artifactId>
+        <groupId>eu.europa.ec.jrc.marex</groupId>
+        <version>1.0.9</version>
+      </dependency>
+
+      <dependency>
+        <artifactId>eucise-service-model</artifactId>
+        <groupId>eu.europa.ec.jrc.marex</groupId>
+        <version>1.0.7</version>
+      </dependency>
+
+      <dependency>
+        <groupId>eu.europa.ec.jrc.marex</groupId>
+        <artifactId>cise-signature</artifactId>
+        <version>1.1-SNAPSHOT</version>
+      </dependency>
+
+      <!-- ext Dependencies -->
+      <dependency>
+        <artifactId>guava</artifactId>
+        <groupId>com.google.guava</groupId>
+        <version>22.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>${jodatime.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.25</version>
+      </dependency>
+
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.3</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>log4j-over-slf4j</artifactId>
+        <version>1.7.25</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jul-to-slf4j</artifactId>
+        <version>1.7.25</version>
+      </dependency>
+
+
+      <!-- xml manipulation -->
+
+      <dependency>
+        <groupId>javax.xml</groupId>
+        <artifactId>jaxp-api</artifactId>
+        <version>1.4.2</version>
+      </dependency>
+
+      <!-- dropwizard framework Libraries -->
+
+
+      <dependency>
+        <groupId>io.dropwizard</groupId>
+        <artifactId>dropwizard-core</artifactId>
+        <version>${dropwizard.version}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.dropwizard</groupId>
+        <artifactId>dropwizard-assets</artifactId>
+        <version>${dropwizard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.dropwizard</groupId>
+        <artifactId>dropwizard-util</artifactId>
+        <version>${dropwizard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>resources.dropwizard</groupId>
+        <artifactId>dropwizard-testing</artifactId>
+        <version>${dropwizard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.dropwizard</groupId>
+        <artifactId>dropwizard-testing</artifactId>
+        <version>${dropwizard.version}</version>
+      </dependency>
+      <!-- Complementary library -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.9.2</version>
+      </dependency>
+
+      <!-- property file handling -->
+      <dependency>
+        <groupId>org.aeonbits.owner</groupId>
+        <artifactId>owner</artifactId>
+        <version>1.0.10</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.aeonbits.owner</groupId>
+        <artifactId>owner-java8</artifactId>
+        <version>1.0.10</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.aeonbits.owner</groupId>
+        <artifactId>owner-java8-extras</artifactId>
+        <version>1.0.10</version>
+      </dependency>
+
+      <!-- Test Libraries -->
+      <dependency>
+        <artifactId>junit</artifactId>
+        <groupId>junit</groupId>
+        <version>4.12</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>3.0.0</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.tomakehurst</groupId>
+        <artifactId>wiremock-jre8-standalone</artifactId>
+        <version>2.23.2</version>
+        <scope>test</scope>
+      </dependency>
+
+
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>3.13.2</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+
+  </dependencyManagement>
 
 
   <distributionManagement>
@@ -293,45 +308,45 @@
     </snapshotRepository>
   </distributionManagement>
 
-    <profiles>
-        <profile>
-            <id>ciBuild</id>
-            <properties>
-                <testcase.excludedGroups>eu.eucise.tests.IntegrationTests</testcase.excludedGroups>
-                <useFile>true</useFile>
-            </properties>
-        </profile>
+  <profiles>
+    <profile>
+      <id>ciBuild</id>
+      <properties>
+        <testcase.excludedGroups>eu.eucise.tests.IntegrationTests</testcase.excludedGroups>
+        <useFile>true</useFile>
+      </properties>
+    </profile>
 
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <testcase.excludedGroups/>
-                <useFile>true</useFile>
-            </properties>
-        </profile>
-    </profiles>
+    <profile>
+      <id>default</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <testcase.excludedGroups/>
+        <useFile>true</useFile>
+      </properties>
+    </profile>
+  </profiles>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <cxf.version>3.2.9</cxf.version>
-        <jetty.version>9.4.11.v20180605</jetty.version>
-        <jersey.version>2.21</jersey.version>
-        <dropwizard.version>1.3.5</dropwizard.version>
-        <jackson.version>2.9.4</jackson.version>
-        <jackson.jaxrs.version>2.9.4</jackson.jaxrs.version>
-        <jodatime.version>2.5</jodatime.version>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <main.basedir>${project.basedir}</main.basedir>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <distribution.version>1.1</distribution.version>
-        <distribution.state>-beta</distribution.state>
-    </properties>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <cxf.version>3.2.9</cxf.version>
+    <jetty.version>9.4.11.v20180605</jetty.version>
+    <jersey.version>2.21</jersey.version>
+    <dropwizard.version>1.3.5</dropwizard.version>
+    <jackson.version>2.9.4</jackson.version>
+    <jackson.jaxrs.version>2.9.4</jackson.jaxrs.version>
+    <jodatime.version>2.5</jodatime.version>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <main.basedir>${project.basedir}</main.basedir>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <distribution.version>1.1</distribution.version>
+    <distribution.state>-beta</distribution.state>
+  </properties>
 
 </project>
