@@ -73,6 +73,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.7</version>
                 <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
                     <javadocDirectory>${main.basedir}/src/javadoc</javadocDirectory>
                     <docfilessubdirs>true</docfilessubdirs>
                     <aggregate>true</aggregate>
