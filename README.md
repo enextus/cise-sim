@@ -246,10 +246,14 @@ INFO  [2019-11-08 11:12:03,034] com.roskart.dropwizard.jaxws.JAXWSEnvironment: J
 ``` 
 
 # How to build the CISE Sim
-To build the CISE Sim is necessary to have a JDK 1.8 and a nodeJS/npm installed on the build 
-workstation.
+To build the CISE Sim from the source code is required to install:
+- jdk 1.8 
+- nodejs 6.4.1+
+- npm 10.11.0+
 
-There are mostly three steps to build the simulator:
+on your workstation.
+
+There are three steps to build the simulator:
 
 - install JavaScript dependencies
 - build with npm ReactJS frontend
