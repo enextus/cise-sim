@@ -9,11 +9,11 @@ server:
   # Protocol and port of simulator web interface
   applicationConnectors:
     - type: http
-      port: 8080
+      port: 8180
   # Protocol and port of simulator web-application admin interface (metrics, Healthcheck ...)
   adminConnectors:
     - type: http
-      port: 8081
+      port: 8181
 # Simulator log configuration, if needed you can uncomment the part below to enable logging to filesystem
 logging:
   level: INFO
