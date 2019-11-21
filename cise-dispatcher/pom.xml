@@ -1,229 +1,253 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cise-dispatcher</artifactId>
-    <groupId>eu.europa.ec.jrc.marex</groupId>
-    <version>1.1</version>
-    <name>cise-dispatcher</name>
+  <artifactId>cise-dispatcher</artifactId>
+  <groupId>eu.europa.ec.jrc.marex</groupId>
+  <version>1.1-SNAPSHOT</version>
+  <name>cise-dispatcher</name>
 
-    <build>
-        <plugins>
-            <!-- tester plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-junit47</artifactId>
-                        <version>2.20</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <!-- This conf avoid parallel execution on different JVM -->
-                    <!-- Useful when spawning servers on junit rules -->
-                    <forkCount>1</forkCount>
-                    <reuseForks>false</reuseForks>
-                    <!-- === -->
-                    <includes>
-                        <include>**/*Spec.java</include>
-                        <include>**/*Test*.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
+  <build>
+    <plugins>
 
-            <!-- compiler plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <compilerArgument>-Xlint:unchecked</compilerArgument>
-                </configuration>
-            </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.1</version>
+        <executions>
+          <execution>
+            <id>default-deploy</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>validate</id>
-                        <phase>validate</phase>
-                        <configuration>
-                            <configLocation>checkstyle.xml</configLocation>
-                            <encoding>UTF-8</encoding>
-                            <consoleOutput>true</consoleOutput>
-                            <failsOnError>true</failsOnError>
-                        </configuration>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+      <!-- tester plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit47</artifactId>
+            <version>2.20</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <!-- This conf avoid parallel execution on different JVM -->
+          <!-- Useful when spawning servers on junit rules -->
+          <forkCount>1</forkCount>
+          <reuseForks>false</reuseForks>
+          <!-- === -->
+          <includes>
+            <include>**/*Spec.java</include>
+            <include>**/*Test*.java</include>
+          </includes>
+        </configuration>
+      </plugin>
 
-            <!-- create an appropriate javadoc -->
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <javadocDirectory>${main.basedir}/src/javadoc</javadocDirectory>
-                    <docfilessubdirs>true</docfilessubdirs>
-                    <aggregate>true</aggregate>
-                    <show>private</show>
-                    <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
-                    <docletArtifact>
-                        <groupId>org.umlgraph</groupId>
-                        <artifactId>umlgraph</artifactId>
-                        <version>5.6.6</version>
-                    </docletArtifact>
-                    <additionalparam>
-                        -inferrel
-                        -attributes
-                        -types
-                        -visibility
-                        -quiet
-                        -hide java.*
-                        -collpackages java.util.*
-                        -qualify
-                        -postfixpackage
-                        -bgcolor white
-                        -edgecolor "#4D7A97"
-                        -edgefontname "Arial"
-                        -edgefontcolor "#4D7A97"
-                        -edgefontsize 9
+      <!-- compiler plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <compilerArgument>-Xlint:unchecked</compilerArgument>
+        </configuration>
+      </plugin>
 
-                        -nodefillcolor white
-                        -nodefontname "Arial"
-                        -nodefontcolor "#2e2e2e"
-                        -nodefontsize 9
-                        -nodefontclasssize 10
-                        -nodefontpackagesize 8
-                        -nodefontpackagename "Arial"
-                        -nodefonttagsize 8
-                    </additionalparam>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.8</version>
-                <executions>
-                    <execution>
-                        <id>unpack-doc-resources</id>
-                        <goals>
-                            <goal>unpack-dependencies</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <includeGroupIds>io.spring.docresources</includeGroupIds>
-                            <includeArtifactIds>spring-doc-resources</includeArtifactIds>
-                            <includeTypes>zip</includeTypes>
-                            <excludeTransitive>true</excludeTransitive>
-                            <outputDirectory>${project.build.directory}/generated-docs/</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    <dependencies>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <configuration>
+              <configLocation>checkstyle.xml</configLocation>
+              <encoding>UTF-8</encoding>
+              <consoleOutput>true</consoleOutput>
+              <failsOnError>true</failsOnError>
+            </configuration>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-        <!-- CISE dependencies -->
-        <dependency>
-            <artifactId>cise-data-model</artifactId>
-            <groupId>eu.europa.ec.jrc.marex</groupId>
-            <version>1.5.3.12</version>
-        </dependency>
+      <!-- create an appropriate javadoc -->
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <additionalparam>-Xdoclint:none</additionalparam>
+          <javadocDirectory>${main.basedir}/src/javadoc</javadocDirectory>
+          <docfilessubdirs>true</docfilessubdirs>
+          <aggregate>true</aggregate>
+          <show>private</show>
+          <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+          <docletArtifact>
+            <groupId>org.umlgraph</groupId>
+            <artifactId>umlgraph</artifactId>
+            <version>5.6.6</version>
+          </docletArtifact>
+          <additionalparam>
+            -inferrel
+            -attributes
+            -types
+            -visibility
+            -quiet
+            -hide java.*
+            -collpackages java.util.*
+            -qualify
+            -postfixpackage
+            -bgcolor white
+            -edgecolor "#4D7A97"
+            -edgefontname "Arial"
+            -edgefontcolor "#4D7A97"
+            -edgefontsize 9
 
-        <dependency>
-            <artifactId>eucise-model-helpers</artifactId>
-            <groupId>eu.europa.ec.jrc.marex</groupId>
-            <version>1.0.9</version>
-        </dependency>
+            -nodefillcolor white
+            -nodefontname "Arial"
+            -nodefontcolor "#2e2e2e"
+            -nodefontsize 9
+            -nodefontclasssize 10
+            -nodefontpackagesize 8
+            -nodefontpackagename "Arial"
+            -nodefonttagsize 8
+          </additionalparam>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.8</version>
+        <executions>
+          <execution>
+            <id>unpack-doc-resources</id>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <includeGroupIds>io.spring.docresources</includeGroupIds>
+              <includeArtifactIds>spring-doc-resources</includeArtifactIds>
+              <includeTypes>zip</includeTypes>
+              <excludeTransitive>true</excludeTransitive>
+              <outputDirectory>${project.build.directory}/generated-docs/</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
 
-        <dependency>
-            <artifactId>eucise-service-model</artifactId>
-            <groupId>eu.europa.ec.jrc.marex</groupId>
-            <version>1.0.7</version>
-        </dependency>
+    <!-- CISE dependencies -->
 
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>2.19</version>
-        </dependency>
-
-        <!--    <dependency>-->
-        <!--      <groupId>org.apache.cxf.services</groupId>-->
-        <!--      <artifactId>cxf-services</artifactId>-->
-        <!--      <version>3.2.9</version>-->
-        <!--      <type>pom</type>-->
-        <!--    </dependency>-->
-
-        <dependency>
-            <groupId>com.sun.xml.ws</groupId>
-            <artifactId>jaxws-rt</artifactId>
-            <version>2.3.2</version>
-            <type>pom</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jul-to-slf4j</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-simple</artifactId>
-            <version>3.2.9</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tomakehurst</groupId>
-            <artifactId>wiremock-jre8-standalone</artifactId>
-            <version>2.24.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.baev</groupId>
-            <artifactId>jaxb-utils</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <artifactId>junit</artifactId>
-            <groupId>junit</groupId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>3.0.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.13.2</version>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <artifactId>cise-dispatcher-api</artifactId>
+      <groupId>eu.europa.ec.jrc.marex</groupId>
+      <version>1.1-SNAPSHOT</version>
+    </dependency>
 
 
-    </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
+    <dependency>
+      <artifactId>eucise-model-helpers</artifactId>
+      <groupId>eu.europa.ec.jrc.marex</groupId>
+      <version>1.0.9</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>eucise-service-model</artifactId>
+      <groupId>eu.europa.ec.jrc.marex</groupId>
+      <version>1.0.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>2.19</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.xml.ws</groupId>
+      <artifactId>jaxws-rt</artifactId>
+      <version>2.3.2</version>
+      <type>pom</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-simple</artifactId>
+      <version>3.2.9</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.tomakehurst</groupId>
+      <artifactId>wiremock-jre8-standalone</artifactId>
+      <version>2.24.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.baev</groupId>
+      <artifactId>jaxb-utils</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>junit</artifactId>
+      <groupId>junit</groupId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>3.0.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <distributionManagement>
+    <repository>
+      <id>digit releases</id>
+      <name>DG DIGIT Repository</name>
+      <url>https://webgate.ec.europa.eu/CITnet/nexus/content/repositories/jrc
+      </url>
+    </repository>
+    <snapshotRepository>
+      <id>digit snapshots</id>
+      <name>DG DIGIT Snapshot Repository</name>
+      <url>
+        https://webgate.ec.europa.eu/CITnet/nexus/content/repositories/jrc-snapshots
+      </url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+  </properties>
 
 </project>
