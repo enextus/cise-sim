@@ -19,8 +19,6 @@ import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-import javax.xml.ws.Endpoint;
-
 public class EmulatorApp extends Application<EmulatorConf> {
 
     // JAX-WS Bundle
@@ -39,8 +37,10 @@ public class EmulatorApp extends Application<EmulatorConf> {
     public void initialize(final Bootstrap<EmulatorConf> bootstrap) {
         bootstrap.addBundle(JAXWS_BUNDLE);
         bootstrap.addBundle(
-                new ConfiguredAssetsBundle("/assets/", "/",
-                        "index.html")); // imply redirect from root ?
+            new ConfiguredAssetsBundle(
+                "/assets/",
+                "/",
+                "index.html")); // imply redirect from root ?
     }
 
     @Override
@@ -49,16 +49,15 @@ public class EmulatorApp extends Application<EmulatorConf> {
 
         environment.jersey().setUrlPattern("/api");
 
-
         AppContext appCtx = new DefaultAppContext();
         XmlMapper xmlMapper = appCtx.getXmlMapper();
         MessageStorage messageStorage = appCtx.makeMessageStorage();
         MessageAPI messageAPI = new DefaultMessageAPI(
-                appCtx.makeMessageProcessor(),
-                messageStorage,
-                appCtx.makeTemplateLoader(),
-                xmlMapper,
-                appCtx.getPrettyNotValidatingXmlMapper());
+            appCtx.makeMessageProcessor(),
+            messageStorage,
+            appCtx.makeTemplateLoader(),
+            xmlMapper,
+            appCtx.getPrettyNotValidatingXmlMapper());
 
         environment.healthChecks().register("noop", new HealthCheck() {
             @Override
@@ -70,18 +69,19 @@ public class EmulatorApp extends Application<EmulatorConf> {
         environment.jersey().register(new UiServiceResource(appCtx.makeEmuConfig()));
         environment.jersey().register(new MessageResource(messageAPI, messageStorage));
         environment.jersey().register(
-                new TemplateResource(messageAPI,
-                        new TemplateAPI(
-                                appCtx.makeMessageProcessor(),
-                                appCtx.makeTemplateLoader(),
-                                xmlMapper, appCtx.getPrettyNotValidatingXmlMapper())));
+            new TemplateResource(messageAPI,
+                new TemplateAPI(
+                    appCtx.makeMessageProcessor(),
+                    appCtx.makeTemplateLoader(),
+                    xmlMapper, appCtx.getPrettyNotValidatingXmlMapper())));
 
+        CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(
+            messageAPI, appCtx.getPrettyNotValidatingXmlMapper());
 
-        CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(messageAPI, appCtx.getPrettyNotValidatingXmlMapper());
         // WSDL first service using server side JAX-WS handler and CXF logging interceptors
-        Endpoint e = JAXWS_BUNDLE.publishEndpoint(new EndpointBuilder("messages", ciseMessageServiceSoap));
-        environment.lifecycle().addServerLifecycleListener(server -> {
-            System.out.println("==============================================\n");
-        });
+        JAXWS_BUNDLE.publishEndpoint(new EndpointBuilder("messages", ciseMessageServiceSoap));
+
+        environment.lifecycle().addServerLifecycleListener(
+            server -> System.out.println("==============================================\n"));
     }
 }

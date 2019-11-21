@@ -42,31 +42,31 @@ class SendForm extends Component {
         return (
                 <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee">
                     <Paper  className={classes.root} >
-                    <Grid container alignItems="flex-start"  p="10px" mx="10px" >
+                    <Grid container alignItems="flex-start" spacing={3}>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <TemplateSelect store={this.getTemplateStore()}/>
                         </Grid>
 
-                        <Grid item xs={6} >
+                        <Grid item xs={6}>
                             <MessageIdField store={this.getTemplateStore()}/>
                         </Grid>
 
-                        <Grid item xs={6}  >
+                        <Grid item xs={6}>
                             <CorrelationIdField store={this.getTemplateStore()}/>
                         </Grid>
 
-                        <Grid item xs={6}  >
+                        <Grid item xs={6}>
                             <RequiresAckCheck store={this.getTemplateStore()}/>
                         </Grid>
 
-                        <Grid item>
-                            <PreviewButton store={this.getTemplateStore()}/>
+                        <Grid item xs={6}>
+                            <Grid container  alignItems="flex-start" justify="flex-end" direction="row">
+                                <PreviewButton store={this.getTemplateStore()}/>
+                                <SendButton store={this.getAllStores()}/>
+                            </Grid>
                         </Grid>
 
-                        <Grid item>
-                            <SendButton store={this.getAllStores()}/>
-                        </Grid>
                     </Grid>
                 </Paper>
                 </Box>

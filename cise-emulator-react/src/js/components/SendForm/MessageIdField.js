@@ -25,6 +25,7 @@ export default class MessageIdField extends React.Component {
                 required={true}
                 fullWidth={true}
                 color="primary"
+                variant="outlined"
                 value={this.props.store.messageId}
                 onChange={this.handleChange}
             />

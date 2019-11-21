@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {observer} from "mobx-react";
 import Tooltip from "@material-ui/core/Tooltip";
+import Switch from '@material-ui/core/Switch';
 
 @observer
 export default class RequiresAckCheck extends React.Component {
@@ -21,7 +22,7 @@ export default class RequiresAckCheck extends React.Component {
             <Tooltip title={"[Optional] Require asynchronous acknowledgement from destination node"} >
             <FormControlLabel
                 control={
-                    <Checkbox
+                    <Switch
                         id="asyncAcknowledge"
                         name="asyncAcknowledge"
                         onChange={this.handleChange}

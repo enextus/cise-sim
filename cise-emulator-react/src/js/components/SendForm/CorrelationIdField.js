@@ -24,6 +24,7 @@ export default class CorrelationIdField extends React.Component {
                     label="Correlation Id"
                     fullWidth={true}
                     color="primary"
+                    variant="outlined"
                     value={this.props.store.correlationId}
                     onChange={this.handleChange}
                 />
