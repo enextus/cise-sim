@@ -47,10 +47,9 @@ function enable_colors_if_supported {
 }
 
 function log_exit_msg {
-
-  E=${?}
+  E=${1:-$?}
 test ${E} -eq 0 && echo "${OK} ${SW_NAME} started at `date -Iseconds`" || \
-    echo "${KO} ${SW_NAME} not started"; exit ${E}
+    echo "${KO} ${SW_NAME} not started. Please, inspect the logs in ${GRE}logs/sim_stdout.log${NOR} to find the reason."; exit ${E}
 }
 
 function log_start_msg {
@@ -74,14 +73,16 @@ function setup_debug {
 
 function start {
 
-  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >${SW_HOME}/logs/sim_stdout.log 2>&1 &
-  pid=$!
-  sleep 1
-  kill -0 ${pid} >/dev/null 2>&1
-  echo ${pid} >${PID_FILE}
+  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
+  local PID=$!
+  sleep 3
+  kill -0 ${PID} 2> /dev/null 
+  local IT_EXISTS=$?
+  [ $IT_EXISTS -ne 0 ] && log_exit_msg 1   
 
-  echo "${GRE}tail -100f logs/sim_stdout.log${NOR} will check the server log files"
-  log_exit_msg
+  echo ${PID} >${PID_FILE}
+  echo "Logging in: ${GRE}logs/sim_stdout.log${NOR}"
+  log_exit_msg 0
 
 }
 
@@ -96,6 +97,24 @@ function sw_run_cmd() {
   fi
 
   SW_RUN_SWR_CMD="${JAVA_EXEC} ${JAVA_OPTS} -Dconf.dir=${SW_HOME}/conf/ -jar ${SW_HOME}/lib/cise-sim.jar server ${SW_HOME}/conf/config.yml"
+}
+
+function get_pid() {
+  local PID=$(cat ${PID_FILE} 2>/dev/null)
+  echo ${PID:-0}
+}
+
+function _status() {
+  PID=$(get_pid)
+  test $PID -eq 0 && \
+  echo "${KO} ${SW_NAME} is stopped (the tmp/sim.pid file is not present but the process could be still running)" || echo "${OK} ${SW_NAME} is running"
+}
+
+function _stop() {
+  PID=$(get_pid)
+  (test ${PID} -ne 0 && kill -15 "${PID}" 2>&1) > /dev/null && \
+	  (echo "${OK} ${SW_NAME} has been stopped" && rm -f "${PID_FILE}" ) \
+	  || echo "${KO} ${SW_NAME} was not running (or the tmp/sim.pid file is not present but the process could be still running)"
 }
 
 # MAIN ###
@@ -143,11 +162,7 @@ debug-run)
   exit 0
   ;;
 stop)
-  PIDS=$(ps aux | grep "sim.jar" | grep -v grep | awk '{ printf $2" " }')
-  (kill -15 "${PIDS}" 2>&1) > /dev/null && \
-    echo "${OK} ${SW_NAME} has been stopped" || echo "${KO} ${SW_NAME} was not running"
-
-  rm -f "${PID_FILE}"
+  _stop
   ;;
 restart)
   $0 stop
@@ -155,8 +170,7 @@ restart)
   $0 start
   ;;
 status)
-  test $(ps aux | grep "sim.jar" | grep -v grep | wc -l) -eq 0 && \
-  echo "${KO} ${SW_NAME} is stopped" || echo "${OK} ${SW_NAME} is running"
+  _status
   ;;
 *)
   print_help

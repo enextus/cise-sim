@@ -27,8 +27,6 @@ public class UiMessageResource {
     @Path("/latest")
     @DELETE
     public Response pullAndDelete() {
-        LOGGER.info("messagePull from UI");
-
         MessageApiDto lastStoredMessage = messageAPI.getLastStoredMessage();
 
         if (lastStoredMessage == null) {
