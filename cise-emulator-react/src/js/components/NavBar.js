@@ -13,15 +13,14 @@ const styles = theme => ({
   },
   participantId: {
     fontSize: '12pt',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    borderBottom: "1px solid white",
   },
-  participant: {
-    fontSize: '11px',
-    textTransform: 'capitalize',
-    backgroundColor: 'secondary',
-    color: 'white',
-    height: 25,
-    padding: '0 3px'
+  protocol: {
+    color: "#f7931e",
+    fontWeight: "bold",
+    fontSize: "9pt",
+    textAlign: "right",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -31,7 +30,21 @@ const styles = theme => ({
     fontWeight: "bold",
     flexGrow: 1,
   },
-  grow: {},
+  subAppNav: {
+    backgroundColor: "#6da0be",
+    paddingBottom: "8px",
+    paddingTop: "5px",
+    paddingRight: "24px",
+  },
+  nodeAddr: {
+    color: "black",
+    fontWeight: "600",
+    fontSize: "10pt",
+    textAlign: "right",
+  },
+  nodeAddrLabel: {
+    color: "white",
+  },
 });
 
 @observer
@@ -45,23 +58,29 @@ class NavBar extends Component {
     const {classes} = this.props;
     return (
         <AppBar position="fixed" className={classes.root}>
+
           <Toolbar>
             <DirectionsBoatIcon
                 fontSize="large"
                 edge="start"
                 className={classes.menuButton}/>
-            <Typography variant="h4" className={classes.title}>
-              CISE Sim
-            </Typography>
+            <Typography variant="h4" className={classes.title}>CISE Sim</Typography>
 
             <div>
-              <Typography className={classes.participantId}>{this.getServiceId()}</Typography>
-              <Button
-                  variant="contained"
-                  color="secondary"> {this.getServiceMode()}
-              </Button>
+              <Typography
+                  className={classes.participantId}>{this.getServiceId()}</Typography>
+              <Typography
+                  className={classes.protocol}>Protocol {this.getServiceMode()}</Typography>
             </div>
           </Toolbar>
+
+          <div className={classes.subAppNav}>
+            <Typography className={classes.nodeAddr}>
+              <span className={classes.nodeAddrLabel}>node address: </span>
+              {this.getServiceId()}
+            </Typography>
+          </div>
+
         </AppBar>
     );
   }
