@@ -11,6 +11,10 @@ const style = (theme) => ({
     root: {
         padding: theme.spacing(1),
     },
+    title: {
+        fontWeight: "600",
+        fontSize: "12pt",
+    },
 });
 
 @observer
@@ -35,7 +39,7 @@ class PushedMessage extends Component {
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="SentMessageContent"
                         id="SentMessage">
-                        <Typography variant="h6">Message Sent</Typography>
+                        <Typography className={classes.title}>Message Sent</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Tabs

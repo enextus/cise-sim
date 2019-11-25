@@ -15,6 +15,10 @@ const styles = (theme) => ({
   root: {
     padding: theme.spacing(1)
   },
+  title: {
+    fontWeight: "600",
+    fontSize: "12pt",
+  },
 });
 
 @observer
@@ -36,7 +40,7 @@ class PreviewMessage extends Component {
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="previewMessageContent"
                 id="previewMessage">
-              <Typography variant="h6">Message Preview</Typography>
+              <Typography className={classes.title}>Message Preview</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <XmlContent>

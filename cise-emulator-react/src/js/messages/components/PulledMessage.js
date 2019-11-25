@@ -21,6 +21,10 @@ const styles = (theme) => ({
   root: {
     padding: theme.spacing(1),
   },
+  title: {
+    fontWeight: "600",
+    fontSize: "12pt",
+  },
   hide: {
     visibility: 'hidden',
   }
@@ -93,7 +97,7 @@ class PulledMessage extends Component {
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="receiveMessageContent"
                 id="ReceivedMessage">
-              <Typography variant="h6">Message Received</Typography>
+              <Typography className={classes.title}>Message Received</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <Tabs

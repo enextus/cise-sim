@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {AppBar, Button, Toolbar, Typography} from "@material-ui/core";
 import {observer} from "mobx-react";
 import DirectionsBoatIcon from '@material-ui/icons/DirectionsBoat';
-import IconButton from "@material-ui/core/IconButton";
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
@@ -12,16 +11,12 @@ const styles = theme => ({
     justifyContent: 'center',
     flexWrap: 'wrap',
   },
-  participantChip: {
-    fontsize: '8px',
-    textTransform: 'capitalize',
-    backgroundColor: 'primary',
-    color: 'white',
-    height: 25,
-    padding: '0 3px'
+  participantId: {
+    fontSize: '12pt',
+    fontWeight: 'bold'
   },
   participant: {
-    fontsize: '11px',
+    fontSize: '11px',
     textTransform: 'capitalize',
     backgroundColor: 'secondary',
     color: 'white',
@@ -30,6 +25,7 @@ const styles = theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    fontsize: 32,
   },
   title: {
     fontWeight: "bold",
@@ -50,16 +46,16 @@ class NavBar extends Component {
     return (
         <AppBar position="fixed" className={classes.root}>
           <Toolbar>
-            <IconButton edge="start" className={classes.menuButton}
-                        color="inherit" aria-label="menu">
-              <DirectionsBoatIcon/>
-            </IconButton>
-
-            <Typography variant="h6" className={classes.title}>
+            <DirectionsBoatIcon
+                fontSize="large"
+                edge="start"
+                className={classes.menuButton}/>
+            <Typography variant="h4" className={classes.title}>
               CISE Sim
             </Typography>
-            <Typography variant="h6">{this.getServiceId()}</Typography>
-            <div><span> </span>
+
+            <div>
+              <Typography className={classes.participantId}>{this.getServiceId()}</Typography>
               <Button
                   variant="contained"
                   color="secondary"> {this.getServiceMode()}

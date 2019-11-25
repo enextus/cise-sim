@@ -3,12 +3,24 @@ import {render} from "react-dom";
 import MainApp from "./js/MainApp";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import {blue, pink} from "@material-ui/core/colors";
 import {CssBaseline} from "@material-ui/core";
-import { SnackbarProvider } from 'notistack';
-import Button from '@material-ui/core/Button';
+import {SnackbarProvider} from 'notistack';
 
 const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Open Sans',
+      // 'BlinkMacSystemFont',
+      // '"Segoe UI"',
+      // 'Roboto',
+      // '"Helvetica Neue"',
+      // 'Arial',
+      // 'sans-serif',
+      // '"Apple Color Emoji"',
+      // '"Segoe UI Emoji"',
+      // '"Segoe UI Symbol"',
+    ].join(','),
+  },
   palette: {
     primary: {main: '#0B6192'},
     secondary: {main: '#F1614A'},
@@ -23,7 +35,7 @@ const theme = createMuiTheme({
       root: {
         display: 'grow'
       }
-    }
+    },
   }
 });
 
@@ -38,7 +50,7 @@ render(
               vertical: 'bottom',
               horizontal: 'right',
             }}
-            hideIconVariant= {true}
+            hideIconVariant={true}
         >
           <MainApp/>
         </SnackbarProvider>

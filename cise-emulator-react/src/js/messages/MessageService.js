@@ -25,14 +25,12 @@ export async function sendMessage(templateId, messageId, correlationId, requires
 export async function pullMessage() {
     
     const pullMessageDeleteResponse = await http_delete("messages/latest");
-    console.log("pullMessageDeleteResponse: ", pullMessageDeleteResponse);
     if (!pullMessageDeleteResponse) return;
-    console.log("pullMessageDeleteResponse: ", pullMessageDeleteResponse);
 
     if (pullMessageDeleteResponse.errorCode) {
         console.log("pullMessagePostResponse returned with n error: ", pullMessageDeleteResponse);
         return pullMessageDeleteResponse;
     }
-    console.log("pullMessagePostResponse: ", pullMessageDeleteResponse);
+
     return new Message(pullMessageDeleteResponse);
 }
