@@ -92,6 +92,10 @@ function run() {
 
 function sw_run_cmd() {
 
+  if [ -z "$JAVA_EXEC" ]; then 
+     echo "${KO} ${SW_NAME} not started. The java executable is not in PATH."; exit ${E}
+  fi
+
   if [ "$JAVA_VERSION" == "1.9" ]; then
     JAVA_OPTS="${JAVA_OPTS} --add-modules java.xml.bind"
   fi
