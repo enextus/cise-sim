@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {AppBar, Button, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Toolbar, Typography} from "@material-ui/core";
 import {observer} from "mobx-react";
 import DirectionsBoatIcon from '@material-ui/icons/DirectionsBoat';
 import PropTypes from 'prop-types';
@@ -14,12 +14,15 @@ const styles = theme => ({
   participantId: {
     fontSize: '12pt',
     fontWeight: 'bold',
-    borderBottom: "1px solid white",
+    borderBottom: "2px solid #f7931e",
+    // borderBottom: "2px solid " + theme.palette.secondary.main,
+    paddingBottom: "3px",
+    textAlign: "right",
   },
   protocol: {
     color: "#f7931e",
     fontWeight: "bold",
-    fontSize: "9pt",
+    fontSize: "10pt",
     textAlign: "right",
   },
   menuButton: {
@@ -37,12 +40,15 @@ const styles = theme => ({
     paddingRight: "24px",
   },
   nodeAddr: {
-    color: "black",
     fontWeight: "600",
     fontSize: "10pt",
     textAlign: "right",
   },
-  nodeAddrLabel: {
+  label: {
+    color: "#9bd1f1",
+    margin: "0 3px",
+  },
+  value: {
     color: "white",
   },
 });
@@ -58,7 +64,6 @@ class NavBar extends Component {
     const {classes} = this.props;
     return (
         <AppBar position="fixed" className={classes.root}>
-
           <Toolbar>
             <DirectionsBoatIcon
                 fontSize="large"
@@ -69,17 +74,14 @@ class NavBar extends Component {
             <div>
               <Typography
                   className={classes.participantId}>{this.getServiceId()}</Typography>
-              <Typography
-                  className={classes.protocol}>Protocol {this.getServiceMode()}</Typography>
+              <Typography className={classes.nodeAddr}>
+                <span className={classes.label}>Endpoint:</span>
+                <span className={classes.value}>{this.getServiceMode()}</span>
+                <span className={classes.label}>Endpoint URL:</span>
+                <span className={classes.value}>{this.getEndpointUrl()}</span>
+              </Typography>
             </div>
           </Toolbar>
-
-          <div className={classes.subAppNav}>
-            <Typography className={classes.nodeAddr}>
-              <span className={classes.nodeAddrLabel}>node address: </span>
-              {this.getServiceId()}
-            </Typography>
-          </div>
 
         </AppBar>
     );
@@ -90,6 +92,10 @@ class NavBar extends Component {
   }
 
   getServiceMode() {
+    return this.props.store.serviceStore.serviceSelf.serviceTransportMode;
+  }
+
+  getEndpointUrl() {
     return this.props.store.serviceStore.serviceSelf.serviceTransportMode;
   }
 }

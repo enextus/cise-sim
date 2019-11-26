@@ -10,14 +10,17 @@ import {withStyles} from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import XmlContent from "./common/XmlContent";
-
+import DesciptionIcon from "@material-ui/icons/Description"
 const styles = (theme) => ({
   root: {
     padding: theme.spacing(1)
   },
   title: {
-    fontWeight: "600",
     fontSize: "12pt",
+  },
+  icon: {
+    marginRight: "5px",
+    color: "#6da0b3",
   },
 });
 
@@ -40,7 +43,8 @@ class PreviewMessage extends Component {
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="previewMessageContent"
                 id="previewMessage">
-              <Typography className={classes.title}>Message Preview</Typography>
+              <DesciptionIcon className={classes.icon}/>
+              <Typography className={classes.title}>message <b>preview</b></Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <XmlContent>

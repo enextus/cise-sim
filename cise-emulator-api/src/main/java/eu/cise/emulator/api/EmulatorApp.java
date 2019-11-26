@@ -10,7 +10,7 @@ import eu.cise.emulator.api.helpers.CrossOriginSupport;
 import eu.cise.emulator.api.resources.MessageResource;
 import eu.cise.emulator.api.resources.TemplateResource;
 import eu.cise.emulator.api.resources.UiMessageResource;
-import eu.cise.emulator.api.resources.UiServiceResource;
+import eu.cise.emulator.api.resources.UIServiceResource;
 import eu.cise.emulator.api.soap.CISEMessageServiceSoapImplDefault;
 import eu.cise.emulator.io.MessageStorage;
 import eu.eucise.xml.XmlMapper;
@@ -66,7 +66,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
             }
         });
         environment.jersey().register(new UiMessageResource(messageAPI));
-        environment.jersey().register(new UiServiceResource(appCtx.makeEmuConfig()));
+        environment.jersey().register(new UIServiceResource(appCtx.makeEmuConfig()));
         environment.jersey().register(new MessageResource(messageAPI, messageStorage));
         environment.jersey().register(
             new TemplateResource(messageAPI,

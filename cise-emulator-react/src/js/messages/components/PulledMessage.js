@@ -16,14 +16,19 @@ import {withSnackbar} from 'notistack';
 import Error from '../../errors/Error';
 import XmlContent from "../../components/common/XmlContent";
 import TabPanel from "../../components/common/TabPanel";
+import EmailIcon from '@material-ui/icons/Email';
+
 
 const styles = (theme) => ({
   root: {
     padding: theme.spacing(1),
   },
   title: {
-    fontWeight: "600",
     fontSize: "12pt",
+  },
+  icon: {
+    marginRight: "5px",
+    color: "#f7931e",
   },
   hide: {
     visibility: 'hidden',
@@ -97,7 +102,9 @@ class PulledMessage extends Component {
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="receiveMessageContent"
                 id="ReceivedMessage">
-              <Typography className={classes.title}>Message Received</Typography>
+              <EmailIcon className={classes.icon}/>
+
+              <Typography className={classes.title}>message <b>received</b></Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <Tabs

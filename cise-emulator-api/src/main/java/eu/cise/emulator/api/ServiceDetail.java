@@ -1,4 +1,4 @@
-package eu.cise;
+package eu.cise.emulator.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -9,8 +9,8 @@ import eu.cise.servicemodel.v1.service.Service;
 @JsonInclude(Include.NON_NULL)
 public class ServiceDetail {
 
-    @JsonProperty("serviceSeaBassin")
-    private final String serviceSeaBassin;
+    @JsonProperty("serviceSeaBasin")
+    private final String serviceSeaBasin;
 
     @JsonProperty("serviceType")
     private final String serviceType;
@@ -30,12 +30,32 @@ public class ServiceDetail {
     @JsonProperty("serviceTransportMode")
     private final String serviceTransportMode;
 
+    @JsonProperty("endpointUrl")
+    private final String endpointUrl;
+
+    public ServiceDetail(Service service, DispatcherType transportMode, String endpointUrl) {
+        this.serviceID = service.getServiceID();
+        this.serviceType =
+            (service.getServiceType() != null) ? service.getServiceType().value() : null;
+        this.serviceOperation =
+            (service.getServiceOperation() != null) ? service.getServiceOperation().value() : null;
+        this.serviceRole =
+            (service.getServiceRole() != null) ? service.getServiceRole().value() : null;
+        this.serviceSeaBasin =
+            (service.getSeaBasin() != null) ? service.getSeaBasin().value() : null;
+        this.serviceParticipantId =
+            (service.getParticipant() != null) ? service.getParticipant().getId() : null;
+        this.serviceTransportMode = (transportMode
+            .toString()); //!= transportMode.REST) ? "SOAP" : "REST"
+        this.endpointUrl = endpointUrl;
+    }
+
     public String getServiceParticipantId() {
         return serviceParticipantId;
     }
 
-    public String getServiceSeaBassin() {
-        return serviceSeaBassin;
+    public String getServiceSeaBasin() {
+        return serviceSeaBasin;
     }
 
     public String getServiceType() {
@@ -58,14 +78,7 @@ public class ServiceDetail {
         return serviceTransportMode;
     }
 
-    public ServiceDetail(Service service, DispatcherType transportMode) {
-        this.serviceID = service.getServiceID();
-        this.serviceType = (service.getServiceType() != null) ? service.getServiceType().value() : null;
-        this.serviceOperation = (service.getServiceOperation() != null) ? service.getServiceOperation().value() : null;
-        this.serviceRole = (service.getServiceRole() != null) ? service.getServiceRole().value() : null;
-        this.serviceSeaBassin = (service.getSeaBasin() != null) ? service.getSeaBasin().value() : null;
-        this.serviceParticipantId = (service.getParticipant() != null) ? service.getParticipant().getId() : null;
-        this.serviceTransportMode = (transportMode.toString()); //!= transportMode.REST) ? "SOAP" : "REST"
+    public String getEndpointUrl() {
+        return endpointUrl;
     }
-
 }
