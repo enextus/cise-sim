@@ -1,20 +1,12 @@
-
 export default class Service {
 
-    serviceParticipantId;
-    serviceTransportMode
+  serviceParticipantId;
+  serviceTransportMode
+  endpointUrl;
 
-    constructor(serviceParticipantId,serviceTransportMode) {
-        this.serviceParticipantId = serviceParticipantId;
-        this.serviceTransportMode = serviceTransportMode;
-    }
-
-    getParticipantId(){
-        return serviceParticipantId;
-    }
-
-    getTransportMode(){
-        return serviceTransportMode;
-    }
-
+  constructor(serviceParticipantId, serviceTransportMode, endpointUrl) {
+    this.serviceParticipantId = serviceParticipantId;
+    this.serviceTransportMode = serviceTransportMode;
+    this.endpointUrl = endpointUrl;
+  }
 }

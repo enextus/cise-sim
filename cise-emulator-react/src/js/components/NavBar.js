@@ -68,21 +68,26 @@ class NavBar extends Component {
             <DirectionsBoatIcon
                 fontSize="large"
                 edge="start"
-                className={classes.menuButton}/>
-            <Typography variant="h4" className={classes.title}>CISE Sim</Typography>
+                className={classes.menuButton} />
+
+            <Typography variant="h4" className={classes.title}>
+              CISE Sim
+            </Typography>
 
             <div>
-              <Typography
-                  className={classes.participantId}>{this.getServiceId()}</Typography>
+              <Typography className={classes.participantId}>
+                {this.getServiceId()}
+              </Typography>
+
               <Typography className={classes.nodeAddr}>
                 <span className={classes.label}>Endpoint:</span>
                 <span className={classes.value}>{this.getServiceMode()}</span>
                 <span className={classes.label}>Endpoint URL:</span>
                 <span className={classes.value}>{this.getEndpointUrl()}</span>
               </Typography>
+
             </div>
           </Toolbar>
-
         </AppBar>
     );
   }
@@ -96,8 +101,9 @@ class NavBar extends Component {
   }
 
   getEndpointUrl() {
-    return this.props.store.serviceStore.serviceSelf.serviceTransportMode;
+    return this.props.store.serviceStore.serviceSelf.endpointUrl;
   }
+
 }
 
 NavBar.propTypes = {
