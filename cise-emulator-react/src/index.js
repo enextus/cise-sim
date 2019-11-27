@@ -9,8 +9,8 @@ import {SnackbarProvider} from 'notistack';
 const theme = createMuiTheme({
   typography: {
     fontFamily: [
-      'Montserrat',
       'Open Sans',
+      'Montserrat',
       'BlinkMacSystemFont',
       '"Segoe UI"',
       'Roboto',

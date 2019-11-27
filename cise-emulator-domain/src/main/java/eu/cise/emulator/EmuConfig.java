@@ -13,11 +13,18 @@ import org.aeonbits.owner.Preprocessor;
         "classpath:sim.properties"})
 public interface EmuConfig extends Config {
 
-    @Key("service.participantid")
+    @Key("simulator.name")
     String participantId();
 
-    @Key("destination.endpoint-url")
+    @Key("destination.protocol")
+    @DefaultValue("REST")
+    DispatcherType dispatcherType();
+
+    @Key("destination.url")
     String endpointUrl();
+
+    @Key("templates.messages.directory")
+    String messageTemplateDir();
 
     @Key("signature.keystore.filename")
     String keyStoreFileName();
@@ -31,19 +38,12 @@ public interface EmuConfig extends Config {
     @Key("signature.privatekey.password")
     String privateKeyPassword();
 
-    @Key("template.messages.directory")
-    String messageTemplateDir();
+    @Key("app.version")
+    String version();
 
     @Key("validation.rule.date")
     @DefaultValue("false")
     boolean isDateValidationEnabled();
-
-    @Key("transport.mode")
-    @DefaultValue("REST")
-    DispatcherType dispatcherType();
-
-    @Key("version")
-    String version();
 
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {

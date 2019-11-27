@@ -76,7 +76,7 @@ class NavBar extends Component {
             <Typography variant="h4" className={classes.title}>
               CISE Sim
               <Typography variant="overline" display="inline" className={classes.appVersion} gutterBottom>
-                Ver: <b>{this.getAppVersion()}</b>
+                (<b>{this.getAppVersion()})</b>
               </Typography>
 
             </Typography>
@@ -87,9 +87,9 @@ class NavBar extends Component {
               </Typography>
 
               <Typography className={classes.nodeAddr}>
-                <span className={classes.label}>Endpoint:</span>
+                <span className={classes.label}>Protocol:</span>
                 <span className={classes.value}>{this.getServiceMode()}</span>
-                <span className={classes.label}>Endpoint URL:</span>
+                <span className={classes.label}>Destination URL:</span>
                 <span className={classes.value}>{this.getEndpointUrl()}</span>
               </Typography>
 
