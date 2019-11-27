@@ -51,6 +51,9 @@ const styles = theme => ({
   value: {
     color: "white",
   },
+  appVersion: {
+    margin: "0 5px",
+  },
 });
 
 @observer
@@ -72,11 +75,15 @@ class NavBar extends Component {
 
             <Typography variant="h4" className={classes.title}>
               CISE Sim
+              <Typography variant="overline" display="inline" className={classes.appVersion} gutterBottom>
+                Ver: <b>{this.getAppVersion()}</b>
+              </Typography>
+
             </Typography>
 
             <div>
               <Typography className={classes.participantId}>
-                {this.getServiceId()}
+                {this.getParticipantId()}
               </Typography>
 
               <Typography className={classes.nodeAddr}>
@@ -92,7 +99,7 @@ class NavBar extends Component {
     );
   }
 
-  getServiceId() {
+  getParticipantId() {
     return this.props.store.serviceStore.serviceSelf.serviceParticipantId;
   }
 
@@ -102,6 +109,10 @@ class NavBar extends Component {
 
   getEndpointUrl() {
     return this.props.store.serviceStore.serviceSelf.endpointUrl;
+  }
+
+  getAppVersion() {
+    return this.props.store.serviceStore.serviceSelf.appVersion;
   }
 
 }

@@ -9,16 +9,17 @@ import {SnackbarProvider} from 'notistack';
 const theme = createMuiTheme({
   typography: {
     fontFamily: [
+      'Montserrat',
       'Open Sans',
-      // 'BlinkMacSystemFont',
-      // '"Segoe UI"',
-      // 'Roboto',
-      // '"Helvetica Neue"',
-      // 'Arial',
-      // 'sans-serif',
-      // '"Apple Color Emoji"',
-      // '"Segoe UI Emoji"',
-      // '"Segoe UI Symbol"',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
     ].join(','),
   },
   palette: {
