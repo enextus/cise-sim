@@ -42,6 +42,9 @@ public interface EmuConfig extends Config {
     @DefaultValue("REST")
     DispatcherType dispatcherType();
 
+    @Key("version")
+    String version();
+
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {
             if (input.trim().toUpperCase().equals("TRUE")) {
