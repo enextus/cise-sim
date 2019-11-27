@@ -32,7 +32,9 @@ public class UIServiceResource {
         ServiceDetail serviceDetail = new ServiceDetail(
             service,
             emuConfig.dispatcherType(),
-            emuConfig.endpointUrl());
+            emuConfig.endpointUrl(),
+            emuConfig.version()
+        );
 
         return Response
                 .status(Response.Status.OK)

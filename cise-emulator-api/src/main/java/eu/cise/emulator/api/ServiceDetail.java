@@ -33,7 +33,13 @@ public class ServiceDetail {
     @JsonProperty("endpointUrl")
     private final String endpointUrl;
 
-    public ServiceDetail(Service service, DispatcherType transportMode, String endpointUrl) {
+    @JsonProperty("endpointUrl")
+    private String appVersion;
+
+    public ServiceDetail(Service service,
+        DispatcherType transportMode,
+        String endpointUrl,
+        String appVersion) {
         this.serviceID = service.getServiceID();
         this.serviceType =
             (service.getServiceType() != null) ? service.getServiceType().value() : null;
@@ -48,6 +54,7 @@ public class ServiceDetail {
         this.serviceTransportMode = (transportMode
             .toString()); //!= transportMode.REST) ? "SOAP" : "REST"
         this.endpointUrl = endpointUrl;
+        this.appVersion = appVersion;
     }
 
     public String getServiceParticipantId() {
@@ -80,5 +87,9 @@ public class ServiceDetail {
 
     public String getEndpointUrl() {
         return endpointUrl;
+    }
+
+    public String getAppVersion() {
+        return appVersion;
     }
 }

@@ -3,7 +3,12 @@ import {getServiceSelf} from "./ServiceService";
 import Service from "./Service";
 
 export default class ServiceStore {
-  serviceSelf = new Service("loading...", "loading...", "loading...");
+
+  serviceSelf = new Service(
+      "...",
+      "...",
+      "...",
+      "...");
 
   async loadServiceSelf() {
     const simInfo = await getServiceSelf();
@@ -14,7 +19,8 @@ export default class ServiceStore {
       this.serviceSelf = new Service(
           simInfo.serviceParticipantId,
           simInfo.serviceTransportMode,
-          simInfo.endpointUrl);
+          simInfo.endpointUrl,
+          simInfo.appVersion);
       console.log("getServiceSelf returned successfully.",
           this.serviceSelf.serviceParticipantId, " - with mode  - ",
           this.serviceSelf.serviceTransportMode);
