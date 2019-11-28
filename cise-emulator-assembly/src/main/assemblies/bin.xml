@@ -43,7 +43,7 @@
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>config.yml</include>
-                <include>keyStore.jks</include>
+                <include>cisesim-nodeex.jks</include>
             </includes>
         </fileSet>
         <fileSet>

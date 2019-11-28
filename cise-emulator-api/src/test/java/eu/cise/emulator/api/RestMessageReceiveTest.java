@@ -39,7 +39,6 @@ public class RestMessageReceiveTest extends AbstractTestBase {
 
     @Rule
     public WireMockRule mWireMockRule = new WireMockRule(HTTP_ENDPOINT_PORT);
-
     private EmuConfig emuConfig = new EmuConfig() {
         @Override
         public String simulatorName() {
@@ -53,22 +52,22 @@ public class RestMessageReceiveTest extends AbstractTestBase {
 
         @Override
         public String keyStoreFileName() {
-            return "keyStore.jks";
+            return "cisesim-nodeex.jks";
         }
 
         @Override
         public String keyStorePassword() {
-            return "password";
+            return "cisesim";
         }
 
         @Override
         public String privateKeyAlias() {
-            return "apache.nodecx.eucise.cx";
+            return "cisesim-nodeex.nodeex.eucise.ex";
         }
 
         @Override
         public String privateKeyPassword() {
-            return "password";
+            return "cisesim";
         }
 
         @Override
@@ -96,10 +95,10 @@ public class RestMessageReceiveTest extends AbstractTestBase {
 
     private SignatureService makeSignatureService(XmlMapper xmlMapper) {
         return newSignatureService(xmlMapper)
-            .withKeyStoreName("keyStore.jks")
-            .withKeyStorePassword("password")
-            .withPrivateKeyAlias("apache.nodecx.eucise.cx")
-            .withPrivateKeyPassword("password")
+            .withKeyStoreName("cisesim-nodeex.jks")
+            .withKeyStorePassword("cisesim")
+            .withPrivateKeyAlias("cisesim-nodeex.nodeex.eucise.ex")
+            .withPrivateKeyPassword("cisesim")
             .build();
     }
 

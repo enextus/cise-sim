@@ -50,10 +50,10 @@ public class RestDispatcherTest {
         URL systemResource = ClassLoader.getSystemResource("");
         System.setProperty("conf.dir", systemResource.getPath());
         return newSignatureService()
-                .withKeyStoreName("keyStore.jks")
-                .withKeyStorePassword("password")
-                .withPrivateKeyAlias("apache.nodecx.eucise.cx")
-                .withPrivateKeyPassword("password")
+                .withKeyStoreName("cisesim-nodeex.jks")
+                .withKeyStorePassword("cisesim")
+                .withPrivateKeyAlias("cisesim-nodeex.nodeex.eucise.ex")
+                .withPrivateKeyPassword("cisesim")
                 .build();
     }
 
