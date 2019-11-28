@@ -28,7 +28,6 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
-import java.net.URL;
 import javax.ws.rs.core.MediaType;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -43,12 +42,12 @@ public class RestMessageReceiveTest extends AbstractTestBase {
 
     private EmuConfig emuConfig = new EmuConfig() {
         @Override
-        public String participantId() {
+        public String simulatorName() {
             return "N/A";
         }
 
         @Override
-        public String endpointUrl() {
+        public String destinationUrl() {
             return "N/A";
         }
 
@@ -83,12 +82,12 @@ public class RestMessageReceiveTest extends AbstractTestBase {
         }
 
         @Override
-        public DispatcherType dispatcherType() {
+        public DispatcherType destinationProtocol() {
             return DispatcherType.REST;
         }
 
         @Override
-        public String version() {
+        public String appVersion() {
             return "1.0-TEST";
         }
     };
@@ -183,7 +182,7 @@ public class RestMessageReceiveTest extends AbstractTestBase {
     private Dispatcher makeDispatcher() {
         DispatcherFactory dispatcherFactory = new DispatcherFactory();
         return dispatcherFactory
-            .getDispatcher(this.emuConfig.dispatcherType(), this.xmlMapperNoValidPretty);
+            .getDispatcher(this.emuConfig.destinationProtocol(), this.xmlMapperNoValidPretty);
         //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
     }
 }

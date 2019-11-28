@@ -13,8 +13,6 @@ import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.signature.SignatureService;
-import eu.eucise.xml.DefaultXmlMapper;
-import eu.eucise.xml.XmlMapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +42,7 @@ public class EmulatorEngineTest {
                 .recipient(newService().id("recipient-id"))
                 .build();
 
-        when(config.endpointUrl()).thenReturn("endpointUrl");
+        when(config.destinationUrl()).thenReturn("endpointUrl");
     }
 
     @After
@@ -54,7 +52,7 @@ public class EmulatorEngineTest {
 
     @Test
     public void it_sends_message_successfully() {
-        when(dispatcher.send(message, config.endpointUrl())).thenReturn(
+        when(dispatcher.send(message, config.destinationUrl())).thenReturn(
                 new DispatchResult(true, Scenarios.getSyncAckMsgSuccess()));
 
         engine.send(message);
@@ -73,7 +71,7 @@ public class EmulatorEngineTest {
 
     @Test
     public void it_sends_a_message_getting_a_successful_response_and_returns_the_acknowledge() {
-        when(dispatcher.send(message, config.endpointUrl())).thenReturn(
+        when(dispatcher.send(message, config.destinationUrl())).thenReturn(
                 new DispatchResult(true, Scenarios.getSyncAckMsgSuccess()));
 
         assertThat(engine.send(message).getAckCode()).isEqualTo(SUCCESS);
@@ -81,7 +79,7 @@ public class EmulatorEngineTest {
 
     @Test
     public void it_sends_a_message_getting_an_unsuccessful_response() {
-        when(dispatcher.send(message, config.endpointUrl())).thenReturn(
+        when(dispatcher.send(message, config.destinationUrl())).thenReturn(
                 new DispatchResult(false, null));
 
         assertThatExceptionOfType(EndpointErrorEx.class)

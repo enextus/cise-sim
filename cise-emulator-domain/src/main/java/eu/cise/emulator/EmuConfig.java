@@ -14,14 +14,14 @@ import org.aeonbits.owner.Preprocessor;
 public interface EmuConfig extends Config {
 
     @Key("simulator.name")
-    String participantId();
+    String simulatorName();
 
     @Key("destination.protocol")
     @DefaultValue("REST")
-    DispatcherType dispatcherType();
+    DispatcherType destinationProtocol();
 
     @Key("destination.url")
-    String endpointUrl();
+    String destinationUrl();
 
     @Key("templates.messages.directory")
     String messageTemplateDir();
@@ -39,7 +39,7 @@ public interface EmuConfig extends Config {
     String privateKeyPassword();
 
     @Key("app.version")
-    String version();
+    String appVersion();
 
     @Key("validation.rule.date")
     @DefaultValue("false")

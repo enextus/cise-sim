@@ -87,7 +87,7 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     @Override
     public Acknowledgement send(Message message) {
         try {
-            DispatchResult sendResult = dispatcher.send(message, emuConfig.endpointUrl());
+            DispatchResult sendResult = dispatcher.send(message, emuConfig.destinationUrl());
 
             if (!sendResult.isOK()) {
                 throw new EndpointErrorEx();

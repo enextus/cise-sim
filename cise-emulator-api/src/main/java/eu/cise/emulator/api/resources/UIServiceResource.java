@@ -24,16 +24,16 @@ public class UIServiceResource {
     @Path("/self")
     public Response informSelfInfo() {
         Participant participant = new Participant();
-        participant.setId(emuConfig.participantId());
+        participant.setId(emuConfig.simulatorName());
 
         Service service = new Service();
         service.setParticipant(participant);
 
         ServiceDetail serviceDetail = new ServiceDetail(
             service,
-            emuConfig.dispatcherType(),
-            emuConfig.endpointUrl(),
-            emuConfig.version()
+            emuConfig.destinationProtocol(),
+            emuConfig.destinationUrl(),
+            emuConfig.appVersion()
         );
 
         return Response
