@@ -39,6 +39,21 @@
       <resource>
         <directory>${basedir}/src/main/resources</directory>
         <filtering>true</filtering>
+        <excludes>
+          <exclude>
+            **/*.jks
+          </exclude>
+        </excludes>
+      </resource>
+
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>
+            **/*.jks
+          </include>
+        </includes>
       </resource>
 
     </resources>

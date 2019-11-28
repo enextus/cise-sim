@@ -6,10 +6,6 @@
   <version>1.1-SNAPSHOT</version>
   <name>cise-dispatcher-api</name>
 
-  <build>
-    <plugins>
-    </plugins>
-  </build>
   <dependencies>
     <dependency>
       <groupId>eu.europa.ec.jrc.marex</groupId>
