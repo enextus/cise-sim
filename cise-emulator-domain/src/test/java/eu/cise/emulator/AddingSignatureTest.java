@@ -1,12 +1,5 @@
 package eu.cise.emulator;
 
-import static eu.eucise.helpers.PushBuilder.newPush;
-import static eu.eucise.helpers.ServiceBuilder.newService;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.servicemodel.v1.service.ServiceType;
@@ -14,6 +7,10 @@ import eu.cise.signature.SignatureService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static eu.eucise.helpers.PushBuilder.newPush;
+import static eu.eucise.helpers.ServiceBuilder.newService;
+import static org.mockito.Mockito.*;
 
 public class AddingSignatureTest {
 
@@ -48,8 +45,6 @@ public class AddingSignatureTest {
 
     @Test
     public void it_verify_the_signature() {
-        when(config.isDateValidationEnabled()).thenReturn(Boolean.FALSE);
-
         push.getSender().setServiceType(ServiceType.VESSEL_SERVICE);
 
         engine.receive(push);

@@ -1,7 +1,6 @@
 package eu.cise.emulator;
 
-import eu.cise.servicemodel.v1.service.ServiceOperationType;
-import eu.cise.servicemodel.v1.service.ServiceType;
+import eu.cise.dispatcher.DispatcherType;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Preprocessor;
@@ -10,36 +9,37 @@ import org.aeonbits.owner.Preprocessor;
  * This file is containing the emulator application configuration
  */
 @Config.PreprocessorClasses({EmuConfig.TrimAndInsureBoolean.class})
-@Sources({"file:${conf.dir}emulator.properties",
-        "classpath:emulator.properties"})
+@Sources({"file:${conf.dir}sim.properties",
+        "classpath:sim.properties"})
 public interface EmuConfig extends Config {
 
-    @Key("sender.service-id")
-    String serviceId();
+    @Key("simulator.name")
+    String simulatorName();
 
-    @Key("sender.service-type")
-    ServiceType serviceType();
+    @Key("destination.protocol")
+    @DefaultValue("REST")
+    DispatcherType destinationProtocol();
 
-    @Key("sender.service-operation")
-    ServiceOperationType serviceOperation();
+    @Key("destination.url")
+    String destinationUrl();
 
-    @Key("destination.endpoint-url")
-    String endpointUrl();
+    @Key("templates.messages.directory")
+    String messageTemplateDir();
 
-    @Key("signature.keyStoreFileName")
+    @Key("signature.keystore.filename")
     String keyStoreFileName();
 
-    @Key("signature.keyStorePassword")
+    @Key("signature.keystore.password")
     String keyStorePassword();
 
-    @Key("signature.privateKeyAlias")
+    @Key("signature.privatekey.alias")
     String privateKeyAlias();
 
-    @Key("signature.privateKeyPassword")
+    @Key("signature.privatekey.password")
     String privateKeyPassword();
 
-    @Key("template.messages.directory")
-    String messageTemplateDir();
+    @Key("app.version")
+    String appVersion();
 
     @Key("validation.rule.date")
     @DefaultValue("false")

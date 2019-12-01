@@ -33,15 +33,16 @@ node_modules
 /cise-mvn-repo/snapshots/
 /cise-mvn-repo/releases/
 /cise-mvn-repo/snapshots/**
-/cise-emulator-app/java-templates/**
 **/target/**
 target/**
 
 
-/cise-emulator-react/build/
 generated-sources
 tmp/**
 
 cise-emulator-io/cise-mvn-repo/
 cise-emulator-transport/cise-mvn-repo/
 npm-debug.log
+
+bundle.js
+cise-emulator-api/java-templates

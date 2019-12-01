@@ -1,7 +1,6 @@
 package eu.cise.dispatcher;
 
 import eu.cise.servicemodel.v1.message.Message;
-import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 
 /**
@@ -12,14 +11,19 @@ import eu.eucise.xml.XmlMapper;
 public class RestDispatcher implements Dispatcher {
 
     private final RestClient client;
+    /**
+        NOTE: This mapper must be not validating
+     */
     private final XmlMapper xmlMapper;
 
     /**
      * This constructor is called by the class for name
+     *
+     * @param prettyNotValidatingXmlMapper
      */
     @SuppressWarnings("unused")
-    public RestDispatcher() {
-        this(new JerseyRestClient(), new DefaultXmlMapper.NotValidating());
+    public RestDispatcher(XmlMapper prettyNotValidatingXmlMapper) {
+        this(new JerseyRestClient(), prettyNotValidatingXmlMapper);
     }
 
     public RestDispatcher(RestClient client, XmlMapper xmlMapper) {
@@ -37,10 +41,10 @@ public class RestDispatcher implements Dispatcher {
     @Override
     public DispatchResult send(Message message, String address) {
         String payload = xmlMapper.toXML(message);
-
+        System.out.println("----------------------------\n" + payload + "\n----------------------------");
         RestResult result = client.post(address, payload);
 
-        return new DispatchResult(result.isOK(), result.getBody());
+        return new DispatchResult(result.isOK(), xmlMapper.fromXML(result.getBody()));
     }
 
 }

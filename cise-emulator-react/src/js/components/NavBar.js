@@ -1,76 +1,124 @@
 import React, {Component} from "react";
-import {AppBar, Button, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Toolbar, Typography} from "@material-ui/core";
 import {observer} from "mobx-react";
 import DirectionsBoatIcon from '@material-ui/icons/DirectionsBoat';
-import Chip from "@material-ui/core/Chip";
-import Avatar from "@material-ui/core/Avatar";
-import withStyles from "@material-ui/core/styles/withStyles";
-import PropTypes from "prop-types";
-import IconButton from "@material-ui/core/IconButton";
+import PropTypes from 'prop-types';
+import {withStyles} from '@material-ui/core/styles';
 
 const styles = theme => ({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-    },
-    chip: {
-        marginRight: theme.spacing(2),
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-        fontWeight: "bold",
-    },
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+  participantId: {
+    fontSize: '12pt',
+    fontWeight: 'bold',
+    borderBottom: "2px solid #f7931e",
+    // borderBottom: "2px solid " + theme.palette.secondary.main,
+    paddingBottom: "3px",
+    textAlign: "right",
+  },
+  protocol: {
+    color: "#f7931e",
+    fontWeight: "bold",
+    fontSize: "10pt",
+    textAlign: "right",
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    fontsize: 32,
+  },
+  title: {
+    fontWeight: "bold",
+    flexGrow: 1,
+  },
+  subAppNav: {
+    backgroundColor: "#6da0be",
+    paddingBottom: "8px",
+    paddingTop: "5px",
+    paddingRight: "24px",
+  },
+  nodeAddr: {
+    fontWeight: "600",
+    fontSize: "10pt",
+    textAlign: "right",
+  },
+  label: {
+    color: "#9bd1f1",
+    margin: "0 3px",
+  },
+  value: {
+    color: "white",
+  },
+  appVersion: {
+    margin: "0 5px",
+  },
 });
 
 @observer
 class NavBar extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        const {classes} = this.props;
-        return (
-            <AppBar position="static" className={classes.root}>
-                <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <DirectionsBoatIcon/>
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}> CISE Emu </Typography>
-                    <div>
-                        <Chip
-                            avatar={<Avatar>ID</Avatar>}
-                            label={this.getServiceId()}
-                            className={classes.chip}
-                            color="secondary"
-                        />
-                        <Button
-                            variant="contained"
-                            // disabled={!this.isConnected()}
-                            color="secondary"> REST
-                        </Button>
-                    </div>
-                </Toolbar>
-            </AppBar>
-        );
-    }
+  render() {
+    const {classes} = this.props;
+    return (
+        <AppBar position="fixed" className={classes.root}>
+          <Toolbar>
+            <DirectionsBoatIcon
+                fontSize="large"
+                edge="start"
+                className={classes.menuButton} />
 
-    getServiceId() {
-        return this.props.store.appStore.memberId;
-    }
+            <Typography variant="h4" className={classes.title}>
+              CISE Sim
+              <Typography variant="overline" display="inline" className={classes.appVersion} gutterBottom>
+                (<b>{this.getAppVersion()})</b>
+              </Typography>
 
-    isConnected() {
-        return this.props.store.appStore.connected;
-    }
+            </Typography>
+
+            <div>
+              <Typography className={classes.participantId}>
+                {this.getParticipantId()}
+              </Typography>
+
+              <Typography className={classes.nodeAddr}>
+                <span className={classes.label}>Protocol:</span>
+                <span className={classes.value}>{this.getServiceMode()}</span>
+                <span className={classes.label}>Destination URL:</span>
+                <span className={classes.value}>{this.getEndpointUrl()}</span>
+              </Typography>
+
+            </div>
+          </Toolbar>
+        </AppBar>
+    );
+  }
+
+  getParticipantId() {
+    return this.props.store.serviceStore.serviceSelf.serviceParticipantId;
+  }
+
+  getServiceMode() {
+    return this.props.store.serviceStore.serviceSelf.serviceTransportMode;
+  }
+
+  getEndpointUrl() {
+    return this.props.store.serviceStore.serviceSelf.endpointUrl;
+  }
+
+  getAppVersion() {
+    return this.props.store.serviceStore.serviceSelf.appVersion;
+  }
+
 }
 
 NavBar.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(NavBar)

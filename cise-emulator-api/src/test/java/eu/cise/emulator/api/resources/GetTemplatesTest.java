@@ -48,14 +48,14 @@ public class GetTemplatesTest {
 
     @Test
     public void it_checks_the_route_to_get_templates_exists() {
-        Response response = resources.target("/api/ui/templates").request().get();
+        Response response = resources.target("/ui/templates").request().get();
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void it_returns_a_template_list_for_templateListResponse_is_ok() {
-        Response response = resources.target("/api/ui/templates").request().get();
+        Response response = resources.target("/ui/templates").request().get();
 
         List<Template> actualTemplateList = response.readEntity(genericTemplateList());
 
@@ -66,7 +66,7 @@ public class GetTemplatesTest {
     public void it_returns_an_api_for_templateListResponse_is_ko() {
         when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse.KO("exception"));
 
-        Response response = resources.target("/api/ui/templates").request().get();
+        Response response = resources.target("/ui/templates").request().get();
 
         APIError actualApiError = response.readEntity(APIError.class);
 
@@ -79,7 +79,7 @@ public class GetTemplatesTest {
     public void it_checks_HTTP_code_to_server_error_when_templateListResponse_is_ko() {
         when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse.KO("exception"));
 
-        Response response = resources.target("/api/ui/templates").request().get();
+        Response response = resources.target("/ui/templates").request().get();
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
     }

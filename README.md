@@ -1,94 +1,282 @@
-# CISE emu
+# CISE Sim
 
-The CISE Emulator is an application to receive and send tracks messages, conform to the CISE Protocol. 
+**CISE Sim** is an application capable to send and receive messages conform to the CISE Protocol.
+CISE Sim is able to simulate the behavior both of a CISE Node and of a CISE Adaptor. It is able to:
+- send CISE messages using a template as a base xml message and automatically creating XML fields like messageId, correlationId, creation date and signature needed for the message to be accepted by the receiving endpoint. 
+- receive messages answering with synchronous acknowledgements. The CISE sync ack are supporting the success case and a subset of the errors that can be reported by a CISE node (i.e. access right matrix errors are not supported)  
 
 ## Requirements
-
-The application should preferably installed on a linux machine.
-Theoretically should work also in any Operative System supporting Java and having a bash shell support but it has only been tested in a GNU/Linux server.
-
-The server should be installed with:
-
+The application must be run on a GNU/Linux operative system and requires to have installed the following software:
 - Java 1.8
-- Maven 3.5+
-- npm / nodejs tool (see https://webgate.ec.europa.eu/CITnet/confluence/display/OCNET/Ubuntu+Workstations)
 
-## Compilation
-
-Clone the git repository:
+## How to run CISE Sim
+CISE Sim is distributed in a tar.gz archive, therefore it needs to be unpacked in a folder by launching the following commands from the UNIX shell:
 
 ```bash
-...$ git clone https://webgate.ec.europa.eu/CITnet/stash/scm/marex/cise-emu.git
-```
-
-After cloning the git repository is possible to compile the project using maven.
-
-```bash
-...$ cd cise-emulator
-...$ mvn clean install
-```
-
-## Running the emulator
-
-When the compilation will be finished (with a BUILD SUCCESSFUL in the standard output) it will be created a distribution package that can be used to run the software.
-
-```bash
-...$ cd target
-...$ mv cise-emulator-bin.tar.gz /my/installation/path
+...$ mkdir -p /my/installation/path 
+...$ tar -xvzf cise-sim-*.tar.gz -C /my/installation/path --strip-components=1
 ...$ cd /my/installation/path
-...$ tar xvfz cise-emulator.tar.gz
-...$ cd cise-emulator-bin
 ```
-
-### Command Line Interface (CLI) Emulator
-Let's assume the repo base dire is called ``cise-emulator``, in the following chapters 
-
-#### CLI Server Emulator 
-
-To start the CLI server in order to receive messages: 
+After unpacking the archive, you can use a provided shell script (``sim``) to control the application. To see the help just launch the application without parameters:
  
 ```bash
-...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-cli.jar cliserver
+...$ cd /my/installation/path
+...$ ./sim
+Usage: sim COMMAND
+sim server lifecycle manager (starting, stopping, debugging).
+COMMAND
+    start       starts the simulator in a detached shell using nohup command.
+    run         starts the simulator in foreground.
+    stop        stops the simulator running in background.
+    restart     restart the simulator running in background.
+    debug-start starts the simulator in a detached shell launching the application
+                in debug mode (port 9999).
+    debug-run   starts the simulator in foreground launching the application
+                in debug mode (port 9999).
+    status      show the current status the simulator (started or stopped).
 ```
 
-#### CLI Client Emulator
-To launch a CLI client in order to send messages:
+To launch the application in foreground type:
 
 ```bash
-...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-cli.jar  sender -c ./cise-emulator-assembly/src/main/conf/cliconfig.yml -s ./cise-emulator-assembly/src/main/conf/xmlmessages/PushTemplate.xml
+...$ ./sim run
 ```
 
-### Web Application (WEB) Emulator
-
-To work properly the emulator needs to refer to an absolute path where to find the Java key store.
-Therefore you need to copy the jks file to local directory:
+You can also run the application in background  with the command:
 
 ```bash
-...$ mkdir  -p /opt/jboss/EuciseData/sim-egn/conf
-...$ cp ./cise-emulator-assembly/src/main/conf/keyStore.jks /opt/jboss/EuciseData/sim-egn/conf/apache-nodecx.jks
+...$ ./sim start
 ```
-The web application of the emulator is composed by two different parts: the API server and the react front end interface. 
 
-#### WEB API server
-To start the web api server from the terminal:
+and then stop it:
+```bash
+...$ ./sim stop
+```
+
+The application sever will start showing a banner and some information in the log file which is located in the ``logs`` directory. 
+You can see the running logs by typing:
 
 ```bash
-...$ java -jar ./cise-emulator-app/target/cise-emulator-app-1.1-SNAPSHOT-web.jar  server ./cise-emulator-assembly/src/main/conf/config.yml &
+...$ tail -f logs/sim_stdout.log
 ```
 
-#### WEB: initialization of the nodejs server
-The nodejs server will server the HTML and javascript file during the development. 
-To initialize it: 
-
-```bash
-...$ cd cise-emulator-react/
-...$ npm install
-...$ npm run build --scripts-prepend-node-path=auto  
-```
-
-#### WEB start the development server  
-Launching this command will open the browser, fire up a nodejs and serve the HTML+JS files:
+**The CISE Sim web interface is now ready to be accessed by opening a browser to the address: http://localhost:8080/**.
  
-```bash
-...$ npm run start --scripts-prepend-node-path=auto  
+**The CISE Sim endpoint is ready to be contacted by a CISE Node or adaptor that can send messages to the following endpoint URLs:** 
+- ``http://<CISE sim ip address >:8080/api/messages`` for REST protocol
+- ``http://<CISE sim ip address >:8080/api/soap/messages`` for SOAP protocol
+
+## Configuration 
+Before connecting to a CISE node or adaptor, the application needs to be configured properly.
+
+The ``conf/`` directory contains two configuration files:
+
+- ``sim.properties``
+- ``config.yml``
+
+### sim.properties
+This file is the main configuration file that allow to configure the parameters related to the participant information, 
+the services and signature files.
+
+**NOTE**: The signature is a fundamental part of the communication in CISE. Therefore is important that, when the CISE Sim is 
+used to send message to the node, it uses a Java Key Store file (aFileEndingWith.jks) generated by the node administrator.
+To allow the CISE Sim to send message to the node, the node administrator needs to create a participant specifically for it. The node administrator should provide the java key store file with the private and public key of the CISE Sim providing also an alias to be set into the sim.properties file to the CISE Sim user in order to configure it. The keystore file should be substituted to the one present in the ``conf`` directory.   
+
+More specifically: 
+
+| Parameter|Description|
+|---|---|
+|service.participantid| is the participant id that must be configured into the node when accessing it and that must be referred by the public and private key generated by the node administrator to allow the CISE sim to access the node. In the case of an adaptor developer this configuration is not impacting the functioning of the CISE Sim.|
+|transport.mode| is the communication protocol used to send and receive messages, it must be one of the two values: SOAP or REST. Be aware to set the right ``destination.endpoint-url`` because it should be different from SOAP and REST.|
+|destination.endpoint-url|is the URL of the CISE Node or of the CISE Adaptor that will receive the messages sent by the CISE Sim.|
+|template.messages.directory|is a directory path relative to the directory where the CISE Sim is installed that specify where to find the templates that will be loaded in the dropdown field present in the web interface. *WARNING* at the moment the path is accepted only relatively to the sim directory in the future also absolute path will be supported.|
+|signature.keystore.filename|is the filename of the keystore contained in the ``conf/`` directory. 
+|signature.keystore.password|is the password to access the keystore.|
+|signature.privatekey.alias|is the alias that identify the _key pair_ in the keystore that will be used to sign the CISE message. Example: ``sim1-node01.node01.eucise.fr`` may find the key pair existing in the keystore associated to the sender id used to sign the cise message.|
+|signature.privatekey.password|is the password to access the key pair.|
+
+
+
+### config.yml
+The config.yml is a YAML file able to configure the application server used to run the CISE Sim application. Here you may find mainly the configuration of the port the CISE Sim will use to listen for incoming messages (**default is 8080**) and the logging configuration. 
+
+The listening port may be configured in the ``server.applicationConnectors.port`` configuration:
+```yaml
+server:
+  # Protocol and port of simulator web interface
+  applicationConnectors:
+    - type: http
+      port: 8080
+``` 
+
+while the logging information can be found mostly under the ``logging.loggers`` configuration:
+```yaml
+logging:
+  level: INFO
+  loggers:
+    "io.dropwizard.bundles.assets": INFO
+    "eu.cise.emulator.api": INFO
+    "org.eclipse.jetty.server.handler": WARN
+    "org.eclipse.jetty.setuid": WARN
+    "io.dropwizard.server.DefaultServerFactory": WARN
+    "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
 ```
+
+### References and examples
+
+#### sim.properties content
+```properties
+################################################################
+# CISE sim properties file
+#
+# Version 1.1-beta
+###############################################################
+
+# The participant ID of simulator instance
+service.participantid=cisesim1-nodecx.nodecx.eucise.cx
+
+# Communication protocol (SOAP/REST) to send and receive messages
+transport.mode=SOAP
+# The destination to which the simulator sends the messages
+destination.endpoint-url=http://your-endpoint.url.cise:8080/api/soap/messages
+
+# Directory relative to installation where the server looks for message templates
+template.messages.directory=templates/messages
+
+# Signature configuration
+signature.keystore.filename=keyStore.jks
+signature.keystore.password=password
+signature.privatekey.alias=apache.nodecx.eucise.cx
+signature.privatekey.password=password
+```
+
+#### config.yml content
+```yaml
+################################################################
+# CISE sim application configuration
+#
+# Version 1.1 Beta
+###############################################################
+
+# Web server configuration
+server:
+  # Protocol and port of simulator web interface
+  applicationConnectors:
+    - type: http
+      port: 8080
+  # Protocol and port of simulator web-application admin interface (metrics, Healthcheck ...)
+  adminConnectors:
+    - type: http
+      port: 8081
+# Simulator log configuration, if needed you can uncomment the part below to enable logging to filesystem
+logging:
+  level: INFO
+  loggers:
+    "io.dropwizard.bundles.assets": INFO
+    "eu.cise.emulator.api": INFO
+    "org.eclipse.jetty.server.handler": WARN
+    "org.eclipse.jetty.setuid": WARN
+    "io.dropwizard.server.DefaultServerFactory": WARN
+    "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
+  appenders:
+    - type: console
+      threshold: ALL
+      queueSize: 512
+      discardingThreshold: 0
+      timeZone: UTC
+      target: stdout
+#    - type: file
+#      currentLogFilename: ./logs/sim.log
+#      archivedLogFilenamePattern: ./logs/sim-%d{yyyy-MM-dd}.log.gz
+#      archivedFileCount: 5
+#      timeZone: UTC
+
+# Web resources mappings: these parameters should not be changed!
+assets:
+  mappings:
+    /assets: /
+  overrides:
+    /base/: ${project.basedir}/cise-emulator-react
+    /base/static:  ${project.basedir}/cise-emulator-react/dist
+
+```
+
+### Console output eu.cise.dispatcher.example
+As a reference, when starting up the CISE Sim the output should be similar to the following one:
+```bash
+$ ./sim run                                                                                                                      [18:10:17] 
+CISE sim
+Java path:    /home/rossima/.jabba/jdk/amazon-corretto@1.8.222-10.1/bin/java
+Java version: "1.8.0_222"
+12:12:00.330 [main] DEBUG org.apache.cxf.common.logging.LogUtils - Using org.apache.cxf.common.logging.Slf4jLogger for logging.
+
+==============================================
+INFO  [2019-11-08 11:12:02,301] org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean: Creating Service {http://www.cise.eu/accesspoint/service/v1/}CISEMessageService from WSDL: META-INF/CISEMessageService.wsdl
+INFO  [2019-11-08 11:12:02,632] org.apache.cxf.endpoint.ServerImpl: Setting the server's publish address to be /messages
+INFO  [2019-11-08 11:12:02,642] io.dropwizard.server.ServerFactory: Starting EmulatorApp
+     _______________ ______   _____ ______  ___
+    / ____/  _/ ___// ____/  / ___//  _/  |/  /
+   / /    / / \__ \/ __/     \__ \ / // /|_/ /
+  / /____/ / ___/ / /___    ___/ // // /  / /
+  \____/___//____/_____/   /____/___/_/  /_/    CISE Sim (c) 2019
+
+INFO  [2019-11-08 11:12:02,690] org.eclipse.jetty.server.Server: jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_222-b10
+INFO  [2019-11-08 11:12:03,013] io.dropwizard.jersey.DropwizardResourceConfig: The following paths were found for the configured resources:
+
+    POST    /api/messages (eu.cise.emulator.api.resources.MessageResource)
+    DELETE  /api/ui/messages/latest (eu.cise.emulator.api.resources.UiMessageResource)
+    GET     /api/ui/service/self (eu.cise.emulator.api.resources.UiServiceResource)
+    GET     /api/ui/templates (eu.cise.emulator.api.resources.TemplateResource)
+    GET     /api/ui/templates/{templateId} (eu.cise.emulator.api.resources.TemplateResource)
+    POST    /api/ui/templates/{templateId} (eu.cise.emulator.api.resources.TemplateResource)
+
+INFO  [2019-11-08 11:12:03,022] io.dropwizard.setup.AdminEnvironment: tasks = 
+
+    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
+    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
+
+INFO  [2019-11-08 11:12:03,033] org.eclipse.jetty.server.AbstractConnector: Started application@14af73e1{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+INFO  [2019-11-08 11:12:03,034] org.eclipse.jetty.server.AbstractConnector: Started admin@73da303e{HTTP/1.1,[http/1.1]}{0.0.0.0:8081}
+INFO  [2019-11-08 11:12:03,034] org.eclipse.jetty.server.Server: Started @2887ms
+==============================================
+
+INFO  [2019-11-08 11:12:03,034] com.roskart.dropwizard.jaxws.JAXWSEnvironment: JAX-WS service endpoints [/api/soap]:
+
+    /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
+``` 
+
+# How to build the CISE Sim
+To build the CISE Sim from the source code is required to install:
+- jdk 1.8 
+- nodejs 6.4.1+
+- npm 10.11.0+
+
+on your workstation.
+
+There are three steps to build the simulator:
+
+- install JavaScript dependencies
+- build with npm ReactJS frontend
+- build with maven the CISE Sim Java code
+
+# JavaScript install and build
+
+To install the JavaScript dependencies is just enough to launch an npm command to install 
+dependencies and to build an artifact of the front end: 
+
+```bash
+$ cd cise-emulator-react
+$ npm install
+$ npm run build --scripts-prepend-node-path=auto
+```
+
+# Java API server build
+
+As usual, it is possible to build the API server through maven build tool. 
+
+```bash
+$ cd <root-path-of-cise-sim-code>
+$ mvn clean install -U -P ciBuild
+```
+
+After the build succeeds, the final artifact can be found in `<root-path-of-cise-sim-code>/target` directory. 

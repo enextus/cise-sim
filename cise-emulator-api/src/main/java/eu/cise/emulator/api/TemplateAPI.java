@@ -13,15 +13,17 @@ public class TemplateAPI {
     private final MessageProcessor messageProcessor;
     private final TemplateLoader templateLoader;
     private final XmlMapper xmlMapper;
+    private final XmlMapper xmlMapperPrettyNotValidating;
 
     public TemplateAPI(
         MessageProcessor messageProcessor,
         TemplateLoader templateLoader,
-        XmlMapper xmlMapper) {
+        XmlMapper xmlMapper, XmlMapper xmlMapperPrettyNotValidating) {
 
         this.messageProcessor = messageProcessor;
         this.templateLoader = templateLoader;
         this.xmlMapper = xmlMapper;
+        this.xmlMapperPrettyNotValidating = xmlMapperPrettyNotValidating;
     }
 
     public PreviewResponse preview(TemplateParams templateParams) {
@@ -34,7 +36,7 @@ public class TemplateAPI {
                     templateParams.getSendParams());
 
             Template templateWithPreparedMessage = new Template(templateParams.getTemplateId(),
-                template.getTemplateName(), xmlMapper.toXML(preparedMessage));
+                template.getTemplateName(), xmlMapperPrettyNotValidating.toXML(preparedMessage));
 
             return new PreviewResponse.OK(templateWithPreparedMessage);
         } catch (Exception e) {

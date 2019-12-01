@@ -1,9 +1,8 @@
 import React, {Component} from "react";
-import {Grid} from "@material-ui/core";
+import {Grid, Paper, Box} from "@material-ui/core";
 import {observer} from "mobx-react";
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import Paper from "@material-ui/core/Paper";
 import MessageIdField from "./SendForm/MessageIdField";
 import CorrelationIdField from "./SendForm/CorrelationIdField";
 import TemplateSelect from "./SendForm/TemplateSelect";
@@ -41,33 +40,36 @@ class SendForm extends Component {
         const {classes} = this.props;
 
         return (
-            <Paper className={classes.root}>
-                <Grid container alignItems="flex-start" spacing={2}>
-                    <Grid item xs={6}>
-                        <MessageIdField store={this.getTemplateStore()}/>
-                    </Grid>
+                <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee">
+                    <Paper  className={classes.root} >
+                    <Grid container alignItems="flex-start" spacing={3}>
 
-                    <Grid item xs={6}>
-                        <CorrelationIdField store={this.getTemplateStore()}/>
-                    </Grid>
+                        <Grid item xs={12}>
+                            <TemplateSelect store={this.getTemplateStore()}/>
+                        </Grid>
 
-                    <Grid item xs={6}>
-                        <TemplateSelect store={this.getTemplateStore()}/>
-                    </Grid>
+                        <Grid item xs={6}>
+                            <MessageIdField store={this.getTemplateStore()}/>
+                        </Grid>
 
-                    <Grid item xs={12}>
-                        <RequiresAckCheck store={this.getTemplateStore()}/>
-                    </Grid>
+                        <Grid item xs={6}>
+                            <CorrelationIdField store={this.getTemplateStore()}/>
+                        </Grid>
 
-                    <Grid item>
-                        <PreviewButton store={this.getTemplateStore()}/>
-                    </Grid>
+                        <Grid item xs={6}>
+                            <RequiresAckCheck store={this.getTemplateStore()}/>
+                        </Grid>
 
-                    <Grid item>
-                        <SendButton store={this.getAllStores()}/>
+                        <Grid item xs={6}>
+                            <Grid container  alignItems="flex-start" justify="flex-end" direction="row">
+                                <PreviewButton store={this.getTemplateStore()}/>
+                                <SendButton store={this.getAllStores()}/>
+                            </Grid>
+                        </Grid>
+
                     </Grid>
-                </Grid>
-            </Paper>
+                </Paper>
+                </Box>
         );
     }
 }

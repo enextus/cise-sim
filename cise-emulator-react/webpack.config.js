@@ -6,43 +6,8 @@ module.exports = {
     context: path.join(__dirname, 'src'),
     devtool: debug ? 'inline-sourcemap' : null,
     entry: './index.js',
-    devServer: {
-        proxy: {
-            '/webapi': {
-                bypass: (req, res) => {
-                    if (req.url.indexOf('/api/ui/messages') !== -1) {
-                        console.log('.')
-                        res.send({
-                            'status': 200,
-                            'body': '<?xml version="1.0"?><!--{"id":"34840-34534-943443", "requireAck":false, "correlationId":"23434-3443-434"}--> <xsl:stylesheet xmlns:xsl="http://www.w3.org/TR/WD-xsl"><ExpansionPanelDetails><span className={classes.message}><Highlight></Highlight></span></xsl:stylesheet>',
-                            'acknowledge': '<?xml version="1.0"?><!--{"id":"34840-34534-943443", "requireAck":false, "correlationId":"23434-3443-434"}--> <xsl:stylesheet xmlns:xsl="http://www.w3.org/TR/WD-xsl"><ExpansionPanelDetails><span className={classes.acknowledgement}><Highlight></Highlight></span></xsl:stylesheet>'
-                        });
-                    }
-                    ''
-                    if (req.url.indexOf('/api/ui/templates/') !== -1) {
-                        console.log('bypass.0TemplateById.')
-                        res.status = 500
-                        res.send({
-                            'error': 'test error 500'
-                        });
-                    }
-                    if (req.url.indexOf('/api/ui/templates') !== -1) {
-                        console.log('bypass.0TemplateList.')
-                        res.send([
-                            "Pull_requestTemplate.xml",
-                            "Pull_responseTemplate.xml",
-                            "PushTemplate.xml",
-                            "PushTemplatefail.xml",
-                            "SubscribeTemplate.xml"
-                        ]);
-                    }
-
-                }
-            }
-        }
-    },
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, '../cise-emulator-api/src/main/resources/assets/static'),
         filename: 'bundle.js',
         publicPath: '/static/'
     },

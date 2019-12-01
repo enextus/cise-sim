@@ -90,7 +90,7 @@ public class FieldAdaptationTest {
                 .build();
 
         SendParam paramCorId = new SendParam(
-                false, "n/a", "new-correlation-id");
+                false, "messageId", "new-correlation-id");
 
         Push expected = engine.prepare(actual, paramCorId);
 
@@ -135,83 +135,7 @@ public class FieldAdaptationTest {
         assertThat(expected.getCreationDateTime()).isEqualTo(toXMLGregorianCalendar(dateFiveMay2019()));
     }
 
-    @Test
-    public void it_overrides_serviceId() {
-        when(config.serviceId()).thenReturn("new-service-id");
 
-        Push actual = newPush().sender(newService().id("to-be-overridden")).build();
-
-        Push expected = engine.prepare(actual, params());
-
-        assertThat(expected.getSender().getServiceID()).isEqualTo("new-service-id");
-    }
-
-
-    @Test
-    public void it_overrides_serviceType() {
-        when(config.serviceType()).thenReturn(DOCUMENT_SERVICE);
-
-        Push actual = newPush().sender(newService().type(CARGO_SERVICE)).build();
-
-        Push expected = engine.prepare(actual, params());
-
-        assertThat(expected.getSender().getServiceType()).isEqualTo(DOCUMENT_SERVICE);
-    }
-
-    @Test
-    public void it_overrides_serviceOperation() {
-        when(config.serviceOperation()).thenReturn(PUSH);
-
-        Push actual = newPush().sender(newService().operation(PULL)).build();
-
-        Push expected = engine.prepare(actual, params());
-
-        assertThat(expected.getSender().getServiceOperation()).isEqualTo(PUSH);
-    }
-
-    @Test
-    public void it_doesnt_override_serviceId_for_null_value_in_config() {
-        when(config.serviceId()).thenReturn(null);
-
-        Push actual = newPush().sender(newService().id("not-to-be-overridden")).build();
-
-        Push expected = engine.prepare(actual, params());
-
-        assertThat(expected.getSender().getServiceID()).isEqualTo("not-to-be-overridden");
-    }
-
-    @Test
-    public void it_doesnt_override_serviceId_for_empty_value_in_config() {
-        when(config.serviceId()).thenReturn("");
-
-        Push actual = newPush().sender(newService().id("not-to-be-overridden")).build();
-
-        Push expected = engine.prepare(actual, params());
-
-        assertThat(expected.getSender().getServiceID()).isEqualTo("not-to-be-overridden");
-    }
-
-    @Test
-    public void it_doesnt_override_serviceType_for_null_value_in_config() {
-        when(config.serviceType()).thenReturn(null);
-
-        Push actual = newPush().sender(newService().type(VESSEL_SERVICE)).build();
-
-        Push expected = engine.prepare(actual, params());
-
-        assertThat(expected.getSender().getServiceType()).isEqualTo(VESSEL_SERVICE);
-    }
-
-    @Test
-    public void it_doesnt_override_serviceOperation_for_null_value_in_config() {
-        when(config.serviceOperation()).thenReturn(null);
-
-        Push actual = newPush().sender(newService().operation(PUSH)).build();
-
-        Push expected = engine.prepare(actual, params());
-
-        assertThat(expected.getSender().getServiceOperation()).isEqualTo(PUSH);
-    }
 
     private SendParam params() {
         return new SendParam(false, "n/a", "n/a");

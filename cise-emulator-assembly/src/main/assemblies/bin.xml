@@ -22,7 +22,7 @@
             <directory>${project.parent.basedir}/cise-emulator-api/target</directory>
             <outputDirectory>/lib</outputDirectory>
             <includes>
-                <include>cise-emulator.jar</include>
+                <include>cise-sim.jar</include>
             </includes>
         </fileSet>
         <fileSet>
@@ -43,20 +43,14 @@
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>config.yml</include>
+                <include>cisesim-nodeex.jks</include>
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-emulator-app/src/test/resources</directory>
+            <directory>${project.parent.basedir}/cise-emulator-api/target/classes</directory>
             <outputDirectory>/conf</outputDirectory>
             <includes>
-                <include>*.jks</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>${project.parent.basedir}/cise-emulator-assembly/src/main/resources/conf/</directory>
-            <outputDirectory>/conf</outputDirectory>
-            <includes>
-                <include>*</include>
+                <include>sim.properties</include>
             </includes>
         </fileSet>
         <fileSet>
@@ -66,8 +60,6 @@
                 <include>*/**</include>
             </includes>
         </fileSet>
-
-
         <fileSet>
             <directory>.</directory>
             <outputDirectory>logs</outputDirectory>

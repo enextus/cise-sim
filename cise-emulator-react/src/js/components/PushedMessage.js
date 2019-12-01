@@ -6,10 +6,18 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import XmlContent from "./common/XmlContent";
 import TabPanel from "./common/TabPanel";
+import SendIcon from "@material-ui/icons/Send"
 
 const style = (theme) => ({
     root: {
         padding: theme.spacing(1),
+    },
+    title: {
+        fontSize: "12pt",
+    },
+    icon: {
+        marginRight: "5px",
+        color: theme.palette.secondary.main,
     },
 });
 
@@ -35,7 +43,8 @@ class PushedMessage extends Component {
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="SentMessageContent"
                         id="SentMessage">
-                        <Typography variant="h6">Message Sent</Typography>
+                        <SendIcon className={classes.icon} />
+                        <Typography className={classes.title}>message <b>sent</b></Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Tabs
@@ -49,7 +58,7 @@ class PushedMessage extends Component {
                                  id='simple-tab-2'
                                  aria-controls='simple-tabpanel-2'/>
                             <Tab value="two"
-                                 label="acknowledgement"
+                                 label="ack received"
                                  id='simple-tab-3'
                                  aria-controls='simple-tabpanel-3'/>
                         </Tabs>

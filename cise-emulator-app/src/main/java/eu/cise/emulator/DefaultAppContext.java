@@ -1,7 +1,7 @@
 package eu.cise.emulator;
 
 import eu.cise.dispatcher.Dispatcher;
-import eu.cise.dispatcher.RestDispatcher;
+import eu.cise.dispatcher.DispatcherFactory;
 import eu.cise.emulator.io.DefaultMessageStorage;
 import eu.cise.emulator.io.MessageStorage;
 import eu.cise.emulator.templates.DefaultTemplateLoader;
@@ -17,10 +17,13 @@ public class DefaultAppContext implements AppContext {
 
     private final EmuConfig emuConfig;
     private final XmlMapper xmlMapper;
+    private final XmlMapper prettyNotValidatingXmlMapper;
+
 
     public DefaultAppContext() {
         this.emuConfig = ConfigFactory.create(EmuConfig.class);
-        this.xmlMapper = new DefaultXmlMapper.Pretty();
+        this.xmlMapper = new DefaultXmlMapper.NotValidating();
+        this.prettyNotValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
     }
 
     @Override
@@ -34,12 +37,13 @@ public class DefaultAppContext implements AppContext {
 
     @Override
     public Dispatcher makeDispatcher() {
-        return new RestDispatcher();
+        DispatcherFactory dispatcherFactory = new DispatcherFactory();
+        return dispatcherFactory.getDispatcher(this.emuConfig.destinationProtocol(), this.xmlMapper); //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
     }
 
     @Override
     public SignatureService makeSignatureService() {
-        return newSignatureService()
+        return newSignatureService(this.xmlMapper) //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
                 .withKeyStoreName(this.emuConfig.keyStoreFileName())
                 .withKeyStorePassword(this.emuConfig.keyStorePassword())
                 .withPrivateKeyAlias(this.emuConfig.privateKeyAlias())
@@ -58,8 +62,13 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public XmlMapper makeXmlMapper() {
+    public XmlMapper getXmlMapper() {
         return xmlMapper;
+    }
+
+    @Override
+    public XmlMapper getPrettyNotValidatingXmlMapper() {
+        return prettyNotValidatingXmlMapper;
     }
 
     @Override

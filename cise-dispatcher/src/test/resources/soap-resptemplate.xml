@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/eu.cise.dispatcher.soap/envelope/">
+<S:Body>
+    <ns5:send xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/"
+              xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/"
+              xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/"
+              xmlns:ns5="http://www.cise.eu/accesspoint/service/v1/">
+        <message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:Push">
+            <CorrelationID>{{request.headers.CorrelationID}}</CorrelationID>
+            <CreationDateTime>{{request.headers.CreationDateTime}}</CreationDateTime>
+            <MessageID>{{request.headers.MessageID}}</MessageID>
+            <Priority>{{request.headers.Priority}}</Priority>
+            <RequiresAck>{{request.headers.RequiresAck}}</RequiresAck>
+            <Sender>
+                <ServiceID>{{request.headers.Recipient.ServiceID}}</ServiceID>
+                <ServiceOperation>{{request.headers.Recipient.ServiceOperation}}</ServiceOperation>
+                <Participant/>
+            </Sender>
+            <Recipient>
+                <ServiceID>{{request.headers.Sender.ServiceID}}</ServiceID>
+                <ServiceOperation>{{request.headers.Sender.ServiceOperation}}</ServiceOperation>
+                <ServiceType>{{request.headers.Sender.ServiceType}}</ServiceType>
+                <Participant/>
+            </Recipient>
+            <Payload xsi:type="ns4:XmlEntityPayload">
+                <InformationSensitivity>{{request.headers.InformationSensitivity}}</InformationSensitivity>
+                <IsPersonalData>{{request.headers.IsPersonalData}}</IsPersonalData>
+                <Purpose>{{request.headers.Purpose}}</Purpose>
+                <EnsureEncryption>{{request.headers.EnsureEncryption}}</EnsureEncryption>
+                <ns5:Vessel/>
+            </Payload>
+        </message>
+    </ns5:send>
+</S:Body>
+</S:Envelope>

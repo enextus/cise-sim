@@ -13,12 +13,12 @@ public class WebAPIMessageResourcePullTest {
 
     private static MessageAPI messageAPI;
 
-    private WebAPIMessageResource webAPIMessageResource;
+    private UiMessageResource webAPIMessageResource;
 
     @Before
     public void before() {
         messageAPI = mock(MessageAPI.class);
-        webAPIMessageResource = new WebAPIMessageResource(messageAPI);
+        webAPIMessageResource = new UiMessageResource(messageAPI);
     }
 
 

@@ -10,7 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-@Path("/api/cisemessages")
+@Path("/messages")
 public class MessageResource {
 
     public static final String ERROR = "ERROR";
@@ -27,6 +27,7 @@ public class MessageResource {
     @Consumes({"application/xml", "text/plain", "text/xml"})
     @Produces("application/xml")
     public Response receive(String inputXmlMessage) {
+
         Acknowledgement acknowledgement = messageAPI.receive(inputXmlMessage);
         return Response
                 .status(Response.Status.CREATED)

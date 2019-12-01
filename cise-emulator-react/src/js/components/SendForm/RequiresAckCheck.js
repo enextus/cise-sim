@@ -2,6 +2,8 @@ import {Checkbox, FormControlLabel} from "@material-ui/core";
 import React from "react";
 import PropTypes from "prop-types";
 import {observer} from "mobx-react";
+import Tooltip from "@material-ui/core/Tooltip";
+import Switch from '@material-ui/core/Switch';
 
 @observer
 export default class RequiresAckCheck extends React.Component {
@@ -17,9 +19,10 @@ export default class RequiresAckCheck extends React.Component {
 
     render() {
         return (
+            <Tooltip title={"[Optional] Require asynchronous acknowledgement from destination node"} >
             <FormControlLabel
                 control={
-                    <Checkbox
+                    <Switch
                         id="asyncAcknowledge"
                         name="asyncAcknowledge"
                         onChange={this.handleChange}
@@ -27,6 +30,7 @@ export default class RequiresAckCheck extends React.Component {
                         value={this.props.store.requiresAck}/>
                 }
                 label="Requires Async Ack"/>
+            </Tooltip>
         );
     }
 }

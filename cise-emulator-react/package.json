@@ -1,5 +1,5 @@
 {
-  "name": "cise-emu",
+  "name": "cise-sim",
   "version": "1.0.0",
   "scripts": {
     "start": "webpack-dev-server --content-base src --hot --open",
