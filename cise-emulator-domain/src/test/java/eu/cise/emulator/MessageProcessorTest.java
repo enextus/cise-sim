@@ -22,6 +22,7 @@ public class MessageProcessorTest {
     private EmuConfig config;
     private MessageProcessor messageProcessor;
     private EmulatorEngine engine;
+    private SendParam param;
 
     @Before
     public void before() {
@@ -29,12 +30,12 @@ public class MessageProcessorTest {
         config = mock(EmuConfig.class);
         engine = mock(EmulatorEngine.class);
         messageProcessor = new DefaultMessageProcessor(engine);
+        param = new SendParam(true, "messageId", "correlationId");
     }
 
     @Test
     public void it_creates_a_preview_message() {
         Message message = newPush().sender(newService().type(VESSEL_SERVICE)).build();
-        SendParam param = new SendParam(true, "messageId", "correlationId");
 
         when(engine.prepare(message, param)).thenReturn(message);
 
@@ -46,7 +47,6 @@ public class MessageProcessorTest {
     @Test
     public void it_calls_prepare_from_emulator_engine() {
         Message message = newPush().sender(newService().type(VESSEL_SERVICE)).build();
-        SendParam param = new SendParam(true, "messageId", "correlationId");
 
         messageProcessor.send(message, param);
 
@@ -56,7 +56,6 @@ public class MessageProcessorTest {
     @Test
     public void it_calls_send_from_emulator_engine() {
         Message message = newPush().sender(newService().type(VESSEL_SERVICE)).build();
-        SendParam param = new SendParam(true, "messageId", "correlationId");
         Message preparedMessage = newPush().sender(newService().type(VESSEL_SERVICE)).build();
         preparedMessage.setCorrelationID("new_correlation_id");
 
@@ -71,16 +70,15 @@ public class MessageProcessorTest {
     public void it_calls_send_with_success_and_returns_a_pair_containing_the_prepared_message_with_the_acknowledge() {
         Message message = newPush().sender(newService().type(VESSEL_SERVICE)).build();
         Push preparedMessage = mock(Push.class);
-        SendParam param = new SendParam(true, "messageId", "correlationId");
         Acknowledgement acknowledgement = newAck().build();
 
         when(engine.prepare(message, param)).thenReturn(preparedMessage);
         when(engine.send(preparedMessage)).thenReturn(acknowledgement);
 
-        Pair<Acknowledgement, Message> sendResposnse = messageProcessor.send(message, param);
+        Pair<Acknowledgement, Message> sendResponse = messageProcessor.send(message, param);
 
-        assertThat(sendResposnse.getA()).isNotNull();
-        assertThat(sendResposnse.getB()).isEqualTo(preparedMessage);
+        assertThat(sendResponse.getA()).isNotNull();
+        assertThat(sendResponse.getB()).isEqualTo(preparedMessage);
     }
 
 }
