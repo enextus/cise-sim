@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public class DefaultMessageAPI implements MessageAPI {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageAPI.class);
+    private final Logger logger = LoggerFactory.getLogger(MessageAPI.class);
 
     private final MessageStorage messageStorage;
     private final MessageProcessor messageProcessor;
@@ -33,8 +33,10 @@ public class DefaultMessageAPI implements MessageAPI {
     private final SynchronousAcknowledgementFactory synchronousAcknowledgementFactory = new SynchronousAcknowledgementFactory();
 
     DefaultMessageAPI(MessageProcessor messageProcessor,
-                      MessageStorage messageStorage,
-                      TemplateLoader templateLoader, XmlMapper xmlMapper, XmlMapper prettyNotValidatingXmlMapper) {
+        MessageStorage messageStorage,
+        TemplateLoader templateLoader,
+        XmlMapper xmlMapper,
+        XmlMapper prettyNotValidatingXmlMapper) {
 
         this.messageProcessor = messageProcessor;
         this.messageStorage = messageStorage;
@@ -45,7 +47,7 @@ public class DefaultMessageAPI implements MessageAPI {
 
     @Override
     public SendResponse send(String templateId, JsonNode params) {
-        LOGGER.debug("send is passed through api templateId: {}, params: {}", templateId, params);
+        logger.debug("send is passed through api templateId: {}, params: {}", templateId, params);
 
         try {
             Template template = templateLoader.loadTemplate(templateId);
@@ -55,16 +57,18 @@ public class DefaultMessageAPI implements MessageAPI {
             Pair<Acknowledgement, Message> sendResponse = messageProcessor.send(message, sendParam);
 
             return new SendResponse.OK(
-                    new MessageApiDto(prettyNotValidatingXmlMapper.toXML(sendResponse.getA()), prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
+                new MessageApiDto(
+                    prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
+                    prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
         } catch (Exception e) {
-            LOGGER.error("Error in Api send", e);
+            logger.error("Error sending a message to destination.url", e);
             return new SendResponse.KO(e.getMessage());
         }
     }
 
     @Override
     public Acknowledgement receive(String content) {
-        LOGGER.debug("receive is receiving through api : {}", content.substring(0, 200));
+        logger.debug("receive is receiving through api : {}", content.substring(0, 200));
         Message message = new Push();
         try {
             message = prettyNotValidatingXmlMapper.fromXML(content);
@@ -83,13 +87,21 @@ public class DefaultMessageAPI implements MessageAPI {
 
 
         } catch (InvalidMessageSignatureEx | SigningCACertInvalidSignatureEx eInvalidSignature) {
-            return synchronousAcknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.INVALID_SIGNATURE, "" + eInvalidSignature.getMessage());
+            return synchronousAcknowledgementFactory
+                .buildAck(message, SynchronousAcknowledgementType.INVALID_SIGNATURE,
+                    "" + eInvalidSignature.getMessage());
         } catch (XmlNotParsableException eXmlMalformed) {
-            return synchronousAcknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.XML_MALFORMED, "" + eXmlMalformed.getMessage());
+            return synchronousAcknowledgementFactory
+                .buildAck(message, SynchronousAcknowledgementType.XML_MALFORMED,
+                    "" + eXmlMalformed.getMessage());
         } catch (NullSenderEx eSemantic) {
-            return synchronousAcknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.SEMANTIC, "" + eSemantic.getMessage());
+            return synchronousAcknowledgementFactory
+                .buildAck(message, SynchronousAcknowledgementType.SEMANTIC,
+                    "" + eSemantic.getMessage());
         } catch (Exception eAny) {
-            return synchronousAcknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.INTERNAL_ERROR, "Unknown Error : " + eAny.getMessage());
+            return synchronousAcknowledgementFactory
+                .buildAck(message, SynchronousAcknowledgementType.INTERNAL_ERROR,
+                    "Unknown Error : " + eAny.getMessage());
         }
 
 

@@ -1,23 +1,31 @@
 package eu.cise.emulator;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static eu.cise.emulator.helpers.Asserts.notBlank;
+import static eu.cise.emulator.helpers.Asserts.notNull;
+import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
+
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherException;
 import eu.cise.emulator.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
 import eu.cise.emulator.SynchronousAcknowledgement.SynchronousAcknowledgementType;
-import eu.cise.emulator.exceptions.*;
+import eu.cise.emulator.exceptions.EmptyMessageIdEx;
+import eu.cise.emulator.exceptions.EndpointErrorEx;
+import eu.cise.emulator.exceptions.EndpointNotFoundEx;
+import eu.cise.emulator.exceptions.NullClockEx;
+import eu.cise.emulator.exceptions.NullConfigEx;
+import eu.cise.emulator.exceptions.NullDispatcherEx;
+import eu.cise.emulator.exceptions.NullMessageEx;
+import eu.cise.emulator.exceptions.NullSendParamEx;
+import eu.cise.emulator.exceptions.NullSenderEx;
+import eu.cise.emulator.exceptions.NullSignatureServiceEx;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
-
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Date;
 import java.time.Clock;
-
-import static com.google.common.base.Strings.isNullOrEmpty;
-import static eu.cise.emulator.helpers.Asserts.notBlank;
-import static eu.cise.emulator.helpers.Asserts.notNull;
-import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 public class DefaultEmulatorEngine implements EmulatorEngine {
@@ -31,13 +39,13 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     /**
      * Default constructor that uses UTC as a reference clock
      * <p>
-     * TODO is now clear that this class has way too many
-     * responsibilities. It should be split in several classes
+     * TODO is now clear that this class has way too many responsibilities. It should be split in
+     * several classes
      */
     public DefaultEmulatorEngine(
-            SignatureService signature,
-            Dispatcher dispatcher,
-            EmuConfig emuConfig) {
+        SignatureService signature,
+        Dispatcher dispatcher,
+        EmuConfig emuConfig) {
 
         this(signature, emuConfig, dispatcher, Clock.systemUTC());
         this.dispatcher = dispatcher;
@@ -55,10 +63,10 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
      *                   NOTE: this constructor is used only in tests
      */
     DefaultEmulatorEngine(
-            SignatureService signature,
-            EmuConfig emuConfig,
-            Dispatcher dispatcher,
-            Clock clock) {
+        SignatureService signature,
+        EmuConfig emuConfig,
+        Dispatcher dispatcher,
+        Clock clock) {
 
         this.signature = notNull(signature, NullSignatureServiceEx.class);
         this.emuConfig = notNull(emuConfig, NullConfigEx.class);
@@ -74,11 +82,10 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         message.setRequiresAck(param.isRequiresAck());
         message.setMessageID(param.getMessageId());
         message.setCorrelationID(
-                computeCorrelationId(param.getCorrelationId(), param.getMessageId())
+            computeCorrelationId(param.getCorrelationId(), param.getMessageId())
         );
 
         message.setCreationDateTime(now());
-
 
         // TODO improve signature to use <T extends Message> as a return type
         return (T) signature.sign(message);
@@ -99,12 +106,6 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         }
     }
 
-    private boolean areServiceIdAndOperationPresent(Acknowledgement ack) {
-        return ack.getSender() == null ||
-                isNullOrEmpty(ack.getSender().getServiceID()) ||
-                ack.getSender().getServiceOperation() == null;
-    }
-
     @Override
     public Acknowledgement receive(Message message) {
         notNull(message, NullMessageEx.class);
@@ -117,7 +118,6 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
         }
 
         signature.verify(message);
-
 
         return acknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.SUCCESS, "");
     }

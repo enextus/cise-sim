@@ -54,10 +54,10 @@ test ${E} -eq 0 && echo "${OK} ${SW_NAME} started at `date -Iseconds`" || \
 
 function log_start_msg {
 
-  echo "${GRE}CISE sim${NOR}"
+  echo "${NOR}== ${GRE}CISE sim${NOR} ====================================="
   echo "Java path:    ${JAVA_EXEC}"
   echo "Java version: ${JAVA_VERSION}"
-
+  echo "================================================="
 }
 
 function log_debug_start_msg {

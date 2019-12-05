@@ -9,8 +9,8 @@ import eu.cise.emulator.DefaultAppContext;
 import eu.cise.emulator.api.helpers.CrossOriginSupport;
 import eu.cise.emulator.api.resources.MessageResource;
 import eu.cise.emulator.api.resources.TemplateResource;
-import eu.cise.emulator.api.resources.UiMessageResource;
 import eu.cise.emulator.api.resources.UIServiceResource;
+import eu.cise.emulator.api.resources.UiMessageResource;
 import eu.cise.emulator.api.soap.CISEMessageServiceSoapImplDefault;
 import eu.cise.emulator.io.MessageStorage;
 import eu.eucise.xml.XmlMapper;
@@ -18,14 +18,15 @@ import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.eclipse.jetty.util.component.LifeCycle;
+import org.eclipse.jetty.util.component.LifeCycle.Listener;
 
 public class EmulatorApp extends Application<EmulatorConf> {
 
     // JAX-WS Bundle
-    private static final JAXWSBundle<Object> JAXWS_BUNDLE = new JAXWSBundle<>("/api/soap");
+    private final JAXWSBundle<Object> jaxwsBundle = new JAXWSBundle<>("/api/soap");
 
     public static void main(final String[] args) {
-        System.out.println("\n==============================================");
         try {
             new EmulatorApp().run(args);
         } catch (Exception e) {
@@ -34,8 +35,13 @@ public class EmulatorApp extends Application<EmulatorConf> {
     }
 
     @Override
+    public String getName() {
+        return "CISE Sim";
+    }
+
+    @Override
     public void initialize(final Bootstrap<EmulatorConf> bootstrap) {
-        bootstrap.addBundle(JAXWS_BUNDLE);
+        bootstrap.addBundle(jaxwsBundle);
         bootstrap.addBundle(
             new ConfiguredAssetsBundle(
                 "/assets/",
@@ -79,9 +85,35 @@ public class EmulatorApp extends Application<EmulatorConf> {
             messageAPI, appCtx.getPrettyNotValidatingXmlMapper());
 
         // WSDL first service using server side JAX-WS handler and CXF logging interceptors
-        JAXWS_BUNDLE.publishEndpoint(new EndpointBuilder("messages", ciseMessageServiceSoap));
+        jaxwsBundle.publishEndpoint(new EndpointBuilder("messages", ciseMessageServiceSoap));
 
-        environment.lifecycle().addServerLifecycleListener(
-            server -> System.out.println("==============================================\n"));
+        environment.lifecycle().addLifeCycleListener(new Listener() {
+            @Override
+            public void lifeCycleStarting(LifeCycle lifeCycle) {
+
+            }
+
+            @Override
+            public void lifeCycleStarted(LifeCycle lifeCycle) {
+                System.out.println("== API Server started ===========================");
+            }
+
+            @Override
+            public void lifeCycleFailure(LifeCycle lifeCycle, Throwable throwable) {
+
+            }
+
+            @Override
+            public void lifeCycleStopping(LifeCycle lifeCycle) {
+
+            }
+
+            @Override
+            public void lifeCycleStopped(LifeCycle lifeCycle) {
+
+            }
+        });
+
     }
+
 }

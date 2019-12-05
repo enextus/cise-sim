@@ -28,6 +28,7 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
+import io.restassured.RestAssured;
 import javax.ws.rs.core.MediaType;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -35,10 +36,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import wiremock.org.apache.http.HttpHeaders;
 
-public class RestMessageReceiveTest extends AbstractTestBase {
+public class RestMessageReceiveTest {
 
     @Rule
-    public WireMockRule mWireMockRule = new WireMockRule(HTTP_ENDPOINT_PORT);
+    public WireMockRule mWireMockRule = new WireMockRule(8123);
     private EmuConfig emuConfig = new EmuConfig() {
         @Override
         public String simulatorName() {
@@ -107,7 +108,8 @@ public class RestMessageReceiveTest extends AbstractTestBase {
      */
     @Before
     public void setup() {
-        initializeRestAssuredHttp();
+        RestAssured.reset();
+        RestAssured.port = 8123;
     }
 
     /**
@@ -129,7 +131,7 @@ public class RestMessageReceiveTest extends AbstractTestBase {
          * The body of the response will be a string containing a greeting.
          */
         stubFor(
-            get(urlEqualTo(BASE_PATH))
+            get(urlEqualTo("/api/messages"))
                 .withHeader(HttpHeaders.ACCEPT, equalTo(MediaType.APPLICATION_XML))
                 .willReturn(aResponse().withStatus(HttpStatus.SC_OK)
                     .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_XML)
@@ -182,6 +184,5 @@ public class RestMessageReceiveTest extends AbstractTestBase {
         DispatcherFactory dispatcherFactory = new DispatcherFactory();
         return dispatcherFactory
             .getDispatcher(this.emuConfig.destinationProtocol(), this.xmlMapperNoValidPretty);
-        //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
     }
 }

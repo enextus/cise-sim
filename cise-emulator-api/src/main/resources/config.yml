@@ -20,10 +20,11 @@ logging:
   level: INFO
   loggers:
     "io.dropwizard.bundles.assets": INFO
-    "eu.cise.emulator.api": INFO
+    "eu.cise.dispatcher": DEBUG
+    "org.apache.cxf": WARN
+    "eu.cise.emulator.api": DEBUG
     "org.eclipse.jetty.server.handler": WARN
     "org.eclipse.jetty.setuid": WARN
-    "eu.cise.dispatcher.Dispatcher": DEBUG
     "io.dropwizard.server.DefaultServerFactory": WARN
     "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
     "org.wiremock": INFO
@@ -34,11 +35,14 @@ logging:
       discardingThreshold: 0
       timeZone: UTC
       target: stdout
-#    - type: file
-#      currentLogFilename: ./logs/sim.log
-#      archivedLogFilenamePattern: ./logs/sim-%d{yyyy-MM-dd}.log.gz
-#      archivedFileCount: 5
-#      timeZone: UTC
+      logFormat: "%highlight(%.-1level)|%message%n"
+    - type: file
+      threshold: ALL
+      logFormat: "%d{HH:mm:ss}[%5.-5thread]%-5.5level|%-25.25logger{1}|%msg%n"
+      currentLogFilename: ./logs/sim.log
+      archivedLogFilenamePattern: ./logs/sim-%d{yyyy-MM-dd}.log.gz
+      archivedFileCount: 5
+      timeZone: UTC
 
 # The assets section is required to serve the UI pages
 # Given is a configuration internal to the application
