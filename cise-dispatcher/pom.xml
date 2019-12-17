@@ -144,28 +144,34 @@
     </dependency>
 
     <dependency>
-      <artifactId>cise-data-model</artifactId>
-      <groupId>eu.europa.ec.jrc.marex</groupId>
-      <version>1.5.3.12</version>
-    </dependency>
-
-    <dependency>
       <artifactId>cise-dispatcher-api</artifactId>
       <groupId>eu.europa.ec.jrc.marex</groupId>
       <version>1.1-SNAPSHOT</version>
     </dependency>
 
+    <!-- EUCISE dependencies -->
+    <dependency>
+      <artifactId>cise-data-model</artifactId>
+      <groupId>eu.europa.ec.jrc.marex</groupId>
+      <version>1.5.3.13-jdk11</version>
+    </dependency>
 
     <dependency>
       <artifactId>eucise-model-helpers</artifactId>
       <groupId>eu.europa.ec.jrc.marex</groupId>
-      <version>1.0.9</version>
+      <version>1.0.10-jdk11</version>
     </dependency>
 
     <dependency>
       <artifactId>eucise-service-model</artifactId>
       <groupId>eu.europa.ec.jrc.marex</groupId>
-      <version>1.0.7</version>
+      <version>1.0.8-jdk11</version>
+    </dependency>
+
+    <dependency>
+      <groupId>eu.europa.ec.jrc.marex</groupId>
+      <artifactId>cise-signature</artifactId>
+      <version>1.0</version>
     </dependency>
 
     <dependency>

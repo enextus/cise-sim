@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.cise.eu/servicemodel/v1/authority/" xmlns:tns="http://www.cise.eu/servicemodel/v1/service/" targetNamespace="http://www.cise.eu/servicemodel/v1/service/" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:ns1="http://www.cise.eu/servicemodel/v1/authority/"
+  xmlns:tns="http://www.cise.eu/servicemodel/v1/service/"
+  targetNamespace="http://www.cise.eu/servicemodel/v1/service/" version="1.0">
 
-  <xs:import namespace="http://www.cise.eu/servicemodel/v1/authority/" schemaLocation="authority.xsd"/>
+  <xs:import namespace="http://www.cise.eu/servicemodel/v1/authority/"
+    schemaLocation="authority.xsd"/>
 
   <xs:element name="Service" type="tns:Service"/>
 
@@ -11,7 +15,8 @@
 
   <xs:complexType name="Service">
     <xs:annotation>
-      <xs:documentation><![CDATA[This entity contains the description of a service.]]></xs:documentation>
+      <xs:documentation>
+        <![CDATA[This entity contains the description of a service.]]></xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element minOccurs="0" name="DataFreshness" type="tns:DataFreshnessType">
@@ -30,7 +35,7 @@ to distinguish real time data from historic data.]]></xs:documentation>
           <xs:documentation><![CDATA[This is the unique ID of the service.]]></xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="ServiceOperation" type="tns:ServiceOperationType">
+      <xs:element minOccurs="0" name="ServiceOperation" type="tns:ServiceOperationType">
         <xs:annotation>
           <xs:documentation><![CDATA[The type of communication pattern supported by the service
 (Pull/Push/Subscribe)]]></xs:documentation>
@@ -75,12 +80,14 @@ supported.]]></xs:documentation>
     <xs:sequence>
       <xs:element minOccurs="0" name="ExpectedResponseTime" type="xs:int">
         <xs:annotation>
-          <xs:documentation><![CDATA[Estimated average time to receive a response.]]></xs:documentation>
+          <xs:documentation>
+            <![CDATA[Estimated average time to receive a response.]]></xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element minOccurs="0" name="MaxEntitiesPerMsg" type="xs:int">
         <xs:annotation>
-          <xs:documentation><![CDATA[Maximum number of entities returned in a pull response.]]></xs:documentation>
+          <xs:documentation>
+            <![CDATA[Maximum number of entities returned in a pull response.]]></xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element minOccurs="0" name="MaxNumberOfRequests" type="xs:int">
@@ -100,7 +107,8 @@ answers or approximate answers.]]></xs:documentation>
 
   <xs:complexType name="SubscriptionCapability">
     <xs:annotation>
-      <xs:documentation><![CDATA[Capabilities specific for the subscribe pattern]]></xs:documentation>
+      <xs:documentation>
+        <![CDATA[Capabilities specific for the subscribe pattern]]></xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="tns:ServiceCapability">
@@ -155,7 +163,8 @@ to distinguish real time data from historic data.]]></xs:documentation>
       </xs:element>
       <xs:element minOccurs="0" name="Function" type="ns1:FunctionType">
         <xs:annotation>
-          <xs:documentation><![CDATA[The function covered by the provider of the service.]]></xs:documentation>
+          <xs:documentation>
+            <![CDATA[The function covered by the provider of the service.]]></xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element minOccurs="0" name="SeaBasin" type="ns1:SeaBasinType">
@@ -225,7 +234,8 @@ service type.]]></xs:documentation>
 
   <xs:simpleType name="ServiceRoleType">
     <xs:annotation>
-      <xs:documentation><![CDATA[Role of the service in the message exchange process.]]></xs:documentation>
+      <xs:documentation>
+        <![CDATA[Role of the service in the message exchange process.]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="Consumer"/>
@@ -235,7 +245,8 @@ service type.]]></xs:documentation>
 
   <xs:simpleType name="ServiceStatusType">
     <xs:annotation>
-      <xs:documentation><![CDATA[Enumeration of the different status of a service.]]></xs:documentation>
+      <xs:documentation>
+        <![CDATA[Enumeration of the different status of a service.]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="Deprecated"/>
@@ -248,7 +259,8 @@ service type.]]></xs:documentation>
 
   <xs:simpleType name="ServiceType">
     <xs:annotation>
-      <xs:documentation><![CDATA[Enumeration of the different type of service related to the entity Data Model of CISE.]]></xs:documentation>
+      <xs:documentation>
+        <![CDATA[Enumeration of the different type of service related to the entity Data Model of CISE.]]></xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="OperationalAssetService"/>
