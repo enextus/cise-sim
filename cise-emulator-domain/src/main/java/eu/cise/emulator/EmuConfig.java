@@ -41,10 +41,6 @@ public interface EmuConfig extends Config {
     @Key("app.version")
     String appVersion();
 
-    @Key("validation.rule.date")
-    @DefaultValue("false")
-    boolean isDateValidationEnabled();
-
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {
             if (input.trim().toUpperCase().equals("TRUE")) {

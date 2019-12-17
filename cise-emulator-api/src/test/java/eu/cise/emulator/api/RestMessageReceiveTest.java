@@ -77,11 +77,6 @@ public class RestMessageReceiveTest {
         }
 
         @Override
-        public boolean isDateValidationEnabled() {
-            return false;
-        }
-
-        @Override
         public DispatcherType destinationProtocol() {
             return DispatcherType.REST;
         }

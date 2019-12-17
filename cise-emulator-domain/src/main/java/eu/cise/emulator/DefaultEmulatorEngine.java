@@ -113,9 +113,9 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
         // TODO The simulator should be able to receive and show a message
         // and to report errors of the message itself.
-        if (message.getSender() == null) {
-            throw new NullSenderEx();
-        }
+//        if (message.getSender() == null) {
+//            throw new NullSenderEx();
+//        }
 
         signature.verify(message);
 
