@@ -60,6 +60,7 @@ public class DefaultMessageAPI implements MessageAPI {
                 new MessageApiDto(
                     prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
                     prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
+
         } catch (Exception e) {
             logger.error("Error sending a message to destination.url", e);
             return new SendResponse.KO(e.getMessage());
