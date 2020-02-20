@@ -3,7 +3,7 @@
 
   <artifactId>cise-dispatcher</artifactId>
   <groupId>eu.europa.ec.jrc.marex</groupId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.2-SNAPSHOT</version>
   <name>cise-dispatcher</name>
 
   <build>
@@ -140,13 +140,13 @@
     <dependency>
       <groupId>eu.europa.ec.jrc.marex</groupId>
       <artifactId>cise-emulator-domain</artifactId>
-      <version>1.2.2-SNAPSHOT</version>
+      <version>1.2.3-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <artifactId>cise-dispatcher-api</artifactId>
       <groupId>eu.europa.ec.jrc.marex</groupId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.2-SNAPSHOT</version>
     </dependency>
 
     <!-- EUCISE dependencies -->
