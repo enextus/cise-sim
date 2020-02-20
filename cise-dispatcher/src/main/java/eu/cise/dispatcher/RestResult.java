@@ -3,8 +3,7 @@ package eu.cise.dispatcher;
 import java.io.Serializable;
 
 /**
- * The class is a value object containing the information coming back from a
- * RESTful request.
+ * The class is a value object containing the information coming back from a RESTful request.
  * <ul>
  * <li>The code will contain the HTTP code of the response.</li>
  * <li>The isOK() method is a shortcut to understand if the request has ended
@@ -27,8 +26,7 @@ public class RestResult implements Serializable {
     private final String message;
 
     /**
-     * Creates a new value object with some specific information about the
-     * response.
+     * Creates a new value object with some specific information about the response.
      *
      * @param code    HTTP response code
      * @param body    HTTP response body
@@ -42,8 +40,7 @@ public class RestResult implements Serializable {
     }
 
     /**
-     * If the status code is a 2XX it interprets the response as a successful
-     * one.
+     * If the status code is a 2XX it interprets the response as a successful one.
      *
      * @param statusCode the status code to be interpreted.
      * @return true if the status code is 2XX and false otherwise.
@@ -82,12 +79,15 @@ public class RestResult implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         RestResult that = (RestResult) o;
 
-        if (ok != that.ok) return false;
+        if (ok != that.ok)
+            return false;
         if (code != null ? !code.equals(that.code) : that.code != null)
             return false;
         if (body != null ? !body.equals(that.body) : that.body != null)
@@ -106,11 +106,11 @@ public class RestResult implements Serializable {
 
     @Override
     public String toString() {
-        return "RestResult{" +
-                "code=" + code +
-                ", body='" + body + '\'' +
-                ", message='" + message + '\'' +
-                ", ok=" + ok +
-                '}';
+        return "rest-result{\n" +
+            "  ok: " + ok +
+            "  code: " + code + "\n" +
+            "  message: " + message + "\n" +
+            "  body: " + body + "\n" +
+            "}";
     }
 }

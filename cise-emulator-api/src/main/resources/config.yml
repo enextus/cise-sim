@@ -1,28 +1,30 @@
-################################################################
-# CISE sim application configuration
 #
-# Version 1.1 Beta
-###############################################################
+# CISE sim application configuration (@project.version@)
+#
 
-# Web server configuration
+# The server section allows to modify the port used by the CISE Sim.
+# To receive CISE messages and to serve the UI of the CISE Sim application
+# The admin port is used to gather statistics of the communication
 server:
-  # Protocol and port of simulator web interface
   applicationConnectors:
     - type: http
-      port: 8180
-  # Protocol and port of simulator web-application admin interface (metrics, Healthcheck ...)
+      port: 8080
   adminConnectors:
     - type: http
-      port: 8181
-# Simulator log configuration, if needed you can uncomment the part below to enable logging to filesystem
+      port: 8081
+
+# The logging section is used to tweak the logging level of the simulator.
+# To write the log in a file instead of the standard output is possible to
+# uncomment the "type file" section.
 logging:
   level: INFO
   loggers:
     "io.dropwizard.bundles.assets": INFO
-    "eu.cise.emulator.api": INFO
+    "eu.cise.dispatcher": DEBUG
+    "org.apache.cxf": WARN
+    "eu.cise.emulator.api": DEBUG
     "org.eclipse.jetty.server.handler": WARN
     "org.eclipse.jetty.setuid": WARN
-    "eu.cise.dispatcher.Dispatcher": DEBUG
     "io.dropwizard.server.DefaultServerFactory": WARN
     "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
     "org.wiremock": INFO
@@ -33,13 +35,18 @@ logging:
       discardingThreshold: 0
       timeZone: UTC
       target: stdout
-#    - type: file
-#      currentLogFilename: ./logs/sim.log
-#      archivedLogFilenamePattern: ./logs/sim-%d{yyyy-MM-dd}.log.gz
-#      archivedFileCount: 5
-#      timeZone: UTC
+      logFormat: "%highlight(%.-1level)|%message%n"
+    - type: file
+      threshold: ALL
+      logFormat: "%d{HH:mm:ss}[%5.-5thread]%-5.5level|%-25.25logger{1}|%msg%n"
+      currentLogFilename: ./logs/sim.log
+      archivedLogFilenamePattern: ./logs/sim-%d{yyyy-MM-dd}.log.gz
+      archivedFileCount: 5
+      timeZone: UTC
 
-# Web resources mappings: these parameters should not be changed!
+# The assets section is required to serve the UI pages
+# Given is a configuration internal to the application
+# the following section should not be changed.
 assets:
   mappings:
     /assets: /

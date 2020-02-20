@@ -3,7 +3,7 @@
 
   <artifactId>cise-dispatcher-api</artifactId>
   <groupId>eu.europa.ec.jrc.marex</groupId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.2-SNAPSHOT</version>
   <name>cise-dispatcher-api</name>
 
   <dependencies>

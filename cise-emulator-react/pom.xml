@@ -5,11 +5,11 @@
   <parent>
     <artifactId>cise-sim</artifactId>
     <groupId>eu.europa.ec.jrc.marex</groupId>
-    <version>1.2.2-SNAPSHOT</version>
+    <version>1.2.3-SNAPSHOT</version>
   </parent>
   <groupId>eu.europa.ec.jrc.marex</groupId>
   <artifactId>cise-emulator-react</artifactId>
-  <version>1.2.2-SNAPSHOT</version>
+  <version>1.2.3-SNAPSHOT</version>
   <build>
     <plugins>
       <plugin>

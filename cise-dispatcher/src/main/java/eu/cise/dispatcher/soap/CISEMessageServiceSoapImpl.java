@@ -29,7 +29,6 @@ import javax.xml.ws.ResponseWrapper;
 })
 public interface CISEMessageServiceSoapImpl {
 
-
     /**
      * @param message
      * @return returns java.eu.cise.dispatcher.soap.Acknowledgement

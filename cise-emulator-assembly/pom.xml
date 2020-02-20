@@ -5,7 +5,7 @@
   <parent>
     <artifactId>cise-sim</artifactId>
     <groupId>eu.europa.ec.jrc.marex</groupId>
-    <version>1.2.2-SNAPSHOT</version>
+    <version>1.2.3-SNAPSHOT</version>
   </parent>
 
   <artifactId>cise-emulator-assembly</artifactId>
@@ -82,7 +82,7 @@
     <dependency>
       <artifactId>cise-emulator-app</artifactId>
       <groupId>eu.europa.ec.jrc.marex</groupId>
-      <version>1.2.2-SNAPSHOT</version>
+      <version>1.2.3-SNAPSHOT</version>
     </dependency>
   </dependencies>
   <properties>

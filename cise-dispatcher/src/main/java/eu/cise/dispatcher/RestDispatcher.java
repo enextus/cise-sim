@@ -2,6 +2,8 @@ package eu.cise.dispatcher;
 
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.XmlMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The RestDispatcher performs RESTful request to nodes or legacy systems. The current
@@ -10,9 +12,10 @@ import eu.eucise.xml.XmlMapper;
 @SuppressWarnings({"WeakerAccess", "Unused"})
 public class RestDispatcher implements Dispatcher {
 
+    private final Logger logger;
     private final RestClient client;
     /**
-        NOTE: This mapper must be not validating
+     * NOTE: This mapper must be not validating
      */
     private final XmlMapper xmlMapper;
 
@@ -29,6 +32,7 @@ public class RestDispatcher implements Dispatcher {
     public RestDispatcher(RestClient client, XmlMapper xmlMapper) {
         this.client = client;
         this.xmlMapper = xmlMapper;
+        this.logger = LoggerFactory.getLogger(RestDispatcher.class);
     }
 
     /**
@@ -41,8 +45,11 @@ public class RestDispatcher implements Dispatcher {
     @Override
     public DispatchResult send(Message message, String address) {
         String payload = xmlMapper.toXML(message);
-        System.out.println("----------------------------\n" + payload + "\n----------------------------");
+        logger.debug("> sending message");
+        logger.debug("> address: {}", address);
+        logger.debug("> payload: \n{}\n", payload);
         RestResult result = client.post(address, payload);
+        logger.debug("< server response: {}", result);
 
         return new DispatchResult(result.isOK(), xmlMapper.fromXML(result.getBody()));
     }
