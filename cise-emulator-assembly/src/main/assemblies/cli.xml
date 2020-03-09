@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<assembly
+    xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+  <id>bin</id>
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <directory>${project.parent.basedir}</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>README*</include>
+        <include>LICENSE*</include>
+        <include>NOTICE*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/cise-emulator-cli/target</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>cise-sim-cli.jar</include>
+      </includes>
+      <fileMode>7775</fileMode>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/cise-emulator-assembly/src/main/scripts</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>*</include>
+      </includes>
+      <fileMode>7775</fileMode>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/cise-emulator-api/target/classes</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>cisesim-nodeex.jks</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/cise-emulator-api/target/classes</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>sim.properties</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>.</directory>
+      <outputDirectory>sent</outputDirectory>
+      <excludes>
+        <exclude>*/**</exclude>
+      </excludes>
+    </fileSet>
+    <fileSet>
+      <directory>.</directory>
+      <outputDirectory>received</outputDirectory>
+      <excludes>
+        <exclude>*/**</exclude>
+      </excludes>
+    </fileSet>
+  </fileSets>
+</assembly>

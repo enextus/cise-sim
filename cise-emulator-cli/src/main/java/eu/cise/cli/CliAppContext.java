@@ -22,10 +22,10 @@ public class CliAppContext {
         this.emuConfig = ConfigFactory.create(EmuConfig.class);
         this.xmlMapper = new DefaultXmlMapper();
         this.signatureService = newSignatureService(xmlMapper)
-                .withKeyStoreName("cisesim-nodeex.jks")
-                .withKeyStorePassword("cisesim")
-                .withPrivateKeyAlias("cisesim-nodeex.nodeex.eucise.ex")
-                .withPrivateKeyPassword("cisesim")
+                .withKeyStoreName(emuConfig.keyStoreFileName())
+                .withKeyStorePassword(emuConfig.keyStorePassword())
+                .withPrivateKeyAlias(emuConfig.privateKeyAlias())
+                .withPrivateKeyPassword(emuConfig.privateKeyPassword())
                 .build();
     }
 
@@ -43,4 +43,7 @@ public class CliAppContext {
                 .getDispatcher(this.emuConfig.destinationProtocol(), this.xmlMapper);
     }
 
+    public MessageLoader makeMessageLoader() {
+        return new MessageLoader(xmlMapper);
+    }
 }

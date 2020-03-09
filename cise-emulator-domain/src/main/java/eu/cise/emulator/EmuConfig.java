@@ -10,7 +10,8 @@ import org.aeonbits.owner.Preprocessor;
  */
 @Config.PreprocessorClasses({EmuConfig.TrimAndInsureBoolean.class})
 @Sources({"file:${conf.dir}sim.properties",
-        "classpath:sim.properties"})
+        "classpath:sim.properties",
+        "file:./sim.properties"})
 public interface EmuConfig extends Config {
 
     @Key("simulator.name")

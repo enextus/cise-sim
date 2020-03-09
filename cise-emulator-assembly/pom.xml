@@ -67,6 +67,21 @@
               </descriptors>
             </configuration>
           </execution>
+          <execution>
+            <id>emulator-cli</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>cise-sim-${project.version}-cli</finalName>
+              <appendAssemblyId>false</appendAssemblyId>
+              <outputDirectory>../target/</outputDirectory>
+              <descriptors>
+                <descriptor>src/main/assemblies/cli.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
