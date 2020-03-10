@@ -25,6 +25,7 @@ public class Main implements Runnable {
 
     @Override
     public void run() {
+        System.setProperty("conf.dir", args.config);
         var appContext = new CliAppContext();
 
         var useCaseSendMessage = new UseCaseSendMessage(

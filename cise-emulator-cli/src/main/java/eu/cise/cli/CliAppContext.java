@@ -20,7 +20,7 @@ public class CliAppContext {
 
     public CliAppContext() {
         this.emuConfig = ConfigFactory.create(EmuConfig.class);
-        this.xmlMapper = new DefaultXmlMapper();
+        this.xmlMapper = new DefaultXmlMapper.NotValidating();
         this.signatureService = newSignatureService(xmlMapper)
                 .withKeyStoreName(emuConfig.keyStoreFileName())
                 .withKeyStorePassword(emuConfig.keyStorePassword())
