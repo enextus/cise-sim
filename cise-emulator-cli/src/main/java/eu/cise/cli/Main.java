@@ -2,6 +2,10 @@ package eu.cise.cli;
 
 import com.beust.jcommander.JCommander;
 import eu.cise.emulator.SendParam;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+
+import static spark.Spark.port;
+import static spark.Spark.post;
 
 public class Main implements Runnable {
 
@@ -26,14 +30,36 @@ public class Main implements Runnable {
     @Override
     public void run() {
         System.setProperty("conf.dir", args.config);
+
         var appContext = new CliAppContext();
 
         var useCaseSendMessage = new UseCaseSendMessage(
                 appContext.makeEmulatorEngine(), appContext.makeMessageLoader()
         );
 
-        var sendParam = new SendParam(args.requiresAck, args.messageId, args.correlationId);
+        var useCaseReciveMessage = new UseCaseReciveMessage(
+                appContext.makeEmulatorEngine(), appContext.makeMessageLoader()
+        );
 
-        useCaseSendMessage.send(args.filename, sendParam);
+
+        if (args.listen) {
+            port(args.port);
+            post("/", (request, response) -> {
+                var xmlMapper = appContext.getXmlMapper();
+
+                Acknowledgement ack = useCaseReciveMessage.receive(xmlMapper.fromXML(request.body()));
+
+                response.status(201);
+                response.type("application/xml");
+
+                return xmlMapper.toXML(ack);
+            });
+        } else {
+            var sendParam = new SendParam(args.requiresAck, args.messageId, args.correlationId);
+
+            useCaseSendMessage.send(args.filename, sendParam);
+        }
+
+
     }
 }

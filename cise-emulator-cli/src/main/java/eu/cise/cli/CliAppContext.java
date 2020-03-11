@@ -29,6 +29,10 @@ public class CliAppContext {
                 .build();
     }
 
+    public XmlMapper getXmlMapper() {
+        return this.xmlMapper;
+    }
+
     public EmuConfig getEmuConfig() {
         return this.emuConfig;
     }
