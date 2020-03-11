@@ -3,7 +3,9 @@ package eu.cise.cli;
 import eu.cise.emulator.EmulatorEngine;
 import eu.cise.emulator.SendParam;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +17,7 @@ public class UseCaseSendMessageTest {
     private MessageLoader loader;
     private Push messageLoaded;
     private Acknowledgement returnedAck;
+    private Message preparedMessage;
 
     @Before
     public void before() {
@@ -24,10 +27,18 @@ public class UseCaseSendMessageTest {
         useCaseSendMessage = new UseCaseSendMessage(emulatorEngine, loader);
 
         messageLoaded = new Push();
+        preparedMessage = new Push();
         returnedAck = new Acknowledgement();
 
-        when(loader.load(any())).thenReturn(messageLoaded);
+        when(loader.load(anyString())).thenReturn(messageLoaded);
+        when(emulatorEngine.prepare(any(),any())).thenReturn(preparedMessage);
         when(emulatorEngine.send(any())).thenReturn(returnedAck);
+    }
+
+    @After
+    public void after() {
+        reset(loader);
+        reset(emulatorEngine);
     }
 
     @Test
@@ -45,7 +56,7 @@ public class UseCaseSendMessageTest {
 
         useCaseSendMessage.send("filename.xml", sendParam);
 
-        verify(emulatorEngine).send(messageLoaded);
+        verify(emulatorEngine).send(preparedMessage);
     }
 
     @Test
@@ -54,7 +65,7 @@ public class UseCaseSendMessageTest {
 
         useCaseSendMessage.send("filename.xml", sendParam);
 
-        verify(loader).saveSentMessage(messageLoaded);
+        verify(loader).saveSentMessage(preparedMessage);
     }
 
     @Test

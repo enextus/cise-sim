@@ -13,9 +13,7 @@
       <directory>${project.parent.basedir}</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
-        <include>README*</include>
         <include>LICENSE*</include>
-        <include>NOTICE*</include>
       </includes>
     </fileSet>
     <fileSet>
@@ -23,14 +21,6 @@
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>cise-sim-cli.jar</include>
-      </includes>
-      <fileMode>7775</fileMode>
-    </fileSet>
-    <fileSet>
-      <directory>${project.parent.basedir}/cise-emulator-assembly/src/main/scripts</directory>
-      <outputDirectory>/</outputDirectory>
-      <includes>
-        <include>*</include>
       </includes>
       <fileMode>7775</fileMode>
     </fileSet>
