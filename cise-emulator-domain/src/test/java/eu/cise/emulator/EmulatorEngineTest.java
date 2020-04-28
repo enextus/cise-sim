@@ -15,6 +15,7 @@ import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.signature.SignatureService;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.SUCCESS;
@@ -111,6 +112,7 @@ public class EmulatorEngineTest {
 
 
     @Test
+    @Ignore
     public void it_receives_a_valid_message_without_sender() {
         Push message = newPush().id("aMessageId").build();
 

@@ -53,8 +53,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Message }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Message }{@code >}
      * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link Message }{@code >}
      */
     @XmlElementDecl(namespace = "http://www.cise.eu/accesspoint/service/v1/", name = "message")
     public JAXBElement<Message> createMessage(Message value) {
@@ -62,8 +66,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Send }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Send }{@code >}
      * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link Send }{@code >}
      */
     @XmlElementDecl(namespace = "http://www.cise.eu/accesspoint/service/v1/", name = "send")
     public JAXBElement<Send> createSend(Send value) {
@@ -71,8 +79,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SendResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendResponse }{@code >}
      * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link SendResponse }{@code >}
      */
     @XmlElementDecl(namespace = "http://www.cise.eu/accesspoint/service/v1/", name = "sendResponse")
     public JAXBElement<SendResponse> createSendResponse(SendResponse value) {

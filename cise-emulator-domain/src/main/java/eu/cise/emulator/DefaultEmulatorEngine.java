@@ -49,6 +49,8 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
 
         this(signature, emuConfig, dispatcher, Clock.systemUTC());
         this.dispatcher = dispatcher;
+
+        // Every time there is a new it should be where all the constructions are happening
         this.acknowledgementFactory = new SynchronousAcknowledgementFactory();
     }
 
@@ -133,6 +135,4 @@ public class DefaultEmulatorEngine implements EmulatorEngine {
     private XMLGregorianCalendar now() {
         return toXMLGregorianCalendar(Date.from(clock.instant()));
     }
-
-
 }

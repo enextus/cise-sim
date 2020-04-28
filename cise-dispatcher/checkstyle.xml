@@ -4,6 +4,8 @@
         "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 
 <module name="Checker">
+    <property name="cacheFile" value="${checkstyle.cache.file}"/>
+
     <module name="SuppressWarningsFilter"/>
     <module name="FileLength"/>
     <module name="FileTabCharacter"/>
@@ -29,7 +31,7 @@
     </module>
 
     <module name="TreeWalker">
-        <property name="cacheFile" value="${checkstyle.cache.file}"/>
+
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->

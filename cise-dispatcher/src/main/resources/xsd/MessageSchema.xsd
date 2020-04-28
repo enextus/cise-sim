@@ -2,5 +2,5 @@
            elementFormDefault="qualified" attributeFormDefault="qualified"
 >
     <xs:import namespace="http://www.cise.eu/servicemodel/v1/message/" schemaLocation="message.xsd"/>
-    <xs:include schemaLocation="EntitySchema.xsd "/>
+    <xs:include schemaLocation="EntitySchema.xsd"/>
 </xs:schema>

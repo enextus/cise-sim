@@ -10,7 +10,8 @@ import org.aeonbits.owner.Preprocessor;
  */
 @Config.PreprocessorClasses({EmuConfig.TrimAndInsureBoolean.class})
 @Sources({"file:${conf.dir}sim.properties",
-        "classpath:sim.properties"})
+        "classpath:sim.properties",
+        "file:./sim.properties"})
 public interface EmuConfig extends Config {
 
     @Key("simulator.name")
@@ -40,10 +41,6 @@ public interface EmuConfig extends Config {
 
     @Key("app.version")
     String appVersion();
-
-    @Key("validation.rule.date")
-    @DefaultValue("false")
-    boolean isDateValidationEnabled();
 
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {

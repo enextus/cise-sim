@@ -23,6 +23,8 @@ public class DefaultAppContext implements AppContext {
     public DefaultAppContext() {
         this.emuConfig = ConfigFactory.create(EmuConfig.class);
         this.xmlMapper = new DefaultXmlMapper.NotValidating();
+
+        // TODO GK testing if we have any issue
         this.prettyNotValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
     }
 
@@ -38,12 +40,15 @@ public class DefaultAppContext implements AppContext {
     @Override
     public Dispatcher makeDispatcher() {
         DispatcherFactory dispatcherFactory = new DispatcherFactory();
-        return dispatcherFactory.getDispatcher(this.emuConfig.destinationProtocol(), this.xmlMapper); //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
+        //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
+        return dispatcherFactory.getDispatcher(this.emuConfig.destinationProtocol(), this.xmlMapper);
+
     }
 
     @Override
     public SignatureService makeSignatureService() {
-        return newSignatureService(this.xmlMapper) //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
+        //*correlation:Disp-Sign where P= pretty V=Valid p=nonpretty or v=nonvalid: signature.fail:Pv-Pv,Pv-pv,pv-Pv  and sax.fail: PV-PV,pV-pV success:pv-pv
+        return newSignatureService(this.xmlMapper)
                 .withKeyStoreName(this.emuConfig.keyStoreFileName())
                 .withKeyStorePassword(this.emuConfig.keyStorePassword())
                 .withPrivateKeyAlias(this.emuConfig.privateKeyAlias())
