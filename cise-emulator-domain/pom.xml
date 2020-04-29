@@ -19,16 +19,19 @@
         <dependency>
             <artifactId>cise-data-model</artifactId>
             <groupId>eu.europa.ec.jrc.marex</groupId>
+            <version>1.5.3.14-jdk11-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <artifactId>eucise-service-model</artifactId>
             <groupId>eu.europa.ec.jrc.marex</groupId>
+            <version>1.0.9-jdk11-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <artifactId>eucise-model-helpers</artifactId>
             <groupId>eu.europa.ec.jrc.marex</groupId>
+            <version>1.0.11-jdk11-SNAPSHOT</version>
         </dependency>
 
         <dependency>

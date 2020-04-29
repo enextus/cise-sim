@@ -19,7 +19,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-emulator-api/target</directory>
+            <directory>${project.parent.basedir}/cise-sim-api/target</directory>
             <outputDirectory>/lib</outputDirectory>
             <includes>
                 <include>cise-sim.jar</include>
@@ -39,7 +39,7 @@
             <fileMode>7775</fileMode>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-emulator-api/target/classes</directory>
+            <directory>${project.parent.basedir}/cise-sim-api/target/classes</directory>
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>config.yml</include>
@@ -47,7 +47,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-emulator-api/target/classes</directory>
+            <directory>${project.parent.basedir}/cise-sim-api/target/classes</directory>
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>sim.properties</include>

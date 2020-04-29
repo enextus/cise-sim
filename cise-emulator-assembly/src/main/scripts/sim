@@ -68,7 +68,7 @@ function log_debug_start_msg {
 }
 
 function setup_debug {
-  export JAVA_OPTS="-Xdebug -agentlib:jdwp=emulator=dt_socket,address=${DEBUG_PORT},server=y,suspend=y"
+  export JAVA_OPTS="-Xdebug -agentlib:jdwp=transport=dt_socket,address=${DEBUG_PORT},server=y,suspend=y"
 }
 
 function start {

@@ -22,7 +22,7 @@
             <phase>prepare-package</phase>
             <configuration>
               <tasks>
-                <replace token="cise-emulator-assembly/src/main/resources/" value="" dir="../cise-emulator-api/target/classes">
+                <replace token="cise-emulator-assembly/src/main/resources/" value="" dir="../cise-sim-api/target/classes">
                   <include name="sim.properties" />
                 </replace>
               </tasks>

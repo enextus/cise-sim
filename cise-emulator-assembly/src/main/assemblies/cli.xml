@@ -25,14 +25,14 @@
       <fileMode>7775</fileMode>
     </fileSet>
     <fileSet>
-      <directory>${project.parent.basedir}/cise-emulator-api/target/classes</directory>
+      <directory>${project.parent.basedir}/cise-sim-api/target/classes</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>cisesim-nodeex.jks</include>
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${project.parent.basedir}/cise-emulator-api/target/classes</directory>
+      <directory>${project.parent.basedir}/cise-sim-api/target/classes</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>sim.properties</include>
