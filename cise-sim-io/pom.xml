@@ -7,7 +7,7 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>cise-emulator-io</artifactId>
+  <artifactId>cise-sim-io</artifactId>
 
   <dependencies>
 

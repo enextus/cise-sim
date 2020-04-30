@@ -34,7 +34,7 @@
     <module>cise-emulator-assembly</module>
     <module>cise-dispatcher</module>
     <module>cise-dispatcher-api</module>
-    <module>cise-emulator-io</module>
+    <module>cise-sim-io</module>
   </modules>
 
   <build>
