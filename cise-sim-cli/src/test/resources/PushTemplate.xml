@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ns4:Push xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/">
+<ns4:Push xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/">
 	<CorrelationID>476d949d-5aa4-44cc-8e20-c1a2288fe098</CorrelationID>
 	<CreationDateTime>2018-01-18T13:45:29.590+01:00</CreationDateTime>
 	<MessageID>2657a510-5469-429f-ad00-7c96daa7c7a2</MessageID>

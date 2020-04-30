@@ -10,7 +10,7 @@
         <version>1.2.3-SNAPSHOT</version>
     </parent>
 
-    <artifactId>cise-emulator-cli</artifactId>
+    <artifactId>cise-sim-cli</artifactId>
     <version>1.2.3-SNAPSHOT</version>
 
     <build>

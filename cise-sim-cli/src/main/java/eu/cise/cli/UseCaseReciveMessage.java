@@ -1,8 +1,8 @@
 package eu.cise.cli;
 
-import eu.cise.sim.engine.SimEngine;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.sim.engine.SimEngine;
 
 public class UseCaseReciveMessage {
 

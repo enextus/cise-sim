@@ -27,7 +27,7 @@
 
   <modules>
     <module>cise-sim-domain</module>
-    <module>cise-emulator-cli</module>
+    <module>cise-sim-cli</module>
     <module>cise-emulator-react</module>
     <module>cise-sim-api</module>
     <module>cise-emulator-app</module>

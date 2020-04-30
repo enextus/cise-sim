@@ -1,10 +1,10 @@
 package eu.cise.cli;
 
-import eu.cise.sim.engine.SimEngine;
-import eu.cise.sim.engine.SendParam;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.sim.engine.SendParam;
+import eu.cise.sim.engine.SimEngine;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

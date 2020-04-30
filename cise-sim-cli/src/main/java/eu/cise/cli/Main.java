@@ -1,8 +1,8 @@
 package eu.cise.cli;
 
 import com.beust.jcommander.JCommander;
-import eu.cise.sim.engine.SendParam;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.sim.engine.SendParam;
 
 import static spark.Spark.port;
 import static spark.Spark.post;

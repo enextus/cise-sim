@@ -1,7 +1,7 @@
 package eu.cise.cli;
 
-import eu.cise.sim.engine.SimEngine;
 import eu.cise.sim.engine.SendParam;
+import eu.cise.sim.engine.SimEngine;
 
 public class UseCaseSendMessage {
 
