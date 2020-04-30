@@ -9,11 +9,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * CiseEmulatorDropwizardConf
+ * CiseSimDropwizardConf
  * general purpose class
  * extending Configuration (dropwizard)
  */
-public class EmulatorConf extends Configuration implements AssetsBundleConfiguration {
+public class SimConf extends Configuration implements AssetsBundleConfiguration {
 
     @Valid
     @NotNull

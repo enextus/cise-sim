@@ -37,7 +37,7 @@ public class CliAppContext {
         return this.simConfig;
     }
 
-    public SimEngine makeEmulatorEngine() {
+    public SimEngine makeSimEngine() {
         return new DefaultSimEngine(signatureService, makeDispatcher(), simConfig);
     }
 

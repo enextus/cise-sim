@@ -1,12 +1,12 @@
 package eu.cise.sim;
 
-import eu.cise.sim.engine.*;
-import eu.cise.sim.utils.FakeSignatureService;
-import eu.cise.sim.utils.Pair;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.signature.SignatureService;
+import eu.cise.sim.engine.*;
+import eu.cise.sim.utils.FakeSignatureService;
+import eu.cise.sim.utils.Pair;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,7 +46,7 @@ public class MessageProcessorTest {
     }
 
     @Test
-    public void it_calls_prepare_from_emulator_engine() {
+    public void it_calls_prepare_from_sim_engine() {
         Message message = newPush().sender(newService().type(VESSEL_SERVICE)).build();
 
         messageProcessor.send(message, param);
@@ -55,7 +55,7 @@ public class MessageProcessorTest {
     }
 
     @Test
-    public void it_calls_send_from_emulator_engine() {
+    public void it_calls_send_from_sim_engine() {
         Message message = newPush().sender(newService().type(VESSEL_SERVICE)).build();
         Message preparedMessage = newPush().sender(newService().type(VESSEL_SERVICE)).build();
         preparedMessage.setCorrelationID("new_correlation_id");

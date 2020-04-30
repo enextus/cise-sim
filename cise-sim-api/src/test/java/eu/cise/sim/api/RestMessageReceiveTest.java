@@ -1,40 +1,37 @@
 package eu.cise.sim.api;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherFactory;
 import eu.cise.dispatcher.DispatcherType;
-import eu.cise.sim.engine.DefaultSimEngine;
-import eu.cise.sim.engine.DefaultMessageProcessor;
-import eu.cise.sim.engine.SimConfig;
-import eu.cise.sim.engine.MessageProcessor;
-import eu.cise.sim.io.MessageStorage;
-import eu.cise.sim.templates.DefaultTemplateLoader;
-import eu.cise.sim.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
+import eu.cise.sim.engine.DefaultMessageProcessor;
+import eu.cise.sim.engine.DefaultSimEngine;
+import eu.cise.sim.engine.MessageProcessor;
+import eu.cise.sim.engine.SimConfig;
+import eu.cise.sim.io.MessageStorage;
+import eu.cise.sim.templates.DefaultTemplateLoader;
+import eu.cise.sim.templates.TemplateLoader;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import io.restassured.RestAssured;
-import javax.ws.rs.core.MediaType;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import wiremock.org.apache.http.HttpHeaders;
+
+import javax.ws.rs.core.MediaType;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class RestMessageReceiveTest {
 
@@ -163,10 +160,10 @@ public class RestMessageReceiveTest {
     }
 
     private MessageProcessor makeMessageProcessor(XmlMapper xmlMapper) {
-        return new DefaultMessageProcessor(makeEmulatorEngine(xmlMapper));
+        return new DefaultMessageProcessor(makeSimEngine(xmlMapper));
     }
 
-    private DefaultSimEngine makeEmulatorEngine(XmlMapper xmlMapper) {
+    private DefaultSimEngine makeSimEngine(XmlMapper xmlMapper) {
         return new DefaultSimEngine(makeSignatureService(xmlMapper), makeDispatcher(),
             this.simConfig);
     }

@@ -1,11 +1,5 @@
 package eu.cise.sim.api.resources;
 
-import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
-import static eu.eucise.helpers.PushBuilder.newPush;
-import static eu.eucise.helpers.ServiceBuilder.newService;
-import static io.dropwizard.testing.ResourceHelpers.resourceFilePath;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import eu.cise.datamodel.v1.entity.Entity;
 import eu.cise.datamodel.v1.entity.incident.Incident;
 import eu.cise.datamodel.v1.entity.incident.MaritimeSafetyIncident;
@@ -15,33 +9,33 @@ import eu.cise.datamodel.v1.entity.vessel.Vessel;
 import eu.cise.dispatcher.DispatchResult;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.SoapDispatcher;
-import eu.cise.sim.api.EmulatorApp;
-import eu.cise.sim.api.EmulatorConf;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
-import eu.cise.servicemodel.v1.message.AcknowledgementType;
-import eu.cise.servicemodel.v1.message.InformationSecurityLevelType;
-import eu.cise.servicemodel.v1.message.InformationSensitivityType;
-import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.servicemodel.v1.message.PriorityType;
-import eu.cise.servicemodel.v1.message.PurposeType;
-import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
 import eu.cise.signature.SignatureService;
+import eu.cise.sim.api.SimApp;
+import eu.cise.sim.api.SimConf;
 import io.dropwizard.testing.junit.DropwizardAppRule;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
+import static eu.eucise.helpers.PushBuilder.newPush;
+import static eu.eucise.helpers.ServiceBuilder.newService;
+import static io.dropwizard.testing.ResourceHelpers.resourceFilePath;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class SoapDispatcherTest {
 
     @ClassRule
-    public static final DropwizardAppRule<EmulatorConf> DROPWIZARD =
-        new DropwizardAppRule<>(EmulatorApp.class, resourceFilePath("test-config.yml"));
+    public static final DropwizardAppRule<SimConf> DROPWIZARD =
+        new DropwizardAppRule<>(SimApp.class, resourceFilePath("test-config.yml"));
 
     private String soapEndpointDestination;
     private Dispatcher soapDispatcher;

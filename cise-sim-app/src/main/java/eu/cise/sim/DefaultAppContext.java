@@ -34,10 +34,10 @@ public class DefaultAppContext implements AppContext {
 
     @Override
     public MessageProcessor makeMessageProcessor() {
-        return new DefaultMessageProcessor(makeEmulatorEngine());
+        return new DefaultMessageProcessor(makeSimEngine());
     }
 
-    private DefaultSimEngine makeEmulatorEngine() {
+    private DefaultSimEngine makeSimEngine() {
         return new DefaultSimEngine(makeSignatureService(), makeDispatcher(), this.simConfig);
     }
 

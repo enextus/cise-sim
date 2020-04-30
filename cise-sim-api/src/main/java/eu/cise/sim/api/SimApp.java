@@ -19,7 +19,7 @@ import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle.Listener;
 
-public class EmulatorApp extends Application<EmulatorConf> {
+public class SimApp extends Application<SimConf> {
 
     // JAX-WS Bundle
     private final JAXWSBundle<Object> jaxwsBundle = new JAXWSBundle<>("/api/soap");
@@ -30,7 +30,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
     }
 
     @Override
-    public void initialize(final Bootstrap<EmulatorConf> bootstrap) {
+    public void initialize(final Bootstrap<SimConf> bootstrap) {
         bootstrap.addBundle(jaxwsBundle);
         bootstrap.addBundle(
             new ConfiguredAssetsBundle(
@@ -40,7 +40,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
     }
 
     @Override
-    public void run(final EmulatorConf conf, final Environment environment) {
+    public void run(final SimConf conf, final Environment environment) {
         CrossOriginSupport.setup(environment);
 
         environment.jersey().setUrlPattern("/api");
@@ -106,7 +106,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
 
     public static void main(final String[] args) {
         try {
-            new EmulatorApp().run(args);
+            new SimApp().run(args);
         } catch (Exception e) {
             e.printStackTrace();
         }

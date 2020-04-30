@@ -34,11 +34,11 @@ public class Main implements Runnable {
         var appContext = new CliAppContext();
 
         var useCaseSendMessage = new UseCaseSendMessage(
-                appContext.makeEmulatorEngine(), appContext.makeMessageLoader()
+                appContext.makeSimEngine(), appContext.makeMessageLoader()
         );
 
         var useCaseReciveMessage = new UseCaseReciveMessage(
-                appContext.makeEmulatorEngine(), appContext.makeMessageLoader()
+                appContext.makeSimEngine(), appContext.makeMessageLoader()
         );
 
 
