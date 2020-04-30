@@ -303,7 +303,7 @@ To install the JavaScript dependencies is just enough to launch an npm command t
 dependencies and to build an artifact of the front end: 
 
 ```bash
-$ cd cise-emulator-react
+$ cd cise-sim-react
 $ npm install
 $ npm run build --scripts-prepend-node-path=auto
 ```

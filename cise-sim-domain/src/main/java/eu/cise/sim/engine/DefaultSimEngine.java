@@ -1,31 +1,23 @@
 package eu.cise.sim.engine;
 
+import eu.cise.dispatcher.DispatchResult;
+import eu.cise.dispatcher.Dispatcher;
+import eu.cise.dispatcher.DispatcherException;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.signature.SignatureService;
+import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
+import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
+import eu.cise.sim.exceptions.*;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.sql.Date;
+import java.time.Clock;
+
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static eu.cise.sim.helpers.Asserts.notBlank;
 import static eu.cise.sim.helpers.Asserts.notNull;
 import static eu.eucise.helpers.DateHelper.toXMLGregorianCalendar;
-
-import eu.cise.dispatcher.DispatchResult;
-import eu.cise.dispatcher.Dispatcher;
-import eu.cise.dispatcher.DispatcherException;
-import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
-import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
-import eu.cise.sim.exceptions.EmptyMessageIdEx;
-import eu.cise.sim.exceptions.EndpointErrorEx;
-import eu.cise.sim.exceptions.EndpointNotFoundEx;
-import eu.cise.sim.exceptions.NullClockEx;
-import eu.cise.sim.exceptions.NullConfigEx;
-import eu.cise.sim.exceptions.NullDispatcherEx;
-import eu.cise.sim.exceptions.NullMessageEx;
-import eu.cise.sim.exceptions.NullSendParamEx;
-import eu.cise.sim.exceptions.NullSenderEx;
-import eu.cise.sim.exceptions.NullSignatureServiceEx;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
-import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.signature.SignatureService;
-import java.sql.Date;
-import java.time.Clock;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 
 public class DefaultSimEngine implements SimEngine {
@@ -64,7 +56,7 @@ public class DefaultSimEngine implements SimEngine {
      *                   <p>
      *                   NOTE: this constructor is used only in tests
      */
-    DefaultSimEngine(
+    public DefaultSimEngine(
         SignatureService signature,
         SimConfig simConfig,
         Dispatcher dispatcher,

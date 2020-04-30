@@ -70,7 +70,7 @@ public class EmulatorApp extends Application<EmulatorConf> {
         environment.jersey().register(new UiMessageResource(messageAPI));
         environment.jersey().register(new UIServiceResource(appCtx.makeEmuConfig()));
         environment.jersey().register(new MessageResource(messageAPI, appCtx.makeMessageStorage()));
-        environment.jersey().register(new TemplateResource(messageAPI,templateAPI));
+        environment.jersey().register(new TemplateResource(messageAPI, templateAPI));
 
         CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(
                 messageAPI,
