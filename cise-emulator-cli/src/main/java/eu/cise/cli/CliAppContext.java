@@ -2,9 +2,9 @@ package eu.cise.cli;
 
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherFactory;
-import eu.cise.emulator.DefaultEmulatorEngine;
-import eu.cise.emulator.EmuConfig;
-import eu.cise.emulator.EmulatorEngine;
+import eu.cise.sim.engine.DefaultSimEngine;
+import eu.cise.sim.engine.SimConfig;
+import eu.cise.sim.engine.SimEngine;
 import eu.cise.signature.SignatureService;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
@@ -14,18 +14,18 @@ import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 
 public class CliAppContext {
 
-    private final EmuConfig emuConfig;
+    private final SimConfig simConfig;
     private final XmlMapper xmlMapper;
     private final SignatureService signatureService;
 
     public CliAppContext() {
-        this.emuConfig = ConfigFactory.create(EmuConfig.class);
+        this.simConfig = ConfigFactory.create(SimConfig.class);
         this.xmlMapper = new DefaultXmlMapper.NotValidating();
         this.signatureService = newSignatureService(xmlMapper)
-                .withKeyStoreName(emuConfig.keyStoreFileName())
-                .withKeyStorePassword(emuConfig.keyStorePassword())
-                .withPrivateKeyAlias(emuConfig.privateKeyAlias())
-                .withPrivateKeyPassword(emuConfig.privateKeyPassword())
+                .withKeyStoreName(simConfig.keyStoreFileName())
+                .withKeyStorePassword(simConfig.keyStorePassword())
+                .withPrivateKeyAlias(simConfig.privateKeyAlias())
+                .withPrivateKeyPassword(simConfig.privateKeyPassword())
                 .build();
     }
 
@@ -33,18 +33,18 @@ public class CliAppContext {
         return this.xmlMapper;
     }
 
-    public EmuConfig getEmuConfig() {
-        return this.emuConfig;
+    public SimConfig getSimConfig() {
+        return this.simConfig;
     }
 
-    public EmulatorEngine makeEmulatorEngine() {
-        return new DefaultEmulatorEngine(signatureService, makeDispatcher(), emuConfig);
+    public SimEngine makeEmulatorEngine() {
+        return new DefaultSimEngine(signatureService, makeDispatcher(), simConfig);
     }
 
     public Dispatcher makeDispatcher() {
         DispatcherFactory dispatcherFactory = new DispatcherFactory();
         return dispatcherFactory
-                .getDispatcher(this.emuConfig.destinationProtocol(), this.xmlMapper);
+                .getDispatcher(this.simConfig.destinationProtocol(), this.xmlMapper);
     }
 
     public MessageLoader makeMessageLoader() {

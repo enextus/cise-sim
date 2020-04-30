@@ -1,10 +1,10 @@
 package eu.cise.sim.api;
 
-import eu.cise.emulator.MessageProcessor;
+import eu.cise.sim.engine.MessageProcessor;
 import eu.cise.sim.api.representation.TemplateParams;
-import eu.cise.emulator.exceptions.LoaderEx;
-import eu.cise.emulator.templates.Template;
-import eu.cise.emulator.templates.TemplateLoader;
+import eu.cise.sim.exceptions.LoaderEx;
+import eu.cise.sim.templates.Template;
+import eu.cise.sim.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.XmlMapper;
 

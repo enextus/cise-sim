@@ -1,6 +1,6 @@
 package eu.cise.sim.api;
 
-import eu.cise.emulator.templates.Template;
+import eu.cise.sim.templates.Template;
 
 import java.io.Serializable;
 import java.util.Objects;

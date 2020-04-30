@@ -1,21 +1,21 @@
 package eu.cise.cli;
 
-import eu.cise.emulator.EmulatorEngine;
+import eu.cise.sim.engine.SimEngine;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 
 public class UseCaseReciveMessage {
 
-    private final EmulatorEngine emulatorEngine;
+    private final SimEngine simEngine;
     private final MessageLoader loader;
 
-    public UseCaseReciveMessage(EmulatorEngine emulatorEngine, MessageLoader loader) {
-        this.emulatorEngine = emulatorEngine;
+    public UseCaseReciveMessage(SimEngine simEngine, MessageLoader loader) {
+        this.simEngine = simEngine;
         this.loader = loader;
     }
 
     public Acknowledgement receive(Message message) {
-        var ack = emulatorEngine.receive(message);
+        var ack = simEngine.receive(message);
 
         loader.saveSentMessage(message);
         loader.saveReturnedAck(ack);

@@ -26,7 +26,7 @@
 
 
   <modules>
-    <module>cise-emulator-domain</module>
+    <module>cise-sim-domain</module>
     <module>cise-emulator-cli</module>
     <module>cise-emulator-react</module>
     <module>cise-sim-api</module>
@@ -171,7 +171,7 @@
       <!-- inner module dependencies -->
       <dependency>
         <groupId>eu.europa.ec.jrc.marex</groupId>
-        <artifactId>cise-emulator-domain</artifactId>
+        <artifactId>cise-sim-domain</artifactId>
         <version>1.2.3-SNAPSHOT</version>
       </dependency>
 

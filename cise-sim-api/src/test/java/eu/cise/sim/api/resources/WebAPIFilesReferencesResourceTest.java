@@ -1,6 +1,6 @@
 package eu.cise.sim.api.resources;
 
-/*import eu.cise.emulator.api.helpers.XmlFileDirectoryList;
+/*import eu.cise.sim.api.helpers.XmlFileDirectoryList;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;

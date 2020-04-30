@@ -9,7 +9,7 @@
     </encoder>
   </appender>
   <logger name="org.wiremock" level="INFO"/>
-  <logger name="eu.cise.emulator" level="DEBUG"/>
+  <logger name="eu.cise.sim" level="DEBUG"/>
 
   <root level="OFF">
     <appender-ref ref="STDOUT"/>

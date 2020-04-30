@@ -15,13 +15,13 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherFactory;
 import eu.cise.dispatcher.DispatcherType;
-import eu.cise.emulator.DefaultEmulatorEngine;
-import eu.cise.emulator.DefaultMessageProcessor;
-import eu.cise.emulator.EmuConfig;
-import eu.cise.emulator.MessageProcessor;
-import eu.cise.emulator.io.MessageStorage;
-import eu.cise.emulator.templates.DefaultTemplateLoader;
-import eu.cise.emulator.templates.TemplateLoader;
+import eu.cise.sim.engine.DefaultSimEngine;
+import eu.cise.sim.engine.DefaultMessageProcessor;
+import eu.cise.sim.engine.SimConfig;
+import eu.cise.sim.engine.MessageProcessor;
+import eu.cise.sim.io.MessageStorage;
+import eu.cise.sim.templates.DefaultTemplateLoader;
+import eu.cise.sim.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
@@ -40,7 +40,7 @@ public class RestMessageReceiveTest {
 
     @Rule
     public WireMockRule mWireMockRule = new WireMockRule(8123);
-    private final EmuConfig emuConfig = new EmuConfig() {
+    private final SimConfig simConfig = new SimConfig() {
         @Override
         public String simulatorName() {
             return "N/A";
@@ -73,7 +73,7 @@ public class RestMessageReceiveTest {
 
         @Override
         public String messageTemplateDir() {
-            return "cise-emulator-assembly/src/main/resources/templates/messages";
+            return "cise-sim-assembly/src/main/resources/templates/messages";
         }
 
         @Override
@@ -166,18 +166,18 @@ public class RestMessageReceiveTest {
         return new DefaultMessageProcessor(makeEmulatorEngine(xmlMapper));
     }
 
-    private DefaultEmulatorEngine makeEmulatorEngine(XmlMapper xmlMapper) {
-        return new DefaultEmulatorEngine(makeSignatureService(xmlMapper), makeDispatcher(),
-            this.emuConfig);
+    private DefaultSimEngine makeEmulatorEngine(XmlMapper xmlMapper) {
+        return new DefaultSimEngine(makeSignatureService(xmlMapper), makeDispatcher(),
+            this.simConfig);
     }
 
     private TemplateLoader makeTemplateLoader() {
-        return new DefaultTemplateLoader(emuConfig);
+        return new DefaultTemplateLoader(simConfig);
     }
 
     private Dispatcher makeDispatcher() {
         DispatcherFactory dispatcherFactory = new DispatcherFactory();
         return dispatcherFactory
-            .getDispatcher(this.emuConfig.destinationProtocol(), this.xmlMapperNoValidPretty);
+            .getDispatcher(this.simConfig.destinationProtocol(), this.xmlMapperNoValidPretty);
     }
 }

@@ -1,22 +1,22 @@
 package eu.cise.cli;
 
-import eu.cise.emulator.EmulatorEngine;
-import eu.cise.emulator.SendParam;
+import eu.cise.sim.engine.SimEngine;
+import eu.cise.sim.engine.SendParam;
 
 public class UseCaseSendMessage {
 
-    private final EmulatorEngine emulatorEngine;
+    private final SimEngine simEngine;
     private final MessageLoader loader;
 
-    public UseCaseSendMessage(EmulatorEngine emulatorEngine, MessageLoader loader) {
-        this.emulatorEngine = emulatorEngine;
+    public UseCaseSendMessage(SimEngine simEngine, MessageLoader loader) {
+        this.simEngine = simEngine;
         this.loader = loader;
     }
 
     public void send(String filename, SendParam sendParam) {
         var message = loader.load(filename);
-        var preparedMessage = emulatorEngine.prepare(message, sendParam);
-        var acknowledgement = emulatorEngine.send(preparedMessage);
+        var preparedMessage = simEngine.prepare(message, sendParam);
+        var acknowledgement = simEngine.send(preparedMessage);
 
         loader.saveSentMessage(message);
         loader.saveReturnedAck(acknowledgement);

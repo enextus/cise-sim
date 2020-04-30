@@ -1,6 +1,6 @@
 package eu.cise.sim.api.representation;
 
-import eu.cise.emulator.SendParam;
+import eu.cise.sim.engine.SendParam;
 
 import java.io.Serializable;
 

@@ -1,10 +1,10 @@
 package eu.cise.sim.api;
 
-import eu.cise.emulator.MessageProcessor;
+import eu.cise.sim.engine.MessageProcessor;
 import eu.cise.sim.api.resources.MessageBuilderUtil;
-import eu.cise.emulator.io.DefaultMessageStorage;
-import eu.cise.emulator.io.MessageStorage;
-import eu.cise.emulator.templates.TemplateLoader;
+import eu.cise.sim.io.DefaultMessageStorage;
+import eu.cise.sim.io.MessageStorage;
+import eu.cise.sim.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.DefaultXmlMapper;

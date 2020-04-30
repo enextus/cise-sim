@@ -1,16 +1,16 @@
 package eu.cise.sim.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.cise.emulator.MessageProcessor;
-import eu.cise.emulator.SendParam;
-import eu.cise.emulator.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
-import eu.cise.emulator.SynchronousAcknowledgement.SynchronousAcknowledgementType;
+import eu.cise.sim.engine.MessageProcessor;
+import eu.cise.sim.engine.SendParam;
+import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
+import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
 import eu.cise.sim.api.helpers.SendParamsReader;
-import eu.cise.emulator.exceptions.NullSenderEx;
-import eu.cise.emulator.io.MessageStorage;
-import eu.cise.emulator.templates.Template;
-import eu.cise.emulator.templates.TemplateLoader;
-import eu.cise.emulator.utils.Pair;
+import eu.cise.sim.exceptions.NullSenderEx;
+import eu.cise.sim.io.MessageStorage;
+import eu.cise.sim.templates.Template;
+import eu.cise.sim.templates.TemplateLoader;
+import eu.cise.sim.utils.Pair;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;

@@ -1,7 +1,7 @@
 package eu.cise.cli;
 
 import com.beust.jcommander.JCommander;
-import eu.cise.emulator.SendParam;
+import eu.cise.sim.engine.SendParam;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 
 import static spark.Spark.port;

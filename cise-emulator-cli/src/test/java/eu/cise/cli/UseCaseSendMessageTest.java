@@ -1,7 +1,7 @@
 package eu.cise.cli;
 
-import eu.cise.emulator.EmulatorEngine;
-import eu.cise.emulator.SendParam;
+import eu.cise.sim.engine.SimEngine;
+import eu.cise.sim.engine.SendParam;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 
 public class UseCaseSendMessageTest {
     private UseCaseSendMessage useCaseSendMessage;
-    private EmulatorEngine emulatorEngine;
+    private SimEngine simEngine;
     private MessageLoader loader;
     private Push messageLoaded;
     private Acknowledgement returnedAck;
@@ -21,24 +21,24 @@ public class UseCaseSendMessageTest {
 
     @Before
     public void before() {
-        emulatorEngine = mock(EmulatorEngine.class);
+        simEngine = mock(SimEngine.class);
         loader = mock(MessageLoader.class);
 
-        useCaseSendMessage = new UseCaseSendMessage(emulatorEngine, loader);
+        useCaseSendMessage = new UseCaseSendMessage(simEngine, loader);
 
         messageLoaded = new Push();
         preparedMessage = new Push();
         returnedAck = new Acknowledgement();
 
         when(loader.load(anyString())).thenReturn(messageLoaded);
-        when(emulatorEngine.prepare(any(),any())).thenReturn(preparedMessage);
-        when(emulatorEngine.send(any())).thenReturn(returnedAck);
+        when(simEngine.prepare(any(),any())).thenReturn(preparedMessage);
+        when(simEngine.send(any())).thenReturn(returnedAck);
     }
 
     @After
     public void after() {
         reset(loader);
-        reset(emulatorEngine);
+        reset(simEngine);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class UseCaseSendMessageTest {
 
         useCaseSendMessage.send("filename.xml", sendParam);
 
-        verify(emulatorEngine).prepare(messageLoaded, sendParam);
+        verify(simEngine).prepare(messageLoaded, sendParam);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class UseCaseSendMessageTest {
 
         useCaseSendMessage.send("filename.xml", sendParam);
 
-        verify(emulatorEngine).send(preparedMessage);
+        verify(simEngine).send(preparedMessage);
     }
 
     @Test

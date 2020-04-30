@@ -8,7 +8,7 @@ import eu.cise.sim.api.SendResponse;
 import eu.cise.sim.api.TemplateAPI;
 import eu.cise.sim.api.TemplateListResponse;
 import eu.cise.sim.api.representation.TemplateParams;
-import eu.cise.emulator.templates.Template;
+import eu.cise.sim.templates.Template;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;

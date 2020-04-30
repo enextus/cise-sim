@@ -102,7 +102,7 @@
         <!-- internal dependencies -->
         <dependency>
             <groupId>eu.europa.ec.jrc.marex</groupId>
-            <artifactId>cise-emulator-domain</artifactId>
+            <artifactId>cise-sim-domain</artifactId>
             <version>1.2.3-SNAPSHOT</version>
         </dependency>
 

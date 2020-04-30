@@ -1,7 +1,7 @@
 package eu.cise.sim.api.helpers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.cise.emulator.SendParam;
+import eu.cise.sim.engine.SendParam;
 
 public class SendParamsReader {
 

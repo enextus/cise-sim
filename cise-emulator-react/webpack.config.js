@@ -7,7 +7,7 @@ module.exports = {
     devtool: debug ? 'inline-sourcemap' : null,
     entry: './index.js',
     output: {
-        path: path.join(__dirname, '../cise-emulator-api/src/main/resources/assets/static'),
+        path: path.join(__dirname, '../cise-sim-api/src/main/resources/assets/static'),
         filename: 'bundle.js',
         publicPath: '/static/'
     },

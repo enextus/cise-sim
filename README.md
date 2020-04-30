@@ -135,7 +135,7 @@ logging:
   level: INFO
   loggers:
     "io.dropwizard.bundles.assets": INFO
-    "eu.cise.emulator.api": INFO
+    "eu.cise.sim.api": INFO
     "org.eclipse.jetty.server.handler": WARN
     "org.eclipse.jetty.setuid": WARN
     "io.dropwizard.server.DefaultServerFactory": WARN
@@ -205,7 +205,7 @@ logging:
   level: INFO
   loggers:
     "io.dropwizard.bundles.assets": INFO
-    "eu.cise.emulator.api": INFO
+    "eu.cise.sim.api": INFO
     "org.eclipse.jetty.server.handler": WARN
     "org.eclipse.jetty.setuid": WARN
     "eu.cise.dispatcher.Dispatcher": DEBUG
@@ -232,7 +232,7 @@ assets:
   mappings:
     /assets: /
   overrides:
-    /base/: ${project.basedir}/cise-emulator-react
+    /base/: ${project.basedir}/cise-sim-react
     /base/static:  ${project.basedir}/cise-emulator-react/dist
 
 ```

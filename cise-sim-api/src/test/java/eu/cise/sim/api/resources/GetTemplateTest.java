@@ -1,12 +1,12 @@
 package eu.cise.sim.api.resources;
 
-import eu.cise.emulator.EmuConfig;
+import eu.cise.sim.engine.SimConfig;
 import eu.cise.sim.api.APIError;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.PreviewResponse;
 import eu.cise.sim.api.TemplateAPI;
 import eu.cise.sim.api.representation.TemplateParams;
-import eu.cise.emulator.templates.Template;
+import eu.cise.sim.templates.Template;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -30,7 +30,7 @@ public class GetTemplateTest {
 
     private static final TemplateAPI templateAPI = mock(TemplateAPI.class);
     private static final MessageAPI messageAPI = mock(MessageAPI.class);
-    private static final EmuConfig emuConfig = mock(EmuConfig.class);
+    private static final SimConfig SIM_CONFIG = mock(SimConfig.class);
 
     private XmlMapper xmlMapper;
 

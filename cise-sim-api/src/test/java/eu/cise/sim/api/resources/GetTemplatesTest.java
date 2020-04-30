@@ -1,11 +1,11 @@
 package eu.cise.sim.api.resources;
 
-import eu.cise.emulator.EmuConfig;
+import eu.cise.sim.engine.SimConfig;
 import eu.cise.sim.api.APIError;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.TemplateAPI;
 import eu.cise.sim.api.TemplateListResponse;
-import eu.cise.emulator.templates.Template;
+import eu.cise.sim.templates.Template;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.After;
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class GetTemplatesTest {
 
     private static final TemplateAPI templateAPI = mock(TemplateAPI.class);
     private static final MessageAPI messageAPI = mock(MessageAPI.class);
-    private static final EmuConfig emuConfig = mock(EmuConfig.class);
+    private static final SimConfig SIM_CONFIG = mock(SimConfig.class);
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()

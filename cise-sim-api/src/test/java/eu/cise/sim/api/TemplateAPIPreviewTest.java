@@ -1,13 +1,13 @@
 package eu.cise.sim.api;
 
-import eu.cise.emulator.MessageProcessor;
-import eu.cise.emulator.SendParam;
+import eu.cise.sim.engine.MessageProcessor;
+import eu.cise.sim.engine.SendParam;
 import eu.cise.sim.api.representation.TemplateParams;
-import eu.cise.emulator.exceptions.NullSendParamEx;
-import eu.cise.emulator.io.MessageStorage;
-import eu.cise.emulator.templates.DefaultTemplateLoader;
-import eu.cise.emulator.templates.Template;
-import eu.cise.emulator.templates.TemplateLoader;
+import eu.cise.sim.exceptions.NullSendParamEx;
+import eu.cise.sim.io.MessageStorage;
+import eu.cise.sim.templates.DefaultTemplateLoader;
+import eu.cise.sim.templates.Template;
+import eu.cise.sim.templates.TemplateLoader;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.eucise.xml.XmlMapper;
 import org.junit.Before;

@@ -7,7 +7,7 @@ import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.MessageApiDto;
 import eu.cise.sim.api.SendResponse;
 import eu.cise.sim.api.TemplateAPI;
-import eu.cise.emulator.templates.Template;
+import eu.cise.sim.templates.Template;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import io.dropwizard.testing.junit.ResourceTestRule;

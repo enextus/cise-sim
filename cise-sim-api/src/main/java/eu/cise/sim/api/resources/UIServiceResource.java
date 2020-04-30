@@ -1,7 +1,7 @@
 package eu.cise.sim.api.resources;
 
 import eu.cise.sim.api.ServiceDetail;
-import eu.cise.emulator.EmuConfig;
+import eu.cise.sim.engine.SimConfig;
 import eu.cise.servicemodel.v1.authority.Participant;
 import eu.cise.servicemodel.v1.service.Service;
 
@@ -14,26 +14,26 @@ import javax.ws.rs.core.Response;
 @Path("/ui/service")
 @Produces(MediaType.APPLICATION_JSON)
 public class UIServiceResource {
-    private final EmuConfig emuConfig;
+    private final SimConfig simConfig;
 
-    public UIServiceResource(EmuConfig emuConfig) {
-        this.emuConfig = emuConfig;
+    public UIServiceResource(SimConfig simConfig) {
+        this.simConfig = simConfig;
     }
 
     @GET
     @Path("/self")
     public Response informSelfInfo() {
         Participant participant = new Participant();
-        participant.setId(emuConfig.simulatorName());
+        participant.setId(simConfig.simulatorName());
 
         Service service = new Service();
         service.setParticipant(participant);
 
         ServiceDetail serviceDetail = new ServiceDetail(
             service,
-            emuConfig.destinationProtocol(),
-            emuConfig.destinationUrl(),
-            emuConfig.appVersion()
+            simConfig.destinationProtocol(),
+            simConfig.destinationUrl(),
+            simConfig.appVersion()
         );
 
         return Response
