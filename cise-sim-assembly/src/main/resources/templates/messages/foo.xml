@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/eu.cise.dispatcher.soap/envelope/">
+    <S:Body>
+        <ns5:send
+                xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/"
+                xmlns:ns5="http://www.cise.eu/accesspoint/service/v1/">
+            <message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:Push">
+                <CorrelationID>correlation-id</CorrelationID>
+                <CreationDateTime>2019-10-23T17:06:15.112+02:00</CreationDateTime>
+                <MessageID>mesageId</MessageID>
+                <Priority>High</Priority>
+                <RequiresAck>true</RequiresAck>
+                <Sender>
+                    <ServiceID>service-id</ServiceID>
+                    <ServiceOperation>Push</ServiceOperation>
+                    <ServiceType>VesselService</ServiceType>
+                    <Participant/>
+                </Sender>
+                <Recipient>
+                    <ServiceID>recipient-id</ServiceID>
+                    <ServiceOperation>Push</ServiceOperation>
+                    <Participant/>
+                </Recipient>
+                <Payload xsi:type="ns4:XmlEntityPayload">
+                    <InformationSecurityLevel>NonClassified</InformationSecurityLevel>
+                    <InformationSensitivity>Green</InformationSensitivity>
+                    <IsPersonalData>false</IsPersonalData>
+                    <Purpose>NonSpecified</Purpose>
+                    <EnsureEncryption>false</EnsureEncryption>
+                    <ns5:Vessel/>
+                </Payload>
+            </message>
+        </ns5:send>
+    </S:Body>
+</S:Envelope>

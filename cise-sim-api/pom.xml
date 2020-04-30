@@ -109,7 +109,7 @@
 
         <dependency>
             <groupId>eu.europa.ec.jrc.marex</groupId>
-            <artifactId>cise-emulator-app</artifactId>
+            <artifactId>cise-sim-app</artifactId>
             <version>1.2.3-SNAPSHOT</version>
         </dependency>
 
