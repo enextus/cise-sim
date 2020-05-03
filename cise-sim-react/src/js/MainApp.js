@@ -1,11 +1,11 @@
-import React from "react";
-import {observer} from "mobx-react";
+import React from 'react';
+import {observer} from 'mobx-react';
 import Body from './components/Body';
 import NavBar from './components/NavBar';
-import TemplateStore from "./templates/TemplateStore";
-import MessageStore from "./messages/MessageStore";
-import ServiceStore from "./services/ServiceStore";
-import {autorun} from "mobx";
+import TemplateStore from './templates/TemplateStore';
+import MessageStore from './messages/MessageStore';
+import ServiceStore from './services/ServiceStore';
+import {autorun} from 'mobx';
 
 
 const stores = {

@@ -1,5 +1,5 @@
-import {Component} from "react";
-import {observer} from "mobx-react";
+import {Component} from 'react';
+import {observer} from 'mobx-react';
 import {
     Button,
     ExpansionPanel,
@@ -14,8 +14,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import {withSnackbar} from 'notistack';
 import Error from '../../errors/Error';
-import XmlContent from "../../components/common/XmlContent";
-import TabPanel from "../../components/common/TabPanel";
+import XmlContent from '../../components/common/XmlContent';
+import TabPanel from '../../components/common/TabPanel';
 import EmailIcon from '@material-ui/icons/Email';
 
 

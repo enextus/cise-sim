@@ -1,5 +1,5 @@
 import {http_get} from '../api/API'
-import Template from "./Template";
+import Template from './Template';
 
 export async function getTemplateList() {
     const templates = await http_get("templates");

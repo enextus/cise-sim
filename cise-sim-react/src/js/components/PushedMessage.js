@@ -1,12 +1,12 @@
-import {Component} from "react";
-import {observer} from "mobx-react";
+import {Component} from 'react';
+import {observer} from 'mobx-react';
 import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Tab, Tabs, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
-import XmlContent from "./common/XmlContent";
-import TabPanel from "./common/TabPanel";
-import SendIcon from "@material-ui/icons/Send"
+import XmlContent from './common/XmlContent';
+import TabPanel from './common/TabPanel';
+import SendIcon from '@material-ui/icons/Send'
 
 const style = (theme) => ({
     root: {

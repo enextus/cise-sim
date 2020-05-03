@@ -1,5 +1,5 @@
 import {http_delete, http_post} from '../api/API'
-import Message from "./Message";
+import Message from './Message';
 
 export async function sendMessage(templateId, messageId, correlationId, requiresAck) {
     console.log("sendMessage");

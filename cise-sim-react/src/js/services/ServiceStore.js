@@ -1,6 +1,6 @@
-import {action, decorate, observable} from "mobx";
-import {getServiceSelf} from "./ServiceService";
-import Service from "./Service";
+import {action, decorate, observable} from 'mobx';
+import {getServiceSelf} from './ServiceService';
+import Service from './Service';
 
 export default class ServiceStore {
 

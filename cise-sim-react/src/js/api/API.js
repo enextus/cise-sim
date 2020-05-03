@@ -1,5 +1,5 @@
-import axios from "axios";
-import Error from "../errors/Error";
+import axios from 'axios';
+import Error from '../errors/Error';
 
 export const http_get = async (service, params) => {
   try {

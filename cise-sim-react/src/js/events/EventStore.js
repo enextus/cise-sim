@@ -1,4 +1,4 @@
-import {action, computed, decorate, observable} from "mobx"
+import {action, computed, decorate, observable} from 'mobx';
 
 export class Event {
  value;

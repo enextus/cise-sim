@@ -1,6 +1,6 @@
-import {action, computed, observable} from "mobx";
-import {pullMessage, sendMessage} from "./MessageService";
-import Message from "./Message";
+import {action, computed, observable} from 'mobx';
+import {pullMessage, sendMessage} from './MessageService';
+import Message from './Message';
 
 export default class MessageStore {
     @observable sentMessage = new Message({body: "", acknowledge: ""});

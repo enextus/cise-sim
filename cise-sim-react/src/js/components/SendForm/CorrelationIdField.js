@@ -1,8 +1,8 @@
-import {TextField} from "@material-ui/core";
-import React from "react";
-import PropTypes from "prop-types";
-import {observer} from "mobx-react";
-import Tooltip from "@material-ui/core/Tooltip";
+import {TextField} from '@material-ui/core';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {observer} from 'mobx-react';
+import Tooltip from '@material-ui/core/Tooltip';
 
 @observer
 export default class CorrelationIdField extends React.Component {

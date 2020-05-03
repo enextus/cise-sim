@@ -1,14 +1,14 @@
-import {Component} from "react";
-import {Box, Grid, Paper} from "@material-ui/core";
-import {observer} from "mobx-react";
+import {Component} from 'react';
+import {Box, Grid, Paper} from '@material-ui/core';
+import {observer} from 'mobx-react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import MessageIdField from "./SendForm/MessageIdField";
-import CorrelationIdField from "./SendForm/CorrelationIdField";
-import TemplateSelect from "./SendForm/TemplateSelect";
-import RequiresAckCheck from "./SendForm/RequiresAckCheck";
-import PreviewButton from "./SendForm/PreviewButton";
-import SendButton from "./SendForm/SendButton";
+import MessageIdField from './SendForm/MessageIdField';
+import CorrelationIdField from './SendForm/CorrelationIdField';
+import TemplateSelect from './SendForm/TemplateSelect';
+import RequiresAckCheck from './SendForm/RequiresAckCheck';
+import PreviewButton from './SendForm/PreviewButton';
+import SendButton from './SendForm/SendButton';
 
 const styles = theme => ({
     root: {
