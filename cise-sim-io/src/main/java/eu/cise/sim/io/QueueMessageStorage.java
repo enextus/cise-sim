@@ -18,7 +18,7 @@ public class QueueMessageStorage implements MessageStorage {
     @Override
     public void store(Object message) {
         queue.offer(message);
-        LOGGER.info("QueueMessageStorage : added message size " + queue.size());
+        LOGGER.info("store message, size " + queue.size());
     }
 
     @Override
@@ -29,7 +29,7 @@ public class QueueMessageStorage implements MessageStorage {
     @Override
     public boolean delete(Object message) {
         boolean result = queue.remove(message);
-        LOGGER.info("QueueMessageStorage : delete message [" + result + "] size " + queue.size());
+        LOGGER.info("delete message [" + result + "], size " + queue.size());
         return result;
     }
 }
