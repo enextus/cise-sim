@@ -135,7 +135,7 @@ logging:
   level: INFO
   loggers:
     "io.dropwizard.bundles.assets": INFO
-    "eu.cise.emulator.api": INFO
+    "eu.cise.sim.api": INFO
     "org.eclipse.jetty.server.handler": WARN
     "org.eclipse.jetty.setuid": WARN
     "io.dropwizard.server.DefaultServerFactory": WARN
@@ -205,7 +205,7 @@ logging:
   level: INFO
   loggers:
     "io.dropwizard.bundles.assets": INFO
-    "eu.cise.emulator.api": INFO
+    "eu.cise.sim.api": INFO
     "org.eclipse.jetty.server.handler": WARN
     "org.eclipse.jetty.setuid": WARN
     "eu.cise.dispatcher.Dispatcher": DEBUG
@@ -232,7 +232,7 @@ assets:
   mappings:
     /assets: /
   overrides:
-    /base/: ${project.basedir}/cise-emulator-react
+    /base/: ${project.basedir}/cise-sim-react
     /base/static:  ${project.basedir}/cise-emulator-react/dist
 
 ```
@@ -261,12 +261,12 @@ INFO  [2019-12-02 17:56:26,883] io.dropwizard.server.ServerFactory: Starting Emu
 INFO  [2019-12-02 17:56:26,937] org.eclipse.jetty.server.Server: jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_222-b10
 INFO  [2019-12-02 17:56:27,252] io.dropwizard.jersey.DropwizardResourceConfig: The following paths were found for the configured resources:
 
-    POST    /api/messages (eu.cise.emulator.api.resources.MessageResource)
-    DELETE  /api/ui/messages/latest (eu.cise.emulator.api.resources.UiMessageResource)
-    GET     /api/ui/service/self (eu.cise.emulator.api.resources.UIServiceResource)
-    GET     /api/ui/templates (eu.cise.emulator.api.resources.TemplateResource)
-    GET     /api/ui/templates/{templateId} (eu.cise.emulator.api.resources.TemplateResource)
-    POST    /api/ui/templates/{templateId} (eu.cise.emulator.api.resources.TemplateResource)
+    POST    /api/messages (MessageResource)
+    DELETE  /api/ui/messages/latest (UiMessageResource)
+    GET     /api/ui/service/self (UIServiceResource)
+    GET     /api/ui/templates (TemplateResource)
+    GET     /api/ui/templates/{templateId} (TemplateResource)
+    POST    /api/ui/templates/{templateId} (TemplateResource)
 
 INFO  [2019-12-02 17:56:27,262] io.dropwizard.setup.AdminEnvironment: tasks = 
 
@@ -303,7 +303,7 @@ To install the JavaScript dependencies is just enough to launch an npm command t
 dependencies and to build an artifact of the front end: 
 
 ```bash
-$ cd cise-emulator-react
+$ cd cise-sim-react
 $ npm install
 $ npm run build --scripts-prepend-node-path=auto
 ```

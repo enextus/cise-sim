@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>cise-sim</artifactId>
+        <groupId>eu.europa.ec.jrc.marex</groupId>
+        <version>1.2.3-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>cise-sim-domain</artifactId>
+    <packaging>jar</packaging>
+    <name>cise-sim-domain</name>
+    <version>1.2.3-SNAPSHOT</version>
+
+    <dependencies>
+
+        <!-- internal dependencies -->
+        <dependency>
+            <artifactId>cise-data-model</artifactId>
+            <groupId>eu.europa.ec.jrc.marex</groupId>
+            <version>1.5.3.14-jdk11-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <artifactId>eucise-service-model</artifactId>
+            <groupId>eu.europa.ec.jrc.marex</groupId>
+            <version>1.0.9-jdk11-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <artifactId>eucise-model-helpers</artifactId>
+            <groupId>eu.europa.ec.jrc.marex</groupId>
+            <version>1.0.11-jdk11-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <artifactId>cise-signature</artifactId>
+            <groupId>eu.europa.ec.jrc.marex</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>cise-dispatcher-api</artifactId>
+            <groupId>eu.europa.ec.jrc.marex</groupId>
+            <version>1.2-SNAPSHOT</version>
+        </dependency>
+
+        <!-- property file handling -->
+        <dependency>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner-java8</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner-java8-extras</artifactId>
+        </dependency>
+
+        <!-- external dependencies -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-testing</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <artifactId>junit</artifactId>
+            <groupId>junit</groupId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <main.basedir>${project.basedir}/..</main.basedir>
+    </properties>
+</project>

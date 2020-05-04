@@ -12,12 +12,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.20</version>
+        <version>2.22.2</version>
         <dependencies>
           <dependency>
             <groupId>org.apache.maven.surefire</groupId>
             <artifactId>surefire-junit47</artifactId>
-            <version>2.20</version>
+            <version>2.22.2</version>
           </dependency>
         </dependencies>
         <configuration>
@@ -37,10 +37,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
+        <version>3.8.1</version>
         <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
+          <release>${java.version}</release>
+          <source>11</source>
+          <target>11</target>
           <compilerArgument>-Xlint:unchecked</compilerArgument>
         </configuration>
       </plugin>
@@ -48,7 +49,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.0</version>
         <executions>
           <execution>
             <id>validate</id>
@@ -138,14 +139,8 @@
 
     <dependency>
       <groupId>eu.europa.ec.jrc.marex</groupId>
-      <artifactId>cise-emulator-domain</artifactId>
+      <artifactId>cise-sim-domain</artifactId>
       <version>1.2.3-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <artifactId>cise-data-model</artifactId>
-      <groupId>eu.europa.ec.jrc.marex</groupId>
-      <version>1.5.3.12</version>
     </dependency>
 
     <dependency>
@@ -154,17 +149,29 @@
       <version>1.2-SNAPSHOT</version>
     </dependency>
 
+    <!-- EUCISE dependencies -->
+    <dependency>
+      <artifactId>cise-data-model</artifactId>
+      <groupId>eu.europa.ec.jrc.marex</groupId>
+      <version>1.5.3.14-jdk11-SNAPSHOT</version>
+    </dependency>
 
     <dependency>
       <artifactId>eucise-model-helpers</artifactId>
       <groupId>eu.europa.ec.jrc.marex</groupId>
-      <version>1.0.9</version>
+      <version>1.0.11-jdk11-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <artifactId>eucise-service-model</artifactId>
       <groupId>eu.europa.ec.jrc.marex</groupId>
-      <version>1.0.7</version>
+      <version>1.0.9-jdk11-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>eu.europa.ec.jrc.marex</groupId>
+      <artifactId>cise-signature</artifactId>
+      <version>999-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -188,7 +195,7 @@
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-frontend-simple</artifactId>
-      <version>3.2.9</version>
+      <version>3.3.3</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -244,7 +251,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
   </properties>
 
 </project>

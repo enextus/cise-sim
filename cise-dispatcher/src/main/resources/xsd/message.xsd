@@ -100,7 +100,7 @@ prioritizing the messages received.]]></xs:documentation>
 upon delivery of this message in the final destination]]></xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="Sender" type="ns1:Service">
+      <xs:element minOccurs="0" name="Sender" type="ns1:Service">
         <xs:annotation>
           <xs:documentation><![CDATA[This field describes the sender of the message.]]></xs:documentation>
         </xs:annotation>
