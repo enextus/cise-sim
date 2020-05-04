@@ -1,0 +1,185 @@
+#!/usr/bin/env bash
+
+# VARIABLES ###
+SW_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
+SW_NAME=`basename ${0:-sim}`
+JAVA_EXEC=`which java`
+JAVA_VERSION=`${JAVA_EXEC} -version 2>&1 | head -n 1 | awk '{ print $3 }'`
+NOHUP_EXEC=`which nohup`
+PID_DIR=${SW_HOME}/tmp
+PID_FILE=${PID_DIR}/${SW_NAME}.pid
+DEBUG_PORT=9999
+
+# FUNCTIONS ###
+function print_help {
+  cat <<EOF
+Usage: ${GRE}${SW_NAME}${NOR} COMMAND
+sim server lifecycle manager (starting, stopping, debugging).
+COMMAND
+    start       starts the simulator in a detached shell using nohup command.
+    run         starts the simulator in foreground.
+    stop        stops the simulator running in background.
+    restart     restart the simulator running in background.
+    debug-start starts the simulator in a detached shell launching the application
+                in debug mode (port ${DEBUG_PORT}).
+    debug-run   starts the simulator in foreground launching the application
+                in debug mode (port ${DEBUG_PORT}).
+    status      show the current status the simulator (started or stopped).
+EOF
+}
+
+function enable_colors_if_supported {
+
+  if test -t 1; then
+    # see if it supports colors...
+    NCOLOR=$(tput colors)
+
+    if test -n "$NCOLOR" && test $NCOLOR -ge 8; then
+      NOR="$(tput sgr0)"
+      RED="$(tput setaf 196)"
+      GRE="$(tput setaf 40)"
+    fi
+  fi
+
+  OK="[${GRE}ok${NOR}]"
+  KO="[${RED}ko${NOR}]"
+
+}
+
+function log_exit_msg {
+  E=${1:-$?}
+test ${E} -eq 0 && echo "${OK} ${SW_NAME} started at `date -Iseconds`" || \
+    echo "${KO} ${SW_NAME} not started. Please, inspect the logs in ${GRE}logs/sim_stdout.log${NOR} to find the reason."; exit ${E}
+}
+
+function log_start_msg {
+
+  echo "${NOR}== ${GRE}CISE sim${NOR} ====================================="
+  echo "Java path:    ${JAVA_EXEC}"
+  echo "Java version: ${JAVA_VERSION}"
+  echo "================================================="
+}
+
+function log_debug_start_msg {
+  log_start_msg
+  echo "DEBUG is ON listening on port ${DEBUG_PORT}"
+  echo "the server is now waiting for a connection from a java remote"
+  echo "debugger to the port ${DEBUG_PORT}"
+}
+
+function setup_debug {
+  export JAVA_OPTS="-Xdebug -agentlib:jdwp=transport=dt_socket,address=${DEBUG_PORT},server=y,suspend=y"
+}
+
+function start {
+
+  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
+  local PID=$!
+  sleep 3
+  kill -0 ${PID} 2> /dev/null 
+  local IT_EXISTS=$?
+  [ $IT_EXISTS -ne 0 ] && log_exit_msg 1   
+
+  echo ${PID} >${PID_FILE}
+  echo "Logging in: ${GRE}logs/sim_stdout.log${NOR}"
+  log_exit_msg 0
+
+}
+
+function run() {
+  ${SW_RUN_SWR_CMD} 2>&1
+}
+
+function sw_run_cmd() {
+
+  if [ -z "$JAVA_EXEC" ]; then 
+     echo "${KO} ${SW_NAME} not started. The java executable is not in PATH."; exit ${E}
+  fi
+
+  if [ "$JAVA_VERSION" == "1.9" ]; then
+    JAVA_OPTS="${JAVA_OPTS} --add-modules java.xml.bind"
+  fi
+
+  SW_RUN_SWR_CMD="${JAVA_EXEC} ${JAVA_OPTS} -Dconf.dir=${SW_HOME}/conf/ -jar ${SW_HOME}/lib/cise-sim.jar server ${SW_HOME}/conf/config.yml"
+}
+
+function get_pid() {
+  local PID=$(cat ${PID_FILE} 2>/dev/null)
+  echo ${PID:-0}
+}
+
+function _status() {
+  PID=$(get_pid)
+  test $PID -eq 0 && \
+  echo "${KO} ${SW_NAME} is stopped (the tmp/sim.pid file is not present but the process could be still running)" || echo "${OK} ${SW_NAME} is running"
+}
+
+function _stop() {
+  PID=$(get_pid)
+  (test ${PID} -ne 0 && kill -15 "${PID}" 2>&1) > /dev/null && \
+	  (echo "${OK} ${SW_NAME} has been stopped" && rm -f "${PID_FILE}" ) \
+	  || echo "${KO} ${SW_NAME} was not running (or the tmp/sim.pid file is not present but the process could be still running)"
+}
+
+# MAIN ###
+enable_colors_if_supported
+
+cd ${SW_HOME}
+PREFIX_CMD=""
+POSTFIX_CMD=""
+COUNT_VAR=0
+for var in "$@"
+ do
+  if [[ $var == -Ddw.* ]]
+  then
+    PREFIX_CMD="$PREFIX_CMD $var"
+  else
+    POSTFIX_CMD="$POSTFIX_CMD $var"
+  fi
+done
+
+sw_run_cmd
+
+case $1 in
+start)
+  log_start_msg
+  start
+  exit 0
+  ;;
+run)
+  log_start_msg
+  run
+  exit 0
+  ;;
+debug-start)
+  setup_debug
+  log_debug_start_msg
+  sw_run_cmd
+  start
+  exit 0
+  ;;
+debug-run)
+  setup_debug
+  log_debug_start_msg
+  sw_run_cmd
+  run
+  exit 0
+  ;;
+stop)
+  _stop
+  ;;
+restart)
+  $0 stop
+  sleep 1
+  $0 start
+  ;;
+status)
+  _status
+  ;;
+*)
+  print_help
+  exit 0
+  ;;
+esac
+
+exit 0
