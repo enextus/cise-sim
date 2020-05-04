@@ -1,4 +1,4 @@
-package eu.cise.sim.api;
+package eu.cise.sim.api.dto;
 
 
 import java.io.Serializable;
@@ -6,7 +6,8 @@ import java.util.Objects;
 
 public class MessageApiDto implements Serializable {
 
-    private static final long serialVersionUID = 42L;
+    private static final long serialVersionUID = 3399816870017528741L;
+
     private String body;
     private String acknowledge;
 

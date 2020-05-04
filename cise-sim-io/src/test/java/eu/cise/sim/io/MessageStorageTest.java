@@ -23,4 +23,27 @@ public class MessageStorageTest {
 
         assertEquals(messageStore.read(), object);
     }
+
+
+    @Test
+    public void it_queue_saves_and_read_the_values_to_store() {
+        Object objectInA = new Object();
+        Object objectInB = new Object();
+        MessageStorage messageStore = new QueueMessageStorage();
+        messageStore.store(objectInA);
+        messageStore.store(objectInB);
+
+        Object objectRcvA = messageStore.read();
+        assertEquals(objectInA, objectRcvA);
+
+        Object objectRcvB = messageStore.read();
+        assertNotEquals(objectInB, objectRcvB);
+
+        boolean isDel = messageStore.delete(objectInA);
+        assertTrue(isDel);
+
+        objectRcvB= messageStore.read();
+        assertEquals(objectInB, objectRcvB);
+
+    }
 }

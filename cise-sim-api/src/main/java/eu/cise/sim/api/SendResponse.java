@@ -1,11 +1,13 @@
 package eu.cise.sim.api;
 
+import eu.cise.sim.api.dto.MessageApiDto;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public abstract class SendResponse implements Serializable {
 
-    private static final long serialVersionUID = 42L;
+    private static final long serialVersionUID = -764894318862925523L;
 
     private final MessageApiDto contents;
     protected String errorMessage;

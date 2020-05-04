@@ -1,7 +1,7 @@
 package eu.cise.sim.api.resources;
 
 import eu.cise.sim.api.MessageAPI;
-import eu.cise.sim.api.MessageApiDto;
+import eu.cise.sim.api.dto.MessageApiDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
