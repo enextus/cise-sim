@@ -15,8 +15,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 public class DefaultTemplateLoader implements TemplateLoader {
 
     private final SimConfig simConfig;
@@ -51,7 +49,7 @@ public class DefaultTemplateLoader implements TemplateLoader {
     //  using the emuConfig.messageTemplateDir
     private String readFile(String fileName) {
         try {
-            return new String(Files.readAllBytes(getFilePath(fileName)), UTF_8);
+            return Files.readString(getFilePath(fileName));
         } catch (IOException e) {
             throw new TemplateNotFoundEx(fileName);
         }

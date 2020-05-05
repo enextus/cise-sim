@@ -18,7 +18,7 @@ import org.aeonbits.owner.ConfigFactory;
 
 import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 
-//import eu.cise.sim.io.DefaultMessageStorage;
+//import DefaultMessageStorage;
 
 public class DefaultAppContext implements AppContext {
 

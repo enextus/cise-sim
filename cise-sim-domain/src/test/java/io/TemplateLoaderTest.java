@@ -1,11 +1,4 @@
-package eu.cise.sim.io;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.when;
+package io;
 
 import eu.cise.sim.engine.SimConfig;
 import eu.cise.sim.exceptions.DirectoryNotFoundEx;
@@ -13,6 +6,10 @@ import eu.cise.sim.exceptions.TemplateNotFoundEx;
 import eu.cise.sim.templates.DefaultTemplateLoader;
 import eu.cise.sim.templates.Template;
 import eu.cise.sim.templates.TemplateLoader;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -21,9 +18,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.Mockito.*;
 
 public class TemplateLoaderTest {
 

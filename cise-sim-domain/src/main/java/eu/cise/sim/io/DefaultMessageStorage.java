@@ -22,7 +22,7 @@ public class DefaultMessageStorage implements MessageStorage<Object> {
         return false;
     }
 
-    boolean isObjectNull() {
+    public boolean isObjectNull() {
         return object == null;
     }
 }

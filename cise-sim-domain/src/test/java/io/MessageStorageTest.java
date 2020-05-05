@@ -1,5 +1,8 @@
-package eu.cise.sim.io;
+package io;
 
+import eu.cise.sim.io.DefaultMessageStorage;
+import eu.cise.sim.io.MessageStorage;
+import eu.cise.sim.io.QueueMessageStorage;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
