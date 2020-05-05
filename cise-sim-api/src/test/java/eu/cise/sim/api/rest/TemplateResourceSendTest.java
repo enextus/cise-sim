@@ -1,4 +1,4 @@
-package eu.cise.sim.api.resources;
+package eu.cise.sim.api.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package eu.cise.sim.api.resources;
+package eu.cise.sim.api.rest;
 
 /*import eu.cise.sim.api.helpers.XmlFileDirectoryList;
 import io.dropwizard.testing.junit.ResourceTestRule;
@@ -21,7 +21,7 @@ public class WebAPIFilesReferencesResourceTest {
 
     /*
     @ClassRule
-    public static final ResourceTestRule resources = ResourceTestRule.builder()
+    public static final ResourceTestRule rest = ResourceTestRule.builder()
             .addResource(new WebAPIFilesReferencesResource())
             .bootstrapLogging(false)
             .build();

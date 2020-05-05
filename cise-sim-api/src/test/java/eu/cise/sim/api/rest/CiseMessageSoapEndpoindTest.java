@@ -1,4 +1,4 @@
-package eu.cise.sim.api.resources;
+package eu.cise.sim.api.rest;
 
 import com.roskart.dropwizard.jaxws.ClientBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
@@ -13,8 +13,6 @@ import org.junit.Test;
 import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.mock;
 
 public class CiseMessageSoapEndpoindTest {

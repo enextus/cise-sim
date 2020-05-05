@@ -1,14 +1,14 @@
-package eu.cise.sim.api.resources;
+package eu.cise.sim.api.rest;
 
-import eu.cise.sim.engine.SimConfig;
+import eu.cise.servicemodel.v1.message.*;
+import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.sim.api.APIError;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.PreviewResponse;
 import eu.cise.sim.api.TemplateAPI;
 import eu.cise.sim.api.representation.TemplateParams;
+import eu.cise.sim.engine.SimConfig;
 import eu.cise.sim.templates.Template;
-import eu.cise.servicemodel.v1.message.*;
-import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import io.dropwizard.testing.junit.ResourceTestRule;

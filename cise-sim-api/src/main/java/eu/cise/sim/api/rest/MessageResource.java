@@ -1,8 +1,8 @@
-package eu.cise.sim.api.resources;
+package eu.cise.sim.api.rest;
 
+import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.io.MessageStorage;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

@@ -70,7 +70,7 @@ public class RestMessageReceiveTest {
 
         @Override
         public String messageTemplateDir() {
-            return "cise-sim-assembly/src/main/resources/templates/messages";
+            return "cise-sim-assembly/src/main/rest/templates/messages";
         }
 
         @Override

@@ -3,7 +3,7 @@ package eu.cise.sim.api;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.sim.api.dto.MessageApiDto;
-import eu.cise.sim.api.resources.MessageBuilderUtil;
+import eu.cise.sim.api.rest.MessageBuilderUtil;
 import eu.cise.sim.engine.MessageProcessor;
 import eu.cise.sim.io.DefaultMessageStorage;
 import eu.cise.sim.io.MessageStorage;
@@ -69,10 +69,10 @@ public class MessageAPIReceiveTest {
     // -------  concerning the CISE api :  node to/from lsa  ---------//
     @Test
     public void it_stores_something_when_invoked_receive() {
-        Acknowledgement acknowledgement = eu.cise.sim.api.resources.MessageBuilderUtil.createAcknowledgeMessage();
+        Acknowledgement acknowledgement = eu.cise.sim.api.rest.MessageBuilderUtil.createAcknowledgeMessage();
         when(messageProcessor.receive(any())).thenReturn(acknowledgement);
         MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, prettyXmlNotValidMapper, prettyXmlNotValidMapper);
-        Acknowledgement response = messageAPI.receive(eu.cise.sim.api.resources.MessageBuilderUtil.TEST_MESSAGE_XML);
+        Acknowledgement response = messageAPI.receive(eu.cise.sim.api.rest.MessageBuilderUtil.TEST_MESSAGE_XML);
         verify(messageStorage).store(any());
     }
 
@@ -81,11 +81,11 @@ public class MessageAPIReceiveTest {
         MessageStorage realMessageStorage = new DefaultMessageStorage();
         XmlMapper xmlMapper = new DefaultXmlMapper.PrettyNotValidating();
 
-        Acknowledgement acknowledgement = eu.cise.sim.api.resources.MessageBuilderUtil.createAcknowledgeMessage();
+        Acknowledgement acknowledgement = eu.cise.sim.api.rest.MessageBuilderUtil.createAcknowledgeMessage();
         when(messageProcessor.receive(any())).thenReturn(acknowledgement);
 
         MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader, xmlMapper, prettyXmlNotValidMapper);
-        Acknowledgement response = messageAPI.receive(eu.cise.sim.api.resources.MessageBuilderUtil.TEST_MESSAGE_XML);
+        Acknowledgement response = messageAPI.receive(eu.cise.sim.api.rest.MessageBuilderUtil.TEST_MESSAGE_XML);
         Acknowledgement awaitedResponse = xmlMapper.fromXML(((MessageApiDto) realMessageStorage.read()).getAcknowledge());
         assertThat(response).isEqualTo(awaitedResponse);
     }
@@ -95,12 +95,12 @@ public class MessageAPIReceiveTest {
         MessageStorage realMessageStorage = new DefaultMessageStorage();
         XmlMapper xmlMapper = new DefaultXmlMapper.PrettyNotValidating();
 
-        Acknowledgement acknowledgement = eu.cise.sim.api.resources.MessageBuilderUtil.createAcknowledgeMessage();
+        Acknowledgement acknowledgement = eu.cise.sim.api.rest.MessageBuilderUtil.createAcknowledgeMessage();
         when(messageProcessor.receive(any())).thenReturn(acknowledgement);
 
         MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, realMessageStorage, templateLoader, xmlMapper, prettyXmlNotValidMapper);
 
-        Acknowledgement response = messageAPI.receive(eu.cise.sim.api.resources.MessageBuilderUtil.TEST_MESSAGE_XML);
+        Acknowledgement response = messageAPI.receive(eu.cise.sim.api.rest.MessageBuilderUtil.TEST_MESSAGE_XML);
         Message sentMessage = xmlMapper.fromXML(MessageBuilderUtil.TEST_MESSAGE_XML);
         Message storedResponse = xmlMapper.fromXML(((MessageApiDto) realMessageStorage.read()).getBody());
         assertThat(sentMessage).isEqualTo(storedResponse);

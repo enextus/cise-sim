@@ -1,4 +1,4 @@
-package eu.cise.sim.api.resources;
+package eu.cise.sim.api.rest;
 
 import eu.cise.datamodel.v1.entity.Entity;
 import eu.cise.datamodel.v1.entity.incident.Incident;

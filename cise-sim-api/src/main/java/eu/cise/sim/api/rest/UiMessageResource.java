@@ -1,4 +1,4 @@
-package eu.cise.sim.api.resources;
+package eu.cise.sim.api.rest;
 
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.dto.MessageApiDto;

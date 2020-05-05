@@ -1,9 +1,9 @@
-package eu.cise.sim.api.resources;
+package eu.cise.sim.api.rest;
 
-import eu.cise.sim.api.ServiceDetail;
-import eu.cise.sim.engine.SimConfig;
 import eu.cise.servicemodel.v1.authority.Participant;
 import eu.cise.servicemodel.v1.service.Service;
+import eu.cise.sim.api.ServiceDetail;
+import eu.cise.sim.engine.SimConfig;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
