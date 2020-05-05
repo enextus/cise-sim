@@ -48,7 +48,7 @@ render(
             dense
             maxSnack={5}
             anchorOrigin={{
-              'bottom',
+              vertical: 'bottom',
               horizontal: 'right',
             }}
             hideIconVariant={true}
