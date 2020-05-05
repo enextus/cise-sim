@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns4:PullResponse xmlns:ns2="http://www.cise.eu/servicemodel/v1/service/"
-                  xmlns:ns3="http://www.cise.eu/servicemodel/v1/authority/"
-                  xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/">
+<ns4:PullResponse
+        xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/">
 
     <!--Push Message Section-->
     <MessageID>476d949d-5aa4-44cc-8e20-c1a228dfe098</MessageID><!--Required-->
