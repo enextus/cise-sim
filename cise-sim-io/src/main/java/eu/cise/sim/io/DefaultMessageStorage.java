@@ -1,6 +1,6 @@
 package eu.cise.sim.io;
 
-public class DefaultMessageStorage implements MessageStorage {
+public class DefaultMessageStorage implements MessageStorage<Object> {
     private Object object;
 
     @Override

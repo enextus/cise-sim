@@ -50,6 +50,7 @@ public class SimApp extends Application<SimConf> {
         MessageAPI messageAPI = new DefaultMessageAPI(
                 appCtx.makeMessageProcessor(),
                 appCtx.makeMessageStorage(),
+                appCtx.makeHistoryMessageStorage(),
                 appCtx.makeTemplateLoader(),
                 appCtx.getXmlMapper(),
                 appCtx.getPrettyNotValidatingXmlMapper());

@@ -3,13 +3,13 @@ package eu.cise.sim.api;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.sim.engine.MessageProcessor;
 import eu.cise.sim.io.MessageStorage;
 import eu.cise.sim.templates.Template;
 import eu.cise.sim.templates.TemplateLoader;
 import eu.cise.sim.utils.Pair;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
-import eu.cise.servicemodel.v1.message.Push;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.junit.Before;
@@ -25,6 +25,7 @@ public class MessageAPISendTest {
 
     private MessageProcessor messageProcessor;
     private MessageStorage messageStorage;
+    private MessageStorage historyMessageStorage;
     private TemplateLoader templateLoader;
     private Push pushMessage;
     private Acknowledgement ackMessage;
@@ -39,6 +40,7 @@ public class MessageAPISendTest {
         jsonMapper = new ObjectMapper();
         messageProcessor = mock(MessageProcessor.class);
         messageStorage = mock(MessageStorage.class);
+        historyMessageStorage = mock(MessageStorage.class);
         templateLoader = mock(TemplateLoader.class);
         pushMessage = newPush().build();
         ackMessage = newAck().build();
@@ -46,7 +48,7 @@ public class MessageAPISendTest {
 
     @Test
     public void it_returns_a_messageApiDto_with_the_acknowledge_received_on_successful_send() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper, concreteNotValidatingXmlMapper);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, historyMessageStorage, templateLoader, xmlMapper, concreteNotValidatingXmlMapper);
 
         Template loadedTemplate = mock(Template.class);
         when(templateLoader.loadTemplate(any())).thenReturn(loadedTemplate);
@@ -63,7 +65,7 @@ public class MessageAPISendTest {
     @Ignore
     @Test
     public void it_returns_a_messageApiDto_with_the_message_sent_on_successful_send() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper, concreteNotValidatingXmlMapper);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, historyMessageStorage, templateLoader, xmlMapper, concreteNotValidatingXmlMapper);
 
         Template loadedTemplate = mock(Template.class);
         when(templateLoader.loadTemplate(any())).thenReturn(loadedTemplate);

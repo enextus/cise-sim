@@ -132,6 +132,8 @@ public class RestMessageReceiveTest {
         );
 
         MessageStorage messageStorage = mock(MessageStorage.class);
+        MessageStorage historyMessageStorage = mock(MessageStorage.class);
+
         String messageStr = MessageBuilderUtil.TEST_MESSAGE_XML;
 
         Message messageToSign = xmlMapperNoValidNoPretty.fromXML(messageStr);
@@ -146,10 +148,13 @@ public class RestMessageReceiveTest {
 
         TemplateLoader templateLoader = makeTemplateLoader();
 
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage,
-            templateLoader,
-            xmlMapperNoValidPretty,
-            xmlMapperNoValidNoPretty);
+        MessageAPI messageAPI = new DefaultMessageAPI(
+                messageProcessor,
+                messageStorage,
+                historyMessageStorage,
+                templateLoader,
+                xmlMapperNoValidPretty,
+                xmlMapperNoValidNoPretty);
 
         Acknowledgement response = messageAPI.receive(messageSignStr);
 

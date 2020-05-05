@@ -18,6 +18,8 @@ public interface AppContext {
 
     MessageStorage makeMessageStorage();
 
+    MessageStorage makeHistoryMessageStorage();
+
     TemplateLoader makeTemplateLoader();
 
     XmlMapper getXmlMapper();

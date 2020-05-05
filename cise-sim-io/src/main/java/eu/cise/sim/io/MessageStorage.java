@@ -3,10 +3,11 @@ package eu.cise.sim.io;
 /**
  * Temporary persistence of messages.
  */
-public interface MessageStorage {
-    void store(Object message);
+public interface MessageStorage<T> {
 
-    Object read();
+    void store(T message);
 
-    boolean delete(Object message);
+    T read();
+
+    boolean delete(T message);
 }

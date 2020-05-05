@@ -6,28 +6,28 @@ import org.slf4j.LoggerFactory;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class QueueMessageStorage implements MessageStorage {
+public class QueueMessageStorage<T> implements MessageStorage<T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QueueMessageStorage.class);
-    private final Queue<Object> queue;
+    private final Queue<T> queue;
 
     public QueueMessageStorage() {
-        queue = new ConcurrentLinkedDeque<>();
+        queue = new ConcurrentLinkedDeque<T>();
     }
 
     @Override
-    public void store(Object message) {
+    public void store(T message) {
         queue.offer(message);
         LOGGER.info("store message, size " + queue.size());
     }
 
     @Override
-    public Object read() {
+    public T read() {
         return queue.peek();
     }
 
     @Override
-    public boolean delete(Object message) {
+    public boolean delete(T message) {
         boolean result = queue.remove(message);
         LOGGER.info("delete message [" + result + "], size " + queue.size());
         return result;
