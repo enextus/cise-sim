@@ -1,13 +1,13 @@
 package eu.cise.sim;
 
 import eu.cise.dispatcher.Dispatcher;
+import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.engine.DefaultSimEngine;
 import eu.cise.sim.engine.SendParam;
-import eu.cise.sim.engine.SimConfig;
 import eu.cise.sim.engine.SimEngine;
 import eu.cise.sim.exceptions.NullSendParamEx;
 import eu.cise.sim.utils.FakeSignatureService;
-import eu.cise.servicemodel.v1.message.Push;
 import org.junit.Before;
 import org.junit.Test;
 

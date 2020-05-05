@@ -7,7 +7,7 @@ import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.PreviewResponse;
 import eu.cise.sim.api.TemplateAPI;
 import eu.cise.sim.api.representation.TemplateParams;
-import eu.cise.sim.engine.SimConfig;
+import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.templates.Template;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;

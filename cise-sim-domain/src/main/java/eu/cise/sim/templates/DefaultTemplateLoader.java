@@ -1,7 +1,7 @@
 package eu.cise.sim.templates;
 
 
-import eu.cise.sim.engine.SimConfig;
+import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.exceptions.DirectoryNotFoundEx;
 import eu.cise.sim.exceptions.LoaderEx;
 import eu.cise.sim.exceptions.TemplateNotFoundEx;

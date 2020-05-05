@@ -1,4 +1,4 @@
-package eu.cise.sim.engine;
+package eu.cise.sim.config;
 
 import eu.cise.dispatcher.DispatcherType;
 import org.aeonbits.owner.Config;

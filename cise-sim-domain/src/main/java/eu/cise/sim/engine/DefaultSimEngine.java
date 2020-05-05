@@ -8,6 +8,7 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
+import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.exceptions.*;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -75,9 +76,7 @@ public class DefaultSimEngine implements SimEngine {
 
         message.setRequiresAck(param.isRequiresAck());
         message.setMessageID(param.getMessageId());
-        message.setCorrelationID(
-            computeCorrelationId(param.getCorrelationId(), param.getMessageId())
-        );
+        message.setCorrelationID(computeCorrelationId(param.getCorrelationId(), param.getMessageId()));
 
         message.setCreationDateTime(now());
 
