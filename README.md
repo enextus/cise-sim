@@ -208,7 +208,7 @@ logging:
     "eu.cise.sim.api": INFO
     "org.eclipse.jetty.server.handler": WARN
     "org.eclipse.jetty.setuid": WARN
-    "eu.cise.dispatcher.Dispatcher": DEBUG
+    "eu.cise.sim.engine.Dispatcher": DEBUG
     "io.dropwizard.server.DefaultServerFactory": WARN
     "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
     "org.wiremock": INFO

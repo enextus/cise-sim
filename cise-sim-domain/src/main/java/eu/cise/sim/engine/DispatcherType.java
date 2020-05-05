@@ -1,4 +1,4 @@
-package eu.cise.dispatcher;
+package eu.cise.sim.engine;
 
 public enum DispatcherType {
     REST,

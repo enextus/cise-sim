@@ -1,8 +1,8 @@
 package eu.cise.sim;
 
-import eu.cise.dispatcher.Dispatcher;
 import eu.cise.signature.SignatureService;
 import eu.cise.sim.config.SimConfig;
+import eu.cise.sim.engine.Dispatcher;
 import eu.cise.sim.engine.MessageProcessor;
 import eu.cise.sim.io.MessageStorage;
 import eu.cise.sim.templates.TemplateLoader;

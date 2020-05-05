@@ -1,4 +1,6 @@
-package eu.cise.dispatcher;
+package eu.cise.dispatcher.rest;
+
+import eu.cise.sim.exceptions.DispatcherException;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -30,7 +32,7 @@ public class JerseyRestClient implements RestClient {
      *
      * @param address the address to contact to deliver the request
      * @param payload the payload to be delivered
-     * @return a {@link eu.cise.dispatcher.RestResult} withe the response details
+     * @return a {@link RestResult} withe the response details
      */
     @Override
     public RestResult post(String address, String payload) {
@@ -41,7 +43,7 @@ public class JerseyRestClient implements RestClient {
      * Concrete implementation of a GET request using Jersey.
      *
      * @param address the address to contact to deliver the request
-     * @return a {@link eu.cise.dispatcher.RestResult} withe the response details
+     * @return a {@link RestResult} withe the response details
      */
     @Override
     public RestResult get(String address) {
@@ -52,7 +54,7 @@ public class JerseyRestClient implements RestClient {
      * Concrete implementation of a DELETE request using Jersey.
      *
      * @param address the address to contact to deliver the request
-     * @return a {@link eu.cise.dispatcher.RestResult} withe the response details
+     * @return a {@link RestResult} withe the response details
      */
     @Override
     public RestResult delete(String address) {

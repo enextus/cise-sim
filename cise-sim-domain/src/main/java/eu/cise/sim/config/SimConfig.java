@@ -1,6 +1,6 @@
 package eu.cise.sim.config;
 
-import eu.cise.dispatcher.DispatcherType;
+import eu.cise.sim.engine.DispatcherType;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Preprocessor;

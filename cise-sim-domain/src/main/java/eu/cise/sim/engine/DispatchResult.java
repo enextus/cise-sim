@@ -1,8 +1,9 @@
-package eu.cise.dispatcher;
+package eu.cise.sim.engine;
 
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Dispatching a message will produce a result (success or failure) with a
@@ -12,10 +13,10 @@ import java.io.Serializable;
  * status.
  */
 @SuppressWarnings("unused")
-public class DispatchResult implements Serializable {
+public class DispatchResult  implements Serializable {
 
     // life, the universe and the everything.
-    private static final long serialVersionUID = 42L;
+    private static final long serialVersionUID = 1609530741412720565L;
 
     // internal state
     private final boolean ok;
@@ -51,7 +52,6 @@ public class DispatchResult implements Serializable {
     }
 
     // To compare value objects we need equals and hashcode methods
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -59,17 +59,15 @@ public class DispatchResult implements Serializable {
         DispatchResult that = (DispatchResult) o;
 
         if (ok != that.ok) return false;
-        return result != null ? result.equals(that.result) : that.result == null;
+        return Objects.equals(result, that.result);
     }
 
-    @Override
     public int hashCode() {
         int result1 = (ok ? 1 : 0);
         result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
         return result1;
     }
 
-    @Override
     public String toString() {
         return "DispatchResult{" +
                 "ok=" + ok +

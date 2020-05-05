@@ -1,4 +1,4 @@
-package eu.cise.dispatcher;
+package eu.cise.dispatcher.rest;
 
 /**
  * This is an interface to define an adapter of a RESTful client in order to
@@ -16,7 +16,7 @@ public interface RestClient {
      *
      * @param address the address to contact to deliver the request
      * @param payload the payload to be delivered
-     * @return the {@link eu.cise.dispatcher.RestResult}
+     * @return the {@link RestResult}
      */
     RestResult post(String address, String payload);
 
@@ -24,7 +24,7 @@ public interface RestClient {
      * A method to perform GET requests to a server address
      *
      * @param address the address to contact to deliver the request
-     * @return the {@link eu.cise.dispatcher.RestResult}
+     * @return the {@link RestResult}
      */
     RestResult get(String address);
 
@@ -32,7 +32,7 @@ public interface RestClient {
      * A method to perform DELETE requests to a server address
      *
      * @param address the address to contact to deliver the request
-     * @return the {@link eu.cise.dispatcher.RestResult}
+     * @return the {@link RestResult}
      */
     RestResult delete(String address);
 

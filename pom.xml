@@ -33,7 +33,6 @@
     <module>cise-sim-app</module>
     <module>cise-sim-assembly</module>
     <module>cise-dispatcher</module>
-    <module>cise-dispatcher-api</module>
   </modules>
 
   <build>

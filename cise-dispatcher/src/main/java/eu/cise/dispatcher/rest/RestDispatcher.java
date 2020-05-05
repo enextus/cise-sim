@@ -1,6 +1,8 @@
-package eu.cise.dispatcher;
+package eu.cise.dispatcher.rest;
 
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.sim.engine.DispatchResult;
+import eu.cise.sim.engine.Dispatcher;
 import eu.eucise.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +42,7 @@ public class RestDispatcher implements Dispatcher {
      *
      * @param message message to be sent.
      * @param address gateway address to send the message to
-     * @return a {@link eu.cise.dispatcher.DispatchResult} containing the dispatching results
+     * @return a {@link DispatchResult} containing the dispatching results
      */
     @Override
     public DispatchResult send(Message message, String address) {

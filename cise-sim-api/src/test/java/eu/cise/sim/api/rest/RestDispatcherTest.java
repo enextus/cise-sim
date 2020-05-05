@@ -2,15 +2,15 @@ package eu.cise.sim.api.rest;
 
 import eu.cise.datamodel.v1.entity.Entity;
 import eu.cise.datamodel.v1.entity.vessel.Vessel;
-import eu.cise.dispatcher.DispatchResult;
-import eu.cise.dispatcher.Dispatcher;
-import eu.cise.dispatcher.RestDispatcher;
+import eu.cise.dispatcher.rest.RestDispatcher;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.servicemodel.v1.service.ServiceType;
 import eu.cise.signature.SignatureService;
 import eu.cise.sim.api.SimApp;
 import eu.cise.sim.api.SimConf;
+import eu.cise.sim.engine.DispatchResult;
+import eu.cise.sim.engine.Dispatcher;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import io.dropwizard.testing.junit.DropwizardAppRule;

@@ -1,4 +1,4 @@
-package eu.cise.dispatcher;
+package eu.cise.sim.exceptions;
 
 public class DispatcherException extends RuntimeException {
 

@@ -1,10 +1,10 @@
 package eu.cise.cli;
 
-import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherFactory;
 import eu.cise.signature.SignatureService;
 import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.engine.DefaultSimEngine;
+import eu.cise.sim.engine.Dispatcher;
 import eu.cise.sim.engine.SimEngine;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;

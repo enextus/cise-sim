@@ -1,5 +1,9 @@
 package eu.cise.dispatcher;
 
+import eu.cise.dispatcher.rest.RestDispatcher;
+import eu.cise.dispatcher.soap.SoapDispatcher;
+import eu.cise.sim.engine.Dispatcher;
+import eu.cise.sim.engine.DispatcherType;
 import eu.eucise.xml.XmlMapper;
 
 public class DispatcherFactory {

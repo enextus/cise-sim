@@ -1,17 +1,13 @@
 package eu.cise.sim.api;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherFactory;
-import eu.cise.dispatcher.DispatcherType;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
 import eu.cise.sim.config.SimConfig;
-import eu.cise.sim.engine.DefaultMessageProcessor;
-import eu.cise.sim.engine.DefaultSimEngine;
-import eu.cise.sim.engine.MessageProcessor;
+import eu.cise.sim.engine.*;
 import eu.cise.sim.io.MessageStorage;
 import eu.cise.sim.templates.DefaultTemplateLoader;
 import eu.cise.sim.templates.TemplateLoader;

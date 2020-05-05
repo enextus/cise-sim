@@ -1,4 +1,4 @@
-package eu.cise.dispatcher;
+package eu.cise.sim.engine;
 
 import eu.cise.servicemodel.v1.message.Message;
 

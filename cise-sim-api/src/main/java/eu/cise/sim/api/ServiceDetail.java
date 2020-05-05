@@ -3,8 +3,8 @@ package eu.cise.sim.api;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import eu.cise.dispatcher.DispatcherType;
 import eu.cise.servicemodel.v1.service.Service;
+import eu.cise.sim.engine.DispatcherType;
 
 @JsonInclude(Include.NON_NULL)
 public class ServiceDetail {

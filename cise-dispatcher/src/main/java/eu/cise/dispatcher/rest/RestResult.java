@@ -1,4 +1,4 @@
-package eu.cise.dispatcher;
+package eu.cise.dispatcher.rest;
 
 import java.io.Serializable;
 

@@ -1,13 +1,15 @@
-package eu.cise.dispatcher;
+package eu.cise.dispatcher.soap;
 
-import eu.cise.dispatcher.soap.CISEMessageService;
-import eu.cise.dispatcher.soap.CISEMessageServiceSoapImpl;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
-import java.net.MalformedURLException;
-import java.net.URL;
+import eu.cise.sim.engine.DispatchResult;
+import eu.cise.sim.engine.Dispatcher;
+import eu.cise.sim.exceptions.DispatcherException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class SoapDispatcher implements Dispatcher {
 
