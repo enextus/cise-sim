@@ -72,6 +72,45 @@ public class MessageShortInfoDtoTest {
     }
 
     @Test
+    public void it_feedback() throws IOException {
+
+        boolean isSent = Boolean.TRUE;
+        String message =  readResource("messages/Feedback_Template.xml");
+        assertNotNull(message);
+
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        assertNotNull(messageShortInfoDto);
+        assertEquals("FEEDBACK", messageShortInfoDto.getMessageType());
+        assertEquals("VesselService", messageShortInfoDto.getServiceType());
+    }
+
+    @Test
+    public void it_unscribe() throws IOException {
+
+        boolean isSent = Boolean.TRUE;
+        String message =  readResource("messages/vessel_unsubscribe.xml");
+        assertNotNull(message);
+
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        assertNotNull(messageShortInfoDto);
+        assertEquals("PULL_REQUEST", messageShortInfoDto.getMessageType());
+        assertEquals("VesselService", messageShortInfoDto.getServiceType());
+    }
+
+    @Test
+    public void it_subscribe() throws IOException {
+
+        boolean isSent = Boolean.TRUE;
+        String message =  readResource("messages/SubscribeTemplate.xml");
+        assertNotNull(message);
+
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        assertNotNull(messageShortInfoDto);
+        assertEquals("PUSH", messageShortInfoDto.getMessageType());
+        assertEquals("VesselService", messageShortInfoDto.getServiceType());
+    }
+
+    @Test
     public void it_ack_synch_pullrequest() throws IOException {
 
         boolean isSent = Boolean.TRUE;
