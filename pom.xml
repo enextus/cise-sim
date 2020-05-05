@@ -26,15 +26,15 @@
 
 
   <modules>
-    <module>cise-emulator-domain</module>
-    <module>cise-emulator-cli</module>
-    <module>cise-emulator-react</module>
-    <module>cise-emulator-api</module>
-    <module>cise-emulator-app</module>
-    <module>cise-emulator-assembly</module>
+    <module>cise-sim-domain</module>
+    <module>cise-sim-cli</module>
+    <module>cise-sim-react</module>
+    <module>cise-sim-api</module>
+    <module>cise-sim-app</module>
+    <module>cise-sim-assembly</module>
     <module>cise-dispatcher</module>
     <module>cise-dispatcher-api</module>
-    <module>cise-emulator-io</module>
+    <module>cise-sim-io</module>
   </modules>
 
   <build>
@@ -171,7 +171,7 @@
       <!-- inner module dependencies -->
       <dependency>
         <groupId>eu.europa.ec.jrc.marex</groupId>
-        <artifactId>cise-emulator-domain</artifactId>
+        <artifactId>cise-sim-domain</artifactId>
         <version>1.2.3-SNAPSHOT</version>
       </dependency>
 

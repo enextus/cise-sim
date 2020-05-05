@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>cise-sim</artifactId>
+    <groupId>eu.europa.ec.jrc.marex</groupId>
+    <version>1.2.3-SNAPSHOT</version>
+  </parent>
+  <groupId>eu.europa.ec.jrc.marex</groupId>
+  <artifactId>cise-sim-react</artifactId>
+  <version>1.2.3-SNAPSHOT</version>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>1.6</version>
+        <configuration>
+          <installDirectory>target</installDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <configuration>
+              <nodeVersion>v10.11.0</nodeVersion>
+              <npmVersion>6.4.1</npmVersion>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm version</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+               <arguments> -version</arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <!--						<configuration>-->
+            <!--							<arguments>install  -no-proxy</arguments>-->
+            <!--						</configuration>-->
+          </execution>
+          <execution>
+            <id>webpack build</id>
+            <goals>
+              <goal>webpack</goal>
+            </goals>
+            <!--						<configuration>-->
+            <!--							<arguments> no-proxy</arguments>-->
+            <!--						</configuration>-->
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <dependencies>
+  </dependencies>
+
+  <profiles>
+
+    <profile>
+      <id>ciBuild</id>
+      <properties>
+        <testcase.excludedGroups>eu.eucise.tests.IntegrationTests
+        </testcase.excludedGroups>
+        <useFile>true</useFile>
+      </properties>
+
+      <build>
+
+        <plugins>
+
+
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>1.6</version>
+
+            <executions>
+              <execution>
+                <id>install node and npm</id>
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+                <configuration>
+                  <nodeVersion>v10.11.0</nodeVersion>
+                  <npmVersion>6.4.1</npmVersion>
+                </configuration>
+                <phase>none</phase>
+              </execution>
+              <execution>
+                <id>npm install</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <configuration>
+                  <arguments>install</arguments>
+                </configuration>
+                <phase>none</phase>
+              </execution>
+              <execution>
+                <id>webpack build</id>
+                <goals>
+                  <goal>webpack</goal>
+                </goals>
+                <phase>none</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+
+    </profile>
+  </profiles>
+  <properties>
+    <main.basedir>${project.basedir}/..</main.basedir>
+  </properties>
+</project>
