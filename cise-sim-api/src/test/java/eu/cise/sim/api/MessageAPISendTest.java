@@ -25,7 +25,6 @@ public class MessageAPISendTest {
 
     private MessageProcessor messageProcessor;
     private MessageStorage messageStorage;
-    private MessageStorage historyMessageStorage;
     private TemplateLoader templateLoader;
     private Push pushMessage;
     private Acknowledgement ackMessage;
@@ -40,7 +39,6 @@ public class MessageAPISendTest {
         jsonMapper = new ObjectMapper();
         messageProcessor = mock(MessageProcessor.class);
         messageStorage = mock(MessageStorage.class);
-        historyMessageStorage = mock(MessageStorage.class);
         templateLoader = mock(TemplateLoader.class);
         pushMessage = newPush().build();
         ackMessage = newAck().build();
@@ -48,7 +46,7 @@ public class MessageAPISendTest {
 
     @Test
     public void it_returns_a_messageApiDto_with_the_acknowledge_received_on_successful_send() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, historyMessageStorage, templateLoader, xmlMapper, concreteNotValidatingXmlMapper);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper, concreteNotValidatingXmlMapper);
 
         Template loadedTemplate = mock(Template.class);
         when(templateLoader.loadTemplate(any())).thenReturn(loadedTemplate);
@@ -65,7 +63,7 @@ public class MessageAPISendTest {
     @Ignore
     @Test
     public void it_returns_a_messageApiDto_with_the_message_sent_on_successful_send() {
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, historyMessageStorage, templateLoader, xmlMapper, concreteNotValidatingXmlMapper);
+        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage, templateLoader, xmlMapper, concreteNotValidatingXmlMapper);
 
         Template loadedTemplate = mock(Template.class);
         when(templateLoader.loadTemplate(any())).thenReturn(loadedTemplate);

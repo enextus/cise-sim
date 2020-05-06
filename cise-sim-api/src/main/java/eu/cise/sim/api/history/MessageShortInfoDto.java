@@ -1,6 +1,7 @@
-package eu.cise.sim.api.dto;
+package eu.cise.sim.api.history;
 
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.sim.api.dto.MessageTypeEnum;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +31,10 @@ public class MessageShortInfoDto implements Serializable {
     public static MessageShortInfoDto getInstance(String message, boolean isSent) throws IllegalArgumentException {
 
         Message ciseMessage = XML_MAPPER.fromXML(message);
+        return getInstance(ciseMessage, isSent);
+    }
+
+    public static MessageShortInfoDto getInstance(Message ciseMessage, boolean isSent) throws IllegalArgumentException {
 
         String  id = ciseMessage.getMessageID();
 

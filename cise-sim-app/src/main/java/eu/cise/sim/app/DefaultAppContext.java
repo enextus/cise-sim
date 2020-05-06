@@ -1,4 +1,4 @@
-package eu.cise.sim;
+package eu.cise.sim.app;
 
 import eu.cise.dispatcher.DispatcherFactory;
 import eu.cise.signature.SignatureService;
@@ -7,9 +7,7 @@ import eu.cise.sim.engine.DefaultMessageProcessor;
 import eu.cise.sim.engine.DefaultSimEngine;
 import eu.cise.sim.engine.Dispatcher;
 import eu.cise.sim.engine.MessageProcessor;
-import eu.cise.sim.io.DefaultMessageStorage;
-import eu.cise.sim.io.MessageStorage;
-import eu.cise.sim.io.QueueMessageStorage;
+import eu.cise.sim.io.*;
 import eu.cise.sim.templates.DefaultTemplateLoader;
 import eu.cise.sim.templates.TemplateLoader;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -18,7 +16,6 @@ import org.aeonbits.owner.ConfigFactory;
 
 import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 
-//import DefaultMessageStorage;
 
 public class DefaultAppContext implements AppContext {
 
@@ -38,6 +35,11 @@ public class DefaultAppContext implements AppContext {
     @Override
     public MessageProcessor makeMessageProcessor() {
         return new DefaultMessageProcessor(makeSimEngine());
+    }
+
+    @Override
+    public MessageProcessor makeMessageProcessor(MessagePersistence messagePersistence) {
+        return new DefaultMessageProcessor(makeSimEngine(), messagePersistence);
     }
 
     private DefaultSimEngine makeSimEngine() {
@@ -64,13 +66,13 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public MessageStorage makeMessageStorage() {
+    public MessageStorage<Object> makeMessageStorage() {
         return new DefaultMessageStorage();
     }
 
     @Override
-    public MessageStorage makeHistoryMessageStorage() {
-        return new QueueMessageStorage();
+    public HistoryPersistence makeHistoryMessageStorage() {
+        return new DummyHistoryPersistence();
     }
 
     @Override

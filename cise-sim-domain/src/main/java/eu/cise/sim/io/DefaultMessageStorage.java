@@ -1,7 +1,7 @@
 package eu.cise.sim.io;
 
 public class DefaultMessageStorage implements MessageStorage<Object> {
-    private Object object;
+    private  Object object;
 
     @Override
     public void store(Object object) {
@@ -15,7 +15,7 @@ public class DefaultMessageStorage implements MessageStorage<Object> {
 
     @Override
     public boolean delete(Object message) {
-        if (this.object.equals(object)) {
+        if (this.object.equals(message)) {
             this.object = null;
             return true;
         }

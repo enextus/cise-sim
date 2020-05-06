@@ -128,7 +128,6 @@ public class RestMessageReceiveTest {
         );
 
         MessageStorage messageStorage = mock(MessageStorage.class);
-        MessageStorage historyMessageStorage = mock(MessageStorage.class);
 
         String messageStr = MessageBuilderUtil.TEST_MESSAGE_XML;
 
@@ -147,8 +146,7 @@ public class RestMessageReceiveTest {
         MessageAPI messageAPI = new DefaultMessageAPI(
                 messageProcessor,
                 messageStorage,
-                historyMessageStorage,
-                templateLoader,
+               templateLoader,
                 xmlMapperNoValidPretty,
                 xmlMapperNoValidNoPretty);
 

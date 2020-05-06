@@ -1,30 +1,20 @@
 package eu.cise.sim.api.history;
 
-import eu.cise.sim.api.dto.MessageShortInfoDto;
-import eu.cise.sim.io.MessageStorage;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.sim.io.HistoryPersistence;
+import eu.cise.sim.utils.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultHistoryAPI implements HistoryAPI {
 
-    private final MessageStorage<MessageShortInfoDto> messageStorage;
+    private final HistoryPersistence memoryQueuedRepository;
 
-    public DefaultHistoryAPI(MessageStorage<MessageShortInfoDto> messageStorage) {
-        this.messageStorage = messageStorage;
+    public DefaultHistoryAPI(HistoryPersistence messageRepository) {
+        this.memoryQueuedRepository = messageRepository;
     }
 
-    @Override
-    public List<MessageShortInfoDto> getLatestMessages() {
-
-        List<MessageShortInfoDto> messageShortInfoDtoList = new ArrayList<>();
-
-        MessageShortInfoDto messageShortInfoDto;
-        while ((messageShortInfoDto = messageStorage.read()) != null) {
-            if (messageStorage.delete(messageShortInfoDto)) {
-                messageShortInfoDtoList.add(messageShortInfoDto);
-            }
-        }
-        return  messageShortInfoDtoList;
+    public List<Pair<Message, Boolean>> getLatestMessages() {
+        return memoryQueuedRepository.getLatestMessages();
     }
 }

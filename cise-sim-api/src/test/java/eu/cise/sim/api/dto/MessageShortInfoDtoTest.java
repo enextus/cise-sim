@@ -1,5 +1,6 @@
 package eu.cise.sim.api.dto;
 
+import eu.cise.sim.api.history.MessageShortInfoDto;
 import org.junit.Before;
 import org.junit.Test;
 

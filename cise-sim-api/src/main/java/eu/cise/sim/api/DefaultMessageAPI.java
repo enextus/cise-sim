@@ -9,7 +9,6 @@ import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
 import eu.cise.sim.api.dto.MessageApiDto;
-import eu.cise.sim.api.dto.MessageShortInfoDto;
 import eu.cise.sim.api.helpers.SendParamsReader;
 import eu.cise.sim.engine.MessageProcessor;
 import eu.cise.sim.engine.SendParam;
@@ -27,24 +26,21 @@ public class DefaultMessageAPI implements MessageAPI {
 
     private final Logger logger = LoggerFactory.getLogger(MessageAPI.class);
 
-    private final MessageStorage<MessageApiDto> messageStorage;
-    private final MessageStorage<MessageShortInfoDto> historyMessageStorage;
+    private final MessageStorage<Object> messageStorage;
     private final MessageProcessor engineMessageProcessor;
     private final XmlMapper xmlMapper;
     private final XmlMapper prettyNotValidatingXmlMapper;
     private final TemplateLoader templateLoader;
     private final SynchronousAcknowledgementFactory synchronousAcknowledgementFactory = new SynchronousAcknowledgementFactory();
 
-    DefaultMessageAPI(MessageProcessor engineMessageProcessor,
-                      MessageStorage<MessageApiDto> messageStorage,
-                      MessageStorage<MessageShortInfoDto> historyMessageStorage,
+    public DefaultMessageAPI(MessageProcessor engineMessageProcessor,
+                      MessageStorage<Object> messageStorage,
                       TemplateLoader templateLoader,
                       XmlMapper xmlMapper,
                       XmlMapper prettyNotValidatingXmlMapper) {
 
         this.engineMessageProcessor = engineMessageProcessor;
         this.messageStorage = messageStorage;
-        this.historyMessageStorage = historyMessageStorage;
         this.xmlMapper = xmlMapper;
         this.prettyNotValidatingXmlMapper = prettyNotValidatingXmlMapper;
         this.templateLoader = templateLoader;
@@ -62,9 +58,6 @@ public class DefaultMessageAPI implements MessageAPI {
             SendParam sendParam = new SendParamsReader().extractParams(params);
             Pair<Acknowledgement, Message> sendResponse = engineMessageProcessor.send(message, sendParam);
 
-            // TODO history storage
-//            historyMessageStorage.store(MessageShortInfoDto.getInstance(prettyNotValidatingXmlMapper.toXML(sendResponse.getB()), Boolean.TRUE));
-//            historyMessageStorage.store(MessageShortInfoDto.getInstance(prettyNotValidatingXmlMapper.toXML(sendResponse.getA()), Boolean.FALSE));
             return new SendResponse.OK(
                 new MessageApiDto(
                     prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
@@ -92,10 +85,6 @@ public class DefaultMessageAPI implements MessageAPI {
             MessageApiDto messageApiDto = new MessageApiDto(acknowledgementXml, messageXml);
             messageStorage.store(messageApiDto);
 
-            // todo history storage
-//            historyMessageStorage.store(MessageShortInfoDto.getInstance(messageXml, Boolean.FALSE));
-//            historyMessageStorage.store(MessageShortInfoDto.getInstance(acknowledgementXml, Boolean.TRUE));
-
             return acknowledgement;
 
 
@@ -122,7 +111,7 @@ public class DefaultMessageAPI implements MessageAPI {
 
     @Override
     public MessageApiDto getLastStoredMessage() {
-        return messageStorage.read();
+        return (MessageApiDto) messageStorage.read();
     }
 
     public boolean consumeStoredMessage(MessageApiDto storedMessage) {

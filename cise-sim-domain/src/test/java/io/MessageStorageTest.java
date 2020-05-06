@@ -32,7 +32,7 @@ public class MessageStorageTest {
     public void it_queue_saves_and_read_the_values_to_store() {
         Object objectInA = new Object();
         Object objectInB = new Object();
-        MessageStorage messageStore = new QueueMessageStorage();
+        MessageStorage<Object> messageStore = new QueueMessageStorage<Object>();
         messageStore.store(objectInA);
         messageStore.store(objectInB);
 

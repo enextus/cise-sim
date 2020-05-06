@@ -1,6 +1,7 @@
 package eu.cise.sim.api.history;
 
-import eu.cise.sim.api.dto.MessageShortInfoDto;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.sim.utils.Pair;
 import org.apache.commons.collections.CollectionUtils;
 
 import javax.ws.rs.GET;
@@ -8,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/history")
@@ -24,7 +26,9 @@ public class HistoryResource {
     @GET
     public Response pullAndDelete() {
 
-        List<MessageShortInfoDto> lastStoredMessage = historyAPI.getLatestMessages();
+        List<Pair<Message, Boolean>> latestMessagesList = historyAPI.getLatestMessages();
+
+        List<MessageShortInfoDto> lastStoredMessage = getLatestMessages(latestMessagesList);
 
         Response response;
         if (CollectionUtils.isEmpty(lastStoredMessage)) {
@@ -39,5 +43,19 @@ public class HistoryResource {
         }
 
         return response;
+    }
+
+
+    private List<MessageShortInfoDto> getLatestMessages(List<Pair<Message, Boolean>> messagePairList) {
+
+        List<MessageShortInfoDto> messageShortInfoDtoList = new ArrayList<>();
+        for (Pair<Message, Boolean> pair : messagePairList) {
+
+            Message message = pair.getA();
+            Boolean direction = pair.getB();
+            messageShortInfoDtoList.add(MessageShortInfoDto.getInstance(message, direction));
+        }
+
+        return  messageShortInfoDtoList;
     }
 }
