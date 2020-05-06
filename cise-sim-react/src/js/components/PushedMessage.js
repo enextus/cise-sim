@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Tab, Tabs, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';

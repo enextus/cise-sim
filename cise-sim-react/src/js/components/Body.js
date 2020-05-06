@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import SendForm from './SendForm';
 import PushedMessage from './PushedMessage';
 import PreviewMessage from './PreviewMessage';

@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import {AppBar, Toolbar, Typography} from '@material-ui/core';
 import {observer} from 'mobx-react';
 import DirectionsBoatIcon from '@material-ui/icons/DirectionsBoat';
