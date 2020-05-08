@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {
-    Button,
     ExpansionPanel,
     ExpansionPanelDetails,
     ExpansionPanelSummary,
@@ -12,10 +11,8 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
-import Error from '../../errors/Error';
 import TabPanel from '../../components/common/TabPanel';
 import EmailIcon from '@material-ui/icons/Email';
-import MesRender from "../HistoryMessageRender";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -23,6 +20,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+
+import MesRender from "../HistoryMessageRender";
 
 const styles = (theme) => ({
     root: {
@@ -47,9 +46,6 @@ const styles = (theme) => ({
 @observer
 class HistoryMessage extends Component {
 
-  lastReceivedSuccessCheckSum = 0;
-  prevReceivedMessageError = new Error("", "");
-
   constructor(props) {
     super(props);
     this.state = {tabValue: "one"};
@@ -63,43 +59,6 @@ class HistoryMessage extends Component {
   isDisabled() {
     return !this.props.store.templateStore.isTemplateSelected;
   }
-
-  showSuccessMessage(event, newValue) {
-    if (this.props.store.messageStore.receivedMessage &&
-        this.props.store.messageStore.receivedMessage.checksum
-        !== this.lastReceivedSuccessCheckSum) {
-      this.props.enqueueSnackbar("Message was received", {
-        variant: 'info',
-        innerRef: instance => {
-          this.props.store.messageStore.receivedMessage.checksum
-        }
-      });
-    }
-    this.lastReceivedSuccessCheckSum = this.props.store.messageStore.receivedMessage.checksum;
-  };
-
-  showErrorMessage(event, newValue) {
-    if (this.props.store.messageStore.receivedMessageError) {
-
-      if (this.props.store.messageStore.receivedMessageError.errorMessage !==
-          this.prevReceivedMessageError.errorMessage) {
-
-        this.prevReceivedMessageError = this.props.store.messageStore.receivedMessageError;
-        this.props.enqueueSnackbar(
-            this.props.store.messageStore.receivedMessageError.errorMessage, {
-              variant: 'error',
-              persist: true,
-              action: (key) => (
-                  <Button onClick={() => {
-                    this.props.closeSnackbar(key)
-                  }}>
-                    {'Dismiss'}
-                  </Button>
-              ),
-            })
-      }
-    }
-  };
 
   orderingHistoryMessage(msgList) {
       const orderedList = [...msgList];
@@ -116,14 +75,15 @@ class HistoryMessage extends Component {
         <div className={classes.root}>
           <ExpansionPanel
               expanded={this.getMessageStore().historyMsgList.length}>
+
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="receiveMessageContent"
-                id="ReceivedMessage">
+                id="HistoryMessage">
               <EmailIcon className={classes.icon}/>
-
-              <Typography className={classes.title}>message <b>History</b></Typography>
+              <Typography className={classes.title}>Message <b>History</b></Typography>
             </ExpansionPanelSummary>
+
             <ExpansionPanelDetails>
               <Tabs
                   value={this.state.tabValue}
@@ -168,9 +128,6 @@ class HistoryMessage extends Component {
 
               </TabPanel>
             </ExpansionPanelDetails>
-            <Typography className={classes.hide}
-                        onChange={this.showErrorMessage()}>{""
-            + this.getMessageStore().receivedMessageError}</Typography>
           </ExpansionPanel>
         </div>
     )

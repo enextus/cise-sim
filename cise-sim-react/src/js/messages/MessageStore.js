@@ -35,10 +35,10 @@ export default class MessageStore {
         this.receivedMessageError = null;
     }
 
-    // In ingresso abbiamo una lista di MessageShortInfo
-    updateHistory(msgShortList) {
+    @action
+    updateHistory(newChunkMsgRcv) {
         const newList = [...this.historyMsgList];
-        msgShortList.forEach(t => newList.push(t));
+        newChunkMsgRcv.forEach(t => newList.push(t));
         this.historyMsgList = newList;
     }
 
