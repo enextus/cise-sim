@@ -5,6 +5,7 @@ import PreviewMessage from './PreviewMessage';
 import PulledMessage from '../messages/components/PulledMessage';
 import {Grid} from '@material-ui/core';
 import {observer} from 'mobx-react';
+import HistoryMessage from "../messages/components/HistoryMessage";
 
 @observer
 export default class Body extends Component {
@@ -21,6 +22,8 @@ export default class Body extends Component {
                     <PushedMessage
                         store={this.props.store}/>
                     <PulledMessage
+                        store={this.props.store}/>
+                    <HistoryMessage
                         store={this.props.store}/>
                 </Grid>
             </Grid>

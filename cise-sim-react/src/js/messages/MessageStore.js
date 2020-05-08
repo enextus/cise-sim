@@ -1,18 +1,19 @@
 import {action, computed, observable} from 'mobx';
-import {pullMessage, sendMessage} from './MessageService';
+import {pullMessage, pullMessageHistory, sendMessage} from './MessageService';
 import Message from './Message';
 
+
 export default class MessageStore {
-    @observable sentMessage = new Message({body: "", acknowledge: ""});
-    @observable receivedMessage = new Message({body: "", acknowledge: ""});
+    @observable sentMessage          = new Message({body: "", acknowledge: ""});
+    @observable receivedMessage      = new Message({body: "", acknowledge: ""});
     @observable receivedMessageError = null;
-    count = 0;
+
+    @observable historyMsgList       = [];
 
     @computed
     get isSentMessagePresent() {
         return !(this.sentMessage);
     }
-
 
     @computed
     get isReceivedMessagePresent() {
@@ -32,6 +33,13 @@ export default class MessageStore {
     @action
     consumeErrorMessage() {
         this.receivedMessageError = null;
+    }
+
+    // In ingresso abbiamo una lista di MessageShortInfo
+    updateHistory(msgShortList) {
+        const newList = [...this.historyMsgList];
+        msgShortList.forEach(t => newList.push(t));
+        this.historyMsgList = newList;
     }
 
     async send(seletedTemplate, messageId, correlationId, requiresAck) {
@@ -65,4 +73,16 @@ export default class MessageStore {
         }, 3000, this);
     }
 
+    startPullHistory() {
+        this.interval = setInterval(async function (that)
+        {
+            const pullMessageResponse = await pullMessageHistory();
+            if (!pullMessageResponse) return;
+            if (pullMessageResponse.errorCode) {
+                that.receivedMessageError = pullMessageResponse;
+            } else {
+                that.updateHistory(pullMessageResponse);
+            }
+        }, 3000, this);
+    }
 }

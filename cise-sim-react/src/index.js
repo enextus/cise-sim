@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import MainApp from './js/MainApp';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import {ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import {CssBaseline} from '@material-ui/core';
 import {SnackbarProvider} from 'notistack';

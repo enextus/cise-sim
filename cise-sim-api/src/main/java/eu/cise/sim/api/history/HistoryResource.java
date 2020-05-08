@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/history")
+@Path("/ui/history")
 @Produces(MediaType.APPLICATION_JSON)
 public class HistoryResource {
 
