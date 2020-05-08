@@ -7,7 +7,7 @@ import eu.eucise.xml.XmlMapper;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class MessageShortInfoDto implements Serializable {
 
@@ -15,12 +15,12 @@ public class MessageShortInfoDto implements Serializable {
     private static final XmlMapper XML_MAPPER = new DefaultXmlMapper.PrettyNotValidating();
 
     private final String id;
-    private final String dateTime;
+    private final long dateTime;
     private final String messageType;
     private final String serviceType;
     private final boolean isSent;
 
-    private MessageShortInfoDto(String id, String dateTime, String messageType, String serviceType, boolean isSent) {
+    private MessageShortInfoDto(String id, long dateTime, String messageType, String serviceType, boolean isSent) {
         this.id = id;
         this.dateTime = dateTime;
         this.messageType = messageType;
@@ -39,8 +39,9 @@ public class MessageShortInfoDto implements Serializable {
         String  id = ciseMessage.getMessageID();
 
         // TODO Check if it's better to leave the original info (like 2019-10-16T14:04:20.673Z)
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-        String  dateTime = formatter.format(ciseMessage.getCreationDateTime().toGregorianCalendar().toZonedDateTime());
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+//        String  dateTime = formatter.format(ciseMessage.getCreationDateTime().toGregorianCalendar().toZonedDateTime());
+        long  dateTime = new Date().getTime();
 
         MessageTypeEnum messageType = MessageTypeEnum.valueOf(ciseMessage);
         String messageTypeName = messageType.name();
@@ -65,10 +66,6 @@ public class MessageShortInfoDto implements Serializable {
             throw new IllegalArgumentException("MessageID is empty");
         }
 
-        if (StringUtils.isEmpty(instance.getDateTime())) {
-            throw new IllegalArgumentException("CreationDateTime is empty");
-        }
-
         if (StringUtils.isEmpty(instance.getMessageType())) {
             throw new IllegalArgumentException("Type of Message is empty");
         }
@@ -78,7 +75,7 @@ public class MessageShortInfoDto implements Serializable {
         return id;
     }
 
-    public String getDateTime() {
+    public long getDateTime() {
         return dateTime;
     }
 

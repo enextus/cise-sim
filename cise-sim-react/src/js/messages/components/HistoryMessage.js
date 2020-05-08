@@ -62,7 +62,8 @@ class HistoryMessage extends Component {
 
   orderingHistoryMessage(msgList) {
       const orderedList = [...msgList];
-      orderedList.sort(function(a,b) {return Date.parse(a.dateTime)-Date.parse(b.dateTime)})
+      //orderedList.sort(function(a,b) {return Date.parse(a.dateTime)-Date.parse(b.dateTime)})
+      orderedList.sort(function(a,b) {return a.dateTime-b.dateTime})
       return orderedList;
   }
 

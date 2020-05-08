@@ -16,7 +16,6 @@ import eu.cise.sim.api.rest.UiMessageResource;
 import eu.cise.sim.api.soap.CISEMessageServiceSoapImplDefault;
 import eu.cise.sim.app.AppContext;
 import eu.cise.sim.app.DefaultAppContext;
-import eu.cise.sim.io.HistoryPersistence;
 import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -52,8 +51,7 @@ public class SimApp extends Application<SimConf> {
 
         AppContext appCtx = new DefaultAppContext();
 
-        HistoryPersistence memoryQueuedRepository =  new MemoryQueuedRepository();
-//        HistoryPersistence memoryQueuedRepository =  appCtx.makeHistoryMessageStorage();
+        MemoryQueuedRepository memoryQueuedRepository =  new MemoryQueuedRepository();
         HistoryAPI historyAPI = new DefaultHistoryAPI(memoryQueuedRepository);
 
 

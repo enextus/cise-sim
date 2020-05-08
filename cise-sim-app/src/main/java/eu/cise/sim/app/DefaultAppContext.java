@@ -7,7 +7,9 @@ import eu.cise.sim.engine.DefaultMessageProcessor;
 import eu.cise.sim.engine.DefaultSimEngine;
 import eu.cise.sim.engine.Dispatcher;
 import eu.cise.sim.engine.MessageProcessor;
-import eu.cise.sim.io.*;
+import eu.cise.sim.io.DefaultMessageStorage;
+import eu.cise.sim.io.MessagePersistence;
+import eu.cise.sim.io.MessageStorage;
 import eu.cise.sim.templates.DefaultTemplateLoader;
 import eu.cise.sim.templates.TemplateLoader;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -68,11 +70,6 @@ public class DefaultAppContext implements AppContext {
     @Override
     public MessageStorage<Object> makeMessageStorage() {
         return new DefaultMessageStorage();
-    }
-
-    @Override
-    public HistoryPersistence makeHistoryMessageStorage() {
-        return new DummyHistoryPersistence();
     }
 
     @Override

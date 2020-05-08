@@ -16,8 +16,7 @@ const stores = {
 
 autorun(() => {
     stores.serviceStore.loadServiceSelf();
-    // This ask the received messages
-    //stores.messageStore.startPull();
+   // stores.messageStore.startPull();
     stores.messageStore.startPullHistory();
 });
 

@@ -22,13 +22,13 @@ public class HistoryResource {
         this.historyAPI = historyAPI;
     }
 
+
+
     @Path("/latest")
     @GET
     public Response pullAndDelete() {
 
-        List<Pair<Message, Boolean>> latestMessagesList = historyAPI.getLatestMessages();
-
-        List<MessageShortInfoDto> lastStoredMessage = getLatestMessages(latestMessagesList);
+        List<MessageShortInfoDto> lastStoredMessage = historyAPI.getLatestMessages();
 
         Response response;
         if (CollectionUtils.isEmpty(lastStoredMessage)) {
@@ -44,7 +44,6 @@ public class HistoryResource {
 
         return response;
     }
-
 
     private List<MessageShortInfoDto> getLatestMessages(List<Pair<Message, Boolean>> messagePairList) {
 
