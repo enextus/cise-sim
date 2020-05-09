@@ -50,6 +50,7 @@ class TemplateSelect extends React.Component {
                     value={this.props.store.selected}
                     onChange={this.handleChange}
                     inputProps={{
+			            name: 'templateSelect',
                         id: 'templateSelect'
                     }}>
                     <MenuItem selected={true} value="empty">
