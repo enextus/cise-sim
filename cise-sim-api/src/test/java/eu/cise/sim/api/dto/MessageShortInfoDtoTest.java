@@ -120,7 +120,7 @@ public class MessageShortInfoDtoTest {
 
         MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
         assertNotNull(messageShortInfoDto);
-        assertEquals("ACKNOWLEDGEMENT", messageShortInfoDto.getMessageType());
+        assertEquals("ACK_SYNC", messageShortInfoDto.getMessageType());
         assertEquals("", messageShortInfoDto.getServiceType());
     }
 
@@ -133,7 +133,7 @@ public class MessageShortInfoDtoTest {
 
         MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
         assertNotNull(messageShortInfoDto);
-        assertEquals("ACKNOWLEDGEMENT", messageShortInfoDto.getMessageType());
+        assertEquals("ACK_ASYNC", messageShortInfoDto.getMessageType());
         assertEquals("", messageShortInfoDto.getServiceType());
     }
 

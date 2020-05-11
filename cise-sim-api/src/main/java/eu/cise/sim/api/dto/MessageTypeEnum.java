@@ -4,7 +4,7 @@ import eu.cise.servicemodel.v1.message.*;
 
 public enum MessageTypeEnum {
 
-    PUSH, PULL_RESPONSE, PULL_REQUEST, FEEDBACK, ACKNOWLEDGEMENT;
+    PUSH, PULL_RESPONSE, PULL_REQUEST, FEEDBACK, ACK_SYNC, ACK_ASYNC;
 
     public static MessageTypeEnum valueOf(Message message) throws IllegalArgumentException {
 
@@ -19,7 +19,11 @@ public enum MessageTypeEnum {
         } else if (message instanceof Feedback) {
             result = FEEDBACK;
         } else if (message instanceof Acknowledgement) {
-            result = ACKNOWLEDGEMENT;
+            if (message.getSender() == null) {
+                result = ACK_SYNC;
+            } else {
+                result = ACK_ASYNC;
+            }
         } else {
             throw new IllegalArgumentException("Message class is unknown " + message.getClass().getCanonicalName());
         }

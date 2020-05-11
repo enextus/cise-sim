@@ -47,7 +47,7 @@ public class MessageShortInfoDto implements Serializable {
         String messageTypeName = messageType.name();
 
         String  serviceType = "";
-        if (messageType != MessageTypeEnum.ACKNOWLEDGEMENT) {
+        if (messageType != MessageTypeEnum.ACK_ASYNC && messageType != MessageTypeEnum.ACK_SYNC) {
             serviceType = ciseMessage.getSender().getServiceType().value();
             if (StringUtils.isEmpty(serviceType)) {
                 throw new IllegalArgumentException("Service type is empty");
