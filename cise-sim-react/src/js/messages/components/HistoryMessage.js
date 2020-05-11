@@ -20,6 +20,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Config from 'Config';
 
 import MesRender from "../HistoryMessageRender";
 
@@ -50,6 +51,8 @@ class HistoryMessage extends Component {
     super(props);
     this.state = {tabValue: "one"};
     this.handleChange = this.handleChange.bind(this);
+
+    console.log("History max message : "+Config.max_history_msg);
   }
 
   handleChange(event, newValue) {
