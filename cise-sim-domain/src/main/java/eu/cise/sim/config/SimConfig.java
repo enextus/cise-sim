@@ -27,6 +27,9 @@ public interface SimConfig extends Config {
     @Key("templates.messages.directory")
     String messageTemplateDir();
 
+    @Key("history.repository.directory")
+    String messageHistoryDir();
+
     @Key("signature.keystore.filename")
     String keyStoreFileName();
 

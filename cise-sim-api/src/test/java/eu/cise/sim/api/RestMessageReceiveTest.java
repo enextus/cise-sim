@@ -66,8 +66,11 @@ public class RestMessageReceiveTest {
 
         @Override
         public String messageTemplateDir() {
-            return "cise-sim-assembly/src/main/rest/templates/messages";
+            return "templates/messages";
         }
+
+        @Override
+        public String messageHistoryDir() { return "msghistory"; }
 
         @Override
         public DispatcherType destinationProtocol() {
