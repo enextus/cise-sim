@@ -107,10 +107,10 @@ class HistoryMessage extends Component {
                       <Table className={classes.table} size="small" aria-label="a dense table">
                           <TableHead>
                               <TableRow>
-                                  <TableCell align="center">RCV Date & Time&nbsp;</TableCell>
+                                  <TableCell align="center">Date & Time&nbsp;</TableCell>
                                   <TableCell align="center">Message Type&nbsp;</TableCell>
                                   <TableCell align="center">Service Type&nbsp;</TableCell>
-                                  <TableCell align="center">SND Date & Time&nbsp;</TableCell>
+                                  <TableCell align="center">Direction&nbsp;</TableCell>
                               </TableRow>
                           </TableHead>
                           <TableBody>

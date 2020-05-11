@@ -1,12 +1,19 @@
 import React from 'react';
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import {blue, green} from "@material-ui/core/colors";
 
 const msgHsTable = ( props ) => {
 
-
-
+    // Direction and background color
+    let direction;
+    let backColor;
+    if (props.isSent) {
+        direction = "SENT";
+        backColor = "#ade6cb"
+    } else {
+        direction = "RECV";
+        backColor = "#4795ff"
+    }
 
     // Formatting the Date Time
     const timestamp = new Date(props.dateTime);
@@ -20,28 +27,17 @@ const msgHsTable = ( props ) => {
     }
     const localeDate = timestamp.toLocaleString()+'.'+padding+msec;
 
-    let out;
-    if (props.isSent) {
-        out = (
-            <TableRow key={props.id} style={{backgroundColor:"#ade6cb"}}>
-            <TableCell align="right"/>
-            <TableCell align="right" color={green}>{props.messageType}</TableCell>
-            <TableCell align="right" color={green}>{props.serviceType}</TableCell>
-            <TableCell align="right" color={green}>{localeDate}</TableCell>
-            </TableRow>);
+    // Row Style
+    const rowStyle = {backgroundColor:backColor, align:'left'};
 
-    }
-    else {
-        out = (
-            <TableRow key={props.id} style={{backgroundColor:'#9095ee'}}>
-                <TableCell align="left" >{localeDate}</TableCell>
-                <TableCell align="left" color={blue}>{props.messageType}</TableCell>
-                <TableCell align="left" color={blue}>{props.serviceType}</TableCell>
-                <TableCell align="left"/>
-            </TableRow>);
-    }
-    //  <TableCell component="th" scope="row" align="right">{props.dateTime}</TableCell>
-    return out;
+    return (
+        <TableRow key={props.id} style={rowStyle}>
+            <TableCell>{localeDate}</TableCell>
+            <TableCell>{props.messageType}</TableCell>
+            <TableCell>{props.serviceType}</TableCell>
+            <TableCell>{direction}</TableCell>
+        </TableRow>
+    )
 };
 
 export default msgHsTable;
