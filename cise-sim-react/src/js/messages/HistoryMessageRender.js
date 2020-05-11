@@ -1,16 +1,14 @@
 import React from 'react';
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import {blue, green} from "@material-ui/core/colors";
 
 const msgHsTable = ( props ) => {
 
-    let direction;
-    if (props.isSent) {
-        direction = "SENT";
-    } else {
-        direction = "RECV";
-    }
 
+
+
+    // Formatting the Date Time
     const timestamp = new Date(props.dateTime);
     const msec = timestamp.getMilliseconds();
     let padding = '';
@@ -22,16 +20,28 @@ const msgHsTable = ( props ) => {
     }
     const localeDate = timestamp.toLocaleString()+'.'+padding+msec;
 
+    let out;
+    if (props.isSent) {
+        out = (
+            <TableRow key={props.id} style={{backgroundColor:"#ade6cb"}}>
+            <TableCell align="right"/>
+            <TableCell align="right" color={green}>{props.messageType}</TableCell>
+            <TableCell align="right" color={green}>{props.serviceType}</TableCell>
+            <TableCell align="right" color={green}>{localeDate}</TableCell>
+            </TableRow>);
 
+    }
+    else {
+        out = (
+            <TableRow key={props.id} style={{backgroundColor:'#9095ee'}}>
+                <TableCell align="left" >{localeDate}</TableCell>
+                <TableCell align="left" color={blue}>{props.messageType}</TableCell>
+                <TableCell align="left" color={blue}>{props.serviceType}</TableCell>
+                <TableCell align="left"/>
+            </TableRow>);
+    }
     //  <TableCell component="th" scope="row" align="right">{props.dateTime}</TableCell>
-    return (
-        <TableRow key={props.id}>
-            <TableCell align="right">{localeDate}</TableCell>
-            <TableCell align="right">{props.messageType}</TableCell>
-            <TableCell align="center">{props.serviceType}</TableCell>
-            <TableCell align="center">{direction}</TableCell>
-        </TableRow>
-    )
+    return out;
 };
 
 export default msgHsTable;
