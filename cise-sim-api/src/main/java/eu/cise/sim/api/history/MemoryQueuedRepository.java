@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -27,13 +28,13 @@ public class MemoryQueuedRepository implements MessagePersistence {
 
     @Override
     public void messageReceived(Message msgRecv) {
-        historyMessageStorage.store(MessageShortInfoDto.getInstance(msgRecv, MSG_RECV));
+        historyMessageStorage.store(MessageShortInfoDto.getInstance(msgRecv, MSG_RECV, new Date()));
         LOGGER.info("messageReceived");
     }
 
     @Override
     public void messageSent(Message msgSent) {
-        historyMessageStorage.store(MessageShortInfoDto.getInstance(msgSent, MSG_SENT));
+        historyMessageStorage.store(MessageShortInfoDto.getInstance(msgSent, MSG_SENT, new Date()));
         LOGGER.info("messageSent");
     }
 

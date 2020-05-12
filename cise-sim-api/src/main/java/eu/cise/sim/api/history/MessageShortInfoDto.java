@@ -28,13 +28,13 @@ public class MessageShortInfoDto implements Serializable {
         this.isSent = isSent;
     }
 
-    public static MessageShortInfoDto getInstance(String message, boolean isSent) throws IllegalArgumentException {
+    public static MessageShortInfoDto getInstance(String message, boolean isSent, Date timestamp) throws IllegalArgumentException {
 
         Message ciseMessage = XML_MAPPER.fromXML(message);
-        return getInstance(ciseMessage, isSent);
+        return getInstance(ciseMessage, isSent, timestamp);
     }
 
-    public static MessageShortInfoDto getInstance(Message ciseMessage, boolean isSent) throws IllegalArgumentException {
+    public static MessageShortInfoDto getInstance(Message ciseMessage, boolean isSent, Date timestamp) throws IllegalArgumentException {
 
         String  id = ciseMessage.getMessageID();
 

@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -27,7 +28,7 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/Pull_requestTemplate.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date());
         assertNotNull(messageShortInfoDto);
         assertEquals("PULL_REQUEST", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -40,7 +41,7 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/Pull_responseTemplate.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date());
         assertNotNull(messageShortInfoDto);
         assertEquals("PULL_RESPONSE", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -53,7 +54,7 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/PushTemplateEULSA1.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date());
         assertNotNull(messageShortInfoDto);
         assertEquals("PUSH", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -66,7 +67,7 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/PushTemplateToSim2.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date());
         assertNotNull(messageShortInfoDto);
         assertEquals("PUSH", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -79,7 +80,7 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/Feedback_Template.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date());
         assertNotNull(messageShortInfoDto);
         assertEquals("FEEDBACK", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -92,7 +93,7 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/vessel_unsubscribe.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date());
         assertNotNull(messageShortInfoDto);
         assertEquals("PULL_REQUEST", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -105,7 +106,7 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/SubscribeTemplate.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date());
         assertNotNull(messageShortInfoDto);
         assertEquals("PUSH", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -118,7 +119,7 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/AckSync_PullRequestTemplate.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date());
         assertNotNull(messageShortInfoDto);
         assertEquals("ACK_SYNC", messageShortInfoDto.getMessageType());
         assertEquals("", messageShortInfoDto.getServiceType());
@@ -131,7 +132,7 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/AckAsync_PullRequestTemplate.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date());
         assertNotNull(messageShortInfoDto);
         assertEquals("ACK_ASYNC", messageShortInfoDto.getMessageType());
         assertEquals("", messageShortInfoDto.getServiceType());

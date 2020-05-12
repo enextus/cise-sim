@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Path("/ui/history")
@@ -52,7 +53,7 @@ public class HistoryResource {
 
             Message message = pair.getA();
             Boolean direction = pair.getB();
-            messageShortInfoDtoList.add(MessageShortInfoDto.getInstance(message, direction));
+            messageShortInfoDtoList.add(MessageShortInfoDto.getInstance(message, direction, new Date()));
         }
 
         return  messageShortInfoDtoList;
