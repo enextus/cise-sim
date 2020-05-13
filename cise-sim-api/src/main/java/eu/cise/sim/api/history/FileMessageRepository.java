@@ -4,6 +4,7 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.sim.api.dto.MessageTypeEnum;
 import eu.cise.sim.io.MessagePersistence;
 import eu.eucise.xml.XmlMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,17 +42,22 @@ public class FileMessageRepository implements MessagePersistence {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileMessageRepository.class);
 
-
     private final XmlMapper xmlMapper;
     private final String    repositoryDir;
-    private final int       maxListDimension = 10; // todo OCNET 332 wil substuite this with configuration param
+    private final int       maxListDimension;
 
     private final MessageStack messageStack;
 
     public FileMessageRepository(XmlMapper xmlMapper, String repositoryDir) {
+        this(xmlMapper, repositoryDir, 10);
+    }
+
+    public FileMessageRepository(XmlMapper xmlMapper, String repositoryDir, int maxMsg) {
         this.xmlMapper = xmlMapper;
         this.repositoryDir = new File(repositoryDir).getAbsolutePath();
-        this.messageStack = new MessageStack(maxListDimension);
+        this.maxListDimension = maxMsg;
+
+        this.messageStack = MessageStack.build(this.repositoryDir, this.maxListDimension, this.xmlMapper);
     }
 
     @Override
@@ -86,6 +92,14 @@ public class FileMessageRepository implements MessagePersistence {
 
     }
 
+    /**
+     * Retrieve the list of MessageShortInfoDto instances of the messages stored after the timestamp passed.
+     * The list returned is ordered by time descending
+     * NB: The max number of elements is equal to the maxListDimension parameter
+     *
+     * @param timestamp The inferior time limit of the list
+     * @return list of MessageShortInfoDto with timestamp duperior of the on passed
+     */
     public List<MessageShortInfoDto> getShortInfoAfter(long timestamp) {
 
         List<MessageShortInfoDto> shortInfoDtoList = new ArrayList<>();
@@ -96,40 +110,40 @@ public class FileMessageRepository implements MessagePersistence {
                 break;
             }
         }
+
+        LOGGER.info("getShortInfoAfter timestamp[{}} number of messages[{}]", new Date(timestamp), shortInfoDtoList.size());
+
         return shortInfoDtoList;
     }
 
+    /**
+     * Retrieve the xml of the cise message, using his uuid
+     * First will be checked the local cache. If it isn't found, the file system will be checked
+     *
+     * @param uuid the message uuid
+     * @return xml if the message
+     * @throws IOException the xml was not found
+     */
     public String getXmlMessageByUuid(String uuid) throws IOException {
 
-        String fileName = messageStack.getFilenameByUuid(uuid);
+        if (StringUtils.isEmpty(uuid)) {
+            throw new IOException("getXmlMessageByUuid uuid is null or empty");
+        }
 
-        Path path = Paths.get(new File(repositoryDir + File.separatorChar + fileName).getAbsolutePath());
+        // Try to get information from the local cache
+        Path path;
+        String fileName = messageStack.getFilenameByUuid(uuid);
+        if (fileName == null) {
+            // The uuid isn't in the cache. Find it on the file system
+            File f = getFileByUuid(uuid);
+            path = f.toPath();
+        } else {
+            path = Paths.get(new File(repositoryDir + File.separatorChar + fileName).getAbsolutePath());
+        }
+
+        LOGGER.info("getXmlMessageByUuid uuid[{}] -> {}", uuid, path.getFileName());
 
         return Files.readString(path, StandardCharsets.UTF_8);
-    }
-
-    public void buildCache() {
-
-        File[] msgInRepo = getRepositoryFiles();
-        int bottom = maxListDimension > msgInRepo.length ? (msgInRepo.length - 1) : (maxListDimension - 1);
-        for (int i = bottom; i >= 0; --i) {
-            try {
-                String xmlMessage = Files.readString(msgInRepo[i].toPath(), StandardCharsets.UTF_8);
-                String fileName = msgInRepo[i].getName();
-                Message message = xmlMapper.fromXML(xmlMessage);
-                FileNameRepository fileNameRepository = new FileNameRepository(fileName);
-                boolean msgIsSent = fileNameRepository.isSent();
-                Date timestamp = fileNameRepository.getTimestamp();
-                messageStack.add(MessageShortInfoDto.getInstance(message, msgIsSent, timestamp), fileName);
-
-            } catch (IOException | ParseException e) {
-                LOGGER.warn("buildCache some problem with file {} : {}", msgInRepo[i], e.getMessage());
-            }
-        }
-    }
-
-    public MessageStack getCache() {
-        return this.messageStack;
     }
 
     private String write(Message message, boolean isSent, Date timestamp) throws IOException {
@@ -143,26 +157,48 @@ public class FileMessageRepository implements MessagePersistence {
             writer.write(xmlMessage);
         }
 
+        LOGGER.info("write xml file {}", fileName);
+
         return fileName;
     }
 
-    public File[] getRepositoryFiles() {
+    private File getFileByUuid(String uuid) throws IOException {
+
+        File result = null;
 
         Path dir = Paths.get(repositoryDir);
         File[] files = dir.toFile().listFiles();
         if (files != null) {
-            Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
+            for (File f : files) {
+                try {
+                    FileNameRepository fileNameRepository = new FileNameRepository(f.getName());
+                    if (fileNameRepository.getUuid().equals(uuid)) {
+                        result = f;
+                        break;
+                    }
+                } catch (ParseException ignored) { }
+            }
         }
-        return files;
+
+        if (result == null) {
+            throw new IOException("getUuidFile uuid not found " + uuid);
+        }
+
+        return result;
     }
 
+
+
+    /**
+     * Convenient Cache class
+     */
     static class MessageStack {
 
         private final Deque<MessageShortInfoDto> shortInfoQueue;
-        private final Map<String, String>   uiidFilenameMap;
+        private final Map<String, String>        uiidFilenameMap;
         private final int maxSize;
 
-        MessageStack(int maxSize) {
+        private MessageStack(int maxSize) {
             this.maxSize = maxSize;
             this.uiidFilenameMap = new ConcurrentHashMap<>();
             this.shortInfoQueue = new ConcurrentLinkedDeque<>();
@@ -186,9 +222,64 @@ public class FileMessageRepository implements MessagePersistence {
         public String getFilenameByUuid(String uuid) {
             return uiidFilenameMap.get(uuid);
         }
+
+        public void clear() {
+            uiidFilenameMap.clear();
+            shortInfoQueue.clear();
+        }
+
+        public int size() {
+            return shortInfoQueue.size();
+        }
+
+        public static MessageStack build(String repositoryDir, int maxSize, XmlMapper xmlMapper) {
+
+            MessageStack messageStack = new MessageStack(maxSize);
+
+            File[] msgInRepo = getRepositoryFiles(repositoryDir);
+            if (msgInRepo == null) {
+                return messageStack;
+            }
+
+            int bottom = maxSize > msgInRepo.length ? (msgInRepo.length - 1) : (maxSize - 1);
+            for (int i = bottom; i >= 0; --i) {
+                try {
+                    String xmlMessage = Files.readString(msgInRepo[i].toPath(), StandardCharsets.UTF_8);
+                    String fileName = msgInRepo[i].getName();
+                    Message message = xmlMapper.fromXML(xmlMessage);
+                    FileNameRepository fileNameRepository = new FileNameRepository(fileName);
+                    boolean msgIsSent = fileNameRepository.isSent();
+                    Date timestamp = fileNameRepository.getTimestamp();
+                    messageStack.add(MessageShortInfoDto.getInstance(message, msgIsSent, timestamp), fileName);
+
+                } catch (IOException | ParseException e) {
+                    LOGGER.warn("build MessageStack some problem with file {} : {}", msgInRepo[i], e.getMessage());
+                }
+            }
+
+            LOGGER.info("MessageStack build with size {}", messageStack.size());
+
+            return messageStack;
+        }
+
+        /**
+         * Retrieve all the File on the repository directory, ordered by last modified parameter descending
+         * @return Array of all the files in the repository directory
+         */
+        private static File[] getRepositoryFiles(String repositoryDir) {
+
+            Path dir = Paths.get(repositoryDir);
+            File[] files = dir.toFile().listFiles();
+            if (files != null) {
+                Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
+            }
+            return files;
+        }
     }
 
-
+    /**
+     * File name builder
+     */
     static class FileNameRepository {
 
         private static final String TIMESTAMP_FORMAT = "yyyyMMdd-hhmmss";
