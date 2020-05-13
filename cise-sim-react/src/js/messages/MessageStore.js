@@ -1,7 +1,7 @@
 import {action, computed, observable} from 'mobx';
-import {pullMessage, pullMessageHistory, sendMessage} from './MessageService';
+import {pullMessage, pullMessageHistory, pullMessageHistoryAfter, sendMessage} from './MessageService';
 import Message from './Message';
-
+import Config from 'Config';
 
 export default class MessageStore {
     @observable sentMessage          = new Message({body: "", acknowledge: ""});
@@ -9,6 +9,8 @@ export default class MessageStore {
     @observable receivedMessageError = null;
 
     @observable historyMsgList       = [];
+    historyLasTimestamp = 0;
+    historyMaxCapacity = Config.max_history_msg;
 
     @computed
     get isSentMessagePresent() {
@@ -36,10 +38,29 @@ export default class MessageStore {
     }
 
     @action
-    updateHistory(newChunkMsgRcv) {
+    updateHistorySecure(newChunkMsgShortInfoRcv) {
+
+        // Adding new data to old ones and find the most recent timestamp
         const newList = [...this.historyMsgList];
-        newChunkMsgRcv.forEach(t => newList.push(t));
-        this.historyMsgList = newList;
+
+        newChunkMsgShortInfoRcv.forEach(t => {
+            newList.push(t);
+            if (t.dateTime > this.historyLasTimestamp) this.historyLasTimestamp = t.dateTime;
+        });
+
+        // Do the ordering by timestamp
+        newList.sort(function(a,b) {return b.dateTime-a.dateTime});
+
+        // take only the first historyMaxCapacity item
+        this.historyMsgList = newList.slice(0, this.historyMaxCapacity);
+    }
+
+    @action
+    updateHistory(newChunkMsgShortInfoRcv) {
+
+        const newList = [...newChunkMsgShortInfoRcv, ...this.historyMsgList];
+        this.historyLasTimestamp = newList[0].dateTime;
+        this.historyMsgList = newList.slice(0, this.historyMaxCapacity);
     }
 
     async send(seletedTemplate, messageId, correlationId, requiresAck) {
@@ -77,6 +98,19 @@ export default class MessageStore {
         this.interval = setInterval(async function (that)
         {
             const pullMessageResponse = await pullMessageHistory();
+            if (!pullMessageResponse) return;
+            if (pullMessageResponse.errorCode) {
+                that.receivedMessageError = pullMessageResponse;
+            } else {
+                that.updateHistory(pullMessageResponse);
+            }
+        }, 3000, this);
+    }
+
+    startPullHistoryProgressive() {
+        this.interval = setInterval(async function (that)
+        {
+            const pullMessageResponse = await pullMessageHistoryAfter(that.historyLasTimestamp);
             if (!pullMessageResponse) return;
             if (pullMessageResponse.errorCode) {
                 that.receivedMessageError = pullMessageResponse;

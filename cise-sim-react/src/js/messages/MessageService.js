@@ -48,3 +48,16 @@ export async function pullMessageHistory() {
 
     return  pullHistoryMessageResponse.map(m => new MessageShortInfo(m));
 }
+
+export async function pullMessageHistoryAfter(timestamp) {
+
+    const pullHistoryMessageResponse = await http_get("history/latest/"+timestamp);
+    if (!pullHistoryMessageResponse) return;
+
+    if (pullHistoryMessageResponse.errorCode) {
+        console.log("pullMessagePostResponse returned with n error: ", pullHistoryMessageResponse);
+        return pullHistoryMessageResponse;
+    }
+
+    return  pullHistoryMessageResponse.map(m => new MessageShortInfo(m));
+}

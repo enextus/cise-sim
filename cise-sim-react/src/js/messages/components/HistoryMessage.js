@@ -20,7 +20,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Config from 'Config';
+
 
 import MesRender from "../HistoryMessageRender";
 
@@ -52,7 +52,6 @@ class HistoryMessage extends Component {
     this.state = {tabValue: "one"};
     this.handleChange = this.handleChange.bind(this);
 
-    console.log("History max message : "+Config.max_history_msg);
   }
 
   handleChange(event, newValue) {
@@ -66,14 +65,14 @@ class HistoryMessage extends Component {
   orderingHistoryMessage(msgList) {
       const orderedList = [...msgList];
       //orderedList.sort(function(a,b) {return Date.parse(a.dateTime)-Date.parse(b.dateTime)})
-      orderedList.sort(function(a,b) {return a.dateTime-b.dateTime})
+      orderedList.sort(function(a,b) {return b.dateTime-a.dateTime})
       return orderedList;
   }
 
   render() {
     const {classes} = this.props;
 
-    const msgRcv = this.orderingHistoryMessage(this.getMessageStore().historyMsgList);
+    const msgRcv = this.getMessageStore().historyMsgList;
 
     return (
         <div className={classes.root}>

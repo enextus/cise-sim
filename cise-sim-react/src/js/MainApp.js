@@ -17,7 +17,8 @@ const stores = {
 autorun(() => {
     stores.serviceStore.loadServiceSelf();
    // stores.messageStore.startPull();
-    stores.messageStore.startPullHistory();
+   // stores.messageStore.startPullHistory();
+    stores.messageStore.startPullHistoryProgressive();
 });
 
 @observer
