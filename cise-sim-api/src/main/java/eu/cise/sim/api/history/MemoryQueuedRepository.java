@@ -1,6 +1,7 @@
 package eu.cise.sim.api.history;
 
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.sim.api.dto.MessageShortInfoDto;
 import eu.cise.sim.io.MessagePersistence;
 import eu.cise.sim.io.MessageStorage;
 import eu.cise.sim.io.QueueMessageStorage;

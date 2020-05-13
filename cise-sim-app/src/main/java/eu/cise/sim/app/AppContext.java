@@ -27,4 +27,8 @@ public interface AppContext {
     XmlMapper getPrettyNotValidatingXmlMapper();
 
     SimConfig makeEmuConfig();
+
+    String getRepoDir();
+
+    int getRepoGuiMaxShow();
 }

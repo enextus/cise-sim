@@ -1,20 +1,19 @@
 package eu.cise.sim.api.history;
 
-import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.sim.utils.Pair;
+
+import eu.cise.sim.api.dto.MessageShortInfoDto;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Path("/ui/history")
-@Produces(MediaType.APPLICATION_JSON)
 public class HistoryResource {
 
     private final HistoryAPI historyAPI;
@@ -24,12 +23,12 @@ public class HistoryResource {
     }
 
 
-
-    @Path("/latest")
+    @Path("/latest/{timestamp}")
     @GET
-    public Response pullAndDelete() {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLatestMessages(@PathParam("timestamp") long timestamp) {
 
-        List<MessageShortInfoDto> lastStoredMessage = historyAPI.getLatestMessages();
+        List<MessageShortInfoDto> lastStoredMessage = historyAPI.getLatestMessages(timestamp);
 
         Response response;
         if (CollectionUtils.isEmpty(lastStoredMessage)) {
@@ -46,16 +45,25 @@ public class HistoryResource {
         return response;
     }
 
-    private List<MessageShortInfoDto> getLatestMessages(List<Pair<Message, Boolean>> messagePairList) {
+    @Path("/message/{uuid}")
+    @GET
+    @Produces(MediaType.APPLICATION_XML)
+    public Response getMessageByUuid(@PathParam("uuid") String uuid) {
 
-        List<MessageShortInfoDto> messageShortInfoDtoList = new ArrayList<>();
-        for (Pair<Message, Boolean> pair : messagePairList) {
+        String xmlMessage = historyAPI.getXmlMessageByUuid(uuid);
 
-            Message message = pair.getA();
-            Boolean direction = pair.getB();
-            messageShortInfoDtoList.add(MessageShortInfoDto.getInstance(message, direction, new Date()));
+        Response response;
+        if (StringUtils.isEmpty(xmlMessage)) {
+            response = Response
+                    .status(Response.Status.NO_CONTENT)
+                    .build();
+        } else {
+            response = Response
+                    .status(Response.Status.OK)
+                    .entity(xmlMessage)
+                    .build();
         }
 
-        return  messageShortInfoDtoList;
+        return response;
     }
 }

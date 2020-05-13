@@ -1,7 +1,6 @@
-package eu.cise.sim.api.history;
+package eu.cise.sim.api.dto;
 
 import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.sim.api.dto.MessageTypeEnum;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.apache.commons.lang3.StringUtils;

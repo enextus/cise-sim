@@ -1,6 +1,7 @@
 package eu.cise.sim.api.history;
 
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.sim.api.dto.MessageShortInfoDto;
 import eu.cise.sim.api.dto.MessageTypeEnum;
 import eu.cise.sim.io.MessagePersistence;
 import eu.eucise.xml.XmlMapper;
@@ -87,7 +88,7 @@ public class FileMessageRepository implements MessagePersistence {
             messageStack.add(MessageShortInfoDto.getInstance(msgSent, MSG_SENT, timestamp), fileName);
 
         } catch (IOException e) {
-            LOGGER.warn("messageSent writing error : {}", e.getMessage());
+            LOGGER.warn("messageSent     writing error : {}", e.getMessage());
         }
 
     }
@@ -238,6 +239,7 @@ public class FileMessageRepository implements MessagePersistence {
 
             File[] msgInRepo = getRepositoryFiles(repositoryDir);
             if (msgInRepo == null) {
+                LOGGER.info("MessageStack build with size 0");
                 return messageStack;
             }
 
@@ -282,7 +284,7 @@ public class FileMessageRepository implements MessagePersistence {
      */
     static class FileNameRepository {
 
-        private static final String TIMESTAMP_FORMAT = "yyyyMMdd-hhmmss";
+        private static final String TIMESTAMP_FORMAT = "yyyyMMdd-HHmmss";
         private static final String ITEM_SEPARATOR = "@";
 
         private static final String MSG_SENT = "SENT";

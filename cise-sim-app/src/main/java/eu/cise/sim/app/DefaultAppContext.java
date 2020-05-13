@@ -91,4 +91,12 @@ public class DefaultAppContext implements AppContext {
     public SimConfig makeEmuConfig() {
         return simConfig;
     }
+
+    public String getRepoDir() {
+        return simConfig.messageHistoryDir();
+    }
+
+    public int getRepoGuiMaxShow() {
+        return simConfig.guiMaxHistoryShow();
+    }
 }

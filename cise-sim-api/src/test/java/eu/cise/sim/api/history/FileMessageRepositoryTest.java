@@ -2,6 +2,7 @@ package eu.cise.sim.api.history;
 
 import eu.cise.servicemodel.v1.message.Message;
 
+import eu.cise.sim.api.dto.MessageShortInfoDto;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.junit.AfterClass;

@@ -5,10 +5,7 @@ import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.sim.api.helpers.CrossOriginSupport;
-import eu.cise.sim.api.history.DefaultHistoryAPI;
-import eu.cise.sim.api.history.HistoryAPI;
-import eu.cise.sim.api.history.HistoryResource;
-import eu.cise.sim.api.history.MemoryQueuedRepository;
+import eu.cise.sim.api.history.*;
 import eu.cise.sim.api.rest.MessageResource;
 import eu.cise.sim.api.rest.TemplateResource;
 import eu.cise.sim.api.rest.UIServiceResource;
@@ -51,12 +48,14 @@ public class SimApp extends Application<SimConf> {
 
         AppContext appCtx = new DefaultAppContext();
 
-        MemoryQueuedRepository memoryQueuedRepository =  new MemoryQueuedRepository();
-        HistoryAPI historyAPI = new DefaultHistoryAPI(memoryQueuedRepository);
+        FileMessageRepository fileMessageRepository =  new FileMessageRepository(appCtx.getPrettyNotValidatingXmlMapper(),
+                                                                                 appCtx.getRepoDir(),
+                                                                                 appCtx.getRepoGuiMaxShow());
+        HistoryAPI historyAPI = new DefaultHistoryAPI(fileMessageRepository);
 
 
         MessageAPI messageAPI = new DefaultMessageAPI(
-                appCtx.makeMessageProcessor(memoryQueuedRepository),
+                appCtx.makeMessageProcessor(fileMessageRepository),
                 appCtx.makeMessageStorage(),
                 appCtx.makeTemplateLoader(),
                 appCtx.getXmlMapper(),

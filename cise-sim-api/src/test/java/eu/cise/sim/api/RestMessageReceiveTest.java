@@ -73,6 +73,11 @@ public class RestMessageReceiveTest {
         public String messageHistoryDir() { return "msghistory"; }
 
         @Override
+        public int guiMaxHistoryShow() {
+            return 10;
+        }
+
+        @Override
         public DispatcherType destinationProtocol() {
             return DispatcherType.REST;
         }
