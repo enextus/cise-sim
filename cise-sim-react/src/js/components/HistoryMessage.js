@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
-import TabPanel from '../../components/common/TabPanel';
+import TabPanel from './common/TabPanel';
 import EmailIcon from '@material-ui/icons/Email';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -20,9 +20,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import MessageTable from './MessageForm/MessageInfoTable'
 
-
-import MesRender from "../HistoryMessageRender";
 
 const styles = (theme) => ({
     root: {
@@ -69,7 +68,7 @@ class HistoryMessage extends Component {
       return orderedList;
   }
 
-  render() {
+  renderOLD() {
     const {classes} = this.props;
 
     const msgRcv = this.getMessageStore().historyMsgList;
@@ -112,18 +111,9 @@ class HistoryMessage extends Component {
                                   <TableCell align="center">Direction&nbsp;</TableCell>
                               </TableRow>
                           </TableHead>
+
                           <TableBody>
-                              {msgRcv.map((msg) => {
-                                  return (
-                                    <MesRender
-                                        dateTime={msg.dateTime}
-                                        messageType={msg.messageType}
-                                        serviceType={msg.serviceType}
-                                        isSent={msg.isSent}
-                                        id={msg.id}
-                                        key={msg.id}
-                                    />
-                              )})}
+
                           </TableBody>
                       </Table>
                   </TableContainer>
@@ -135,6 +125,45 @@ class HistoryMessage extends Component {
         </div>
     )
   }
+
+    render() {
+        const {classes} = this.props;
+
+        const msgRcv = this.getMessageStore().historyMsgList;
+
+        return (
+            <div className={classes.root}>
+                <ExpansionPanel
+                    expanded={this.getMessageStore().historyMsgList.length}>
+
+                    <ExpansionPanelSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="receiveMessageContent"
+                        id="HistoryMessage">
+                        <EmailIcon className={classes.icon}/>
+                        <Typography className={classes.title}>Message <b>History</b></Typography>
+                    </ExpansionPanelSummary>
+
+                    <ExpansionPanelDetails>
+                        <Tabs
+                            value={this.state.tabValue}
+                            onChange={this.handleChange}
+                            aria-label="simple-tabpanel"
+                            indicatorColor="primary"
+                            textColor="primary">
+                            <Tab label="message"
+                                 id='simple-tab-1'
+                                 value="one"
+                                 aria-controls='simple-tabpanel-1'/>
+                        </Tabs>
+                        <TabPanel value={this.state.tabValue} index="one" >
+                            <MessageTable msgRcv={msgRcv}/>
+                        </TabPanel>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+            </div>
+        )
+    }
 
   getMessageStore() {
     return this.props.store.messageStore;

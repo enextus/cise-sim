@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import SendForm from './SendForm';
 import PushedMessage from './PushedMessage';
 import PreviewMessage from './PreviewMessage';
-import PulledMessage from '../messages/components/PulledMessage';
+import PulledMessage from './PulledMessage';
 import {Grid} from '@material-ui/core';
 import {observer} from 'mobx-react';
-import HistoryMessage from "../messages/components/HistoryMessage";
+import HistoryMessage from "./HistoryMessage";
 
 @observer
 export default class Body extends Component {

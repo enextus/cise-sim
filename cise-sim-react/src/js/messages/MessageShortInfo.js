@@ -7,10 +7,10 @@ export default class MessageShortInfo {
     isSent;
 
     constructor(props) {
-        this.id = props.id;
-        this.dateTime = props.dateTime;
+        this.id          = props.id;
+        this.dateTime    = props.dateTime;
         this.messageType = props.messageType;
         this.serviceType = props.serviceType;
-        this.isSent = Boolean(props.sent);
+        this.isSent      = Boolean(props.sent);
     }
 }

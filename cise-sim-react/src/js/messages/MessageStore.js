@@ -37,6 +37,7 @@ export default class MessageStore {
         this.receivedMessageError = null;
     }
 
+    /*
     @action
     updateHistorySecure(newChunkMsgShortInfoRcv) {
 
@@ -54,6 +55,7 @@ export default class MessageStore {
         // take only the first historyMaxCapacity item
         this.historyMsgList = newList.slice(0, this.historyMaxCapacity);
     }
+    */
 
     @action
     updateHistory(newChunkMsgShortInfoRcv) {

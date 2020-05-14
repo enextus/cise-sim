@@ -13,9 +13,9 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import {withSnackbar} from 'notistack';
-import Error from '../../errors/Error';
-import XmlContent from '../../components/common/XmlContent';
-import TabPanel from '../../components/common/TabPanel';
+import Error from '../errors/Error';
+import XmlContent from './common/XmlContent';
+import TabPanel from './common/TabPanel';
 import EmailIcon from '@material-ui/icons/Email';
 
 
