@@ -43,7 +43,7 @@ public class MessageShortInfoDto implements Serializable {
         long  dateTime = new Date().getTime();
 
         MessageTypeEnum messageType = MessageTypeEnum.valueOf(ciseMessage);
-        String messageTypeName = messageType.name();
+        String messageTypeName = messageType.getUiName();
 
         String  serviceType = "";
         if (messageType != MessageTypeEnum.ACK_ASYNC && messageType != MessageTypeEnum.ACK_SYNC) {

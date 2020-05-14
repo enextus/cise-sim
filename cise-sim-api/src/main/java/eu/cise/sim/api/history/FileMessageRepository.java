@@ -19,7 +19,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -255,7 +254,7 @@ public class FileMessageRepository implements MessagePersistence {
                     messageStack.add(MessageShortInfoDto.getInstance(message, msgIsSent, timestamp), fileName);
 
                 } catch (IOException | ParseException e) {
-                    LOGGER.warn("build MessageStack some problem with file {} : {}", msgInRepo[i], e.getMessage());
+                    LOGGER.warn("MessageStack build problem with file {} : {}", msgInRepo[i], e.getMessage());
                 }
             }
 
@@ -285,7 +284,7 @@ public class FileMessageRepository implements MessagePersistence {
     static class FileNameRepository {
 
         private static final String TIMESTAMP_FORMAT = "yyyyMMdd-HHmmss";
-        private static final String ITEM_SEPARATOR = "@";
+        private static final String ITEM_SEPARATOR = "_";
 
         private static final String MSG_SENT = "SENT";
         private static final String MSG_RECV = "RECV";
@@ -300,7 +299,9 @@ public class FileMessageRepository implements MessagePersistence {
         FileNameRepository(String fileName) throws ParseException {
 
             String[] msgElement = fileName.split(ITEM_SEPARATOR);
-
+            if (msgElement.length != 4) {
+                throw new ParseException("File name not in the right format : " + fileName, 0);
+            }
             SimpleDateFormat formatter = new SimpleDateFormat(TIMESTAMP_FORMAT);
 
             this.timestamp = formatter.parse(msgElement[0]);
@@ -313,13 +314,13 @@ public class FileMessageRepository implements MessagePersistence {
 
         FileNameRepository(Message message, boolean isSent, Date timestamp) {
 
-            this.uuid = message.getMessageID();
+            this.uuid = UUID.randomUUID().toString();
 
             String direction = isSent ? MSG_SENT : MSG_RECV;
             this.isSent = isSent;
 
             MessageTypeEnum messageType = MessageTypeEnum.valueOf(message);
-            this.messageTypeName = messageType.name();
+            this.messageTypeName = messageType.getFileName();
 
             this.timestamp = timestamp;
 

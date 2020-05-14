@@ -4,7 +4,20 @@ import eu.cise.servicemodel.v1.message.*;
 
 public enum MessageTypeEnum {
 
-    PUSH, PULL_RESPONSE, PULL_REQUEST, FEEDBACK, ACK_SYNC, ACK_ASYNC;
+    PUSH("Push", "PUSH"),
+    PULL_RESPONSE("Pull Response", "PULLRESPONSE"),
+    PULL_REQUEST("Pull Request", "PULLREQUEST"),
+    FEEDBACK("Feedback", "FEEDBACK"),
+    ACK_SYNC("Ack Synch", "ACKSYNCH"),
+    ACK_ASYNC("Ack Synch", "ACKASYNCH");
+
+    private final String uiName;
+    private final String fileName;
+
+    MessageTypeEnum(String uiName, String fileName) {
+        this.uiName = uiName;
+        this.fileName = fileName;
+    }
 
     public static MessageTypeEnum valueOf(Message message) throws IllegalArgumentException {
 
@@ -29,5 +42,13 @@ public enum MessageTypeEnum {
         }
 
         return result;
+    }
+
+    public String getUiName() {
+        return uiName;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }
