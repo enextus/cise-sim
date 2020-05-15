@@ -61,3 +61,16 @@ export async function pullMessageHistoryAfter(timestamp) {
 
     return  pullHistoryMessageResponse.map(m => new MessageShortInfo(m));
 }
+
+export async function pullMessageByHistoryId(id) {
+
+    const messageResponse = await http_get("history/message/"+id);
+    if (!messageResponse) return;
+
+    if (messageResponse.errorCode) {
+        console.log("pullMessagePostResponse returned with n error: ", messageResponse);
+        return messageResponse;
+    }
+
+    return  messageResponse;
+}

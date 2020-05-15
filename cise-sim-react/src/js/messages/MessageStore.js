@@ -1,6 +1,7 @@
 import {action, computed, observable} from 'mobx';
-import {pullMessage, pullMessageHistory, pullMessageHistoryAfter, sendMessage} from './MessageService';
+import {pullMessage, pullMessageByHistoryId, pullMessageHistoryAfter, sendMessage} from './MessageService';
 import Message from './Message';
+import MessageEasy from "./MessageEasy";
 
 export default class MessageStore {
     @observable sentMessage          = new Message({body: "", acknowledge: ""});
@@ -105,19 +106,6 @@ export default class MessageStore {
         }, 3000, this);
     }
 
-    startPullHistory() {
-        this.interval = setInterval(async function (that)
-        {
-            const pullMessageResponse = await pullMessageHistory();
-            if (!pullMessageResponse) return;
-            if (pullMessageResponse.errorCode) {
-                that.receivedMessageError = pullMessageResponse;
-            } else {
-                that.updateHistory(pullMessageResponse);
-            }
-        }, 3000, this);
-    }
-
     startPullHistoryProgressive() {
         this.interval = setInterval(async function (that)
         {
@@ -129,5 +117,15 @@ export default class MessageStore {
                 that.updateHistory(pullMessageResponse);
             }
         }, 3000, this);
+    }
+
+    async getByShortInfoId(shortInfoId) {
+        const messageResponse = await pullMessageByHistoryId(shortInfoId);
+        if (!messageResponse) return;
+        if (messageResponse.errorCode) {
+            this.receivedMessageError = messageResponse;
+        } else {
+            this.receivedMessage = new MessageEasy(messageResponse);
+        }
     }
 }

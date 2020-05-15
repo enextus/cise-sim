@@ -31,7 +31,7 @@ const msgTableRow = ( props ) => {
     const rowStyle = {backgroundColor:backColor, align:'left'};
 
     return (
-        <TableRow key={props.msgInfo.id} style={rowStyle}>
+        <TableRow key={props.msgInfo.id} style={rowStyle} onClick={props.selectMsg}>
             <TableCell>{localeDate}</TableCell>
             <TableCell>{props.msgInfo.messageType}</TableCell>
             <TableCell>{props.msgInfo.serviceType}</TableCell>

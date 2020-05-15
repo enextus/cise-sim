@@ -48,6 +48,7 @@ class HistoryMessage extends Component {
 
     handleChange(event, newValue) {
         this.setState({tabValue: newValue})
+        console.log("newValue "+newValue);
     };
 
     isDisabled() {
@@ -85,14 +86,18 @@ class HistoryMessage extends Component {
                             aria-label="simple-tabpanel"
                             indicatorColor="primary"
                             textColor="primary">
-                            <Tab label="message"
+
+                            <Tab label="message 1"
                                  id='simple-tab-1'
                                  value="one"
-                                 aria-controls='simple-tabpanel-1'/>
+                                 aria-controls='simple-tabpanel-1'>
+                            </Tab>
                         </Tabs>
+
                         <TabPanel value={this.state.tabValue} index="one" >
-                            <MessageTable msgRcv={msgRcv}/>
+                            <MessageTable msgRcv={msgRcv} messageStore={this.getMessageStore()}/>
                         </TabPanel>
+
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
             </div>
