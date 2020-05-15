@@ -11,6 +11,7 @@ import java.util.Date;
 public class MessageShortInfoDto implements Serializable {
 
     private static final long serialVersionUID = 2601968705651574024L;
+
     private static final XmlMapper XML_MAPPER = new DefaultXmlMapper.PrettyNotValidating();
 
     private final String id;
@@ -27,20 +28,15 @@ public class MessageShortInfoDto implements Serializable {
         this.isSent = isSent;
     }
 
-    public static MessageShortInfoDto getInstance(String message, boolean isSent, Date timestamp) throws IllegalArgumentException {
+    public static MessageShortInfoDto getInstance(String message, boolean isSent, Date timestamp, String uuid) throws IllegalArgumentException {
 
         Message ciseMessage = XML_MAPPER.fromXML(message);
-        return getInstance(ciseMessage, isSent, timestamp);
+        return getInstance(ciseMessage, isSent, timestamp, uuid);
     }
 
-    public static MessageShortInfoDto getInstance(Message ciseMessage, boolean isSent, Date timestamp) throws IllegalArgumentException {
+    public static MessageShortInfoDto getInstance(Message ciseMessage, boolean isSent, Date timestamp, String uuid) throws IllegalArgumentException {
 
-        String  id = ciseMessage.getMessageID();
-
-        // TODO Check if it's better to leave the original info (like 2019-10-16T14:04:20.673Z)
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-//        String  dateTime = formatter.format(ciseMessage.getCreationDateTime().toGregorianCalendar().toZonedDateTime());
-        long  dateTime = new Date().getTime();
+        long  dateTime = timestamp.getTime();
 
         MessageTypeEnum messageType = MessageTypeEnum.valueOf(ciseMessage);
         String messageTypeName = messageType.getUiName();
@@ -53,7 +49,7 @@ public class MessageShortInfoDto implements Serializable {
             }
         }
 
-        MessageShortInfoDto instance = new MessageShortInfoDto(id, dateTime, messageTypeName, serviceType, isSent);
+        MessageShortInfoDto instance = new MessageShortInfoDto(uuid, dateTime, messageTypeName, serviceType, isSent);
         check(instance);
 
         return instance;

@@ -1,7 +1,6 @@
 package eu.cise.sim.api.history;
 
 import eu.cise.servicemodel.v1.message.Message;
-
 import eu.cise.sim.api.dto.MessageShortInfoDto;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
@@ -21,7 +20,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class FileMessageRepositoryTest {
 
@@ -86,6 +86,7 @@ public class FileMessageRepositoryTest {
     public void io_full_test() throws IOException {
 
         int startNumFiles = countFiles();
+       List<MessageShortInfoDto> shortInfoDtoList;
 
         String message1 =  readResource("messages/AckAsync_PullRequestTemplate.xml");
         String message2 =  readResource("messages/Pull_requestTemplate.xml");
@@ -95,24 +96,34 @@ public class FileMessageRepositoryTest {
 
         Message ciseMsg1 = xmlMapper.fromXML(message1);
         fileMessageRepository.messageReceived(ciseMsg1);
+        shortInfoDtoList =  fileMessageRepository.getShortInfoAfter(0);
+        String uuid1= shortInfoDtoList.get(0).getId();
 
         Message ciseMsg2 = xmlMapper.fromXML(message2);
         fileMessageRepository.messageReceived(ciseMsg2);
+        shortInfoDtoList =  fileMessageRepository.getShortInfoAfter(0);
+        String uuid2= shortInfoDtoList.get(0).getId();
 
         Message ciseMsg3 = xmlMapper.fromXML(message3);
         fileMessageRepository.messageReceived(ciseMsg3);
+        shortInfoDtoList =  fileMessageRepository.getShortInfoAfter(0);
+        String uuid3= shortInfoDtoList.get(0).getId();
 
         Message ciseMsg4 = xmlMapper.fromXML(message4);
         fileMessageRepository.messageReceived(ciseMsg4);
+        shortInfoDtoList =  fileMessageRepository.getShortInfoAfter(0);
+        String uuid4= shortInfoDtoList.get(0).getId();
 
         Message ciseMsg5 = xmlMapper.fromXML(message5);
         fileMessageRepository.messageReceived(ciseMsg5);
+        shortInfoDtoList =  fileMessageRepository.getShortInfoAfter(0);
+        String uuid5= shortInfoDtoList.get(0).getId();
 
         int endNumFiles = countFiles();
 
         assertEquals(5, endNumFiles - startNumFiles);
 
-        List<MessageShortInfoDto> shortInfoDtoList =  fileMessageRepository.getShortInfoAfter(0);
+        shortInfoDtoList =  fileMessageRepository.getShortInfoAfter(0);
         if (TEST_CACHE_DIM <= 5)
             assertEquals(TEST_CACHE_DIM, shortInfoDtoList.size());
 
@@ -120,29 +131,29 @@ public class FileMessageRepositoryTest {
         MessageShortInfoDto dto4 = shortInfoDtoList.get(1);
         MessageShortInfoDto dto3 = shortInfoDtoList.get(2);
 
-        assertEquals(dto5.getId(), ciseMsg5.getMessageID());
-        assertEquals(dto4.getId(), ciseMsg4.getMessageID());
-        assertEquals(dto3.getId(), ciseMsg3.getMessageID());
+        assertEquals(dto5.getId(), uuid5);
+        assertEquals(dto4.getId(), uuid4);
+        assertEquals(dto3.getId(), uuid3);
 
         String xmlOnDisk;
         Message messageRead;
-        xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(ciseMsg1.getMessageID());
+        xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(uuid1);
         messageRead = xmlMapper.fromXML(xmlOnDisk);
         assertEquals(messageRead, ciseMsg1);
 
-       xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(ciseMsg2.getMessageID());
+       xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(uuid2);
        messageRead = xmlMapper.fromXML(xmlOnDisk);
        assertEquals(messageRead, ciseMsg2);
 
-       xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(ciseMsg3.getMessageID());
+       xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(uuid3);
        messageRead = xmlMapper.fromXML(xmlOnDisk);
        assertEquals(messageRead, ciseMsg3);
 
-       xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(ciseMsg4.getMessageID());
+       xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(uuid4);
        messageRead = xmlMapper.fromXML(xmlOnDisk);
        assertEquals(messageRead, ciseMsg4);
 
-       xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(ciseMsg5.getMessageID());
+       xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(uuid5);
        messageRead = xmlMapper.fromXML(xmlOnDisk);
        assertEquals(messageRead, ciseMsg5);
 

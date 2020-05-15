@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 public class MemoryQueuedRepository implements MessagePersistence {
@@ -29,13 +30,15 @@ public class MemoryQueuedRepository implements MessagePersistence {
 
     @Override
     public void messageReceived(Message msgRecv) {
-        historyMessageStorage.store(MessageShortInfoDto.getInstance(msgRecv, MSG_RECV, new Date()));
+        String uuid = UUID.randomUUID().toString();
+        historyMessageStorage.store(MessageShortInfoDto.getInstance(msgRecv, MSG_RECV, new Date(), uuid));
         LOGGER.info("messageReceived");
     }
 
     @Override
     public void messageSent(Message msgSent) {
-        historyMessageStorage.store(MessageShortInfoDto.getInstance(msgSent, MSG_SENT, new Date()));
+        String uuid = UUID.randomUUID().toString();
+        historyMessageStorage.store(MessageShortInfoDto.getInstance(msgSent, MSG_SENT, new Date(), uuid));
         LOGGER.info("messageSent");
     }
 

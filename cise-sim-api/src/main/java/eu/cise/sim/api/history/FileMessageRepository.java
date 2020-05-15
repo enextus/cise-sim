@@ -66,9 +66,9 @@ public class FileMessageRepository implements MessagePersistence {
         try {
 
             Date timestamp = new Date();
-            String fileName = write(msgRcv, Boolean.FALSE, timestamp);
+            FileNameRepository fileNameRepo = write(msgRcv, Boolean.FALSE, timestamp);
 
-            messageStack.add(MessageShortInfoDto.getInstance(msgRcv, MSG_RECV, timestamp), fileName);
+            messageStack.add(MessageShortInfoDto.getInstance(msgRcv, MSG_RECV, timestamp, fileNameRepo.getUuid()), fileNameRepo.getFileName());
 
         } catch (IOException e) {
             LOGGER.warn("messageReceived writing error : {}", e.getMessage());
@@ -82,9 +82,9 @@ public class FileMessageRepository implements MessagePersistence {
         try {
 
             Date timestamp = new Date();
-            String fileName = write(msgSent, Boolean.TRUE, timestamp);
+            FileNameRepository fileNameRepo = write(msgSent, Boolean.TRUE, timestamp);
 
-            messageStack.add(MessageShortInfoDto.getInstance(msgSent, MSG_SENT, timestamp), fileName);
+            messageStack.add(MessageShortInfoDto.getInstance(msgSent, MSG_SENT, timestamp, fileNameRepo.getUuid()), fileNameRepo.getFileName());
 
         } catch (IOException e) {
             LOGGER.warn("messageSent     writing error : {}", e.getMessage());
@@ -146,7 +146,7 @@ public class FileMessageRepository implements MessagePersistence {
         return Files.readString(path, StandardCharsets.UTF_8);
     }
 
-    private String write(Message message, boolean isSent, Date timestamp) throws IOException {
+    private FileNameRepository write(Message message, boolean isSent, Date timestamp) throws IOException {
 
         FileNameRepository fileNameRepository = new FileNameRepository(message, isSent, timestamp);
 
@@ -159,7 +159,7 @@ public class FileMessageRepository implements MessagePersistence {
 
         LOGGER.info("write xml file {}", fileName);
 
-        return fileName;
+        return fileNameRepository;
     }
 
     private File getFileByUuid(String uuid) throws IOException {
@@ -246,12 +246,13 @@ public class FileMessageRepository implements MessagePersistence {
             for (int i = bottom; i >= 0; --i) {
                 try {
                     String xmlMessage = Files.readString(msgInRepo[i].toPath(), StandardCharsets.UTF_8);
-                    String fileName = msgInRepo[i].getName();
                     Message message = xmlMapper.fromXML(xmlMessage);
+
+                    String fileName = msgInRepo[i].getName();
                     FileNameRepository fileNameRepository = new FileNameRepository(fileName);
-                    boolean msgIsSent = fileNameRepository.isSent();
-                    Date timestamp = fileNameRepository.getTimestamp();
-                    messageStack.add(MessageShortInfoDto.getInstance(message, msgIsSent, timestamp), fileName);
+                    boolean msgIsSent   = fileNameRepository.isSent();
+                    Date timestamp      = fileNameRepository.getTimestamp();
+                    messageStack.add(MessageShortInfoDto.getInstance(message, msgIsSent, timestamp, fileNameRepository.getUuid()), fileName);
 
                 } catch (IOException | ParseException e) {
                     LOGGER.warn("MessageStack build problem with file {} : {}", msgInRepo[i], e.getMessage());
@@ -283,7 +284,7 @@ public class FileMessageRepository implements MessagePersistence {
      */
     static class FileNameRepository {
 
-        private static final String TIMESTAMP_FORMAT = "yyyyMMdd-HHmmss";
+        private static final String TIMESTAMP_FORMAT = "yyyyMMdd-HHmmssSSS";
         private static final String ITEM_SEPARATOR = "_";
 
         private static final String MSG_SENT = "SENT";
