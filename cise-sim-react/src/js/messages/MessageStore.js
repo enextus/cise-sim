@@ -1,7 +1,6 @@
 import {action, computed, observable} from 'mobx';
 import {pullMessage, pullMessageHistory, pullMessageHistoryAfter, sendMessage} from './MessageService';
 import Message from './Message';
-import Config from 'Config';
 
 export default class MessageStore {
     @observable sentMessage          = new Message({body: "", acknowledge: ""});
@@ -10,7 +9,7 @@ export default class MessageStore {
 
     @observable historyMsgList       = [];
     historyLasTimestamp = 0;
-    historyMaxCapacity = Config.max_history_msg;
+    historyMaxCapacity = 0;
 
     @computed
     get isSentMessagePresent() {
@@ -35,6 +34,16 @@ export default class MessageStore {
     @action
     consumeErrorMessage() {
         this.receivedMessageError = null;
+    }
+
+
+    setHistoryMaxCapacity(maxLength) {
+        if (this.historyMaxCapacity !== maxLength) {
+            this.historyMaxCapacity = maxLength;
+            this.historyLasTimestamp = 0
+
+            console.log("setHistoryMaxCapacity to "+maxLength)
+        }
     }
 
     /*

@@ -13,13 +13,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import TabPanel from './common/TabPanel';
 import EmailIcon from '@material-ui/icons/Email';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+
 import MessageTable from './MessageForm/MessageInfoTable'
 
 
@@ -46,90 +40,30 @@ const styles = (theme) => ({
 @observer
 class HistoryMessage extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {tabValue: "one"};
-    this.handleChange = this.handleChange.bind(this);
+    constructor(props) {
+        super(props);
+        this.state = {tabValue: "one"};
+        this.handleChange = this.handleChange.bind(this);
+    }
 
-  }
+    handleChange(event, newValue) {
+        this.setState({tabValue: newValue})
+    };
 
-  handleChange(event, newValue) {
-    this.setState({tabValue: newValue})
-  };
+    isDisabled() {
+        return !this.props.store.templateStore.isTemplateSelected;
+    }
 
-  isDisabled() {
-    return !this.props.store.templateStore.isTemplateSelected;
-  }
-
-  orderingHistoryMessage(msgList) {
-      const orderedList = [...msgList];
-      //orderedList.sort(function(a,b) {return Date.parse(a.dateTime)-Date.parse(b.dateTime)})
-      orderedList.sort(function(a,b) {return b.dateTime-a.dateTime})
-      return orderedList;
-  }
-
-  renderOLD() {
-    const {classes} = this.props;
-
-    const msgRcv = this.getMessageStore().historyMsgList;
-
-    return (
-        <div className={classes.root}>
-          <ExpansionPanel
-              expanded={this.getMessageStore().historyMsgList.length}>
-
-            <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="receiveMessageContent"
-                id="HistoryMessage">
-              <EmailIcon className={classes.icon}/>
-              <Typography className={classes.title}>Message <b>History</b></Typography>
-            </ExpansionPanelSummary>
-
-            <ExpansionPanelDetails>
-              <Tabs
-                  value={this.state.tabValue}
-                  onChange={this.handleChange}
-                  aria-label="simple-tabpanel"
-                  indicatorColor="primary"
-                  textColor="primary">
-                <Tab label="message"
-                     id='simple-tab-1'
-                     value="one"
-                     aria-controls='simple-tabpanel-1'/>
-              </Tabs>
-              <TabPanel value={this.state.tabValue} index="one" >
-
-
-                  <TableContainer component={Paper}>
-                      <Table className={classes.table} size="small" aria-label="a dense table">
-                          <TableHead>
-                              <TableRow>
-                                  <TableCell align="center">Date & Time&nbsp;</TableCell>
-                                  <TableCell align="center">Message Type&nbsp;</TableCell>
-                                  <TableCell align="center">Service Type&nbsp;</TableCell>
-                                  <TableCell align="center">Direction&nbsp;</TableCell>
-                              </TableRow>
-                          </TableHead>
-
-                          <TableBody>
-
-                          </TableBody>
-                      </Table>
-                  </TableContainer>
-
-
-              </TabPanel>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-        </div>
-    )
-  }
+    setMaxMsg() {
+        this.getMessageStore().setHistoryMaxCapacity(this.getMaxMsgShow());
+    }
 
     render() {
         const {classes} = this.props;
 
         const msgRcv = this.getMessageStore().historyMsgList;
+        const maxShow = this.getServiceStore().serviceSelf.messageHistoryMaxLength;
+        this.getMessageStore().setHistoryMaxCapacity(maxShow);
 
         return (
             <div className={classes.root}>
@@ -165,9 +99,14 @@ class HistoryMessage extends Component {
         )
     }
 
-  getMessageStore() {
-    return this.props.store.messageStore;
-  }
+    getMessageStore() {
+        return this.props.store.messageStore;
+    }
+
+   getServiceStore() {
+        return this.props.store.serviceStore;
+    }
+
 }
 
 HistoryMessage.propTypes = {
