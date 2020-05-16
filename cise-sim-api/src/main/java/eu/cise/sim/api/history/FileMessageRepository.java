@@ -143,7 +143,7 @@ public class FileMessageRepository implements MessagePersistence {
 
     private FileNameRepository write(Message message, boolean isSent, Date timestamp) throws IOException {
 
-        FileNameRepository fileNameRepository = new FileNameRepository(message, isSent, timestamp);
+        FileNameRepository fileNameRepository = FileNameRepository.getInstance(message, isSent, timestamp);
 
         String fileName = fileNameRepository.getFileName();
         String xmlMessage = xmlMapper.toXML(message);
@@ -159,27 +159,23 @@ public class FileMessageRepository implements MessagePersistence {
 
     private Path getPathByUuid(String uuid) throws IOException {
 
-        File result = null;
 
         Path dir = Paths.get(repositoryDir);
         File[] files = dir.toFile().listFiles();
-        if (files != null) {
-            for (File f : files) {
-                try {
-                    FileNameRepository fileNameRepository = new FileNameRepository(f.getName());
-                    if (fileNameRepository.getUuid().equals(uuid)) {
-                        result = f;
-                        break;
-                    }
-                } catch (ParseException ignored) { }
-            }
-        }
-
-        if (result == null) {
+        if (files == null) {
             throw new IOException("getUuidFile uuid not found " + uuid);
         }
 
-        return result.toPath();
+        for (File f : files) {
+            try {
+                FileNameRepository fileNameRepository = FileNameRepository.getInstance(f.getName());
+                if (fileNameRepository.getUuid().equals(uuid)) {
+                    return f.toPath();
+                }
+            } catch (ParseException ignored) { }
+        }
+
+        throw new IOException("getUuidFile uuid not found " + uuid);
     }
 
 
@@ -244,7 +240,7 @@ public class FileMessageRepository implements MessagePersistence {
                     Message message = xmlMapper.fromXML(xmlMessage);
 
                     String fileName = msgInRepo[i].getName();
-                    FileNameRepository fileNameRepository = new FileNameRepository(fileName);
+                    FileNameRepository    fileNameRepository = FileNameRepository.getInstance(fileName);
                     boolean msgIsSent   = fileNameRepository.isSent();
                     Date timestamp      = fileNameRepository.getTimestamp();
                     messageStack.add(MessageShortInfoDto.getInstance(message, msgIsSent, timestamp, fileNameRepository.getUuid()), fileName);
@@ -292,41 +288,54 @@ public class FileMessageRepository implements MessagePersistence {
 
         private final String fileName;
 
-        FileNameRepository(String fileName) throws ParseException {
+        private FileNameRepository(String uuid, boolean isSent, String messageTypeName, Date timestamp, String fileName) {
+            this.uuid = uuid;
+            this.isSent = isSent;
+            this.messageTypeName = messageTypeName;
+            this.timestamp = timestamp;
+            this.fileName = fileName;
+        }
+
+
+        public static FileNameRepository getInstance(String fileName) throws ParseException {
 
             String[] msgElement = fileName.split(ITEM_SEPARATOR);
             if (msgElement.length != 4) {
                 throw new ParseException("File name not in the right format : " + fileName, 0);
             }
             SimpleDateFormat formatter = new SimpleDateFormat(TIMESTAMP_FORMAT);
+            Date timestamp = formatter.parse(msgElement[0]);
+            String messageTypeName = msgElement[1];
+            boolean isSent = msgElement[2].equals(MSG_SENT);
+            String uuid = msgElement[3];
 
-            this.timestamp = formatter.parse(msgElement[0]);
-            this.messageTypeName = msgElement[1];
-            this.isSent = msgElement[2].equals(MSG_SENT);
-            this.uuid = msgElement[3];
-            this.fileName = fileName;
+            return new FileNameRepository(uuid, isSent, messageTypeName, timestamp, fileName);
         }
 
 
-        FileNameRepository(Message message, boolean isSent, Date timestamp) {
+        public static FileNameRepository getInstance(Message message, boolean isSent, Date timestamp) {
 
-            this.uuid = UUID.randomUUID().toString();
+            String uuid = UUID.randomUUID().toString();
 
             String direction = isSent ? MSG_SENT : MSG_RECV;
-            this.isSent = isSent;
 
             MessageTypeEnum messageType = MessageTypeEnum.valueOf(message);
-            this.messageTypeName = messageType.getFileName();
+            String messageTypeName = messageType.getFileName();
 
-            this.timestamp = timestamp;
+            String fileName = buildFilename(uuid, direction, messageTypeName, timestamp);
+
+            return new FileNameRepository(uuid, isSent, messageTypeName, timestamp, fileName);
+        }
+
+        private static String buildFilename(String uuid, String direction, String messageTypeName, Date timestamp) {
 
             SimpleDateFormat formatter = new SimpleDateFormat(TIMESTAMP_FORMAT);
             String  dateTime = formatter.format(timestamp);
 
-            this.fileName =   dateTime + ITEM_SEPARATOR
-                            + messageTypeName + ITEM_SEPARATOR
-                            + direction + ITEM_SEPARATOR
-                            + uuid;
+            return    dateTime + ITEM_SEPARATOR
+                    + messageTypeName + ITEM_SEPARATOR
+                    + direction + ITEM_SEPARATOR
+                    + uuid;
         }
 
         public String getUuid() {
