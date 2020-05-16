@@ -5,7 +5,10 @@ import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.sim.api.helpers.CrossOriginSupport;
-import eu.cise.sim.api.history.*;
+import eu.cise.sim.api.history.DefaultHistoryAPI;
+import eu.cise.sim.api.history.FileMessageRepository;
+import eu.cise.sim.api.history.HistoryAPI;
+import eu.cise.sim.api.history.HistoryResource;
 import eu.cise.sim.api.rest.MessageResource;
 import eu.cise.sim.api.rest.TemplateResource;
 import eu.cise.sim.api.rest.UIServiceResource;
@@ -48,6 +51,11 @@ public class SimApp extends Application<SimConf> {
 
         AppContext appCtx = new DefaultAppContext();
 
+        /**
+         * TODO The FileMessageRepository should be created in the appContext and then you should have a method
+         * in the appContext like makeMessageRepository that returns it to be injected in the HistoryAPI
+         * The whole appContext idea is to have a single place where to create all the concrete objects.
+        */
         FileMessageRepository fileMessageRepository =  new FileMessageRepository(appCtx.getPrettyNotValidatingXmlMapper(),
                                                                                  appCtx.getRepoDir(),
                                                                                  appCtx.getRepoGuiMaxShow());
