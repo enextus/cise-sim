@@ -130,16 +130,11 @@ public class FileMessageRepository implements MessagePersistence {
             throw new IOException("getXmlMessageByUuid uuid is null or empty");
         }
 
-        // Try to get information from the local cache
-        Path path;
         String fileName = messageStack.getFilenameByUuid(uuid);
-        if (fileName == null) {
-            // The uuid isn't in the cache. Find it on the file system
-            File f = getFileByUuid(uuid);
-            path = f.toPath();
-        } else {
-            path = Paths.get(new File(repositoryDir + File.separatorChar + fileName).getAbsolutePath());
-        }
+
+        Path path = fileName == null ?
+                getPathByUuid(uuid) :
+                Paths.get(new File(repositoryDir + File.separatorChar + fileName).getAbsolutePath());
 
         LOGGER.info("getXmlMessageByUuid uuid[{}] -> {}", uuid, path.getFileName());
 
@@ -162,7 +157,7 @@ public class FileMessageRepository implements MessagePersistence {
         return fileNameRepository;
     }
 
-    private File getFileByUuid(String uuid) throws IOException {
+    private Path getPathByUuid(String uuid) throws IOException {
 
         File result = null;
 
@@ -184,7 +179,7 @@ public class FileMessageRepository implements MessagePersistence {
             throw new IOException("getUuidFile uuid not found " + uuid);
         }
 
-        return result;
+        return result.toPath();
     }
 
 
