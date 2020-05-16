@@ -9,7 +9,7 @@ public enum MessageTypeEnum {
     PULL_REQUEST("Pull Request", "PULLREQUEST"),
     FEEDBACK("Feedback", "FEEDBACK"),
     ACK_SYNC("Ack Synch", "ACKSYNCH"),
-    ACK_ASYNC("Ack Synch", "ACKASYNCH");
+    ACK_ASYNC("Ack Asynch", "ACKASYNCH");
 
     private final String uiName;
     private final String fileName;
