@@ -21,27 +21,31 @@ public enum MessageTypeEnum {
 
     public static MessageTypeEnum valueOf(Message message) throws IllegalArgumentException {
 
-        MessageTypeEnum result;
-
         if (message instanceof PullRequest) {
-            result = PULL_REQUEST;
-        } else if (message instanceof PullResponse) {
-            result = PULL_RESPONSE;
-        } else if (message instanceof Push) {
-            result = PUSH;
-        } else if (message instanceof Feedback) {
-            result = FEEDBACK;
-        } else if (message instanceof Acknowledgement) {
-            if (message.getSender() == null) {
-                result = ACK_SYNC;
-            } else {
-                result = ACK_ASYNC;
-            }
-        } else {
-            throw new IllegalArgumentException("Message class is unknown " + message.getClass().getCanonicalName());
+            return PULL_REQUEST;
         }
 
-        return result;
+        if (message instanceof PullResponse) {
+            return PULL_RESPONSE;
+        }
+
+        if (message instanceof Push) {
+            return PUSH;
+        }
+
+        if (message instanceof Feedback) {
+            return FEEDBACK;
+        }
+
+        if (message instanceof Acknowledgement) {
+            if (message.getSender() == null) {
+                return ACK_SYNC;
+            } else {
+                return ACK_ASYNC;
+            }
+        }
+
+        throw new IllegalArgumentException("Message class is unknown " + message.getClass().getCanonicalName());
     }
 
     public String getUiName() {
