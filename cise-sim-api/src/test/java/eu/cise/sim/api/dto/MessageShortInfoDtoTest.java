@@ -32,127 +32,68 @@ public class MessageShortInfoDtoTest {
     @Test
     public void it_pull_request() throws IOException {
 
-        boolean isSent = Boolean.TRUE;
-        String message =  readResource("messages/Pull_requestTemplate.xml");
-        assertNotNull(message);
-
-        Message ciseMessage = XML_MAPPER.fromXML(message);
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
-        assertNotNull(messageShortInfoDto);
-        assertEquals("Pull Request", messageShortInfoDto.getMessageType());
-        assertEquals("VesselService", messageShortInfoDto.getServiceType());
+        doTest(  Boolean.TRUE, "messages/Pull_requestTemplate.xml", "Pull Request", "VesselService");
     }
 
     @Test
     public void it_pull_response() throws IOException {
 
-        boolean isSent = Boolean.TRUE;
-        String message =  readResource("messages/Pull_responseTemplate.xml");
-        assertNotNull(message);
-
-        Message ciseMessage = XML_MAPPER.fromXML(message);
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
-        assertNotNull(messageShortInfoDto);
-        assertEquals("Pull Response", messageShortInfoDto.getMessageType());
-        assertEquals("VesselService", messageShortInfoDto.getServiceType());
+        doTest(  Boolean.TRUE, "messages/Pull_responseTemplate.xml", "Pull Response", "VesselService");
     }
 
     @Test
     public void it_push_eulsa2() throws IOException {
 
-        boolean isSent = Boolean.TRUE;
-        String message =  readResource("messages/PushTemplateEULSA1.xml");
-        assertNotNull(message);
-
-        Message ciseMessage = XML_MAPPER.fromXML(message);
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
-        assertNotNull(messageShortInfoDto);
-        assertEquals("Push", messageShortInfoDto.getMessageType());
-        assertEquals("VesselService", messageShortInfoDto.getServiceType());
+        doTest(  Boolean.TRUE, "messages/PushTemplateEULSA1.xml", "Push", "VesselService");
     }
 
     @Test
     public void it_push_tosim2() throws IOException {
 
-        boolean isSent = Boolean.TRUE;
-        String message =  readResource("messages/PushTemplateToSim2.xml");
-        assertNotNull(message);
-
-        Message ciseMessage = XML_MAPPER.fromXML(message);
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
-        assertNotNull(messageShortInfoDto);
-        assertEquals("Push", messageShortInfoDto.getMessageType());
-        assertEquals("VesselService", messageShortInfoDto.getServiceType());
+        doTest(  Boolean.TRUE, "messages/PushTemplateToSim2.xml", "Push", "VesselService");
     }
 
     @Test
     public void it_feedback() throws IOException {
 
-        boolean isSent = Boolean.TRUE;
-        String message =  readResource("messages/Feedback_Template.xml");
-        assertNotNull(message);
-
-        Message ciseMessage = XML_MAPPER.fromXML(message);
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
-        assertNotNull(messageShortInfoDto);
-        assertEquals("Feedback", messageShortInfoDto.getMessageType());
-        assertEquals("VesselService", messageShortInfoDto.getServiceType());
+        doTest(  Boolean.TRUE, "messages/Feedback_Template.xml", "Feedback", "VesselService");
     }
 
     @Test
     public void it_unscribe() throws IOException {
 
-        boolean isSent = Boolean.TRUE;
-        String message =  readResource("messages/vessel_unsubscribe.xml");
-        assertNotNull(message);
-
-        Message ciseMessage = XML_MAPPER.fromXML(message);
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
-        assertNotNull(messageShortInfoDto);
-        assertEquals("Pull Request", messageShortInfoDto.getMessageType());
-        assertEquals("VesselService", messageShortInfoDto.getServiceType());
+        doTest(  Boolean.TRUE, "messages/vessel_unsubscribe.xml", "Pull Request", "VesselService");
     }
 
     @Test
     public void it_subscribe() throws IOException {
 
-        boolean isSent = Boolean.TRUE;
-        String message =  readResource("messages/SubscribeTemplate.xml");
-        assertNotNull(message);
-
-        Message ciseMessage = XML_MAPPER.fromXML(message);
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
-        assertNotNull(messageShortInfoDto);
-        assertEquals("Push", messageShortInfoDto.getMessageType());
-        assertEquals("VesselService", messageShortInfoDto.getServiceType());
+        doTest(  Boolean.TRUE, "messages/SubscribeTemplate.xml", "Push", "VesselService");
     }
 
     @Test
     public void it_ack_synch_pullrequest() throws IOException {
 
-        boolean isSent = Boolean.TRUE;
-        String message =  readResource("messages/AckSync_PullRequestTemplate.xml");
-        assertNotNull(message);
-
-        Message ciseMessage = XML_MAPPER.fromXML(message);
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
-        assertNotNull(messageShortInfoDto);
-        assertEquals("Ack Synch", messageShortInfoDto.getMessageType());
-        assertEquals("", messageShortInfoDto.getServiceType());
+        doTest(  Boolean.TRUE, "messages/AckSync_PullRequestTemplate.xml", "Ack Synch", "");
     }
 
     @Test
     public void it_ack_asynch_pullrequest() throws IOException {
 
-        boolean isSent = Boolean.TRUE;
-        String message =  readResource("messages/AckAsync_PullRequestTemplate.xml");
+        doTest(  Boolean.TRUE, "messages/AckAsync_PullRequestTemplate.xml", "Ack Asynch", "");
+    }
+
+    private void doTest( boolean isSent, String messageFileName, String expectedType, String expectedService) throws IOException {
+
+        String message =  readResource(messageFileName);
         assertNotNull(message);
 
         Message ciseMessage = XML_MAPPER.fromXML(message);
         MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
         assertNotNull(messageShortInfoDto);
-        assertEquals("Ack Synch", messageShortInfoDto.getMessageType());
-        assertEquals("", messageShortInfoDto.getServiceType());
+        assertEquals(expectedType, messageShortInfoDto.getMessageType());
+        assertEquals(expectedService, messageShortInfoDto.getServiceType());
+
     }
 
     private String readResource(String resourceName) throws IOException {
