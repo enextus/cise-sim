@@ -1,6 +1,9 @@
 package eu.cise.sim.api.dto;
 
-import org.junit.Before;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.eucise.xml.DefaultXmlMapper;
+import eu.eucise.xml.XmlMapper;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,8 +22,11 @@ public class MessageShortInfoDtoTest {
 
     private final String uuid = UUID.randomUUID().toString();
 
-    @Before
-    public void setUp() throws Exception {
+    private static XmlMapper XML_MAPPER;
+
+    @BeforeClass
+    public static void createTempDir() throws Exception {
+        XML_MAPPER = new DefaultXmlMapper.PrettyNotValidating();
     }
 
     @Test
@@ -30,7 +36,8 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/Pull_requestTemplate.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date(), uuid);
+        Message ciseMessage = XML_MAPPER.fromXML(message);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
         assertNotNull(messageShortInfoDto);
         assertEquals("Pull Request", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -43,7 +50,8 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/Pull_responseTemplate.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date(), uuid);
+        Message ciseMessage = XML_MAPPER.fromXML(message);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
         assertNotNull(messageShortInfoDto);
         assertEquals("Pull Response", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -56,7 +64,8 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/PushTemplateEULSA1.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date(), uuid);
+        Message ciseMessage = XML_MAPPER.fromXML(message);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
         assertNotNull(messageShortInfoDto);
         assertEquals("Push", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -69,7 +78,8 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/PushTemplateToSim2.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date(), uuid);
+        Message ciseMessage = XML_MAPPER.fromXML(message);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
         assertNotNull(messageShortInfoDto);
         assertEquals("Push", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -82,7 +92,8 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/Feedback_Template.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date(), uuid);
+        Message ciseMessage = XML_MAPPER.fromXML(message);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
         assertNotNull(messageShortInfoDto);
         assertEquals("Feedback", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -95,7 +106,8 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/vessel_unsubscribe.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date(), uuid);
+        Message ciseMessage = XML_MAPPER.fromXML(message);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
         assertNotNull(messageShortInfoDto);
         assertEquals("Pull Request", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -108,7 +120,8 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/SubscribeTemplate.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date(), uuid);
+        Message ciseMessage = XML_MAPPER.fromXML(message);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
         assertNotNull(messageShortInfoDto);
         assertEquals("Push", messageShortInfoDto.getMessageType());
         assertEquals("VesselService", messageShortInfoDto.getServiceType());
@@ -121,7 +134,8 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/AckSync_PullRequestTemplate.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date(), uuid);
+        Message ciseMessage = XML_MAPPER.fromXML(message);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
         assertNotNull(messageShortInfoDto);
         assertEquals("Ack Synch", messageShortInfoDto.getMessageType());
         assertEquals("", messageShortInfoDto.getServiceType());
@@ -134,7 +148,8 @@ public class MessageShortInfoDtoTest {
         String message =  readResource("messages/AckAsync_PullRequestTemplate.xml");
         assertNotNull(message);
 
-        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(message, isSent, new Date(), uuid);
+        Message ciseMessage = XML_MAPPER.fromXML(message);
+        MessageShortInfoDto messageShortInfoDto = MessageShortInfoDto.getInstance(ciseMessage, isSent, new Date(), uuid);
         assertNotNull(messageShortInfoDto);
         assertEquals("Ack Synch", messageShortInfoDto.getMessageType());
         assertEquals("", messageShortInfoDto.getServiceType());

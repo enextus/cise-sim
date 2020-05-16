@@ -1,8 +1,6 @@
 package eu.cise.sim.api.dto;
 
 import eu.cise.servicemodel.v1.message.Message;
-import eu.eucise.xml.DefaultXmlMapper;
-import eu.eucise.xml.XmlMapper;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -12,7 +10,6 @@ public class MessageShortInfoDto implements Serializable {
 
     private static final long serialVersionUID = 42L;
 
-    private static final XmlMapper XML_MAPPER = new DefaultXmlMapper.PrettyNotValidating();
 
     private final String id;
     private final long dateTime;
@@ -26,12 +23,6 @@ public class MessageShortInfoDto implements Serializable {
         this.messageType = messageType;
         this.serviceType = serviceType;
         this.isSent = isSent;
-    }
-
-    public static MessageShortInfoDto getInstance(String message, boolean isSent, Date timestamp, String uuid) throws IllegalArgumentException {
-
-        Message ciseMessage = XML_MAPPER.fromXML(message);
-        return getInstance(ciseMessage, isSent, timestamp, uuid);
     }
 
     public static MessageShortInfoDto getInstance(Message ciseMessage, boolean isSent, Date timestamp, String uuid) throws IllegalArgumentException {
