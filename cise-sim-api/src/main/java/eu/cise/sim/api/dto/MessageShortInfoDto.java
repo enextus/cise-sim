@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class MessageShortInfoDto implements Serializable {
 
-    private static final long serialVersionUID = 2601968705651574024L;
+    private static final long serialVersionUID = 42L;
 
     private static final XmlMapper XML_MAPPER = new DefaultXmlMapper.PrettyNotValidating();
 

@@ -16,7 +16,7 @@ import java.util.Objects;
 public class DispatchResult  implements Serializable {
 
     // life, the universe and the everything.
-    private static final long serialVersionUID = 1609530741412720565L;
+    private static final long serialVersionUID = 42L;
 
     // internal state
     private final boolean ok;

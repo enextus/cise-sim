@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class MessageApiDto implements Serializable {
 
-    private static final long serialVersionUID = 3399816870017528741L;
+    private static final long serialVersionUID = 42L;
 
     private String body;
     private String acknowledge;

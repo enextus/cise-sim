@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public abstract class PreviewResponse implements Serializable {
 
-    private static final long serialVersionUID = 7667077161257108738L;
+    private static final long serialVersionUID = 42L;
 
     private final Template template;
     protected String errorMessage;

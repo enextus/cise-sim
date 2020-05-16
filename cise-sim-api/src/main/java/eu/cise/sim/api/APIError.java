@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class APIError implements Serializable {
 
-    private static final long serialVersionUID = -2884011965234418488L;
+    private static final long serialVersionUID = 42L;
 
     private final String error;
 
