@@ -9,10 +9,10 @@ import eu.cise.servicemodel.v1.message.Acknowledgement;
 
 
 /**
- * <p>Classe Java per sendResponse complex type.
- * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
- * 
+ * <p>Java class for sendResponse complex type.
+ *
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="sendResponse"&gt;
  *   &lt;complexContent&gt;
