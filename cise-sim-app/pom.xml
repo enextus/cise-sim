@@ -35,11 +35,6 @@
             <artifactId>cise-dispatcher</artifactId>
             <version>1.2-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>eu.europa.ec.jrc.marex</groupId>
-            <artifactId>cise-sim-io</artifactId>
-            <version>1.2.3-SNAPSHOT</version>
-        </dependency>
 
         <!--/dropwizard/-->
         <dependency>

@@ -1,6 +1,6 @@
-import {getTemplateById, getTemplateList} from "./TemplateService";
-import {action, computed, observable} from "mobx";
-import Template from "./Template";
+import {getTemplateById, getTemplateList} from './TemplateService';
+import {action, computed, observable} from 'mobx';
+import Template from './Template';
 
 export default class TemplateStore {
     @observable templateList = [];

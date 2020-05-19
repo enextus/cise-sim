@@ -1,18 +1,21 @@
-import {action, computed, observable} from "mobx";
-import {pullMessage, sendMessage} from "./MessageService";
-import Message from "./Message";
+import {action, computed, observable} from 'mobx';
+import {pullMessage, pullMessageByHistoryId, pullMessageHistoryAfter, sendMessage} from './MessageService';
+import Message from './Message';
+import MessageEasy from "./MessageEasy";
 
 export default class MessageStore {
-    @observable sentMessage = new Message({body: "", acknowledge: ""});
-    @observable receivedMessage = new Message({body: "", acknowledge: ""});
+    @observable sentMessage          = new Message({body: "", acknowledge: ""});
+    @observable receivedMessage      = new Message({body: "", acknowledge: ""});
     @observable receivedMessageError = null;
-    count = 0;
+
+    @observable historyMsgList       = [];
+    historyLasTimestamp = 0;
+    historyMaxCapacity = 0;
 
     @computed
     get isSentMessagePresent() {
         return !(this.sentMessage);
     }
-
 
     @computed
     get isReceivedMessagePresent() {
@@ -32,6 +35,44 @@ export default class MessageStore {
     @action
     consumeErrorMessage() {
         this.receivedMessageError = null;
+    }
+
+
+    setHistoryMaxCapacity(maxLength) {
+        if (this.historyMaxCapacity !== maxLength) {
+            this.historyMaxCapacity = maxLength;
+            this.historyLasTimestamp = 0
+
+            console.log("setHistoryMaxCapacity to "+maxLength)
+        }
+    }
+
+    /*
+    @action
+    updateHistorySecure(newChunkMsgShortInfoRcv) {
+
+        // Adding new data to old ones and find the most recent timestamp
+        const newList = [...this.historyMsgList];
+
+        newChunkMsgShortInfoRcv.forEach(t => {
+            newList.push(t);
+            if (t.dateTime > this.historyLasTimestamp) this.historyLasTimestamp = t.dateTime;
+        });
+
+        // Do the ordering by timestamp
+        newList.sort(function(a,b) {return b.dateTime-a.dateTime});
+
+        // take only the first historyMaxCapacity item
+        this.historyMsgList = newList.slice(0, this.historyMaxCapacity);
+    }
+    */
+
+    @action
+    updateHistory(newChunkMsgShortInfoRcv) {
+
+        const newList = [...newChunkMsgShortInfoRcv, ...this.historyMsgList];
+        this.historyLasTimestamp = newList[0].dateTime;
+        this.historyMsgList = newList.slice(0, this.historyMaxCapacity);
     }
 
     async send(seletedTemplate, messageId, correlationId, requiresAck) {
@@ -65,4 +106,26 @@ export default class MessageStore {
         }, 3000, this);
     }
 
+    startPullHistoryProgressive() {
+        this.interval = setInterval(async function (that)
+        {
+            const pullMessageResponse = await pullMessageHistoryAfter(that.historyLasTimestamp);
+            if (!pullMessageResponse) return;
+            if (pullMessageResponse.errorCode) {
+                that.receivedMessageError = pullMessageResponse;
+            } else {
+                that.updateHistory(pullMessageResponse);
+            }
+        }, 3000, this);
+    }
+
+    async getByShortInfoId(shortInfoId) {
+        const messageResponse = await pullMessageByHistoryId(shortInfoId);
+        if (!messageResponse) return;
+        if (messageResponse.errorCode) {
+            this.receivedMessageError = messageResponse;
+        } else {
+            this.receivedMessage = new MessageEasy(messageResponse);
+        }
+    }
 }

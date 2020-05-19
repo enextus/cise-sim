@@ -1,7 +1,7 @@
 package eu.cise.sim;
 
 
-import eu.cise.sim.engine.SimConfig;
+import eu.cise.sim.config.SimConfig;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.After;

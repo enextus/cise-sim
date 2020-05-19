@@ -5,7 +5,7 @@ import eu.cise.servicemodel.v1.message.Message;
 
 /**
  * This is the engine of the sim that holds all the main
- * flows of business logic for preparing,  sending, receiving
+ * flows of business logic for preparing, sending, receiving
  * interpreting the received message and act on it appropriately
  */
 public interface SimEngine {

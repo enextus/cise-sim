@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class SendingDataWrapper implements Serializable {
 
+    private static final long serialVersionUID = 42L;
+
     private SendParam param;
     private String templateHash;
 

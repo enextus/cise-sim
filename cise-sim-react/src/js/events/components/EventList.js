@@ -1,5 +1,5 @@
-import React from "react";
-import {observer} from "mobx-react";
+import React from 'react';
+import {observer} from 'mobx-react';
 
 @observer
 export default class EventList extends React.Component {
