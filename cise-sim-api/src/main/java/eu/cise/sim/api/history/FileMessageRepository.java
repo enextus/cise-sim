@@ -37,6 +37,8 @@ import static eu.cise.sim.api.history.MemoryQueuedRepository.MSG_SENT;
  * type of message
  * sent/received
  * unique ID to avoid duplicate
+ *
+ * TODO : find a coherent name between 'Repository' and 'Persistence' (interface name)
  */
 public class FileMessageRepository implements MessagePersistence {
 

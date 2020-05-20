@@ -12,6 +12,8 @@ export default class MessageStore {
     historyLasTimestamp = 0;
     historyMaxCapacity = 0;
 
+    @observable threadMessageDetails = [];
+
     @computed
     get isSentMessagePresent() {
         return !(this.sentMessage);
@@ -73,6 +75,11 @@ export default class MessageStore {
         const newList = [...newChunkMsgShortInfoRcv, ...this.historyMsgList];
         this.historyLasTimestamp = newList[0].dateTime;
         this.historyMsgList = newList.slice(0, this.historyMaxCapacity);
+    }
+
+    @action
+    updateThreadDetails(newMessagesThread) {
+        this.threadMessageDetails = newMessagesThread;
     }
 
     async send(seletedTemplate, messageId, correlationId, requiresAck) {
