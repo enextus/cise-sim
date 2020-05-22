@@ -32,7 +32,7 @@ class PreviewButton extends React.Component {
 
     async preview() {
         const response = await this.props.store.preview();
-        console.log("TemplateStore.preview response: ", response);
+
         if (response.errorCode) {
             this.props.enqueueSnackbar(response.errorMessage, {
                 variant: 'error',

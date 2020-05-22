@@ -8,10 +8,13 @@ const styles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        padding: 16,
+        padding: 8,
         margin: '16px auto',
-        maxWidth: 800
+        maxWidth: 800,
+        overflowY: 'scroll',
+        maxHeight: 800,
     },
+
 });
 
 
@@ -19,16 +22,16 @@ const styles = theme => ({
 class ThreadMessageList extends Component {
 
 
-    getMsg = (correlationId) =>  {
+    selectThread = (correlationId) =>  {
         const msgRcv = this.getMessageStore().historyMsgList;
 
-        const result = msgRcv.filter((item, index) => {
-            return item.correlationId === correlationId;
-        })
+        const result = msgRcv.filter(item => item.correlationId === correlationId);
 
-        this.getMessageStore().updateThreadDetails(result);
+        // Do the ordering by timestamp
+        result.sort(function(a,b) {return b.dateTime-a.dateTime});
 
-        console.log(result);
+        this.getMessageStore().getThreadWithBody(result);
+        this.getMessageStore().updateThreadIdSelected(correlationId);
     }
 
     buildThreadCards = (msgList) => {
@@ -43,7 +46,7 @@ class ThreadMessageList extends Component {
                 counter[msg.correlationId] = 1;
             } else {
                 counter[msg.correlationId]++;
-                if (msg.messageType !== 'Ack Synch' && (group[msg.correlationId].messageType === 'Ack Synch' || group[msg.correlationId].dateTime < msg.dateTime)) {
+                if (msg.messageType !== 'Ack Synch' && (group[msg.correlationId].messageType === 'Ack Synch' || group[msg.correlationId].dateTime >= msg.dateTime)) {
                     group[msg.correlationId]  = msg;
                 }
             }
@@ -72,12 +75,17 @@ class ThreadMessageList extends Component {
 
         const threadCards = this.buildThreadCards(msgRcv);
 
-        console.log(threadCards);
         return (
-            <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee">
+            <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee" hidden={threadCards.length === 0}>
                 <Paper  className={classes.root} >
-                        <Grid item xs={12}>
-                            {threadCards.map((msg) => <ThreadMsgInfo msgInfo={msg} key={msg.id} selectMsg={() => this.getMsg(msg.correlationId)}/>)}
+                        <Grid item xs={12} >
+                            {threadCards.map((msg) =>
+                                <ThreadMsgInfo
+                                    key={msg.id}
+                                    msgInfo={msg}
+                                    selectThread={() => this.selectThread(msg.correlationId)}
+                                    selected={this.getMessageStore().threadIdSelected === msg.correlationId}
+                                />)}
                         </Grid>
                 </Paper>
             </Box>

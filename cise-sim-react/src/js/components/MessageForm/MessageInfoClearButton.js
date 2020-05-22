@@ -16,12 +16,12 @@ const styles = theme => ({
 class MsgClearButton extends Component {
 
     isDisabled() {
-        return !this.props.messageStore.historyMsgList.length > 0;
+        return !this.getMessageStore() .historyMsgList.length > 0;
     }
 
     clear () {
-        this.props.messageStore.historyMsgList = [];
-        this.props.messageStore.threadMessageDetails = [];
+        this.getMessageStore().clearHistory();
+        this.getMessageStore().updateThreadWithBody([]);
 
     }
 
@@ -41,6 +41,10 @@ class MsgClearButton extends Component {
 
             </Button>
         )
+    }
+
+    getMessageStore() {
+        return this.props.messageStore;
     }
 }
 

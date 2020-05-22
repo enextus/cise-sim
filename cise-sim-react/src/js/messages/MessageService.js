@@ -63,7 +63,6 @@ export async function pullMessageHistoryAfter(timestamp) {
 }
 
 export async function pullMessageByHistoryId(id) {
-
     const messageResponse = await http_get("history/message/"+id);
     if (!messageResponse) return;
 

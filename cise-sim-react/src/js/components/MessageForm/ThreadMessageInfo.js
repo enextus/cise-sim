@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import TableBody from "@material-ui/core/TableBody";
@@ -9,9 +9,11 @@ import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
 
-const useStyles = makeStyles({
+const styles = theme => ({
     root: {
         minWidth: 275,
+        padding : 2,
+        margin :  4
     },
     bullet: {
         display: 'inline-block',
@@ -22,14 +24,56 @@ const useStyles = makeStyles({
         fontSize: 14,
     },
     pos: {
-        marginBottom: 12,
+        marginBottom: 2,
     },
+
+    cardcontent :{
+        padding:8,
+    },
+
+
+    tablebody : {
+        backgroundColor: "antiquewhite",
+        '&:hover': {
+            backgroundColor: "#F1614A",
+        },
+
+    },
+
+    tablebodyselected : {
+        backgroundColor:  "#F1614A",
+    },
+
+    cellmsgtype :{
+        textAlign: "left"
+    },
+
+    celdirection: {
+        width: '50%',
+        textAlign: "left"
+    },
+
+    celllocaldate :{
+        textAlign: "right"
+    },
+    cellsrvtype :{
+        textAlign: "left"
+    },
+
+    cellempty :{
+
+    },
+    cellnumth :{
+        textAlign: "right"
+    },
+
+
 });
 
 
 const messageInfoCard = (props)  => {
 
-    const classes = useStyles();
+    const {classes} = props;
     const msgInfo = props.msgInfo;
 
     // Direction and background color
@@ -45,6 +89,7 @@ const messageInfoCard = (props)  => {
 
     // Formatting the Date Time
     const timestamp = new Date(msgInfo.dateTime);
+    /*
     const msec = timestamp.getMilliseconds();
     let padding = '';
     if (msec < 10) {
@@ -54,23 +99,37 @@ const messageInfoCard = (props)  => {
         padding = '0';
     }
     const localeDate = timestamp.toLocaleString()+'.'+padding+msec;
+   */
+    const localeDate = timestamp.toLocaleString();
+
 
     return (
-        <Card className={classes.root} key={msgInfo.id}>
-            <CardContent onClick={props.selectMsg}>
-                <TableContainer component={Paper}>
+        <Card
+            className={classes.root}
+            key={msgInfo.id}
+        >
+            <CardContent
+                className={classes.cardcontent}
+                onClick={props.selectThread}
+            >
+
+                <TableContainer
+                    component={Paper}
+                >
+
                     <Table size="small" aria-label="a dense table">
-                        <TableBody>
+                        <TableBody
+                            className={props.selected ? classes.tablebodyselected:classes.tablebody}>
+
                             <TableRow>
-                                <TableCell>{msgInfo.messageType}</TableCell>
-                                <TableCell>{direction}</TableCell>
-                                <TableCell>{localeDate}</TableCell>
+                                <TableCell className={classes.cellmsgtype} component="th" scope="row">{msgInfo.messageType} ({direction})</TableCell>
+                                <TableCell className={classes.celllocaldate}>{localeDate}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>{msgInfo.serviceType}</TableCell>
-                                <TableCell/>
-                                <TableCell>{msgInfo.numTh}</TableCell>
+                                <TableCell className={classes.cellsrvtype} component="th" scope="row">{msgInfo.serviceType}</TableCell>
+                                <TableCell className={classes.cellnumth}>{msgInfo.numTh}</TableCell>
                             </TableRow>
+
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -79,4 +138,4 @@ const messageInfoCard = (props)  => {
     );
 }
 
-export default messageInfoCard;
+export default withStyles(styles)(messageInfoCard);

@@ -1,15 +1,24 @@
 import React, {Component} from 'react';
 import {Grid} from '@material-ui/core';
-import {observer} from 'mobx-react';
 import Paper from "@material-ui/core/Paper";
 import ButtonsPanel from "./ButtonsPanel";
-import ChronoHistoryMessages from "./ChronoThreadMessages";
+import ChronoHistoryMessages from "./ThreadMessageList";
 import ThreadMessageDetails from "./ThreadMessageDetails";
+import Typography from "@material-ui/core/Typography";
+import {withStyles} from "@material-ui/core/styles";
 
 
-@observer
-export default class BodyV2 extends Component {
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        padding: 16,
+        margin: '16px auto',
+        maxWidth: 800
+    },
+});
 
+class BodyThread extends Component {
 
     render() {
 
@@ -28,14 +37,20 @@ export default class BodyV2 extends Component {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={3} >
                     <Paper elevation={3} >
+                        <Typography variant="h5" component="h1" align={"center"}>
+                            Thread Messages History
+                        </Typography>
                         <ChronoHistoryMessages  store={this.props.store} />
                     </Paper>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={9}>
                     <Paper elevation={3}>
+                        <Typography variant="h5" component="h1" align={"center"}>
+                            Thread Detail
+                        </Typography>
                        <ThreadMessageDetails  store={this.props.store} />
                     </Paper>
                 </Grid>
@@ -44,3 +59,5 @@ export default class BodyV2 extends Component {
         )
     }
 }
+
+export default withStyles(styles)(BodyThread)

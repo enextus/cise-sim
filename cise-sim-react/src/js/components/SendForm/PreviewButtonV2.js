@@ -31,7 +31,6 @@ class PreviewButtonV2 extends React.Component {
 
     async preview() {
         const response = await this.props.store.preview();
-        console.log("TemplateStore.preview response: ", response);
     }
 
     render() {

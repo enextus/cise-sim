@@ -3,6 +3,7 @@ import {Box, Grid, Paper} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import {observer} from "mobx-react";
 import MessageInfoCard from "../components/MessageForm/MessageInfoCard";
+import Slide from "@material-ui/core/Slide";
 
 const styles = theme => ({
     root: {
@@ -14,65 +15,32 @@ const styles = theme => ({
     },
 });
 
-/**
- * This class handle the details of a thread message
- * It use 2 components: MessageInfoCard and MessageXml
- * It handle the request of the xml an to render the only MessageXml components
- */
+
 @observer
 class ThreadMessageDetails extends Component {
-
-
-
-    getMsg = (uuid) =>  {
-        console.log("getMsg uuid " + uuid );
-      //  this.getMessageStore().getByShortInfoId(uuid);
-
-    //    console.log("handleChange uuid " + uuid + "newExpanded "+newExpanded);
-        if (uuid !== this.bodyId) {
-            this.getMessageStore().getByShortInfoId(uuid);
-            this.bodyId = uuid;
-        }
-    }
-
-    /*
-Signature:
-function(event: object, expanded: boolean) => void
-event: The event source of the callback.
-expanded: The expanded state of the panel.
- */
-    bodyId = null;
-
-    handleChange = (uuid) => (event, newExpanded) => {
-
-        console.log("handleChange uuid " + uuid + "newExpanded "+newExpanded);
-        if (uuid !== this.bodyId) {
-            this.getMessageStore().getByShortInfoId(uuid);
-            this.bodyId = uuid;
-        }
-  //      setExpanded(newExpanded ? panel : false);
-    };
-
 
     render() {
 
         const {classes} = this.props;
-        const msgRcv  = this.getMessageStore().threadMessageDetails;
-        const msgBody = this.getMessageStore().receivedMessage.body;
+        const messageList  = this.getMessageStore().threadWithBody;
 
         return (
-            <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee">
+            <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee" hidden={messageList.length === 0}>
+                <Slide  direction="right" in={messageList.length>0} unmountOnExit>
                 <Paper  className={classes.root} >
-                        <Grid item xs={12}>
-                            {msgRcv.map((msg) => <MessageInfoCard
-                                key={msg.id}
-                                selectMsg={() => this.getMsg(msg.id)}
-                                msgInfo={msg}
-                                change={() => this.handleChange(msg.id)}
-                                body={this.bodyId === msg.id ? msgBody : null}
-                                />)}
-                        </Grid>
+                    <Grid container>
+
+                        {messageList.map((msg) =>
+                            <MessageInfoCard
+                                key={msg.msgInfo.id}
+                                msgInfo={msg.msgInfo}
+                                body={msg.body}
+                            />
+                        )}
+
+                    </Grid>
                 </Paper>
+                </Slide>
             </Box>
         )
     }
@@ -82,6 +50,5 @@ expanded: The expanded state of the panel.
     }
 
 }
-
 
 export default withStyles(styles)(ThreadMessageDetails);

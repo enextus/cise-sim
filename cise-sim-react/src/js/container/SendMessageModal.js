@@ -1,26 +1,40 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import SendForm from "../components/SendFormV2";
+import {Button} from "@material-ui/core";
+import SendRoundedIcon from '@material-ui/icons/SendRounded';
 
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
     modal: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     paper: {
         backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
-}));
 
-const TransitionsModal = (props) => {
-    const classes = useStyles();
+    button: {
+        margin: theme.spacing(1),
+    },
+
+    rightIcon: {
+        marginLeft: theme.spacing(1),
+    },
+
+});
+
+
+const sendMessageModal = (props) => {
+
+    const {classes} = props;
     const [open, setOpen] = React.useState(false);
 
     const handleOpen = () => {
@@ -31,11 +45,25 @@ const TransitionsModal = (props) => {
         setOpen(false);
     };
 
+    const openButton = (props) => {
+
+        return (
+            <Button
+                id="clearMsg"
+                color="secondary"
+                variant="contained"
+                className={classes.button}
+                onClick={handleOpen}>
+                Send Message
+                <SendRoundedIcon className={classes.rightIcon}/>
+
+            </Button>
+        )
+    }
+
     return (
         <div>
-            <button type="button" onClick={handleOpen}>
-                Create Message
-            </button>
+            {openButton(props)}
 
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -50,12 +78,15 @@ const TransitionsModal = (props) => {
                 }}>
 
                 <Fade in={open}>
+                    <div>
                    <SendForm store={props.store}/>
+                    </div>
                 </Fade>
+
 
             </Modal>
         </div>
     );
 }
 
-export default TransitionsModal;
+export default withStyles(styles)(sendMessageModal);
