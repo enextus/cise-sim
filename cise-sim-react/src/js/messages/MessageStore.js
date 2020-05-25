@@ -1,10 +1,17 @@
 import {action, computed, observable} from 'mobx';
-import {pullMessage, pullMessageByHistoryId, pullMessageHistoryAfter, sendMessage} from './MessageService';
+import {
+    pullMessage,
+    pullMessageByHistoryId,
+    pullMessageByHistoryIdFull,
+    pullMessageHistoryAfter,
+    sendMessage
+} from './MessageService';
 import Message from './Message';
 import MessageEasy from "./MessageEasy";
 import MessageThInfo from "./MessageThInfo";
 
 export default class MessageStore {
+
     @observable sentMessage          = new Message({body: "", acknowledge: ""});
     @observable receivedMessage      = new Message({body: "", acknowledge: ""});
     @observable receivedMessageError = null;
@@ -156,7 +163,7 @@ export default class MessageStore {
         }
     }
 
-    async getThreadWithBody(newMessagesThread) {
+    async getThreadWithBodyOLD(newMessagesThread) {
 
         let result = [];
 
@@ -168,6 +175,26 @@ export default class MessageStore {
             }else {
                 result.push(new MessageThInfo(msgInfo, body));
             }
+        }
+
+        this.updateThreadWithBody(result);
+    }
+
+    async getThreadWithBody(newMessagesThread) {
+
+        let result = [];
+        let requestPromises = [];
+
+        let msgInfo;
+        for (msgInfo of newMessagesThread) {
+            const req = pullMessageByHistoryIdFull(msgInfo);
+            requestPromises.push(req);
+        }
+
+        const requestResult = await Promise.all(requestPromises);
+        let response;
+        for (response of requestResult) {
+            result.push(response)
         }
 
         this.updateThreadWithBody(result);
