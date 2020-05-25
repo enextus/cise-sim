@@ -43,6 +43,7 @@ const sendMessageModal = (props) => {
 
     const handleClose = () => {
         setOpen(false);
+        props.store.templateStore.resetPreview();
     };
 
     const openButton = (props) => {
@@ -54,7 +55,7 @@ const sendMessageModal = (props) => {
                 variant="contained"
                 className={classes.button}
                 onClick={handleOpen}>
-                Send Message
+                Create Message
                 <SendRoundedIcon className={classes.rightIcon}/>
 
             </Button>
