@@ -19,6 +19,24 @@ const styles = theme => ({
 @observer
 class ThreadMessageDetails extends Component {
 
+    buildAckSuccessFail(threadWithBodyList) {
+
+        const ackType = 'Ack Synch'; // messageType
+
+        let ackResult = [];
+        threadWithBodyList.map( (msg) => {
+            if (msg.msgInfo.messageType === ackType) {
+                ackResult[msg.msgInfo.messageId.split('_')[0]] = msg.msgInfo.ackResult;
+            }
+        });
+
+        threadWithBodyList.map( (msg) => {
+            if (msg.msgInfo.messageType !== ackType) {
+                msg.msgInfo.ackResult = ackResult[msg.msgInfo.messageId];
+            }
+        });
+    }
+
     render() {
 
         const {classes} = this.props;
@@ -26,6 +44,8 @@ class ThreadMessageDetails extends Component {
 
         // toDo the ordering by timestamp
         //messageList.sort(function(a,b) {return b.msgInfo.dateTime-a.msgInfo.dateTime});
+
+        this.buildAckSuccessFail(messageList);
 
         return (
             <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee" hidden={messageList.length === 0}>

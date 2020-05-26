@@ -9,6 +9,7 @@ export default class MessageShortInfo {
     correlationId;
     from;
     to;
+    ackResult;
 
     constructor(props) {
         this.id             = props.id;
@@ -20,5 +21,6 @@ export default class MessageShortInfo {
         this.correlationId  = props.correlationId;
         this.from           = props.from;
         this.to             = props.to;
+        this.ackResult      = props.ackResult;
     }
 }

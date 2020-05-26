@@ -1,5 +1,7 @@
 package eu.cise.sim.api.dto;
 
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,7 +27,10 @@ public class MessageShortInfoDto implements Serializable {
     private final String from;
     private final String to;
 
-    private MessageShortInfoDto(String id, long dateTime, String messageType, String serviceType, boolean isSent, String messageId, String correlationId, String from, String to) {
+    // If Ack Synch message,
+    private final String ackResult;
+
+    private MessageShortInfoDto(String id, long dateTime, String messageType, String serviceType, boolean isSent, String messageId, String correlationId, String from, String to, String ackType) {
         this.id = id;
         this.dateTime = dateTime;
         this.messageType = messageType;
@@ -35,6 +40,7 @@ public class MessageShortInfoDto implements Serializable {
         this.correlationId = correlationId;
         this.from = from;
         this.to = to;
+        this.ackResult = ackType;
     }
 
     public static MessageShortInfoDto getInstance(Message ciseMessage, boolean isSent, Date timestamp, String uuid) throws IllegalArgumentException {
@@ -52,14 +58,18 @@ public class MessageShortInfoDto implements Serializable {
             }
         }
 
-        // Sender
-        String from = ciseMessage.getSender() != null ? ciseMessage.getSender().getServiceID() : "";
+        String ackResult = "";
+        if (messageType == MessageTypeEnum.ACK_SYNC) {
+            AcknowledgementType ackType = ((Acknowledgement) ciseMessage).getAckCode();
+            ackResult = ackType.value();
+        }
 
-        // Recipient
+        // Sender & Recipient
+        String from = ciseMessage.getSender() != null ? ciseMessage.getSender().getServiceID() : "";
         String to = ciseMessage.getRecipient() != null ? ciseMessage.getRecipient().getServiceID() : "";
 
 
-        MessageShortInfoDto instance = new MessageShortInfoDto(uuid, dateTime, messageTypeName, serviceType, isSent, ciseMessage.getMessageID(), ciseMessage.getCorrelationID(), from, to);
+        MessageShortInfoDto instance = new MessageShortInfoDto(uuid, dateTime, messageTypeName, serviceType, isSent, ciseMessage.getMessageID(), ciseMessage.getCorrelationID(), from, to, ackResult);
 
         check(instance);
 
@@ -111,5 +121,9 @@ public class MessageShortInfoDto implements Serializable {
 
     public String getTo() {
         return to;
+    }
+
+    public String getAckResult() {
+        return ackResult;
     }
 }
