@@ -21,7 +21,11 @@ public class MessageShortInfoDto implements Serializable {
     private final String messageId;
     private final String correlationId;
 
-    private MessageShortInfoDto(String id, long dateTime, String messageType, String serviceType, boolean isSent, String messageId, String correlationId) {
+    // Sender and receiver
+    private final String from;
+    private final String to;
+
+    private MessageShortInfoDto(String id, long dateTime, String messageType, String serviceType, boolean isSent, String messageId, String correlationId, String from, String to) {
         this.id = id;
         this.dateTime = dateTime;
         this.messageType = messageType;
@@ -29,6 +33,8 @@ public class MessageShortInfoDto implements Serializable {
         this.isSent = isSent;
         this.messageId = messageId;
         this.correlationId = correlationId;
+        this.from = from;
+        this.to = to;
     }
 
     public static MessageShortInfoDto getInstance(Message ciseMessage, boolean isSent, Date timestamp, String uuid) throws IllegalArgumentException {
@@ -46,7 +52,14 @@ public class MessageShortInfoDto implements Serializable {
             }
         }
 
-        MessageShortInfoDto instance = new MessageShortInfoDto(uuid, dateTime, messageTypeName, serviceType, isSent, ciseMessage.getMessageID(), ciseMessage.getCorrelationID());
+        // Sender
+        String from = ciseMessage.getSender() != null ? ciseMessage.getSender().getServiceID() : "";
+
+        // Recipient
+        String to = ciseMessage.getRecipient() != null ? ciseMessage.getRecipient().getServiceID() : "";
+
+
+        MessageShortInfoDto instance = new MessageShortInfoDto(uuid, dateTime, messageTypeName, serviceType, isSent, ciseMessage.getMessageID(), ciseMessage.getCorrelationID(), from, to);
 
         check(instance);
 
@@ -90,5 +103,13 @@ public class MessageShortInfoDto implements Serializable {
 
     public String getCorrelationId() {
         return correlationId;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
     }
 }

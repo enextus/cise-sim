@@ -37,7 +37,7 @@ class BodyThread extends Component {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={3} >
+                <Grid item xs={4} >
                     <Paper elevation={3} >
                         <Typography variant="h5" component="h1" align={"center"}>
                             Thread Messages History
@@ -46,7 +46,7 @@ class BodyThread extends Component {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={9}>
+                <Grid item xs={8}>
                     <Paper elevation={3}>
                         <Typography variant="h5" component="h1" align={"center"}>
                             Thread Detail

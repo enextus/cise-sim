@@ -54,7 +54,8 @@ const styles = theme => ({
     },
 
     celllocaldate :{
-        textAlign: "right"
+        textAlign: "right",
+        width: "30%"
     },
     cellsrvtype :{
         textAlign: "left"
@@ -67,7 +68,6 @@ const styles = theme => ({
         textAlign: "right"
     },
 
-
 });
 
 
@@ -78,14 +78,28 @@ const messageInfoCard = (props)  => {
 
     // Direction and background color
     let direction;
+    let fromto;
     let backColor;
     if (msgInfo.isSent) {
         direction = "SENT";
+        if (msgInfo.to.length > 0) {
+            fromto = "To: " + msgInfo.to;
+        }
+        else {
+            fromto = "To: Unknown";
+        }
         backColor = "#ade6cb"
     } else {
         direction = "RECV";
+        if (msgInfo.from.length > 0) {
+            fromto = "From: " + msgInfo.from;
+        }
+        else {
+            fromto = "From: Unknown";
+        }
         backColor = "#4795ff"
     }
+
 
     // Formatting the Date Time
     const timestamp = new Date(msgInfo.dateTime);
@@ -125,6 +139,7 @@ const messageInfoCard = (props)  => {
                                 <TableCell className={classes.cellmsgtype} component="th" scope="row">{msgInfo.messageType} ({direction})</TableCell>
                                 <TableCell className={classes.celllocaldate}>{localeDate}</TableCell>
                             </TableRow>
+                            <TableRow><TableCell align={"left"} component="th" scope="row">{fromto}</TableCell><TableCell style={{width:'1%'}}/></TableRow>
                             <TableRow>
                                 <TableCell className={classes.cellsrvtype} component="th" scope="row">{msgInfo.serviceType}</TableCell>
                                 <TableCell className={classes.cellnumth}>{msgInfo.numTh}</TableCell>

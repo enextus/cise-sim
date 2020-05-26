@@ -7,6 +7,8 @@ export default class MessageShortInfo {
     isSent;
     messageId;
     correlationId;
+    from;
+    to;
 
     constructor(props) {
         this.id             = props.id;
@@ -16,5 +18,7 @@ export default class MessageShortInfo {
         this.isSent         = Boolean(props.sent);
         this.messageId      = props.messageId;
         this.correlationId  = props.correlationId;
+        this.from           = props.from;
+        this.to             = props.to;
     }
 }

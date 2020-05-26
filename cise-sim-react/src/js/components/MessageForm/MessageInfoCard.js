@@ -71,15 +71,27 @@ const messageInfoCard = (props)  => {
 
     // Direction and background color
     let direction;
+    let fromto;
     let backColor;
     if (msgInfo.isSent) {
         direction = "Sent";
+        if (msgInfo.to.length > 0) {
+            fromto = "To: " + msgInfo.to;
+        }
+        else {
+            fromto = "To: Unknown";
+        }
         backColor = "#ade6cb"
     } else {
         direction = "Received";
+        if (msgInfo.from.length > 0) {
+            fromto = "From: " + msgInfo.from;
+        }
+        else {
+            fromto = "From: Unknown";
+        }
         backColor = "#4795ff"
     }
-
     // Formatting the Date Time
     const timestamp = new Date(msgInfo.dateTime);
     const msec = timestamp.getMilliseconds();
@@ -99,9 +111,10 @@ const messageInfoCard = (props)  => {
                     <Table size="small" aria-label="a dense table">
                         <TableBody>
                             <TableRow>
-                                <TableCell>Type : {msgInfo.messageType}</TableCell>
+                                <TableCell >Type : {msgInfo.messageType}</TableCell>
                                 <TableCell align={"right"}>{direction}</TableCell>
                             </TableRow>
+                            <TableRow><TableCell align={"left"}>{fromto}</TableCell></TableRow>
                             <TableRow><TableCell> Time : {localeDate}</TableCell><TableCell/></TableRow>
                             <TableRow><TableCell> Service Type : {msgInfo.serviceType}</TableCell><TableCell/></TableRow>
                         </TableBody>
