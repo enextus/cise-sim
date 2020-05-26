@@ -1,4 +1,4 @@
-import {EventStore} from "../js/events/EventStore"
+import {EventStore} from "../js/stores/events/EventStore"
 
 describe("EventStore.js", () => {
 

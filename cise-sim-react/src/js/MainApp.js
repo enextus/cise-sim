@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import Body from './container/BodyThread';
+import Body from './containers/BodyThread';
 import NavBar from './components/NavBar';
-import TemplateStore from './templates/TemplateStore';
-import MessageStore from './messages/MessageStore';
-import ServiceStore from './services/ServiceStore';
+import TemplateStore from './stores/templates/TemplateStore';
+import MessageStore from './stores/messages/MessageStore';
+import ServiceStore from './stores/services/ServiceStore';
 import {autorun} from 'mobx';
 
 

@@ -1,4 +1,4 @@
-import {http_get} from '../api/API'
+import {http_get} from '../../api/API'
 import Template from './Template';
 
 export async function getTemplateList() {

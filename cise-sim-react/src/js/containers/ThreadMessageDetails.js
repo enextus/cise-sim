@@ -24,6 +24,9 @@ class ThreadMessageDetails extends Component {
         const {classes} = this.props;
         const messageList  = this.getMessageStore().threadWithBody;
 
+        // toDo the ordering by timestamp
+        //messageList.sort(function(a,b) {return b.msgInfo.dateTime-a.msgInfo.dateTime});
+
         return (
             <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee" hidden={messageList.length === 0}>
                 <Slide  direction="right" in={messageList.length>0} unmountOnExit>

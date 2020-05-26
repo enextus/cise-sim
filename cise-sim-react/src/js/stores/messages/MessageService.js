@@ -1,4 +1,4 @@
-import {http_delete, http_get, http_post} from '../api/API'
+import {http_delete, http_get, http_post} from '../../api/API'
 import Message from './Message';
 import MessageShortInfo from "./MessageShortInfo";
 import MessageThInfo from "./MessageThInfo";
