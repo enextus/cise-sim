@@ -116,11 +116,12 @@ const messageInfoCard = (props)  => {
    */
     const localeDate = timestamp.toLocaleString();
 
-
+    const cardStyle = msgInfo.ackSuccess ? null: { border: "2px solid red"};
     return (
         <Card
             className={classes.root}
             key={msgInfo.id}
+            style={cardStyle}
         >
             <CardContent
                 className={classes.cardcontent}

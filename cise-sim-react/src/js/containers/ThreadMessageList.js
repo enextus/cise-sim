@@ -38,13 +38,16 @@ class ThreadMessageList extends Component {
 
         let group = [];
         let counter = [];
-        let mostRecentTimestamp = []
+        let mostRecentTimestamp = [];
+        let ackSuccess = [];
+
         let msg;
         for (msg of msgList) {
             if (group[msg.correlationId] === undefined) {
                 group[msg.correlationId] = {...msg};
                 counter[msg.correlationId] = 1;
                 mostRecentTimestamp[msg.correlationId] = msg.dateTime;
+                ackSuccess[msg.correlationId] = Boolean('true');
             } else {
                 counter[msg.correlationId]++;
                 if (mostRecentTimestamp[msg.correlationId] <  msg.dateTime) {
@@ -55,6 +58,9 @@ class ThreadMessageList extends Component {
 
                 }
             }
+            if (msg.messageType === 'Ack Synch') {
+                ackSuccess[msg.correlationId] = ackSuccess[msg.correlationId] && msg.ackResult.includes('Success');
+            }
         }
 
         let result = []
@@ -62,7 +68,7 @@ class ThreadMessageList extends Component {
         for (item in group) {
             group[item].numTh = counter[item];
             group[item].mostRecentTimestamp = mostRecentTimestamp[item];
-
+            group[item].ackSuccess =  ackSuccess[item];
             result.push(group[item]);
         }
 
