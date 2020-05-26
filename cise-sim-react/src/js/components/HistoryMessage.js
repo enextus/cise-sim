@@ -51,14 +51,6 @@ class HistoryMessage extends Component {
         console.log("newValue "+newValue);
     };
 
-    isDisabled() {
-        return !this.props.store.templateStore.isTemplateSelected;
-    }
-
-    setMaxMsg() {
-        this.getMessageStore().setHistoryMaxCapacity(this.getMaxMsgShow());
-    }
-
     render() {
         const {classes} = this.props;
 

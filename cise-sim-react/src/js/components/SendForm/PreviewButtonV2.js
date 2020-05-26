@@ -3,7 +3,6 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {observer} from 'mobx-react';
-import {withSnackbar} from 'notistack';
 
 
 const styles = theme => ({
@@ -24,7 +23,7 @@ const action = (key) => (
 )
 
 @observer
-class PreviewButton extends React.Component {
+class PreviewButtonV2 extends React.Component {
 
     isDisabled() {
         return !this.props.store.isTemplateSelected;
@@ -32,22 +31,6 @@ class PreviewButton extends React.Component {
 
     async preview() {
         const response = await this.props.store.preview();
-
-        if (response.errorCode) {
-            this.props.enqueueSnackbar(response.errorMessage, {
-                variant: 'error',
-                persist: true,
-                action: (key) => (
-                    <Button onClick={() => {
-                        this.props.closeSnackbar(key)
-                    }}>
-                        {'Dismiss'}
-                    </Button>
-                ),
-            })
-        } else {
-            this.props.enqueueSnackbar('New preview has been generated.', {variant: 'success',});
-        }
     }
 
     render() {
@@ -65,13 +48,12 @@ class PreviewButton extends React.Component {
             </Button>
         )
     }
-
 }
 
 
-PreviewButton.propTypes = {
+PreviewButtonV2.propTypes = {
     store: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(withSnackbar(PreviewButton))
+export default withStyles(styles)(PreviewButtonV2)

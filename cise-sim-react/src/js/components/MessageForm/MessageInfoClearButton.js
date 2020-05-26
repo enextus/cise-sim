@@ -1,6 +1,6 @@
 import {Button, withStyles} from '@material-ui/core';
 import ClearAllRoundedIcon from '@material-ui/icons/ClearAllRounded';
-import React from 'react';
+import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 
 const styles = theme => ({
@@ -13,14 +13,16 @@ const styles = theme => ({
 });
 
 @observer
-class MsgClearButton extends React.Component {
+class MsgClearButton extends Component {
 
     isDisabled() {
-        return !this.props.messageStore.historyMsgList.length > 0;
+        return !this.getMessageStore() .historyMsgList.length > 0;
     }
 
     clear () {
-        this.props.messageStore.historyMsgList = [];
+        this.getMessageStore().clearHistory();
+        this.getMessageStore().updateThreadWithBody([]);
+
     }
 
     render() {
@@ -40,8 +42,10 @@ class MsgClearButton extends React.Component {
             </Button>
         )
     }
+
+    getMessageStore() {
+        return this.props.messageStore;
+    }
 }
-
-
 
 export default withStyles(styles)(MsgClearButton)

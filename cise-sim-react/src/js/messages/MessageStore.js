@@ -1,9 +1,17 @@
 import {action, computed, observable} from 'mobx';
-import {pullMessage, pullMessageByHistoryId, pullMessageHistoryAfter, sendMessage} from './MessageService';
+import {
+    pullMessage,
+    pullMessageByHistoryId,
+    pullMessageByHistoryIdFull,
+    pullMessageHistoryAfter,
+    sendMessage
+} from './MessageService';
 import Message from './Message';
 import MessageEasy from "./MessageEasy";
+import MessageThInfo from "./MessageThInfo";
 
 export default class MessageStore {
+
     @observable sentMessage          = new Message({body: "", acknowledge: ""});
     @observable receivedMessage      = new Message({body: "", acknowledge: ""});
     @observable receivedMessageError = null;
@@ -11,6 +19,10 @@ export default class MessageStore {
     @observable historyMsgList       = [];
     historyLasTimestamp = 0;
     historyMaxCapacity = 0;
+
+    @observable threadMessageDetails = [];
+    @observable threadWithBody = [];
+    @observable threadIdSelected = "";
 
     @computed
     get isSentMessagePresent() {
@@ -41,6 +53,7 @@ export default class MessageStore {
     setHistoryMaxCapacity(maxLength) {
         if (this.historyMaxCapacity !== maxLength) {
             this.historyMaxCapacity = maxLength;
+            this.threadMaxCapacity = maxLength;
             this.historyLasTimestamp = 0
 
             console.log("setHistoryMaxCapacity to "+maxLength)
@@ -73,6 +86,27 @@ export default class MessageStore {
         const newList = [...newChunkMsgShortInfoRcv, ...this.historyMsgList];
         this.historyLasTimestamp = newList[0].dateTime;
         this.historyMsgList = newList.slice(0, this.historyMaxCapacity);
+    }
+
+
+    @action
+    clearHistory() {
+        this.historyMsgList = [];
+    }
+
+    @action
+    updateThreadDetails(newMessagesThread) {
+        this.threadMessageDetails = newMessagesThread;
+    }
+
+    @action
+    updateThreadWithBody(newThreadWithBody) {
+        this.threadWithBody = newThreadWithBody;
+    }
+
+    @action
+    updateThreadIdSelected(correlationId) {
+        this.threadIdSelected = correlationId;
     }
 
     async send(seletedTemplate, messageId, correlationId, requiresAck) {
@@ -127,5 +161,42 @@ export default class MessageStore {
         } else {
             this.receivedMessage = new MessageEasy(messageResponse);
         }
+    }
+
+    async getThreadWithBodyOLD(newMessagesThread) {
+
+        let result = [];
+
+        let msgInfo;
+        for (msgInfo of newMessagesThread) {
+            const body = await pullMessageByHistoryId(msgInfo.id);
+            if (!body || body.errorCode) {
+                result.push(new MessageThInfo(msgInfo, "Message body not available"));
+            }else {
+                result.push(new MessageThInfo(msgInfo, body));
+            }
+        }
+
+        this.updateThreadWithBody(result);
+    }
+
+    async getThreadWithBody(newMessagesThread) {
+
+        let result = [];
+        let requestPromises = [];
+
+        let msgInfo;
+        for (msgInfo of newMessagesThread) {
+            const req = pullMessageByHistoryIdFull(msgInfo);
+            requestPromises.push(req);
+        }
+
+        const requestResult = await Promise.all(requestPromises);
+        let response;
+        for (response of requestResult) {
+            result.push(response)
+        }
+
+        this.updateThreadWithBody(result);
     }
 }

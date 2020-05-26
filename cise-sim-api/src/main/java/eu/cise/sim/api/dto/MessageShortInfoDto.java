@@ -17,12 +17,18 @@ public class MessageShortInfoDto implements Serializable {
     private final String serviceType;
     private final boolean isSent;
 
-    private MessageShortInfoDto(String id, long dateTime, String messageType, String serviceType, boolean isSent) {
+    // Message Thread Infos
+    private final String messageId;
+    private final String correlationId;
+
+    private MessageShortInfoDto(String id, long dateTime, String messageType, String serviceType, boolean isSent, String messageId, String correlationId) {
         this.id = id;
         this.dateTime = dateTime;
         this.messageType = messageType;
         this.serviceType = serviceType;
         this.isSent = isSent;
+        this.messageId = messageId;
+        this.correlationId = correlationId;
     }
 
     public static MessageShortInfoDto getInstance(Message ciseMessage, boolean isSent, Date timestamp, String uuid) throws IllegalArgumentException {
@@ -40,7 +46,8 @@ public class MessageShortInfoDto implements Serializable {
             }
         }
 
-        MessageShortInfoDto instance = new MessageShortInfoDto(uuid, dateTime, messageTypeName, serviceType, isSent);
+        MessageShortInfoDto instance = new MessageShortInfoDto(uuid, dateTime, messageTypeName, serviceType, isSent, ciseMessage.getMessageID(), ciseMessage.getCorrelationID());
+
         check(instance);
 
         return instance;
@@ -75,5 +82,13 @@ public class MessageShortInfoDto implements Serializable {
 
     public boolean isSent() {
         return isSent;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public String getCorrelationId() {
+        return correlationId;
     }
 }

@@ -34,6 +34,7 @@
     "@material-ui/styles": "^4.9.13",
     "axios": "^0.19.2",
     "axios-rest-client": "^0.1.11",
+    "lodash": "^4.17.15",
     "mobx": "^5.15.4",
     "mobx-react": "^5.4.4",
     "mobx-utils": "^5.5.7",

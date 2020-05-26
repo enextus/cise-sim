@@ -27,10 +27,12 @@ class PreviewMessage extends Component {
   }
 
   handleUpdate() {
+
   }
 
   render() {
     const {classes} = this.props;
+
     return (
         <div className={classes.root}>
           <ExpansionPanel expanded={!this.isTemplateEmpty()}>
