@@ -38,16 +38,21 @@ class ThreadMessageList extends Component {
 
         let group = [];
         let counter = [];
-
+        let mostRecentTimestamp = []
         let msg;
         for (msg of msgList) {
             if (group[msg.correlationId] === undefined) {
-                group[msg.correlationId] = msg;
+                group[msg.correlationId] = {...msg};
                 counter[msg.correlationId] = 1;
+                mostRecentTimestamp[msg.correlationId] = msg.dateTime;
             } else {
                 counter[msg.correlationId]++;
+                if (mostRecentTimestamp[msg.correlationId] <  msg.dateTime) {
+                    mostRecentTimestamp[msg.correlationId] =  msg.dateTime;
+                }
                 if (msg.messageType !== 'Ack Synch' && (group[msg.correlationId].messageType === 'Ack Synch' || group[msg.correlationId].dateTime >= msg.dateTime)) {
-                    group[msg.correlationId]  = msg;
+                    group[msg.correlationId]  =  {...msg};
+
                 }
             }
         }
@@ -56,11 +61,14 @@ class ThreadMessageList extends Component {
         let item;
         for (item in group) {
             group[item].numTh = counter[item];
+            group[item].mostRecentTimestamp = mostRecentTimestamp[item];
+
             result.push(group[item]);
         }
 
         // Do the ordering by timestamp
         result.sort(function(a,b) {return b.dateTime-a.dateTime});
+
 
         return result;
     }

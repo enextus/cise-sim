@@ -102,7 +102,7 @@ const messageInfoCard = (props)  => {
 
 
     // Formatting the Date Time
-    const timestamp = new Date(msgInfo.dateTime);
+    const timestamp = new Date(msgInfo.mostRecentTimestamp);
     /*
     const msec = timestamp.getMilliseconds();
     let padding = '';
