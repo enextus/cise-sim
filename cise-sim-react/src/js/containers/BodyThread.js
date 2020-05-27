@@ -6,7 +6,7 @@ import ChronoHistoryMessages from "./ThreadMessageList";
 import ThreadMessageDetails from "./ThreadMessageDetails";
 import Typography from "@material-ui/core/Typography";
 import {withStyles} from "@material-ui/core/styles";
-
+import ThreadListHeader from "../components/MessageForm/ThreadListHeader";
 
 const styles = theme => ({
     root: {
@@ -37,16 +37,14 @@ class BodyThread extends Component {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={4} >
+                <Grid item xs={3} >
                     <Paper elevation={3} >
-                        <Typography variant="h5" component="h1" align={"center"}>
-                            Thread Messages History
-                        </Typography>
-                        <ChronoHistoryMessages  store={this.props.store} />
+                       <ThreadListHeader store={this.props.store}/>
+                       <ChronoHistoryMessages  store={this.props.store} />
                     </Paper>
                 </Grid>
 
-                <Grid item xs={8}>
+                <Grid item xs={9}>
                     <Paper elevation={3}>
                         <Typography variant="h5" component="h1" align={"center"}>
                             Thread Detail

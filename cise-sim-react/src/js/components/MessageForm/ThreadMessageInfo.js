@@ -55,7 +55,7 @@ const styles = theme => ({
 
     celllocaldate :{
         textAlign: "right",
-        width: "30%"
+        width: "10%"
     },
     cellsrvtype :{
         textAlign: "left"
@@ -114,7 +114,7 @@ const messageInfoCard = (props)  => {
     }
     const localeDate = timestamp.toLocaleString()+'.'+padding+msec;
    */
-    const localeDate = timestamp.toLocaleString();
+    const localeDate = timestamp.toLocaleString().replace(',', ' ');
 
     const cardStyle = msgInfo.ackSuccess ? null: { border: "2px solid red"};
     return (

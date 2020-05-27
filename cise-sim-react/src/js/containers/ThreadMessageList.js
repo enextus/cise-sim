@@ -14,6 +14,9 @@ const styles = theme => ({
         overflowY: 'scroll',
         maxHeight: 800,
     },
+    button: {
+        align: "right"
+    }
 
 });
 
@@ -83,14 +86,18 @@ class ThreadMessageList extends Component {
     render() {
 
         const {classes} = this.props;
-        const msgRcv = this.getMessageStore().historyMsgList;
+
+        // Set the max number of messages to be shown
         const maxShow = this.getServiceStore().serviceSelf.messageHistoryMaxLength;
         this.getMessageStore().setHistoryMaxCapacity(maxShow);
 
+        // Manage the message and create the thread groups
+        const msgRcv = this.getMessageStore().historyMsgList;
         const threadCards = this.buildThreadCards(msgRcv);
 
+        // Render
         return (
-            <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee" hidden={threadCards.length === 0}>
+            <Box p="8px" mt="20px" mx="20px" bgcolor="#eeeeee" hidden={threadCards.length === 0} >
                 <Paper  className={classes.root} >
                         <Grid item xs={12} >
                             {threadCards.map((msg) =>
