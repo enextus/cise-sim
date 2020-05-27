@@ -67,20 +67,23 @@ const sendMessageModal = (props) => {
             {openButton(props)}
 
             <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
+
+                aria-labelledby="create-message"
+                aria-describedby="create-and-send-cise-message"
                 className={classes.modal}
                 open={open}
                 onClose={handleClose}
                 closeAfterTransition
+                disableBackdropClick
                 BackdropComponent={Backdrop}
                 BackdropProps={{
                     timeout: 500,
                 }}>
 
                 <Fade in={open}>
-                    <div>
-                   <SendForm store={props.store}/>
+                    <div id="create-message">
+
+                   <SendForm store={props.store} id="create-and-send-cise-message" onclose={handleClose}/>
                     </div>
                 </Fade>
 

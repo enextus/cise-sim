@@ -10,6 +10,7 @@ import RequiresAckCheck from './SendForm/RequiresAckCheck';
 import PreviewButton from './SendForm/PreviewButtonV2';
 import SendButton from './SendForm/SendButton';
 import PreviewMessage from "./PreviewMessage";
+import SendFormHeader from "./SendForm/SendFormHeader";
 
 const styles = theme => ({
     root: {
@@ -41,9 +42,14 @@ class SendFormV2 extends Component {
         const {classes} = this.props;
 
         return (
-                <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee">
+                <Box p="8px" mt="20px" mx="20px" bgcolor="#eeeeee">
                     <Paper  className={classes.root} >
+
                     <Grid container alignItems="flex-start" spacing={3}>
+
+                        <Grid item xs={12}>
+                            <SendFormHeader onclose={this.props.onclose}/>
+                        </Grid>
 
                         <Grid item xs={12}>
                             <TemplateSelect store={this.getTemplateStore()}/>
