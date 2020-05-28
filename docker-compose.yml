@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  cise-sim:
+    image: poaless/cise-sim:1.3.0-alpha-alpine
+    volumes:
+      - /home/alex/Documenti/sprint/docker_volumes_sim/conf:/srv/cise-simulator/conf
+      - /home/alex/Documenti/sprint/docker_volumes_sim/logs:/srv/cise-simulator/logs
+      - /home/alex/Documenti/sprint/docker_volumes_sim/msghistory:/srv/cise-simulator/msghistory
+    ports:
+      - 8080:8080
+      - 8081:8081
+
