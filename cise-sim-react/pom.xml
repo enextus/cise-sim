@@ -20,7 +20,9 @@
         <configuration>
           <installDirectory>target</installDirectory>
         </configuration>
+
         <executions>
+
           <execution>
             <id>install node and npm</id>
             <goals>
@@ -31,15 +33,18 @@
               <npmVersion>6.4.1</npmVersion>
             </configuration>
           </execution>
+
           <execution>
             <id>npm version</id>
             <goals>
               <goal>npm</goal>
             </goals>
             <configuration>
+              <skip>true</skip>
                <arguments> -version</arguments>
             </configuration>
           </execution>
+
           <execution>
             <id>npm install</id>
             <goals>
@@ -49,6 +54,7 @@
             <!--							<arguments>install  -no-proxy</arguments>-->
             <!--						</configuration>-->
           </execution>
+
           <execution>
             <id>webpack build</id>
             <goals>
@@ -58,6 +64,7 @@
             <!--							<arguments> no-proxy</arguments>-->
             <!--						</configuration>-->
           </execution>
+
         </executions>
       </plugin>
 
