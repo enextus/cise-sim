@@ -1,9 +1,9 @@
-import {FormControl, InputLabel, Select, withStyles} from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
-import React from "react";
-import PropTypes from "prop-types";
-import {observer} from "mobx-react";
-import Tooltip from "@material-ui/core/Tooltip";
+import {FormControl, InputLabel, Select, withStyles} from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {observer} from 'mobx-react';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = () => ({
     formControlInicial: {
@@ -50,7 +50,7 @@ class TemplateSelect extends React.Component {
                     value={this.props.store.selected}
                     onChange={this.handleChange}
                     inputProps={{
-			name: 'templateSelect',
+			            name: 'templateSelect',
                         id: 'templateSelect'
                     }}>
                     <MenuItem selected={true} value="empty">

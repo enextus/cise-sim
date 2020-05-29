@@ -1,8 +1,8 @@
-import {Button, withStyles} from "@material-ui/core";
-import DescriptionIcon from "@material-ui/icons/Description";
-import React from "react";
-import PropTypes from "prop-types";
-import {observer} from "mobx-react";
+import {Button, withStyles} from '@material-ui/core';
+import DescriptionIcon from '@material-ui/icons/Description';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {observer} from 'mobx-react';
 import {withSnackbar} from 'notistack';
 
 
@@ -32,7 +32,7 @@ class PreviewButton extends React.Component {
 
     async preview() {
         const response = await this.props.store.preview();
-        console.log("TemplateStore.preview response: ", response);
+
         if (response.errorCode) {
             this.props.enqueueSnackbar(response.errorMessage, {
                 variant: 'error',

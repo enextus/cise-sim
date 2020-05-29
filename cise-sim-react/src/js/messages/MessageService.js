@@ -1,5 +1,7 @@
-import {http_delete, http_post} from '../api/API'
-import Message from "./Message";
+import {http_delete, http_get, http_post} from '../api/API'
+import Message from './Message';
+import MessageShortInfo from "./MessageShortInfo";
+import MessageThInfo from "./MessageThInfo";
 
 export async function sendMessage(templateId, messageId, correlationId, requiresAck) {
     console.log("sendMessage");
@@ -13,11 +15,10 @@ export async function sendMessage(templateId, messageId, correlationId, requires
 
     if (sendMessagePostResponse.errorCode) {
         // return Error object
-        console.log("sendMessagePostResposnse retuned with n error: ", sendMessagePostResponse);
+        console.log("sendMessage retuned with n error: ", sendMessagePostResponse);
         return sendMessagePostResponse;
     }
 
-    console.log("sendMessagePostResposnse: ", sendMessagePostResponse);
     return new Message(sendMessagePostResponse);
 }
 
@@ -28,9 +29,59 @@ export async function pullMessage() {
     if (!pullMessageDeleteResponse) return;
 
     if (pullMessageDeleteResponse.errorCode) {
-        console.log("pullMessagePostResponse returned with n error: ", pullMessageDeleteResponse);
+        console.log("pullMessage returned with n error: ", pullMessageDeleteResponse);
         return pullMessageDeleteResponse;
     }
 
     return new Message(pullMessageDeleteResponse);
+}
+
+export async function pullMessageHistory() {
+
+    const pullHistoryMessageResponse = await http_get("history/latest");
+    if (!pullHistoryMessageResponse) return;
+
+    if (pullHistoryMessageResponse.errorCode) {
+        console.log("pullMessageHistory returned with n error: ", pullHistoryMessageResponse);
+        return pullHistoryMessageResponse;
+    }
+
+    return  pullHistoryMessageResponse.map(m => new MessageShortInfo(m));
+}
+
+export async function pullMessageHistoryAfter(timestamp) {
+
+    const pullHistoryMessageResponse = await http_get("history/latest/"+timestamp);
+    if (!pullHistoryMessageResponse) return;
+
+    if (pullHistoryMessageResponse.errorCode) {
+        console.log("pullMessageHistoryAfter returned with n error: ", pullHistoryMessageResponse);
+        return pullHistoryMessageResponse;
+    }
+
+    return  pullHistoryMessageResponse.map(m => new MessageShortInfo(m));
+}
+
+export async function pullMessageByHistoryId(id) {
+    const messageResponse = await http_get("history/message/"+id);
+    if (!messageResponse) return;
+
+    if (messageResponse.errorCode) {
+        console.log("pullMessageByHistoryId returned with n error: ", messageResponse);
+        return messageResponse;
+    }
+
+    return  messageResponse;
+}
+
+export async function pullMessageByHistoryIdFull(msgInfo) {
+    const messageResponse = await http_get("history/message/"+msgInfo.id);
+    if (!messageResponse) return;
+
+    if (messageResponse.errorCode) {
+        console.log("pullMessageByHistoryIdFull returned with n error: ", messageResponse);
+        return new MessageThInfo(msgInfo, "Message body not available");
+    }
+
+    return  new MessageThInfo(msgInfo, messageResponse);
 }

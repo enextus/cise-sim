@@ -1,11 +1,11 @@
-import React from "react";
-import {observer} from "mobx-react";
-import Body from './components/Body';
+import React, {Component} from 'react';
+import {observer} from 'mobx-react';
+import Body from './container/BodyThread';
 import NavBar from './components/NavBar';
-import TemplateStore from "./templates/TemplateStore";
-import MessageStore from "./messages/MessageStore";
-import ServiceStore from "./services/ServiceStore";
-import {autorun} from "mobx";
+import TemplateStore from './templates/TemplateStore';
+import MessageStore from './messages/MessageStore';
+import ServiceStore from './services/ServiceStore';
+import {autorun} from 'mobx';
 
 
 const stores = {
@@ -16,11 +16,11 @@ const stores = {
 
 autorun(() => {
     stores.serviceStore.loadServiceSelf();
-    stores.messageStore.startPull();
+    stores.messageStore.startPullHistoryProgressive();
 });
 
 @observer
-export default class MainApp extends React.Component {
+export default class MainApp extends Component {
 
     constructor(props) {
         super(props);

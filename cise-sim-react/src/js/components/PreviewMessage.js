@@ -1,11 +1,11 @@
-import {Component} from "react";
-import {observer} from "mobx-react";
+import React, {Component} from 'react';
+import {observer} from 'mobx-react';
 import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
-import XmlContent from "./common/XmlContent";
-import DesciptionIcon from "@material-ui/icons/Description"
+import XmlContent from './common/XmlContent';
+import DesciptionIcon from '@material-ui/icons/Description'
 
 const styles = (theme) => ({
   root: {
@@ -27,10 +27,12 @@ class PreviewMessage extends Component {
   }
 
   handleUpdate() {
+
   }
 
   render() {
     const {classes} = this.props;
+
     return (
         <div className={classes.root}>
           <ExpansionPanel expanded={!this.isTemplateEmpty()}>

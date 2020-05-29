@@ -1,8 +1,8 @@
-import React from "react";
-import {observer} from "mobx-react";
+import React from 'react';
+import {observer} from 'mobx-react';
 import Highlight from 'react-highlight.js';
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = (theme) => ({
   root: {

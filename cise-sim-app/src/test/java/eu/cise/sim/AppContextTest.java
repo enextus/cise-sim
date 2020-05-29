@@ -1,5 +1,7 @@
 package eu.cise.sim;
 
+import eu.cise.sim.app.AppContext;
+import eu.cise.sim.app.DefaultAppContext;
 import eu.cise.sim.engine.MessageProcessor;
 import org.junit.Before;
 import org.junit.Ignore;

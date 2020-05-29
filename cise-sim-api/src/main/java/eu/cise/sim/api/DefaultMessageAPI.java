@@ -1,21 +1,22 @@
 package eu.cise.sim.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.cise.sim.engine.MessageProcessor;
-import eu.cise.sim.engine.SendParam;
-import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
-import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
-import eu.cise.sim.api.helpers.SendParamsReader;
-import eu.cise.sim.exceptions.NullSenderEx;
-import eu.cise.sim.io.MessageStorage;
-import eu.cise.sim.templates.Template;
-import eu.cise.sim.templates.TemplateLoader;
-import eu.cise.sim.utils.Pair;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
 import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
+import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
+import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
+import eu.cise.sim.api.dto.MessageApiDto;
+import eu.cise.sim.api.helpers.SendParamsReader;
+import eu.cise.sim.engine.MessageProcessor;
+import eu.cise.sim.engine.SendParam;
+import eu.cise.sim.exceptions.NullSenderEx;
+import eu.cise.sim.io.MessageStorage;
+import eu.cise.sim.templates.Template;
+import eu.cise.sim.templates.TemplateLoader;
+import eu.cise.sim.utils.Pair;
 import eu.eucise.xml.XmlMapper;
 import eu.eucise.xml.XmlNotParsableException;
 import org.slf4j.Logger;
@@ -25,20 +26,20 @@ public class DefaultMessageAPI implements MessageAPI {
 
     private final Logger logger = LoggerFactory.getLogger(MessageAPI.class);
 
-    private final MessageStorage messageStorage;
-    private final MessageProcessor messageProcessor;
+    private final MessageStorage<Object> messageStorage;
+    private final MessageProcessor engineMessageProcessor;
     private final XmlMapper xmlMapper;
     private final XmlMapper prettyNotValidatingXmlMapper;
     private final TemplateLoader templateLoader;
     private final SynchronousAcknowledgementFactory synchronousAcknowledgementFactory = new SynchronousAcknowledgementFactory();
 
-    DefaultMessageAPI(MessageProcessor messageProcessor,
-        MessageStorage messageStorage,
-        TemplateLoader templateLoader,
-        XmlMapper xmlMapper,
-        XmlMapper prettyNotValidatingXmlMapper) {
+    public DefaultMessageAPI(MessageProcessor engineMessageProcessor,
+                      MessageStorage<Object> messageStorage,
+                      TemplateLoader templateLoader,
+                      XmlMapper xmlMapper,
+                      XmlMapper prettyNotValidatingXmlMapper) {
 
-        this.messageProcessor = messageProcessor;
+        this.engineMessageProcessor = engineMessageProcessor;
         this.messageStorage = messageStorage;
         this.xmlMapper = xmlMapper;
         this.prettyNotValidatingXmlMapper = prettyNotValidatingXmlMapper;
@@ -52,9 +53,10 @@ public class DefaultMessageAPI implements MessageAPI {
         try {
             Template template = templateLoader.loadTemplate(templateId);
             String xmlContent = template.getTemplateContent();
-            SendParam sendParam = new SendParamsReader().extractParams(params);
+
             Message message = xmlMapper.fromXML(xmlContent);
-            Pair<Acknowledgement, Message> sendResponse = messageProcessor.send(message, sendParam);
+            SendParam sendParam = new SendParamsReader().extractParams(params);
+            Pair<Acknowledgement, Message> sendResponse = engineMessageProcessor.send(message, sendParam);
 
             return new SendResponse.OK(
                 new MessageApiDto(
@@ -75,13 +77,12 @@ public class DefaultMessageAPI implements MessageAPI {
             message = prettyNotValidatingXmlMapper.fromXML(content);
 
             // store the input message and the acknowledgement
-            Acknowledgement acknowledgement = messageProcessor.receive(message);
+            Acknowledgement acknowledgement = engineMessageProcessor.receive(message);
 
             String acknowledgementXml = prettyNotValidatingXmlMapper.toXML(acknowledgement);
             String messageXml = prettyNotValidatingXmlMapper.toXML(message);
 
             MessageApiDto messageApiDto = new MessageApiDto(acknowledgementXml, messageXml);
-
             messageStorage.store(messageApiDto);
 
             return acknowledgement;

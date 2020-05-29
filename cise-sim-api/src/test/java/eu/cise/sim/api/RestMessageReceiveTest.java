@@ -1,17 +1,13 @@
 package eu.cise.sim.api;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherFactory;
-import eu.cise.dispatcher.DispatcherType;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
-import eu.cise.sim.engine.DefaultMessageProcessor;
-import eu.cise.sim.engine.DefaultSimEngine;
-import eu.cise.sim.engine.MessageProcessor;
-import eu.cise.sim.engine.SimConfig;
+import eu.cise.sim.config.SimConfig;
+import eu.cise.sim.engine.*;
 import eu.cise.sim.io.MessageStorage;
 import eu.cise.sim.templates.DefaultTemplateLoader;
 import eu.cise.sim.templates.TemplateLoader;
@@ -70,7 +66,15 @@ public class RestMessageReceiveTest {
 
         @Override
         public String messageTemplateDir() {
-            return "cise-sim-assembly/src/main/resources/templates/messages";
+            return "templates/messages";
+        }
+
+        @Override
+        public String messageHistoryDir() { return "msghistory"; }
+
+        @Override
+        public int guiMaxHistoryShow() {
+            return 10;
         }
 
         @Override
@@ -132,6 +136,7 @@ public class RestMessageReceiveTest {
         );
 
         MessageStorage messageStorage = mock(MessageStorage.class);
+
         String messageStr = MessageBuilderUtil.TEST_MESSAGE_XML;
 
         Message messageToSign = xmlMapperNoValidNoPretty.fromXML(messageStr);
@@ -146,10 +151,12 @@ public class RestMessageReceiveTest {
 
         TemplateLoader templateLoader = makeTemplateLoader();
 
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage,
-            templateLoader,
-            xmlMapperNoValidPretty,
-            xmlMapperNoValidNoPretty);
+        MessageAPI messageAPI = new DefaultMessageAPI(
+                messageProcessor,
+                messageStorage,
+               templateLoader,
+                xmlMapperNoValidPretty,
+                xmlMapperNoValidNoPretty);
 
         Acknowledgement response = messageAPI.receive(messageSignStr);
 

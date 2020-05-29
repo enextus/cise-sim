@@ -1,5 +1,7 @@
 package eu.cise.sim.api;
 
+import eu.cise.sim.api.dto.MessageApiDto;
+
 import java.io.Serializable;
 import java.util.Objects;
 

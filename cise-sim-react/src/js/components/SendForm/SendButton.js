@@ -1,8 +1,8 @@
-import {Button, withStyles} from "@material-ui/core";
-import SendRoundedIcon from "@material-ui/icons/SendRounded";
-import React from "react";
-import PropTypes from "prop-types";
-import {observer} from "mobx-react";
+import {Button, withStyles} from '@material-ui/core';
+import SendRoundedIcon from '@material-ui/icons/SendRounded';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {observer} from 'mobx-react';
 import {withSnackbar} from 'notistack';
 
 const styles = theme => ({

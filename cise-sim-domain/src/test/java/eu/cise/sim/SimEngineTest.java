@@ -1,21 +1,17 @@
 package eu.cise.sim;
 
 
-import eu.cise.dispatcher.DispatchResult;
-import eu.cise.dispatcher.Dispatcher;
-import eu.cise.dispatcher.DispatcherException;
-import eu.cise.sim.engine.DefaultSimEngine;
-import eu.cise.sim.engine.SimConfig;
-import eu.cise.sim.engine.SimEngine;
-import eu.cise.sim.exceptions.EmptyMessageIdEx;
-import eu.cise.sim.exceptions.EndpointErrorEx;
-import eu.cise.sim.exceptions.EndpointNotFoundEx;
-import eu.cise.sim.exceptions.NullSenderEx;
-import eu.cise.sim.utils.Scenarios;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.signature.SignatureService;
+import eu.cise.sim.config.SimConfig;
+import eu.cise.sim.engine.DefaultSimEngine;
+import eu.cise.sim.engine.DispatchResult;
+import eu.cise.sim.engine.Dispatcher;
+import eu.cise.sim.engine.SimEngine;
+import eu.cise.sim.exceptions.*;
+import eu.cise.sim.utils.Scenarios;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;

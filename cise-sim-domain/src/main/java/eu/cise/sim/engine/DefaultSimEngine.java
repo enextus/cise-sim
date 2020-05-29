@@ -1,13 +1,11 @@
 package eu.cise.sim.engine;
 
-import eu.cise.dispatcher.DispatchResult;
-import eu.cise.dispatcher.Dispatcher;
-import eu.cise.dispatcher.DispatcherException;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
+import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.exceptions.*;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -25,8 +23,8 @@ public class DefaultSimEngine implements SimEngine {
     private final Clock clock;
     private final SimConfig simConfig;
     private final SignatureService signature;
-    private Dispatcher dispatcher;
-    private SynchronousAcknowledgementFactory acknowledgementFactory;
+    private final Dispatcher dispatcher;
+    private final SynchronousAcknowledgementFactory acknowledgementFactory;
 
     /**
      * Default constructor that uses UTC as a reference clock
@@ -40,10 +38,6 @@ public class DefaultSimEngine implements SimEngine {
         SimConfig simConfig) {
 
         this(signature, simConfig, dispatcher, Clock.systemUTC());
-        this.dispatcher = dispatcher;
-
-        // Every time there is a new it should be where all the constructions are happening
-        this.acknowledgementFactory = new SynchronousAcknowledgementFactory();
     }
 
     /**
@@ -66,6 +60,9 @@ public class DefaultSimEngine implements SimEngine {
         this.simConfig = notNull(simConfig, NullConfigEx.class);
         this.dispatcher = notNull(dispatcher, NullDispatcherEx.class);
         this.clock = notNull(clock, NullClockEx.class);
+
+        // Every time there is a new it should be where all the constructions are happening
+        this.acknowledgementFactory = new SynchronousAcknowledgementFactory();
     }
 
     @Override
@@ -75,9 +72,7 @@ public class DefaultSimEngine implements SimEngine {
 
         message.setRequiresAck(param.isRequiresAck());
         message.setMessageID(param.getMessageId());
-        message.setCorrelationID(
-            computeCorrelationId(param.getCorrelationId(), param.getMessageId())
-        );
+        message.setCorrelationID(computeCorrelationId(param.getCorrelationId(), param.getMessageId()));
 
         message.setCreationDateTime(now());
 

@@ -10,9 +10,9 @@ import eu.cise.servicemodel.v1.message.Acknowledgement;
 
 /**
  * <p>Java class for sendResponse complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="sendResponse"&gt;
  *   &lt;complexContent&gt;
@@ -37,7 +37,7 @@ public class SendResponse {
     protected Acknowledgement _return;
 
     /**
-     * Gets the value of the return property.
+     * Recupera il valore della proprietà return.
      * 
      * @return
      *     possible object is
@@ -49,7 +49,7 @@ public class SendResponse {
     }
 
     /**
-     * Sets the value of the return property.
+     * Imposta il valore della proprietà return.
      * 
      * @param value
      *     allowed object is

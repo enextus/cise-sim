@@ -51,5 +51,5 @@ assets:
   mappings:
     /assets: /
   overrides:
-    /base/: ${project.basedir}/cise-sim-react
-    /base/static:  ${project.basedir}/cise-sim-react/dist
+    /base/: ${project.basedir}/cise-emulator-react
+    /base/static:  ${project.basedir}/cise-emulator-react/dist
