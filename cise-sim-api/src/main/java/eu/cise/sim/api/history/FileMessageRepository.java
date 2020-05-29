@@ -50,6 +50,9 @@ public class FileMessageRepository implements MessagePersistence {
 
     private final MessageStack messageStack;
 
+    private final List<CorrelationPair> correlationCacheList;
+
+
     public FileMessageRepository(XmlMapper xmlMapper, String repositoryDir) {
         this(xmlMapper, repositoryDir, 10);
     }
@@ -60,6 +63,7 @@ public class FileMessageRepository implements MessagePersistence {
         this.maxListDimension = maxMsg;
 
         this.messageStack = MessageStack.build(this.repositoryDir, this.maxListDimension, this.xmlMapper);
+        this.correlationCacheList =  new ArrayList<>();
     }
 
     @Override
@@ -118,6 +122,55 @@ public class FileMessageRepository implements MessagePersistence {
         return shortInfoDtoList;
     }
 
+    public List<MessageShortInfoDto> getShortInfoAfterGroupByCorrelationId(long timestamp) {
+
+        List<MessageShortInfoDto> shortInfoDtoList = new ArrayList<>();
+
+        File[] msgInRepo = MessageStack.getRepositoryFiles(repositoryDir);
+        if (msgInRepo == null) {
+            return shortInfoDtoList;
+        }
+
+        Set<String> correlationIdSet = new HashSet<>();
+        for (CorrelationPair cp : correlationCacheList) {
+            if (cp.getTimestamp() >= timestamp) {
+                correlationIdSet.add(cp.getCorrelationId());
+            }
+        }
+
+        for (File f : msgInRepo) {
+            try {
+                String xmlMessage = Files.readString(f.toPath(), StandardCharsets.UTF_8);
+                Message message = xmlMapper.fromXML(xmlMessage);
+                if (correlationIdSet.contains(message.getCorrelationID())) {
+                    String fileName = f.getName();
+                    FileNameRepository fileNameRepository = FileNameRepository.getInstance(fileName);
+                    shortInfoDtoList.add(MessageShortInfoDto.getInstance(message, fileNameRepository.isSent(), fileNameRepository.getTimestamp(), fileNameRepository.getUuid());
+                }
+            } catch (IOException | ParseException e) {
+                LOGGER.warn("MessageStack build problem with file {} : {}", msgInRepo[i], e.getMessage());
+            }
+        }
+        LOGGER.info("getShortInfoAfterGroupByCorrelationId timestamp[{}} number of messages[{}]", new Date(timestamp), shortInfoDtoList.size());
+
+        return shortInfoDtoList;
+    }
+
+    MessageShortInfoDto getByFile(FileNameRepository in) {
+
+        try {
+            File f = new File(this.repositoryDir, in.getFileName());
+            String xmlMessage =  Files.readString(f.toPath(), StandardCharsets.UTF_8);
+            Message message = xmlMapper.fromXML(xmlMessage);
+            boolean msgIsSent   = in.isSent();
+            Date timestamp      = in.getTimestamp();
+            return MessageShortInfoDto.getInstance(message, msgIsSent, timestamp, in.getUuid());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     /**
      * Retrieve the xml of the cise message, using his uuid
      * First will be checked the local cache. If it isn't found, the file system will be checked
@@ -180,7 +233,46 @@ public class FileMessageRepository implements MessagePersistence {
         throw new IOException("getUuidFile uuid not found " + uuid);
     }
 
+    private void buildInstance() {
 
+        File[] msgFiles = MessageStack.getRepositoryFiles(this.repositoryDir);
+
+        for (File f : msgFiles) {
+            try {
+                FileNameRepository fileNameRepository = FileNameRepository.getInstance(f.getName());
+                String xmlMessage = Files.readString(f.toPath(), StandardCharsets.UTF_8);
+                Message message = xmlMapper.fromXML(xmlMessage);
+                CorrelationPair cp = new CorrelationPair(fileNameRepository.getTimestamp().getTime(), message.getCorrelationID());
+
+                correlationCacheList.add(cp);
+
+            } catch (IOException | ParseException e) {
+                LOGGER.warn("MessageStack build problem with file {} : {}", f, e.getMessage());
+            }
+
+        }
+       
+    }
+
+    static class CorrelationPair {
+
+        private final long timestamp;
+        private final String correlationId;
+
+        CorrelationPair(long timestamp, String correlationId) {
+            this.timestamp = timestamp;
+            this.correlationId = correlationId;
+        }
+
+
+        public String getCorrelationId() {
+            return correlationId;
+        }
+
+        long getTimestamp() {
+            return timestamp;
+        }
+    }
 
     /**
      * Convenient Cache class
@@ -261,7 +353,7 @@ public class FileMessageRepository implements MessagePersistence {
          * Retrieve all the File on the repository directory, ordered by last modified parameter descending
          * @return Array of all the files in the repository directory
          */
-        private static File[] getRepositoryFiles(String repositoryDir) {
+        public static File[] getRepositoryFiles(String repositoryDir) {
 
             Path dir = Paths.get(repositoryDir);
             File[] files = dir.toFile().listFiles();
