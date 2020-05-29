@@ -318,5 +318,3 @@ $ mvn clean install -U -P ciBuild
 ```
 
 After the build succeeds, the final artifact can be found in `<root-path-of-cise-sim-code>/target` directory. 
-
----
