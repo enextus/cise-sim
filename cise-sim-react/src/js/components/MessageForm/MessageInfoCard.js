@@ -110,6 +110,9 @@ const messageInfoCard = (props)  => {
     const localeDate = timestamp.toLocaleString()+'.'+padding+msec;
 
     // Ack Style
+    if (!msgInfo.ackResult) {
+        msgInfo.ackResult = 'Not Received';
+    }
     const isSuccess = msgInfo.ackResult.includes('Success');
     const ackTextColor = isSuccess ? "green" : "red";
     const rowAckCodeStyle = {color:ackTextColor, textAlign:'right'};

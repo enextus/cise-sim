@@ -43,6 +43,7 @@ class ThreadMessageList extends Component {
         let counter = [];
         let mostRecentTimestamp = [];
         let ackSuccess = [];
+        let rcvAckSynch = [];
 
         let msg;
         for (msg of msgList) {
@@ -51,6 +52,7 @@ class ThreadMessageList extends Component {
                 counter[msg.correlationId] = 1;
                 mostRecentTimestamp[msg.correlationId] = msg.dateTime;
                 ackSuccess[msg.correlationId] = Boolean('true');
+                rcvAckSynch[msg.correlationId] = Boolean('false');
             } else {
                 counter[msg.correlationId]++;
                 if (mostRecentTimestamp[msg.correlationId] <  msg.dateTime) {
@@ -63,6 +65,7 @@ class ThreadMessageList extends Component {
             }
             if (msg.messageType === 'Ack Synch') {
                 ackSuccess[msg.correlationId] = ackSuccess[msg.correlationId] && msg.ackResult.includes('Success');
+                rcvAckSynch[msg.correlationId] = Boolean('true');
             }
         }
 
@@ -71,7 +74,7 @@ class ThreadMessageList extends Component {
         for (item in group) {
             group[item].numTh = counter[item];
             group[item].mostRecentTimestamp = mostRecentTimestamp[item];
-            group[item].ackSuccess =  ackSuccess[item];
+            group[item].ackSuccess =  rcvAckSynch[msg.correlationId] ? ackSuccess[item]: Boolean('false');
             result.push(group[item]);
         }
 
