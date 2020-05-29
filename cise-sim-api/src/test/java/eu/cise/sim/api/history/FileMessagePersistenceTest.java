@@ -23,20 +23,20 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class FileMessageRepositoryTest {
+public class FileMessagePersistenceTest {
 
     private static Path tempDirWithPrefix;
 
     private static int TEST_CACHE_DIM = 3;
 
     private final XmlMapper xmlMapper;
-    private final FileMessageRepository fileMessageRepository;
+    private final FileMessagePersistence fileMessagePersistence;
 
-    public FileMessageRepositoryTest() {
+    public FileMessagePersistenceTest() {
 
         this.xmlMapper = new DefaultXmlMapper.PrettyNotValidating();
         String repositoryDir = tempDirWithPrefix.toString();
-        this.fileMessageRepository = new FileMessageRepository(xmlMapper, repositoryDir, TEST_CACHE_DIM);
+        this.fileMessagePersistence = new FileMessagePersistence(xmlMapper, repositoryDir, TEST_CACHE_DIM);
 
     }
 
@@ -59,7 +59,7 @@ public class FileMessageRepositoryTest {
         assertNotNull(message);
 
         Message pullReq = xmlMapper.fromXML(message);
-        fileMessageRepository.messageReceived(pullReq);
+        fileMessagePersistence.messageReceived(pullReq);
         String lastXmlMessage = readLastXml();
         assertNotNull(lastXmlMessage);
 
@@ -74,7 +74,7 @@ public class FileMessageRepositoryTest {
         assertNotNull(message);
 
         Message pullReq = xmlMapper.fromXML(message);
-        fileMessageRepository.messageSent(pullReq);
+        fileMessagePersistence.messageSent(pullReq);
         String lastXmlMessage = readLastXml();
         assertNotNull(lastXmlMessage);
 
@@ -102,8 +102,8 @@ public class FileMessageRepositoryTest {
 
             String message =  readResource(messagFile[i]);
             ciseMsg[i] = xmlMapper.fromXML(message);
-            fileMessageRepository.messageReceived(ciseMsg[i]);
-            shortInfoDtoList =  fileMessageRepository.getShortInfoAfter(0);
+            fileMessagePersistence.messageReceived(ciseMsg[i]);
+            shortInfoDtoList =  fileMessagePersistence.getThreadsAfter(0);
             uuid[i]= shortInfoDtoList.get(0).getId();
         };
 
@@ -111,20 +111,9 @@ public class FileMessageRepositoryTest {
 
         assertEquals(messagFile.length, endNumFiles - startNumFiles);
 
-        shortInfoDtoList =  fileMessageRepository.getShortInfoAfter(0);
+        shortInfoDtoList =  fileMessagePersistence.getThreadsAfter(0);
         if (TEST_CACHE_DIM <= messagFile.length)
             assertEquals(TEST_CACHE_DIM, shortInfoDtoList.size());
-
-        int count = messagFile.length - 1;
-        for (MessageShortInfoDto dto : shortInfoDtoList) {
-            assertEquals(dto.getId(), uuid[count--]);
-        }
-
-        for (int i = 0; i < messagFile.length; ++i) {
-            String xmlOnDisk = fileMessageRepository.getXmlMessageByUuid(uuid[i]);
-            Message messageRead = xmlMapper.fromXML(xmlOnDisk);
-            assertEquals(messageRead, ciseMsg[i]);
-        }
 
     }
 

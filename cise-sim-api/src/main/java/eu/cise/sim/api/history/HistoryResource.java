@@ -28,7 +28,7 @@ public class HistoryResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLatestMessages(@PathParam("timestamp") long timestamp) {
 
-        List<MessageShortInfoDto> lastStoredMessage = historyAPI.getLatestMessages(timestamp);
+        List<MessageShortInfoDto> lastStoredMessage = historyAPI.getThreadsAfter(timestamp);
 
         Response response;
         if (CollectionUtils.isEmpty(lastStoredMessage)) {
