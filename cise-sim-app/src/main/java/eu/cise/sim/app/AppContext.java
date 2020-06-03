@@ -30,5 +30,5 @@ public interface AppContext {
 
     String getRepoDir();
 
-    int getRepoGuiMaxShow();
+    int getGuiMaxThMsgs();
 }
