@@ -18,7 +18,7 @@ export default class MessageStore {
 
     @observable historyMsgList       = [];
     historyLasTimestamp = 0;
-    historyMaxCapacity = 0;
+    threadMaxCapacity = 0;
 
     @observable threadMessageDetails = [];
     @observable threadWithBody = [];
@@ -50,44 +50,50 @@ export default class MessageStore {
     }
 
 
-    setHistoryMaxCapacity(maxLength) {
-        if (this.historyMaxCapacity !== maxLength) {
-            this.historyMaxCapacity = maxLength;
+    setThreadMaxCapacity(maxLength) {
+        if (this.threadMaxCapacity !== maxLength) {
+         
             this.threadMaxCapacity = maxLength;
             this.historyLasTimestamp = 0
 
-            console.log("setHistoryMaxCapacity to "+maxLength)
+            console.log("setThreadMaxCapacity to "+maxLength)
         }
     }
 
-    /*
-    @action
-    updateHistorySecure(newChunkMsgShortInfoRcv) {
-
-        // Adding new data to old ones and find the most recent timestamp
-        const newList = [...this.historyMsgList];
-
-        newChunkMsgShortInfoRcv.forEach(t => {
-            newList.push(t);
-            if (t.dateTime > this.historyLasTimestamp) this.historyLasTimestamp = t.dateTime;
-        });
-
-        // Do the ordering by timestamp
-        newList.sort(function(a,b) {return b.dateTime-a.dateTime});
-
-        // take only the first historyMaxCapacity item
-        this.historyMsgList = newList.slice(0, this.historyMaxCapacity);
-    }
-    */
 
     @action
     updateHistory(newChunkMsgShortInfoRcv) {
 
+        // Adding new data to old ones and find the most recent timestamp
         const newList = [...newChunkMsgShortInfoRcv, ...this.historyMsgList];
-        this.historyLasTimestamp = newList[0].dateTime;
-        this.historyMsgList = newList.slice(0, this.historyMaxCapacity);
+
+        // Do the ordering by timestamp
+        newList.sort(function(a,b) {return b.dateTime-a.dateTime});
+
+        this.historyLasTimestamp = newList.dateTime;
+
+        // take only the first threadMaxCapacity item
+        this.historyMsgList = this.findMaxCorrId(newList);
+
     }
 
+    findMaxCorrId(msgList) {
+
+        let arrayOfCorrId = []
+
+        return msgList.filter(msg => {
+            
+            if (arrayOfCorrId.includes(msg.correlationId)) {
+                return true;
+            }
+
+            if (arrayOfCorrId.length < this.threadMaxCapacity) {
+                arrayOfCorrId.push(msg.correlationId);
+                return true;
+            }
+            return false;
+        })
+    }
 
     @action
     clearHistory() {
@@ -148,6 +154,7 @@ export default class MessageStore {
             if (pullMessageResponse.errorCode) {
                 that.receivedMessageError = pullMessageResponse;
             } else {
+                console.log("startPullHistoryProgressive received "+pullMessageResponse.length);
                 that.updateHistory(pullMessageResponse);
             }
         }, 3000, this);

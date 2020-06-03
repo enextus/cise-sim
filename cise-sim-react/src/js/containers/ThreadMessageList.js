@@ -92,7 +92,7 @@ class ThreadMessageList extends Component {
 
         // Set the max number of messages to be shown
         const maxShow = this.getServiceStore().serviceSelf.messageHistoryMaxLength;
-        this.getMessageStore().setHistoryMaxCapacity(maxShow);
+        this.getMessageStore().setThreadMaxCapacity(maxShow);
 
         // Manage the message and create the thread groups
         const msgRcv = this.getMessageStore().historyMsgList;
