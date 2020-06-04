@@ -2,6 +2,7 @@ import {http_delete, http_get, http_post} from '../../api/API'
 import Message from './Message';
 import MessageShortInfo from "./MessageShortInfo";
 import MessageThInfo from "./MessageThInfo";
+import LabelsIncidentDto from "../../components/IncidentForm/dto/LabelsIncidentDto";
 
 export async function sendMessage(templateId, messageId, correlationId, requiresAck) {
     console.log("sendMessage");
@@ -34,19 +35,6 @@ export async function pullMessage() {
     }
 
     return new Message(pullMessageDeleteResponse);
-}
-
-export async function pullMessageHistory() {
-
-    const pullHistoryMessageResponse = await http_get("history/latest");
-    if (!pullHistoryMessageResponse) return;
-
-    if (pullHistoryMessageResponse.errorCode) {
-        console.log("pullMessageHistory returned with n error: ", pullHistoryMessageResponse);
-        return pullHistoryMessageResponse;
-    }
-
-    return  pullHistoryMessageResponse.map(m => new MessageShortInfo(m));
 }
 
 export async function pullMessageHistoryAfter(timestamp) {
@@ -84,4 +72,18 @@ export async function pullMessageByHistoryIdFull(msgInfo) {
     }
 
     return  new MessageThInfo(msgInfo, messageResponse);
+}
+
+
+export async function getLabelsIncident() {
+
+    const labelsResponse = await http_get("messages/labels/incident");
+    if (!labelsResponse) return;
+
+    if (labelsResponse.errorCode) {
+        console.log("pullMessage returned with n error: ", labelsResponse);
+        return labelsResponse;
+    }
+
+    return new LabelsIncidentDto(labelsResponse);
 }

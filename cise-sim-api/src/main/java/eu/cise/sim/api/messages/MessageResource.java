@@ -1,16 +1,15 @@
-package eu.cise.sim.api.rest;
+package eu.cise.sim.api.messages;
 
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.sim.api.MessageAPI;
+import eu.cise.sim.api.messages.dto.label.IncidentMessageLabelDto;
 import eu.cise.sim.io.MessageStorage;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/messages")
+@Path("/ui/messages")
 public class MessageResource {
 
     public static final String ERROR = "ERROR";
@@ -32,6 +31,17 @@ public class MessageResource {
         return Response
                 .status(Response.Status.CREATED)
                 .entity(acknowledgement)
+                .build();
+    }
+
+    @Path("/labels/incident")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLabelsIncident() {
+
+        return Response
+                .status(Response.Status.OK)
+                .entity(IncidentMessageLabelDto.getInstance())
                 .build();
     }
 }

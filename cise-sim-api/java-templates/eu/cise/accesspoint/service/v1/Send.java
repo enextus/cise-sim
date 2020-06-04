@@ -8,9 +8,9 @@ import eu.cise.servicemodel.v1.message.Message;
 
 
 /**
- * <p>Java class for send complex type.
- *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Classe Java per send complex type.
+ * 
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="send"&gt;

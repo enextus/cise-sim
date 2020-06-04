@@ -30,7 +30,7 @@ public interface SimConfig extends Config {
     @Key("history.repository.directory")
     String messageHistoryDir();
 
-    @Key("history.gui.maxthmsg")
+    @Key("history.gui.maxthmsgs")
     int guiMaxThMsgs();
 
     @Key("signature.keystore.filename")

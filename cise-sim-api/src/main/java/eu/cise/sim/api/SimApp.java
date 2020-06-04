@@ -6,7 +6,7 @@ import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.sim.api.helpers.CrossOriginSupport;
 import eu.cise.sim.api.history.*;
-import eu.cise.sim.api.rest.MessageResource;
+import eu.cise.sim.api.messages.MessageResource;
 import eu.cise.sim.api.rest.TemplateResource;
 import eu.cise.sim.api.rest.UIServiceResource;
 import eu.cise.sim.api.rest.UiMessageResource;
@@ -55,7 +55,7 @@ public class SimApp extends Application<SimConf> {
         */
         HistoryMessagePersistence fileMessagePersistence =  new FileMessagePersistence(appCtx.getPrettyNotValidatingXmlMapper(),
                                                                                        appCtx.getRepoDir(),
-                                                                                       appCtx.getRepoGuiMaxShow());
+                                                                                       appCtx.getGuiMaxThMsgs());
         HistoryAPI historyAPI = new DefaultHistoryAPI(fileMessagePersistence);
 
 

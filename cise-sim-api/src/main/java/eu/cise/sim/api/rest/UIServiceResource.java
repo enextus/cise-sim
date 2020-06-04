@@ -34,7 +34,7 @@ public class UIServiceResource {
             simConfig.destinationProtocol(),
             simConfig.destinationUrl(),
             simConfig.appVersion(),
-            simConfig.guiMaxHistoryShow());
+            simConfig.guiMaxThMsgs());
 
 
         return Response
