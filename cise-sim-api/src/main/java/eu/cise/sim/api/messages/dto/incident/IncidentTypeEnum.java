@@ -1,4 +1,4 @@
-package eu.cise.sim.api.messages.dto;
+package eu.cise.sim.api.messages.dto.incident;
 
 public enum IncidentTypeEnum {
 

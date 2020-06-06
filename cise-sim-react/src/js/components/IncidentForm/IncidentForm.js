@@ -9,6 +9,14 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import IncidentVesselInput from "./IncidentVesselInput";
+import {AddBoxRounded, IndeterminateCheckBoxRounded} from "@material-ui/icons";
+import TableContainer from "@material-ui/core/TableContainer";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import IncidentMessageDto from "./dto/IncidentMessageDto";
 
 const styles = theme => ({
     root: {
@@ -34,18 +42,14 @@ const styles = theme => ({
 class IncidentForm extends Component {
 
     state = {
+
         incidentType: undefined,
-        subType: undefined,
-        vesselType: undefined,
-        role: undefined,
-        latitude: '',
-        longitude: '',
-        imoNumber: undefined,
-        mmsi: undefined,
 
         isValidLatitude:false,
         isValidLongitude:false,
 
+        listIdVessel: [0],
+        lastIdVessel: 0,
     }
 
     constructor(props) {
@@ -59,7 +63,12 @@ class IncidentForm extends Component {
     // Incident Type
     handleChangeType = (event) => {
         console.log("IncidentForm handleChangeType " +event.target.value);
-        this.setState({incidentType: event.target.value})
+
+      this.setState({incidentType: event.target.value})
+
+      //  this.setState((prevState) => {return {incidentType: event.target.value};});
+
+        this.getIncidentStore().getIncidentInputInfo().incidentType =  event.target.value;
     }
 
     getSelectType() {
@@ -74,66 +83,35 @@ class IncidentForm extends Component {
     // Sub Type
     handleChangeSubType = (event) => {
         console.log("IncidentForm handleChangeSubType " +event.target.value);
-        this.setState({subType: event.target.value})
+        this.getIncidentStore().getIncidentInputInfo().subType =  event.target.value;
     }
 
     getSelectSubType() {
-        let select;
+        let list =[];
         if (this.state.incidentType) {
-            const list = this.getIncidentStore().labelIncidentSubTypeList[this.state.incidentType];
-            select = <IncidentSelect
-                title="Incident Sub Type"
-                listValueLabel={list}
-                change={this.handleChangeSubType}
-            />
+            list = this.getIncidentStore().labelIncidentSubTypeList[this.state.incidentType];
         }
-        return select;
-    }
-
-    // Vessel Type
-    handleChangeVesselType = (event) => {
-        console.log("IncidentForm handleChangeVesselType " +event.target.value);
-        this.setState({vesselType: event.target.value})
-    }
-
-    getSelectVessel() {
-        let select;
-        if (this.state.subType) {
-            const list = this.getIncidentStore().labelVesselTypeList;
-            select = <IncidentSelect
-                title="Vessel Type"
-                listValueLabel={list}
-                change={this.handleChangeVesselType}
-            />
+        else {
+            list[0] = {value:'empty', label:'Select Incident'};
         }
-        return select;
+
+        return <IncidentSelect
+            title="Incident Sub Type"
+            listValueLabel={list}
+            change={this.handleChangeSubType}
+        />
+
     }
 
-    // Role
-    handleChangeRole = (event) => {
-        console.log("IncidentForm handleChangeRole " +event.target.value);
-        this.setState({role: event.target.value})
-    }
-
-    getSelectRole() {
-        let select;
-        if (this.state.vesselType) {
-            const list = this.getIncidentStore().labelRoleList;
-            select = <IncidentSelect
-                title="Role Type"
-                listValueLabel={list}
-                change={this.handleChangeRole}
-            />
-        }
-        return select;
-    }
 
     // Latitude
     handleChangeLatitude = (event) => {
         console.log("IncidentForm handleChangeLatitude " +event.target.value);
-        this.setState({
-            latitude: event.target.value,
-            isValidLatitude:isFinite(event.target.value) && Math.abs(event.target.value) <= 90});
+        const isValid = isFinite(event.target.value) && Math.abs(event.target.value) <= 90;
+        if (isValid) {
+            this.getIncidentStore().getIncidentInputInfo().latitude =  event.target.value;
+        }
+        this.setState({isValidLatitude:isValid});
     }
 
     getLatitudineInput() {
@@ -145,7 +123,7 @@ class IncidentForm extends Component {
                 fullWidth={true}
                 color="primary"
                 variant="outlined"
-                value={this.state.latitude}
+               // value={this.state.latitude}
                 onChange={this.handleChangeLatitude}
                 error={!this.state.isValidLatitude}
             />
@@ -155,10 +133,11 @@ class IncidentForm extends Component {
     // Longitude
     handleChangeLongitude = (event) => {
         console.log("IncidentForm handleChangeLongitude " +event.target.value);
-        this.setState({
-            longitude:event.target.value,
-            isValidLongitude:isFinite(event.target.value) && Math.abs(event.target.value) <= 180
-        })
+        const isValid = isFinite(event.target.value) && Math.abs(event.target.value) <= 180;
+        if (isValid) {
+            this.getIncidentStore().getIncidentInputInfo().longitude =  event.target.value;
+        }
+        this.setState({isValidLongitude:isValid})
     }
 
     getLongitudeInput() {
@@ -169,59 +148,53 @@ class IncidentForm extends Component {
                 fullWidth={true}
                 color="primary"
                 variant="outlined"
-                value={this.state.longitude}
+               // value={this.state.longitude}
                 onChange={this.handleChangeLongitude}
                 error={!this.state.isValidLongitude}
             />
         </Tooltip>
     }
 
-    // imoNumber
-    handleChangeImonumber = (event) => {
-        console.log("IncidentForm handleChangeImonumber " +event.target.value);
-        this.setState({imoNumber: event.target.value});
+
+
+    // Add Vessel Button
+    handleAddVessel = () => {
+        console.log("IncidentForm handleAddVessel ");
+        let i = this.state.lastIdVessel;
+        let newListIdVessel = [...this.state.listIdVessel];
+        i++;
+        newListIdVessel.push(i);
+
+        this.setState({
+            lastIdVessel:i,
+            listIdVessel:newListIdVessel
+        });
     }
 
-    getImonumberInput() {
-        return  <Tooltip title={"[Optional] Use this field to override the CorrelationId."} >
-            <TextField
-                name="imonumberId"
-                label="Imo number"
-                fullWidth={true}
-                color="primary"
-                variant="outlined"
-                value={this.state.imoNumber}
-                onChange={this.handleChangeImonumber}
-            />
-        </Tooltip>
-    }
+    getAddVesselButton(classes) {
 
-    // imoNumber
-    handleChangeMmsi = (event) => {
-        console.log("IncidentForm handleChangeMmsi " +event.target.value);
-        this.setState({mmsi: event.target.value});
-    }
+        return (
+            <Button
+                id="clearMsg"
+                color="secondary"
+                variant="contained"
+                className={classes.button}
+                onClick={this.handleAddVessel}
+                type="submit"
+            >
+               Add Vessel
+                <AddBoxRounded className={classes.rightIcon}/>
 
-    getMmsiInput() {
-        return  <Tooltip title={"[Optional] Use this field to override the CorrelationId."} >
-            <TextField
-                name="mmsiId"
-                label="mmsi"
-                fullWidth={true}
-                color="primary"
-                variant="outlined"
-                value={this.state.mmsi}
-                onChange={this.handleChangeMmsi}
-            />
-        </Tooltip>
+            </Button>
+        )
     }
 
 
     // Submit button
     handleSubmit = () => {
         console.log("IncidentForm handleSubmit ");
+        this.sendMessage();
     }
-
 
     getSubmitButton(classes) {
 
@@ -241,7 +214,98 @@ class IncidentForm extends Component {
         )
     }
 
+    getVesselInput(classes) {
+        let vesselList = [];
+        for (let i of this.state.listIdVessel) {
+            vesselList.push( this.getVesselLine(classes, i));
+        }
+        return vesselList;
+    }
 
+    // Remove vessel button
+    handleRemoveVessel = (idx) => {
+        console.log("IncidentForm handleRemoveVessel idx "+idx);
+        let newListIdVessel = this.state.listIdVessel.filter(value => value !== idx);
+
+        this.setState({
+            listIdVessel:newListIdVessel
+        });
+    }
+
+    getIncidentLine(classes) {
+
+        return  (
+            <TableContainer component={Paper} >
+                <Table size="small" aria-label="a dense table">
+                    <TableBody>
+                        <TableRow>
+
+                            <TableCell>
+                                {this.getSelectType()}
+                            </TableCell>
+
+                            <TableCell>
+                                {this.getSelectSubType()}
+                            </TableCell>
+
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        )
+    }
+
+    getPositionLine(classes) {
+
+        return  (
+            <TableContainer component={Paper} >
+                <Table size="small" aria-label="a dense table">
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>
+                                {this.getLatitudineInput()}
+                            </TableCell>
+
+                            <TableCell>
+                                {this.getLongitudeInput()}
+                            </TableCell>
+
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        )
+    }
+
+    getVesselLine(classes, idx) {
+
+        return  (
+            <TableContainer component={Paper} key={idx} id={'vessel_'+idx}>
+                <Table size="small" aria-label="a dense table">
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>
+                                <Button
+                                    id="clearMsg"
+                                    color="secondary"
+                                    variant="contained"
+                                    className={classes.button}
+                                    onClick={() => this.handleRemoveVessel(idx)}
+                                    type="submit"
+                                    disabled={idx===0}
+                                >
+                                  <IndeterminateCheckBoxRounded className={classes.rightIcon}/>
+                                </Button>
+                            </TableCell>
+                            <TableCell>
+                                <IncidentVesselInput store={this.props.store} id={idx}/>
+                            </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </TableContainer>
+        )
+    }
 
     render() {
 
@@ -254,52 +318,55 @@ class IncidentForm extends Component {
                 <Paper  className={classes.root} >
                     <Grid container alignItems="flex-start" spacing={3}>
 
-                        <Grid item xs={3}>
-                            {this.getSelectType()}
+                        <Grid item xs={12}>
+                            {this.getIncidentLine(classes)}
                         </Grid>
 
-                        <Grid item xs={3}>
-                            {this.getSelectSubType()}
+                        <Grid item xs={12}>
+                            {this.getPositionLine(classes)}
                         </Grid>
 
-                        <Grid item xs={3}>
-                            {this.getSelectVessel()}
+                        <Grid item xs={12}>
+                            {this.getAddVesselButton(classes)}
                         </Grid>
 
-                        <Grid item xs={3}>
-                            {this.getSelectRole()}
-                        </Grid>
 
-                        <Grid item xs={3}>
-                            {this.getLatitudineInput()}
-                        </Grid>
-
-                        <Grid item xs={3}>
-                            {this.getLongitudeInput()}
-                        </Grid>
-
-                        <Grid item xs={3}>
-                            {this.getImonumberInput()}
-                        </Grid>
-
-                        <Grid item xs={3}>
-                            {this.getMmsiInput()}
+                        <Grid item xs={12}>
+                            {this.getVesselInput(classes)}
                         </Grid>
 
                         <Grid item xs={12}>
                             {this.getSubmitButton(classes)}
                         </Grid>
+
                         <Grid item xs={12}>
-                        <FormControl>
-                            <InputLabel htmlFor="my-input">Email address</InputLabel>
-                            <Input id="my-input" aria-describedby="my-helper-text" />
-                            <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
-                        </FormControl>
+                            <FormControl>
+                                <InputLabel htmlFor="my-input">Email address</InputLabel>
+                                <Input id="my-input" aria-describedby="my-helper-text" />
+                                <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
+                            </FormControl>
                         </Grid>
                     </Grid>
                 </Paper>
             </Box>
         )
+    }
+
+    sendMessage() {
+        const incidentMsg = new IncidentMessageDto();
+
+        incidentMsg.incident = this.getIncidentStore().getIncidentInputInfo();
+        for (let id of this.state.listIdVessel) {
+            incidentMsg.vesselList.push(this.getIncidentStore().getVesselInputArrayItem(id))
+        }
+
+        console.log("sendMessage " + incidentMsg);
+        // todo incidentMsg.contentList;
+
+        const result = this.getIncidentStore().sendIncidentMessage(incidentMsg);
+
+        console.log("sendMessage result " + result);
+
     }
 }
 

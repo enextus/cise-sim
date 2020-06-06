@@ -1,7 +1,7 @@
 package eu.cise.sim.api.messages.dto.label;
 
 import eu.cise.datamodel.v1.entity.incident.*;
-import eu.cise.sim.api.messages.dto.IncidentTypeEnum;
+import eu.cise.sim.api.messages.dto.incident.IncidentTypeEnum;
 
 import java.io.Serializable;
 import java.util.ArrayList;

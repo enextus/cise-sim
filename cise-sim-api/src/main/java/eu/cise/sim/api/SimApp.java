@@ -15,6 +15,7 @@ import eu.cise.sim.app.AppContext;
 import eu.cise.sim.app.DefaultAppContext;
 import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
+import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.util.component.LifeCycle;
@@ -85,6 +86,8 @@ public class SimApp extends Application<SimConf> {
         environment.jersey().register(new TemplateResource(messageAPI, templateAPI));
 
         environment.jersey().register(new HistoryResource(historyAPI));
+
+        environment.jersey().register(new JsonProcessingExceptionMapper(true));
 
         CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(
                 messageAPI,

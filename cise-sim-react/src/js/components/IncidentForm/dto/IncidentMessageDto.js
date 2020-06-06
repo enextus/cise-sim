@@ -1,13 +1,16 @@
 export default class IncidentMessageDto {
 
-    incidentType;
-    subType;
-    latitude;
-    longitude;
-    imoNumber;
-    mmsi;
-    vesselType;
-    role;
+    incident;
+
+    vesselList;
+    contentList;
+
+    constructor() {
+
+        this.incident = undefined;
+        this.vesselList = [];
+        this.contentList = [];
+    }
 
 }
 

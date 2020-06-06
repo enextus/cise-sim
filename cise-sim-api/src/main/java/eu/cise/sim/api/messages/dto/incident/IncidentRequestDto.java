@@ -1,6 +1,7 @@
-package eu.cise.sim.api.messages.dto;
+package eu.cise.sim.api.messages.dto.incident;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,49 +30,37 @@ import java.util.List;
  * - Vessel.VesselType (enumeration)
  * - ObjectEvent.ObjectRole.ObjectRoleInEventType (enumeration)
  *
- * todo Add extra documents (List Of)
+ * Content
+ * - AttachedDocument (abstract class)
  */
-public class IncidentDto implements Serializable {
+public class IncidentRequestDto implements Serializable {
+
+    /**
+     * {
+     * "incident":{"incidentType":"maritime","subType":"VTSRulesInfringement","latitude":"12","longitude":"23"},
+     * "vesselList":[{"vesselType":"PassengerShip","role":"Participant","imoNumber":"1","mmsi":"2"}],
+     * "contentList":[]
+     * }
+     */
 
     private static final long serialVersionUID = 42L;
 
-    private String type;
-    private String subType;
-    private String latitude;
-    private String longitude;
+    private IncidentInfoDto incident;
     private List<VesselInfoDto> vesselList;
+    private List<String> contentList; //  Base 64 binary document
 
-
-    public String getType() {
-        return type;
+    public IncidentRequestDto() {
+        incident = new IncidentInfoDto();
+        vesselList = new ArrayList<>();
+        contentList = new ArrayList<>();
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public IncidentInfoDto getIncident() {
+        return incident;
     }
 
-    public String getSubType() {
-        return subType;
-    }
-
-    public void setSubType(String subType) {
-        this.subType = subType;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    public void setIncident(IncidentInfoDto incident) {
+        this.incident = incident;
     }
 
     public List<VesselInfoDto> getVesselList() {
@@ -80,5 +69,13 @@ public class IncidentDto implements Serializable {
 
     public void setVesselList(List<VesselInfoDto> vesselList) {
         this.vesselList = vesselList;
+    }
+
+    public List<String> getContentList() {
+        return contentList;
+    }
+
+    public void setContentList(List<String> contentList) {
+        this.contentList = contentList;
     }
 }

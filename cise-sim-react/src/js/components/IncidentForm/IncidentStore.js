@@ -1,83 +1,47 @@
-import IncidentMessageDto from "./dto/IncidentMessageDto";
-import {getLabelsIncident} from "./IncidentService";
-import {action, observable} from "mobx";
+import {getvaluesIncident, sendIncidentMessage} from "./IncidentService";
+import UserVesselInput from "./UserVesselInput";
+import UserIncidentInput from "./UserIncidentInput";
 
 export default class IncidentStore {
 
-
+    /**
+     * Init phase, retrieving values infos from backend
+     */
     async getLabels() {
 
         console.log("IncidentStore initialization Starting ...");
 
-        const labelsIncidentDto = await getLabelsIncident();
+        const labelsIncidentDto = await getvaluesIncident();
 
-        this.setLabelType(labelsIncidentDto.incidentList);
-        this.setLabelVesselAndRole(labelsIncidentDto.vessel);
-
+        this.setValueAndLabelOnIncidentAndSubtype(labelsIncidentDto.incidentList);
+        this.setValueAndLabelOnVesselAndRole(labelsIncidentDto.vessel);
 
         console.log("IncidentStore initialization done");
     }
 
-    // Message to be sent
-    @observable incidentMessage = new IncidentMessageDto();
 
-    @action
-    setIncidentType(type) {
-        this.incidentMessage.incidentType = type;
-    }
-
-    setSubType(subType) {
-        this.incidentMessage.subType = subType;
-    }
-
-    setLatitude(latitude) {
-        this.incidentMessage.latitude = latitude;
-    }
-
-    setLongitude(longitude) {
-        this.incidentMessage.longitude = longitude;
-    }
-
-    setImoNumber(imoNumber) {
-        this.incidentMessage.imoNumber = imoNumber;
-    }
-
-    setMmsi(mmsi) {
-        this.incidentMessage.mmsi = mmsi;
-    }
-
-    setVesselType(vesselType) {
-        this.incidentMessage.vesselType = vesselType;
-    }
-
-    setRole(role) {
-        this.incidentMessage.role = role;
-    }
-
+    /**
+     * Values and Labels build
+     */
     labelIncidentType = []; // Single array of string with the Incident Type:
     labelIncidentSubTypeList = [];
+    labelVesselTypeList = [];
+    labelRoleList = [];
 
-    setLabelType(labelIncidentTypeArray) {
-
+    setValueAndLabelOnIncidentAndSubtype(labelIncidentTypeArray) {
 
         let tmpType = [];
         for (let labelIncidentType of labelIncidentTypeArray) {
-         //   this.labelIncidentType.push(labelIncidentType.type);
+            //   this.labelIncidentType.push(labelIncidentType.type);
             tmpType.push(labelIncidentType.type);
             this.labelIncidentSubTypeList[labelIncidentType.type] = this.buildValueLabelMap(labelIncidentType.subTypeList);
         }
         this.labelIncidentType = this.buildValueLabelMap(tmpType);
     }
 
-    labelVesselTypeList = [];
-    labelRoleList = [];
-
-    setLabelVesselAndRole(labelVessel) {
+    setValueAndLabelOnVesselAndRole(labelVessel) {
         this.labelVesselTypeList = this.buildValueLabelMap(labelVessel.typeList);
         this.labelRoleList = this.buildValueLabelMap(labelVessel.roleList);
-
-        console.log("setLabelVessel labelVesselTypeList:"+this.labelVesselTypeList);
-        console.log("setLabelVessel labelRoleList:"+this.labelRoleList);
     }
 
     buildValueLabelMap(valueList) {
@@ -89,21 +53,28 @@ export default class IncidentStore {
         return labelMap
     }
 
-    getLabelIncidentType() {
-        return this.labelIncidentType;
+    //--------------------------------------------
+
+    /**
+     * Store Input
+     */
+
+    incidentInputInfo = new UserIncidentInput();
+    getIncidentInputInfo() {
+        return this.incidentInputInfo;
+    }
+    vesselInputArray = [];
+    getVesselInputArrayItem(idx) {
+        if (!this.vesselInputArray[idx]) {
+            this.vesselInputArray[idx] = new UserVesselInput();
+        }
+        return this.vesselInputArray[idx];
     }
 
-    getLabelSubType() {
-        return this.labelIncidentSubTypeList[this.incidentMessage.incidentType];
-    }
+    //--------------------------------------------
 
-    getLabelVesselType() {
-        return this.labelVesselTypeList;
+    sendIncidentMessage(msg) {
+        return sendIncidentMessage(msg);
     }
-
-    getLabelRole() {
-        return this.labelRoleList;
-    }
-
 
 }
