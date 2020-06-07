@@ -5,10 +5,6 @@ import {withStyles} from '@material-ui/core/styles';
 import IncidentSelect from "./IncidentSelectorInfo";
 import Tooltip from "@material-ui/core/Tooltip";
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import IncidentVesselInput from "./IncidentVesselInput";
 import {AddBoxRounded, IndeterminateCheckBoxRounded} from "@material-ui/icons";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -17,6 +13,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import IncidentMessageDto from "./dto/IncidentMessageDto";
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 
 const styles = theme => ({
     root: {
@@ -68,13 +65,13 @@ class IncidentForm extends Component {
 
       //  this.setState((prevState) => {return {incidentType: event.target.value};});
 
-        this.getIncidentStore().getIncidentInputInfo().incidentType =  event.target.value;
+      this.getIncidentStore().getIncidentInputInfo().incidentType =  event.target.value;
     }
 
     getSelectType() {
         const list = this.getIncidentStore().labelIncidentType
         return <IncidentSelect
-            title="Incident Type"
+            title="Incident"
             listValueLabel={list}
             change={this.handleChangeType}
         />
@@ -96,7 +93,7 @@ class IncidentForm extends Component {
         }
 
         return <IncidentSelect
-            title="Incident Sub Type"
+            title="Sub Type"
             listValueLabel={list}
             change={this.handleChangeSubType}
         />
@@ -209,6 +206,30 @@ class IncidentForm extends Component {
             >
                 Send Message
                 <SendRoundedIcon className={classes.rightIcon}/>
+
+            </Button>
+        )
+    }
+
+    // Submit button
+    handleEnd = () => {
+        console.log("IncidentForm handleSubmit ");
+        this.props.onclose();
+    }
+
+    getEndButton(classes) {
+
+        return (
+            <Button
+                id="clearMsg"
+                color="secondary"
+                variant="contained"
+                className={classes.button}
+                onClick={this.handleEnd}
+                type="submit"
+            >
+                Had enough
+                <CloseRoundedIcon className={classes.rightIcon}/>
 
             </Button>
         )
@@ -335,17 +356,17 @@ class IncidentForm extends Component {
                             {this.getVesselInput(classes)}
                         </Grid>
 
-                        <Grid item xs={12}>
+                        <Grid item xs={4}>
+                            {this.getEndButton(classes)}
+                        </Grid>
+                        <Grid item xs={4}>
+
+                        </Grid>
+                        <Grid item xs={4}>
                             {this.getSubmitButton(classes)}
                         </Grid>
 
-                        <Grid item xs={12}>
-                            <FormControl>
-                                <InputLabel htmlFor="my-input">Email address</InputLabel>
-                                <Input id="my-input" aria-describedby="my-helper-text" />
-                                <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
-                            </FormControl>
-                        </Grid>
+
                     </Grid>
                 </Paper>
             </Box>
