@@ -42,6 +42,7 @@ class IncidentVesselInput extends Component {
     handleChangeVesselType = (event) => {
         console.log("IncidentVesselInput handleChangeVesselType " +event.target.value);
         this.getIncidentStore().getVesselInputArrayItem(this.props.id).vesselType = event.target.value;
+        this.checkIsValid(this.props.id);
     }
 
     getSelectVessel() {
@@ -57,6 +58,7 @@ class IncidentVesselInput extends Component {
     handleChangeRole = (event) => {
         console.log("IncidentVesselInput handleChangeRole " +event.target.value);
         this.getIncidentStore().getVesselInputArrayItem(this.props.id).role = event.target.value;
+        this.checkIsValid(this.props.id);
 
     }
 
@@ -73,10 +75,11 @@ class IncidentVesselInput extends Component {
     handleChangeImonumber = (event) => {
         console.log("IncidentVesselInput handleChangeImonumber " +event.target.value);
         this.getIncidentStore().getVesselInputArrayItem(this.props.id).imoNumber = event.target.value;
+        this.checkIsValid(this.props.id);
     }
 
     getImonumberInput() {
-        return  <Tooltip title={"[Optional] Use this field to override the CorrelationId."} >
+        return  <Tooltip title={"Insert the Imo number value"} >
             <TextField
                 name="imonumberId"
                 label="Imo number"
@@ -93,11 +96,11 @@ class IncidentVesselInput extends Component {
     handleChangeMmsi = (event) => {
         console.log("IncidentVesselInput handleChangeMmsi " +event.target.value);
         this.getIncidentStore().getVesselInputArrayItem(this.props.id).mmsi = event.target.value;
-
+        this.checkIsValid(this.props.id);
     }
 
     getMmsiInput() {
-        return  <Tooltip title={"[Optional] Use this field to override the CorrelationId."} >
+        return  <Tooltip title={"Insert the mmsi value"} >
             <TextField
                 name="mmsiId"
                 label="mmsi"
@@ -110,6 +113,16 @@ class IncidentVesselInput extends Component {
         </Tooltip>
     }
 
+    checkIsValid(idx) {
+        /*
+        let vesselInput = this.getIncidentStore().getVesselInputArrayItem(this.props.id);
+        vesselInput.isValid = vesselInput.vesselType !== undefined
+                                && vesselInput.role!== undefined
+                                && vesselInput.imoNumber!== undefined
+                                && vesselInput.mmsi!== undefined;
+
+         */
+    }
 
     render() {
 

@@ -2,10 +2,10 @@ import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 import {Button} from "@material-ui/core";
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import IncidentForm from "../components/IncidentForm/IncidentForm";
+import Slide from "@material-ui/core/Slide";
 
 const styles = theme => ({
     modal: {
@@ -79,12 +79,12 @@ const incidentMessageModal = (props) => {
                     timeout: 500,
                 }}>
 
-                <Fade in={open}>
+                <Slide direction="down" in={open} mountOnEnter unmountOnExit timeout={2000}>
                     <div id="create-incident-message">
 
                    <IncidentForm store={props.store} id="create-and-send-incident-message" onclose={handleClose}/>
                     </div>
-                </Fade>
+                </Slide>
 
 
             </Modal>

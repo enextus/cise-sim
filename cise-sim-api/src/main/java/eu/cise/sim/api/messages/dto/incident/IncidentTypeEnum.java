@@ -10,13 +10,13 @@ public enum IncidentTypeEnum {
  *  - CrisisIncident
      */
 
-    MARITIME_SAFETY("maritime"),
-    POLLUTION("pollution"),
-    IRREGULARITY_MIGRATION("migration"),
-    LAW_INFIRINGEMENT("law"),
-    CRISIS("crisis");
+    MARITIME_SAFETY("Maritime"),
+    POLLUTION("Pollution"),
+    IRREGULARITY_MIGRATION("Migration"),
+    LAW_INFIRINGEMENT("Law"),
+    CRISIS("Crisis");
 
-    private String guiValue;
+    private final String guiValue;
 
     IncidentTypeEnum(String guiValue) {
         this.guiValue = guiValue;

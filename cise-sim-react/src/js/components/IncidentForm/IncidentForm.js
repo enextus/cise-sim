@@ -14,6 +14,8 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import IncidentMessageDto from "./dto/IncidentMessageDto";
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
     root: {
@@ -31,6 +33,14 @@ const styles = theme => ({
     rightIcon: {
         marginLeft: theme.spacing(1),
     },
+    icon : {
+        padding: 0,
+        margin: 0,
+        color: "red",
+    },
+    cellicon : {
+        padding: 4,
+    }
 
 
 });
@@ -113,7 +123,7 @@ class IncidentForm extends Component {
 
     getLatitudineInput() {
 
-        return  <Tooltip title={"[Optional] Use this field to override the CorrelationId."} >
+        return  <Tooltip title={"Insert the Latitude value"} >
             <TextField
                 name="latitudeId"
                 label="Latitude"
@@ -138,7 +148,7 @@ class IncidentForm extends Component {
     }
 
     getLongitudeInput() {
-        return  <Tooltip title={"[Optional] Use this field to override the CorrelationId."} >
+        return  <Tooltip title={"Insert the Longitude value"} >
             <TextField
                 name="longitudeId"
                 label="Longitude"
@@ -179,13 +189,26 @@ class IncidentForm extends Component {
                 onClick={this.handleAddVessel}
                 type="submit"
             >
-               Add Vessel
-                <AddBoxRounded className={classes.rightIcon}/>
+                Vessels <AddBoxRounded className={classes.rightIcon}/>
 
             </Button>
         )
     }
 
+    getAddVesselIcon(classes) {
+
+        return (
+            <IconButton
+                color="secondary"
+                variant="contained"
+                className={classes.icon}
+                onClick={() => this.handleAddVessel}
+                size="medium"
+            >
+                (<AddBoxRounded  size="small"/>)
+            </IconButton>
+        )
+    }
 
     // Submit button
     handleSubmit = () => {
@@ -305,18 +328,16 @@ class IncidentForm extends Component {
                 <Table size="small" aria-label="a dense table">
                     <TableBody>
                         <TableRow>
-                            <TableCell>
-                                <Button
-                                    id="clearMsg"
-                                    color="secondary"
+                            <TableCell className={classes.cellicon}>
+                                <IconButton
                                     variant="contained"
-                                    className={classes.button}
+                                    className={classes.icon}
                                     onClick={() => this.handleRemoveVessel(idx)}
-                                    type="submit"
-                                    disabled={idx===0}
+                                    disabled={this.state.listIdVessel.length===1}
+                                    size="medium"
                                 >
-                                  <IndeterminateCheckBoxRounded className={classes.rightIcon}/>
-                                </Button>
+                                  <IndeterminateCheckBoxRounded  size="large"/>
+                                </IconButton>
                             </TableCell>
                             <TableCell>
                                 <IncidentVesselInput store={this.props.store} id={idx}/>
@@ -325,6 +346,26 @@ class IncidentForm extends Component {
                 </TableBody>
             </Table>
         </TableContainer>
+        )
+    }
+
+    getBottomButtons(classes) {
+
+        return  (
+            <TableContainer component={Paper} >
+                <Table size="small" aria-label="a dense table">
+                    <TableBody>
+                        <TableRow>
+                            <TableCell align={"left"}>
+                                {this.getEndButton(classes)}
+                            </TableCell>
+                            <TableCell align={"right"}>
+                                {this.getSubmitButton(classes)}
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
         )
     }
 
@@ -340,6 +381,9 @@ class IncidentForm extends Component {
                     <Grid container alignItems="flex-start" spacing={3}>
 
                         <Grid item xs={12}>
+                            <Typography variant="h6" component="h6" align={"left"}>
+                                Incident main info
+                            </Typography>
                             {this.getIncidentLine(classes)}
                         </Grid>
 
@@ -351,19 +395,12 @@ class IncidentForm extends Component {
                             {this.getAddVesselButton(classes)}
                         </Grid>
 
-
                         <Grid item xs={12}>
                             {this.getVesselInput(classes)}
                         </Grid>
 
-                        <Grid item xs={4}>
-                            {this.getEndButton(classes)}
-                        </Grid>
-                        <Grid item xs={4}>
-
-                        </Grid>
-                        <Grid item xs={4}>
-                            {this.getSubmitButton(classes)}
+                        <Grid item xs={12}>
+                            {this.getBottomButtons(classes)}
                         </Grid>
 
 
