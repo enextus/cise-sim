@@ -6,7 +6,6 @@ import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.SendResponse;
 import eu.cise.sim.api.messages.dto.incident.IncidentRequestDto;
 import eu.cise.sim.api.messages.dto.label.IncidentMessageLabelDto;
-import eu.cise.sim.io.MessageStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,18 +15,15 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 
 @Path("/ui/messages")
-public class MessageResource {
+@Produces(MediaType.APPLICATION_JSON)
+public class UiMessageResource {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageResource.class);
-
-    public static final String ERROR = "ERROR";
+    private static final Logger LOGGER = LoggerFactory.getLogger(UiMessageResource.class);
     private final MessageAPI messageAPI;
-    private final MessageStorage messageStorage;
     private final MessageService messageService;
 
-    public MessageResource(MessageAPI messageAPI, MessageStorage messageStorage) {
+    public UiMessageResource(MessageAPI messageAPI) {
         this.messageAPI = messageAPI;
-        this.messageStorage = messageStorage;
         this.messageService = new MessageService();
     }
 
@@ -67,7 +63,7 @@ public class MessageResource {
             SendResponse response = messageAPI.send(message);
 
         } catch (IOException e) {
-           LOGGER.warn("sendIncident exception", e);
+            LOGGER.warn("sendIncident exception", e);
         }
 
         return Response
