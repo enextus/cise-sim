@@ -70,7 +70,7 @@ export default class MessageStore {
         // Do the ordering by timestamp
         newList.sort(function(a,b) {return b.dateTime-a.dateTime});
 
-        this.historyLasTimestamp = newList.dateTime;
+        this.historyLasTimestamp = newList[0].dateTime;
 
         // take only the first threadMaxCapacity item
         this.historyMsgList = this.findMaxCorrId(newList);

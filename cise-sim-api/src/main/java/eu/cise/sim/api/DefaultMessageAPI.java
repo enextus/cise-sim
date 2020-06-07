@@ -22,6 +22,8 @@ import eu.eucise.xml.XmlNotParsableException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.UUID;
+
 public class DefaultMessageAPI implements MessageAPI {
 
     private final Logger logger = LoggerFactory.getLogger(MessageAPI.class);
@@ -62,6 +64,30 @@ public class DefaultMessageAPI implements MessageAPI {
                 new MessageApiDto(
                     prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
                     prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
+
+        } catch (Exception e) {
+            logger.error("Error sending a message to destination.url", e);
+            return new SendResponse.KO(e.getMessage());
+        }
+    }
+
+    @Override
+    public SendResponse send(Message message) {
+
+        try {
+
+
+            // todo know better the param
+            boolean requiresAck = false;
+            String messageId = UUID.randomUUID().toString();
+            String correlationId = messageId;
+            SendParam sendParam = new  SendParam(requiresAck, messageId, correlationId);
+            Pair<Acknowledgement, Message> sendResponse = engineMessageProcessor.send(message, sendParam);
+
+            return new SendResponse.OK(
+                    new MessageApiDto(
+                            prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
+                            prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
 
         } catch (Exception e) {
             logger.error("Error sending a message to destination.url", e);
