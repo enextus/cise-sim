@@ -40,6 +40,5 @@ public class MaritimeSafetyIncidentBuilderTest {
         String xml = prettyNotValidatingXmlMapper.toXML(incident);
 
         assertNotNull(xml);
-        System.out.println(xml);
     }
 }

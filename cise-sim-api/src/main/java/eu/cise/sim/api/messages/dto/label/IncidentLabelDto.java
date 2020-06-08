@@ -32,7 +32,7 @@ public class IncidentLabelDto implements Serializable {
             case IRREGULARITY_MIGRATION:
                 return buildIrregularMigrationIncident();
 
-            case LAW_INFIRINGEMENT:
+            case LAW_INFRINGEMENT:
                 return buildLawInfringementIncident();
 
             case CRISIS:
@@ -79,7 +79,7 @@ public class IncidentLabelDto implements Serializable {
         for (LawInfringementIncidentType type : LawInfringementIncidentType.values()) {
             labelList.add(type.value());
         }
-        return new IncidentLabelDto(IncidentTypeEnum.LAW_INFIRINGEMENT.getGuiValue(), labelList);
+        return new IncidentLabelDto(IncidentTypeEnum.LAW_INFRINGEMENT.getGuiValue(), labelList);
     }
 
     private static IncidentLabelDto buildCrisisIncident() {

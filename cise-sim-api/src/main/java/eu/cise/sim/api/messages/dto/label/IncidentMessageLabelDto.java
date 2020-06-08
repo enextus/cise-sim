@@ -21,7 +21,7 @@ public class IncidentMessageLabelDto implements Serializable {
         incidentList.add(IncidentLabelDto.build(IncidentTypeEnum.MARITIME_SAFETY));
         incidentList.add(IncidentLabelDto.build(IncidentTypeEnum.CRISIS));
         incidentList.add(IncidentLabelDto.build(IncidentTypeEnum.IRREGULARITY_MIGRATION));
-        incidentList.add(IncidentLabelDto.build(IncidentTypeEnum.LAW_INFIRINGEMENT));
+        incidentList.add(IncidentLabelDto.build(IncidentTypeEnum.LAW_INFRINGEMENT));
         incidentList.add(IncidentLabelDto.build(IncidentTypeEnum.POLLUTION));
 
         instance = new IncidentMessageLabelDto(incidentList, VesselLabelDto.getInstance());

@@ -24,8 +24,9 @@ import java.util.List;
  *  - LawInfringementIncident
  *  - CrisisIncident
  **/
-public abstract class AbstractIncidentBuilder implements IncidentBuilderInterface {
+public abstract class AbstractIncidentBuilder implements IncidentBuilder {
 
+    @Override
     public final Incident build(IncidentRequestDto incidentRequestDto) {
 
         Incident msg =  getIncidentInstance(incidentRequestDto);

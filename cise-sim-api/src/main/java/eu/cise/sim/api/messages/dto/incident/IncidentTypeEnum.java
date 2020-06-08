@@ -1,5 +1,7 @@
 package eu.cise.sim.api.messages.dto.incident;
 
+import eu.cise.sim.api.messages.builders.*;
+
 public enum IncidentTypeEnum {
 
     /*
@@ -10,16 +12,18 @@ public enum IncidentTypeEnum {
  *  - CrisisIncident
      */
 
-    MARITIME_SAFETY("Maritime"),
-    POLLUTION("Pollution"),
-    IRREGULARITY_MIGRATION("Migration"),
-    LAW_INFIRINGEMENT("Law"),
-    CRISIS("Crisis");
+    MARITIME_SAFETY("Maritime", new MaritimeSafetyIncidentBuilder()),
+    POLLUTION("Pollution", new PollutiontBuilder()),
+    IRREGULARITY_MIGRATION("Migration", new IrregularMigrationBuilder()),
+    LAW_INFRINGEMENT("Law", new LawInfringementBuilder()),
+    CRISIS("Crisis", new CrisisIncidentBuilder());
 
     private final String guiValue;
+    private final IncidentBuilder incidentBuilder;
 
-    IncidentTypeEnum(String guiValue) {
+    IncidentTypeEnum(String guiValue, IncidentBuilder incidentBuilder) {
         this.guiValue = guiValue;
+        this.incidentBuilder = incidentBuilder;
     }
 
     public static IncidentTypeEnum valueOfGuiValue(String guiValue) {
@@ -34,5 +38,9 @@ public enum IncidentTypeEnum {
 
     public String getGuiValue() {
         return guiValue;
+    }
+
+    public IncidentBuilder getIncidentBuilder() {
+        return incidentBuilder;
     }
 }
