@@ -1,5 +1,4 @@
-#FROM oracle/graalvm-ce:20.0.0-java11
-FROM  adoptopenjdk/openjdk11:latest
+FROM azul/zulu-openjdk-alpine:11-jre
 LABEL maintainer="Alessandro.LA-PORTA@ext.ec.europa.eu" \
       maintainer="Giancarlo.PACE@ec.europa.eu"
 
@@ -8,8 +7,10 @@ LABEL maintainer="Alessandro.LA-PORTA@ext.ec.europa.eu" \
 
 # All future commands should run as the appuser user
 #USER appuser
-#RUN apt update &&\
-#    apt install bash
+
+RUN apk update &&\
+    apk upgrade &&\
+    apk add bash
 
 COPY target/cise-sim-1.3.0-ALPHA.tar.gz /srv/cise-sim-1.3.0-ALPHA.tar.gz
 RUN mkdir -p /srv/cise-simulator && tar xvfz /srv/cise-sim-1.3.0-ALPHA.tar.gz -C /srv/cise-simulator --strip-components 1

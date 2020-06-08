@@ -1,33 +1,12 @@
 version: '3.3'
 services:
-  sim-ita:
-    image: poaless/cise-sim:1.3.0-alpha-sprint16
+  cise-sim:
+    image: poaless/cise-sim:latest
     volumes:
-      - ./volumes/sim80/conf:/srv/cise-simulator/conf
-      - ./volumes/sim80/logs:/srv/cise-simulator/logs
-      - ./volumes/sim80/msghistory:/srv/cise-simulator/msghistory
+      - ./conf:/srv/cise-simulator/conf
+      - ./logs:/srv/cise-simulator/logs
+      - ./msghistory:/srv/cise-simulator/msghistory
     ports:
       - 8080:8080
       - 8081:8081
-    networks:
-      net_ita:
-      net_cise:
-
-  sim-fra:
-    image: poaless/cise-sim:1.3.0-alpha-sprint16
-    volumes:
-      - ./volumes/sim86/conf:/srv/cise-simulator/conf
-      - ./volumes/sim86/logs:/srv/cise-simulator/logs
-      - ./volumes/sim86/msghistory:/srv/cise-simulator/msghistory
-    ports:
-      - 8086:8080
-      - 8087:8081
-    networks:
-      net_cise:
-      net_fra:
-
-networks:
-  net_ita:
-  net_cise:
-  net_fra:
 
