@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import {Button} from "@material-ui/core";
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
-import IncidentForm from "../components/IncidentForm/IncidentForm";
+import IncidentForm from "../forms/IncidentForm/IncidentForm";
 import Slide from "@material-ui/core/Slide";
 
 const styles = theme => ({

@@ -6,7 +6,7 @@ import TemplateStore from './stores/templates/TemplateStore';
 import MessageStore from './stores/messages/MessageStore';
 import ServiceStore from './stores/services/ServiceStore';
 import {autorun} from 'mobx';
-import IncidentStore from "./components/IncidentForm/IncidentStore";
+import IncidentStore from "./forms/IncidentForm/IncidentStore";
 
 
 const stores = {

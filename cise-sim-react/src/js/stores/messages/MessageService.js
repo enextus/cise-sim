@@ -2,7 +2,7 @@ import {http_delete, http_get, http_post} from '../../api/API'
 import Message from './Message';
 import MessageShortInfo from "./MessageShortInfo";
 import MessageThInfo from "./MessageThInfo";
-import LabelsIncidentDto from "../../components/IncidentForm/dto/LabelsIncidentDto";
+import LabelsIncidentDto from "../../forms/IncidentForm/dto/LabelsIncidentDto";
 
 export async function sendMessage(templateId, messageId, correlationId, requiresAck) {
     console.log("sendMessage");

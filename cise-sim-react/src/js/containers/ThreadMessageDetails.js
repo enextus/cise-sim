@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Box, Grid, Paper} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import {observer} from "mobx-react";
-import MessageInfoCard from "../components/MessageForm/MessageInfoCard";
+import MessageInfoCard from "../forms/MessageForm/MessageInfoCard";
 import Slide from "@material-ui/core/Slide";
 
 const styles = theme => ({

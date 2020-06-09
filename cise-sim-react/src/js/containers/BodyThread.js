@@ -6,7 +6,7 @@ import ChronoHistoryMessages from "./ThreadMessageList";
 import ThreadMessageDetails from "./ThreadMessageDetails";
 import Typography from "@material-ui/core/Typography";
 import {withStyles} from "@material-ui/core/styles";
-import ThreadListHeader from "../components/MessageForm/ThreadListHeader";
+import ThreadListHeader from "../forms/MessageForm/ThreadListHeader";
 
 const styles = theme => ({
     root: {
