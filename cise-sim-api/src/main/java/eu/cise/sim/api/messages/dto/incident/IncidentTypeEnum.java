@@ -12,7 +12,7 @@ public enum IncidentTypeEnum {
  *  - CrisisIncident
      */
 
-    MARITIME_SAFETY("Maritime", new MaritimeSafetyIncidentBuilder()),
+    MARITIME_SAFETY("Maritime Safety", new MaritimeSafetyIncidentBuilder()),
     POLLUTION("Pollution", new PollutiontBuilder()),
     IRREGULARITY_MIGRATION("Migration", new IrregularMigrationBuilder()),
     LAW_INFRINGEMENT("Law", new LawInfringementBuilder()),
