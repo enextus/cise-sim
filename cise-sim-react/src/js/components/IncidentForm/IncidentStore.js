@@ -1,6 +1,7 @@
 import {getvaluesIncident, sendIncidentMessage} from "./IncidentService";
-import UserVesselInput from "./UserVesselInput";
-import UserIncidentInput from "./UserIncidentInput";
+import UserVesselInput from "./inputs/UserVesselInput";
+import UserIncidentInput from "./inputs/UserIncidentInput";
+import UserContentInput from "./inputs/UserContentInput";
 
 export default class IncidentStore {
 
@@ -32,7 +33,6 @@ export default class IncidentStore {
 
         let tmpType = [];
         for (let labelIncidentType of labelIncidentTypeArray) {
-            //   this.labelIncidentType.push(labelIncidentType.type);
             tmpType.push(labelIncidentType.type);
             this.labelIncidentSubTypeList[labelIncidentType.type] = this.buildValueLabelMap(labelIncidentType.subTypeList);
         }
@@ -63,12 +63,27 @@ export default class IncidentStore {
     getIncidentInputInfo() {
         return this.incidentInputInfo;
     }
+
     vesselInputArray = [];
     getVesselInputArrayItem(idx) {
         if (!this.vesselInputArray[idx]) {
             this.vesselInputArray[idx] = new UserVesselInput();
         }
         return this.vesselInputArray[idx];
+    }
+
+    contentInputArray = [];
+    getContentInputArrayItem(idx) {
+        if (!this.contentInputArray[idx]) {
+            this.contentInputArray[idx] = new UserContentInput();
+        }
+        return this.contentInputArray[idx];
+    }
+
+    cleanResources() {
+        this.incidentInputInfo = new UserIncidentInput();
+        this.vesselInputArray = [];
+        this.contentInputArray = [];
     }
 
     //--------------------------------------------

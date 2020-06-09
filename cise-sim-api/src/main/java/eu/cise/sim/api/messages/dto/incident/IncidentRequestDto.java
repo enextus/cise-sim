@@ -47,7 +47,7 @@ public class IncidentRequestDto implements Serializable {
 
     private IncidentInfoDto incident;
     private List<VesselInfoDto> vesselList;
-    private List<String> contentList; //  Base 64 binary document
+    private List<ContentInfoDto> contentList; //  Base 64 binary document
 
     public IncidentRequestDto() {
         incident = new IncidentInfoDto();
@@ -71,11 +71,11 @@ public class IncidentRequestDto implements Serializable {
         this.vesselList = vesselList;
     }
 
-    public List<String> getContentList() {
+    public List<ContentInfoDto> getContentList() {
         return contentList;
     }
 
-    public void setContentList(List<String> contentList) {
+    public void setContentList(List<ContentInfoDto> contentList) {
         this.contentList = contentList;
     }
 }

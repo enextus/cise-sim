@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {Box, Button, Grid, Paper, TextField} from '@material-ui/core';
+import {Box, Button, Grid, Paper} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 
-import IncidentSelect from "./IncidentSelectorInfo";
-import Tooltip from "@material-ui/core/Tooltip";
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
-import IncidentVesselInput from "./IncidentVesselInput";
+import IncidentVesselInput from "./components/IncidentVesselInput";
 import {AddBoxRounded, IndeterminateCheckBoxRounded} from "@material-ui/icons";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -15,7 +13,8 @@ import TableCell from "@material-ui/core/TableCell";
 import IncidentMessageDto from "./dto/IncidentMessageDto";
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import IncidentContentInput from "./components/IncidentContentInput";
+import IncidentMainInfoInput from "./components/IncidentMainInfoInput";
 
 const styles = theme => ({
     root: {
@@ -40,6 +39,7 @@ const styles = theme => ({
     },
     cellicon : {
         padding: 4,
+        width: 16,
     }
 
 
@@ -57,6 +57,9 @@ class IncidentForm extends Component {
 
         listIdVessel: [0],
         lastIdVessel: 0,
+
+        listIdContent: [],
+        lastIdContent: 0,
     }
 
     constructor(props) {
@@ -67,106 +70,10 @@ class IncidentForm extends Component {
         return this.props.store.incidentStore
     };
 
-    // Incident Type
-    handleChangeType = (event) => {
-        console.log("IncidentForm handleChangeType " +event.target.value);
-
-      this.setState({incidentType: event.target.value})
-
-      //  this.setState((prevState) => {return {incidentType: event.target.value};});
-
-      this.getIncidentStore().getIncidentInputInfo().incidentType =  event.target.value;
-    }
-
-    getSelectType() {
-        const list = this.getIncidentStore().labelIncidentType
-        return <IncidentSelect
-            title="Incident"
-            listValueLabel={list}
-            change={this.handleChangeType}
-        />
-    }
-
-    // Sub Type
-    handleChangeSubType = (event) => {
-        console.log("IncidentForm handleChangeSubType " +event.target.value);
-        this.getIncidentStore().getIncidentInputInfo().subType =  event.target.value;
-    }
-
-    getSelectSubType() {
-        let list =[];
-        if (this.state.incidentType) {
-            list = this.getIncidentStore().labelIncidentSubTypeList[this.state.incidentType];
-        }
-        else {
-            list[0] = {value:'empty', label:'Select Incident'};
-        }
-
-        return <IncidentSelect
-            title="Sub Type"
-            listValueLabel={list}
-            change={this.handleChangeSubType}
-        />
-
-    }
-
-
-    // Latitude
-    handleChangeLatitude = (event) => {
-        console.log("IncidentForm handleChangeLatitude " +event.target.value);
-        const isValid = isFinite(event.target.value) && Math.abs(event.target.value) <= 90;
-        if (isValid) {
-            this.getIncidentStore().getIncidentInputInfo().latitude =  event.target.value;
-        }
-        this.setState({isValidLatitude:isValid});
-    }
-
-    getLatitudineInput() {
-
-        return  <Tooltip title={"Insert the Latitude value"} >
-            <TextField
-                name="latitudeId"
-                label="Latitude"
-                fullWidth={true}
-                color="primary"
-                variant="outlined"
-               // value={this.state.latitude}
-                onChange={this.handleChangeLatitude}
-                error={!this.state.isValidLatitude}
-            />
-        </Tooltip>
-    }
-
-    // Longitude
-    handleChangeLongitude = (event) => {
-        console.log("IncidentForm handleChangeLongitude " +event.target.value);
-        const isValid = isFinite(event.target.value) && Math.abs(event.target.value) <= 180;
-        if (isValid) {
-            this.getIncidentStore().getIncidentInputInfo().longitude =  event.target.value;
-        }
-        this.setState({isValidLongitude:isValid})
-    }
-
-    getLongitudeInput() {
-        return  <Tooltip title={"Insert the Longitude value"} >
-            <TextField
-                name="longitudeId"
-                label="Longitude"
-                fullWidth={true}
-                color="primary"
-                variant="outlined"
-               // value={this.state.longitude}
-                onChange={this.handleChangeLongitude}
-                error={!this.state.isValidLongitude}
-            />
-        </Tooltip>
-    }
-
-
 
     // Add Vessel Button
     handleAddVessel = () => {
-        console.log("IncidentForm handleAddVessel ");
+
         let i = this.state.lastIdVessel;
         let newListIdVessel = [...this.state.listIdVessel];
         i++;
@@ -195,24 +102,39 @@ class IncidentForm extends Component {
         )
     }
 
-    getAddVesselIcon(classes) {
+    // Add Content Button
+    handleAddContent = () => {
+
+        let i = this.state.lastIdContent;
+        let newListIdContent = [...this.state.listIdContent];
+        i++;
+        newListIdContent.push(i);
+
+        this.setState({
+            lastIdContent:i,
+            listIdContent:newListIdContent
+        });
+    }
+
+    getAddContentButton(classes) {
 
         return (
-            <IconButton
+            <Button
+                id="clearMsg"
                 color="secondary"
                 variant="contained"
-                className={classes.icon}
-                onClick={() => this.handleAddVessel}
-                size="medium"
+                className={classes.button}
+                onClick={this.handleAddContent}
+                type="submit"
             >
-                (<AddBoxRounded  size="small"/>)
-            </IconButton>
+                Contents <AddBoxRounded className={classes.rightIcon}/>
+
+            </Button>
         )
     }
 
     // Submit button
     handleSubmit = () => {
-        console.log("IncidentForm handleSubmit ");
         this.sendMessage();
     }
 
@@ -236,7 +158,8 @@ class IncidentForm extends Component {
 
     // Submit button
     handleEnd = () => {
-        console.log("IncidentForm handleSubmit ");
+
+        this.getIncidentStore().cleanResources();
         this.props.onclose();
     }
 
@@ -268,7 +191,7 @@ class IncidentForm extends Component {
 
     // Remove vessel button
     handleRemoveVessel = (idx) => {
-        console.log("IncidentForm handleRemoveVessel idx "+idx);
+
         let newListIdVessel = this.state.listIdVessel.filter(value => value !== idx);
 
         this.setState({
@@ -276,49 +199,23 @@ class IncidentForm extends Component {
         });
     }
 
-    getIncidentLine(classes) {
-
-        return  (
-            <TableContainer component={Paper} >
-                <Table size="small" aria-label="a dense table">
-                    <TableBody>
-                        <TableRow>
-
-                            <TableCell>
-                                {this.getSelectType()}
-                            </TableCell>
-
-                            <TableCell>
-                                {this.getSelectSubType()}
-                            </TableCell>
-
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        )
+    // Content
+    getContentInput(classes) {
+        let contentList = [];
+        for (let i of this.state.listIdContent) {
+            contentList.push( this.getContentLine(classes, i));
+        }
+        return contentList;
     }
 
-    getPositionLine(classes) {
+    // Remove content button
+    handleRemoveContent = (idx) => {
 
-        return  (
-            <TableContainer component={Paper} >
-                <Table size="small" aria-label="a dense table">
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>
-                                {this.getLatitudineInput()}
-                            </TableCell>
+        let newListIdContent = this.state.listIdContent.filter(value => value !== idx);
 
-                            <TableCell>
-                                {this.getLongitudeInput()}
-                            </TableCell>
-
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        )
+        this.setState({
+            listIdContent:newListIdContent
+        });
     }
 
     getVesselLine(classes, idx) {
@@ -349,6 +246,33 @@ class IncidentForm extends Component {
         )
     }
 
+    getContentLine(classes, idx) {
+
+        return  (
+            <TableContainer component={Paper} key={idx} id={'content_'+idx}>
+                <Table size="small" aria-label="a dense table">
+                    <TableBody>
+                        <TableRow>
+                            <TableCell className={classes.cellicon}>
+                                <IconButton
+                                    variant="contained"
+                                    className={classes.icon}
+                                    onClick={() => this.handleRemoveContent(idx)}
+                                    size="medium"
+                                >
+                                    <IndeterminateCheckBoxRounded  size="large"/>
+                                </IconButton>
+                            </TableCell>
+                            <TableCell align={"left"}>
+                                <IncidentContentInput store={this.props.store} id={idx}/>
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        )
+    }
+
     getBottomButtons(classes) {
 
         return  (
@@ -373,36 +297,28 @@ class IncidentForm extends Component {
 
         const {classes} = this.props;
 
-        console.log("Render IncidentForm");
-
-       return (
+        return (
             <Box p="8px" mt="20px" mx="20px" bgcolor="#eeeeee">
                 <Paper  className={classes.root} >
                     <Grid container alignItems="flex-start" spacing={3}>
 
                         <Grid item xs={12}>
-                            <Typography variant="h6" component="h6" align={"left"}>
-                                Incident main info
-                            </Typography>
-                            {this.getIncidentLine(classes)}
+                            <IncidentMainInfoInput store={this.props.store} />
                         </Grid>
 
-                        <Grid item xs={12}>
-                            {this.getPositionLine(classes)}
-                        </Grid>
-
-                        <Grid item xs={12}>
+                         <Grid item xs={12}>
                             {this.getAddVesselButton(classes)}
+                            {this.getVesselInput(classes)}
                         </Grid>
 
                         <Grid item xs={12}>
-                            {this.getVesselInput(classes)}
+                            {this.getAddContentButton(classes)}
+                            {this.getContentInput(classes)}
                         </Grid>
 
                         <Grid item xs={12}>
                             {this.getBottomButtons(classes)}
                         </Grid>
-
 
                     </Grid>
                 </Paper>
@@ -415,16 +331,20 @@ class IncidentForm extends Component {
 
         incidentMsg.incident = this.getIncidentStore().getIncidentInputInfo();
         for (let id of this.state.listIdVessel) {
-            incidentMsg.vesselList.push(this.getIncidentStore().getVesselInputArrayItem(id))
+            const item = this.getIncidentStore().getVesselInputArrayItem(id);
+            if (  item.vesselType && item.role && item.imoNumber && item.mmsi) {
+                incidentMsg.vesselList.push(item)
+            }
         }
 
-        console.log("sendMessage " + incidentMsg);
-        // todo incidentMsg.contentList;
+        for (let id of this.state.listIdContent) {
+            const item = this.getIncidentStore().getContentInputArrayItem(id);
+            if ( item.content && item.mediaType) {
+                incidentMsg.contentList.push(item);
+            }
+        }
 
         const result = this.getIncidentStore().sendIncidentMessage(incidentMsg);
-
-        console.log("sendMessage result " + result);
-
     }
 }
 

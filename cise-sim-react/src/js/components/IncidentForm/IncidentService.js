@@ -18,7 +18,7 @@ export async function getvaluesIncident() {
 }
 
 export async function sendIncidentMessage(incidentMsg) {
-    console.log("sendIncidentMessage");
+
     const response = await http_post("messages/incident/send", incidentMsg);
 
     if (response.errorCode) {

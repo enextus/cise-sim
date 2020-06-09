@@ -19,8 +19,7 @@ public class VesselInfoDto implements Serializable {
     private String role;
     private String imoNumber;
     private String mmsi;
-//    private Long imoNumber;
-//    private Long mmsi;
+
 
     public String getVesselType() {
         return vesselType;
