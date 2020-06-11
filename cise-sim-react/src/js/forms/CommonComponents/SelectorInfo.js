@@ -29,11 +29,13 @@ const selectorInfo = (props)  => {
 
 
     const [myValue, setMyValue] = React.useState('empty');
+    const [currentList, setCurrList] = React.useState('');
 
     const {classes} = props;
 
     const handleChange = (event) => {
         setMyValue(event.target.value);
+        setCurrList(props.listValueLabel[0]);
         props.change(event);
     }
 
@@ -44,7 +46,7 @@ const selectorInfo = (props)  => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 onChange={handleChange}
-                value={myValue}
+                value={currentList === props.listValueLabel[0] ? myValue:'empty'}
             >
                 <MenuItem selected={true} value="empty">
                     <em>Please choice</em>
