@@ -2,6 +2,7 @@ import {getvaluesIncident, sendIncidentMessage} from "./IncidentService";
 import UserVesselInput from "./inputs/UserVesselInput";
 import UserIncidentInput from "./inputs/UserIncidentInput";
 import UserContentInput from "./inputs/UserContentInput";
+import {buildValueLabelMap} from "../CommonComponents/HelperFunctions";
 
 export default class IncidentStore {
 
@@ -34,23 +35,14 @@ export default class IncidentStore {
         let tmpType = [];
         for (let labelIncidentType of labelIncidentTypeArray) {
             tmpType.push(labelIncidentType.type);
-            this.labelIncidentSubTypeList[labelIncidentType.type] = this.buildValueLabelMap(labelIncidentType.subTypeList);
+            this.labelIncidentSubTypeList[labelIncidentType.type] = buildValueLabelMap(labelIncidentType.subTypeList);
         }
-        this.labelIncidentType = this.buildValueLabelMap(tmpType);
+        this.labelIncidentType = buildValueLabelMap(tmpType);
     }
 
     setValueAndLabelOnVesselAndRole(labelVessel) {
-        this.labelVesselTypeList = this.buildValueLabelMap(labelVessel.typeList);
-        this.labelRoleList = this.buildValueLabelMap(labelVessel.roleList);
-    }
-
-    buildValueLabelMap(valueList) {
-        let labelMap = [];
-        for (let val of valueList) {
-            let lab = val[0] + val.substring(1).replace(/[A-Z][a-z]*/g, str => ' ' + str.toLowerCase());
-            labelMap.push({value:val, label:lab});
-        }
-        return labelMap
+        this.labelVesselTypeList = buildValueLabelMap(labelVessel.typeList);
+        this.labelRoleList = buildValueLabelMap(labelVessel.roleList);
     }
 
     //--------------------------------------------

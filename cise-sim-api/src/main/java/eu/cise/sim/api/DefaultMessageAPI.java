@@ -36,10 +36,10 @@ public class DefaultMessageAPI implements MessageAPI {
     private final SynchronousAcknowledgementFactory synchronousAcknowledgementFactory = new SynchronousAcknowledgementFactory();
 
     public DefaultMessageAPI(MessageProcessor engineMessageProcessor,
-                      MessageStorage<Object> messageStorage,
-                      TemplateLoader templateLoader,
-                      XmlMapper xmlMapper,
-                      XmlMapper prettyNotValidatingXmlMapper) {
+                             MessageStorage<Object> messageStorage,
+                             TemplateLoader templateLoader,
+                             XmlMapper xmlMapper,
+                             XmlMapper prettyNotValidatingXmlMapper) {
 
         this.engineMessageProcessor = engineMessageProcessor;
         this.messageStorage = messageStorage;
@@ -61,9 +61,9 @@ public class DefaultMessageAPI implements MessageAPI {
             Pair<Acknowledgement, Message> sendResponse = engineMessageProcessor.send(message, sendParam);
 
             return new SendResponse.OK(
-                new MessageApiDto(
-                    prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
-                    prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
+                    new MessageApiDto(
+                            prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
+                            prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
 
         } catch (Exception e) {
             logger.error("Error sending a message to destination.url", e);
@@ -81,13 +81,15 @@ public class DefaultMessageAPI implements MessageAPI {
             boolean requiresAck = false;
             String messageId = UUID.randomUUID().toString();
             String correlationId = messageId;
-            SendParam sendParam = new  SendParam(requiresAck, messageId, correlationId);
+            SendParam sendParam = new SendParam(requiresAck, messageId, correlationId);
             Pair<Acknowledgement, Message> sendResponse = engineMessageProcessor.send(message, sendParam);
 
-            return new SendResponse.OK(
+            SendResponse response = new SendResponse.OK(
                     new MessageApiDto(
                             prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
                             prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
+            response.setAcknowledgement(sendResponse.getA());
+            return response;
 
         } catch (Exception e) {
             logger.error("Error sending a message to destination.url", e);
@@ -116,20 +118,20 @@ public class DefaultMessageAPI implements MessageAPI {
 
         } catch (InvalidMessageSignatureEx | SigningCACertInvalidSignatureEx eInvalidSignature) {
             return synchronousAcknowledgementFactory
-                .buildAck(message, SynchronousAcknowledgementType.INVALID_SIGNATURE,
-                    "" + eInvalidSignature.getMessage());
+                    .buildAck(message, SynchronousAcknowledgementType.INVALID_SIGNATURE,
+                            "" + eInvalidSignature.getMessage());
         } catch (XmlNotParsableException eXmlMalformed) {
             return synchronousAcknowledgementFactory
-                .buildAck(message, SynchronousAcknowledgementType.XML_MALFORMED,
-                    "" + eXmlMalformed.getMessage());
+                    .buildAck(message, SynchronousAcknowledgementType.XML_MALFORMED,
+                            "" + eXmlMalformed.getMessage());
         } catch (NullSenderEx eSemantic) {
             return synchronousAcknowledgementFactory
-                .buildAck(message, SynchronousAcknowledgementType.SEMANTIC,
-                    "" + eSemantic.getMessage());
+                    .buildAck(message, SynchronousAcknowledgementType.SEMANTIC,
+                            "" + eSemantic.getMessage());
         } catch (Exception eAny) {
             return synchronousAcknowledgementFactory
-                .buildAck(message, SynchronousAcknowledgementType.INTERNAL_ERROR,
-                    "Unknown Error : " + eAny.getMessage());
+                    .buildAck(message, SynchronousAcknowledgementType.INTERNAL_ERROR,
+                            "Unknown Error : " + eAny.getMessage());
         }
 
 

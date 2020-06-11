@@ -3,10 +3,7 @@ package eu.cise.sim.api.history;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class IdTimestampCache {
@@ -43,7 +40,7 @@ public class IdTimestampCache {
 
         synchronized (cacheMap) {
             cacheMap.put(id, timestamp);
-            LOGGER.info("Added id {}, timestamp {}, size {}", id, timestamp, cacheMap.size());
+            LOGGER.info("Added id {}, timestamp {}, size {}", id, new Date(timestamp), cacheMap.size());
 
             checkSize();
         }
@@ -61,7 +58,7 @@ public class IdTimestampCache {
                     .collect(Collectors.toSet());
         }
 
-        LOGGER.info("getCorrelationIdAfter timestamp {}, returned {} id's", timestamp, idSet.size());
+        LOGGER.info("getCorrelationIdAfter timestamp {}, returned {} id's", new Date(timestamp), idSet.size());
 
         return idSet;
     }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 
-import IncidentSelect from "./IncidentSelectorInfo";
+import IncidentSelect from "../../CommonComponents/SelectorInfo";
 import Tooltip from "@material-ui/core/Tooltip";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";

@@ -1,17 +1,19 @@
 package eu.cise.sim.api;
 
+import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.sim.api.dto.MessageApiDto;
+import org.glassfish.pfl.basic.logex.Message;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class SendResponse implements Serializable {
-
-    private static final long serialVersionUID = 42L;
+public abstract class SendResponse {
 
     private final MessageApiDto contents;
     protected String errorMessage;
     protected boolean ok = true;
+
+    private Message message;
+    private Acknowledgement acknowledgement;
 
     public SendResponse(MessageApiDto contents) {
         this.contents = contents;
@@ -57,5 +59,19 @@ public abstract class SendResponse implements Serializable {
         }
     }
 
+    public Message getMessage() {
+        return message;
+    }
 
+    public void setMessage(Message message) {
+        this.message = message;
+    }
+
+    public Acknowledgement getAcknowledgement() {
+        return acknowledgement;
+    }
+
+    public void setAcknowledgement(Acknowledgement acknowledgement) {
+        this.acknowledgement = acknowledgement;
+    }
 }

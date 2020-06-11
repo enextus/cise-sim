@@ -11,9 +11,6 @@ public class MessageApiDto implements Serializable {
     private String body;
     private String acknowledge;
 
-    public MessageApiDto() {
-    }
-
     public MessageApiDto(String acknowledge, String body) {
         this.body = body;
         this.acknowledge = acknowledge;

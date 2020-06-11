@@ -12,22 +12,30 @@ const styles = theme => ({
     },
 });
 
+/**
+ *
+ *  title: Title of the selector
+ *  listValueLabel: List of couple label and value
+ *  change: notification function of the selected value like :
+ *              handleChange = (event) => {
+ *                  value = event.target.value;
+ *              }
+ *
+ * @param props
+ *
+ * @returns {*}
+ */
+const selectorInfo = (props)  => {
 
-// title
-// listValueLabel
-const incidentSelectorInfo = (props)  => {
 
-    const [myValue, setMyValue] = React.useState('');
+    const [myValue, setMyValue] = React.useState('empty');
 
     const {classes} = props;
 
-
     const handleChange = (event) => {
-        console.log("incidentSelectorInfo select " +event.target.value);
         setMyValue(event.target.value);
         props.change(event);
     }
-
 
     return (
         <FormControl className={classes.formControl}>
@@ -48,5 +56,5 @@ const incidentSelectorInfo = (props)  => {
     )
 }
 
+export default withStyles(styles)(selectorInfo);
 
-export default withStyles(styles)(incidentSelectorInfo)

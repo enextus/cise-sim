@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Grid} from '@material-ui/core';
 import TransitionsModal from "./SendMessageModal";
 import IncidentMessageModal from "./IncidentMessageModal";
+import DiscoveryMessageModal from "./DiscoveryMessageModal";
 
 // Set of utility/functional Buttons
 export default class ButtonsPanel extends Component {
@@ -12,6 +13,7 @@ export default class ButtonsPanel extends Component {
             <Grid container  alignItems="flex-start" justify="flex-start" direction="row">
                     <TransitionsModal store={this.props.store} />
                     <IncidentMessageModal store={this.props.store} />
+                    <DiscoveryMessageModal store={this.props.store} />
             </Grid>
         )
     }

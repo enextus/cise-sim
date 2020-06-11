@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import IncidentSelect from "./IncidentSelectorInfo";
+import IncidentSelect from "../../CommonComponents/SelectorInfo";
 import Tooltip from "@material-ui/core/Tooltip";
 import {Paper, TextField} from "@material-ui/core";
 import {withStyles} from "@material-ui/core/styles";
