@@ -41,10 +41,10 @@ const selectorInfo = (props)  => {
 
     return (
         <FormControl className={classes.formControl}>
-            <InputLabel>{props.title}</InputLabel>
+            <InputLabel id={"selectorinfo_" + props.title}>{props.title}</InputLabel>
             <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId={"selectorinfo_" + props.title}
+                id={"selector_" + props.title}
                 onChange={handleChange}
                 value={currentList === props.listValueLabel[0] ? myValue:'empty'}
             >
