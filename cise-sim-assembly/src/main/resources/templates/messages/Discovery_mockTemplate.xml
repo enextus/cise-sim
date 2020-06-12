@@ -13,6 +13,6 @@
 		<ServiceStatus>Online</ServiceStatus>
 		<ServiceType>VesselService</ServiceType>
 	</Sender>
-	<PullType>Request</PullType>
+	<PullType>Discover</PullType>
 	<ResponseTimeOut>1000</ResponseTimeOut>
 </ns4:PullRequest>
