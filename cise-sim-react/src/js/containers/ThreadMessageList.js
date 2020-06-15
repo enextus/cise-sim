@@ -79,7 +79,7 @@ class ThreadMessageList extends Component {
         }
 
         // Do the ordering by timestamp
-        result.sort(function(a,b) {return b.dateTime-a.dateTime});
+        result.sort(function(a,b) {return b.mostRecentTimestamp-a.mostRecentTimestamp});
 
 
         return result;
