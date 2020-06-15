@@ -127,7 +127,7 @@ class IncidentForm extends Component {
                 onClick={this.handleAddContent}
                 type="submit"
             >
-                Contents <AddBoxRounded className={classes.rightIcon}/>
+                Attach documents <AddBoxRounded className={classes.rightIcon}/>
 
             </Button>
         )
@@ -174,7 +174,7 @@ class IncidentForm extends Component {
                 onClick={this.handleEnd}
                 type="submit"
             >
-                Had enough
+                Close
                 <CloseRoundedIcon className={classes.rightIcon}/>
 
             </Button>

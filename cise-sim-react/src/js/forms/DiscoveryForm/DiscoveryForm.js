@@ -132,7 +132,7 @@ class DiscoveryForm extends Component {
                 onClick={this.handleEnd}
                 type="submit"
             >
-                Had enough
+                Close
                 <CloseRoundedIcon className={classes.rightIcon}/>
 
             </Button>

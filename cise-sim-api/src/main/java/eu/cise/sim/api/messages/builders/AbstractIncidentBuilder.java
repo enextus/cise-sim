@@ -66,6 +66,8 @@ public abstract class AbstractIncidentBuilder implements IncidentBuilder {
         for (ContentInfoDto contentInfoDto : contentList) {
             VesselDocument document = new VesselDocument();
             document.setContent(Base64.getDecoder().decode(contentInfoDto.getContent())); // NB this method do also the encode 64
+            document.setTitle(contentInfoDto.getName());
+
             /*
             Metadata metadata = new Metadata();
             metadata.setFileMediaType();
@@ -73,7 +75,6 @@ public abstract class AbstractIncidentBuilder implements IncidentBuilder {
             */
             Event.DocumentRel documentRel = new Event.DocumentRel();
             documentRel.setDocument(document);
-
             msg.getDocumentRels().add(documentRel);
         }
 

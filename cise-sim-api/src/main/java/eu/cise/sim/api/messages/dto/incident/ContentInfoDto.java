@@ -8,6 +8,7 @@ public class ContentInfoDto  implements Serializable {
 
     private String content;
     private String mediaType;
+    private String name;
 
     public String getContent() {
         return content;
@@ -23,5 +24,13 @@ public class ContentInfoDto  implements Serializable {
 
     public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

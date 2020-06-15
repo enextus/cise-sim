@@ -6,5 +6,6 @@ export default class UserContentInput {
     constructor() {
         this.content = undefined;
         this.mediaType = undefined;
+        this.name = undefined;
      }
 }

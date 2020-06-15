@@ -44,6 +44,7 @@ class IncidentContentInput extends Component {
 
     handleInput= (event) => {
         this.setState({filename:event.target.files[0].name})
+        this.getIncidentStore().getContentInputArrayItem(this.props.id).name = event.target.files[0].name;
 
         const files = event.target.files;
 
@@ -60,6 +61,7 @@ class IncidentContentInput extends Component {
 
             this.getIncidentStore().getContentInputArrayItem(this.props.id).content   = e.target.result.substring(comma+1);
             this.getIncidentStore().getContentInputArrayItem(this.props.id).mediaType = e.target.result.substring(colon+1, semicolon);
+
         }
 
         // Read the file
@@ -82,7 +84,7 @@ class IncidentContentInput extends Component {
                                     <IconButton color="primary" aria-label="upload picture" component="span">
                                         <DescriptionRoundedIcon />
                                     </IconButton>
-                                    <input accept="application/pdf"  id={"icon-button-file"+this.props.id} type="file" style={{display:"none"}}  onChange={this.handleInput}/>
+                                    <input id={"icon-button-file"+this.props.id} type="file" style={{display:"none"}}  onChange={this.handleInput}/>
                                 </label>
                                 {this.state.filename}
                             </TableCell>
