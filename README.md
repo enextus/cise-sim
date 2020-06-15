@@ -103,8 +103,8 @@ services:
       - /srv/cise-sim-volumes/conf:/srv/cise-simulator/logs
       - /srv/cise-sim-volumes/conf:/srv/cise-simulator/msghistory
     ports:
-      - 8080:8080
-      - 8081:8081
+      - 8280:8080
+      - 8281:8081
 ``` 
 Be warned that in this example the configurable ports and directory are still the default. 
 
