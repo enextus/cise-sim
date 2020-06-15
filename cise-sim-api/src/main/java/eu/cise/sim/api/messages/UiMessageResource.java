@@ -1,6 +1,6 @@
 package eu.cise.sim.api.messages;
 
-import eu.cise.servicemodel.v1.message.Acknowledgement;
+
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.SendResponse;
@@ -34,7 +34,7 @@ public class UiMessageResource {
     @Produces("application/xml")
     public Response receive(String inputXmlMessage) {
 
-        Acknowledgement acknowledgement = messageAPI.receive(inputXmlMessage);
+        String acknowledgement = messageAPI.receiveXML(inputXmlMessage);
         return Response
                 .status(Response.Status.CREATED)
                 .entity(acknowledgement)

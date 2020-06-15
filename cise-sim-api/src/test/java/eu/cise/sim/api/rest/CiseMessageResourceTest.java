@@ -3,6 +3,8 @@ package eu.cise.sim.api.rest;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.io.MessageStorage;
+import eu.eucise.xml.DefaultXmlMapper;
+import eu.eucise.xml.XmlMapper;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -22,7 +24,7 @@ public class CiseMessageResourceTest {
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new MessageResource(messageAPI, messageStorage))
+            .addResource(new MessageResource(messageAPI))
             .bootstrapLogging(false)
             .build();
 
@@ -35,9 +37,10 @@ public class CiseMessageResourceTest {
     public void it_invokes_the_send_the_http_is_successful_201() {
         String message = MessageBuilderUtil.TEST_MESSAGE_XML;
         Acknowledgement acknowledgement = newAck().build();
-        when(messageAPI.receive(message)).thenReturn(acknowledgement);
+        XmlMapper prettyXmlNotValidMapper = new DefaultXmlMapper.PrettyNotValidating();
+        when(messageAPI.receiveXML(message)).thenReturn(prettyXmlNotValidMapper.toXML(acknowledgement));
 
-        MessageResource ciseMessageResource = new MessageResource(messageAPI, messageStorage);
+        MessageResource ciseMessageResource = new MessageResource(messageAPI);
         Response response = ciseMessageResource.receive(message);
         assertThat(response.getStatus()).isEqualTo(201);
     }

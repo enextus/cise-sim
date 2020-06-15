@@ -36,8 +36,10 @@ public class TemplateResource {
         List<Template> templateList = templateListResponse.getTemplates();
 
         if (!templateListResponse.isOk()) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                .entity(new APIError(templateListResponse.getError())).build();
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(new APIError(templateListResponse.getError()))
+                    .build();
         }
 
         return Response.status(Response.Status.OK)

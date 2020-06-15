@@ -62,7 +62,6 @@ public class SimApp extends Application<SimConf> {
 
         MessageAPI messageAPI = new DefaultMessageAPI(
                 appCtx.makeMessageProcessor(fileMessagePersistence),
-                appCtx.makeMessageStorage(),
                 appCtx.makeTemplateLoader(),
                 appCtx.getXmlMapper(),
                 appCtx.getPrettyNotValidatingXmlMapper());
@@ -82,7 +81,8 @@ public class SimApp extends Application<SimConf> {
 
         environment.jersey().register(new UiMessageResource(messageAPI));
         environment.jersey().register(new UIServiceResource(appCtx.makeEmuConfig()));
-        environment.jersey().register(new MessageResource(messageAPI, appCtx.makeMessageStorage()));
+        environment.jersey().register(new MessageResource(messageAPI));
+        //environment.jersey().register(new MessageResourceJersey(messageAPI,  appCtx.getXmlMapper()));
         environment.jersey().register(new TemplateResource(messageAPI, templateAPI));
 
         environment.jersey().register(new HistoryResource(historyAPI));
