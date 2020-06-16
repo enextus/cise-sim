@@ -1,12 +1,8 @@
 package eu.cise.dispatcher.soap;
 
-import static javax.xml.ws.handler.MessageContext.MESSAGE_OUTBOUND_PROPERTY;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 import javax.annotation.Resource;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
@@ -20,8 +16,9 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.*;
+
+import static javax.xml.ws.handler.MessageContext.MESSAGE_OUTBOUND_PROPERTY;
 
 @WebService(name = "WsHandler", targetNamespace = "http://www.cise.eu/accesspoint/service/v1/")
 @HandlerChain(file = "handlers.xml")
@@ -44,10 +41,10 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
         try {
             Boolean outboundProperty = (Boolean) messageContext.get(MESSAGE_OUTBOUND_PROPERTY);
 
-            logger.info("Outbound message: {}", messageContext.getMessage());
+            logger.info("Outbound message: {}", messageContext.getMessage().getSOAPBody().toString());
 
             if (!outboundProperty) {
-                logger.info("Inbound message: {}", messageContext.getMessage());
+                logger.info("Inbound message: {}", messageContext.getMessage().getSOAPBody().toString());
                 return true;
             }
 

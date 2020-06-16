@@ -1,9 +1,9 @@
 package eu.cise.sim.api.soap;
 
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
-import eu.cise.sim.api.MessageAPI;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.sim.api.MessageAPI;
 import eu.eucise.xml.XmlMapper;
 
 import javax.jws.WebService;
@@ -34,7 +34,7 @@ public class CISEMessageServiceSoapImplDefault implements CISEMessageServiceSoap
 
     @Override
     public Acknowledgement send(Message message) {
-        Acknowledgement acknowledgement = messageAPI.receive(xmlMapper.toXML(message));
+        Acknowledgement acknowledgement = messageAPI.receive(message);
         return acknowledgement;
     }
 

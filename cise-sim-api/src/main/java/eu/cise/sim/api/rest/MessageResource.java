@@ -1,8 +1,6 @@
 package eu.cise.sim.api.rest;
 
-import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.sim.api.MessageAPI;
-import eu.cise.sim.io.MessageStorage;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -15,12 +13,10 @@ public class MessageResource {
 
     public static final String ERROR = "ERROR";
     private final MessageAPI messageAPI;
-    private final MessageStorage messageStorage;
 
 
-    public MessageResource(MessageAPI messageAPI, MessageStorage messageStorage) {
+    public MessageResource(MessageAPI messageAPI) {
         this.messageAPI = messageAPI;
-        this.messageStorage = messageStorage;
     }
 
     @POST
@@ -28,7 +24,8 @@ public class MessageResource {
     @Produces("application/xml")
     public Response receive(String inputXmlMessage) {
 
-        Acknowledgement acknowledgement = messageAPI.receive(inputXmlMessage);
+        String acknowledgement = messageAPI.receiveXML(inputXmlMessage);
+
         return Response
                 .status(Response.Status.CREATED)
                 .entity(acknowledgement)

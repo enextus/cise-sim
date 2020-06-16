@@ -3,9 +3,9 @@ import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import {Button} from "@material-ui/core";
-import SendRoundedIcon from '@material-ui/icons/SendRounded';
-import IncidentForm from "../forms/IncidentForm/IncidentForm";
 import Slide from "@material-ui/core/Slide";
+import DiscoveryForm from "../forms/DiscoveryForm/DiscoveryForm";
+import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded';
 
 const styles = theme => ({
     modal: {
@@ -32,7 +32,7 @@ const styles = theme => ({
 });
 
 
-const incidentMessageModal = (props) => {
+const discoveryMessageModal = (props) => {
 
     const {classes} = props;
     const [open, setOpen] = React.useState(false);
@@ -54,8 +54,8 @@ const incidentMessageModal = (props) => {
                 variant="contained"
                 className={classes.button}
                 onClick={handleOpen}>
-                Incident Message
-                <SendRoundedIcon className={classes.rightIcon}/>
+                Discovery Message
+                <LanguageRoundedIcon className={classes.rightIcon}/>
 
             </Button>
         )
@@ -80,9 +80,9 @@ const incidentMessageModal = (props) => {
                 }}>
 
                 <Slide direction="down" in={open} mountOnEnter unmountOnExit timeout={2000}>
-                    <div id="create-incident-message">
+                    <div id="create-discovery-message">
 
-                   <IncidentForm store={props.store} id="create-and-send-incident-message" onclose={handleClose}/>
+                   <DiscoveryForm store={props.store} id="create-and-send-discovery-message" onclose={handleClose}/>
                     </div>
                 </Slide>
 
@@ -92,4 +92,4 @@ const incidentMessageModal = (props) => {
     );
 }
 
-export default withStyles(styles)(incidentMessageModal);
+export default withStyles(styles)(discoveryMessageModal);

@@ -8,7 +8,6 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
 import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.engine.*;
-import eu.cise.sim.io.MessageStorage;
 import eu.cise.sim.templates.DefaultTemplateLoader;
 import eu.cise.sim.templates.TemplateLoader;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -25,9 +24,6 @@ import javax.ws.rs.core.MediaType;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 public class RestMessageReceiveTest {
 
@@ -135,7 +131,6 @@ public class RestMessageReceiveTest {
                 )
         );
 
-        MessageStorage messageStorage = mock(MessageStorage.class);
 
         String messageStr = MessageBuilderUtil.TEST_MESSAGE_XML;
 
@@ -153,14 +148,12 @@ public class RestMessageReceiveTest {
 
         MessageAPI messageAPI = new DefaultMessageAPI(
                 messageProcessor,
-                messageStorage,
-               templateLoader,
+                templateLoader,
                 xmlMapperNoValidPretty,
                 xmlMapperNoValidNoPretty);
 
-        Acknowledgement response = messageAPI.receive(messageSignStr);
+        Acknowledgement response = messageAPI.receive(messageToSign);
 
-        verify(messageStorage).store(any());
 
         assertThat(response.getAckCode()).isEqualTo(AcknowledgementType.SUCCESS);
 

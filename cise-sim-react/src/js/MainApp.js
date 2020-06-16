@@ -6,7 +6,8 @@ import TemplateStore from './stores/templates/TemplateStore';
 import MessageStore from './stores/messages/MessageStore';
 import ServiceStore from './stores/services/ServiceStore';
 import {autorun} from 'mobx';
-import IncidentStore from "./components/IncidentForm/IncidentStore";
+import IncidentStore from "./forms/IncidentForm/IncidentStore";
+import DiscoveryStore from "./forms/DiscoveryForm/DiscoveryStore";
 
 
 const stores = {
@@ -14,12 +15,15 @@ const stores = {
     messageStore: new MessageStore(),
     serviceStore: new ServiceStore(),
     incidentStore: new IncidentStore(),
+    discoveryStore: new DiscoveryStore(),
+
 };
 
 autorun(() => {
     stores.serviceStore.loadServiceSelf();
     stores.messageStore.startPullHistoryProgressive();
     stores.incidentStore.getLabels();
+    stores.discoveryStore.getLabels();
 });
 
 @observer

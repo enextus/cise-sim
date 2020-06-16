@@ -4,17 +4,14 @@ package eu.cise.sim.api.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class MessageApiDto implements Serializable {
+public class MessageBodyAckDto implements Serializable {
 
     private static final long serialVersionUID = 42L;
 
     private String body;
     private String acknowledge;
 
-    public MessageApiDto() {
-    }
-
-    public MessageApiDto(String acknowledge, String body) {
+    public MessageBodyAckDto(String acknowledge, String body) {
         this.body = body;
         this.acknowledge = acknowledge;
     }
@@ -23,7 +20,7 @@ public class MessageApiDto implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MessageApiDto that = (MessageApiDto) o;
+        MessageBodyAckDto that = (MessageBodyAckDto) o;
         return body.equals(that.body) &&
                 acknowledge.equals(that.acknowledge);
     }

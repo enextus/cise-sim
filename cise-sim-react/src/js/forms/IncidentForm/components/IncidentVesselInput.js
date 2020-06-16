@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import IncidentSelect from "./IncidentSelectorInfo";
+import IncidentSelect from "../../CommonComponents/SelectorInfo";
 import Tooltip from "@material-ui/core/Tooltip";
 import {Paper, TextField} from "@material-ui/core";
 import {withStyles} from "@material-ui/core/styles";
@@ -42,7 +42,6 @@ class IncidentVesselInput extends Component {
     handleChangeVesselType = (event) => {
         console.log("IncidentVesselInput handleChangeVesselType " +event.target.value);
         this.getIncidentStore().getVesselInputArrayItem(this.props.id).vesselType = event.target.value;
-        this.checkIsValid(this.props.id);
     }
 
     getSelectVessel() {
@@ -58,7 +57,6 @@ class IncidentVesselInput extends Component {
     handleChangeRole = (event) => {
         console.log("IncidentVesselInput handleChangeRole " +event.target.value);
         this.getIncidentStore().getVesselInputArrayItem(this.props.id).role = event.target.value;
-        this.checkIsValid(this.props.id);
 
     }
 
@@ -75,7 +73,6 @@ class IncidentVesselInput extends Component {
     handleChangeImonumber = (event) => {
         console.log("IncidentVesselInput handleChangeImonumber " +event.target.value);
         this.getIncidentStore().getVesselInputArrayItem(this.props.id).imoNumber = event.target.value;
-        this.checkIsValid(this.props.id);
     }
 
     getImonumberInput() {
@@ -96,7 +93,6 @@ class IncidentVesselInput extends Component {
     handleChangeMmsi = (event) => {
         console.log("IncidentVesselInput handleChangeMmsi " +event.target.value);
         this.getIncidentStore().getVesselInputArrayItem(this.props.id).mmsi = event.target.value;
-        this.checkIsValid(this.props.id);
     }
 
     getMmsiInput() {
@@ -113,22 +109,9 @@ class IncidentVesselInput extends Component {
         </Tooltip>
     }
 
-    checkIsValid(idx) {
-        /*
-        let vesselInput = this.getIncidentStore().getVesselInputArrayItem(this.props.id);
-        vesselInput.isValid = vesselInput.vesselType !== undefined
-                                && vesselInput.role!== undefined
-                                && vesselInput.imoNumber!== undefined
-                                && vesselInput.mmsi!== undefined;
-
-         */
-    }
-
     render() {
 
         const {classes} = this.props;
-
-        console.log("Render IncidentVesselInput");
 
         return (
             <TableContainer component={Paper} >

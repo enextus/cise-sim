@@ -1,8 +1,7 @@
-package eu.cise.sim.api.messages.builders;
+package eu.cise.sim.utils;
 
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.servicemodel.v1.message.PullRequest;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 
@@ -23,7 +22,7 @@ public class MockMessage {
        return XML_MAPPER.fromXML(message);
     }
 
-    public static PullRequest getDiscoveryMessage() throws IOException {
+    public static Message getDiscoveryMessage() throws IOException {
 
         String message =  readResource("Discovery_mockTemplate.xml");
 

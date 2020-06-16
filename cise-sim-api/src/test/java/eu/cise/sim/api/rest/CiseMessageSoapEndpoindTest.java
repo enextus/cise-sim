@@ -24,7 +24,7 @@ public class CiseMessageSoapEndpoindTest {
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new MessageResource(messageAPI, messageStorage))
+            .addResource(new MessageResource(messageAPI))
             .bootstrapLogging(false)
             .build();
 
@@ -39,7 +39,7 @@ public class CiseMessageSoapEndpoindTest {
     public void it_invokes_the_service_the_http_is_successful_201() {
         String message = MessageBuilderUtil.TEST_MESSAGE_SOAP;
 
-        MessageResource ciseMessageResource = new MessageResource(messageAPI, messageStorage);
+        MessageResource ciseMessageResource = new MessageResource(messageAPI);
         Response response = ciseMessageResource.receive(message);
         assertThat(response.getStatus()).isEqualTo(201);
     }

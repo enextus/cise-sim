@@ -1,28 +1,27 @@
 package eu.cise.sim.SynchronousAcknowledgement;
 
-import static com.google.common.base.Strings.isNullOrEmpty;
-import static eu.cise.sim.helpers.Asserts.notNull;
-import static eu.eucise.helpers.AckBuilder.newAck;
-import static eu.eucise.helpers.ServiceBuilder.newService;
-
-import eu.cise.sim.exceptions.NullClockEx;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
-import eu.cise.servicemodel.v1.message.AcknowledgementType;
-import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.servicemodel.v1.message.PriorityType;
-import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.Service;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
+import eu.cise.sim.exceptions.NullClockEx;
+import eu.cise.sim.utils.MockMessage;
 import eu.eucise.helpers.AckBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 import java.sql.Date;
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static eu.cise.sim.helpers.Asserts.notNull;
+import static eu.eucise.helpers.AckBuilder.newAck;
+import static eu.eucise.helpers.ServiceBuilder.newService;
 
 public class SynchronousAcknowledgementFactory {
 
@@ -123,6 +122,21 @@ public class SynchronousAcknowledgementFactory {
 
         Acknowledgement acknowledgement = ackBuilder.build();
         acknowledgement.setPayload(null);
+
+        // Mock discovery services
+        if (message instanceof PullRequest) {
+            PullRequest msgPull = (PullRequest) message;
+            if (msgPull.getPullType() == PullType.DISCOVER) {
+
+                try {
+                    Acknowledgement mockDiscovery = MockMessage.getDiscoveryAckSynch();
+                    acknowledgement.getDiscoveredServices().addAll(mockDiscovery.getDiscoveredServices());
+                } catch (IOException e) {
+                    LOGGER.warn("Adding discovered services throw exception {}", e.getMessage());
+                }
+            }
+        }
+
         return acknowledgement;
     }
 

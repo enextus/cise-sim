@@ -11,7 +11,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import EmailIcon from "@material-ui/icons/Email";
-import XmlContent from "../common/XmlContent";
+import XmlContent from "../../components/common/XmlContent";
 
 
 const styles = theme => ({

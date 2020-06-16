@@ -90,7 +90,7 @@ public class FileMessagePersistence implements HistoryMessagePersistence {
     public List<MessageShortInfoDto> getThreadsAfter(long timestamp) {
 
         Set<String> correlationIdSet = idTimestampCache.getIdAfter(timestamp);
-        List<MessageShortInfoDto> shortInfoDtoList = getMessagesFilterByCorrelationId(correlationIdSet);
+        List<MessageShortInfoDto> shortInfoDtoList = getMessagesFilterByCorrelationId(correlationIdSet, timestamp);
 
         LOGGER.info("getShortInfoAfter timestamp[{}} number of messages[{}]", new Date(timestamp), shortInfoDtoList.size());
 
@@ -160,7 +160,7 @@ public class FileMessagePersistence implements HistoryMessagePersistence {
      * @param correlationIdSet Set of correlation id
      * @return List of MessageShortInfoDto with correlation id contained in correlationIdSet
      */
-    private List<MessageShortInfoDto> getMessagesFilterByCorrelationId(Set<String> correlationIdSet) {
+    private List<MessageShortInfoDto> getMessagesFilterByCorrelationId(Set<String> correlationIdSet, long afterTimestamp) {
 
         List<MessageShortInfoDto> resultList = new ArrayList<>();
 
@@ -184,7 +184,9 @@ public class FileMessagePersistence implements HistoryMessagePersistence {
                     Date timestamp      = fileNameRepository.getTimestamp();
                     String uuid         = fileNameRepository.getUuid();
 
-                    resultList.add(MessageShortInfoDto.getInstance(message, msgIsSent, timestamp, uuid));
+                    if (timestamp.getTime() > afterTimestamp) {
+                        resultList.add(MessageShortInfoDto.getInstance(message, msgIsSent, timestamp, uuid));
+                    }
                 }
 
             } catch (IOException | ParseException e) {

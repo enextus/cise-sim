@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.SendResponse;
 import eu.cise.sim.api.TemplateAPI;
-import eu.cise.sim.api.dto.MessageApiDto;
+import eu.cise.sim.api.dto.MessageBodyAckDto;
 import eu.cise.sim.templates.Template;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
@@ -44,7 +44,7 @@ public class TemplateResourceSendTest {
         xmlMapper = new DefaultXmlMapper();
         jsonMapper = new ObjectMapper();
         expectedTemplate = new Template("template-id-#1", "name-#1");
-        when(messageAPI.send(any(), any())).thenReturn(new SendResponse.OK(new MessageApiDto( "", "")));
+        when(messageAPI.send(any(), any())).thenReturn(new SendResponse.OK(new MessageBodyAckDto( "", "")));
     }
 
     @After

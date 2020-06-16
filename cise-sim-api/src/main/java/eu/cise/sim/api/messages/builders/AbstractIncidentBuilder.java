@@ -8,10 +8,12 @@ import eu.cise.datamodel.v1.entity.location.Geometry;
 import eu.cise.datamodel.v1.entity.location.Location;
 import eu.cise.datamodel.v1.entity.vessel.Vessel;
 import eu.cise.datamodel.v1.entity.vessel.VesselType;
+import eu.cise.sim.api.messages.dto.incident.ContentInfoDto;
 import eu.cise.sim.api.messages.dto.incident.IncidentInfoDto;
 import eu.cise.sim.api.messages.dto.incident.IncidentRequestDto;
 import eu.cise.sim.api.messages.dto.incident.VesselInfoDto;
 
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -60,13 +62,19 @@ public abstract class AbstractIncidentBuilder implements IncidentBuilder {
 
         }
 
-        List<String> contentList = incidentRequestDto.getContentList();
-        for (String content : contentList) {
+        List<ContentInfoDto> contentList = incidentRequestDto.getContentList();
+        for (ContentInfoDto contentInfoDto : contentList) {
             VesselDocument document = new VesselDocument();
-            document.setContent(content.getBytes()); // NB this method doalso the encode 64
+            document.setContent(Base64.getDecoder().decode(contentInfoDto.getContent())); // NB this method do also the encode 64
+            document.setTitle(contentInfoDto.getName());
+
+            /*
+            Metadata metadata = new Metadata();
+            metadata.setFileMediaType();
+            document.getMetadatas()
+            */
             Event.DocumentRel documentRel = new Event.DocumentRel();
             documentRel.setDocument(document);
-
             msg.getDocumentRels().add(documentRel);
         }
 

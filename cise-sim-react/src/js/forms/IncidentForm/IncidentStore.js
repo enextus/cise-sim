@@ -1,6 +1,8 @@
-import {getvaluesIncident, sendIncidentMessage} from "./IncidentService";
-import UserVesselInput from "./UserVesselInput";
-import UserIncidentInput from "./UserIncidentInput";
+import {getValuesIncident, sendIncidentMessage} from "./IncidentService";
+import UserVesselInput from "./inputs/UserVesselInput";
+import UserIncidentInput from "./inputs/UserIncidentInput";
+import UserContentInput from "./inputs/UserContentInput";
+import {buildValueLabelMap} from "../CommonComponents/HelperFunctions";
 
 export default class IncidentStore {
 
@@ -11,7 +13,7 @@ export default class IncidentStore {
 
         console.log("IncidentStore initialization Starting ...");
 
-        const labelsIncidentDto = await getvaluesIncident();
+        const labelsIncidentDto = await getValuesIncident();
 
         this.setValueAndLabelOnIncidentAndSubtype(labelsIncidentDto.incidentList);
         this.setValueAndLabelOnVesselAndRole(labelsIncidentDto.vessel);
@@ -32,25 +34,15 @@ export default class IncidentStore {
 
         let tmpType = [];
         for (let labelIncidentType of labelIncidentTypeArray) {
-            //   this.labelIncidentType.push(labelIncidentType.type);
             tmpType.push(labelIncidentType.type);
-            this.labelIncidentSubTypeList[labelIncidentType.type] = this.buildValueLabelMap(labelIncidentType.subTypeList);
+            this.labelIncidentSubTypeList[labelIncidentType.type] = buildValueLabelMap(labelIncidentType.subTypeList);
         }
-        this.labelIncidentType = this.buildValueLabelMap(tmpType);
+        this.labelIncidentType = buildValueLabelMap(tmpType);
     }
 
     setValueAndLabelOnVesselAndRole(labelVessel) {
-        this.labelVesselTypeList = this.buildValueLabelMap(labelVessel.typeList);
-        this.labelRoleList = this.buildValueLabelMap(labelVessel.roleList);
-    }
-
-    buildValueLabelMap(valueList) {
-        let labelMap = [];
-        for (let val of valueList) {
-            let lab = val[0] + val.substring(1).replace(/[A-Z][a-z]*/g, str => ' ' + str.toLowerCase());
-            labelMap.push({value:val, label:lab});
-        }
-        return labelMap
+        this.labelVesselTypeList = buildValueLabelMap(labelVessel.typeList);
+        this.labelRoleList = buildValueLabelMap(labelVessel.roleList);
     }
 
     //--------------------------------------------
@@ -63,12 +55,27 @@ export default class IncidentStore {
     getIncidentInputInfo() {
         return this.incidentInputInfo;
     }
+
     vesselInputArray = [];
     getVesselInputArrayItem(idx) {
         if (!this.vesselInputArray[idx]) {
             this.vesselInputArray[idx] = new UserVesselInput();
         }
         return this.vesselInputArray[idx];
+    }
+
+    contentInputArray = [];
+    getContentInputArrayItem(idx) {
+        if (!this.contentInputArray[idx]) {
+            this.contentInputArray[idx] = new UserContentInput();
+        }
+        return this.contentInputArray[idx];
+    }
+
+    cleanResources() {
+        this.incidentInputInfo = new UserIncidentInput();
+        this.vesselInputArray = [];
+        this.contentInputArray = [];
     }
 
     //--------------------------------------------
