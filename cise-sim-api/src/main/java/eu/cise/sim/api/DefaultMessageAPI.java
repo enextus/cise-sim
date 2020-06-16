@@ -7,7 +7,7 @@ import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
 import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
-import eu.cise.sim.api.dto.MessageApiDto;
+import eu.cise.sim.api.dto.MessageBodyAckDto;
 import eu.cise.sim.api.helpers.SendParamsReader;
 import eu.cise.sim.engine.MessageProcessor;
 import eu.cise.sim.engine.SendParam;
@@ -57,7 +57,7 @@ public class DefaultMessageAPI implements MessageAPI {
             Pair<Acknowledgement, Message> sendResponse = engineMessageProcessor.send(message, sendParam);
 
             return new SendResponse.OK(
-                    new MessageApiDto(
+                    new MessageBodyAckDto(
                             prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
                             prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
 
@@ -81,7 +81,7 @@ public class DefaultMessageAPI implements MessageAPI {
             Pair<Acknowledgement, Message> sendResponse = engineMessageProcessor.send(message, sendParam);
 
             SendResponse response = new SendResponse.OK(
-                    new MessageApiDto(
+                    new MessageBodyAckDto(
                             prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
                             prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
             response.setAcknowledgement(sendResponse.getA());

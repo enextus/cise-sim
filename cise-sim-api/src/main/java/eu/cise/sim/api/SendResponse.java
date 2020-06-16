@@ -1,21 +1,22 @@
 package eu.cise.sim.api;
 
 import eu.cise.servicemodel.v1.message.Acknowledgement;
-import eu.cise.sim.api.dto.MessageApiDto;
+import eu.cise.sim.api.dto.MessageBodyAckDto;
 import org.glassfish.pfl.basic.logex.Message;
 
 import java.util.Objects;
 
+// TODO check if this class is still necessary ??
 public abstract class SendResponse {
 
-    private final MessageApiDto contents;
+    private final MessageBodyAckDto contents;
     protected String errorMessage;
     protected boolean ok = true;
 
     private Message message;
     private Acknowledgement acknowledgement;
 
-    public SendResponse(MessageApiDto contents) {
+    public SendResponse(MessageBodyAckDto contents) {
         this.contents = contents;
     }
 
@@ -27,7 +28,7 @@ public abstract class SendResponse {
         return ok;
     }
 
-    public MessageApiDto getContents() {
+    public MessageBodyAckDto getContents() {
         return contents;
     }
 
@@ -45,7 +46,7 @@ public abstract class SendResponse {
     }
 
     public static class OK extends SendResponse {
-        public OK(MessageApiDto contents) {
+        public OK(MessageBodyAckDto contents) {
             super(contents);
             this.errorMessage = null;
         }
