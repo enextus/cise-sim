@@ -48,36 +48,26 @@ public class DefaultMessageAPI implements MessageAPI {
     public SendResponse send(String templateId, JsonNode params) {
         logger.debug("send is passed through api templateId: {}, params: {}", templateId, params);
 
-        try {
-            Template template = templateLoader.loadTemplate(templateId);
-            String xmlContent = template.getTemplateContent();
+        Template template = templateLoader.loadTemplate(templateId);
+        String xmlContent = template.getTemplateContent();
 
-            Message message = xmlMapper.fromXML(xmlContent);
-            SendParam sendParam = new SendParamsReader().extractParams(params);
-            Pair<Acknowledgement, Message> sendResponse = engineMessageProcessor.send(message, sendParam);
-
-            return new SendResponse.OK(
-                    new MessageBodyAckDto(
-                            prettyNotValidatingXmlMapper.toXML(sendResponse.getA()),
-                            prettyNotValidatingXmlMapper.toXML(sendResponse.getB())));
-
-        } catch (Exception e) {
-            logger.error("Error sending a message to destination.url", e);
-            return new SendResponse.KO(e.getMessage());
-        }
+        Message message = xmlMapper.fromXML(xmlContent);
+        SendParam sendParam = new SendParamsReader().extractParams(params);
+        return send(message, sendParam);
     }
 
     @Override
     public SendResponse send(Message message) {
 
+            String messageId = UUID.randomUUID().toString();
+            SendParam sendParam = new SendParam(false, messageId, messageId);
+            return send(message, sendParam);
+    }
+
+    private  SendResponse send(Message message, SendParam sendParam) {
+
         try {
 
-
-            // todo know better the param
-            boolean requiresAck = false;
-            String messageId = UUID.randomUUID().toString();
-            String correlationId = messageId;
-            SendParam sendParam = new SendParam(requiresAck, messageId, correlationId);
             Pair<Acknowledgement, Message> sendResponse = engineMessageProcessor.send(message, sendParam);
 
             SendResponse response = new SendResponse.OK(
