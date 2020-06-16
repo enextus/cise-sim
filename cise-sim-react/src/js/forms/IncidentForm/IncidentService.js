@@ -2,7 +2,7 @@ import {http_get, http_post} from "../../api/API";
 import LabelsIncidentDto from "./dto/LabelsIncidentDto";
 
 
-export async function getvaluesIncident() {
+export async function getValuesIncident() {
 
     const labelsResponse = await http_get("messages/incident/values");
     if (!labelsResponse) return;

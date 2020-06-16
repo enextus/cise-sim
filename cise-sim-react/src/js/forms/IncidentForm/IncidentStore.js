@@ -1,4 +1,4 @@
-import {getvaluesIncident, sendIncidentMessage} from "./IncidentService";
+import {getValuesIncident, sendIncidentMessage} from "./IncidentService";
 import UserVesselInput from "./inputs/UserVesselInput";
 import UserIncidentInput from "./inputs/UserIncidentInput";
 import UserContentInput from "./inputs/UserContentInput";
@@ -13,7 +13,7 @@ export default class IncidentStore {
 
         console.log("IncidentStore initialization Starting ...");
 
-        const labelsIncidentDto = await getvaluesIncident();
+        const labelsIncidentDto = await getValuesIncident();
 
         this.setValueAndLabelOnIncidentAndSubtype(labelsIncidentDto.incidentList);
         this.setValueAndLabelOnVesselAndRole(labelsIncidentDto.vessel);
