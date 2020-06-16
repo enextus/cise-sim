@@ -92,11 +92,25 @@ public class DefaultAppContext implements AppContext {
         return simConfig;
     }
 
+    @Override
     public String getRepoDir() {
         return simConfig.messageHistoryDir();
     }
 
+    @Override
     public int getGuiMaxThMsgs() {
         return simConfig.guiMaxThMsgs();
     }
+
+    @Override
+    public String getProxyHost() {
+        return simConfig.proxyHost();
+    }
+
+    @Override
+    public String getProxyPort() {
+        return simConfig.proxyPort();
+    }
+
+
 }

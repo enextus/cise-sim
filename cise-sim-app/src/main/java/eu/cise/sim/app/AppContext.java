@@ -31,4 +31,8 @@ public interface AppContext {
     String getRepoDir();
 
     int getGuiMaxThMsgs();
+
+    String getProxyHost();
+
+    String getProxyPort();
 }
