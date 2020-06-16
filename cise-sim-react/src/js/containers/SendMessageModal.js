@@ -50,8 +50,8 @@ const sendMessageModal = (props) => {
 
         return (
             <Button
-                id="clearMsg"
-                color="secondary"
+                id="createMsg"
+                color="primary"
                 variant="contained"
                 className={classes.button}
                 onClick={handleOpen}>

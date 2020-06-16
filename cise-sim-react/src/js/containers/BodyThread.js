@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Grid} from '@material-ui/core';
 import Paper from "@material-ui/core/Paper";
-import ButtonsPanel from "./ButtonsPanel";
+import ButtonsPanel from "./ButtonsPanelRight";
 import ChronoHistoryMessages from "./ThreadMessageList";
 import ThreadMessageDetails from "./ThreadMessageDetails";
 import Typography from "@material-ui/core/Typography";
@@ -23,6 +23,7 @@ class BodyThread extends Component {
     render() {
 
         return (
+            <Paper elevation={3}>
             <Grid container spacing={2}>
 
                 <Grid item xs={12}>
@@ -32,28 +33,23 @@ class BodyThread extends Component {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Paper elevation={3}>
                         <ButtonsPanel store={this.props.store} />
-                    </Paper>
                 </Grid>
 
                 <Grid item xs={3} >
-                    <Paper elevation={3} >
                        <ThreadListHeader store={this.props.store}/>
                        <ChronoHistoryMessages  store={this.props.store} />
-                    </Paper>
                 </Grid>
 
                 <Grid item xs={9}>
-                    <Paper elevation={3}>
                         <Typography variant="h5" component="h1" align={"center"}>
                             Thread Detail
                         </Typography>
                        <ThreadMessageDetails  store={this.props.store} />
-                    </Paper>
                 </Grid>
 
             </Grid>
+            </Paper>
         )
     }
 }

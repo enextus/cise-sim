@@ -50,10 +50,11 @@ const discoveryMessageModal = (props) => {
         return (
             <Button
                 id="clearMsg"
-                color="secondary"
+                color="primary"
                 variant="contained"
                 className={classes.button}
-                onClick={handleOpen}>
+                onClick={handleOpen}
+            >
                 Discovery Message
                 <LanguageRoundedIcon className={classes.rightIcon}/>
 

@@ -40,6 +40,7 @@ export default class IncidentStore {
         this.labelIncidentType = buildValueLabelMap(tmpType);
     }
 
+
     setValueAndLabelOnVesselAndRole(labelVessel) {
         this.labelVesselTypeList = buildValueLabelMap(labelVessel.typeList);
         this.labelRoleList = buildValueLabelMap(labelVessel.roleList);
