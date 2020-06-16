@@ -56,7 +56,7 @@ class HistoryMessage extends Component {
 
         const msgRcv = this.getMessageStore().historyMsgList;
         const maxShow = this.getServiceStore().serviceSelf.messageHistoryMaxLength;
-        this.getMessageStore().setHistoryMaxCapacity(maxShow);
+        this.getMessageStore().setThreadMaxCapacity(maxShow);
 
         return (
             <div className={classes.root}>

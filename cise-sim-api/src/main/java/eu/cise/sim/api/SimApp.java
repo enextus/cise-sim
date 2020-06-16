@@ -5,19 +5,17 @@ import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.sim.api.helpers.CrossOriginSupport;
-import eu.cise.sim.api.history.DefaultHistoryAPI;
-import eu.cise.sim.api.history.FileMessageRepository;
-import eu.cise.sim.api.history.HistoryAPI;
-import eu.cise.sim.api.history.HistoryResource;
+import eu.cise.sim.api.history.*;
+import eu.cise.sim.api.messages.UiMessageResource;
 import eu.cise.sim.api.rest.MessageResource;
 import eu.cise.sim.api.rest.TemplateResource;
 import eu.cise.sim.api.rest.UIServiceResource;
-import eu.cise.sim.api.rest.UiMessageResource;
 import eu.cise.sim.api.soap.CISEMessageServiceSoapImplDefault;
 import eu.cise.sim.app.AppContext;
 import eu.cise.sim.app.DefaultAppContext;
 import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
+import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.util.component.LifeCycle;
@@ -56,14 +54,14 @@ public class SimApp extends Application<SimConf> {
          * in the appContext like makeMessageRepository that returns it to be injected in the HistoryAPI
          * The whole appContext idea is to have a single place where to create all the concrete objects.
         */
-        FileMessageRepository fileMessageRepository =  new FileMessageRepository(appCtx.getPrettyNotValidatingXmlMapper(),
-                                                                                 appCtx.getRepoDir(),
-                                                                                 appCtx.getRepoGuiMaxShow());
-        HistoryAPI historyAPI = new DefaultHistoryAPI(fileMessageRepository);
+        HistoryMessagePersistence fileMessagePersistence =  new FileMessagePersistence(appCtx.getPrettyNotValidatingXmlMapper(),
+                                                                                       appCtx.getRepoDir(),
+                                                                                       appCtx.getGuiMaxThMsgs());
+        HistoryAPI historyAPI = new DefaultHistoryAPI(fileMessagePersistence);
 
 
         MessageAPI messageAPI = new DefaultMessageAPI(
-                appCtx.makeMessageProcessor(fileMessageRepository),
+                appCtx.makeMessageProcessor(fileMessagePersistence),
                 appCtx.makeMessageStorage(),
                 appCtx.makeTemplateLoader(),
                 appCtx.getXmlMapper(),
@@ -88,6 +86,8 @@ public class SimApp extends Application<SimConf> {
         environment.jersey().register(new TemplateResource(messageAPI, templateAPI));
 
         environment.jersey().register(new HistoryResource(historyAPI));
+
+        environment.jersey().register(new JsonProcessingExceptionMapper(true));
 
         CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(
                 messageAPI,

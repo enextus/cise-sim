@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface HistoryAPI {
 
-    List<MessageShortInfoDto> getLatestMessages(long timestamp);
+    List<MessageShortInfoDto> getThreadsAfter(long timestamp);
 
     String getXmlMessageByUuid(String uuid);
 }

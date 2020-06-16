@@ -96,7 +96,7 @@ public class DefaultAppContext implements AppContext {
         return simConfig.messageHistoryDir();
     }
 
-    public int getRepoGuiMaxShow() {
-        return simConfig.guiMaxHistoryShow();
+    public int getGuiMaxThMsgs() {
+        return simConfig.guiMaxThMsgs();
     }
 }

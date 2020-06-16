@@ -73,7 +73,7 @@ public class RestMessageReceiveTest {
         public String messageHistoryDir() { return "msghistory"; }
 
         @Override
-        public int guiMaxHistoryShow() {
+        public int guiMaxThMsgs() {
             return 10;
         }
 

@@ -13,10 +13,17 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import EmailIcon from "@material-ui/icons/Email";
 import XmlContent from "../common/XmlContent";
 
+
 const styles = theme => ({
     root: {
         minWidth: 275,
     },
+
+    card : {
+        minWidth: 275,
+        marginBottom: 4,
+    },
+
     bullet: {
         display: 'inline-block',
         margin: '0 2px',
@@ -44,7 +51,7 @@ const styles = theme => ({
 const messageXml = (props, classes) => {
 
     return (
-        <ExpansionPanel className={classes.root}>
+        <ExpansionPanel>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="receiveMessageContent"
@@ -69,15 +76,25 @@ const messageInfoCard = (props)  => {
     const {classes} = props;
     const msgInfo = props.msgInfo;
 
-    // Direction and background color
+    // Direction and From/To
     let direction;
-    let backColor;
+    let fromto;
     if (msgInfo.isSent) {
         direction = "Sent";
-        backColor = "#ade6cb"
+        if (msgInfo.to.length > 0) {
+            fromto = "To: " + msgInfo.to;
+        }
+        else {
+            fromto = "To: Unknown";
+        }
     } else {
         direction = "Received";
-        backColor = "#4795ff"
+        if (msgInfo.from.length > 0) {
+            fromto = "From: " + msgInfo.from;
+        }
+        else {
+            fromto = "From: Unknown";
+        }
     }
 
     // Formatting the Date Time
@@ -92,18 +109,33 @@ const messageInfoCard = (props)  => {
     }
     const localeDate = timestamp.toLocaleString()+'.'+padding+msec;
 
+    // Ack Style
+    if (!msgInfo.ackResult) {
+        msgInfo.ackResult = 'Not Received';
+    }
+    const isSuccess = msgInfo.ackResult.includes('Success');
+    const ackTextColor = isSuccess ? "green" : "red";
+    const rowAckCodeStyle = {color:ackTextColor, textAlign:'right'};
+    const cardStyle = { border: "2px solid " + ackTextColor };
+    const ackTableCell = <TableCell style={rowAckCodeStyle}> Ack : {msgInfo.ackResult}</TableCell>
+
+    // Rendering
     return (
-        <Card className={classes.root} key={msgInfo.id}>
+        <Card className={classes.card} key={msgInfo.id} style={cardStyle} >
             <CardContent>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} >
                     <Table size="small" aria-label="a dense table">
                         <TableBody>
                             <TableRow>
-                                <TableCell>Type : {msgInfo.messageType}</TableCell>
+                                <TableCell> Type : {msgInfo.messageType}</TableCell>
                                 <TableCell align={"right"}>{direction}</TableCell>
                             </TableRow>
+                            <TableRow><TableCell align={"left"}> {fromto}</TableCell><TableCell/></TableRow>
                             <TableRow><TableCell> Time : {localeDate}</TableCell><TableCell/></TableRow>
-                            <TableRow><TableCell> Service Type : {msgInfo.serviceType}</TableCell><TableCell/></TableRow>
+                            <TableRow>
+                                <TableCell> Service Type : {msgInfo.serviceType}</TableCell>
+                                {ackTableCell}
+                            </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>

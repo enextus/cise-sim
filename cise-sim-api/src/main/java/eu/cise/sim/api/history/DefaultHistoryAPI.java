@@ -11,21 +11,21 @@ public class DefaultHistoryAPI implements HistoryAPI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHistoryAPI.class);
 
-    private final FileMessageRepository fileMessageRepository;
+    private final HistoryMessagePersistence messagePersistenceService;
 
-    public DefaultHistoryAPI(FileMessageRepository fileMessageRepository) {
-        this.fileMessageRepository = fileMessageRepository;
+    public DefaultHistoryAPI(HistoryMessagePersistence messagePersistenceService) {
+        this.messagePersistenceService = messagePersistenceService;
     }
 
-    public List<MessageShortInfoDto> getLatestMessages(long timestamp) {
-        return fileMessageRepository.getShortInfoAfter(timestamp);
+    public List<MessageShortInfoDto> getThreadsAfter(long timestamp) {
+        return messagePersistenceService.getThreadsAfter(timestamp);
     }
 
     @Override
     public String getXmlMessageByUuid(String uuid) {
         String xmlMessage = null;
         try {
-            xmlMessage = fileMessageRepository.getXmlMessageByUuid(uuid);
+            xmlMessage = messagePersistenceService.getXmlMessageByUuid(uuid);
         } catch (IOException e) {
             LOGGER.warn("getXmlMessageByUuid exception : {}", e.getMessage());
         }
