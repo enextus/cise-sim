@@ -4,9 +4,9 @@ import Paper from "@material-ui/core/Paper";
 import ButtonsPanel from "./ButtonsPanelRight";
 import ChronoHistoryMessages from "./ThreadMessageList";
 import ThreadMessageDetails from "./ThreadMessageDetails";
-import Typography from "@material-ui/core/Typography";
 import {withStyles} from "@material-ui/core/styles";
 import ThreadListHeader from "../forms/MessageForm/ThreadListHeader";
+import ThreadDetailHeader from "../forms/MessageForm/ThreadDetailHeader";
 
 const styles = theme => ({
     root: {
@@ -42,9 +42,7 @@ class BodyThread extends Component {
                 </Grid>
 
                 <Grid item xs={9}>
-                        <Typography variant="h5" component="h1" align={"center"}>
-                            Thread Detail
-                        </Typography>
+                        <ThreadDetailHeader store={this.props.store} />
                        <ThreadMessageDetails  store={this.props.store} />
                 </Grid>
 

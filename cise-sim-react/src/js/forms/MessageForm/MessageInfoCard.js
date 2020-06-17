@@ -5,12 +5,10 @@ import CardContent from '@material-ui/core/CardContent';
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
 import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import EmailIcon from "@material-ui/icons/Email";
 import XmlContent from "../../components/common/XmlContent";
 
 
@@ -29,9 +27,7 @@ const styles = theme => ({
         margin: '0 2px',
         transform: 'scale(0.8)',
     },
-    title: {
-        fontSize: 14,
-    },
+
     pos: {
         marginBottom: 12,
     },
@@ -44,7 +40,48 @@ const styles = theme => ({
     },
     xml: {
         maxHeight:250
-    }
+    },
+
+    msgtype :{
+        textAlign: "left",
+        color: "black",
+        fontWeight: "bold",
+        fontSize: "larger",
+        width: "15%",
+        paddingBottom:0,
+        borderBottom:0
+    },
+
+    localdate :{
+        textAlign: "right",
+        width: "10%",
+        fontSize: "smaller",
+        paddingBottom:0,
+        borderBottom:0
+    },
+
+    fromto: {
+        textAlign: "left",
+        paddingBottom: 10,
+        paddingTop: 0,
+        fontSize: "smaller",
+        borderBottom: 0,
+
+    },
+
+    srvtype :{
+        textAlign: "left",
+        paddingBottom: 0,
+        paddingTop: 0,
+        fontSize: "medium",
+        borderBottom: 0,
+    },
+
+    xmlsummary: {
+        fontSize: "medium",
+        fontWeight: "bold",
+
+    },
 });
 
 
@@ -52,20 +89,20 @@ const messageXml = (props, classes) => {
 
     return (
         <ExpansionPanel>
+
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="receiveMessageContent"
                 id="ReceivedMessage">
 
-                <EmailIcon className={classes.icon}/>
-                <Typography className={classes.title}><b>Show message</b></Typography>
+                <Typography className={classes.xmlsummary}>Message Details</Typography>
 
             </ExpansionPanelSummary>
+
             <ExpansionPanelDetails>
-
                 <XmlContent>{props.body}</XmlContent>
-
             </ExpansionPanelDetails>
+
         </ExpansionPanel>
     )
 }
@@ -80,7 +117,7 @@ const messageInfoCard = (props)  => {
     let direction;
     let fromto;
     if (msgInfo.isSent) {
-        direction = "Sent";
+        direction = "SENT";
         if (msgInfo.to.length > 0) {
             fromto = "To: " + msgInfo.to;
         }
@@ -88,7 +125,7 @@ const messageInfoCard = (props)  => {
             fromto = "To: Unknown";
         }
     } else {
-        direction = "Received";
+        direction = "RECEIVED";
         if (msgInfo.from.length > 0) {
             fromto = "From: " + msgInfo.from;
         }
@@ -107,7 +144,7 @@ const messageInfoCard = (props)  => {
     else if (msec < 100) {
         padding = '0';
     }
-    const localeDate = timestamp.toLocaleString()+'.'+padding+msec;
+    const localeDate = timestamp.toLocaleString().replace(',', ' ° ')+'.'+padding+msec;
 
     // Ack Style
     if (!msgInfo.ackResult) {
@@ -116,26 +153,40 @@ const messageInfoCard = (props)  => {
     const isSuccess = msgInfo.ackResult.includes('Success');
     const ackTextColor = isSuccess ? "green" : "red";
     const rowAckCodeStyle = {color:ackTextColor, textAlign:'right'};
-    const cardStyle = { border: "2px solid " + ackTextColor };
-    const ackTableCell = <TableCell style={rowAckCodeStyle}> Ack : {msgInfo.ackResult}</TableCell>
+  //  const cardStyle = { border: "2px solid " + ackTextColor };
+
+    // Message type with wrong ack result
+    let messageType = msgInfo.messageType;
+    let messageTypeColor = null;
+    if (!isSuccess && messageType === 'Ack Synch') {
+        messageType = messageType+" - "+msgInfo.ackResult;
+        messageTypeColor = {color: "red"};
+    }
 
     // Rendering
     return (
-        <Card className={classes.card} key={msgInfo.id} style={cardStyle} >
+        <Card className={classes.card} key={msgInfo.id} >
             <CardContent>
-                <TableContainer component={Paper} >
+                <TableContainer>
                     <Table size="small" aria-label="a dense table">
                         <TableBody>
+
                             <TableRow>
-                                <TableCell> Type : {msgInfo.messageType}</TableCell>
-                                <TableCell align={"right"}>{direction}</TableCell>
+                                <TableCell className={classes.msgtype} style={messageTypeColor}>{messageType}</TableCell>
+                                <TableCell className={classes.localdate}>{localeDate} <strong>{direction}</strong></TableCell>
                             </TableRow>
-                            <TableRow><TableCell align={"left"}> {fromto}</TableCell><TableCell/></TableRow>
-                            <TableRow><TableCell> Time : {localeDate}</TableCell><TableCell/></TableRow>
+
                             <TableRow>
-                                <TableCell> Service Type : {msgInfo.serviceType}</TableCell>
-                                {ackTableCell}
+                                <TableCell className={classes.fromto}>{fromto}</TableCell>
+                                <TableCell className={classes.fromto}/>
                             </TableRow>
+
+
+                            <TableRow>
+                                <TableCell className={classes.srvtype}>Service Type : {msgInfo.serviceType}</TableCell>
+                                <TableCell className={classes.srvtype}/>
+                            </TableRow>
+
                         </TableBody>
                     </Table>
                 </TableContainer>

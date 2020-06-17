@@ -153,7 +153,7 @@ const messageInfoCard = (props)  => {
                             </TableRow>
 
                             <TableRow >
-                                <TableCell className={classes.fromto} align={"left"} component="th" scope="row">{fromto}</TableCell>
+                                <TableCell className={classes.fromto} component="th" scope="row">{fromto}</TableCell>
                                 <TableCell className={classes.fromto} style={{width:'1%'}}/>
                             </TableRow>
 

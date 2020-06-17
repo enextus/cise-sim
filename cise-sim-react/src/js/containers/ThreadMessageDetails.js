@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Box, Grid, Paper} from '@material-ui/core';
+import {Box, Grid} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import {observer} from "mobx-react";
 import MessageInfoCard from "../forms/MessageForm/MessageInfoCard";
@@ -48,11 +48,9 @@ class ThreadMessageDetails extends Component {
         this.buildAckSuccessFail(messageList);
 
         return (
-            <Box p="8px" mt="68px" mx="58px" bgcolor="#eeeeee" hidden={messageList.length === 0}>
+            <Box p="8px" mt="20px" mx="58px" hidden={messageList.length === 0}>
                 <Slide  direction="right" in={messageList.length>0} unmountOnExit>
-                <Paper  className={classes.root} >
-                    <Grid container>
-
+                    <Grid container className={classes.root}>
                         {messageList.map((msg) =>
                             <MessageInfoCard
                                 key={msg.msgInfo.id}
@@ -62,7 +60,6 @@ class ThreadMessageDetails extends Component {
                         )}
 
                     </Grid>
-                </Paper>
                 </Slide>
             </Box>
         )
