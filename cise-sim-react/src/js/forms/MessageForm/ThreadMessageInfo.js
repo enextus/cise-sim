@@ -5,67 +5,78 @@ import CardContent from '@material-ui/core/CardContent';
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
 
 const styles = theme => ({
+
     root: {
         minWidth: 275,
         padding : 2,
-        margin :  4
-    },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 2,
-    },
-
-    cardcontent :{
-        padding:8,
-    },
-
-
-    tablebody : {
-        backgroundColor: "antiquewhite",
+        margin :  4,
+        paddingBottom:0,
+        marginBottom: 0,
+        marginRight:16,
+        backgroundColor: "white",
         '&:hover': {
-            backgroundColor: "#F1614A",
+            backgroundColor: "lightgrey",
         },
 
     },
 
-    tablebodyselected : {
-        backgroundColor:  "#F1614A",
+    cardcontent :{
+        padding:8,
+        "&:last-child": {
+            paddingBottom: 8
+        },
     },
 
-    cellmsgtype :{
-        textAlign: "left"
+
+    msgtype :{
+        textAlign: "left",
+        color: "black",
+        fontWeight: "bold",
+        fontSize: "large",
+        borderBottom: 0,
+        width: "15%",
     },
 
-    celdirection: {
-        width: '50%',
-        textAlign: "left"
-    },
-
-    celllocaldate :{
+    localdate :{
         textAlign: "right",
-        width: "10%"
-    },
-    cellsrvtype :{
-        textAlign: "left"
+        width: "10%",
+        fontSize: "smaller",
+        borderBottom: 0,
     },
 
-    cellempty :{
+    fromto: {
+        textAlign: "left",
+        paddingBottom: 0,
+        paddingTop: 0,
+        fontSize: "smaller",
+        borderBottom: 0,
 
     },
-    cellnumth :{
-        textAlign: "right"
+
+    srvtype :{
+        textAlign: "left",
+        paddingBottom: 0,
+        paddingTop: 0,
+        fontSize: "smaller",
+        borderBottom: 0,
+    },
+
+    nummsg:{
+        textAlign: "right",
+        fontWeight: "bold",
+        fontSize: "large",
+        paddingBottom: 0,
+        paddingTop: 0,
+        borderBottom: 0,
+    },
+
+    specialicon: {
+        borderBottom: 0,
+
     },
 
 });
@@ -76,10 +87,9 @@ const messageInfoCard = (props)  => {
     const {classes} = props;
     const msgInfo = props.msgInfo;
 
-    // Direction and background color
+    // Direction and From To
     let direction;
     let fromto;
-    let backColor;
     if (msgInfo.isSent) {
         direction = "SENT";
         if (msgInfo.to.length > 0) {
@@ -88,7 +98,6 @@ const messageInfoCard = (props)  => {
         else {
             fromto = "To: Unknown";
         }
-        backColor = "#ade6cb"
     } else {
         direction = "RECV";
         if (msgInfo.from.length > 0) {
@@ -97,30 +106,28 @@ const messageInfoCard = (props)  => {
         else {
             fromto = "From: Unknown";
         }
-        backColor = "#4795ff"
     }
 
 
     // Formatting the Date Time
     const timestamp = new Date(msgInfo.mostRecentTimestamp);
-    /*
-    const msec = timestamp.getMilliseconds();
-    let padding = '';
-    if (msec < 10) {
-        padding ='00';
-    }
-    else if (msec < 100) {
-        padding = '0';
-    }
-    const localeDate = timestamp.toLocaleString()+'.'+padding+msec;
-   */
-    const localeDate = timestamp.toLocaleString().replace(',', ' ');
+    const localeDate = timestamp.toLocaleString().replace(',', ' ° ');
 
-    const cardStyle = msgInfo.ackSuccess ? null: { border: "2px solid red"};
+    // Special effects
+    let redStyle = null;
+    let cardStyle = [];
+    if (!msgInfo.ackSuccess) {
+        cardStyle = {marginRight:0,borderRight:16, borderRightColor: "red", borderRightStyle: "solid"}
+        redStyle  = {color: "red"};
+    }
+    if (props.selected) {
+        cardStyle.backgroundColor="lightgrey";
+    }
+
     return (
         <Card
-            className={classes.root}
             key={msgInfo.id}
+            className={classes.root}
             style={cardStyle}
         >
             <CardContent
@@ -128,22 +135,36 @@ const messageInfoCard = (props)  => {
                 onClick={props.selectThread}
             >
 
-                <TableContainer
-                    component={Paper}
-                >
+                <TableContainer>
 
-                    <Table size="small" aria-label="a dense table">
+                    <Table size="small" aria-label="a dense table" padding={"default"}>
                         <TableBody
-                            className={props.selected ? classes.tablebodyselected:classes.tablebody}>
+
+                        >
 
                             <TableRow>
-                                <TableCell className={classes.cellmsgtype} component="th" scope="row">{msgInfo.messageType} ({direction})</TableCell>
-                                <TableCell className={classes.celllocaldate}>{localeDate}</TableCell>
+                                <TableCell
+                                    className={classes.msgtype} component="th" scope="row"
+                                    style={redStyle}
+                                >
+                                    {msgInfo.messageType} {direction}
+                                </TableCell>
+                                <TableCell className={classes.localdate}>{localeDate}</TableCell>
                             </TableRow>
-                            <TableRow><TableCell align={"left"} component="th" scope="row">{fromto}</TableCell><TableCell style={{width:'1%'}}/></TableRow>
+
+                            <TableRow >
+                                <TableCell className={classes.fromto} align={"left"} component="th" scope="row">{fromto}</TableCell>
+                                <TableCell className={classes.fromto} style={{width:'1%'}}/>
+                            </TableRow>
+
                             <TableRow>
-                                <TableCell className={classes.cellsrvtype} component="th" scope="row">{msgInfo.serviceType}</TableCell>
-                                <TableCell className={classes.cellnumth}>{msgInfo.numTh}</TableCell>
+                                <TableCell className={classes.srvtype} component="th" scope="row">{msgInfo.serviceType}</TableCell>
+                                <TableCell className={classes.srvtype} style={{width: '1%'}}/>
+                            </TableRow>
+
+                            <TableRow>
+                                <TableCell className={classes.specialicon} component="th" scope="row"/>
+                                <TableCell className={classes.nummsg}>{msgInfo.numTh}</TableCell>
                             </TableRow>
 
                         </TableBody>

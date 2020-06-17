@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Box, Grid, Paper} from '@material-ui/core';
+import {Box, Grid} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import ThreadMsgInfo from '../forms/MessageForm/ThreadMessageInfo';
 import {observer} from "mobx-react";
@@ -100,18 +100,18 @@ class ThreadMessageList extends Component {
 
         // Render
         return (
-            <Box p="8px" mt="20px" mx="20px" bgcolor="#eeeeee" hidden={threadCards.length === 0} >
-                <Paper  className={classes.root} >
-                        <Grid item xs={12} >
-                            {threadCards.map((msg) =>
-                                <ThreadMsgInfo
-                                    key={msg.id}
-                                    msgInfo={msg}
-                                    selectThread={() => this.selectThread(msg.correlationId)}
-                                    selected={this.getMessageStore().threadIdSelected === msg.correlationId}
-                                />)}
-                        </Grid>
-                </Paper>
+            <Box p="8px" mt="20px" mx="20px" hidden={threadCards.length === 0} >
+                <Grid item xs={12} >
+
+                    {threadCards.map((msg) =>
+                        <ThreadMsgInfo
+                            key={msg.id}
+                            msgInfo={msg}
+                            selectThread={() => this.selectThread(msg.correlationId)}
+                            selected={this.getMessageStore().threadIdSelected === msg.correlationId}
+                        />)}
+
+                </Grid>
             </Box>
         )
     }
