@@ -10,16 +10,17 @@ import TableContainer from "@material-ui/core/TableContainer";
 import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import XmlContent from "../../components/common/XmlContent";
+import ExpansionPanelPreview from "./ExpansionPanelPreview";
 
 
 const styles = theme => ({
     root: {
         minWidth: 275,
     },
-
     card : {
         minWidth: 275,
         marginBottom: 4,
+        borderRadius: 16,
     },
 
     bullet: {
@@ -84,11 +85,14 @@ const styles = theme => ({
     },
 });
 
+const handleChange = (event, newExpanded) => {
+    console.log("handleChange "+event+" newExpanded "+newExpanded);
+};
 
 const messageXml = (props, classes) => {
 
     return (
-        <ExpansionPanel>
+        <ExpansionPanel onChange={handleChange}>
 
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon/>}
@@ -190,7 +194,7 @@ const messageInfoCard = (props)  => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {messageXml(props, classes)}
+                <ExpansionPanelPreview body={props.body} numLines={4}/>
             </CardContent>
         </Card>
     );

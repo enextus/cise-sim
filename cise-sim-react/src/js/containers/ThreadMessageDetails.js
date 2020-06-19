@@ -17,7 +17,7 @@ const styles = theme => ({
         flexWrap: 'wrap',
         padding: 16,
         margin: '16px auto',
-        maxWidth: 800
+        maxWidth: 1100
     },
 });
 
@@ -91,8 +91,6 @@ class ThreadMessageDetails extends Component {
         const {classes} = this.props;
         const messageList  = this.getMessageStore().threadWithBody;
 
-        // toDo the ordering by timestamp
-        //messageList.sort(function(a,b) {return b.msgInfo.dateTime-a.msgInfo.dateTime});
         let showThreadDetails;
         if (messageList.length === 0) {
             showThreadDetails = this.buildWelcome(classes);
