@@ -4,12 +4,11 @@ import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography
 import {withStyles} from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
-import XmlContent from './common/XmlContent';
-import DesciptionIcon from '@material-ui/icons/Description'
+import XmlContent from '../../components/common/XmlContent';
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing(1)
+  //  padding: theme.spacing(1)
   },
   title: {
     fontSize: "12pt",
@@ -34,23 +33,26 @@ class PreviewMessage extends Component {
     const {classes} = this.props;
 
     return (
-        <div className={classes.root}>
-          <ExpansionPanel expanded={!this.isTemplateEmpty()}>
+          <ExpansionPanel expanded={!this.isTemplateEmpty()} elevation={0} >
+
             <ExpansionPanelSummary
                 onClick={this.handleUpdate}
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="previewMessageContent"
-                id="previewMessage">
-              <DesciptionIcon className={classes.icon}/>
-              <Typography className={classes.title}>message <b>preview</b></Typography>
+                id="previewMessage"
+                style={{margin:0, padding:0}}
+            >
+
+              <Typography className={classes.title}><strong>Message Preview</strong></Typography>
+
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+
+            <ExpansionPanelDetails style={{margin:0, padding:0}}>
               <XmlContent>
                 {this.templateStore().template.content}
               </XmlContent>
             </ExpansionPanelDetails>
           </ExpansionPanel>
-        </div>
 
     )
   }

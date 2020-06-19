@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
-import {Box, Grid, Paper} from '@material-ui/core';
+import {Box, Grid} from '@material-ui/core';
 import {observer} from 'mobx-react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import MessageIdField from '../forms/SendForm/MessageIdField';
-import CorrelationIdField from '../forms/SendForm/CorrelationIdField';
-import TemplateSelect from '../forms/SendForm/TemplateSelect';
-import RequiresAckCheck from '../forms/SendForm/RequiresAckCheck';
-import PreviewButton from '../forms/SendForm/PreviewButtonV2';
-import SendButton from '../forms/SendForm/SendButton';
+import MessageIdField from './MessageIdField';
+import CorrelationIdField from './CorrelationIdField';
+import TemplateSelect from './TemplateSelect';
+import RequiresAckCheck from './RequiresAckCheck';
+import SendButton from './SendButton';
 import PreviewMessage from "./PreviewMessage";
-import SendFormHeader from "../forms/SendForm/SendFormHeader";
+import SendFormHeader from "./SendFormHeader";
 
 const styles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
         padding: 16,
-        margin: '16px auto',
+        //margin: '16px auto',
+        margin: 'auto',
         maxWidth: 800
     },
 });
@@ -42,10 +42,9 @@ class SendFormV2 extends Component {
         const {classes} = this.props;
 
         return (
-                <Box p="8px" mt="20px" mx="20px" bgcolor="#eeeeee">
-                    <Paper  className={classes.root} >
+                <Box bgcolor="white">
 
-                    <Grid container alignItems="flex-start" spacing={3}>
+                    <Grid container alignItems="flex-start" spacing={3} className={classes.root}>
 
                         <Grid item xs={12}>
                             <SendFormHeader onclose={this.props.onclose}/>
@@ -68,8 +67,7 @@ class SendFormV2 extends Component {
                         </Grid>
 
                         <Grid item xs={6}>
-                            <Grid container  alignItems="flex-start" justify="flex-end" direction="row">
-                                <PreviewButton store={this.getTemplateStore()}/>
+                            <Grid container  alignItems="flex-end" justify="flex-end" direction="row">
                                 <SendButton store={this.getAllStores()}/>
                             </Grid>
                         </Grid>
@@ -79,7 +77,6 @@ class SendFormV2 extends Component {
                         </Grid>
 
                     </Grid>
-                </Paper>
                 </Box>
         )
     }

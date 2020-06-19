@@ -3,7 +3,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import SendForm from "../components/SendFormV2";
+import SendForm from "../forms/SendForm/SendFormV2";
 import {Button} from "@material-ui/core";
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 
@@ -82,11 +82,9 @@ const sendMessageModal = (props) => {
 
                 <Fade in={open}>
                     <div id="create-message">
-
-                   <SendForm store={props.store} id="create-and-send-cise-message" onclose={handleClose}/>
+                        <SendForm store={props.store} id="create-and-send-cise-message" onclose={handleClose}/>
                     </div>
                 </Fade>
-
 
             </Modal>
         </div>

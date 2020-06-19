@@ -12,7 +12,7 @@ const styles = () => ({
     },
     formControl: {
         minWidth: 120,
-        color:'grey'
+        color:'lightgray'
     }
 });
 
@@ -25,12 +25,26 @@ class TemplateSelect extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    async preview() {
+        const response = await this.props.store.preview();
+    }
+
     handleChange(event) {
         this.props.store.selected = event.target.value;
+        if (event.target.value === 'empty') {
+            this.props.store.resetPreview();
+        }
+        else {
+            this.preview();
+        }
     }
 
     componentDidMount() {
         this.props.store.loadTemplateList();
+    }
+
+    componentWillUnmount() {
+        this.props.store.selected = "empty";
     }
 
     isSelected() {
@@ -54,7 +68,7 @@ class TemplateSelect extends React.Component {
                         id: 'templateSelect'
                     }}>
                     <MenuItem selected={true} value="empty">
-                        <em>select template</em>
+                        <em>Select Template</em>
                     </MenuItem>
                     {this.getMessageTemplateItems()}
                 </Select>
