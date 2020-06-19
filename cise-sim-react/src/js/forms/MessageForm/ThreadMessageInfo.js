@@ -7,6 +7,8 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
+import MsgCounterUnsel from "./svg/msgs-counter-unselected.svg";
+import MsgCounterSel from "./svg/msgs-counter-selected.svg";
 
 const styles = theme => ({
 
@@ -114,6 +116,7 @@ const messageInfoCard = (props)  => {
     const localeDate = timestamp.toLocaleString().replace(',', ' ° ');
 
     // Special effects
+    let iconNumTh = MsgCounterUnsel;
     let redStyle = null;
     let cardStyle = [];
     if (!msgInfo.ackSuccess) {
@@ -122,6 +125,7 @@ const messageInfoCard = (props)  => {
     }
     if (props.selected) {
         cardStyle.backgroundColor="lightgrey";
+        iconNumTh = MsgCounterSel;
     }
 
     return (
@@ -164,7 +168,10 @@ const messageInfoCard = (props)  => {
 
                             <TableRow>
                                 <TableCell className={classes.specialicon} component="th" scope="row"/>
-                                <TableCell className={classes.nummsg}>{msgInfo.numTh}</TableCell>
+                                <TableCell className={classes.nummsg}>
+                                    {msgInfo.numTh}
+                                    <img src={iconNumTh} alt="thn" style={{paddingLeft:4, width:20}}/>
+                                </TableCell>
                             </TableRow>
 
                         </TableBody>

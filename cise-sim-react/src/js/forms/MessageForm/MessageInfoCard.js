@@ -11,7 +11,8 @@ import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import XmlContent from "../../components/common/XmlContent";
 import ExpansionPanelPreview from "./ExpansionPanelPreview";
-
+import IconMsgOk from "./svg/msg-ok.svg";
+import IconMsgKo from "./svg/msg-alert.svg";
 
 const styles = theme => ({
     root: {
@@ -160,11 +161,13 @@ const messageInfoCard = (props)  => {
   //  const cardStyle = { border: "2px solid " + ackTextColor };
 
     // Message type with wrong ack result
+    let iconMsg = IconMsgOk;
     let messageType = msgInfo.messageType;
     let messageTypeColor = null;
     if (!isSuccess && messageType === 'Ack Synch') {
         messageType = messageType+" - "+msgInfo.ackResult;
         messageTypeColor = {color: "red"};
+        iconMsg = IconMsgKo;
     }
 
     // Rendering
@@ -176,7 +179,10 @@ const messageInfoCard = (props)  => {
                         <TableBody>
 
                             <TableRow>
-                                <TableCell className={classes.msgtype} style={messageTypeColor}>{messageType}</TableCell>
+                                <TableCell className={classes.msgtype} style={messageTypeColor}>
+                                    <img src={iconMsg} alt="thn" style={{paddingRight:6, width:22}}/>
+                                    {messageType}
+                                </TableCell>
                                 <TableCell className={classes.localdate}>{localeDate} <strong>{direction}</strong></TableCell>
                             </TableRow>
 
@@ -194,7 +200,7 @@ const messageInfoCard = (props)  => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <ExpansionPanelPreview body={props.body} numLines={4}/>
+                <ExpansionPanelPreview body={props.body} numLines={6}/>
             </CardContent>
         </Card>
     );
