@@ -96,7 +96,14 @@ class ThreadMessageList extends Component {
 
         // Manage the message and create the thread groups
         const msgRcv = this.getMessageStore().historyMsgList;
-        const threadCards = this.buildThreadCards(msgRcv);
+        let threadCards = this.buildThreadCards(msgRcv);
+
+        const msgFIlter = this.getMessageStore().threadFilter;
+        if (msgFIlter) {
+            if(msgFIlter === 'fail') {
+                threadCards = threadCards.filter((msg) => !msg.ackSuccess);
+            }
+        }
 
         // Render
         return (
