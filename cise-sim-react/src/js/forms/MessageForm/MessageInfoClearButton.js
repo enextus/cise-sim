@@ -1,7 +1,7 @@
 import {Button, withStyles} from '@material-ui/core';
-import ClearAllRoundedIcon from '@material-ui/icons/ClearAllRounded';
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
+import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
 
 const styles = theme => ({
     button: {
@@ -9,6 +9,9 @@ const styles = theme => ({
     },
     rightIcon: {
         marginLeft: theme.spacing(1),
+    },
+    leftIcon: {
+        marginRight: theme.spacing(1),
     },
 });
 
@@ -35,11 +38,14 @@ class MsgClearButton extends Component {
                 variant="contained"
                 className={classes.button}
                 onClick={() => this.clear()}
-                disabled={this.isDisabled()}>
-                Clear Msg
-                <ClearAllRoundedIcon className={classes.rightIcon}/>
+                disabled={this.isDisabled()}
+                size={"small"}
+            >
 
-            </Button>
+                    <VisibilityOffRoundedIcon className={classes.leftIcon}/>
+                    Clear List
+
+                </Button>
         )
     }
 

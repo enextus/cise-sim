@@ -5,7 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import {Button} from "@material-ui/core";
 import Slide from "@material-ui/core/Slide";
 import DiscoveryForm from "../forms/DiscoveryForm/DiscoveryForm";
-import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded';
+import TrackChangesRoundedIcon from '@material-ui/icons/TrackChangesRounded';
 
 const styles = theme => ({
     modal: {
@@ -56,7 +56,7 @@ const discoveryMessageModal = (props) => {
                 onClick={handleOpen}
             >
                 Discovery Message
-                <LanguageRoundedIcon className={classes.rightIcon}/>
+                <TrackChangesRoundedIcon className={classes.rightIcon}/>
 
             </Button>
         )

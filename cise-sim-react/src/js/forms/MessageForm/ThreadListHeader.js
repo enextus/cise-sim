@@ -43,7 +43,9 @@ const threadListHeader = (props)  => {
                                 Thread Messages History
                             </Typography>
                         </TableCell>
-                        <TableCell align={"right"}> <MsgClearButton messageStore={props.store.messageStore} /></TableCell>
+                        <TableCell align={"right"}>
+                            <MsgClearButton messageStore={props.store.messageStore} />
+                        </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

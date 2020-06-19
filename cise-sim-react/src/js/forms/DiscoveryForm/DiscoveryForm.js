@@ -102,7 +102,7 @@ class DiscoveryForm extends Component {
         return (
             <Button
                 id="clearMsg"
-                color="secondary"
+                color="primary"
                 variant="contained"
                 className={classes.button}
                 onClick={this.handleSubmit}
@@ -126,7 +126,7 @@ class DiscoveryForm extends Component {
         return (
             <Button
                 id="clearMsg"
-                color="secondary"
+                color="primary"
                 variant="contained"
                 className={classes.button}
                 onClick={this.handleEnd}
