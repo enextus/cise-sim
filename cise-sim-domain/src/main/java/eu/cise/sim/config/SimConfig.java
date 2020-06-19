@@ -54,6 +54,9 @@ public interface SimConfig extends Config {
     @Key("proxy.port")
     String proxyPort();
 
+    @Key("gui.hide.incident")
+    boolean hideIncident();
+
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {
             if (input.trim().toUpperCase().equals("TRUE")) {

@@ -92,6 +92,11 @@ public class RestMessageReceiveTest {
         public String proxyPort() {
             return "";
         }
+
+        @Override
+        public boolean hideIncident() {
+            return true;
+        }
     };
     private final XmlMapper xmlMapperNoValidNoPretty = new DefaultXmlMapper.NotValidating();
     private final XmlMapper xmlMapperNoValidPretty = new DefaultXmlMapper.PrettyNotValidating();

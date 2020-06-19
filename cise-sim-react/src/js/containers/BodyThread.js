@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Grid} from '@material-ui/core';
 import Paper from "@material-ui/core/Paper";
-import ButtonsPanel from "./ButtonsPanelRight";
+import ButtonsPanel from "./ButtonsPanel";
 import ChronoHistoryMessages from "./ThreadMessageList";
 import ThreadMessageDetails from "./ThreadMessageDetails";
 import {withStyles} from "@material-ui/core/styles";
@@ -36,14 +36,14 @@ class BodyThread extends Component {
                         <ButtonsPanel store={this.props.store} />
                 </Grid>
 
-                <Grid item xs={3} >
-                       <ThreadListHeader store={this.props.store}/>
-                       <ChronoHistoryMessages  store={this.props.store} />
+                <Grid item xs={4} >
+                    <ThreadListHeader store={this.props.store}/>
+                    <ChronoHistoryMessages  store={this.props.store} />
                 </Grid>
 
-                <Grid item xs={9}>
-                        <ThreadDetailHeader store={this.props.store} />
-                       <ThreadMessageDetails  store={this.props.store} />
+                <Grid item xs={8}>
+                    <ThreadDetailHeader store={this.props.store} />
+                    <ThreadMessageDetails  store={this.props.store} />
                 </Grid>
 
             </Grid>

@@ -9,7 +9,8 @@ export default class ServiceStore {
       "...",
       "...",
       "...",
-      0);
+      0,
+      true);
 
   async loadServiceSelf() {
     const simInfo = await getServiceSelf();
@@ -23,7 +24,8 @@ export default class ServiceStore {
           simInfo.serviceTransportMode,
           simInfo.endpointUrl,
           simInfo.appVersion,
-          simInfo.messageHistoryMaxLength);
+          simInfo.messageHistoryMaxLength,
+          simInfo.hideIncident);
 
       console.log("getServiceSelf returned successfully.",
           this.serviceSelf.serviceParticipantId, " - with mode  - ",
