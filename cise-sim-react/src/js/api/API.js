@@ -61,11 +61,18 @@ const getServiceURL = service => {
 };
 
 const getHost = () => {
-    if (window.location.hostname.includes("localhost")) {
-        return window.location.protocol.concat("//").concat(
-            window.location.hostname).concat(":8080");
-    } else
-        return window.location.protocol.concat("//").concat(window.location.host);
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+
+        if (window.location.hostname.includes("localhost")) {
+            return window.location.protocol.concat("//").concat(
+                window.location.hostname).concat(":8080");
+        }
+
+    } else {
+        // production code
+    }
+
+    return window.location.protocol.concat("//").concat(window.location.host);
 };
 
 const handleError = (error) => {
