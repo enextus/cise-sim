@@ -77,7 +77,9 @@ const incidentMessageModal = (props) => {
                 BackdropComponent={Backdrop}
                 BackdropProps={{
                     timeout: 500,
-                }}>
+                }}
+                size={"small"}
+            >
 
                 <Slide direction="down" in={open} mountOnEnter unmountOnExit timeout={2000}>
                     <div id="create-incident-message">

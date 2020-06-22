@@ -9,11 +9,16 @@ import TableContainer from "@material-ui/core/TableContainer";
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import Button from "@material-ui/core/Button";
 
+import {fontSizeNormal} from "../../layouts/Font";
+
 const styles = theme => ({
     root: {
         backgroundColor: "white",
-
     },
+    headertext : {
+        fontWeight: "bold",
+        fontSize: fontSizeNormal,
+    }
 });
 
 

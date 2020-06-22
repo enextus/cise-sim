@@ -1,23 +1,26 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography} from '@material-ui/core';
+import {ExpansionPanel, ExpansionPanelDetails, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import XmlContent from '../../components/common/XmlContent';
+import {fontSizeSmall} from "../../layouts/Font";
+import {CompactExpansionPanelSummary} from "../../components/common/CompactExpansionPanelSummary";
 
 const styles = (theme) => ({
   root: {
   //  padding: theme.spacing(1)
   },
   title: {
-    fontSize: "12pt",
+    fontSize:fontSizeSmall
   },
   icon: {
     marginRight: "5px",
     color: "#6da0b3",
   },
 });
+
 
 @observer
 class PreviewMessage extends Component {
@@ -35,7 +38,7 @@ class PreviewMessage extends Component {
     return (
           <ExpansionPanel expanded={!this.isTemplateEmpty()} elevation={0} >
 
-            <ExpansionPanelSummary
+            <CompactExpansionPanelSummary
                 onClick={this.handleUpdate}
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="previewMessageContent"
@@ -45,10 +48,10 @@ class PreviewMessage extends Component {
 
               <Typography className={classes.title}><strong>Message Preview</strong></Typography>
 
-            </ExpansionPanelSummary>
+            </CompactExpansionPanelSummary>
 
-            <ExpansionPanelDetails style={{margin:0, padding:0}}>
-              <XmlContent>
+            <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeSmall}}>
+              <XmlContent >
                 {this.templateStore().template.content}
               </XmlContent>
             </ExpansionPanelDetails>

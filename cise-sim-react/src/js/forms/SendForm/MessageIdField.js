@@ -4,6 +4,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {observer} from 'mobx-react';
 
+import {fontSizeSmall} from "../../layouts/Font";
+import Box from "@material-ui/core/Box";
+
 @observer
 export default class MessageIdField extends React.Component {
 
@@ -21,13 +24,17 @@ export default class MessageIdField extends React.Component {
             <Tooltip title={"[Required/Generated] Use this field to set a unique message Identifier"} >
             <TextField
                 name="messageId"
-                label="Message Id"
                 required={true}
                 fullWidth={true}
                 color="primary"
                 variant="outlined"
                 value={this.props.store.messageId}
                 onChange={this.handleChange}
+                inputProps={{
+                    style: {fontSize: fontSizeSmall}
+                }}
+                size={"small"}
+                label={<Box component="div" fontSize={fontSizeSmall}>Message Id</Box>}
             />
             </Tooltip>
         )

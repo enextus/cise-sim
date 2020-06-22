@@ -15,8 +15,8 @@ const styles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        padding: 16,
-        margin: '16px auto',
+        padding: 8,
+        margin: '8px auto',
         maxWidth: 1100
     },
 });
@@ -95,7 +95,7 @@ class ThreadMessageDetails extends Component {
         }
 
         return (
-            <Box p="8px" mt="20px" mx="58px">
+            <Box p="8px" mt="20px" mx="8px">
                 {showThreadDetails}
             </Box>
         )

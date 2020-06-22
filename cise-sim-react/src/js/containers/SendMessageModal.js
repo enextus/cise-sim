@@ -78,7 +78,9 @@ const sendMessageModal = (props) => {
                 BackdropComponent={Backdrop}
                 BackdropProps={{
                     timeout: 500,
-                }}>
+                }}
+                size={"small"}
+            >
 
                 <Fade in={open}>
                     <div id="create-message">

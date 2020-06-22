@@ -54,6 +54,7 @@ const discoveryMessageModal = (props) => {
                 variant="contained"
                 className={classes.button}
                 onClick={handleOpen}
+                size={"small"}
             >
                 Discovery Message
                 <TrackChangesRoundedIcon className={classes.rightIcon}/>

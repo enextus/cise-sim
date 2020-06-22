@@ -1,8 +1,10 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core/styles";
-import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary} from "@material-ui/core";
+import {ExpansionPanel, ExpansionPanelDetails} from "@material-ui/core";
 import MoreHorizRoundedIcon from '@material-ui/icons/MoreHorizRounded';
 import XmlContent from "../../components/common/XmlContent";
+import {fontSizeSmall} from "../../layouts/Font";
+import {CompactExpansionPanelSummary} from "../../components/common/CompactExpansionPanelSummary";
 
 const styles = theme => ({
     root: {
@@ -14,29 +16,6 @@ const styles = theme => ({
     }
 });
 
-const summaryStyles = {
-    root: {
-        minHeight: 7*4 ,
-        "&$expanded": {
-            minHeight: 0,
-            margin:0,
-        }
-    },
-    content: {
-        margin: "4px 0",
-        "&$expanded": {
-            margin: "4px 0"
-        }
-    },
-    expandIcon: {
-        padding: 3
-    },
-    expanded: {}
-};
-const CompactExpansionPanelSummary = withStyles(summaryStyles)(
-    ExpansionPanelSummary
-);
-CompactExpansionPanelSummary.muiName = "ExpansionPanelSummary";
 
 class ExpansionPanelPreview extends Component {
 
@@ -75,7 +54,7 @@ class ExpansionPanelPreview extends Component {
                     <MoreHorizRoundedIcon/>
                 </CompactExpansionPanelSummary>
 
-                <ExpansionPanelDetails id="ExpDetails">
+                <ExpansionPanelDetails id="ExpDetails" style={{fontSize:fontSizeSmall}}>
                     <XmlContent>{this.state.currentBody}</XmlContent>
                 </ExpansionPanelDetails>
 

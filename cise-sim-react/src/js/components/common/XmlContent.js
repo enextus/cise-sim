@@ -6,7 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = (theme) => ({
   root: {
-    maxHeight: '600px',
+    maxHeight: '270px',
     overflow: 'auto',
   }
 });

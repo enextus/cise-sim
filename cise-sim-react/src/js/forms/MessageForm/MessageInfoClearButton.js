@@ -39,7 +39,7 @@ class MsgClearButton extends Component {
                 className={classes.button}
                 onClick={() => this.clear()}
                 disabled={this.isDisabled()}
-                size={"small"}
+                size="small"
             >
 
                     <VisibilityOffRoundedIcon className={classes.leftIcon}/>

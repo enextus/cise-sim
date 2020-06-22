@@ -107,7 +107,7 @@ class ThreadMessageList extends Component {
 
         // Render
         return (
-            <Box p="8px" mt="20px" mx="20px" hidden={threadCards.length === 0} >
+            <Box p="8px" mt="20px" mx="6px" hidden={threadCards.length === 0}  >
                 <Grid item xs={12} >
 
                     {threadCards.map((msg) =>

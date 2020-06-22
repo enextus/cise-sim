@@ -1,6 +1,7 @@
 import {FormControl, InputLabel, Select, withStyles} from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import React from 'react';
+import {fontSizeSmall} from "../../layouts/Font";
 
 const styles = theme => ({
     formControl: {
@@ -10,6 +11,10 @@ const styles = theme => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
+
+    menuItem : {
+        fontSize: fontSizeSmall,
+    }
 });
 
 /**
@@ -47,11 +52,12 @@ const selectorInfo = (props)  => {
                 id={"selector_" + props.title}
                 onChange={handleChange}
                 value={currentList === props.listValueLabel[0] ? myValue:'empty'}
+                style={{fontSize:fontSizeSmall}}
             >
-                <MenuItem selected={true} value="empty">
+                <MenuItem selected={true} value="empty" className={classes.menuItem}>
                     <em>Please choice</em>
                 </MenuItem>
-                {props.listValueLabel.map((item, idx) => <MenuItem key={idx} value={item.value}>{item.label}</MenuItem>)}
+                {props.listValueLabel.map((item, idx) => <MenuItem key={idx} value={item.value} className={classes.menuItem}>{item.label}</MenuItem>)}
 
             </Select>
         </FormControl>

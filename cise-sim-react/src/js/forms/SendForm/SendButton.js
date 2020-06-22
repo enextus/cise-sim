@@ -56,7 +56,9 @@ class SendButton extends React.Component {
                 variant="contained"
                 className={classes.button}
                 onClick={() => this.send()}
-                disabled={this.isDisabled()}>
+                disabled={this.isDisabled()}
+                size={"small"}
+            >
                 Send
                 <SendRoundedIcon className={classes.rightIcon}/>
             </Button>

@@ -8,6 +8,8 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 
+import {fontSizeNormal} from "../../layouts/Font";
+
 const styles = theme => ({
     root: {
         display: 'flex',
@@ -39,7 +41,7 @@ const threadListHeader = (props)  => {
                 <TableBody>
                     <TableRow>
                         <TableCell>
-                            <Typography variant="h5" component="h1" align={"left"}>
+                            <Typography variant="h5" component="h1" align={"left"} style={{fontSize:fontSizeNormal}}>
                                 Thread Messages History
                             </Typography>
                         </TableCell>

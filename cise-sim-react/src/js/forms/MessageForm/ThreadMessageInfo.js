@@ -10,6 +10,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import MsgCounterUnsel from "./svg/msgs-counter-unselected.svg";
 import MsgCounterSel from "./svg/msgs-counter-selected.svg";
 
+import {fontSizeExtraSmall, fontSizeNormal, fontSizeSmall} from "../../layouts/Font";
+
+
 const styles = theme => ({
 
     root: {
@@ -38,23 +41,29 @@ const styles = theme => ({
         textAlign: "left",
         color: "black",
         fontWeight: "bold",
-        fontSize: "large",
+        fontSize: fontSizeNormal,
         borderBottom: 0,
         width: "15%",
+        paddingRight: 0,
     },
 
     localdate :{
         textAlign: "right",
         width: "10%",
-        fontSize: "smaller",
+        fontSize: fontSizeSmall,
         borderBottom: 0,
+        paddingLeft:0,
+        "&:last-child": {
+            paddingRight: 0
+        },
     },
 
     fromto: {
         textAlign: "left",
         paddingBottom: 0,
         paddingTop: 0,
-        fontSize: "smaller",
+        paddingRight:0,
+        fontSize: fontSizeExtraSmall,
         borderBottom: 0,
 
     },
@@ -63,14 +72,14 @@ const styles = theme => ({
         textAlign: "left",
         paddingBottom: 0,
         paddingTop: 0,
-        fontSize: "smaller",
+        fontSize: fontSizeSmall,
         borderBottom: 0,
     },
 
     nummsg:{
         textAlign: "right",
         fontWeight: "bold",
-        fontSize: "large",
+        fontSize: fontSizeNormal,
         paddingBottom: 0,
         paddingTop: 0,
         borderBottom: 0,
@@ -146,7 +155,7 @@ const messageInfoCard = (props)  => {
 
                         >
 
-                            <TableRow>
+                            <TableRow >
                                 <TableCell
                                     className={classes.msgtype} component="th" scope="row"
                                     style={redStyle}

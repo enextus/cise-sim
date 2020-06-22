@@ -18,7 +18,8 @@ const styles = theme => ({
         padding: 16,
         //margin: '16px auto',
         margin: 'auto',
-        maxWidth: 800
+        maxWidth: 600,
+        maxHeight: 600
     },
 });
 
@@ -42,7 +43,7 @@ class SendFormV2 extends Component {
         const {classes} = this.props;
 
         return (
-                <Box bgcolor="white">
+                <Box bgcolor="white" style={{maxHeight:"800px"}}>
 
                     <Grid container alignItems="flex-start" spacing={3} className={classes.root}>
 
@@ -62,17 +63,17 @@ class SendFormV2 extends Component {
                             <CorrelationIdField store={this.getTemplateStore()}/>
                         </Grid>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={6} style={{paddingBottom:0}}>
                             <RequiresAckCheck store={this.getTemplateStore()}/>
                         </Grid>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={6} style={{paddingBottom:0}}>
                             <Grid container  alignItems="flex-end" justify="flex-end" direction="row">
                                 <SendButton store={this.getAllStores()}/>
                             </Grid>
                         </Grid>
 
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{paddingTop:0}}>
                             <PreviewMessage store={this. getAllStores()}/>
                         </Grid>
 

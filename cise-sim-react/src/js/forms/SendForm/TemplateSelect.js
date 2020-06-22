@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import {observer} from 'mobx-react';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import {fontSizeSmall} from "../../layouts/Font";
+
 const styles = () => ({
     formControlInicial: {
         minWidth: 120,
@@ -13,6 +15,10 @@ const styles = () => ({
     formControl: {
         minWidth: 120,
         color:'lightgray'
+    },
+
+    menuItem : {
+        fontSize: fontSizeSmall,
     }
 });
 
@@ -65,20 +71,22 @@ class TemplateSelect extends React.Component {
                     onChange={this.handleChange}
                     inputProps={{
 			            name: 'templateSelect',
-                        id: 'templateSelect'
-                    }}>
-                    <MenuItem selected={true} value="empty">
+                        id: 'templateSelect',
+                    }}
+                    style={{fontSize:fontSizeSmall}}
+                >
+                    <MenuItem selected={true} value="empty" className={classes.menuItem}>
                         <em>Select Template</em>
                     </MenuItem>
-                    {this.getMessageTemplateItems()}
+                    {this.getMessageTemplateItems(classes)}
                 </Select>
             </FormControl>
         )
     }
 
-    getMessageTemplateItems() {
+    getMessageTemplateItems(classes) {
         return this.props.store.templateOptions.map((item, idx) => (
-            <MenuItem key={idx} value={item.value}>{item.label}</MenuItem>)
+            <MenuItem key={idx} value={item.value} className={classes.menuItem}>{item.label}</MenuItem>)
         )
     }
 }

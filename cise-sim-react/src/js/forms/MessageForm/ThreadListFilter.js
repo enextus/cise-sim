@@ -49,11 +49,13 @@ class ThreadListFilter extends Component {
                         Showing:
                     </Typography>
                 </Grid>
-                <Grid item xs={11}>
-                <ButtonGroup color="primary" aria-label="outlined primary button group">
+                <Grid item xs={11} >
+                    <Grid container   alignItems="flex-end" justify="flex-end" direction="row">
+                <ButtonGroup color="primary" aria-label="outlined primary button group" size={"small"} >
                     <Button variant={this.state.variantAll} onClick={this.handleAllMessages} >All messages</Button>
                     <Button variant={this.state.variantFail} onClick={this.handleFailedMessages}>Failed request</Button>
                 </ButtonGroup>
+                    </Grid>
             </Grid>
             </Grid>
         )

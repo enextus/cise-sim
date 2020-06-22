@@ -13,6 +13,7 @@ import XmlContent from "../../components/common/XmlContent";
 import ExpansionPanelPreview from "./ExpansionPanelPreview";
 import IconMsgOk from "./svg/msg-ok.svg";
 import IconMsgKo from "./svg/msg-alert.svg";
+import {fontSizeLarge, fontSizeNormal, fontSizeSmall} from "../../layouts/Font";
 
 const styles = theme => ({
     root: {
@@ -48,26 +49,31 @@ const styles = theme => ({
         textAlign: "left",
         color: "black",
         fontWeight: "bold",
-        fontSize: "larger",
+        fontSize: fontSizeLarge,
         width: "15%",
         paddingBottom:0,
-        borderBottom:0
+        borderBottom:0,
+        paddingRight: 0,
     },
 
     localdate :{
         textAlign: "right",
         width: "10%",
-        fontSize: "smaller",
-        paddingBottom:0,
-        borderBottom:0
+        fontSize: fontSizeSmall,
+        borderBottom: 0,
+        paddingLeft:0,
+        "&:last-child": {
+            paddingRight: 0
+        },
     },
 
     fromto: {
         textAlign: "left",
         paddingBottom: 10,
         paddingTop: 0,
-        fontSize: "smaller",
+        fontSize: fontSizeSmall,
         borderBottom: 0,
+        paddingRight:0,
 
     },
 
@@ -75,12 +81,12 @@ const styles = theme => ({
         textAlign: "left",
         paddingBottom: 0,
         paddingTop: 0,
-        fontSize: "medium",
+        fontSize: fontSizeNormal,
         borderBottom: 0,
     },
 
     xmlsummary: {
-        fontSize: "medium",
+        fontSize: fontSizeNormal,
         fontWeight: "bold",
 
     },

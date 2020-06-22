@@ -36,12 +36,12 @@ class BodyThread extends Component {
                         <ButtonsPanel store={this.props.store} />
                 </Grid>
 
-                <Grid item xs={4} >
+                <Grid item xs={5} >
                     <ThreadListHeader store={this.props.store}/>
                     <ChronoHistoryMessages  store={this.props.store} />
                 </Grid>
 
-                <Grid item xs={8}>
+                <Grid item xs={7}>
                     <ThreadDetailHeader store={this.props.store} />
                     <ThreadMessageDetails  store={this.props.store} />
                 </Grid>

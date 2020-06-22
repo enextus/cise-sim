@@ -107,6 +107,7 @@ class DiscoveryForm extends Component {
                 className={classes.button}
                 onClick={this.handleSubmit}
                 type="submit"
+                size="small"
             >
                 Send Message
                 <SendRoundedIcon className={classes.rightIcon}/>
@@ -131,6 +132,7 @@ class DiscoveryForm extends Component {
                 className={classes.button}
                 onClick={this.handleEnd}
                 type="submit"
+                size="small"
             >
                 Close
                 <CloseRoundedIcon className={classes.rightIcon}/>
