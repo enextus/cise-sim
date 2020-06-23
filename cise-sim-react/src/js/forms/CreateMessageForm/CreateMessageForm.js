@@ -24,7 +24,7 @@ const styles = theme => ({
 });
 
 @observer
-class SendForm extends Component {
+class CreateMessageForm extends Component {
 
     constructor(props) {
         super(props);
@@ -83,9 +83,9 @@ class SendForm extends Component {
     }
 }
 
-SendForm.propTypes = {
+CreateMessageForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SendForm);
+export default withStyles(styles)(CreateMessageForm);
 

@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {Grid} from '@material-ui/core';
 import Paper from "@material-ui/core/Paper";
 import ButtonsPanel from "./ButtonsPanel";
-import ChronoHistoryMessages from "./ThreadMessageList";
-import ThreadMessageDetails from "./ThreadMessageDetails";
+import ChronoHistoryMessages from "../forms/ThreadForm/ThreadMessageList";
+import ThreadMessageDetails from "../forms/ThreadForm/ThreadMessageDetails";
 import {withStyles} from "@material-ui/core/styles";
-import ThreadListHeader from "../forms/MessageForm/ThreadListHeader";
-import ThreadDetailHeader from "../forms/MessageForm/ThreadDetailHeader";
+import ThreadListHeader from "../forms/ThreadForm/List/ThreadListHeader";
+import ThreadDetailHeader from "../forms/ThreadForm/Details/ThreadDetailHeader";
 
 const styles = theme => ({
     root: {
@@ -18,7 +18,7 @@ const styles = theme => ({
     },
 });
 
-class BodyThread extends Component {
+class Body extends Component {
 
     render() {
 
@@ -52,4 +52,4 @@ class BodyThread extends Component {
     }
 }
 
-export default withStyles(styles)(BodyThread)
+export default withStyles(styles)(Body)

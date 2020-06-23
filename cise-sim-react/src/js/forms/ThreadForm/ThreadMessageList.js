@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Box, Grid} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
-import ThreadMsgInfo from '../forms/MessageForm/ThreadMessageInfo';
+import ThreadMsgInfo from './List/ThreadListMessageInfo';
 import {observer} from "mobx-react";
 
 const styles = theme => ({

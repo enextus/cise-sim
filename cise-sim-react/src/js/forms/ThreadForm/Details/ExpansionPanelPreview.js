@@ -2,9 +2,9 @@ import React, {Component} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import {ExpansionPanel, ExpansionPanelDetails} from "@material-ui/core";
 import MoreHorizRoundedIcon from '@material-ui/icons/MoreHorizRounded';
-import XmlContent from "../../components/common/XmlContent";
-import {fontSizeSmall} from "../../layouts/Font";
-import {CompactExpansionPanelSummary} from "../../components/common/CompactExpansionPanelSummary";
+import XmlContent from "../../../components/common/XmlContent";
+import {fontSizeSmall} from "../../../layouts/Font";
+import {CompactExpansionPanelSummary} from "../../../components/common/CompactExpansionPanelSummary";
 
 const styles = theme => ({
     root: {

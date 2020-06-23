@@ -18,10 +18,11 @@ length 	    Sets the font-size to a fixed size in px, cm, etc. Read about length
 initial 	Sets this property to its default value. Read about initial
 inherit 	Inherits this property from its parent element. Read about inherit
  */
-export const fontSizeExtraLarge="large";
-export const fontSizeLarge="medium";
-export const fontSizeNormal="small";
-export const fontSizeSmall="x-small";
-export const fontSizeExtraSmall="xx-small";
 
-export const buttonSizeSmall="20px";
+    export const fontSizeExtraLarge=window.screen.availWidth < 1200 ? "large"    : screen.availWidth > 1600 ? "xx-large" : "x-large";
+    export const fontSizeLarge=window.screen.availWidth < 1200 ?      "medium"   : screen.availWidth > 1600 ? "x-large"  : "large";
+    export const fontSizeNormal=window.screen.availWidth < 1200 ?     "small"    : screen.availWidth > 1600 ? "large"    : "medium";
+    export const fontSizeSmall=window.screen.availWidth < 1200 ?      "x-small"  : screen.availWidth > 1600 ? "medium"   : "small";
+    export const fontSizeExtraSmall=window.screen.availWidth < 1200 ? "xx-small" : screen.availWidth > 1600 ? "small"    : "x-small";
+
+    export const buttonSizeSmall=window.screen.availWidth < 1200 ?    "inherit"  : screen.availWidth > 1600 ? "inherit"  : "inherit"; //20px

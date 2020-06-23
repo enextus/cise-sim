@@ -2,17 +2,21 @@ import {Button, withStyles} from '@material-ui/core';
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
-import {buttonSizeSmall, fontSizeSmall} from "../../layouts/Font";
+import {buttonSizeSmall, fontSizeExtraSmall} from "../../../layouts/Font";
 
 const styles = theme => ({
     button: {
         margin: theme.spacing(1),
+        maxHeight: buttonSizeSmall,
+        fontSize:fontSizeExtraSmall
     },
     rightIcon: {
         marginLeft: theme.spacing(1),
     },
     leftIcon: {
         marginRight: theme.spacing(1),
+        width:"20%",
+        marginLeft: theme.spacing(0)
     },
 });
 
@@ -40,7 +44,6 @@ class MsgClearButton extends Component {
                 className={classes.button}
                 onClick={() => this.clear()}
                 disabled={this.isDisabled()}
-                style={{maxWidth: '100%', maxHeight: buttonSizeSmall,fontSize:fontSizeSmall}}
             >
 
                     <VisibilityOffRoundedIcon className={classes.leftIcon}/>

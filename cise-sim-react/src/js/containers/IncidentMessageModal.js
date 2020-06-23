@@ -6,6 +6,7 @@ import {Button} from "@material-ui/core";
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import IncidentForm from "../forms/IncidentForm/IncidentForm";
 import Slide from "@material-ui/core/Slide";
+import {buttonSizeSmall, fontSizeExtraSmall} from "../layouts/Font";
 
 const styles = theme => ({
     modal: {
@@ -23,6 +24,8 @@ const styles = theme => ({
 
     button: {
         margin: theme.spacing(1),
+        maxHeight: buttonSizeSmall,
+        fontSize:fontSizeExtraSmall
     },
 
     rightIcon: {

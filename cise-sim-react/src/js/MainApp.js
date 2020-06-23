@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import Body from './containers/BodyThread';
+import Body from './containers/Body';
 import NavBar from './components/NavBar';
 import TemplateStore from './stores/templates/TemplateStore';
 import MessageStore from './stores/messages/MessageStore';

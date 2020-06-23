@@ -1,14 +1,12 @@
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
 import {withStyles} from "@material-ui/core/styles";
-import MsgClearButton from "./MessageInfoClearButton";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-
-import {fontSizeLarge} from "../../layouts/Font";
+import {fontSizeNormal} from "../../../layouts/Font";
 
 const styles = theme => ({
     root: {
@@ -40,13 +38,10 @@ const threadListHeader = (props)  => {
             <Table size="small" aria-label="a dense table">
                 <TableBody>
                     <TableRow>
-                        <TableCell>
-                            <Typography variant="h5" component="h1" align={"left"} style={{fontSize:fontSizeLarge}}>
-                                Thread Messages History
+                        <TableCell >
+                            <Typography style={{padding:6, fontSize:fontSizeNormal}} variant="h5" component="h1" align={"left"}>
+                                Thread Detail
                             </Typography>
-                        </TableCell>
-                        <TableCell align={"right"}>
-                            <MsgClearButton messageStore={props.store.messageStore} />
                         </TableCell>
                     </TableRow>
                 </TableBody>

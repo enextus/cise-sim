@@ -9,9 +9,9 @@ import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
 
 import ExpansionPanelPreview from "./ExpansionPanelPreview";
-import IconMsgOk from "./svg/msg-ok.svg";
-import IconMsgKo from "./svg/msg-alert.svg";
-import {fontSizeLarge, fontSizeNormal, fontSizeSmall} from "../../layouts/Font";
+import IconMsgOk from "../svg/msg-ok.svg";
+import IconMsgKo from "../svg/msg-alert.svg";
+import {fontSizeLarge, fontSizeNormal, fontSizeSmall} from "../../../layouts/Font";
 
 const styles = theme => ({
     root: {
@@ -58,36 +58,32 @@ const styles = theme => ({
         textAlign: "right",
         width: "10%",
         fontSize: fontSizeSmall,
-        borderBottom: 0,
         paddingLeft:0,
         "&:last-child": {
             paddingRight: 0
         },
+        paddingBottom:0,
+        borderBottom:0,
     },
 
     fromto: {
         textAlign: "left",
-        paddingBottom: 10,
+        fontSize: fontSizeNormal,
         paddingTop: 0,
-        fontSize: fontSizeSmall,
         borderBottom: 0,
-        paddingRight:0,
-
+        paddingBottom:0
     },
 
     srvtype :{
         textAlign: "left",
+        fontSize: fontSizeNormal,
+
+        borderBottom: 0,
         paddingBottom: 0,
         paddingTop: 0,
-        fontSize: fontSizeNormal,
-        borderBottom: 0,
-    },
-
-    xmlsummary: {
-        fontSize: fontSizeNormal,
-        fontWeight: "bold",
 
     },
+
 });
 
 

@@ -3,10 +3,10 @@ import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import SendForm from "../forms/SendForm/SendForm";
+import SendForm from "../forms/CreateMessageForm/CreateMessageForm";
 import {Button} from "@material-ui/core";
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
-import {buttonSizeSmall, fontSizeSmall} from "../layouts/Font";
+import {buttonSizeSmall, fontSizeExtraSmall} from "../layouts/Font";
 
 const styles = theme => ({
     modal: {
@@ -25,7 +25,7 @@ const styles = theme => ({
     button: {
         margin: theme.spacing(1),
         maxHeight: buttonSizeSmall,
-        fontSize:fontSizeSmall
+        fontSize:fontSizeExtraSmall
     },
 
     rightIcon: {
@@ -35,7 +35,7 @@ const styles = theme => ({
 });
 
 
-const sendMessageModal = (props) => {
+const createMessageModal = (props) => {
 
     const {classes} = props;
     const [open, setOpen] = React.useState(false);
@@ -96,4 +96,4 @@ const sendMessageModal = (props) => {
     );
 }
 
-export default withStyles(styles)(sendMessageModal);
+export default withStyles(styles)(createMessageModal);
