@@ -7,9 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
-import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import XmlContent from "../../components/common/XmlContent";
+
 import ExpansionPanelPreview from "./ExpansionPanelPreview";
 import IconMsgOk from "./svg/msg-ok.svg";
 import IconMsgKo from "./svg/msg-alert.svg";
@@ -91,32 +89,6 @@ const styles = theme => ({
 
     },
 });
-
-const handleChange = (event, newExpanded) => {
-    console.log("handleChange "+event+" newExpanded "+newExpanded);
-};
-
-const messageXml = (props, classes) => {
-
-    return (
-        <ExpansionPanel onChange={handleChange}>
-
-            <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="receiveMessageContent"
-                id="ReceivedMessage">
-
-                <Typography className={classes.xmlsummary}>Message Details</Typography>
-
-            </ExpansionPanelSummary>
-
-            <ExpansionPanelDetails>
-                <XmlContent>{props.body}</XmlContent>
-            </ExpansionPanelDetails>
-
-        </ExpansionPanel>
-    )
-}
 
 
 const messageInfoCard = (props)  => {

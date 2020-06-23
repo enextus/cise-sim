@@ -3,9 +3,10 @@ import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import SendForm from "../forms/SendForm/SendFormV2";
+import SendForm from "../forms/SendForm/SendForm";
 import {Button} from "@material-ui/core";
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
+import {buttonSizeSmall, fontSizeSmall} from "../layouts/Font";
 
 const styles = theme => ({
     modal: {
@@ -23,6 +24,8 @@ const styles = theme => ({
 
     button: {
         margin: theme.spacing(1),
+        maxHeight: buttonSizeSmall,
+        fontSize:fontSizeSmall
     },
 
     rightIcon: {

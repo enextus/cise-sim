@@ -6,6 +6,7 @@ import {Button} from "@material-ui/core";
 import Slide from "@material-ui/core/Slide";
 import DiscoveryForm from "../forms/DiscoveryForm/DiscoveryForm";
 import TrackChangesRoundedIcon from '@material-ui/icons/TrackChangesRounded';
+import {buttonSizeSmall, fontSizeSmall} from "../layouts/Font";
 
 const styles = theme => ({
     modal: {
@@ -23,6 +24,8 @@ const styles = theme => ({
 
     button: {
         margin: theme.spacing(1),
+        maxHeight: buttonSizeSmall,
+        fontSize:fontSizeSmall
     },
 
     rightIcon: {

@@ -15,6 +15,7 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import IconButton from "@material-ui/core/IconButton";
 import IncidentContentInput from "./components/IncidentContentInput";
 import IncidentMainInfoInput from "./components/IncidentMainInfoInput";
+import {buttonSizeSmall, fontSizeSmall} from "../../layouts/Font";
 
 const styles = theme => ({
     root: {
@@ -27,6 +28,8 @@ const styles = theme => ({
 
     button: {
         margin: theme.spacing(1),
+        maxHeight: buttonSizeSmall,
+        fontSize:fontSizeSmall
     },
 
     rightIcon: {

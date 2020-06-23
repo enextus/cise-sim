@@ -6,6 +6,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
+import {fontSizeLarge} from "../../layouts/Font";
 
 const styles = theme => ({
     root: {
@@ -38,7 +39,7 @@ const threadListHeader = (props)  => {
                 <TableBody>
                     <TableRow>
                         <TableCell >
-                            <Typography style={{padding:6}} variant="h5" component="h1" align={"left"}>
+                            <Typography style={{padding:6, fontSize:fontSizeLarge}} variant="h5" component="h1" align={"left"}>
                                 Thread Detail
                             </Typography>
                         </TableCell>
