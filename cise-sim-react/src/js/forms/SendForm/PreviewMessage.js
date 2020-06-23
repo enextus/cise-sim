@@ -51,12 +51,11 @@ class PreviewMessage extends Component {
             </CompactExpansionPanelSummary>
 
             <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeSmall}}>
-              <XmlContent >
+              <XmlContent size="small">
                 {this.templateStore().template.content}
               </XmlContent>
             </ExpansionPanelDetails>
           </ExpansionPanel>
-
     )
   }
 

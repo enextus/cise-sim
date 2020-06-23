@@ -13,7 +13,7 @@ const styles = theme => ({
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular
-    }
+    },
 });
 
 
@@ -50,12 +50,12 @@ class ExpansionPanelPreview extends Component {
         return (
             <ExpansionPanel onChange={this.handleChange} elevation={0} id="ExpPannel" expanded style={{margin:0}}>
 
-                <CompactExpansionPanelSummary id="ExpSummary">
+                <CompactExpansionPanelSummary id="ExpSummary" >
                     <MoreHorizRoundedIcon/>
                 </CompactExpansionPanelSummary>
 
                 <ExpansionPanelDetails id="ExpDetails" style={{fontSize:fontSizeSmall}}>
-                    <XmlContent>{this.state.currentBody}</XmlContent>
+                    <XmlContent size='normal'>{this.state.currentBody}</XmlContent>
                 </ExpansionPanelDetails>
 
             </ExpansionPanel>

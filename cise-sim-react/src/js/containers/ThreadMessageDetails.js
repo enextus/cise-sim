@@ -4,7 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 import {observer} from "mobx-react";
 import MessageInfoCard from "../forms/MessageForm/MessageInfoCard";
 import Slide from "@material-ui/core/Slide";
-import Logo from "./empty-history.svg"
+import Logo from "./svg/empty-history.svg"
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";

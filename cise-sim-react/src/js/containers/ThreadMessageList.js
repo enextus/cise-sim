@@ -98,14 +98,14 @@ class ThreadMessageList extends Component {
         const msgRcv = this.getMessageStore().historyMsgList;
         let threadCards = this.buildThreadCards(msgRcv);
 
-        const msgFIlter = this.getMessageStore().threadFilter;
-        if (msgFIlter) {
-            if(msgFIlter === 'fail') {
+        const msgFilter = this.getMessageStore().threadFilter;
+        if (msgFilter) {
+            if(msgFilter === 'fail') {
                 threadCards = threadCards.filter((msg) => !msg.ackSuccess);
             }
         }
 
-        // Render
+        // Render ( maxHeight="420px"  overflow= "scroll") .. ?
         return (
             <Box p="8px" mt="20px" mx="6px" hidden={threadCards.length === 0}  >
                 <Grid item xs={12} >
