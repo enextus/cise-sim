@@ -5,7 +5,7 @@ import {withStyles} from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import XmlContent from '../../components/common/XmlContent';
-import {fontSizeSmall} from "../../layouts/Font";
+import {fontSizeNormal, fontSizeSmall, xmlContentHeightSize} from "../../layouts/Font";
 import {CompactExpansionPanelSummary} from "../../components/common/CompactExpansionPanelSummary";
 
 const styles = (theme) => ({
@@ -50,8 +50,8 @@ class PreviewMessage extends Component {
 
             </CompactExpansionPanelSummary>
 
-            <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeSmall}}>
-              <XmlContent size="small">
+            <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeNormal}}>
+              <XmlContent size={xmlContentHeightSize}>
                 {this.templateStore().template.content}
               </XmlContent>
             </ExpansionPanelDetails>

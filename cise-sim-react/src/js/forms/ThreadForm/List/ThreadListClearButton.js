@@ -23,18 +23,32 @@ const styles = theme => ({
 @observer
 class MsgClearButton extends Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     isDisabled() {
-        return !this.getMessageStore() .historyMsgList.length > 0;
+        return !this.getMessageStore().historyMsgList.length > 0;
     }
 
     clear () {
         this.getMessageStore().clearHistory();
         this.getMessageStore().updateThreadWithBody([]);
-
     }
 
     render() {
         const {classes} = this.props;
+
+        let disabled;
+        let visibility;
+        if (this.getMessageStore()){
+            disabled =this.isDisabled();
+            visibility = null;
+        }
+        else {
+            disabled = null;
+            visibility = 'hidden';
+        }
 
         return (
             <Button
@@ -43,13 +57,12 @@ class MsgClearButton extends Component {
                 variant="contained"
                 className={classes.button}
                 onClick={() => this.clear()}
-                disabled={this.isDisabled()}
+                disabled={disabled}
+                style={{visibility:visibility}}
             >
-
-                    <VisibilityOffRoundedIcon className={classes.leftIcon}/>
-                    Clear List
-
-                </Button>
+                <VisibilityOffRoundedIcon className={classes.leftIcon}/>
+                Clear List
+            </Button>
         )
     }
 

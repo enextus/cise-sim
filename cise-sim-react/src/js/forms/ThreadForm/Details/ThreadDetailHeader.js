@@ -7,6 +7,8 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import {fontSizeNormal} from "../../../layouts/Font";
+import Box from "@material-ui/core/Box";
+import MsgClearButton from "../List/ThreadListClearButton";
 
 const styles = theme => ({
     root: {
@@ -34,6 +36,7 @@ const threadListHeader = (props)  => {
     const {classes} = props;
 
     return (
+        <Box>
         <TableContainer style={{paddingLeft:20}}>
             <Table size="small" aria-label="a dense table">
                 <TableBody>
@@ -43,10 +46,12 @@ const threadListHeader = (props)  => {
                                 Thread Detail
                             </Typography>
                         </TableCell>
+                        <TableCell> <MsgClearButton /></TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
         </TableContainer>
+        </Box>
     )
 }
 

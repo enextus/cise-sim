@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 
 import {fontSizeNormal} from "../../../layouts/Font";
+import {Box} from "@material-ui/core";
 
 const styles = theme => ({
     root: {
@@ -36,6 +37,7 @@ const threadListHeader = (props)  => {
     const {classes} = props;
 
     return (
+        <Box>
         <TableContainer style={{paddingLeft:20}}>
             <Table size="small" aria-label="a dense table">
                 <TableBody>
@@ -52,6 +54,7 @@ const threadListHeader = (props)  => {
                 </TableBody>
             </Table>
         </TableContainer>
+        </Box>
     )
 }
 

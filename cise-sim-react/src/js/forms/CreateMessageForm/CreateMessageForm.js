@@ -10,6 +10,7 @@ import RequiresAckCheck from './RequiresAckCheck';
 import SendButton from './SendButton';
 import PreviewMessage from "./PreviewMessage";
 import SendFormHeader from "./SendFormHeader";
+import {boxSizeHeight} from "../../layouts/Font";
 
 const styles = theme => ({
     root: {
@@ -19,7 +20,7 @@ const styles = theme => ({
         //margin: '16px auto',
         margin: 'auto',
         maxWidth: 600,
-        maxHeight: 600
+        maxHeight: {boxSizeHeight}
     },
 });
 
