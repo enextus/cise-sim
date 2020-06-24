@@ -4,12 +4,13 @@ import {withStyles} from '@material-ui/core/styles';
 import {observer} from "mobx-react";
 import MessageInfoCard from "./Details/MessageInfoCard";
 import Slide from "@material-ui/core/Slide";
-import Logo from "../../containers/svg/empty-history.svg"
+import Logo from "./svg/empty-history-icon.svg"
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import {fontSizeLarge} from "../../layouts/Font";
 
 const styles = theme => ({
     root: {
@@ -71,6 +72,11 @@ class ThreadMessageDetails extends Component {
                                 <p align="center">
                                     <img src={Logo}  width="300" height="300" alt="Select a thread to see details" />
                                 </p>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow style={{borderBottom:0}}>
+                            <TableCell style={{borderBottom:0, textAlign:"center", fontSize:fontSizeLarge}}>
+                                Select a thread to see details
                             </TableCell>
                         </TableRow>
                     </TableBody>
