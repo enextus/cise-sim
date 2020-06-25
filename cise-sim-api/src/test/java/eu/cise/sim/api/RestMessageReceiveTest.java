@@ -167,10 +167,10 @@ public class RestMessageReceiveTest {
                 xmlMapperNoValidPretty,
                 xmlMapperNoValidNoPretty);
 
-        Acknowledgement response = messageAPI.receive(messageToSign);
+        ResponseApi<Acknowledgement> response = messageAPI.receive(messageToSign);
 
 
-        assertThat(response.getAckCode()).isEqualTo(AcknowledgementType.SUCCESS);
+        assertThat(response.getResult().getAckCode()).isEqualTo(AcknowledgementType.SUCCESS);
 
     }
 

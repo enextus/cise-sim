@@ -3,10 +3,12 @@ package eu.cise.sim.api.rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Push;
+import eu.cise.sim.api.DefaultTemplateAPI;
 import eu.cise.sim.api.MessageAPI;
-import eu.cise.sim.api.SendResponse;
-import eu.cise.sim.api.TemplateAPI;
-import eu.cise.sim.api.dto.MessageBodyAckDto;
+import eu.cise.sim.api.MessageResponse;
+import eu.cise.sim.api.ResponseApi;
 import eu.cise.sim.templates.Template;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
@@ -27,11 +29,11 @@ import static org.mockito.Mockito.*;
 public class TemplateResourceSendTest {
 
     private static final MessageAPI messageAPI = mock(MessageAPI.class);
-    private static final TemplateAPI templateAPI = mock(TemplateAPI.class);
+    private static final DefaultTemplateAPI DEFAULT_TEMPLATE_API = mock(DefaultTemplateAPI.class);
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new TemplateResource(messageAPI, templateAPI))
+            .addResource(new TemplateResource(messageAPI, DEFAULT_TEMPLATE_API))
             .bootstrapLogging(false)
             .build();
 
@@ -44,12 +46,12 @@ public class TemplateResourceSendTest {
         xmlMapper = new DefaultXmlMapper();
         jsonMapper = new ObjectMapper();
         expectedTemplate = new Template("template-id-#1", "name-#1");
-        when(messageAPI.send(any(), any())).thenReturn(new SendResponse.OK(new MessageBodyAckDto( "", "")));
+        when(messageAPI.send(any(), any())).thenReturn(new  ResponseApi<MessageResponse>(new MessageResponse(new Push(), new Acknowledgement())));
     }
 
     @After
     public void after() {
-        reset(templateAPI);
+        reset(DEFAULT_TEMPLATE_API);
         reset(messageAPI);
     }
 

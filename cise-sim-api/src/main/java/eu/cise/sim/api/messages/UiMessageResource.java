@@ -3,7 +3,8 @@ package eu.cise.sim.api.messages;
 
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.sim.api.MessageAPI;
-import eu.cise.sim.api.SendResponse;
+import eu.cise.sim.api.MessageResponse;
+import eu.cise.sim.api.ResponseApi;
 import eu.cise.sim.api.messages.dto.discovery.DiscoveryRequestDto;
 import eu.cise.sim.api.messages.dto.incident.IncidentRequestDto;
 import eu.cise.sim.api.messages.dto.label.DiscoveryLabelDto;
@@ -34,10 +35,10 @@ public class UiMessageResource {
     @Produces("application/xml")
     public Response receive(String inputXmlMessage) {
 
-        String acknowledgement = messageAPI.receiveXML(inputXmlMessage);
+        ResponseApi<String> acknowledgement = messageAPI.receiveXML(inputXmlMessage);
         return Response
                 .status(Response.Status.CREATED)
-                .entity(acknowledgement)
+                .entity(acknowledgement.getResult())
                 .build();
     }
 
@@ -63,8 +64,8 @@ public class UiMessageResource {
         LOGGER.info("sendIncident received " + incidentMsg);
 
         try {
-            Message message = messageService.buildIncidentMsg(incidentMsg);
-            SendResponse response = messageAPI.send(message);
+            Message message = messageService.buildIncident(incidentMsg);
+            ResponseApi<MessageResponse> response = messageAPI.send(message);
 
         } catch (IOException e) {
             LOGGER.warn("sendIncident exception", e);
@@ -98,10 +99,11 @@ public class UiMessageResource {
         LOGGER.info("sendDiscovery received " + discoveryMsg);
 
         try {
-            Message message = messageService.buildDiscoveryMsg(discoveryMsg);
-            SendResponse response = messageAPI.send(message);
+            Message message = messageService.buildDiscovery(discoveryMsg);
+            ResponseApi<MessageResponse> response = messageAPI.send(message);
+
             if (response.isOk()) {
-                messageService.manageDiscoveryAnswer(response.getAcknowledgement());
+                messageService.manageDiscoveryAnswer(response.getResult().getAcknowledgement());
             }
 
         } catch (IOException e) {

@@ -23,11 +23,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class MessageService {
+public class MessageService implements MessageBuilderAPI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageService.class);
 
-    public Message buildIncidentMsg(IncidentRequestDto incidentRequestDto) throws IOException {
+    @Override
+    public Message buildIncident(IncidentRequestDto incidentRequestDto) throws IOException {
 
         IncidentTypeEnum type = IncidentTypeEnum.valueOfGuiValue(incidentRequestDto.getIncident().getIncidentType());
         IncidentBuilder builder = type.getIncidentBuilder();
@@ -41,7 +42,8 @@ public class MessageService {
        return mockMessage;
     }
 
-    public Message buildDiscoveryMsg(DiscoveryRequestDto discoveryRequestDto) throws IOException {
+    @Override
+    public Message buildDiscovery(DiscoveryRequestDto discoveryRequestDto) throws IOException {
 
         PullRequest mockMessage = MockMessage.getDiscoveryMessage();
 

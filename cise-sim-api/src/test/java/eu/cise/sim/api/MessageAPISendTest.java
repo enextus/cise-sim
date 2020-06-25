@@ -52,9 +52,9 @@ public class MessageAPISendTest {
         String ackAsString = concreteNotValidatingXmlMapper.toXML(ackMessage);
         when(xmlMapper.toXML(any())).thenReturn(ackAsString);
 
-        SendResponse sendResponse = messageAPI.send("template-id", msgParams());
-
-        assertThat(sendResponse.getContents().getAcknowledge()).isEqualTo(ackAsString);
+        ResponseApi<MessageResponse> sendResponse = messageAPI.send("template-id", msgParams());
+        String ackResponseString = concreteNotValidatingXmlMapper.toXML(sendResponse.getResult().getAcknowledgement());
+        assertThat(ackResponseString).isEqualTo(ackAsString);
     }
 
     @Ignore
@@ -69,9 +69,10 @@ public class MessageAPISendTest {
         String messageAsString = concreteNotValidatingXmlMapper.toXML(ackMessage);
         when(xmlMapper.toXML(any())).thenReturn(messageAsString);
 
-        SendResponse sendResponse = messageAPI.send("template-id", msgParams());
+        ResponseApi<MessageResponse> sendResponse = messageAPI.send("template-id", msgParams());
+        String msgResponseString = concreteNotValidatingXmlMapper.toXML(sendResponse.getResult().getMessage());
 
-        assertThat(sendResponse.getContents().getBody()).isEqualTo(messageAsString);
+        assertThat(msgResponseString).isEqualTo(messageAsString);
     }
 
     private JsonNode msgParams() {

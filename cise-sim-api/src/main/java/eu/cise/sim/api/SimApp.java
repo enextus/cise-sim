@@ -76,7 +76,7 @@ public class SimApp extends Application<SimConf> {
                 appCtx.getXmlMapper(),
                 appCtx.getPrettyNotValidatingXmlMapper());
 
-        TemplateAPI templateAPI = new TemplateAPI(
+        DefaultTemplateAPI defaultTemplateAPI = new DefaultTemplateAPI(
                 appCtx.makeMessageProcessor(),
                 appCtx.makeTemplateLoader(),
                 appCtx.getXmlMapper(),
@@ -93,7 +93,7 @@ public class SimApp extends Application<SimConf> {
         environment.jersey().register(new UIServiceResource(appCtx.makeEmuConfig()));
         environment.jersey().register(new MessageResource(messageAPI));
         //environment.jersey().register(new MessageResourceJersey(messageAPI,  appCtx.getXmlMapper()));
-        environment.jersey().register(new TemplateResource(messageAPI, templateAPI));
+        environment.jersey().register(new TemplateResource(messageAPI, defaultTemplateAPI));
 
         environment.jersey().register(new HistoryResource(historyAPI));
 

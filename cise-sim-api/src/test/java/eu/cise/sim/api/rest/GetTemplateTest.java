@@ -3,9 +3,9 @@ package eu.cise.sim.api.rest;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.sim.api.APIError;
+import eu.cise.sim.api.DefaultTemplateAPI;
 import eu.cise.sim.api.MessageAPI;
-import eu.cise.sim.api.PreviewResponse;
-import eu.cise.sim.api.TemplateAPI;
+import eu.cise.sim.api.ResponseApi;
 import eu.cise.sim.api.representation.TemplateParams;
 import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.templates.Template;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 
 public class GetTemplateTest {
 
-    private static final TemplateAPI templateAPI = mock(TemplateAPI.class);
+    private static final DefaultTemplateAPI DEFAULT_TEMPLATE_API = mock(DefaultTemplateAPI.class);
     private static final MessageAPI messageAPI = mock(MessageAPI.class);
     private static final SimConfig SIM_CONFIG = mock(SimConfig.class);
 
@@ -36,7 +36,7 @@ public class GetTemplateTest {
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new TemplateResource(messageAPI, templateAPI))
+            .addResource(new TemplateResource(messageAPI, DEFAULT_TEMPLATE_API))
             .bootstrapLogging(false)
             .build();
     private Template expectedTemplate;
@@ -45,12 +45,12 @@ public class GetTemplateTest {
     public void before() {
         xmlMapper = new DefaultXmlMapper();
         expectedTemplate = new Template("template-id-#1", "name-#1");
-        when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(expectedTemplate));
+        when(DEFAULT_TEMPLATE_API.preview(any())).thenReturn(new ResponseApi<Template>(expectedTemplate));
     }
 
     @After
     public void after() {
-        reset(templateAPI);
+        reset(DEFAULT_TEMPLATE_API);
         reset(messageAPI);
     }
 
@@ -73,7 +73,7 @@ public class GetTemplateTest {
                 .queryParam("requiresAck", false)
                 .request().get();
 
-        verify(templateAPI).preview(any(TemplateParams.class));
+        verify(DEFAULT_TEMPLATE_API).preview(any(TemplateParams.class));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class GetTemplateTest {
                 .queryParam("requiresAck", false)
                 .request().get();
 
-        verify(templateAPI).preview(aTemplateParams());
+        verify(DEFAULT_TEMPLATE_API).preview(aTemplateParams());
     }
 
     @Test
@@ -102,7 +102,7 @@ public class GetTemplateTest {
 
     @Test
     public void it_returns_a_apiError_when_previewResponse_is_ko() {
-        when(templateAPI.preview(any())).thenReturn(new PreviewResponse.KO("exception"));
+        when(DEFAULT_TEMPLATE_API.preview(any())).thenReturn(new  ResponseApi<Template>(ResponseApi.ErrorId.FATAL, "exception"));
 
         Response response = resources.target("/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
@@ -132,7 +132,7 @@ public class GetTemplateTest {
                 .build();
 
         Template template = new Template("template-id-#1", "name-#1", xmlMapper.toXML(fakePreparedMessage));
-        when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(template));
+        when(DEFAULT_TEMPLATE_API.preview(any())).thenReturn(new ResponseApi<Template>(template));
         Response response = resources.target("/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")
                 .queryParam("correlationId", "correlation-id-#1")
@@ -162,7 +162,7 @@ public class GetTemplateTest {
 
         Template template = new Template("template-id-#1", "name-#1", xmlMapper.toXML(fakePreparedMessage));
 
-        when(templateAPI.preview(any())).thenReturn(new PreviewResponse.OK(template));
+        when(DEFAULT_TEMPLATE_API.preview(any())).thenReturn(new ResponseApi<Template>(template));
 
         Response response = resources.target("/ui/templates/1234567")
                 .queryParam("messageId", "message-id-#1")

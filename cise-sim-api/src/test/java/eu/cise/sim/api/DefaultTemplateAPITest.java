@@ -15,15 +15,15 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class TemplateAPITest {
+public class DefaultTemplateAPITest {
 
-    private TemplateAPI templateAPI;
+    private DefaultTemplateAPI defaultTemplateAPI;
     private TemplateLoader templateLoader;
 
     @Before
     public void before() {
         templateLoader = mock(TemplateLoader.class);
-        templateAPI = new TemplateAPI(
+        defaultTemplateAPI = new DefaultTemplateAPI(
                 mock(MessageProcessor.class),
                 templateLoader,
                 new DefaultXmlMapper(), new DefaultXmlMapper.PrettyNotValidating());
@@ -31,7 +31,7 @@ public class TemplateAPITest {
 
     @Test
     public void it_load_the_template_list() {
-        templateAPI.getTemplates();
+        defaultTemplateAPI.getTemplates();
 
         verify(templateLoader).loadTemplateList();
     }
@@ -43,7 +43,7 @@ public class TemplateAPITest {
 
         when(templateLoader.loadTemplateList()).thenReturn(expectedTemplateList);
 
-        List<Template> actualTemplateList = templateAPI.getTemplates().getTemplates();
+        List<Template> actualTemplateList = defaultTemplateAPI.getTemplates().getResult();
 
         assertThat(actualTemplateList).hasSameElementsAs(expectedTemplateList);
     }
@@ -55,7 +55,7 @@ public class TemplateAPITest {
 
         when(templateLoader.loadTemplateList()).thenReturn(expectedTemplateList);
 
-        assertThat(templateAPI.getTemplates()).isInstanceOf(TemplateListResponse.OK.class);
+        assertThat(defaultTemplateAPI.getTemplates().isOk()).isTrue();
     }
 
     @Ignore
@@ -63,9 +63,9 @@ public class TemplateAPITest {
     public void it_returns_a_ko_response_when_throwing_an_IOLoaderException() {
         when(templateLoader.loadTemplateList()).thenThrow(new LoaderEx());
 
-        templateAPI.getTemplates();
+        defaultTemplateAPI.getTemplates();
 
-        assertThat(templateAPI.getTemplates()).isInstanceOf(TemplateListResponse.KO.class);
+        assertThat(defaultTemplateAPI.getTemplates().isOk()).isFalse();
     }
 
 

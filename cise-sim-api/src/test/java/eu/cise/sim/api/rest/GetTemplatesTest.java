@@ -1,9 +1,9 @@
 package eu.cise.sim.api.rest;
 
 import eu.cise.sim.api.APIError;
+import eu.cise.sim.api.DefaultTemplateAPI;
 import eu.cise.sim.api.MessageAPI;
-import eu.cise.sim.api.TemplateAPI;
-import eu.cise.sim.api.TemplateListResponse;
+import eu.cise.sim.api.ResponseApi;
 import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.templates.Template;
 import io.dropwizard.testing.junit.ResourceTestRule;
@@ -22,13 +22,13 @@ import static org.mockito.Mockito.*;
 
 public class GetTemplatesTest {
 
-    private static final TemplateAPI templateAPI = mock(TemplateAPI.class);
+    private static final DefaultTemplateAPI DEFAULT_TEMPLATE_API = mock(DefaultTemplateAPI.class);
     private static final MessageAPI messageAPI = mock(MessageAPI.class);
     private static final SimConfig SIM_CONFIG = mock(SimConfig.class);
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new TemplateResource(messageAPI, templateAPI))
+            .addResource(new TemplateResource(messageAPI, DEFAULT_TEMPLATE_API))
             .bootstrapLogging(false)
             .build();
 
@@ -37,12 +37,12 @@ public class GetTemplatesTest {
     @Before
     public void before() {
         expectedTemplateList = asList(new Template("id1", "name1"), new Template("id2", "name2"));
-        when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse.OK(expectedTemplateList));
+        when(DEFAULT_TEMPLATE_API.getTemplates()).thenReturn(new ResponseApi<List<Template>>(expectedTemplateList));
     }
 
     @After
     public void after() {
-        reset(templateAPI);
+        reset(DEFAULT_TEMPLATE_API);
         reset(messageAPI);
     }
 
@@ -64,7 +64,7 @@ public class GetTemplatesTest {
 
     @Test
     public void it_returns_an_api_for_templateListResponse_is_ko() {
-        when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse.KO("exception"));
+        when(DEFAULT_TEMPLATE_API.getTemplates()).thenReturn(new ResponseApi<List<Template>>(ResponseApi.ErrorId.FATAL, "exception"));
 
         Response response = resources.target("/ui/templates").request().get();
 
@@ -77,7 +77,7 @@ public class GetTemplatesTest {
 
     @Test
     public void it_checks_HTTP_code_to_server_error_when_templateListResponse_is_ko() {
-        when(templateAPI.getTemplates()).thenReturn(new TemplateListResponse.KO("exception"));
+        when(DEFAULT_TEMPLATE_API.getTemplates()).thenReturn(new ResponseApi<List<Template>>(ResponseApi.ErrorId.FATAL, "exception"));
 
         Response response = resources.target("/ui/templates").request().get();
 
