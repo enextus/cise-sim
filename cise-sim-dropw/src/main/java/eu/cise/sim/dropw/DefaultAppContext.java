@@ -1,8 +1,16 @@
 package eu.cise.sim.dropw;
 
+import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.dispatcher.DispatcherFactory;
 import eu.cise.signature.SignatureService;
+import eu.cise.sim.api.DefaultMessageAPI;
+import eu.cise.sim.api.DefaultTemplateAPI;
+import eu.cise.sim.api.MessageAPI;
+import eu.cise.sim.api.TemplateAPI;
+import eu.cise.sim.api.history.FileMessageService;
+import eu.cise.sim.api.history.ThreadMessageService;
 import eu.cise.sim.config.SimConfig;
+import eu.cise.sim.dropw.soapresources.CISEMessageServiceSoapImplDefault;
 import eu.cise.sim.engine.DefaultMessageProcessor;
 import eu.cise.sim.engine.DefaultSimEngine;
 import eu.cise.sim.engine.Dispatcher;
@@ -85,6 +93,39 @@ public class DefaultAppContext implements AppContext {
     @Override
     public XmlMapper getPrettyNotValidatingXmlMapper() {
         return prettyNotValidatingXmlMapper;
+    }
+
+    @Override
+    public ThreadMessageService getThreadMessageService() {
+        return  new FileMessageService(getPrettyNotValidatingXmlMapper(),
+                                       getRepoDir(),
+                                       getGuiMaxThMsgs());
+
+    }
+
+    @Override
+    public MessageAPI getMessageAPI(MessagePersistence messagePersistence) {
+        return new DefaultMessageAPI(
+                makeMessageProcessor(messagePersistence),
+                makeTemplateLoader(),
+                getXmlMapper(),
+                getPrettyNotValidatingXmlMapper());
+    }
+
+    @Override
+    public TemplateAPI getTemplateAPI() {
+        return new DefaultTemplateAPI(
+                    makeMessageProcessor(),
+                    makeTemplateLoader(),
+                    getXmlMapper(),
+                    getPrettyNotValidatingXmlMapper());
+    }
+
+    @Override
+    public CISEMessageServiceSoapImpl getServiceSoap(MessageAPI messageAPI) {
+        return new CISEMessageServiceSoapImplDefault(
+                messageAPI,
+                getPrettyNotValidatingXmlMapper());
     }
 
     @Override

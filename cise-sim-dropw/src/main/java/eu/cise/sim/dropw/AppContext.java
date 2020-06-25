@@ -1,6 +1,10 @@
 package eu.cise.sim.dropw;
 
+import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.signature.SignatureService;
+import eu.cise.sim.api.MessageAPI;
+import eu.cise.sim.api.TemplateAPI;
+import eu.cise.sim.api.history.ThreadMessageService;
 import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.engine.Dispatcher;
 import eu.cise.sim.engine.MessageProcessor;
@@ -25,6 +29,14 @@ public interface AppContext {
     XmlMapper getXmlMapper();
 
     XmlMapper getPrettyNotValidatingXmlMapper();
+
+    ThreadMessageService getThreadMessageService();
+
+    MessageAPI getMessageAPI(MessagePersistence messagePersistence);
+
+    TemplateAPI getTemplateAPI();
+
+    CISEMessageServiceSoapImpl getServiceSoap(MessageAPI messageAPI);
 
     SimConfig makeEmuConfig();
 

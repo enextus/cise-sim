@@ -42,7 +42,7 @@
             <fileMode>7775</fileMode>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-sim-api/target/classes</directory>
+            <directory>${project.parent.basedir}/cise-sim-dropw/target/classes</directory>
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>config.yml</include>
@@ -50,7 +50,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-sim-api/target/classes</directory>
+            <directory>${project.parent.basedir}/cise-sim-dropw/target/classes</directory>
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>sim.properties</include>

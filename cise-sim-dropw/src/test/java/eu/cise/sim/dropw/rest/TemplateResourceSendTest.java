@@ -9,7 +9,7 @@ import eu.cise.sim.api.DefaultTemplateAPI;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.MessageResponse;
 import eu.cise.sim.api.ResponseApi;
-import eu.cise.sim.dropw.resources.TemplateResource;
+import eu.cise.sim.dropw.restresources.TemplateResource;
 import eu.cise.sim.templates.Template;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;

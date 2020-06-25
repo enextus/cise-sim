@@ -4,13 +4,11 @@ import com.codahale.metrics.health.HealthCheck;
 import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
-import eu.cise.sim.api.DefaultMessageAPI;
-import eu.cise.sim.api.DefaultTemplateAPI;
 import eu.cise.sim.api.MessageAPI;
+import eu.cise.sim.api.TemplateAPI;
 import eu.cise.sim.api.helpers.CrossOriginSupport;
-import eu.cise.sim.api.history.FileMessageService;
 import eu.cise.sim.api.history.ThreadMessageService;
-import eu.cise.sim.dropw.resources.*;
+import eu.cise.sim.dropw.restresources.*;
 import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
@@ -57,28 +55,9 @@ public class SimApp extends Application<SimConf> {
         // Proxy management
         proxyManagement(appCtx.getProxyHost(), appCtx.getProxyPort());
 
-        /**
-         * TODO The FileMessageRepository should be created in the appContext and then you should have a method
-         * in the appContext like makeMessageRepository that returns it to be injected in the HistoryAPI
-         * The whole appContext idea is to have a single place where to create all the concrete objects.
-        */
-        ThreadMessageService fileMessagePersistence =  new FileMessageService(appCtx.getPrettyNotValidatingXmlMapper(),
-                                                                                       appCtx.getRepoDir(),
-                                                                                       appCtx.getGuiMaxThMsgs());
-
-
-
-        MessageAPI messageAPI = new DefaultMessageAPI(
-                appCtx.makeMessageProcessor(fileMessagePersistence),
-                appCtx.makeTemplateLoader(),
-                appCtx.getXmlMapper(),
-                appCtx.getPrettyNotValidatingXmlMapper());
-
-        DefaultTemplateAPI defaultTemplateAPI = new DefaultTemplateAPI(
-                appCtx.makeMessageProcessor(),
-                appCtx.makeTemplateLoader(),
-                appCtx.getXmlMapper(),
-                appCtx.getPrettyNotValidatingXmlMapper());
+        ThreadMessageService threadMessageService =  appCtx.getThreadMessageService();
+        MessageAPI  messageAPI = appCtx.getMessageAPI(threadMessageService);
+        TemplateAPI templateAPI = appCtx.getTemplateAPI();
 
         environment.healthChecks().register("noop", new HealthCheck() {
             @Override
@@ -90,16 +69,11 @@ public class SimApp extends Application<SimConf> {
         environment.jersey().register(new UiMessageResource(messageAPI));
         environment.jersey().register(new UIServiceResource(appCtx.makeEmuConfig()));
         environment.jersey().register(new MessageResource(messageAPI));
-        //environment.jersey().register(new MessageResourceJersey(messageAPI,  appCtx.getXmlMapper()));
-        environment.jersey().register(new TemplateResource(messageAPI, defaultTemplateAPI));
-
-        environment.jersey().register(new ThreadMessageResource(fileMessagePersistence));
-
+        environment.jersey().register(new TemplateResource(messageAPI, templateAPI));
+        environment.jersey().register(new ThreadMessageResource(threadMessageService));
         environment.jersey().register(new JsonProcessingExceptionMapper(true));
 
-        CISEMessageServiceSoapImpl ciseMessageServiceSoap = new CISEMessageServiceSoapImplDefault(
-                messageAPI,
-                appCtx.getPrettyNotValidatingXmlMapper());
+        CISEMessageServiceSoapImpl ciseMessageServiceSoap = appCtx.getServiceSoap(messageAPI);
 
         // WSDL first service using server side JAX-WS handler and CXF logging interceptors
         jaxwsBundle.publishEndpoint(new EndpointBuilder("messages", ciseMessageServiceSoap));
