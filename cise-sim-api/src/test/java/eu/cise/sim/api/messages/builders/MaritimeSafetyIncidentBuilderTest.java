@@ -5,6 +5,7 @@ import eu.cise.datamodel.v1.entity.event.Event;
 import eu.cise.datamodel.v1.entity.incident.Incident;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.servicemodel.v1.message.XmlEntityPayload;
+import eu.cise.sim.api.messages.builders.incident.MaritimeSafetyIncidentBuilder;
 import eu.cise.sim.api.messages.dto.incident.IncidentInfoDto;
 import eu.cise.sim.api.messages.dto.incident.IncidentRequestDto;
 import eu.cise.sim.api.messages.dto.incident.VesselInfoDto;

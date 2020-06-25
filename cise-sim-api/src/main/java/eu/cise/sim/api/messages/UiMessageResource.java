@@ -5,17 +5,15 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.MessageResponse;
 import eu.cise.sim.api.ResponseApi;
+import eu.cise.sim.api.helpers.BuildHelper;
 import eu.cise.sim.api.messages.dto.discovery.DiscoveryRequestDto;
 import eu.cise.sim.api.messages.dto.incident.IncidentRequestDto;
-import eu.cise.sim.api.messages.dto.label.DiscoveryLabelDto;
-import eu.cise.sim.api.messages.dto.label.IncidentMessageLabelDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
 
 @Path("/ui/messages")
 @Produces(MediaType.APPLICATION_JSON)
@@ -36,10 +34,7 @@ public class UiMessageResource {
     public Response receive(String inputXmlMessage) {
 
         ResponseApi<String> acknowledgement = messageAPI.receiveXML(inputXmlMessage);
-        return Response
-                .status(Response.Status.CREATED)
-                .entity(acknowledgement.getResult())
-                .build();
+        return BuildHelper.buildResponse(acknowledgement, Response.Status.INTERNAL_SERVER_ERROR, Response.Status.CREATED);
     }
 
     /* ----------- INCIDENT ----------- */
@@ -51,7 +46,7 @@ public class UiMessageResource {
 
         return Response
                 .status(Response.Status.OK)
-                .entity(IncidentMessageLabelDto.getInstance())
+                .entity(messageService.getLabelsIncident())
                 .build();
     }
 
@@ -63,12 +58,9 @@ public class UiMessageResource {
 
         LOGGER.info("sendIncident received " + incidentMsg);
 
-        try {
-            Message message = messageService.buildIncident(incidentMsg);
-            ResponseApi<MessageResponse> response = messageAPI.send(message);
-
-        } catch (IOException e) {
-            LOGGER.warn("sendIncident exception", e);
+        ResponseApi<Message> message = messageService.buildIncident(incidentMsg);
+        if (message.isOk()) {
+            ResponseApi<MessageResponse> response = messageAPI.send(message.getResult());
         }
 
         return Response
@@ -86,7 +78,7 @@ public class UiMessageResource {
 
         return Response
                 .status(Response.Status.OK)
-                .entity(DiscoveryLabelDto.getInstance())
+                .entity(messageService.getLabelsDiscovery())
                 .build();
     }
 
@@ -98,16 +90,13 @@ public class UiMessageResource {
 
         LOGGER.info("sendDiscovery received " + discoveryMsg);
 
-        try {
-            Message message = messageService.buildDiscovery(discoveryMsg);
-            ResponseApi<MessageResponse> response = messageAPI.send(message);
+        ResponseApi<Message> message = messageService.buildDiscovery(discoveryMsg);
+        if (message.isOk()) {
+            ResponseApi<MessageResponse> response = messageAPI.send(message.getResult());
 
             if (response.isOk()) {
                 messageService.manageDiscoveryAnswer(response.getResult().getAcknowledgement());
             }
-
-        } catch (IOException e) {
-            LOGGER.warn("sendDiscovery exception", e);
         }
 
         return Response
@@ -115,5 +104,4 @@ public class UiMessageResource {
                 .entity("OK")
                 .build();
     }
-
 }

@@ -1,4 +1,4 @@
-package eu.cise.sim.api.messages.builders;
+package eu.cise.sim.api.messages.builders.incident;
 
 import eu.cise.datamodel.v1.entity.incident.Incident;
 import eu.cise.datamodel.v1.entity.incident.MaritimeSafetyIncident;

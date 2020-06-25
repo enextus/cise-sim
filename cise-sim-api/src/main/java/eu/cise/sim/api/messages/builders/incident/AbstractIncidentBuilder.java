@@ -1,4 +1,4 @@
-package eu.cise.sim.api.messages.builders;
+package eu.cise.sim.api.messages.builders.incident;
 
 import eu.cise.datamodel.v1.entity.document.VesselDocument;
 import eu.cise.datamodel.v1.entity.event.Event;
@@ -8,6 +8,7 @@ import eu.cise.datamodel.v1.entity.location.Geometry;
 import eu.cise.datamodel.v1.entity.location.Location;
 import eu.cise.datamodel.v1.entity.vessel.Vessel;
 import eu.cise.datamodel.v1.entity.vessel.VesselType;
+import eu.cise.sim.api.messages.builders.IncidentBuilder;
 import eu.cise.sim.api.messages.dto.incident.ContentInfoDto;
 import eu.cise.sim.api.messages.dto.incident.IncidentInfoDto;
 import eu.cise.sim.api.messages.dto.incident.IncidentRequestDto;

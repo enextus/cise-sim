@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiscoveryLabelDto implements Serializable {
+public class DiscoveryMessageLabelDto implements Serializable {
 
     private static final long serialVersionUID = 42L;
 
@@ -16,7 +16,7 @@ public class DiscoveryLabelDto implements Serializable {
     private final List<String> seaBasinList;
     private final List<String> serviceTypeList;
 
-    private static DiscoveryLabelDto instance;
+    private static DiscoveryMessageLabelDto instance;
 
     static {
 
@@ -34,14 +34,14 @@ public class DiscoveryLabelDto implements Serializable {
             serviceTypeList.add(type.value());
         }
 
-        instance = new DiscoveryLabelDto(countryList, seaBasinList, serviceTypeList);
+        instance = new DiscoveryMessageLabelDto(countryList, seaBasinList, serviceTypeList);
     }
 
-    public static DiscoveryLabelDto getInstance() {
+    public static DiscoveryMessageLabelDto getInstance() {
         return instance;
     }
 
-    private DiscoveryLabelDto(List<String> countryList, List<String> seaBasinList, List<String> serviceTypeList) {
+    private DiscoveryMessageLabelDto(List<String> countryList, List<String> seaBasinList, List<String> serviceTypeList) {
         this.countryList = countryList;
         this.seaBasinList = seaBasinList;
         this.serviceTypeList = serviceTypeList;

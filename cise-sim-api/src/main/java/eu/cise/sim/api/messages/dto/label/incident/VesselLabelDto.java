@@ -1,4 +1,4 @@
-package eu.cise.sim.api.messages.dto.label;
+package eu.cise.sim.api.messages.dto.label.incident;
 
 import eu.cise.datamodel.v1.entity.event.ObjectRoleInEventType;
 import eu.cise.datamodel.v1.entity.vessel.VesselType;
