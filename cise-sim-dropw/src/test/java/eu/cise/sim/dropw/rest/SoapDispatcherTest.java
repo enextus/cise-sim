@@ -1,4 +1,4 @@
-package eu.cise.sim.api.rest;
+package eu.cise.sim.dropw.rest;
 /*
 import eu.cise.datamodel.v1.entity.Entity;
 import eu.cise.datamodel.v1.entity.incident.Incident;

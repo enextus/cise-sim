@@ -1,7 +1,5 @@
-package eu.cise.sim;
+package eu.cise.sim.dropw;
 
-import eu.cise.sim.dropw.AppContext;
-import eu.cise.sim.dropw.DefaultAppContext;
 import eu.cise.sim.engine.MessageProcessor;
 import org.junit.Before;
 import org.junit.Ignore;

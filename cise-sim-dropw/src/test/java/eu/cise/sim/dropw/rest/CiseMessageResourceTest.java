@@ -1,8 +1,9 @@
-package eu.cise.sim.api.rest;
+package eu.cise.sim.dropw.rest;
 
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.sim.api.MessageAPI;
+import eu.cise.sim.dropw.resources.MessageResource;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import io.dropwizard.testing.junit.ResourceTestRule;

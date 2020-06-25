@@ -1,9 +1,10 @@
-package eu.cise.sim.api.rest;
+package eu.cise.sim.dropw.rest;
 
 import com.roskart.dropwizard.jaxws.ClientBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import com.roskart.dropwizard.jaxws.JAXWSEnvironment;
 import eu.cise.sim.api.MessageAPI;
+import eu.cise.sim.dropw.resources.MessageResource;
 import eu.cise.sim.io.MessageStorage;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;

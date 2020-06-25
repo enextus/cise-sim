@@ -10,7 +10,6 @@ import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.helpers.CrossOriginSupport;
 import eu.cise.sim.api.history.FileMessageService;
 import eu.cise.sim.api.history.ThreadMessageService;
-import eu.cise.sim.api.soap.CISEMessageServiceSoapImplDefault;
 import eu.cise.sim.dropw.resources.*;
 import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;

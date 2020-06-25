@@ -1,10 +1,11 @@
-package eu.cise.sim.api.rest;
+package eu.cise.sim.dropw.rest;
 
 import eu.cise.sim.api.APIError;
 import eu.cise.sim.api.DefaultTemplateAPI;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.ResponseApi;
 import eu.cise.sim.config.SimConfig;
+import eu.cise.sim.dropw.resources.TemplateResource;
 import eu.cise.sim.templates.Template;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.After;

@@ -26,9 +26,12 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-sim-app/target/site/apidocs
+            <directory>${project.parent.basedir}
             </directory>
             <outputDirectory>docs</outputDirectory>
+            <includes>
+                <include>*.pdf</include>
+            </includes>
         </fileSet>
         <fileSet>
             <directory>${project.parent.basedir}/cise-sim-assembly/src/main/scripts</directory>

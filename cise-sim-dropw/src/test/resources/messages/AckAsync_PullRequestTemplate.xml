@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:Acknowledgement xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/">
+    <CorrelationID>c7b7dea3-a2af-4ef9-b9e9-0d8e2e63f66d</CorrelationID>
+    <CreationDateTime>2019-08-28T13:59:37.631Z</CreationDateTime>
+    <MessageID>3e33a062-d557-4463-952f-f156d70e8387</MessageID>
+    <Priority>Low</Priority>
+    <RequiresAck>false</RequiresAck>
+    <Sender>
+        <ServiceID>cx.simlsa2-nodecx.vessel.pull.provider</ServiceID>
+        <ServiceOperation>Acknowledgement</ServiceOperation>
+        <Participant>
+            <Id>eu.eucise.cx.simlsa2-nodecx</Id>
+            <Name>Simulator LSA 2</Name>
+            <Description>Second simulator LSA</Description>
+            <ClassificationLevel>Unclassified</ClassificationLevel>
+            <EndpointUrl>http://192.168.42.37:8380/sim-LSA/CISEMessageService</EndpointUrl>
+            <EndpointType>SOAP</EndpointType>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.vessel.push.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.persondocument.subscribe.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.vessel.subscribe.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.incident.subscribe.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.locationdocument.subscribe.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.vessel.pull.provider</ProvidedServicesIds>
+            <Gateway>
+                <Id>eu.eucise.cx.nodecx</Id>
+            </Gateway>
+            <Owner>JRC</Owner>
+            <PointOfContact>
+                <Name>Jesus</Name>
+            </PointOfContact>
+            <AreasOfInterest>BalticSea</AreasOfInterest>
+            <AreasOfInterest>NorthSea</AreasOfInterest>
+            <Communities>GeneralLawEnforcement</Communities>
+            <Communities>MarineEnvironment</Communities>
+            <Functions>Safety</Functions>
+            <MemberState>CX</MemberState>
+        </Participant>
+    </Sender>
+    <Recipient>
+        <ServiceID>cx.simlsa1-nodecx.vessel.pull.consumer</ServiceID>
+        <ServiceOperation>Acknowledgement</ServiceOperation>
+        <Participant>
+            <Id>eu.eucise.cx.simlsa1-nodecx</Id>
+            <Name>Simulator LSA 1</Name>
+            <Description>First simulator LSA</Description>
+            <ClassificationLevel>Unclassified</ClassificationLevel>
+            <EndpointUrl>http://192.168.42.37:8280/sim-LSA/CISEMessageService</EndpointUrl>
+            <EndpointType>SOAP</EndpointType>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.vessel.push.provider</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.vessel.pull.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.persondocument.subscribe.provider</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.vessel.subscribe.provider</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.incident.subscribe.provider</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.locationdocument.subscribe.provider</ProvidedServicesIds>
+            <Gateway>
+                <Id>eu.eucise.cx.nodecx</Id>
+            </Gateway>
+            <Owner>JRC</Owner>
+            <PointOfContact>
+                <Name>Jesus</Name>
+                <Surname>Alvarado</Surname>
+                <Address>10 Simon Cruz street, JRC, Italy</Address>
+                <Telephone>+3984847722</Telephone>
+                <Email>simon10.cruz@gmail.com</Email>
+            </PointOfContact>
+            <AreasOfInterest>BalticSea</AreasOfInterest>
+            <AreasOfInterest>Mediterranean</AreasOfInterest>
+            <Communities>Customs</Communities>
+            <Communities>MaritimeSafetySecurity</Communities>
+            <Functions>BorderMonitoring</Functions>
+            <Functions>BorderOperation</Functions>
+            <MemberState>CX</MemberState>
+        </Participant>
+    </Recipient>
+    <AckCode>Success</AckCode>
+    <AckDetail>Pull Request type REQUEST received</AckDetail>
+</ns4:Acknowledgement>

@@ -1,4 +1,4 @@
-package eu.cise.sim.api.rest;
+package eu.cise.sim.dropw.rest;
 
 /*import eu.cise.sim.api.helpers.XmlFileDirectoryList;
 import io.dropwizard.testing.junit.ResourceTestRule;

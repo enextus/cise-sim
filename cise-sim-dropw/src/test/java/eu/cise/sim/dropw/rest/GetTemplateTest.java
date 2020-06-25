@@ -1,4 +1,4 @@
-package eu.cise.sim.api.rest;
+package eu.cise.sim.dropw.rest;
 
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
@@ -8,6 +8,7 @@ import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.ResponseApi;
 import eu.cise.sim.api.representation.TemplateParams;
 import eu.cise.sim.config.SimConfig;
+import eu.cise.sim.dropw.resources.TemplateResource;
 import eu.cise.sim.templates.Template;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
