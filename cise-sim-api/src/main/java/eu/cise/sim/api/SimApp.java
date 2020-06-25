@@ -5,7 +5,9 @@ import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.sim.api.helpers.CrossOriginSupport;
-import eu.cise.sim.api.history.*;
+import eu.cise.sim.api.history.FileMessageService;
+import eu.cise.sim.api.history.ThreadMessageResource;
+import eu.cise.sim.api.history.ThreadMessageService;
 import eu.cise.sim.api.messages.UiMessageResource;
 import eu.cise.sim.api.rest.MessageResource;
 import eu.cise.sim.api.rest.TemplateResource;
@@ -64,10 +66,10 @@ public class SimApp extends Application<SimConf> {
          * in the appContext like makeMessageRepository that returns it to be injected in the HistoryAPI
          * The whole appContext idea is to have a single place where to create all the concrete objects.
         */
-        HistoryMessagePersistence fileMessagePersistence =  new FileMessagePersistence(appCtx.getPrettyNotValidatingXmlMapper(),
+        ThreadMessageService fileMessagePersistence =  new FileMessageService(appCtx.getPrettyNotValidatingXmlMapper(),
                                                                                        appCtx.getRepoDir(),
                                                                                        appCtx.getGuiMaxThMsgs());
-        HistoryAPI historyAPI = new DefaultHistoryAPI(fileMessagePersistence);
+
 
 
         MessageAPI messageAPI = new DefaultMessageAPI(
@@ -95,7 +97,7 @@ public class SimApp extends Application<SimConf> {
         //environment.jersey().register(new MessageResourceJersey(messageAPI,  appCtx.getXmlMapper()));
         environment.jersey().register(new TemplateResource(messageAPI, defaultTemplateAPI));
 
-        environment.jersey().register(new HistoryResource(historyAPI));
+        environment.jersey().register(new ThreadMessageResource(fileMessagePersistence));
 
         environment.jersey().register(new JsonProcessingExceptionMapper(true));
 

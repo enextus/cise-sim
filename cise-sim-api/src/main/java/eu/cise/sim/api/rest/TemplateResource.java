@@ -2,6 +2,7 @@ package eu.cise.sim.api.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.sim.api.*;
+import eu.cise.sim.api.helpers.BuildHelper;
 import eu.cise.sim.api.representation.TemplateParams;
 import eu.cise.sim.templates.Template;
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class TemplateResource {
     public Response getTemplates() {
         logger.debug("requesting messages templates to the server");
         ResponseApi<List<Template>> templateListResponse = templateAPI.getTemplates();
-        return MessageResource.buildResponse(templateListResponse, Response.Status.INTERNAL_SERVER_ERROR, null);
+        return BuildHelper.buildResponse(templateListResponse, Response.Status.INTERNAL_SERVER_ERROR);
     }
 
 
@@ -46,7 +47,7 @@ public class TemplateResource {
         @QueryParam("requestAck")    boolean requestAck) {
 
         ResponseApi<Template> previewResponse = templateAPI.preview(new TemplateParams(templateId, messageId, correlationId, requestAck));
-        return  MessageResource.buildResponse(previewResponse, Response.Status.INTERNAL_SERVER_ERROR, null);
+        return  BuildHelper.buildResponse(previewResponse, Response.Status.INTERNAL_SERVER_ERROR);
     }
 
     @POST
@@ -55,7 +56,7 @@ public class TemplateResource {
 
         logger.debug("sending template: {} with param: {}", templateId, msgWithParams);
         ResponseApi<MessageResponse> sendResponse = messageAPI.send(templateId, msgWithParams);
-        return MessageResource.buildResponse(sendResponse, Response.Status.INTERNAL_SERVER_ERROR, Response.Status.CREATED);
+        return BuildHelper.buildResponse(sendResponse, Response.Status.INTERNAL_SERVER_ERROR, Response.Status.CREATED);
     }
 
 }

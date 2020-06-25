@@ -1,12 +1,12 @@
 package eu.cise.sim.api.history;
 
-import eu.cise.sim.api.dto.MessageShortInfoDto;
-import eu.cise.sim.io.MessagePersistence;
 
-import java.io.IOException;
+import eu.cise.sim.api.ResponseApi;
+import eu.cise.sim.api.dto.MessageShortInfoDto;
+
 import java.util.List;
 
-public interface HistoryMessagePersistence extends MessagePersistence {
+public interface ThreadMessageAPI {
 
     /**
      * Retrieve the list of MessageShortInfoDto instances of the messages that the correlationId was received after the timestamp passed.
@@ -22,8 +22,6 @@ public interface HistoryMessagePersistence extends MessagePersistence {
      *
      * @param uuid the message MessageShortInfoDto uuid
      * @return xml of the message
-     * @throws IOException the xml was not found
      */
-    String getXmlMessageByUuid(String uuid) throws IOException;
-
+    ResponseApi<String> getXmlMessageByUuid(String uuid);
 }

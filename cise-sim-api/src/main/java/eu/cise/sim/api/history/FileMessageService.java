@@ -1,6 +1,7 @@
 package eu.cise.sim.api.history;
 
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.sim.api.ResponseApi;
 import eu.cise.sim.api.dto.MessageShortInfoDto;
 import eu.cise.sim.api.dto.MessageTypeEnum;
 import eu.eucise.xml.XmlMapper;
@@ -31,16 +32,16 @@ import java.util.*;
  * sent/received
  * unique ID to avoid duplicate*
  */
-public class FileMessagePersistence implements HistoryMessagePersistence {
+public class FileMessageService implements ThreadMessageService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileMessagePersistence.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileMessageService.class);
 
     private final XmlMapper xmlMapper;
     private final String    repositoryDir;
 
     private final IdTimestampCache idTimestampCache;
 
-    public FileMessagePersistence(XmlMapper xmlMapper, String repositoryDir, int maxMsg) {
+    public FileMessageService(XmlMapper xmlMapper, String repositoryDir, int maxMsg) {
 
         this.xmlMapper          = xmlMapper;
         this.repositoryDir      = new File(repositoryDir).getAbsolutePath();
@@ -105,17 +106,24 @@ public class FileMessagePersistence implements HistoryMessagePersistence {
      * @throws IOException the xml was not found
      */
     @Override
-    public String getXmlMessageByUuid(String uuid) throws IOException {
+    public ResponseApi<String> getXmlMessageByUuid(String uuid) {
 
         if (StringUtils.isEmpty(uuid)) {
-            throw new IOException("getXmlMessageByUuid uuid is null or empty");
+            return new ResponseApi<>(ResponseApi.ErrorId.FATAL, "getXmlMessageByUuid uuid is null or empty");
         }
 
-        Path path = getPathByUuid(uuid);
+        ResponseApi<String> result;
+        try {
+            Path path =  getPathByUuid(uuid);
 
-        LOGGER.info("getXmlMessageByUuid uuid[{}] -> {}", uuid, path.getFileName());
+            LOGGER.info("getXmlMessageByUuid uuid[{}] -> {}", uuid, path.getFileName());
+            String xmlMessage = Files.readString(path, StandardCharsets.UTF_8);
+            result = new ResponseApi<>(xmlMessage);
+        } catch (IOException e) {
+            result = new ResponseApi<>(ResponseApi.ErrorId.FATAL, e.getMessage());
+        }
 
-        return Files.readString(path, StandardCharsets.UTF_8);
+        return result;
     }
 
     private FileNameRepository write(Message message, boolean isSent, Date timestamp) throws IOException {
