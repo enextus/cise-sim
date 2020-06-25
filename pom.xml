@@ -29,6 +29,7 @@
     <module>cise-sim-domain</module>
     <module>cise-sim-cli</module>
     <module>cise-sim-react</module>
+    <module>cise-sim-dropw</module>
     <module>cise-sim-api</module>
     <module>cise-sim-app</module>
     <module>cise-sim-assembly</module>

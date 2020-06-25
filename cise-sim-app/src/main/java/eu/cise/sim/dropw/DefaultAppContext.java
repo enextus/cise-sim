@@ -1,4 +1,4 @@
-package eu.cise.sim.app;
+package eu.cise.sim.dropw;
 
 import eu.cise.dispatcher.DispatcherFactory;
 import eu.cise.signature.SignatureService;

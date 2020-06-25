@@ -1,20 +1,17 @@
-package eu.cise.sim.api;
+package eu.cise.sim.dropw;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
+import eu.cise.sim.api.DefaultMessageAPI;
+import eu.cise.sim.api.DefaultTemplateAPI;
+import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.helpers.CrossOriginSupport;
 import eu.cise.sim.api.history.FileMessageService;
-import eu.cise.sim.api.history.ThreadMessageResource;
 import eu.cise.sim.api.history.ThreadMessageService;
-import eu.cise.sim.api.messages.UiMessageResource;
-import eu.cise.sim.api.rest.MessageResource;
-import eu.cise.sim.api.rest.TemplateResource;
-import eu.cise.sim.api.rest.UIServiceResource;
 import eu.cise.sim.api.soap.CISEMessageServiceSoapImplDefault;
-import eu.cise.sim.dropw.AppContext;
-import eu.cise.sim.dropw.DefaultAppContext;
+import eu.cise.sim.dropw.resources.*;
 import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
