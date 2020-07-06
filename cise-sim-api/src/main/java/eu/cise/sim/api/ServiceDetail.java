@@ -24,17 +24,22 @@ public class ServiceDetail {
     @JsonProperty("messageHistoryMaxLength")
     private final int maxHistoryMsg;
 
+    @JsonProperty("hideIncidentButton")
+    private final boolean hideIncident;
+
+
     public ServiceDetail(Service service,
                          DispatcherType transportMode,
                          String endpointUrl,
                          String appVersion,
-                         int maxHistoryMsg) {
+                         int maxHistoryMsg, boolean hideIncident) {
         this.serviceParticipantId =
             (service.getParticipant() != null) ? service.getParticipant().getId() : null;
         this.serviceTransportMode = transportMode.toString();
         this.endpointUrl = endpointUrl;
         this.appVersion = appVersion;
         this.maxHistoryMsg = maxHistoryMsg;
+        this.hideIncident = hideIncident;
     }
 
     public String getServiceParticipantId() {
@@ -55,5 +60,9 @@ public class ServiceDetail {
 
     public int getMaxHistoryMsg() {
         return maxHistoryMsg;
+    }
+
+    public boolean isHideIncident() {
+        return hideIncident;
     }
 }

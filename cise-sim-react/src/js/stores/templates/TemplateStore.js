@@ -33,8 +33,11 @@ export default class TemplateStore {
 
     @action
     async loadTemplateList() {
-        const templates = await getTemplateList();
-        templates.forEach(t => this.templateList.push(t));
+
+        if (this.templateList.length === 0) {
+            const templates = await getTemplateList();
+            templates.forEach(t => this.templateList.push(t));
+        }
     }
 
     @action

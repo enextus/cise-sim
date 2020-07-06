@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Box, Grid, Paper} from '@material-ui/core';
+import {Box, Grid} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
-import ThreadMsgInfo from '../forms/MessageForm/ThreadMessageInfo';
+import ThreadMsgInfo from './List/ThreadListMessageInfo';
 import {observer} from "mobx-react";
 
 const styles = theme => ({
@@ -96,22 +96,29 @@ class ThreadMessageList extends Component {
 
         // Manage the message and create the thread groups
         const msgRcv = this.getMessageStore().historyMsgList;
-        const threadCards = this.buildThreadCards(msgRcv);
+        let threadCards = this.buildThreadCards(msgRcv);
 
-        // Render
+        const msgFilter = this.getMessageStore().threadFilter;
+        if (msgFilter) {
+            if(msgFilter === 'fail') {
+                threadCards = threadCards.filter((msg) => !msg.ackSuccess);
+            }
+        }
+
+        // Render ( maxHeight="420px"  overflow= "scroll") .. ?
         return (
-            <Box p="8px" mt="20px" mx="20px" bgcolor="#eeeeee" hidden={threadCards.length === 0} >
-                <Paper  className={classes.root} >
-                        <Grid item xs={12} >
-                            {threadCards.map((msg) =>
-                                <ThreadMsgInfo
-                                    key={msg.id}
-                                    msgInfo={msg}
-                                    selectThread={() => this.selectThread(msg.correlationId)}
-                                    selected={this.getMessageStore().threadIdSelected === msg.correlationId}
-                                />)}
-                        </Grid>
-                </Paper>
+            <Box p="8px" mt="20px" mx="6px" hidden={threadCards.length === 0}  >
+                <Grid item xs={12} >
+
+                    {threadCards.map((msg) =>
+                        <ThreadMsgInfo
+                            key={msg.id}
+                            msgInfo={msg}
+                            selectThread={() => this.selectThread(msg.correlationId)}
+                            selected={this.getMessageStore().threadIdSelected === msg.correlationId}
+                        />)}
+
+                </Grid>
             </Box>
         )
     }

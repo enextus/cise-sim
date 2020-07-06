@@ -115,6 +115,13 @@ export default class MessageStore {
         this.threadIdSelected = correlationId;
     }
 
+    @observable threadFilter=null;
+
+    @action
+    updateThreadFilter(newFilter) {
+        this.threadFilter = newFilter;
+    }
+
     async send(seletedTemplate, messageId, correlationId, requiresAck) {
         const sendMessageResponse = await sendMessage(
             seletedTemplate,

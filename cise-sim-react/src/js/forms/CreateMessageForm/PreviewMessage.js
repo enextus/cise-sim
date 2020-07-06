@@ -1,24 +1,26 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography} from '@material-ui/core';
+import {ExpansionPanel, ExpansionPanelDetails, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
-import XmlContent from './common/XmlContent';
-import DesciptionIcon from '@material-ui/icons/Description'
+import XmlContent from '../../components/common/XmlContent';
+import {fontSizeNormal, fontSizeSmall, xmlContentHeightSize} from "../../layouts/Font";
+import {CompactExpansionPanelSummary} from "../../components/common/CompactExpansionPanelSummary";
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing(1)
+  //  padding: theme.spacing(1)
   },
   title: {
-    fontSize: "12pt",
+    fontSize:fontSizeSmall
   },
   icon: {
     marginRight: "5px",
     color: "#6da0b3",
   },
 });
+
 
 @observer
 class PreviewMessage extends Component {
@@ -34,24 +36,26 @@ class PreviewMessage extends Component {
     const {classes} = this.props;
 
     return (
-        <div className={classes.root}>
-          <ExpansionPanel expanded={!this.isTemplateEmpty()}>
-            <ExpansionPanelSummary
+          <ExpansionPanel expanded={!this.isTemplateEmpty()} elevation={0} >
+
+            <CompactExpansionPanelSummary
                 onClick={this.handleUpdate}
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="previewMessageContent"
-                id="previewMessage">
-              <DesciptionIcon className={classes.icon}/>
-              <Typography className={classes.title}>message <b>preview</b></Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <XmlContent>
+                id="previewMessage"
+                style={{margin:0, padding:0}}
+            >
+
+              <Typography className={classes.title}><strong>Message Preview</strong></Typography>
+
+            </CompactExpansionPanelSummary>
+
+            <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeNormal}}>
+              <XmlContent size={xmlContentHeightSize}>
                 {this.templateStore().template.content}
               </XmlContent>
             </ExpansionPanelDetails>
           </ExpansionPanel>
-        </div>
-
     )
   }
 

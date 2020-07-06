@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import {observer} from 'mobx-react';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import {fontSizeSmall} from "../../layouts/Font";
+
 const styles = () => ({
     formControlInicial: {
         minWidth: 120,
@@ -12,7 +14,11 @@ const styles = () => ({
     },
     formControl: {
         minWidth: 120,
-        color:'grey'
+        color:'lightgray'
+    },
+
+    menuItem : {
+        fontSize: fontSizeSmall,
     }
 });
 
@@ -25,12 +31,26 @@ class TemplateSelect extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    async preview() {
+        const response = await this.props.store.preview();
+    }
+
     handleChange(event) {
         this.props.store.selected = event.target.value;
+        if (event.target.value === 'empty') {
+            this.props.store.resetPreview();
+        }
+        else {
+            this.preview();
+        }
     }
 
     componentDidMount() {
         this.props.store.loadTemplateList();
+    }
+
+    componentWillUnmount() {
+        this.props.store.selected = "empty";
     }
 
     isSelected() {
@@ -51,20 +71,22 @@ class TemplateSelect extends React.Component {
                     onChange={this.handleChange}
                     inputProps={{
 			            name: 'templateSelect',
-                        id: 'templateSelect'
-                    }}>
-                    <MenuItem selected={true} value="empty">
-                        <em>select template</em>
+                        id: 'templateSelect',
+                    }}
+                    style={{fontSize:fontSizeSmall}}
+                >
+                    <MenuItem selected={true} value="empty" className={classes.menuItem}>
+                        <em>Select Template</em>
                     </MenuItem>
-                    {this.getMessageTemplateItems()}
+                    {this.getMessageTemplateItems(classes)}
                 </Select>
             </FormControl>
         )
     }
 
-    getMessageTemplateItems() {
+    getMessageTemplateItems(classes) {
         return this.props.store.templateOptions.map((item, idx) => (
-            <MenuItem key={idx} value={item.value}>{item.label}</MenuItem>)
+            <MenuItem key={idx} value={item.value} className={classes.menuItem}>{item.label}</MenuItem>)
         )
     }
 }

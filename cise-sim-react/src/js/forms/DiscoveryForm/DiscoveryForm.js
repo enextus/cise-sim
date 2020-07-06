@@ -22,6 +22,7 @@ const styles = theme => ({
 
     button: {
         margin: theme.spacing(1),
+
     },
 
     rightIcon: {
@@ -102,11 +103,12 @@ class DiscoveryForm extends Component {
         return (
             <Button
                 id="clearMsg"
-                color="secondary"
+                color="primary"
                 variant="contained"
                 className={classes.button}
                 onClick={this.handleSubmit}
                 type="submit"
+                size="small"
             >
                 Send Message
                 <SendRoundedIcon className={classes.rightIcon}/>
@@ -126,11 +128,12 @@ class DiscoveryForm extends Component {
         return (
             <Button
                 id="clearMsg"
-                color="secondary"
+                color="primary"
                 variant="contained"
                 className={classes.button}
                 onClick={this.handleEnd}
                 type="submit"
+                size="small"
             >
                 Close
                 <CloseRoundedIcon className={classes.rightIcon}/>

@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import TabPanel from './common/TabPanel';
 import EmailIcon from '@material-ui/icons/Email';
 
-import MessageTable from '../forms/MessageForm/MessageInfoTable'
+import MessageTable from './messages/MessageInfoTable'
 
 
 const styles = (theme) => ({

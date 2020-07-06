@@ -5,7 +5,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import {Button} from "@material-ui/core";
 import Slide from "@material-ui/core/Slide";
 import DiscoveryForm from "../forms/DiscoveryForm/DiscoveryForm";
-import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded';
+import TrackChangesRoundedIcon from '@material-ui/icons/TrackChangesRounded';
+import {buttonSizeSmall, fontSizeExtraSmall} from "../layouts/Font";
 
 const styles = theme => ({
     modal: {
@@ -23,6 +24,8 @@ const styles = theme => ({
 
     button: {
         margin: theme.spacing(1),
+        maxHeight: buttonSizeSmall,
+        fontSize:fontSizeExtraSmall
     },
 
     rightIcon: {
@@ -50,12 +53,13 @@ const discoveryMessageModal = (props) => {
         return (
             <Button
                 id="clearMsg"
-                color="secondary"
+                color="primary"
                 variant="contained"
                 className={classes.button}
-                onClick={handleOpen}>
+                onClick={handleOpen}
+            >
                 Discovery Message
-                <LanguageRoundedIcon className={classes.rightIcon}/>
+                <TrackChangesRoundedIcon className={classes.rightIcon}/>
 
             </Button>
         )

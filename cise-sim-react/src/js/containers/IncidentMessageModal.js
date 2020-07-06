@@ -6,6 +6,7 @@ import {Button} from "@material-ui/core";
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import IncidentForm from "../forms/IncidentForm/IncidentForm";
 import Slide from "@material-ui/core/Slide";
+import {buttonSizeSmall, fontSizeExtraSmall} from "../layouts/Font";
 
 const styles = theme => ({
     modal: {
@@ -23,6 +24,8 @@ const styles = theme => ({
 
     button: {
         margin: theme.spacing(1),
+        maxHeight: buttonSizeSmall,
+        fontSize:fontSizeExtraSmall
     },
 
     rightIcon: {
@@ -77,7 +80,9 @@ const incidentMessageModal = (props) => {
                 BackdropComponent={Backdrop}
                 BackdropProps={{
                     timeout: 500,
-                }}>
+                }}
+                size={"small"}
+            >
 
                 <Slide direction="down" in={open} mountOnEnter unmountOnExit timeout={2000}>
                     <div id="create-incident-message">

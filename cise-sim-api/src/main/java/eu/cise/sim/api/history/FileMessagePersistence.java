@@ -285,7 +285,8 @@ public class FileMessagePersistence implements HistoryMessagePersistence {
             return    dateTime + ITEM_SEPARATOR
                     + messageTypeName + ITEM_SEPARATOR
                     + direction + ITEM_SEPARATOR
-                    + uuid;
+                    + uuid
+                    + ".xml";
         }
 
         public String getUuid() {

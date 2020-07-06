@@ -3,9 +3,10 @@ import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import SendForm from "../components/SendFormV2";
+import SendForm from "../forms/CreateMessageForm/CreateMessageForm";
 import {Button} from "@material-ui/core";
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
+import {buttonSizeSmall, fontSizeExtraSmall} from "../layouts/Font";
 
 const styles = theme => ({
     modal: {
@@ -23,6 +24,8 @@ const styles = theme => ({
 
     button: {
         margin: theme.spacing(1),
+        maxHeight: buttonSizeSmall,
+        fontSize:fontSizeExtraSmall
     },
 
     rightIcon: {
@@ -32,7 +35,7 @@ const styles = theme => ({
 });
 
 
-const sendMessageModal = (props) => {
+const createMessageModal = (props) => {
 
     const {classes} = props;
     const [open, setOpen] = React.useState(false);
@@ -50,8 +53,8 @@ const sendMessageModal = (props) => {
 
         return (
             <Button
-                id="clearMsg"
-                color="secondary"
+                id="createMsg"
+                color="primary"
                 variant="contained"
                 className={classes.button}
                 onClick={handleOpen}>
@@ -78,19 +81,19 @@ const sendMessageModal = (props) => {
                 BackdropComponent={Backdrop}
                 BackdropProps={{
                     timeout: 500,
-                }}>
+                }}
+                size={"small"}
+            >
 
                 <Fade in={open}>
                     <div id="create-message">
-
-                   <SendForm store={props.store} id="create-and-send-cise-message" onclose={handleClose}/>
+                        <SendForm store={props.store} id="create-and-send-cise-message" onclose={handleClose}/>
                     </div>
                 </Fade>
-
 
             </Modal>
         </div>
     );
 }
 
-export default withStyles(styles)(sendMessageModal);
+export default withStyles(styles)(createMessageModal);

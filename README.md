@@ -157,6 +157,14 @@ To allow the CISE Sim to send message to the CISE Node, the node administrator n
 |app.version|The CISE Sim application version. This value is set by the build system and it has an informative purpose.|
 |history.repository.directory|Specifies a path relative to the directory where the CISE Sim will write the xml format files of the messages received and sent. The name has a specific format, specified in the next chapter. *WARNING* Currently the path is accepted only relatively to the sim installation directory.|
 |history.gui.maxthmsgs|Maximum number of threads that will be shown in the user interface.
+|proxy.host|Proxy ip host in number format 
+|proxy.port|Proxy port number  
+####Proxy configuration
+The configuration file provides the possibility to configure the proxy server with the parameters ``proxy.host`` and ``proxy.port``.
+The values contained need a verification, and the host changed (the ip address 10.40.x.5 isn't valid, it's just a suggestion).
+If the proxy it isn't needed, remove **both** values  
+**WARNING** if the configuration values are malformed, the cise sim won't start
+  
 
 #### Archived message file name format
 The messages are archived in files. The single file contains the xml format of the message, and the name format is:  

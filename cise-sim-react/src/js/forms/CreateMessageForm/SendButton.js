@@ -52,11 +52,13 @@ class SendButton extends React.Component {
         return (
             <Button
                 id="send"
-                color="secondary"
+                color="primary"
                 variant="contained"
                 className={classes.button}
                 onClick={() => this.send()}
-                disabled={this.isDisabled()}>
+                disabled={this.isDisabled()}
+                size={"small"}
+            >
                 Send
                 <SendRoundedIcon className={classes.rightIcon}/>
             </Button>
