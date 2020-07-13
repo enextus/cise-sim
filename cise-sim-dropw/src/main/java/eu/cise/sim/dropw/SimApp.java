@@ -117,7 +117,7 @@ public class SimApp extends Application<SimConf> {
 
         if (!p.matcher(proxyHost + ":" + proxyPort).matches()) {
             String errMsg = "PROXY: wrong couple host and port configuration host[" + proxyHost + "] port[" + proxyPort + "]";
-            throw new RuntimeException(errMsg);
+            throw new ConfigurationException(errMsg);
         }
 
         System.setProperty("http.proxyHost", proxyHost);
@@ -128,10 +128,13 @@ public class SimApp extends Application<SimConf> {
 
     public static void main(final String[] args) {
 
+        SimApp simApp = new SimApp();
         try {
-            new SimApp().run(args);
+            simApp.run(args);
+        } catch (ConfigurationException ce) {
+            simApp.logger.error("Configuration error : {}", ce.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            simApp.logger.error("FATAL ERROR ", e);
         }
     }
 }

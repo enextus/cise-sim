@@ -15,7 +15,7 @@ export default class ButtonsPanel extends Component {
 
 
     render() {
-        const hideIncident = this.getServiceStore().serviceSelf.hideIncident;
+        const showIncident = this.getServiceStore().serviceSelf.showIncident;
 
         return (
             <TableContainer>
@@ -28,7 +28,7 @@ export default class ButtonsPanel extends Component {
                             <TableCell>
                                 <Grid container   alignItems="flex-end" justify="flex-end" direction="row">
                                     <DiscoveryMessageModal store={this.props.store} />
-                                    {hideIncident ? null: <IncidentMessageModal store={this.props.store} /> }
+                                    {showIncident ? <IncidentMessageModal store={this.props.store} /> : null }
                                     <CreateMessageModal store={this.props.store} />
                                 </Grid>
                             </TableCell>

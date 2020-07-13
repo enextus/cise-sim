@@ -53,4 +53,12 @@
       </excludes>
     </fileSet>
   </fileSets>
+  <fileSet>
+    <directory>${project.parent.basedir}
+    </directory>
+    <outputDirectory>docs</outputDirectory>
+    <includes>
+      <include>*.pdf</include>
+    </includes>
+  </fileSet>
 </assembly>

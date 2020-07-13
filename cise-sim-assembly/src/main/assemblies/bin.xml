@@ -72,13 +72,6 @@
         </fileSet>
         <fileSet>
             <directory>.</directory>
-            <outputDirectory>tmp</outputDirectory>
-            <excludes>
-                <exclude>*/**</exclude>
-            </excludes>
-        </fileSet>
-        <fileSet>
-            <directory>.</directory>
             <outputDirectory>msghistory</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>

@@ -23,6 +23,12 @@ import eu.cise.sim.templates.TemplateLoader;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.aeonbits.owner.ConfigFactory;
+import org.apache.commons.lang3.StringUtils;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 
 import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 
@@ -40,6 +46,8 @@ public class DefaultAppContext implements AppContext {
 
         // TODO GK testing if we have any issue
         this.prettyNotValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();
+
+        checkConfig();
     }
 
     @Override
@@ -154,4 +162,80 @@ public class DefaultAppContext implements AppContext {
     }
 
 
+    public void checkConfig() {
+
+        if (StringUtils.isEmpty(simConfig.simulatorName())) {
+            throw new ConfigurationException("Simulator name not configured");
+        }
+
+        if (StringUtils.isEmpty(simConfig.appVersion())) {
+            throw new ConfigurationException("Simulator version not configured");
+        }
+
+
+        if (StringUtils.isEmpty(simConfig.destinationUrl())) {
+            throw new ConfigurationException("Destination Url not configured");
+        } else {
+            try {
+                new URL(simConfig.destinationUrl());
+            } catch (MalformedURLException e) {
+                throw new ConfigurationException("Destination Url malformed " + e.getMessage());
+            }
+        }
+
+        if (StringUtils.isEmpty(simConfig.messageTemplateDir())) {
+            throw new ConfigurationException("Message template dir not configured");
+        } else {
+            try {
+                Paths.get(simConfig.messageTemplateDir());
+            } catch (InvalidPathException e) {
+                throw new ConfigurationException("Message template dir malformed " + e.getMessage());
+            }
+        }
+
+        if (StringUtils.isEmpty(simConfig.messageHistoryDir())) {
+            throw new ConfigurationException("Message history dir not configured");
+        } else {
+            try {
+                Paths.get(simConfig.messageHistoryDir());
+            } catch (InvalidPathException e) {
+                throw new ConfigurationException("Message history dir malformed " + e.getMessage());
+            }
+        }
+
+        try {
+            if (simConfig.guiMaxThMsgs() <= 0) {
+                throw new ConfigurationException("Maximum number of Threads value is negative");
+            }
+        } catch (RuntimeException e) {
+            throw new ConfigurationException("Maximum number of Threads not configured");
+        }
+
+        try {
+            simConfig.destinationProtocol();
+        } catch (RuntimeException e) {
+            throw new ConfigurationException("Wrong destination protocol " + e.getMessage());
+        }
+
+
+        // This will check the signature configuration
+        try {
+            makeSignatureService();
+        } catch (RuntimeException e) {
+            String errMsg = e.getMessage();
+            if (StringUtils.isEmpty(errMsg) && e.getCause() != null) {
+                Throwable t = e.getCause();
+                errMsg = t.getMessage();
+                if (StringUtils.isEmpty(errMsg) && t.getCause() != null) {
+                    t = t.getCause();
+                    errMsg = t.getMessage();
+                    if (StringUtils.isEmpty(errMsg) && t.getCause() != null) {
+                        t = t.getCause();
+                        errMsg = t.getMessage();
+                    }
+                }
+            }
+            throw new ConfigurationException("Wrong signature configuration : " + errMsg);
+        }
+    }
 }

@@ -94,7 +94,7 @@ public class RestMessageReceiveTest {
         }
 
         @Override
-        public boolean hideIncident() {
+        public boolean showIncident() {
             return true;
         }
     };

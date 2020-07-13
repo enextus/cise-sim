@@ -47,4 +47,5 @@ public interface AppContext {
     String getProxyHost();
 
     String getProxyPort();
+
 }
