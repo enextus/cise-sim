@@ -9,8 +9,10 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import ThreadListFilter from "../forms/ThreadForm/List/ThreadListFilter";
+import {observer} from "mobx-react";
 
 // Set of utility/functional Buttons
+@observer
 export default class ButtonsPanel extends Component {
 
 

@@ -4,6 +4,7 @@ import Service from './Service';
 
 export default class ServiceStore {
 
+
   serviceSelf = new Service(
       "...",
       "...",
@@ -19,13 +20,13 @@ export default class ServiceStore {
       console.log("getServiceSelf returned an error.", simInfo.errorCode);
     } else {
 
-      this.serviceSelf = new Service(
+      this.setServiceSelf(new Service(
           simInfo.serviceParticipantId,
           simInfo.serviceTransportMode,
           simInfo.endpointUrl,
           simInfo.appVersion,
           simInfo.messageHistoryMaxLength,
-          simInfo.hideIncident);
+          simInfo.showIncident));
 
       console.log("getServiceSelf returned successfully.",
           this.serviceSelf.serviceParticipantId, " - with mode  - ",
@@ -33,6 +34,10 @@ export default class ServiceStore {
     }
   }
 
+
+  setServiceSelf(serviceSelf) {
+    this.serviceSelf = serviceSelf;
+  }
 }
 
 decorate(ServiceStore, {
