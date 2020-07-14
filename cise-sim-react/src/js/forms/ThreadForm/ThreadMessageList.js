@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Box, Grid} from '@material-ui/core';
+import {Box} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import ThreadMsgInfo from './List/ThreadListMessageInfo';
 import {observer} from "mobx-react";
@@ -12,7 +12,6 @@ const styles = theme => ({
         margin: '16px auto',
         maxWidth: 800,
         overflowY: 'scroll',
-        maxHeight: 800,
     },
     button: {
         align: "right"
@@ -107,8 +106,7 @@ class ThreadMessageList extends Component {
 
         // Render ( maxHeight="420px"  overflow= "scroll") .. ?
         return (
-            <Box p="8px" mt="20px" mx="6px" hidden={threadCards.length === 0}  >
-                <Grid item xs={12} >
+            <Box hidden={threadCards.length === 0}  >
 
                     {threadCards.map((msg) =>
                         <ThreadMsgInfo
@@ -118,7 +116,6 @@ class ThreadMessageList extends Component {
                             selected={this.getMessageStore().threadIdSelected === msg.correlationId}
                         />)}
 
-                </Grid>
             </Box>
         )
     }

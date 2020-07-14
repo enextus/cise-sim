@@ -8,7 +8,6 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import ThreadListFilter from "../forms/ThreadForm/List/ThreadListFilter";
 import {observer} from "mobx-react";
 
 // Set of utility/functional Buttons
@@ -25,10 +24,7 @@ export default class ButtonsPanel extends Component {
                     <TableBody>
                         <TableRow>
                             <TableCell>
-                                <ThreadListFilter  store={this.props.store}/>
-                            </TableCell>
-                            <TableCell>
-                                <Grid container   alignItems="flex-end" justify="flex-end" direction="row">
+                                <Grid container alignItems="flex-end" justify="flex-end" direction="row">
                                     <DiscoveryMessageModal store={this.props.store} />
                                     {showIncident ? <IncidentMessageModal store={this.props.store} /> : null }
                                     <CreateMessageModal store={this.props.store} />

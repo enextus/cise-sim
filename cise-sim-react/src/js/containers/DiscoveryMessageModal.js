@@ -58,7 +58,7 @@ const discoveryMessageModal = (props) => {
                 className={classes.button}
                 onClick={handleOpen}
             >
-                Discovery Message
+                Discover services
                 <TrackChangesRoundedIcon className={classes.rightIcon}/>
 
             </Button>
