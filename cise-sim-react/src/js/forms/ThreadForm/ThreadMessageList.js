@@ -57,12 +57,12 @@ class ThreadMessageList extends Component {
                 if (mostRecentTimestamp[msg.correlationId] <  msg.dateTime) {
                     mostRecentTimestamp[msg.correlationId] =  msg.dateTime;
                 }
-                if (msg.messageType !== 'Ack Synch' && (group[msg.correlationId].messageType === 'Ack Synch' || group[msg.correlationId].dateTime >= msg.dateTime)) {
+                if (msg.messageType !== 'Sync Ack' && (group[msg.correlationId].messageType === 'Sync Ack' || group[msg.correlationId].dateTime >= msg.dateTime)) {
                     group[msg.correlationId]  =  {...msg};
 
                 }
             }
-            if (msg.messageType === 'Ack Synch') {
+            if (msg.messageType === 'Sync Ack') {
                 ackSuccess[msg.correlationId] = ackSuccess[msg.correlationId] && msg.ackResult.includes('Success');
                 rcvAckSynch[msg.correlationId] = Boolean('true');
             }

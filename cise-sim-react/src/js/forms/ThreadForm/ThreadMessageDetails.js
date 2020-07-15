@@ -28,7 +28,7 @@ class ThreadMessageDetails extends Component {
 
     buildAckSuccessFail(threadWithBodyList) {
 
-        const ackType = 'Ack Synch'; // messageType
+        const ackType = 'Sync Ack'; // messageType
 
         let ackResult = [];
         threadWithBodyList.map( (msg) => {

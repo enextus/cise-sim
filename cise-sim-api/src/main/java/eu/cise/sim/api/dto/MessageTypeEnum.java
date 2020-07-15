@@ -9,8 +9,8 @@ public enum MessageTypeEnum {
     PULL_RESPONSE("Pull Response", "PULLRESPONSE"),
     PULL_REQUEST("Pull Request", "PULLREQUEST"),
     FEEDBACK("Feedback", "FEEDBACK"),
-    ACK_SYNC("Ack Synch", "ACKSYNCH"),
-    ACK_ASYNC("Ack Asynch", "ACKASYNCH"),
+    ACK_SYNC("Sync Ack", "SYNCACK"),
+    ACK_ASYNC("Async Ack", "ASYNCACK"),
     PUBLISH("Publish", "PUBLISH"),
     SUBSCRIBE("Subscribe", "SUBSCRIBE");
 

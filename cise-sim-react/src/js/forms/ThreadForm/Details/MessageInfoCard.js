@@ -134,7 +134,7 @@ const messageInfoCard = (props)  => {
     let iconMsg = IconMsgOk;
     let messageType = msgInfo.messageType;
     let messageTypeColor = null;
-    if (!isSuccess && messageType === 'Ack Synch') {
+    if (!isSuccess && messageType === 'Sync Ack') {
         messageType = messageType+" - "+msgInfo.ackResult;
         messageTypeColor = {color: "red"};
         iconMsg = IconMsgKo;
@@ -170,7 +170,7 @@ const messageInfoCard = (props)  => {
                                 </TableRow>
                                 : null }
 
-                            {messageType === 'Ack Synch'? null :
+                            {messageType === 'Sync Ack'? null :
                             <TableRow>
                                 <TableCell className={classes.srvtype}>Service Type : {msgInfo.serviceType}</TableCell>
                                 <TableCell className={classes.srvtype}/>
