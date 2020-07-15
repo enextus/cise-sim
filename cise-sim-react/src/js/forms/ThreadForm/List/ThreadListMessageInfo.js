@@ -12,6 +12,7 @@ import MsgCounterSel from "../svg/msgs-counter-selected.svg";
 
 import {fontSizeExtraSmall, fontSizeNormal, fontSizeSmall} from "../../../layouts/Font";
 import Typography from "@material-ui/core/Typography";
+import {date2String} from "../../CommonComponents/HelperFunctions";
 
 
 const styles = theme => ({
@@ -42,14 +43,14 @@ const styles = theme => ({
         color: "black",
         fontWeight: "bold",
         fontSize: fontSizeNormal,
-        width: "49%",
+        width: "34%",
         display:"inline-block"
     },
 
     localdate :{
         textAlign: "right",
-        width: "50%",
-        fontSize: fontSizeSmall,
+        width: "65%",
+        fontSize: fontSizeExtraSmall,
         display:"inline-block"
     },
 
@@ -114,8 +115,7 @@ const messageInfoCard = (props)  => {
 
 
     // Formatting the Date Time
-    const timestamp = new Date(msgInfo.mostRecentTimestamp);
-    const localeDate = timestamp.toLocaleString().replace(',', ' ° ');
+    const localeDate = date2String(msgInfo.mostRecentTimestamp);
 
     // Special effects
     let iconNumTh = MsgCounterUnsel;
@@ -146,8 +146,8 @@ const messageInfoCard = (props)  => {
 
                             <TableRow >
                                 <TableCell component="th" scope="row" style={{ borderBottom: 0, paddingRight: 0}}>
-                                    <Typography className={classes.msgtype} style={redStyle}>{msgInfo.messageType} {direction}</Typography>
-                                    <Typography className={classes.localdate}>{localeDate}</Typography>
+                                    <Typography className={classes.msgtype} style={redStyle}>{msgInfo.messageType}</Typography>
+                                    <Typography className={classes.localdate}><strong>{direction} *</strong> {localeDate}</Typography>
                                 </TableCell>
                             </TableRow>
 

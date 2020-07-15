@@ -12,6 +12,7 @@ import ExpansionPanelPreview from "./ExpansionPanelPreview";
 import IconMsgOk from "../svg/msg-ok.svg";
 import IconMsgKo from "../svg/msg-alert.svg";
 import {fontSizeLarge, fontSizeNormal, fontSizeSmall} from "../../../layouts/Font";
+import {date2String} from "../../CommonComponents/HelperFunctions";
 
 const styles = theme => ({
     root: {
@@ -113,17 +114,13 @@ const messageInfoCard = (props)  => {
         }
     }
 
+    const msgTo = msgInfo.to.length > 0 ? "To: " + msgInfo.to : null;
+    const msgFrom = msgInfo.from.length > 0 ? "From: " + msgInfo.from : null;
+
+
     // Formatting the Date Time
     const timestamp = new Date(msgInfo.dateTime);
-    const msec = timestamp.getMilliseconds();
-    let padding = '';
-    if (msec < 10) {
-        padding ='00';
-    }
-    else if (msec < 100) {
-        padding = '0';
-    }
-    const localeDate = timestamp.toLocaleString().replace(',', ' ° ')+'.'+padding+msec;
+    const localeDate = date2String(timestamp);
 
     // Ack Style
     if (!msgInfo.ackResult) {
@@ -132,7 +129,6 @@ const messageInfoCard = (props)  => {
     const isSuccess = msgInfo.ackResult.includes('Success');
     const ackTextColor = isSuccess ? "green" : "red";
     const rowAckCodeStyle = {color:ackTextColor, textAlign:'right'};
-  //  const cardStyle = { border: "2px solid " + ackTextColor };
 
     // Message type with wrong ack result
     let iconMsg = IconMsgOk;
@@ -157,20 +153,29 @@ const messageInfoCard = (props)  => {
                                     <img src={iconMsg} alt="thn" style={{paddingRight:6, width:22}}/>
                                     {messageType}
                                 </TableCell>
-                                <TableCell className={classes.localdate}>{localeDate} <strong>{direction}</strong></TableCell>
+                                <TableCell className={classes.localdate}><strong>{direction} *</strong> {localeDate}</TableCell>
                             </TableRow>
 
+                            {msgFrom ?
                             <TableRow>
-                                <TableCell className={classes.fromto}>{fromto}</TableCell>
+                                <TableCell className={classes.fromto}>{msgFrom}</TableCell>
                                 <TableCell className={classes.fromto}/>
                             </TableRow>
+                            : null }
 
+                            {msgTo ?
+                                <TableRow>
+                                    <TableCell className={classes.fromto}>{msgTo}</TableCell>
+                                    <TableCell className={classes.fromto}/>
+                                </TableRow>
+                                : null }
 
+                            {messageType === 'Ack Synch'? null :
                             <TableRow>
                                 <TableCell className={classes.srvtype}>Service Type : {msgInfo.serviceType}</TableCell>
                                 <TableCell className={classes.srvtype}/>
                             </TableRow>
-
+                            }
                         </TableBody>
                     </Table>
                 </TableContainer>

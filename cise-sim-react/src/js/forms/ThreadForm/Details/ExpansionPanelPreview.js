@@ -5,6 +5,12 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 import XmlContent from "../../../components/common/XmlContent";
 import {fontSizeNormal, xmlContentHeightSize} from "../../../layouts/Font";
 import {CompactExpansionPanelSummary} from "../../../components/common/CompactExpansionPanelSummary";
+import Typography from "@material-ui/core/Typography";
+import TableContainer from "@material-ui/core/TableContainer";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 
 const styles = theme => ({
     root: {
@@ -48,10 +54,22 @@ class ExpansionPanelPreview extends Component {
 
 
         return (
-            <ExpansionPanel onChange={this.handleChange} elevation={0} id="ExpPannel" expanded style={{margin:0}}>
+            <ExpansionPanel onChange={this.handleChange} elevation={0} id="ExpPannel" expanded style={{margin:0}} >
 
-                <CompactExpansionPanelSummary id="ExpSummary" >
-                    <ExpandMoreRoundedIcon/> Expand
+                <CompactExpansionPanelSummary id="ExpSummary" expandIcon={<ExpandMoreRoundedIcon/>}>
+
+                    <TableContainer>
+                        <Table size="small" aria-label="a dense table">
+                            <TableBody>
+                                <TableRow >
+                                    <TableCell component="th" scope="row" style={{ borderBottom: 0, padding: 0, textAlign:"right"}}>
+                                        <Typography style={{textAlign:'right'}}>Expand</Typography>
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+
                 </CompactExpansionPanelSummary>
 
                 <ExpansionPanelDetails id="ExpDetails" style={{fontSize:fontSizeNormal}}>
