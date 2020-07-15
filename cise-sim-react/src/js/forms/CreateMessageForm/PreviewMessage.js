@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import XmlContent from '../../components/common/XmlContent';
 import {fontSizeNormal, fontSizeSmall, xmlContentHeightSize} from "../../layouts/Font";
-import {CompactExpansionPanelSummary} from "../../components/common/CompactExpansionPanelSummary";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 
 const styles = (theme) => ({
   root: {
@@ -38,7 +38,7 @@ class PreviewMessage extends Component {
     return (
           <ExpansionPanel expanded={!this.isTemplateEmpty()} elevation={0} >
 
-            <CompactExpansionPanelSummary
+            <ExpansionPanelSummary
                 onClick={this.handleUpdate}
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="previewMessageContent"
@@ -48,7 +48,7 @@ class PreviewMessage extends Component {
 
               <Typography className={classes.title}><strong>Message Preview</strong></Typography>
 
-            </CompactExpansionPanelSummary>
+            </ExpansionPanelSummary>
 
             <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeNormal}}>
               <XmlContent size={xmlContentHeightSize}>

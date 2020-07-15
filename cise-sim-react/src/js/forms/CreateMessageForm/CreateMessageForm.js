@@ -17,9 +17,8 @@ const styles = theme => ({
         display: 'flex',
         flexWrap: 'wrap',
         padding: 16,
-        //margin: '16px auto',
-        margin: 'auto',
-        maxWidth: 600,
+        margin: '16px auto',
+        maxWidth: '70%',
         maxHeight: {boxSizeHeight}
     },
 });
@@ -44,11 +43,11 @@ class CreateMessageForm extends Component {
         const {classes} = this.props;
 
         return (
-                <Box bgcolor="white" style={{maxHeight:"800px"}}>
+                <Box bgcolor="white" className={classes.root}>
 
-                    <Grid container alignItems="flex-start" spacing={3} className={classes.root}>
+                    <Grid container alignItems="flex-start" spacing={3} >
 
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{padding:0}}>
                             <SendFormHeader onclose={this.props.onclose}/>
                         </Grid>
 

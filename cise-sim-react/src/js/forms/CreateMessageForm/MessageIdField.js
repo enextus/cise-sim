@@ -21,7 +21,7 @@ export default class MessageIdField extends React.Component {
 
     render() {
         return (
-            <Tooltip title={"[Required/Generated] Use this field to set a unique message Identifier"} >
+            <Tooltip title={"[Required] Message identifier (UUID)"} >
             <TextField
                 name="messageId"
                 required={true}
