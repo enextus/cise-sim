@@ -117,7 +117,6 @@ const messageInfoCard = (props)  => {
     const msgTo = msgInfo.to.length > 0 ? "To: " + msgInfo.to : null;
     const msgFrom = msgInfo.from.length > 0 ? "From: " + msgInfo.from : null;
 
-
     // Formatting the Date Time
     const timestamp = new Date(msgInfo.dateTime);
     const localeDate = date2String(timestamp);
@@ -153,7 +152,7 @@ const messageInfoCard = (props)  => {
                                     <img src={iconMsg} alt="thn" style={{paddingRight:6, width:22}}/>
                                     {messageType}
                                 </TableCell>
-                                <TableCell className={classes.localdate}><strong>{direction} *</strong> {localeDate}</TableCell>
+                                <TableCell className={classes.localdate}><strong>{direction} ●</strong> {localeDate}</TableCell>
                             </TableRow>
 
                             {msgFrom ?
@@ -170,7 +169,7 @@ const messageInfoCard = (props)  => {
                                 </TableRow>
                                 : null }
 
-                            {messageType === 'Sync Ack'? null :
+                            {messageType.startsWith('Sync Ack') ? null :
                             <TableRow>
                                 <TableCell className={classes.srvtype}>Service Type : {msgInfo.serviceType}</TableCell>
                                 <TableCell className={classes.srvtype}/>

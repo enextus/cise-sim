@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {ExpansionPanel, ExpansionPanelDetails, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import XmlContent from '../../components/common/XmlContent';
 import {fontSizeNormal, fontSizeSmall, xmlContentHeightSize} from "../../layouts/Font";
@@ -40,8 +39,7 @@ class PreviewMessage extends Component {
 
             <ExpansionPanelSummary
                 onClick={this.handleUpdate}
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="previewMessageContent"
+               aria-controls="previewMessageContent"
                 id="previewMessage"
                 style={{margin:0, padding:0}}
             >

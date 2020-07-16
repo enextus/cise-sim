@@ -3,10 +3,10 @@ import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import {Button} from "@material-ui/core";
-import Slide from "@material-ui/core/Slide";
 import DiscoveryForm from "../forms/DiscoveryForm/DiscoveryForm";
 import TrackChangesRoundedIcon from '@material-ui/icons/TrackChangesRounded';
 import {buttonSizeSmall, fontSizeExtraSmall} from "../layouts/Font";
+import Fade from "@material-ui/core/Fade";
 
 const styles = theme => ({
     modal: {
@@ -83,13 +83,11 @@ const discoveryMessageModal = (props) => {
                     timeout: 500,
                 }}>
 
-                <Slide direction="down" in={open} mountOnEnter unmountOnExit timeout={2000}>
+                <Fade in={open}>
                     <div id="create-discovery-message">
-
-                   <DiscoveryForm store={props.store} id="create-and-send-discovery-message" onclose={handleClose}/>
+                        <DiscoveryForm store={props.store} id="create-and-send-discovery-message" onclose={handleClose}/>
                     </div>
-                </Slide>
-
+                </Fade>
 
             </Modal>
         </div>

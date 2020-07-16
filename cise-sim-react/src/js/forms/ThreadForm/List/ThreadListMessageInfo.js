@@ -24,7 +24,7 @@ const styles = theme => ({
         paddingBottom:0,
         marginBottom: 0,
         marginRight:16,
-        backgroundColor:"lightcyan",
+        backgroundColor:"#cdeefd",
         '&:hover': {
             backgroundColor: "lightgrey",
         },
@@ -43,13 +43,13 @@ const styles = theme => ({
         color: "black",
         fontWeight: "bold",
         fontSize: fontSizeNormal,
-        width: "34%",
+        width: "30%",
         display:"inline-block"
     },
 
     localdate :{
         textAlign: "right",
-        width: "65%",
+        width: "69%",
         fontSize: fontSizeExtraSmall,
         display:"inline-block"
     },
@@ -147,7 +147,7 @@ const messageInfoCard = (props)  => {
                             <TableRow >
                                 <TableCell component="th" scope="row" style={{ borderBottom: 0, paddingRight: 0}}>
                                     <Typography className={classes.msgtype} style={redStyle}>{msgInfo.messageType}</Typography>
-                                    <Typography className={classes.localdate}><strong>{direction} *</strong> {localeDate}</Typography>
+                                    <Typography className={classes.localdate}><strong>{direction} ●</strong> {localeDate}</Typography>
                                 </TableCell>
                             </TableRow>
 

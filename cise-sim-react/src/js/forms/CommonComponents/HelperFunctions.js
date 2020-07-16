@@ -1,3 +1,4 @@
+import React from "react";
 
 
 export const buildValueLabelMap = (valueList) => {
@@ -54,8 +55,7 @@ export const date2String = (timestamp) => {
     if (mm < 10)
         mm = "0" + mm;
 
-    monthLiteral = 'September'
-    let cur_day =  gg + "-" + monthLiteral + "-" + aaaa;
+    let cur_day =  gg + "-" + monthLiteral.substr(0,3) + "-" + aaaa;
 
     let hours = date.getHours()
     let minutes = date.getMinutes()
@@ -76,6 +76,11 @@ export const date2String = (timestamp) => {
     else if (mseconds < 100)
         mseconds = "0" + mseconds;
 
+    // GMT
+    let mytime = date.toString();
+    const y = mytime.indexOf('GMT');
+    const z = mytime.indexOf(' ', y);
+    const gmt = mytime.substr(y+3, z-y-3);
 
-    return cur_day + " ° " + hours + ":" + minutes + ":" + seconds + "." + mseconds;
+    return cur_day + " " + hours + ":" + minutes + ":" + seconds + "." + mseconds + " "+ gmt;
 }

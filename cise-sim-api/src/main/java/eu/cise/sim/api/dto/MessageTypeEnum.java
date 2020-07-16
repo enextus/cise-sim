@@ -3,6 +3,8 @@ package eu.cise.sim.api.dto;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 
+import static eu.cise.servicemodel.v1.message.AcknowledgementType.AUTHENTICATION_ERROR;
+
 public enum MessageTypeEnum {
 
     PUSH("Push", "PUSH"),
@@ -49,7 +51,8 @@ public enum MessageTypeEnum {
         }
 
         if (message instanceof Acknowledgement) {
-            if (message.getSender() == null) {
+            Acknowledgement ack = (Acknowledgement) message;
+            if (message.getSender() == null || ack.getAckCode() == AUTHENTICATION_ERROR) {
                 return ACK_SYNC;
             } else {
                 return ACK_ASYNC;

@@ -5,8 +5,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import {Button} from "@material-ui/core";
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import IncidentForm from "../forms/IncidentForm/IncidentForm";
-import Slide from "@material-ui/core/Slide";
 import {buttonSizeSmall, fontSizeExtraSmall} from "../layouts/Font";
+import Fade from "@material-ui/core/Fade";
 
 const styles = theme => ({
     modal: {
@@ -84,13 +84,11 @@ const incidentMessageModal = (props) => {
                 size={"small"}
             >
 
-                <Slide direction="down" in={open} mountOnEnter unmountOnExit timeout={2000}>
+                <Fade in={open}>
                     <div id="create-incident-message">
-
-                   <IncidentForm store={props.store} id="create-and-send-incident-message" onclose={handleClose}/>
+                        <IncidentForm store={props.store} id="create-and-send-incident-message" onclose={handleClose}/>
                     </div>
-                </Slide>
-
+                </Fade>
 
             </Modal>
         </div>

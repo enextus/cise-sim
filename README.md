@@ -31,8 +31,8 @@ The CISE Sim exposes the following endpoints:
 ## Requirements
 - GNU/Linux operative system
 - Java 8 or Java 11
-- Docker version XXX (optional)
-
+- Docker version 19 at least (optional)
+- docker-compose version 1.25 at least (optional)
 
 
 ## Software Packages

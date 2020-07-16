@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import {ExpansionPanel, ExpansionPanelDetails} from "@material-ui/core";
-import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 import XmlContent from "../../../components/common/XmlContent";
 import {fontSizeNormal, xmlContentHeightSize} from "../../../layouts/Font";
 import {CompactExpansionPanelSummary} from "../../../components/common/CompactExpansionPanelSummary";
@@ -11,6 +10,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import AspectRatioRoundedIcon from '@material-ui/icons/AspectRatioRounded';
 
 const styles = theme => ({
     root: {
@@ -56,7 +56,7 @@ class ExpansionPanelPreview extends Component {
         return (
             <ExpansionPanel onChange={this.handleChange} elevation={0} id="ExpPannel" expanded style={{margin:0}} >
 
-                <CompactExpansionPanelSummary id="ExpSummary" expandIcon={<ExpandMoreRoundedIcon/>}>
+                <CompactExpansionPanelSummary id="ExpSummary" expandIcon={<AspectRatioRoundedIcon/>}>
 
                     <TableContainer>
                         <Table size="small" aria-label="a dense table">
