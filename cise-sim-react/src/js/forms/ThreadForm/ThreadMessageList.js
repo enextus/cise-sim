@@ -3,6 +3,8 @@ import {Box} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import ThreadMsgInfo from './List/ThreadListMessageInfo';
 import {observer} from "mobx-react";
+import Typography from "@material-ui/core/Typography";
+import {fontSizeNormal} from "../../layouts/Font";
 
 const styles = theme => ({
     root: {
@@ -84,7 +86,31 @@ class ThreadMessageList extends Component {
         return result;
     }
 
+    renderList = (threadCards) => {
+        return ( <Box hidden={threadCards.length === 0}  >
 
+            {threadCards.map((msg) =>
+                <ThreadMsgInfo
+                    key={msg.id}
+                    msgInfo={msg}
+                    selectThread={() => this.selectThread(msg.correlationId)}
+                    selected={this.getMessageStore().threadIdSelected === msg.correlationId}
+                />)}
+
+        </Box>)
+    }
+
+    renderEmptyList = () => {
+
+        return ( <Box>
+
+                <Typography style={{paddingTop:60, fontSize:fontSizeNormal}} variant="h4" component="h1" align={"center"}>
+                    Empty Thread List
+                </Typography>
+            </Box>
+
+        )
+    }
     render() {
 
         const {classes} = this.props;
@@ -104,20 +130,8 @@ class ThreadMessageList extends Component {
             }
         }
 
-        // Render ( maxHeight="420px"  overflow= "scroll") .. ?
-        return (
-            <Box hidden={threadCards.length === 0}  >
+        return threadCards.length ?  this.renderList(threadCards) : this.renderEmptyList();
 
-                    {threadCards.map((msg) =>
-                        <ThreadMsgInfo
-                            key={msg.id}
-                            msgInfo={msg}
-                            selectThread={() => this.selectThread(msg.correlationId)}
-                            selected={this.getMessageStore().threadIdSelected === msg.correlationId}
-                        />)}
-
-            </Box>
-        )
     }
 
     getMessageStore() {

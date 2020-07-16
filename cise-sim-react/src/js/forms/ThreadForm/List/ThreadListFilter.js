@@ -47,7 +47,7 @@ class ThreadListFilter extends Component {
             <Grid container   alignItems="flex-start" justify="flex-start" direction="row">
 
                 <Grid item xs={12} >
-                    <Grid container   alignItems="flex-end" justify="flex-end" direction="row">
+                    <Grid container   alignItems="flex-start" justify="flex-start" direction="row">
                         <ButtonGroup color="primary" aria-label="outlined primary button group" style={{ maxHeight: buttonSizeSmall,fontSize:fontSizeUltraSmall}}>
                             <Button variant={this.state.variantAll} onClick={this.handleAllMessages}  style={{ maxHeight: buttonSizeSmall,fontSize:fontSizeUltraSmall}}>All messages</Button>
                             <Button variant={this.state.variantFail} onClick={this.handleFailedMessages}  style={{ maxHeight: buttonSizeSmall,fontSize:fontSizeUltraSmall}}>Errors</Button>
