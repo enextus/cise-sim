@@ -19,6 +19,13 @@
             </includes>
         </fileSet>
         <fileSet>
+            <directory>${project.parent.basedir}/cise-sim-cli/target</directory>
+            <outputDirectory>/lib</outputDirectory>
+            <includes>
+                <include>cise-sim-cli.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <directory>${project.parent.basedir}/cise-sim-dropw/target</directory>
             <outputDirectory>/lib</outputDirectory>
             <includes>

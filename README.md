@@ -338,7 +338,12 @@ COMMAND
     debug-run   starts the simulator in foreground launching the application
                 in debug mode (port 9999).
     status      show the current status the simulator (started or stopped).
+    send-msg    send a message from an xml file
 ```
+
+#### Sending a message from command line
+With the command ./sim send-msg 'filename' is possible to send a message contained in a xml file.
+The destination is the same configured for cise-sim and message sent and ack received will be stored in the cise-sim repository directory
 
 
 ## As a Docker container

@@ -90,6 +90,10 @@ function run() {
   ${SW_RUN_SWR_CMD} 2>&1
 }
 
+function run_cli() {
+  ${SW_RUN_CLI_CMD} 2>&1
+}
+
 function sw_run_cmd() {
 
   if [ -z "$JAVA_EXEC" ]; then 
@@ -101,7 +105,12 @@ function sw_run_cmd() {
   fi
 
   SW_RUN_SWR_CMD="${JAVA_EXEC} ${JAVA_OPTS} -Dconf.dir=${SW_HOME}/conf/ -jar ${SW_HOME}/lib/cise-sim.jar server ${SW_HOME}/conf/config.yml"
+
+  SW_RUN_CLI_CMD="${JAVA_EXEC} ${JAVA_OPTS} -jar ${SW_HOME}/lib/cise-sim-cli.jar -c ${SW_HOME}/conf/ -f "
+
 }
+
+
 
 function get_pid() {
   local PID=$(cat ${PID_FILE} 2>/dev/null)
@@ -140,6 +149,8 @@ done
 
 sw_run_cmd
 
+SW_RUN_CLI_CMD="$SW_RUN_CLI_CMD $2"
+
 case $1 in
 start)
   log_start_msg
@@ -172,6 +183,11 @@ restart)
   $0 stop
   sleep 1
   $0 start
+  ;;
+send-msg)
+  log_start_msg
+  run_cli
+  exit 0
   ;;
 status)
   _status
