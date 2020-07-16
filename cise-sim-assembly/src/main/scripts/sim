@@ -8,6 +8,10 @@ JAVA_VERSION=`${JAVA_EXEC} -version 2>&1 | head -n 1 | awk '{ print $3 }'`
 NOHUP_EXEC=`which nohup`
 PID_DIR=${SW_HOME}/tmp
 PID_FILE=${PID_DIR}/${SW_NAME}.pid
+
+
+echo $PID_FILE
+
 DEBUG_PORT=9999
 
 # FUNCTIONS ###
@@ -49,7 +53,7 @@ function enable_colors_if_supported {
 function log_exit_msg {
   E=${1:-$?}
 test ${E} -eq 0 && echo "${OK} ${SW_NAME} started at `date -Iseconds`" || \
-    echo "${KO} ${SW_NAME} not started. Please, inspect the logs in ${GRE}logs/sim_stdout.log${NOR} to find the reason."; exit ${E}
+    echo "${KO} ${SW_NAME} not started. Please, inspect the logs in ${GRE}logs/sim.log${NOR} to find the reason."; exit ${E}
 }
 
 function log_start_msg {
@@ -73,15 +77,16 @@ function setup_debug {
 
 function start {
 
-  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
+#  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
+  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} 2>&1 &
   local PID=$!
   sleep 3
-  kill -0 ${PID} 2> /dev/null 
+  kill -0 ${PID} 2> /dev/null
   local IT_EXISTS=$?
-  [ $IT_EXISTS -ne 0 ] && log_exit_msg 1   
+  [ $IT_EXISTS -ne 0 ] && log_exit_msg 1
 
   echo ${PID} >${PID_FILE}
-  echo "Logging in: ${GRE}logs/sim_stdout.log${NOR}"
+  #echo "Logging in: ${GRE}logs/sim_stdout.log${NOR}"
   log_exit_msg 0
 
 }
