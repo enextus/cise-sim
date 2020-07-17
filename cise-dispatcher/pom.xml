@@ -8,6 +8,27 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-codegen-plugin</artifactId>
+        <version>${cxf.version}</version>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <goals>
+              <goal>wsdl2java</goal>
+            </goals>
+            <configuration>
+              <sourceRoot>${basedir}/java-templates</sourceRoot>
+              <wsdlOptions>
+                <wsdlOption>
+                  <wsdl>${basedir}/src/main/resources/META-INF/wsdl/CISEMessageService.wsdl</wsdl>
+                </wsdlOption>
+              </wsdlOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <!-- tester plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -254,6 +275,7 @@
     <java.version>11</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
+    <cxf.version>3.3.3</cxf.version>
   </properties>
 
 </project>

@@ -8,10 +8,10 @@
 server:
   applicationConnectors:
     - type: http
-      port: 8080
+      port: 8200
   adminConnectors:
     - type: http
-      port: 8081
+      port: 8201
 
 # The logging section is used to tweak the logging level of the simulator.
 # To write the log in a file instead of the standard output is possible to
