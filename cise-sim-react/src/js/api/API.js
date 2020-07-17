@@ -68,8 +68,6 @@ const getHost = () => {
                 window.location.hostname).concat(":8080");
         }
 
-    } else {
-        // production code
     }
 
     return window.location.protocol.concat("//").concat(window.location.host);
