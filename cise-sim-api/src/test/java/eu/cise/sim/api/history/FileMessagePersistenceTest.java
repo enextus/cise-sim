@@ -30,13 +30,13 @@ public class FileMessagePersistenceTest {
     private static int TEST_CACHE_DIM = 3;
 
     private final XmlMapper xmlMapper;
-    private final FileMessagePersistence fileMessagePersistence;
+    private final FileMessageService fileMessagePersistence;
 
     public FileMessagePersistenceTest() {
 
         this.xmlMapper = new DefaultXmlMapper.PrettyNotValidating();
         String repositoryDir = tempDirWithPrefix.toString();
-        this.fileMessagePersistence = new FileMessagePersistence(xmlMapper, repositoryDir, TEST_CACHE_DIM);
+        this.fileMessagePersistence = new FileMessageService(xmlMapper, repositoryDir, TEST_CACHE_DIM);
 
     }
 

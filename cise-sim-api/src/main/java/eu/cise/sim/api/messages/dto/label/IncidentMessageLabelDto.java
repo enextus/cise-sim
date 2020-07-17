@@ -1,6 +1,8 @@
 package eu.cise.sim.api.messages.dto.label;
 
 import eu.cise.sim.api.messages.dto.incident.IncidentTypeEnum;
+import eu.cise.sim.api.messages.dto.label.incident.IncidentLabelDto;
+import eu.cise.sim.api.messages.dto.label.incident.VesselLabelDto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ public class IncidentMessageLabelDto implements Serializable {
     private static final long serialVersionUID = 42L;
 
     private final List<IncidentLabelDto>  incidentList;
-    private final VesselLabelDto          vessel;
+    private final VesselLabelDto vessel;
 
     private static IncidentMessageLabelDto instance;
 

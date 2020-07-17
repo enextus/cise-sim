@@ -19,16 +19,19 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-sim-api/target</directory>
+            <directory>${project.parent.basedir}/cise-sim-dropw/target</directory>
             <outputDirectory>/lib</outputDirectory>
             <includes>
                 <include>cise-sim.jar</include>
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-sim-app/target/site/apidocs
+            <directory>${project.parent.basedir}
             </directory>
             <outputDirectory>docs</outputDirectory>
+            <includes>
+                <include>*.pdf</include>
+            </includes>
         </fileSet>
         <fileSet>
             <directory>${project.parent.basedir}/cise-sim-assembly/src/main/scripts</directory>
@@ -39,7 +42,7 @@
             <fileMode>7775</fileMode>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-sim-api/target/classes</directory>
+            <directory>${project.parent.basedir}/cise-sim-dropw/target/classes</directory>
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>config.yml</include>
@@ -47,7 +50,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.parent.basedir}/cise-sim-api/target/classes</directory>
+            <directory>${project.parent.basedir}/cise-sim-dropw/target/classes</directory>
             <outputDirectory>/conf</outputDirectory>
             <includes>
                 <include>sim.properties</include>

@@ -6,10 +6,10 @@ import eu.cise.servicemodel.v1.message.Message;
 
 public interface MessageAPI {
 
-    SendResponse send(String templateId, JsonNode json);
-    SendResponse send(Message message);
+    ResponseApi<MessageResponse>  send(String templateId, JsonNode json);
+    ResponseApi<MessageResponse>  send(Message message);
 
-    String receiveXML(String inputXmlMessage);
-    Acknowledgement receive(Message message);
+    ResponseApi<String> receiveXML(String inputXmlMessage);
+    ResponseApi<Acknowledgement> receive(Message message);
 
 }

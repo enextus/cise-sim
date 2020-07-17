@@ -95,7 +95,7 @@
   </build>
   <dependencies>
     <dependency>
-      <artifactId>cise-sim-app</artifactId>
+      <artifactId>cise-sim-dropw</artifactId>
       <groupId>eu.europa.ec.jrc.marex</groupId>
       <version>1.3.0-ALPHA</version>
     </dependency>
