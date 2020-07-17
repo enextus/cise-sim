@@ -329,8 +329,8 @@ INFO  [2019-12-02 17:56:26,937] org.eclipse.jetty.server.Server: jetty-9.4.z-SNA
 INFO  [2019-12-02 17:56:27,252] io.dropwizard.jersey.DropwizardResourceConfig: The following paths were found for the configured resources:
 
      POST    /api/messages (eu.cise.sim.api.rest.MessageResource)
-     GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.api.history.HistoryResource)
-     GET     /api/ui/history/message/{uuid} (eu.cise.sim.api.history.HistoryResource)
+     GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.api.history.ThreadMessageResource)
+     GET     /api/ui/history/message/{uuid} (eu.cise.sim.api.history.ThreadMessageResource)
      POST    /api/ui/messages (eu.cise.sim.api.messages.UiMessageResource)
      POST    /api/ui/messages/discovery/send (eu.cise.sim.api.messages.UiMessageResource)
      GET     /api/ui/messages/discovery/values (eu.cise.sim.api.messages.UiMessageResource)

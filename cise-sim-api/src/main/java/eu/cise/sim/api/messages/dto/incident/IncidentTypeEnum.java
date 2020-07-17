@@ -1,6 +1,7 @@
 package eu.cise.sim.api.messages.dto.incident;
 
-import eu.cise.sim.api.messages.builders.*;
+import eu.cise.sim.api.messages.builders.IncidentBuilder;
+import eu.cise.sim.api.messages.builders.incident.*;
 
 public enum IncidentTypeEnum {
 
