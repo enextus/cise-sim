@@ -1,4 +1,4 @@
-package eu.cise.sim.dropw;
+package eu.cise.sim.dropw.context;
 
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.dispatcher.DispatcherFactory;
@@ -9,15 +9,14 @@ import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.TemplateAPI;
 import eu.cise.sim.api.history.FileMessageService;
 import eu.cise.sim.api.history.ThreadMessageService;
+import eu.cise.sim.config.ProxyManager;
 import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.dropw.soapresources.CISEMessageServiceSoapImplDefault;
 import eu.cise.sim.engine.DefaultMessageProcessor;
 import eu.cise.sim.engine.DefaultSimEngine;
 import eu.cise.sim.engine.Dispatcher;
 import eu.cise.sim.engine.MessageProcessor;
-import eu.cise.sim.io.DefaultMessageStorage;
 import eu.cise.sim.io.MessagePersistence;
-import eu.cise.sim.io.MessageStorage;
 import eu.cise.sim.templates.DefaultTemplateLoader;
 import eu.cise.sim.templates.TemplateLoader;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -83,9 +82,18 @@ public class DefaultAppContext implements AppContext {
                 .build();
     }
 
-    @Override
-    public MessageStorage<Object> makeMessageStorage() {
-        return new DefaultMessageStorage();
+    public String makeProxy() {
+        String result = "PROXY: no proxy configured";
+        String host = simConfig.proxyHost();
+        String port = simConfig.proxyPort();
+
+        if (!StringUtils.isEmpty(host) || !StringUtils.isEmpty(port)) {
+
+            System.setProperty("http.proxyHost", host);
+            System.setProperty("http.proxyPort", port);
+            result = "PROXY: activated on host[" + host + "] port[" + port + "]";
+        }
+        return result;
     }
 
     @Override
@@ -152,15 +160,9 @@ public class DefaultAppContext implements AppContext {
     }
 
     @Override
-    public String getProxyHost() {
-        return simConfig.proxyHost();
+    public ProxyManager makeProxyManager() {
+        return new DefaultProxyManager(simConfig.proxyHost(), simConfig.proxyPort());
     }
-
-    @Override
-    public String getProxyPort() {
-        return simConfig.proxyPort();
-    }
-
 
     public void checkConfig() {
 
@@ -171,7 +173,6 @@ public class DefaultAppContext implements AppContext {
         if (StringUtils.isEmpty(simConfig.appVersion())) {
             throw new ConfigurationException("Simulator version not configured");
         }
-
 
         if (StringUtils.isEmpty(simConfig.destinationUrl())) {
             throw new ConfigurationException("Destination Url not configured");
@@ -217,7 +218,6 @@ public class DefaultAppContext implements AppContext {
             throw new ConfigurationException("Wrong destination protocol " + e.getMessage());
         }
 
-
         // This will check the signature configuration
         try {
             makeSignatureService();
@@ -237,5 +237,9 @@ public class DefaultAppContext implements AppContext {
             }
             throw new ConfigurationException("Wrong signature configuration : " + errMsg);
         }
+
+        // Check proxy
+        DefaultProxyManager.checkConfiguration(simConfig.proxyHost(), simConfig.proxyPort());
+
     }
 }

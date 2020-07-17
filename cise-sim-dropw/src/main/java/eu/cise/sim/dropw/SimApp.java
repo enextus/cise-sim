@@ -8,19 +8,21 @@ import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.TemplateAPI;
 import eu.cise.sim.api.helpers.CrossOriginSupport;
 import eu.cise.sim.api.history.ThreadMessageService;
+import eu.cise.sim.config.ProxyManager;
+import eu.cise.sim.dropw.context.AppContext;
+import eu.cise.sim.dropw.context.ConfigurationException;
+import eu.cise.sim.dropw.context.DefaultAppContext;
+import eu.cise.sim.dropw.context.SimConf;
 import eu.cise.sim.dropw.restresources.*;
 import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle.Listener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.regex.Pattern;
 
 public class SimApp extends Application<SimConf> {
 
@@ -53,7 +55,9 @@ public class SimApp extends Application<SimConf> {
         AppContext appCtx = new DefaultAppContext();
 
         // Proxy management
-        proxyManagement(appCtx.getProxyHost(), appCtx.getProxyPort());
+        ProxyManager proxyManager = appCtx.makeProxyManager();
+        String logProxyActivation = proxyManager.activate();
+        logger.info(logProxyActivation);
 
         ThreadMessageService threadMessageService =  appCtx.getThreadMessageService();
         MessageAPI  messageAPI = appCtx.getMessageAPI(threadMessageService);
@@ -101,29 +105,6 @@ public class SimApp extends Application<SimConf> {
             }
         });
 
-    }
-
-    private void proxyManagement(String proxyHost, String proxyPort)  {
-
-        if (StringUtils.isEmpty(proxyHost) && StringUtils.isEmpty(proxyPort)) {
-            logger.info("PROXY: no proxy configured");
-            return;
-        }
-
-        Pattern p = Pattern.compile("^"
-                + "(([0-9]{1,3}\\.){3})[0-9]{1,3}" // Ip
-                + ":"
-                + "[0-9]{1,5}$"); // Port
-
-        if (!p.matcher(proxyHost + ":" + proxyPort).matches()) {
-            String errMsg = "PROXY: wrong couple host and port configuration host[" + proxyHost + "] port[" + proxyPort + "]";
-            throw new ConfigurationException(errMsg);
-        }
-
-        System.setProperty("http.proxyHost", proxyHost);
-        System.setProperty("http.proxyPort", proxyPort);
-
-        logger.info("PROXY: activated on host[{}] port[{}]", proxyHost, proxyPort);
     }
 
     public static void main(final String[] args) {
