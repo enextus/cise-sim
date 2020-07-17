@@ -43,13 +43,3 @@ logging:
       archivedLogFilenamePattern: ./logs/sim-%d{yyyy-MM-dd}.log.gz
       archivedFileCount: 5
       timeZone: UTC
-
-# The assets section is required to serve the UI pages
-# Given is a configuration internal to the application
-# the following section should not be changed.
-assets:
-  mappings:
-    /assets: /
-  overrides:
-    /base/: ${project.basedir}/cise-sim-react
-    /base/static:  ${project.basedir}/cise-sim-react/dist

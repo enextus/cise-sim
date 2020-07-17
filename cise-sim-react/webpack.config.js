@@ -1,6 +1,6 @@
-var path = require('path');
-var webpack = require('webpack');
-var debug = process.env.NODE_ENV !== 'production';
+const path = require('path');
+const webpack = require('webpack');
+const debug = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     context: path.join(__dirname, 'src'),
@@ -30,6 +30,23 @@ module.exports = {
                 }
             }],
             include: path.join(__dirname, 'src')
-        }]
+            },
+            {
+            // config for images
+            test: /\.(png|svg|jpg|jpeg|gif)$/,
+            use: [
+                {
+                    loader: 'file-loader',
+                    options: {
+                        outputPath: 'images',
+                    }
+                }
+            ],
+            },
+        ]
     },
+
+    externals: {
+        'Config': JSON.stringify(process.env.NODE_ENV === 'production' ? require('./config.prod.json') : require('./config.dev.json'))
+    }
 };

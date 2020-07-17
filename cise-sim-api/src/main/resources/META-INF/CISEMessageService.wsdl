@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:tns="http://www.cise.eu/accesspoint/service/v1/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
                   name="CISEMessageService" targetNamespace="http://www.cise.eu/accesspoint/service/v1/">
   <wsdl:types>
-<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/service/"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/service/"
            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://www.cise.eu/servicemodel/v1/authority/" targetNamespace="http://www.cise.eu/servicemodel/v1/service/" version="1.0">
 
   
@@ -264,7 +264,8 @@
 
 
 </xs:schema>
-<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/message/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns1="http://www.cise.eu/servicemodel/v1/service/" targetNamespace="http://www.cise.eu/servicemodel/v1/message/" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/message/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+           xmlns:ns1="http://www.cise.eu/servicemodel/v1/service/" targetNamespace="http://www.cise.eu/servicemodel/v1/message/" version="1.0">
 
   
   <xs:import namespace="http://www.cise.eu/servicemodel/v1/service/"/>
@@ -794,7 +795,7 @@
 
 
 </xs:schema>
-<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/authority/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" targetNamespace="http://www.cise.eu/servicemodel/v1/authority/" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/authority/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" targetNamespace="http://www.cise.eu/servicemodel/v1/authority/" version="1.0">
 
   
   <xs:element name="Gateway" type="tns:Gateway"/>
@@ -1514,7 +1515,10 @@
 
 
 </xs:schema>
-<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/accesspoint/service/v1/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://www.cise.eu/servicemodel/v1/service/" xmlns:ns1="http://www.cise.eu/servicemodel/v1/message/" elementFormDefault="unqualified" targetNamespace="http://www.cise.eu/accesspoint/service/v1/" version="1.0">
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+               xmlns:tns="http://www.cise.eu/accesspoint/service/v1/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+               xmlns:ns1="http://www.cise.eu/servicemodel/v1/message/" elementFormDefault="unqualified"
+               targetNamespace="http://www.cise.eu/accesspoint/service/v1/" version="1.0">
 
   
   <xs:import namespace="http://www.cise.eu/servicemodel/v1/message/"/>
@@ -1557,6 +1561,8 @@
 
 </xs:schema>
   </wsdl:types>
+
+
   <wsdl:message name="sendResponse">
     <wsdl:part element="tns:sendResponse" name="parameters">
     </wsdl:part>
@@ -1565,6 +1571,7 @@
     <wsdl:part element="tns:send" name="parameters">
     </wsdl:part>
   </wsdl:message>
+
   <wsdl:portType name="CISEMessageServiceSoapImpl">
     <wsdl:operation name="send">
       <wsdl:input message="tns:send" name="send">
@@ -1573,6 +1580,7 @@
     </wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
+
   <wsdl:binding name="CISEMessageServiceSoapBinding" type="tns:CISEMessageServiceSoapImpl">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="send">
@@ -1585,6 +1593,7 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+
   <wsdl:service name="CISEMessageService">
     <wsdl:port binding="tns:CISEMessageServiceSoapBinding" name="CISEMessageServiceSoapPort">
       <soap:address location="http://localhost:8080/api/soap/messages"/>

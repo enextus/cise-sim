@@ -7,11 +7,11 @@
     <parent>
         <artifactId>cise-sim</artifactId>
         <groupId>eu.europa.ec.jrc.marex</groupId>
-        <version>1.2.3-SNAPSHOT</version>
+        <version>1.3.0-ALPHA</version>
     </parent>
 
     <artifactId>cise-sim-cli</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.3.0-ALPHA</version>
 
     <build>
         <plugins>
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>eu.europa.ec.jrc.marex</groupId>
             <artifactId>cise-sim-domain</artifactId>
-            <version>1.2.3-SNAPSHOT</version>
+            <version>1.3.0-ALPHA</version>
         </dependency>
 
         <dependency>
@@ -82,6 +82,12 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <artifactId>junit</artifactId>
+            <groupId>junit</groupId>
             <scope>test</scope>
         </dependency>
 

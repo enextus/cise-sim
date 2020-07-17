@@ -1,9 +1,9 @@
-import React from "react";
-import {render} from "react-dom";
-import MainApp from "./js/MainApp";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import {CssBaseline} from "@material-ui/core";
+import React from 'react';
+import {render} from 'react-dom';
+import MainApp from './js/MainApp';
+import {ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import {CssBaseline} from '@material-ui/core';
 import {SnackbarProvider} from 'notistack';
 
 const theme = createMuiTheme({
@@ -48,7 +48,7 @@ render(
             dense
             maxSnack={5}
             anchorOrigin={{
-              'bottom',
+              vertical:   'bottom',
               horizontal: 'right',
             }}
             hideIconVariant={true}

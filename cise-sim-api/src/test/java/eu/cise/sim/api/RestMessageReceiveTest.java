@@ -1,18 +1,13 @@
 package eu.cise.sim.api;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import eu.cise.dispatcher.Dispatcher;
 import eu.cise.dispatcher.DispatcherFactory;
-import eu.cise.dispatcher.DispatcherType;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
-import eu.cise.sim.engine.DefaultMessageProcessor;
-import eu.cise.sim.engine.DefaultSimEngine;
-import eu.cise.sim.engine.MessageProcessor;
-import eu.cise.sim.engine.SimConfig;
-import eu.cise.sim.io.MessageStorage;
+import eu.cise.sim.config.SimConfig;
+import eu.cise.sim.engine.*;
 import eu.cise.sim.templates.DefaultTemplateLoader;
 import eu.cise.sim.templates.TemplateLoader;
 import eu.eucise.xml.DefaultXmlMapper;
@@ -29,9 +24,6 @@ import javax.ws.rs.core.MediaType;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static eu.cise.signature.SignatureServiceBuilder.newSignatureService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 public class RestMessageReceiveTest {
 
@@ -70,7 +62,15 @@ public class RestMessageReceiveTest {
 
         @Override
         public String messageTemplateDir() {
-            return "cise-sim-assembly/src/main/resources/templates/messages";
+            return "templates/messages";
+        }
+
+        @Override
+        public String messageHistoryDir() { return "msghistory"; }
+
+        @Override
+        public int guiMaxThMsgs() {
+            return 10;
         }
 
         @Override
@@ -81,6 +81,21 @@ public class RestMessageReceiveTest {
         @Override
         public String appVersion() {
             return "1.0-TEST";
+        }
+
+        @Override
+        public String proxyHost() {
+            return "";
+        }
+
+        @Override
+        public String proxyPort() {
+            return "";
+        }
+
+        @Override
+        public boolean hideIncident() {
+            return true;
         }
     };
     private final XmlMapper xmlMapperNoValidNoPretty = new DefaultXmlMapper.NotValidating();
@@ -131,7 +146,7 @@ public class RestMessageReceiveTest {
                 )
         );
 
-        MessageStorage messageStorage = mock(MessageStorage.class);
+
         String messageStr = MessageBuilderUtil.TEST_MESSAGE_XML;
 
         Message messageToSign = xmlMapperNoValidNoPretty.fromXML(messageStr);
@@ -146,14 +161,14 @@ public class RestMessageReceiveTest {
 
         TemplateLoader templateLoader = makeTemplateLoader();
 
-        MessageAPI messageAPI = new DefaultMessageAPI(messageProcessor, messageStorage,
-            templateLoader,
-            xmlMapperNoValidPretty,
-            xmlMapperNoValidNoPretty);
+        MessageAPI messageAPI = new DefaultMessageAPI(
+                messageProcessor,
+                templateLoader,
+                xmlMapperNoValidPretty,
+                xmlMapperNoValidNoPretty);
 
-        Acknowledgement response = messageAPI.receive(messageSignStr);
+        Acknowledgement response = messageAPI.receive(messageToSign);
 
-        verify(messageStorage).store(any());
 
         assertThat(response.getAckCode()).isEqualTo(AcknowledgementType.SUCCESS);
 

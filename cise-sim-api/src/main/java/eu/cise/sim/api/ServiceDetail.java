@@ -3,8 +3,8 @@ package eu.cise.sim.api;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import eu.cise.dispatcher.DispatcherType;
 import eu.cise.servicemodel.v1.service.Service;
+import eu.cise.sim.engine.DispatcherType;
 
 @JsonInclude(Include.NON_NULL)
 public class ServiceDetail {
@@ -21,15 +21,25 @@ public class ServiceDetail {
     @JsonProperty("appVersion")
     private final String appVersion;
 
+    @JsonProperty("messageHistoryMaxLength")
+    private final int maxHistoryMsg;
+
+    @JsonProperty("hideIncidentButton")
+    private final boolean hideIncident;
+
+
     public ServiceDetail(Service service,
-        DispatcherType transportMode,
-        String endpointUrl,
-        String appVersion) {
+                         DispatcherType transportMode,
+                         String endpointUrl,
+                         String appVersion,
+                         int maxHistoryMsg, boolean hideIncident) {
         this.serviceParticipantId =
             (service.getParticipant() != null) ? service.getParticipant().getId() : null;
         this.serviceTransportMode = transportMode.toString();
         this.endpointUrl = endpointUrl;
         this.appVersion = appVersion;
+        this.maxHistoryMsg = maxHistoryMsg;
+        this.hideIncident = hideIncident;
     }
 
     public String getServiceParticipantId() {
@@ -46,5 +56,13 @@ public class ServiceDetail {
 
     public String getAppVersion() {
         return appVersion;
+    }
+
+    public int getMaxHistoryMsg() {
+        return maxHistoryMsg;
+    }
+
+    public boolean isHideIncident() {
+        return hideIncident;
     }
 }

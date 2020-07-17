@@ -10,6 +10,7 @@ The application must be run on a GNU/Linux operative system and requires to have
 - Java 1.8
 
 ## How to run CISE Sim
+### Tar.gz archive distribution
 CISE Sim is distributed in a tar.gz archive, therefore it needs to be unpacked in a folder by launching the following commands from the UNIX shell:
 
 ```bash
@@ -19,14 +20,14 @@ CISE Sim is distributed in a tar.gz archive, therefore it needs to be unpacked i
 ```
 After unpacking the archive, you can use the ``sim`` shell script to manage the application. 
 
-### Application lifecycle
-#### Start in foreground
+#### Application lifecycle
+##### Start in foreground
 To run the application in foreground type:
 
 ```bash
 ...$ ./sim run
 ```
-#### Start in background
+##### Start in background
 To run the application in background with the command:
 
 ```bash
@@ -43,26 +44,13 @@ You can see the running logs by typing:
 ...$ tail -f logs/sim_stdout.log
 ```
 
-#### Stop from the background
+##### Stop from the background
 To stop a CISE Sim previously started in background just launch the ``stop`` command.
 
 ```bash
 ...$ ./sim stop
 ```
-### Accessing the CISE Sim
-It is possible to interact with the CISE Sim through a user interface. To access the CISE Sim web
-interface just launch a browser and go to the url: ``http://localhost:8080/``.
- 
-When the simulator application is running it provides also and endpoint where different counterparts
-(CISE Nodes or CISE Adaptors be tested) can send their messages to.
-
-The following endpoints are available: 
-- REST: ``http://localhost:8080/api/messages``
-- SOAP: ``http://localhost:8080/api/soap/messages``
-
-Only the protocol configured in the sim.properties file is available to receive messages.
-
-### Other sim commands 
+#### Other sim commands 
 Launching ``sim`` without parameters displays an help in console output:
  
 ```bash
@@ -83,6 +71,57 @@ COMMAND
 ```
 
 These commands can be used to check the application status and to run the application in debug mode.
+
+### Docker distribution
+It also exists a docker distribution of cise-sim: **ec-jrc/cise-sim:latest**  
+From now on this documentation suppose that the image is in the host Docker image repository  
+
+#### Configuration persistence
+To obtain the configuration persistence it's necessary to create in the host a set of directories, put them in a preferred location
+(for example /srv/cise-sim-volumes). Those directories will map the following cise directories:  
+- /srv/cise-simulator/**conf** 
+- /srv/cise-simulator/**logs**
+- /srv/cise-simulator/**msghistory**
+
+```
+mkdir /srv/cise-sim-volumes/conf
+mkdir /srv/cise-sim-volumes/logs
+mkdir /srv/cise-sim-volumes/msghistory
+```
+Put in the directory **conf** the configuration files.  
+**logs** and **msghistory** are the location where the cise-simm will put the output for logs and messages managed.  
+
+#### Launch docker container
+To create and run the container we suggest using a simple docker compose file, where map the server ports and the volumes. For example :  
+```
+version: '3.3'
+services:
+  cise-sim:
+    image: jrc-ispra/cise-sim:latest
+    volumes:
+      - /srv/cise-sim-volumes/conf:/srv/cise-simulator/conf
+      - /srv/cise-sim-volumes/conf:/srv/cise-simulator/logs
+      - /srv/cise-sim-volumes/conf:/srv/cise-simulator/msghistory
+    ports:
+      - 8280:8080
+      - 8281:8081
+``` 
+Be warned that in this example the configurable ports and directory are still the default. 
+
+ 
+### Accessing the CISE Sim
+It is possible to interact with the CISE Sim through a user interface. To access the CISE Sim web
+interface just launch a browser and go to the url: ``http://localhost:8080/``.
+ 
+When the simulator application is running it provides also and endpoint where different counterparts
+(CISE Nodes or CISE Adaptors be tested) can send their messages to.
+
+The following endpoints are available: 
+- REST: ``http://localhost:8080/api/messages``
+- SOAP: ``http://localhost:8080/api/soap/messages``
+
+Only the protocol configured in the sim.properties file is available to receive messages.
+
 
 ## Configuration 
 Before connecting to a CISE node or adaptor, the CISE Sim needs to be properly configured.
@@ -116,10 +155,34 @@ To allow the CISE Sim to send message to the CISE Node, the node administrator n
 |signature.privatekey.alias|the alias that identify the _key pair_ in the keystore that will be used to sign the CISE message. Example: ``cisesim-nodeex.nodeex.eucise.ex``.|
 |signature.privatekey.password|is the password to access the key pair.|
 |app.version|The CISE Sim application version. This value is set by the build system and it has an informative purpose.|
+|history.repository.directory|Specifies a path relative to the directory where the CISE Sim will write the xml format files of the messages received and sent. The name has a specific format, specified in the next chapter. *WARNING* Currently the path is accepted only relatively to the sim installation directory.|
+|history.gui.maxthmsgs|Maximum number of threads that will be shown in the user interface.
+|proxy.host|Proxy ip host in number format 
+|proxy.port|Proxy port number  
+####Proxy configuration
+The configuration file provides the possibility to configure the proxy server with the parameters ``proxy.host`` and ``proxy.port``.
+The values contained need a verification, and the host changed (the ip address 10.40.x.5 isn't valid, it's just a suggestion).
+If the proxy it isn't needed, remove **both** values  
+**WARNING** if the configuration values are malformed, the cise sim won't start
+  
+
+#### Archived message file name format
+The messages are archived in files. The single file contains the xml format of the message, and the name format is:  
+``Timestamp_TypeName_Direction_Uuid``
+
+|Parameter|Description|
+|---|---|
+|Timestamp|Timestamp when the message was processed,following the format : yyyyMMdd-HHmmssSSS
+|TypeName|Type of the message (i.e. PULLREQUEST, FORWARD, etc.). For the Acknowledge messages, SYNCH are the ones received/sent synchronously after the message was sent/received
+|Direction|RECV for message received, or SENT for message sent
+|Uuid|Uniq identifier
+Some examples:  
+20200611-120029798_PULLREQUEST_SENT_31fb100d-dd13-450d-858b-d410a5f2c345  
+20200611-120029808_ACKSYNCH_RECV_184e0b37-bdb0-4efd-b993-ac18abd1f7ec
 
 ### config.yml
 The config.yml is needed to configure the application server used to run the CISE Sim application. 
-Here is possible to possible to configure the tcp port the CISE Sim will use to for serving the UI, to receive incoming messages:
+Here is possible to configure the tcp port the CISE Sim will use to for serving the UI, to receive incoming messages:
 
 ```yaml
 server:
@@ -179,6 +242,10 @@ signature.privatekey.password=cisesim
 # The CISE Sim application version.
 # This value is set by the build system and it has an informative purpose.
 app.version=1.2.2-beta
+
+# Repository information
+history.repository.directory=msghistory
+history.gui.maxthmsgs=10
 ```
 
 #### config.yml content
@@ -208,7 +275,7 @@ logging:
     "eu.cise.sim.api": INFO
     "org.eclipse.jetty.server.handler": WARN
     "org.eclipse.jetty.setuid": WARN
-    "eu.cise.dispatcher.Dispatcher": DEBUG
+    "eu.cise.sim.engine.Dispatcher": DEBUG
     "io.dropwizard.server.DefaultServerFactory": WARN
     "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
     "org.wiremock": INFO
@@ -256,17 +323,24 @@ INFO  [2019-12-02 17:56:26,883] io.dropwizard.server.ServerFactory: Starting Emu
   / /____/ / ___/ / /___    ___/ // // /  / /
   \____/___//____/_____/   /____/___/_/  /_/
 
-// CISE Sim // Ver: 1.2.2-SNAPSHOT //
+// CISE Sim // Ver: 1.3.0-ALPHA //
 
 INFO  [2019-12-02 17:56:26,937] org.eclipse.jetty.server.Server: jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_222-b10
 INFO  [2019-12-02 17:56:27,252] io.dropwizard.jersey.DropwizardResourceConfig: The following paths were found for the configured resources:
 
-    POST    /api/messages (MessageResource)
-    DELETE  /api/ui/messages/latest (UiMessageResource)
-    GET     /api/ui/service/self (UIServiceResource)
-    GET     /api/ui/templates (TemplateResource)
-    GET     /api/ui/templates/{templateId} (TemplateResource)
-    POST    /api/ui/templates/{templateId} (TemplateResource)
+     POST    /api/messages (eu.cise.sim.api.rest.MessageResource)
+     GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.api.history.HistoryResource)
+     GET     /api/ui/history/message/{uuid} (eu.cise.sim.api.history.HistoryResource)
+     POST    /api/ui/messages (eu.cise.sim.api.messages.UiMessageResource)
+     POST    /api/ui/messages/discovery/send (eu.cise.sim.api.messages.UiMessageResource)
+     GET     /api/ui/messages/discovery/values (eu.cise.sim.api.messages.UiMessageResource)
+     POST    /api/ui/messages/incident/send (eu.cise.sim.api.messages.UiMessageResource)
+     GET     /api/ui/messages/incident/values (eu.cise.sim.api.messages.UiMessageResource)
+     GET     /api/ui/service/self (eu.cise.sim.api.rest.UIServiceResource)
+     GET     /api/ui/templates (eu.cise.sim.api.rest.TemplateResource)
+     GET     /api/ui/templates/{templateId} (eu.cise.sim.api.rest.TemplateResource)
+     POST    /api/ui/templates/{templateId} (eu.cise.sim.api.rest.TemplateResource)
+
 
 INFO  [2019-12-02 17:56:27,262] io.dropwizard.setup.AdminEnvironment: tasks = 
 
