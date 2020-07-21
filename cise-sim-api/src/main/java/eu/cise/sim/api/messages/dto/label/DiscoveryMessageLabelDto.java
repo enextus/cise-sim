@@ -21,8 +21,9 @@ public class DiscoveryMessageLabelDto implements Serializable {
     static {
 
         List<String> countryList = new ArrayList<>();
-        countryList.add(CountryType.EU.value());
-        countryList.add(CountryType.CX.value());
+        for (CountryType country : CountryType.values()) {
+            countryList.add(country.value());
+        }
 
         List<String> seaBasinList = new ArrayList<>();
         for (SeaBasinType type : SeaBasinType.values()) {

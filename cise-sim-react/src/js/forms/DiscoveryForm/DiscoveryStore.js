@@ -28,9 +28,9 @@ export default class DiscoveryStore {
     labelServiceTypeList = [];
 
     setValueAndLabelOnDiscovery(labelsDiscoveryDto) {
-        this.labelCountryList     = buildValueLabelMap(labelsDiscoveryDto.countryList);
-        this.labelSeaBasinList    = buildValueLabelMap(labelsDiscoveryDto.seaBasinList);
-        this.labelServiceTypeList = buildValueLabelMap(labelsDiscoveryDto.serviceTypeList);
+        this.labelCountryList     = buildValueLabelMap(labelsDiscoveryDto.countryList.sort());
+        this.labelSeaBasinList    = buildValueLabelMap(labelsDiscoveryDto.seaBasinList.sort());
+        this.labelServiceTypeList = buildValueLabelMap(labelsDiscoveryDto.serviceTypeList.sort());
     }
 
 
