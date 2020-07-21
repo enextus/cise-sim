@@ -41,12 +41,13 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
         try {
             Boolean outboundProperty = (Boolean) messageContext.get(MESSAGE_OUTBOUND_PROPERTY);
 
-            logger.info("Outbound message: {}", messageContext.getMessage().getSOAPBody().toString());
-
             if (!outboundProperty) {
-                logger.info("Inbound message: {}", messageContext.getMessage().getSOAPBody().toString());
+                logger.info("SOAP Inbound message received");
                 return true;
             }
+
+            logger.info("SOAP Outbound message sent");
+
 
             SOAPBody soapBody = extractSoapBodyFrom(messageContext);
 

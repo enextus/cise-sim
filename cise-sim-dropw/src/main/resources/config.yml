@@ -20,9 +20,9 @@ logging:
   level: INFO
   loggers:
     "io.dropwizard.bundles.assets": INFO
-    "eu.cise.dispatcher": DEBUG
+    "eu.cise.dispatcher": INFO
     "org.apache.cxf": WARN
-    "eu.cise.emulator.api": DEBUG
+    "eu.cise.emulator.api": INFO
     "org.eclipse.jetty.server.handler": WARN
     "org.eclipse.jetty.setuid": WARN
     "io.dropwizard.server.DefaultServerFactory": WARN

@@ -7,6 +7,7 @@ import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
 import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
+import eu.cise.sim.api.dto.MessageTypeEnum;
 import eu.cise.sim.api.helpers.SendParamsReader;
 import eu.cise.sim.engine.MessageProcessor;
 import eu.cise.sim.engine.SendParam;
@@ -88,7 +89,8 @@ public class DefaultMessageAPI implements MessageAPI {
 
     @Override
     public ResponseApi<Acknowledgement> receive(Message message) {
-        logger.debug("receiving message");
+
+        logger.info("Received message {} id[{}]", MessageTypeEnum.valueOf(message).getUiName(), message.getMessageID());
 
         try {
 
