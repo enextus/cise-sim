@@ -26,11 +26,15 @@ export default class DiscoveryStore {
     labelCountryList = [];
     labelSeaBasinList = [];
     labelServiceTypeList = [];
+    labelServiceOperationList = [];
+    labelServiceRoleList = [];
 
     setValueAndLabelOnDiscovery(labelsDiscoveryDto) {
         this.labelCountryList     = buildValueLabelMap(labelsDiscoveryDto.countryList.sort());
         this.labelSeaBasinList    = buildValueLabelMap(labelsDiscoveryDto.seaBasinList.sort());
         this.labelServiceTypeList = buildValueLabelMap(labelsDiscoveryDto.serviceTypeList.sort());
+        this.labelServiceOperationList  = buildValueLabelMap(labelsDiscoveryDto.serviceOperationList.sort());
+        this.labelServiceRoleList       = buildValueLabelMap(labelsDiscoveryDto.serviceRoleList.sort());
     }
 
 
@@ -51,8 +55,9 @@ export default class DiscoveryStore {
 
     //--------------------------------------------
 
-    sendDiscoveryMessage() {
-        return sendDiscoveryMessage(this.discoveryInputInfo);
+    async sendDiscoveryMessage(sender) {
+        this.discoveryInputInfo.discoverySender= sender;
+        return await sendDiscoveryMessage(this.discoveryInputInfo);
     }
 
 }

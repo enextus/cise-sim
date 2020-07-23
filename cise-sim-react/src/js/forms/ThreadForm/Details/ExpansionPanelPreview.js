@@ -37,8 +37,8 @@ class ExpansionPanelPreview extends Component {
         super(props);
         this.body = props.body;
         this.preview = props.body.split('\n').slice(0, props.numLines-1).join('\n');
-        this.isPreview = true;
-        this.state.currentBody = this.preview;
+        this.state.isPreview = props.expanded === undefined || props.expanded !== true;
+        this.state.currentBody = this.state.isPreview ? this.preview : this.body;
     }
 
     handleChange = (event, expanded) => {

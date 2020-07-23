@@ -41,12 +41,13 @@ const selectorInfo = (props)  => {
     const handleChange = (event) => {
         setMyValue(event.target.value);
         setCurrList(props.listValueLabel[0]);
+        event.target.value = event.target.value.localeCompare('empty') === 0 ? undefined : event.target.value;
         props.change(event);
     }
 
     return (
         <FormControl className={classes.formControl}>
-            <InputLabel id={"selectorinfo_" + props.title}>{props.title}</InputLabel>
+            <InputLabel id={"selectorinfo_" + props.title} style={{minWidth:"max-content"}}>{props.title}</InputLabel>
             <Select
                 labelId={"selectorinfo_" + props.title}
                 id={"selector_" + props.title}
@@ -55,7 +56,7 @@ const selectorInfo = (props)  => {
                 style={{fontSize:fontSizeSmall}}
             >
                 <MenuItem selected={true} value="empty" className={classes.menuItem}>
-                    <em>Please choice</em>
+                    <em>Select one</em>
                 </MenuItem>
                 {props.listValueLabel.map((item, idx) => <MenuItem key={idx} value={item.value} className={classes.menuItem}>{item.label}</MenuItem>)}
 

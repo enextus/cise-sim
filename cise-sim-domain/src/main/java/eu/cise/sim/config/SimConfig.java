@@ -58,6 +58,9 @@ public interface SimConfig extends Config {
     @DefaultValue("false")
     boolean showIncident();
 
+    @Key("discovery.sender")
+    String discoverySender();
+
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {
             if (input.trim().toUpperCase().equals("TRUE")) {

@@ -35,7 +35,8 @@ public class UIServiceResource {
             simConfig.destinationUrl(),
             simConfig.appVersion(),
             simConfig.guiMaxThMsgs(),
-            simConfig.showIncident());
+            simConfig.showIncident(),
+            simConfig.discoverySender());
 
 
         return Response

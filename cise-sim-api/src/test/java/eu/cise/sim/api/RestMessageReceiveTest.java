@@ -97,6 +97,11 @@ public class RestMessageReceiveTest {
         public boolean showIncident() {
             return true;
         }
+
+        @Override
+        public String discoverySender() {
+            return "";
+        }
     };
     private final XmlMapper xmlMapperNoValidNoPretty = new DefaultXmlMapper.NotValidating();
     private final XmlMapper xmlMapperNoValidPretty = new DefaultXmlMapper.PrettyNotValidating();
