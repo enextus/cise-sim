@@ -55,8 +55,11 @@ export default class DiscoveryStore {
 
     //--------------------------------------------
 
-    async sendDiscoveryMessage(sender) {
-        this.discoveryInputInfo.discoverySender= sender;
+    async sendDiscoveryMessage(sender, type, operation) {
+        this.discoveryInputInfo.discoverySender = sender;
+        this.discoveryInputInfo.discoveryServiceType = type;
+        this.discoveryInputInfo.discoveryServiceOperation = operation;
+
         return await sendDiscoveryMessage(this.discoveryInputInfo);
     }
 

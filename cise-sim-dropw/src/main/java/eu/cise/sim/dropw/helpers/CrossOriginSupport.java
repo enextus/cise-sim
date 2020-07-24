@@ -1,4 +1,4 @@
-package eu.cise.sim.api.helpers;
+package eu.cise.sim.dropw.helpers;
 
 import ch.qos.logback.classic.Logger;
 import io.dropwizard.setup.Environment;

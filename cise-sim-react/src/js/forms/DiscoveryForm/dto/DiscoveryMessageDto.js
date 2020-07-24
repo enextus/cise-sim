@@ -6,6 +6,8 @@ export default class DiscoveryMessageDto {
     serviceOperation;
     serviceRole;
     discoverySender;
+    discoveryServiceType;
+    discoveryServiceOperation;
 
     constructor() {
         this.country = undefined;
@@ -14,5 +16,7 @@ export default class DiscoveryMessageDto {
         this.serviceOperation = undefined;
         this.serviceRole = undefined;
         this.discoverySender = undefined;
+        this.discoveryServiceType = undefined;
+        this.discoveryServiceOperation = undefined;
     }
 }

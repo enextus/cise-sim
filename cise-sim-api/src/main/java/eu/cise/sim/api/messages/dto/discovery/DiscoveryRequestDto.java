@@ -13,6 +13,8 @@ public class DiscoveryRequestDto implements Serializable {
     private String serviceRole;
 
     private String discoverySender;
+    private String discoveryServiceType;
+    private String discoveryServiceOperation;
 
     public String getCountry() {
         return country;
@@ -62,6 +64,22 @@ public class DiscoveryRequestDto implements Serializable {
         this.discoverySender = discoverySender;
     }
 
+    public String getDiscoveryServiceType() {
+        return discoveryServiceType;
+    }
+
+    public void setDiscoveryServiceType(String discoveryServiceType) {
+        this.discoveryServiceType = discoveryServiceType;
+    }
+
+    public String getDiscoveryServiceOperation() {
+        return discoveryServiceOperation;
+    }
+
+    public void setDiscoveryServiceOperation(String discoveryServiceOperation) {
+        this.discoveryServiceOperation = discoveryServiceOperation;
+    }
+
     @Override
     public String toString() {
         return "Country [" + this.country
@@ -70,6 +88,7 @@ public class DiscoveryRequestDto implements Serializable {
                 + "] Service Operation [" + this.serviceOperation
                 + "] Service Role [" + this.serviceRole
                 + "] Discovery Consumer [" + this.discoverySender
+                + "] Discovery ServiceType [" + this.discoveryServiceType
                 + "]";
     }
 }

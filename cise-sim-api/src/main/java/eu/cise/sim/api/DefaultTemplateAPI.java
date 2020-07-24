@@ -56,5 +56,4 @@ public class DefaultTemplateAPI implements TemplateAPI {
             return new ResponseApi<>(ResponseApi.ErrorId.FATAL, e.getMessage());
         }
     }
-
 }

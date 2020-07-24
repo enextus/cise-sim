@@ -6,13 +6,13 @@ import com.roskart.dropwizard.jaxws.JAXWSBundle;
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.TemplateAPI;
-import eu.cise.sim.api.helpers.CrossOriginSupport;
 import eu.cise.sim.api.history.ThreadMessageService;
 import eu.cise.sim.config.ProxyManager;
 import eu.cise.sim.dropw.context.AppContext;
 import eu.cise.sim.dropw.context.ConfigurationException;
 import eu.cise.sim.dropw.context.DefaultAppContext;
 import eu.cise.sim.dropw.context.SimConf;
+import eu.cise.sim.dropw.helpers.CrossOriginSupport;
 import eu.cise.sim.dropw.restresources.*;
 import io.dropwizard.Application;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
@@ -52,7 +52,13 @@ public class SimApp extends Application<SimConf> {
 
         environment.jersey().setUrlPattern("/api");
 
-        AppContext appCtx = new DefaultAppContext();
+        AppContext appCtx;
+        try {
+            appCtx = new DefaultAppContext();
+        } catch (ConfigurationException cex) {
+            logger.error("Configuration error : " + cex.getMessage());
+            throw cex;
+        }
 
         // Proxy management
         ProxyManager proxyManager = appCtx.makeProxyManager();

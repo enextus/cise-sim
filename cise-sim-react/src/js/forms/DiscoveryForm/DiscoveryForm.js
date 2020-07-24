@@ -135,7 +135,7 @@ class DiscoveryForm extends Component {
 */
     async handleSubmit() {
 
-        const response = await this.getStore().sendDiscoveryMessage(this.props.sender);
+        const response = await this.getStore().sendDiscoveryMessage(this.props.sender,this.props.type, this.props.operation);
 
         // Manage snackbar for message delivery notification
         if(response.errorCode){

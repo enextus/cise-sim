@@ -50,7 +50,10 @@ class PreviewMessage extends Component {
 
             <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeNormal}}>
               <XmlContent size={xmlContentHeightSize}>
-                {this.templateStore().template.content}
+                {this.templateStore().template.errorCode === undefined ?
+                  this.templateStore().template.content :
+                    '<ErrorDetail>' + this.templateStore().template.errorMessage + '</ErrorDetail>'
+                }
               </XmlContent>
             </ExpansionPanelDetails>
           </ExpansionPanel>

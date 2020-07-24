@@ -18,7 +18,8 @@ const styles = theme => ({
 class SendButton extends React.Component {
 
     isDisabled() {
-        return !this.props.store.templateStore.isTemplateSelected;
+        return (!this.props.store.templateStore.isTemplateSelected
+        || this.props.store.templateStore.template.errorCode !== undefined);
     }
 
     async send() {

@@ -71,24 +71,15 @@ public class MessageService implements MessageBuilderAPI {
         PullRequestBuilder pullBuilder = PullRequestBuilder.newPullRequest();
         initBuilder(pullBuilder);
 
-
-        /*
-        try {
-            mockMessage = MockMessage.getDiscoveryMessage();
-        } catch (IOException e) {
-            return new ResponseApi<>(ResponseApi.ErrorId.FATAL, e.getMessage());
-        }
-        */
-
         Service sender = new Service();
         pullBuilder.sender(sender);
         if (!StringUtils.isEmpty(discoveryRequestDto.getDiscoverySender())) {
             sender.setServiceID(discoveryRequestDto.getDiscoverySender());
+            sender.setServiceType(ServiceType.fromValue(discoveryRequestDto.getDiscoveryServiceType()));
+            sender.setServiceOperation(ServiceOperationType.fromValue(discoveryRequestDto.getDiscoveryServiceOperation()));
         }
-        sender.setServiceOperation(ServiceOperationType.PULL);
-        sender.setServiceRole(ServiceRoleType.CONSUMER);
-        sender.setServiceType(ServiceType.VESSEL_SERVICE)
-        ;
+        //sender.setServiceRole(ServiceRoleType.CONSUMER);
+
         ServiceProfile serviceProfile = new ServiceProfile();
 
         if (!StringUtils.isEmpty(discoveryRequestDto.getSeaBasin())) {
@@ -97,8 +88,6 @@ public class MessageService implements MessageBuilderAPI {
 
         if (!StringUtils.isEmpty(discoveryRequestDto.getServiceType())) {
             serviceProfile.setServiceType(ServiceType.fromValue(discoveryRequestDto.getServiceType()));
-            sender.setServiceType(ServiceType.fromValue(discoveryRequestDto.getServiceType()));
-
         }
 
         if (!StringUtils.isEmpty(discoveryRequestDto.getCountry())) {
@@ -113,11 +102,11 @@ public class MessageService implements MessageBuilderAPI {
             serviceProfile.setServiceRole(ServiceRoleType.fromValue(discoveryRequestDto.getServiceRole()));
         }
 
-        PullRequest mockMessage = pullBuilder.build();
-        mockMessage.setPullType(PullType.DISCOVER);
-        mockMessage.getDiscoveryProfiles().add(serviceProfile);
+        PullRequest discoveryMessage = pullBuilder.build();
+        discoveryMessage.setPullType(PullType.DISCOVER);
+        discoveryMessage.getDiscoveryProfiles().add(serviceProfile);
 
-        return new ResponseApi<>(mockMessage);
+        return new ResponseApi<>(discoveryMessage);
     }
 
     @Override

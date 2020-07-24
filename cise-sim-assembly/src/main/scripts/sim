@@ -29,6 +29,7 @@ COMMAND
     debug-run   starts the simulator in foreground launching the application
                 in debug mode (port ${DEBUG_PORT}).
     status      show the current status the simulator (started or stopped).
+    send        send a message from an xml file
 EOF
 }
 
@@ -188,7 +189,7 @@ restart)
   sleep 1
   $0 start
   ;;
-send-msg)
+send)
   log_start_msg
   run_cli
   exit 0
