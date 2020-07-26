@@ -85,7 +85,7 @@ const discoveryMessageModal = (props) => {
 
                 <Fade in={open}>
                     <div id="create-discovery-message">
-                        <DiscoveryForm store={props.store} id="create-and-send-discovery-message" onclose={handleClose}/>
+                        <DiscoveryForm store={props.store} id="create-and-send-discovery-message" onclose={handleClose} sender={props.sender} type={props.type} operation={props.operation}/>
                     </div>
                 </Fade>
 

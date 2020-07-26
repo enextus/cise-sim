@@ -43,13 +43,13 @@ const styles = theme => ({
         color: "black",
         fontWeight: "bold",
         fontSize: fontSizeNormal,
-        width: "30%",
+        width: "35%",
         display:"inline-block"
     },
 
     localdate :{
         textAlign: "right",
-        width: "69%",
+        width: "65%",
         fontSize: fontSizeExtraSmall,
         display:"inline-block"
     },

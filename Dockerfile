@@ -6,9 +6,9 @@ RUN apk update &&\
     apk upgrade &&\
     apk add bash
 
-COPY target/cise-sim-1.3.0-ALPHA.tar.gz /srv/cise-sim-1.3.0-ALPHA.tar.gz
-RUN mkdir -p /srv/cise-simulator && tar xvfz /srv/cise-sim-1.3.0-ALPHA.tar.gz -C /srv/cise-simulator --strip-components 1
-RUN rm /srv/cise-sim-1.3.0-ALPHA.tar.gz
+COPY target/cise-sim-1.3.0.tar.gz /srv/cise-sim.tar.gz
+RUN mkdir -p /srv/cise-simulator && tar xvfz /srv/cise-sim.tar.gz -C /srv/cise-simulator --strip-components 1
+RUN rm /srv/cise-sim.tar.gz
 
 # Create a group and user. NB: this user group should exists in the host machine and the volume must be writeble by it
 #RUN addgroup -S appgroup && adduser -S appuser -G appgroup

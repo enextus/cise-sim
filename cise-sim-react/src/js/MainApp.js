@@ -34,6 +34,8 @@ export default class MainApp extends Component {
     }
 
     render() {
+        const bodyElt = document.querySelector("body");
+        bodyElt.style.backgroundColor = "white";
         return (
             <>
                 <NavBar store={stores}/>

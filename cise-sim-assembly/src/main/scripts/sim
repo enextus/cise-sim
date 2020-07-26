@@ -29,6 +29,7 @@ COMMAND
     debug-run   starts the simulator in foreground launching the application
                 in debug mode (port ${DEBUG_PORT}).
     status      show the current status the simulator (started or stopped).
+    send        send a message from an xml file
 EOF
 }
 
@@ -77,8 +78,7 @@ function setup_debug {
 
 function start {
 
-#  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
-  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} 2>&1 &
+  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
   local PID=$!
   sleep 3
   kill -0 ${PID} 2> /dev/null
@@ -189,7 +189,7 @@ restart)
   sleep 1
   $0 start
   ;;
-send-msg)
+send)
   log_start_msg
   run_cli
   exit 0

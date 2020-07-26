@@ -62,7 +62,7 @@ public class MessageShortInfoDtoTest {
     @Test
     public void it_unscribe() throws IOException {
 
-        doTest(  Boolean.TRUE, "messages/vessel_unsubscribe.xml", "Subscribe", "VesselService");
+        doTest(  Boolean.TRUE, "messages/vessel_unsubscribe.xml", "Unsubscribe", "VesselService");
     }
 
     @Test
@@ -80,7 +80,7 @@ public class MessageShortInfoDtoTest {
     @Test
     public void it_ack_asynch_pullrequest() throws IOException {
 
-        doTest(  Boolean.TRUE, "messages/AckAsync_PullRequestTemplate.xml", "Async Ack", "");
+        doTest(  Boolean.TRUE, "messages/AckAsync_PullRequestTemplate.xml", "Sync Ack", "");
     }
 
     private void doTest( boolean isSent, String messageFileName, String expectedType, String expectedService) throws IOException {

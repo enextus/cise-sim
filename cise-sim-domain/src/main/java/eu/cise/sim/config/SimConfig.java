@@ -45,9 +45,6 @@ public interface SimConfig extends Config {
     @Key("signature.privatekey.password")
     String privateKeyPassword();
 
-    @Key("app.version")
-    String appVersion();
-
     @Key("proxy.host")
     String proxyHost();
 
@@ -57,6 +54,15 @@ public interface SimConfig extends Config {
     @Key("gui.show.incident")
     @DefaultValue("false")
     boolean showIncident();
+
+    @Key("discovery.sender.serviceid")
+    String discoverySender();
+
+    @Key("discovery.sender.servicetype")
+    String discoveryServiceType();
+
+    @Key("discovery.sender.serviceoperation")
+    String discoveryServiceOperation();
 
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {

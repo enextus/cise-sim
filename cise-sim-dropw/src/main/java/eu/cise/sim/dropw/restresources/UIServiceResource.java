@@ -4,6 +4,7 @@ import eu.cise.servicemodel.v1.authority.Participant;
 import eu.cise.servicemodel.v1.service.Service;
 import eu.cise.sim.api.ServiceDetail;
 import eu.cise.sim.config.SimConfig;
+import eu.cise.sim.dropw.context.VersionApp;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -23,6 +24,7 @@ public class UIServiceResource {
     @GET
     @Path("/self")
     public Response informSelfInfo() {
+        VersionApp versionApp = new VersionApp();
         Participant participant = new Participant();
         participant.setId(simConfig.simulatorName());
 
@@ -33,9 +35,12 @@ public class UIServiceResource {
             service,
             simConfig.destinationProtocol(),
             simConfig.destinationUrl(),
-            simConfig.appVersion(),
+            versionApp.getVersion(),
             simConfig.guiMaxThMsgs(),
-            simConfig.showIncident());
+            simConfig.showIncident(),
+            simConfig.discoverySender(),
+            simConfig.discoveryServiceType(),
+            simConfig.discoveryServiceOperation());
 
 
         return Response

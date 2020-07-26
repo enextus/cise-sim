@@ -34,7 +34,8 @@ export default class MessageIdField extends React.Component {
                     style: {fontSize: fontSizeSmall}
                 }}
                 size={"small"}
-                label={<Box component="div" fontSize={fontSizeSmall}>Message Id</Box>}
+                style={{minWidth:"max-content"}}
+                label={<Box component="label" fontSize={fontSizeSmall} >Message Id</Box>}
             />
             </Tooltip>
         )

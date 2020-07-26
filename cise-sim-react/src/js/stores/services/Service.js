@@ -6,13 +6,19 @@ export default class Service {
   appVersion;
   messageHistoryMaxLength;
   showIncident;
+  discoverySender;
+  discoveryServiceType;
+  discoveryServiceOperation;
 
-  constructor(serviceParticipantId, serviceTransportMode, endpointUrl, appVersion, messageHistoryMaxLength, showIncident) {
+  constructor(serviceParticipantId, serviceTransportMode, endpointUrl, appVersion, messageHistoryMaxLength, showIncident, discoverySender, discoveryServiceType, discoveryServiceOperation) {
     this.serviceParticipantId = serviceParticipantId;
     this.serviceTransportMode = serviceTransportMode;
     this.endpointUrl = endpointUrl;
     this.appVersion = appVersion;
     this.messageHistoryMaxLength = messageHistoryMaxLength;
     this.showIncident = showIncident;
+    this.discoverySender = discoverySender;
+    this.discoveryServiceType = discoveryServiceType;
+    this.discoveryServiceOperation = discoveryServiceOperation;
   }
 }

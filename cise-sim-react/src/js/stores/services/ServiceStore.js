@@ -4,14 +4,15 @@ import Service from './Service';
 
 export default class ServiceStore {
 
-
   serviceSelf = new Service(
       "...",
       "...",
       "...",
       "...",
       0,
-      true);
+      true,
+      undefined,
+      undefined, undefined);
 
   async loadServiceSelf() {
     const simInfo = await getServiceSelf();
@@ -26,7 +27,10 @@ export default class ServiceStore {
           simInfo.endpointUrl,
           simInfo.appVersion,
           simInfo.messageHistoryMaxLength,
-          simInfo.showIncident));
+          simInfo.showIncident,
+          simInfo.discoverySender,
+          simInfo.discoveryServiceType,
+          simInfo.discoveryServiceOperation));
 
       console.log("getServiceSelf returned successfully.",
           this.serviceSelf.serviceParticipantId, " - with mode  - ",

@@ -3,8 +3,6 @@ package eu.cise.sim.api.dto;
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 
-import static eu.cise.servicemodel.v1.message.AcknowledgementType.AUTHENTICATION_ERROR;
-
 public enum MessageTypeEnum {
 
     PUSH("Push", "PUSH"),
@@ -14,8 +12,10 @@ public enum MessageTypeEnum {
     ACK_SYNC("Sync Ack", "SYNCACK"),
     ACK_ASYNC("Async Ack", "ASYNCACK"),
     PUBLISH("Publish", "PUBLISH"),
-    SUBSCRIBE("Subscribe", "SUBSCRIBE");
-
+    SUBSCRIBE("Subscribe", "SUBSCRIBE"),
+    DISCOVER("Discover", "DISCOVER"),
+    UNSUBSCRIBE("Unsubscribe", "UNSUBSCRIBE"),
+    GET_SUBSCRIBERS("Get Subscribers", "GETSUBSCRIBERS");
 
     private final String uiName;
     private final String fileName;
@@ -27,13 +27,22 @@ public enum MessageTypeEnum {
 
     public static MessageTypeEnum valueOf(Message message) throws IllegalArgumentException {
 
-        if (message instanceof PullRequest) {
-            // Suscribe is a pull request with <ServiceOperation>Subscribe</ServiceOperation>
-            return (message.getSender().getServiceOperation() == ServiceOperationType.SUBSCRIBE) ?
-                    SUBSCRIBE :
-                    PULL_REQUEST;
-        }
 
+        if (message instanceof PullRequest) {
+            PullRequest pr = (PullRequest) message;
+            switch (pr.getPullType()) {
+                case SUBSCRIBE:
+                    return SUBSCRIBE;
+                case DISCOVER:
+                    return DISCOVER;
+                case UNSUBSCRIBE:
+                    return UNSUBSCRIBE;
+                case GET_SUBSCRIBERS:
+                    return GET_SUBSCRIBERS;
+                default:
+                    return PULL_REQUEST;
+            }
+        }
 
         if (message instanceof PullResponse) {
             return PULL_RESPONSE;
@@ -51,8 +60,8 @@ public enum MessageTypeEnum {
         }
 
         if (message instanceof Acknowledgement) {
-            Acknowledgement ack = (Acknowledgement) message;
-            if (message.getSender() == null || ack.getAckCode() == AUTHENTICATION_ERROR) {
+
+            if (message.getAny() == null || message.getAny().getElementsByTagName("Signature") == null) {
                 return ACK_SYNC;
             } else {
                 return ACK_ASYNC;

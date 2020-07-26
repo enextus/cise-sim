@@ -3,116 +3,26 @@
     <parent>
         <artifactId>cise-sim</artifactId>
         <groupId>eu.europa.ec.jrc.marex</groupId>
-        <version>1.3.0-ALPHA</version>
+        <version>1.3.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cise-sim-api</artifactId>
 
-    <build>
-        <plugins>
-            <!--
-            <plugin>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-codegen-plugin</artifactId>
-                <version>${cxf.version}</version>
-                <executions>
-                    <execution>
-                        <id>generate-sources</id>
-                        <goals>
-                            <goal>wsdl2java</goal>
-                        </goals>
-                        <configuration>
-                            <sourceRoot>${basedir}/java-templates</sourceRoot>
-                            <wsdlOptions>
-                                <wsdlOption>
-                                    <wsdl>${basedir}/src/main/resources/META-INF/CISEMessageService.wsdl</wsdl>
-                                </wsdlOption>
-                            </wsdlOptions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>ant-magic</id>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <delete dir="java-templates/eu/cise/servicemodel" />
-                            </tasks>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>templating-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <executions>
-                    <execution>
-                        <id>filter-src</id>
-                        <goals>
-                            <goal>filter-sources</goal>
-                        </goals>
-                        <phase>compile</phase>
-                        <configuration>
-                            <sourceDirectory>${basedir}/java-templates/eu/cise/accesspoint/service/v1
-                            </sourceDirectory>
-                            <outputDirectory>${basedir}/src/main/generated-sources/eu/cise/accesspoint/service/v1
-                            </outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>cise-emu</id>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                    <resource>META-INF/cxf/bus-extensions.txt</resource>
-                                </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>eu.cise.sim.api.SimApp</mainClass>
-                                </transformer>
-                            </transformers>
-                            <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <finalName>cise-sim</finalName>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin -->
-        </plugins>
-
-    </build>
     <dependencies>
 
         <!-- internal dependencies -->
         <dependency>
             <groupId>eu.europa.ec.jrc.marex</groupId>
             <artifactId>cise-sim-domain</artifactId>
-            <version>1.3.0-ALPHA</version>
+            <version>1.3.0</version>
         </dependency>
-
 
         <dependency>
             <groupId>eu.europa.ec.jrc.marex</groupId>
-            <artifactId>cise-sim-app</artifactId>
-            <version>1.3.0-ALPHA</version>
+            <artifactId>cise-dispatcher</artifactId>
+            <version>1.2-SNAPSHOT</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- /Log libraries/ -->
@@ -129,12 +39,6 @@
         </dependency>
 
         <!-- /testing libraries/ -->
-        <dependency>
-            <groupId>io.dropwizard</groupId>
-            <artifactId>dropwizard-testing</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <artifactId>junit</artifactId>
             <groupId>junit</groupId>
@@ -155,12 +59,6 @@
 
         <!-- /soap service / -->
         <dependency>
-            <groupId>com.github.roskart.dropwizard-jaxws</groupId>
-            <artifactId>dropwizard-jaxws</artifactId>
-            <version>1.1.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock-standalone</artifactId>
             <version>2.24.1</version>
@@ -173,11 +71,30 @@
             <version>3.3.0</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-core</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!-- ext Dependencies -->
+        <dependency>
+            <artifactId>guava</artifactId>
+            <groupId>com.google.guava</groupId>
+            <version>22.0</version>
         </dependency>
 
     </dependencies>

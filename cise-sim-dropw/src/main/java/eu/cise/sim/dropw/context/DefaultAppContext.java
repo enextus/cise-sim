@@ -2,6 +2,8 @@ package eu.cise.sim.dropw.context;
 
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
 import eu.cise.dispatcher.DispatcherFactory;
+import eu.cise.servicemodel.v1.service.ServiceOperationType;
+import eu.cise.servicemodel.v1.service.ServiceType;
 import eu.cise.signature.SignatureService;
 import eu.cise.sim.api.DefaultMessageAPI;
 import eu.cise.sim.api.DefaultTemplateAPI;
@@ -170,7 +172,9 @@ public class DefaultAppContext implements AppContext {
             throw new ConfigurationException("Simulator name not configured");
         }
 
-        if (StringUtils.isEmpty(simConfig.appVersion())) {
+        VersionApp versionApp = new VersionApp();
+        String version = versionApp.getVersion();
+        if (StringUtils.isEmpty(version)) {
             throw new ConfigurationException("Simulator version not configured");
         }
 
@@ -216,6 +220,25 @@ public class DefaultAppContext implements AppContext {
             simConfig.destinationProtocol();
         } catch (RuntimeException e) {
             throw new ConfigurationException("Wrong destination protocol " + e.getMessage());
+        }
+
+        // CheckDiscovery parameters
+        String discoveryParam = simConfig.discoveryServiceOperation();
+        if (!StringUtils.isEmpty(discoveryParam)) {
+            try {
+                ServiceOperationType.fromValue(discoveryParam);
+            } catch (RuntimeException ex) {
+                throw new ConfigurationException("Wrong discovery service operation value " + discoveryParam);
+            }
+        }
+
+        discoveryParam = simConfig.discoveryServiceType();
+        if (!StringUtils.isEmpty(discoveryParam)) {
+            try {
+                ServiceType.fromValue(discoveryParam);
+            } catch (RuntimeException ex) {
+                throw new ConfigurationException("Wrong discovery service type value " + discoveryParam);
+            }
         }
 
         // This will check the signature configuration

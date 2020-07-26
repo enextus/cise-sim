@@ -27,12 +27,25 @@ public class ServiceDetail {
     @JsonProperty("showIncident")
     private final boolean showIncident;
 
+    @JsonProperty("discoverySender")
+    private final String discoverySender;
+
+    @JsonProperty("discoveryServiceType")
+    private final String discoveryServiceType;
+
+    @JsonProperty("discoveryServiceOperation")
+    private final String discoveryServiceOperation;
+
 
     public ServiceDetail(Service service,
                          DispatcherType transportMode,
                          String endpointUrl,
                          String appVersion,
-                         int maxHistoryMsg, boolean showIncident) {
+                         int maxHistoryMsg,
+                         boolean showIncident,
+                         String discoverySender,
+                         String discoveryServiceType,
+                         String discoveryServiceOperation) {
         this.serviceParticipantId =
             (service.getParticipant() != null) ? service.getParticipant().getId() : null;
         this.serviceTransportMode = transportMode.toString();
@@ -40,6 +53,10 @@ public class ServiceDetail {
         this.appVersion = appVersion;
         this.maxHistoryMsg = maxHistoryMsg;
         this.showIncident = showIncident;
+
+        this.discoverySender = discoverySender;
+        this.discoveryServiceType = discoveryServiceType;
+        this.discoveryServiceOperation = discoveryServiceOperation;
     }
 
     public String getServiceParticipantId() {
@@ -64,5 +81,17 @@ public class ServiceDetail {
 
     public boolean isShowIncident() {
         return showIncident;
+    }
+
+    public String getDiscoverySender() {
+        return discoverySender;
+    }
+
+    public String getDiscoveryServiceType() {
+        return discoveryServiceType;
+    }
+
+    public String getDiscoveryServiceOperation() {
+        return discoveryServiceOperation;
     }
 }

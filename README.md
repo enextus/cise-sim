@@ -123,7 +123,6 @@ This file contains the parameters to set up the protocol, the endpoint and the m
 
 | Parameter|Description|Example|
 |----------|-----------|-------|
-|app.version|Software version displayed on the CISE Sim web interface.|1.0
 |simulator.name|Simulator name displayed on the CISE Sim web interface. <br> The property is used only to display the system name on the CISE Sim.<br> The property does not affect the functioning.|sim1-nodeAX
 |destination.protocol|Protocol used to send messages to the "destination.url". Allowed values: `SOAP`, `REST`|SOAP
 |destination.url| URL of the service endpoint where the CISE Sim will send the XML messages.|http://10.10.10.34:8300/api/soap/messages
@@ -136,15 +135,16 @@ This file contains the parameters to set up the protocol, the endpoint and the m
 |history.gui.maxnummsgs|Maximum number of threads displayed in the user interface|10
 |proxy.host|IP address of the HTTP Proxy (Optional)|10.10.10.10
 |proxy.port|Port number of the HTTP Proxy (Optional)|1234
+|discovery.sender.serviceid|Discovery service, Sender ServiceId (Optional)
+|discovery.sender.servicetype|Discovery service, Sender ServiceType (Optional)
+|discovery.sender.serviceoperation|Discovery service, Sender ServiceOperation (Optional)
 
+Note: Discovery sevice button will be present in the UI, only if all the three parameters discovery.* are presents
 #### Example: sim.properties
 ```properties
 #
 # CISE Sim (1.3.0-ALPHA)
 #
-
-# Software version displayed on the CISE Sim web interface. 
-app.version=1.3.0-ALPHA
 
 # Simulator name displayed on the CISE Sim web interface.
 # The property is used only to display the system name on the CISE Sim.
@@ -175,6 +175,16 @@ history.gui.numthreads=100
 # Proxy configuration
 # proxy.host=10.40.X.5
 # proxy.port=8888
+
+# Discovery service Sender parameters
+# ServiceId of the Sender
+discovery.sender.serviceid=
+
+# Service Type of discovery.sender
+discovery.sender.servicetype=
+
+# Service Type of discovery.sender
+discovery.sender.serviceoperation=
 
 ```
 
@@ -228,15 +238,15 @@ server:
 logging:
   level: INFO
   loggers:
-    "eu.cise.dispatcher": DEBUG
-    "eu.cise.emulator.api": DEBUG
-    "io.dropwizard.bundles.assets": INFO
-    "org.apache.cxf": WARN
-    "org.eclipse.jetty.server.handler": WARN
-    "org.eclipse.jetty.setuid": WARN
-    "io.dropwizard.server.DefaultServerFactory": WARN
-    "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
-    "org.wiremock": INFO
+     "io.dropwizard.bundles.assets": INFO
+     "eu.cise.dispatcher": INFO
+     "org.apache.cxf": WARN
+     "eu.cise.emulator.api": INFO
+     "org.eclipse.jetty.server.handler": WARN
+     "org.eclipse.jetty.setuid": WARN
+     "io.dropwizard.server.DefaultServerFactory": WARN
+     "io.dropwizard.bundles.assets.ConfiguredAssetsBundle": WARN
+     "org.wiremock": INFO
   appenders:
     - type: console
       threshold: ALL
@@ -338,7 +348,7 @@ COMMAND
     debug-run   starts the simulator in foreground launching the application
                 in debug mode (port 9999).
     status      show the current status the simulator (started or stopped).
-    send-msg    send a message from an xml file
+    send        send a message from an xml file
 ```
 
 #### Sending a message from command line

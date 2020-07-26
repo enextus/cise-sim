@@ -133,10 +133,12 @@ const messageInfoCard = (props)  => {
     let iconMsg = IconMsgOk;
     let messageType = msgInfo.messageType;
     let messageTypeColor = null;
+    let expandPreview = false;
     if (!isSuccess && messageType === 'Sync Ack') {
         messageType = messageType+" - "+msgInfo.ackResult;
         messageTypeColor = {color: "red"};
         iconMsg = IconMsgKo;
+        expandPreview = true;
     }
 
     // Rendering
@@ -178,7 +180,7 @@ const messageInfoCard = (props)  => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <ExpansionPanelPreview body={props.body} numLines={6}/>
+                <ExpansionPanelPreview body={props.body} numLines={6} expanded={expandPreview}/>
             </CardContent>
         </Card>
     );
