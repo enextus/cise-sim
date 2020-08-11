@@ -2,11 +2,13 @@ package eu.cise.sim.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
 import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
+import eu.cise.sim.api.dto.MessageTypeEnum;
 import eu.cise.sim.api.helpers.SendParamsReader;
 import eu.cise.sim.engine.MessageProcessor;
 import eu.cise.sim.engine.SendParam;
@@ -69,6 +71,7 @@ public class DefaultMessageAPI implements MessageAPI {
         try {
 
             Pair<Acknowledgement, Message> sendResponse = engineMessageProcessor.send(message, sendParam);
+            logAckError(sendResponse.getA());
             return new ResponseApi<>(new MessageResponse(sendResponse.getB(), sendResponse.getA()));
 
         } catch (Exception e) {
@@ -88,7 +91,8 @@ public class DefaultMessageAPI implements MessageAPI {
 
     @Override
     public ResponseApi<Acknowledgement> receive(Message message) {
-        logger.debug("receiving message");
+
+        logger.info("Received message {} id[{}]", MessageTypeEnum.valueOf(message).getUiName(), message.getMessageID());
 
         try {
 
@@ -110,6 +114,12 @@ public class DefaultMessageAPI implements MessageAPI {
             return new ResponseApi<>(synchronousAcknowledgementFactory
                     .buildAck(message, SynchronousAcknowledgementType.INTERNAL_ERROR,
                             "Unknown Error : " + eAny.getMessage()));
+        }
+    }
+
+    private void logAckError(Acknowledgement ack) {
+        if (ack.getAckCode() != AcknowledgementType.SUCCESS) {
+            logger.warn("ACK UNSECCESS : code[{}] detail[{}]", ack.getAckCode(), ack.getAckDetail());
         }
     }
 }

@@ -47,12 +47,22 @@ public class RestDispatcher implements Dispatcher {
     @Override
     public DispatchResult send(Message message, String address) {
         String payload = xmlMapper.toXML(message);
-        logger.debug("> sending message");
-        logger.debug("> address: {}", address);
-        logger.debug("> payload: \n{}\n", payload);
-        RestResult result = client.post(address, payload);
-        logger.debug("< server response: {}", result);
 
+        if (logger.isDebugEnabled()) {
+            logger.debug("> sending message");
+            logger.debug("> address: {}", address);
+            logger.debug("> payload: \n{}\n", payload);
+        } else {
+            logger.info("Sending Rest message to " + address);
+        }
+
+        RestResult result = client.post(address, payload);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("< server response: {}", result);
+        } else {
+            logger.info("Server response: isOk[{}], code[{}], message[{}]", result.isOK(), result.getCode(), result.getMessage());
+        }
         return new DispatchResult(result.isOK(), xmlMapper.fromXML(result.getBody()));
     }
 

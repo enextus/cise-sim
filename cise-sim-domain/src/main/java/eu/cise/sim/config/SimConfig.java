@@ -30,7 +30,7 @@ public interface SimConfig extends Config {
     @Key("history.repository.directory")
     String messageHistoryDir();
 
-    @Key("history.gui.maxthmsgs")
+    @Key("history.gui.numthreads")
     int guiMaxThMsgs();
 
     @Key("signature.keystore.filename")
@@ -45,17 +45,24 @@ public interface SimConfig extends Config {
     @Key("signature.privatekey.password")
     String privateKeyPassword();
 
-    @Key("app.version")
-    String appVersion();
-
     @Key("proxy.host")
     String proxyHost();
 
     @Key("proxy.port")
     String proxyPort();
 
-    @Key("gui.hide.incident")
-    boolean hideIncident();
+    @Key("gui.show.incident")
+    @DefaultValue("false")
+    boolean showIncident();
+
+    @Key("discovery.sender.serviceid")
+    String discoverySender();
+
+    @Key("discovery.sender.servicetype")
+    String discoveryServiceType();
+
+    @Key("discovery.sender.serviceoperation")
+    String discoveryServiceOperation();
 
     class TrimAndInsureBoolean implements Preprocessor {
         public String process(String input) {

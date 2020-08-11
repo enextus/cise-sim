@@ -146,7 +146,7 @@ public class GetTemplateTest {
     }
 
 
-    @Test
+   @Test
     public void it_returns_template_which_contains_the_template_body_an_xml() {
         Message fakePreparedMessage = newPush()
                 .id("messageId")

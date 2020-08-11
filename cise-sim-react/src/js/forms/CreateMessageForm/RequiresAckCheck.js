@@ -35,7 +35,7 @@ export default class RequiresAckCheck extends React.Component {
 
                 }
 
-                label={<Box component="div" fontSize={fontSizeSmall}>Require Synch Ack</Box>}
+                label={<Box component="div" fontSize={fontSizeSmall}>Require Sync Ack</Box>}
 
             />
             </Tooltip>

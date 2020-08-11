@@ -8,10 +8,10 @@
 server:
   applicationConnectors:
     - type: http
-      port: 8080
+      port: 8200
   adminConnectors:
     - type: http
-      port: 8081
+      port: 8201
 
 # The logging section is used to tweak the logging level of the simulator.
 # To write the log in a file instead of the standard output is possible to
@@ -20,9 +20,9 @@ logging:
   level: INFO
   loggers:
     "io.dropwizard.bundles.assets": INFO
-    "eu.cise.dispatcher": DEBUG
+    "eu.cise.dispatcher": INFO
     "org.apache.cxf": WARN
-    "eu.cise.emulator.api": DEBUG
+    "eu.cise.emulator.api": INFO
     "org.eclipse.jetty.server.handler": WARN
     "org.eclipse.jetty.setuid": WARN
     "io.dropwizard.server.DefaultServerFactory": WARN

@@ -1,6 +1,7 @@
 package eu.cise.sim.api.dto;
 
 import eu.cise.servicemodel.v1.message.*;
+import eu.cise.servicemodel.v1.service.ServiceOperationType;
 
 public enum MessageTypeEnum {
 
@@ -8,8 +9,13 @@ public enum MessageTypeEnum {
     PULL_RESPONSE("Pull Response", "PULLRESPONSE"),
     PULL_REQUEST("Pull Request", "PULLREQUEST"),
     FEEDBACK("Feedback", "FEEDBACK"),
-    ACK_SYNC("Ack Synch", "ACKSYNCH"),
-    ACK_ASYNC("Ack Asynch", "ACKASYNCH");
+    ACK_SYNC("Sync Ack", "SYNCACK"),
+    ACK_ASYNC("Async Ack", "ASYNCACK"),
+    PUBLISH("Publish", "PUBLISH"),
+    SUBSCRIBE("Subscribe", "SUBSCRIBE"),
+    DISCOVER("Discover", "DISCOVER"),
+    UNSUBSCRIBE("Unsubscribe", "UNSUBSCRIBE"),
+    GET_SUBSCRIBERS("Get Subscribers", "GETSUBSCRIBERS");
 
     private final String uiName;
     private final String fileName;
@@ -21,8 +27,21 @@ public enum MessageTypeEnum {
 
     public static MessageTypeEnum valueOf(Message message) throws IllegalArgumentException {
 
+
         if (message instanceof PullRequest) {
-            return PULL_REQUEST;
+            PullRequest pr = (PullRequest) message;
+            switch (pr.getPullType()) {
+                case SUBSCRIBE:
+                    return SUBSCRIBE;
+                case DISCOVER:
+                    return DISCOVER;
+                case UNSUBSCRIBE:
+                    return UNSUBSCRIBE;
+                case GET_SUBSCRIBERS:
+                    return GET_SUBSCRIBERS;
+                default:
+                    return PULL_REQUEST;
+            }
         }
 
         if (message instanceof PullResponse) {
@@ -30,7 +49,10 @@ public enum MessageTypeEnum {
         }
 
         if (message instanceof Push) {
-            return PUSH;
+            // Publish is Push with <ServiceOperation>Subscribe</ServiceOperation>
+            return (message.getSender().getServiceOperation() == ServiceOperationType.SUBSCRIBE) ?
+                    PUBLISH :
+                    PUSH;
         }
 
         if (message instanceof Feedback) {
@@ -38,7 +60,8 @@ public enum MessageTypeEnum {
         }
 
         if (message instanceof Acknowledgement) {
-            if (message.getSender() == null) {
+
+            if (message.getAny() == null || message.getAny().getElementsByTagName("Signature") == null) {
                 return ACK_SYNC;
             } else {
                 return ACK_ASYNC;

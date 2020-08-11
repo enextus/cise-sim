@@ -18,7 +18,8 @@ const styles = theme => ({
 class SendButton extends React.Component {
 
     isDisabled() {
-        return !this.props.store.templateStore.isTemplateSelected;
+        return (!this.props.store.templateStore.isTemplateSelected
+        || this.props.store.templateStore.template.errorCode !== undefined);
     }
 
     async send() {
@@ -41,7 +42,7 @@ class SendButton extends React.Component {
         } else {
             this.props.enqueueSnackbar('New message has been sent.', {variant: 'success',});
             this.props.store.templateStore.createNewMessageId();
-            this.props.store.templateStore.resetPreview();
+          //  this.props.store.templateStore.resetPreview();
         }
 
     }

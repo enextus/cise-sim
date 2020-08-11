@@ -79,11 +79,6 @@ public class RestMessageReceiveTest {
         }
 
         @Override
-        public String appVersion() {
-            return "1.0-TEST";
-        }
-
-        @Override
         public String proxyHost() {
             return "";
         }
@@ -94,8 +89,23 @@ public class RestMessageReceiveTest {
         }
 
         @Override
-        public boolean hideIncident() {
+        public boolean showIncident() {
             return true;
+        }
+
+        @Override
+        public String discoverySender() {
+            return "";
+        }
+
+        @Override
+        public String discoveryServiceType() {
+            return "";
+        }
+
+        @Override
+        public String discoveryServiceOperation() {
+            return "";
         }
     };
     private final XmlMapper xmlMapperNoValidNoPretty = new DefaultXmlMapper.NotValidating();

@@ -1,12 +1,12 @@
-version: '3.3'
+version: '3'
 services:
   cise-sim:
-    image: poaless/cise-sim:latest
+    image: ec-jrc/cise-sim:latest
     volumes:
       - ./conf:/srv/cise-simulator/conf
       - ./logs:/srv/cise-simulator/logs
       - ./msghistory:/srv/cise-simulator/msghistory
     ports:
-      - 8080:8080
-      - 8081:8081
+      - 8200:8200
+      - 8201:8201
 

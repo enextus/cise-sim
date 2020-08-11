@@ -3,7 +3,10 @@ package eu.cise.sim.api.dto;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.service.ServiceType;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +15,7 @@ public class MessageShortInfoDto implements Serializable {
 
     private static final long serialVersionUID = 42L;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageShortInfoDto.class);
 
     private final String id;
     private final long dateTime;
@@ -52,9 +56,15 @@ public class MessageShortInfoDto implements Serializable {
 
         String  serviceType = "";
         if (messageType != MessageTypeEnum.ACK_ASYNC && messageType != MessageTypeEnum.ACK_SYNC) {
-            serviceType = ciseMessage.getSender().getServiceType().value();
-            if (StringUtils.isEmpty(serviceType)) {
-                throw new IllegalArgumentException("Service type is empty");
+            if (ciseMessage.getSender() == null) {
+                LOGGER.warn("In message id [{}] of type [{}] no sender was found", ciseMessage.getMessageID(), messageType.getUiName());
+            } else {
+                ServiceType serviceTypeEnum = ciseMessage.getSender().getServiceType();
+                if (serviceTypeEnum == null) {
+                    LOGGER.warn("In message id [{}] of type [{}] no service type was found", ciseMessage.getMessageID(), messageType.getUiName());
+                } else {
+                    serviceType = serviceTypeEnum.value();
+                }
             }
         }
 

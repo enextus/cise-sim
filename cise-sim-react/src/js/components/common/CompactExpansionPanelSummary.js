@@ -13,8 +13,9 @@ const summaryStyles = {
     content: {
         margin: "4px 0",
         "&$expanded": {
-            margin: "4px 0"
-        }
+            margin: "4px 0",
+        },
+
     },
     expandIcon: {
         padding: 3

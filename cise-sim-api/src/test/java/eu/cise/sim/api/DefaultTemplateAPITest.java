@@ -68,5 +68,4 @@ public class DefaultTemplateAPITest {
         assertThat(defaultTemplateAPI.getTemplates().isOk()).isFalse();
     }
 
-
 }

@@ -4,13 +4,8 @@ import eu.cise.datamodel.v1.entity.incident.Incident;
 import eu.cise.servicemodel.v1.authority.CountryType;
 import eu.cise.servicemodel.v1.authority.Participant;
 import eu.cise.servicemodel.v1.authority.SeaBasinType;
-import eu.cise.servicemodel.v1.message.Acknowledgement;
-import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.servicemodel.v1.message.PullRequest;
-import eu.cise.servicemodel.v1.message.XmlEntityPayload;
-import eu.cise.servicemodel.v1.service.Service;
-import eu.cise.servicemodel.v1.service.ServiceProfile;
-import eu.cise.servicemodel.v1.service.ServiceType;
+import eu.cise.servicemodel.v1.message.*;
+import eu.cise.servicemodel.v1.service.*;
 import eu.cise.sim.api.ResponseApi;
 import eu.cise.sim.api.messages.builders.IncidentBuilder;
 import eu.cise.sim.api.messages.builders.MockMessage;
@@ -19,16 +14,25 @@ import eu.cise.sim.api.messages.dto.incident.IncidentRequestDto;
 import eu.cise.sim.api.messages.dto.incident.IncidentTypeEnum;
 import eu.cise.sim.api.messages.dto.label.DiscoveryMessageLabelDto;
 import eu.cise.sim.api.messages.dto.label.IncidentMessageLabelDto;
+import eu.eucise.helpers.MessageBuilder;
+import eu.eucise.helpers.PullRequestBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class MessageService implements MessageBuilderAPI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageService.class);
+
+    /************************************/
+    /* ----------- INCIDENT ----------- */
+    /************************************/
 
     @Override
     public ResponseApi<Message> buildIncident(IncidentRequestDto incidentRequestDto)  {
@@ -57,23 +61,52 @@ public class MessageService implements MessageBuilderAPI {
     }
 
 
+    /************************************/
+    /* ----------- DISCOVERY ---------- */
+    /************************************/
+
     @Override
     public ResponseApi<Message> buildDiscovery(DiscoveryRequestDto discoveryRequestDto) {
 
-        PullRequest mockMessage;
-        try {
-            mockMessage = MockMessage.getDiscoveryMessage();
-        } catch (IOException e) {
-            return new ResponseApi<>(ResponseApi.ErrorId.FATAL, e.getMessage());
+        PullRequestBuilder pullBuilder = PullRequestBuilder.newPullRequest();
+        initBuilder(pullBuilder);
+
+        Service sender = new Service();
+        pullBuilder.sender(sender);
+        if (!StringUtils.isEmpty(discoveryRequestDto.getDiscoverySender())) {
+            sender.setServiceID(discoveryRequestDto.getDiscoverySender());
+            sender.setServiceType(ServiceType.fromValue(discoveryRequestDto.getDiscoveryServiceType()));
+            sender.setServiceOperation(ServiceOperationType.fromValue(discoveryRequestDto.getDiscoveryServiceOperation()));
         }
+        //sender.setServiceRole(ServiceRoleType.CONSUMER);
 
         ServiceProfile serviceProfile = new ServiceProfile();
-        serviceProfile.setSeaBasin(SeaBasinType.fromValue(discoveryRequestDto.getSeaBasin()));
-        serviceProfile.setServiceType(ServiceType.fromValue(discoveryRequestDto.getServiceType()));
-        serviceProfile.setCountry(CountryType.fromValue(discoveryRequestDto.getCountry()));
-        mockMessage.getDiscoveryProfiles().add(serviceProfile);
 
-        return new ResponseApi<>(mockMessage);
+        if (!StringUtils.isEmpty(discoveryRequestDto.getSeaBasin())) {
+            serviceProfile.setSeaBasin(SeaBasinType.fromValue(discoveryRequestDto.getSeaBasin()));
+        }
+
+        if (!StringUtils.isEmpty(discoveryRequestDto.getServiceType())) {
+            serviceProfile.setServiceType(ServiceType.fromValue(discoveryRequestDto.getServiceType()));
+        }
+
+        if (!StringUtils.isEmpty(discoveryRequestDto.getCountry())) {
+            serviceProfile.setCountry(CountryType.fromValue(discoveryRequestDto.getCountry()));
+        }
+
+        if (!StringUtils.isEmpty(discoveryRequestDto.getServiceOperation())) {
+            serviceProfile.setServiceOperation(ServiceOperationType.fromValue(discoveryRequestDto.getServiceOperation()));
+        }
+
+        if (!StringUtils.isEmpty(discoveryRequestDto.getServiceRole())) {
+            serviceProfile.setServiceRole(ServiceRoleType.fromValue(discoveryRequestDto.getServiceRole()));
+        }
+
+        PullRequest discoveryMessage = pullBuilder.build();
+        discoveryMessage.setPullType(PullType.DISCOVER);
+        discoveryMessage.getDiscoveryProfiles().add(serviceProfile);
+
+        return new ResponseApi<>(discoveryMessage);
     }
 
     @Override
@@ -101,4 +134,20 @@ public class MessageService implements MessageBuilderAPI {
     public HashMap<String, List<String>> getDiscoveryMap() {
         return discoveryMap;
     }
+
+    protected void initBuilder(MessageBuilder<? extends Message, ? extends MessageBuilder<?, ?>> mb) {
+
+        String messageId = UUID.randomUUID().toString();
+
+        mb.id(messageId)
+                .correlationId(messageId)
+                .creationDateTime(new Date())
+                .isRequiresAck(false)
+                .informationSecurityLevel(InformationSecurityLevelType.NON_SPECIFIED)
+                .informationSensitivity(InformationSensitivityType.NON_SPECIFIED)
+                .isPersonalData(false)
+                .purpose(PurposeType.NON_SPECIFIED)
+                .priority(PriorityType.HIGH);
+    }
+
 }
