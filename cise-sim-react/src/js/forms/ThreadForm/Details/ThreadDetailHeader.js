@@ -6,7 +6,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import {fontSizeNormal} from "../../../layouts/Font";
+import {fontSizeSmall} from "../../../layouts/Font";
 import Box from "@material-ui/core/Box";
 import MsgClearButton from "../List/ThreadListClearButton";
 
@@ -40,13 +40,13 @@ const threadListHeader = (props)  => {
         <TableContainer style={{paddingLeft:20}}>
             <Table size="small" aria-label="a dense table">
                 <TableBody>
-                    <TableRow>
-                        <TableCell >
-                            <Typography style={{padding:6, fontSize:fontSizeNormal}} variant="h5" component="h1" align={"left"}>
+                    <TableRow style={{padding:0}}>
+                        <TableCell style={{padding:0}}>
+                            <Typography style={{paddingLeft:6, fontSize:fontSizeSmall}} variant="h5" component="h1" align={"left"}>
                                 Thread Detail
                             </Typography>
                         </TableCell>
-                        <TableCell> <MsgClearButton /></TableCell>
+                        <TableCell  align={"right"} style={{padding:0}}> <MsgClearButton /></TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

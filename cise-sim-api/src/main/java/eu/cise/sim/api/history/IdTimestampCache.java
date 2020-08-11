@@ -40,7 +40,7 @@ public class IdTimestampCache {
 
         synchronized (cacheMap) {
             cacheMap.put(id, timestamp);
-            LOGGER.info("Added id {}, timestamp {}, size {}", id, new Date(timestamp), cacheMap.size());
+            LOGGER.debug("Added id {}, timestamp {}, size {}", id, new Date(timestamp), cacheMap.size());
 
             checkSize();
         }
@@ -58,7 +58,9 @@ public class IdTimestampCache {
                     .collect(Collectors.toSet());
         }
 
-        LOGGER.info("getCorrelationIdAfter timestamp {}, returned {} id's", new Date(timestamp), idSet.size());
+        if (idSet.size() > 0) {
+            LOGGER.debug("getCorrelationIdAfter timestamp {}, returned {} id's", new Date(timestamp), idSet.size());
+        }
 
         return idSet;
     }
@@ -80,6 +82,6 @@ public class IdTimestampCache {
 
         cacheMap.remove(oldestId);
 
-        LOGGER.info("Reduced cache to {} removing id {} timestamp {}", cacheMap.size(), oldestId, oldestTimestamp);
+        LOGGER.debug("Reduced cache to {} removing id {} timestamp {}", cacheMap.size(), oldestId, oldestTimestamp);
     }
 }

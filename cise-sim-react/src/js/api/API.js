@@ -65,11 +65,9 @@ const getHost = () => {
 
         if (window.location.hostname.includes("localhost")) {
             return window.location.protocol.concat("//").concat(
-                window.location.hostname).concat(":8080");
+                window.location.hostname).concat(":8200");
         }
 
-    } else {
-        // production code
     }
 
     return window.location.protocol.concat("//").concat(window.location.host);

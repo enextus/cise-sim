@@ -1,15 +1,14 @@
 import React from 'react';
-import Typography from "@material-ui/core/Typography";
 import {withStyles} from "@material-ui/core/styles";
-import MsgClearButton from "./ThreadListClearButton";
+import ThreadListClearButton from "./ThreadListClearButton";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-
-import {fontSizeNormal} from "../../../layouts/Font";
 import {Box} from "@material-ui/core";
+import ThreadListFilter from "./ThreadListFilter";
+
 
 const styles = theme => ({
     root: {
@@ -41,14 +40,12 @@ const threadListHeader = (props)  => {
         <TableContainer style={{paddingLeft:20}}>
             <Table size="small" aria-label="a dense table">
                 <TableBody>
-                    <TableRow>
-                        <TableCell>
-                            <Typography variant="h5" component="h1" align={"left"} style={{fontSize:fontSizeNormal}}>
-                                Thread Messages History
-                            </Typography>
+                    <TableRow style={{padding:0}}>
+                        <TableCell align={"left"} style={{padding:0}}>
+                            <ThreadListFilter store={props.store} />
                         </TableCell>
-                        <TableCell align={"right"}>
-                            <MsgClearButton messageStore={props.store.messageStore} />
+                        <TableCell align={"right"} style={{padding:0}}>
+                            <ThreadListClearButton messageStore={props.store.messageStore} />
                         </TableCell>
                     </TableRow>
                 </TableBody>

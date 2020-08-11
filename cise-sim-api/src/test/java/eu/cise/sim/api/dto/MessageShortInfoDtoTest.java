@@ -44,7 +44,7 @@ public class MessageShortInfoDtoTest {
     @Test
     public void it_push_eulsa2() throws IOException {
 
-        doTest(  Boolean.TRUE, "messages/PushTemplateEULSA1.xml", "Push", "VesselService");
+        doTest(  Boolean.TRUE, "messages/PushTemplateEULSA1.xml", "Publish", "VesselService");
     }
 
     @Test
@@ -62,25 +62,25 @@ public class MessageShortInfoDtoTest {
     @Test
     public void it_unscribe() throws IOException {
 
-        doTest(  Boolean.TRUE, "messages/vessel_unsubscribe.xml", "Pull Request", "VesselService");
+        doTest(  Boolean.TRUE, "messages/vessel_unsubscribe.xml", "Unsubscribe", "VesselService");
     }
 
     @Test
     public void it_subscribe() throws IOException {
 
-        doTest(  Boolean.TRUE, "messages/SubscribeTemplate.xml", "Push", "VesselService");
+        doTest(  Boolean.TRUE, "messages/SubscribeTemplate.xml", "Publish", "VesselService");
     }
 
     @Test
     public void it_ack_synch_pullrequest() throws IOException {
 
-        doTest(  Boolean.TRUE, "messages/AckSync_PullRequestTemplate.xml", "Ack Synch", "");
+        doTest(  Boolean.TRUE, "messages/AckSync_PullRequestTemplate.xml", "Sync Ack", "");
     }
 
     @Test
     public void it_ack_asynch_pullrequest() throws IOException {
 
-        doTest(  Boolean.TRUE, "messages/AckAsync_PullRequestTemplate.xml", "Ack Asynch", "");
+        doTest(  Boolean.TRUE, "messages/AckAsync_PullRequestTemplate.xml", "Sync Ack", "");
     }
 
     private void doTest( boolean isSent, String messageFileName, String expectedType, String expectedService) throws IOException {

@@ -11,6 +11,8 @@ import MsgCounterUnsel from "../svg/msgs-counter-unselected.svg";
 import MsgCounterSel from "../svg/msgs-counter-selected.svg";
 
 import {fontSizeExtraSmall, fontSizeNormal, fontSizeSmall} from "../../../layouts/Font";
+import Typography from "@material-ui/core/Typography";
+import {date2String} from "../../CommonComponents/HelperFunctions";
 
 
 const styles = theme => ({
@@ -22,7 +24,7 @@ const styles = theme => ({
         paddingBottom:0,
         marginBottom: 0,
         marginRight:16,
-        backgroundColor: "white",
+        backgroundColor:"#cdeefd",
         '&:hover': {
             backgroundColor: "lightgrey",
         },
@@ -36,43 +38,36 @@ const styles = theme => ({
         },
     },
 
-
     msgtype :{
         textAlign: "left",
         color: "black",
         fontWeight: "bold",
         fontSize: fontSizeNormal,
-        borderBottom: 0,
-        width: "15%",
-        paddingRight: 0,
+        width: "35%",
+        display:"inline-block"
     },
 
     localdate :{
         textAlign: "right",
-        width: "10%",
-        fontSize: fontSizeSmall,
-        borderBottom: 0,
-        paddingLeft:0,
-        "&:last-child": {
-            paddingRight: 0
-        },
+        width: "65%",
+        fontSize: fontSizeExtraSmall,
+        display:"inline-block"
     },
 
     fromto: {
         textAlign: "left",
+        fontSize: fontSizeExtraSmall,
         paddingBottom: 0,
         paddingTop: 0,
         paddingRight:0,
-        fontSize: fontSizeExtraSmall,
         borderBottom: 0,
-
     },
 
     srvtype :{
         textAlign: "left",
+        fontSize: fontSizeSmall,
         paddingBottom: 0,
         paddingTop: 0,
-        fontSize: fontSizeSmall,
         borderBottom: 0,
     },
 
@@ -87,7 +82,6 @@ const styles = theme => ({
 
     specialicon: {
         borderBottom: 0,
-
     },
 
 });
@@ -121,8 +115,7 @@ const messageInfoCard = (props)  => {
 
 
     // Formatting the Date Time
-    const timestamp = new Date(msgInfo.mostRecentTimestamp);
-    const localeDate = timestamp.toLocaleString().replace(',', ' ° ');
+    const localeDate = date2String(msgInfo.mostRecentTimestamp);
 
     // Special effects
     let iconNumTh = MsgCounterUnsel;
@@ -147,36 +140,26 @@ const messageInfoCard = (props)  => {
                 className={classes.cardcontent}
                 onClick={props.selectThread}
             >
-
                 <TableContainer>
-
                     <Table size="small" aria-label="a dense table" padding={"default"}>
-                        <TableBody
-
-                        >
+                        <TableBody>
 
                             <TableRow >
-                                <TableCell
-                                    className={classes.msgtype} component="th" scope="row"
-                                    style={redStyle}
-                                >
-                                    {msgInfo.messageType} {direction}
+                                <TableCell component="th" scope="row" style={{ borderBottom: 0, paddingRight: 0}}>
+                                    <Typography className={classes.msgtype} style={redStyle}>{msgInfo.messageType}</Typography>
+                                    <Typography className={classes.localdate}><strong>{direction} ●</strong> {localeDate}</Typography>
                                 </TableCell>
-                                <TableCell className={classes.localdate}>{localeDate}</TableCell>
                             </TableRow>
 
                             <TableRow >
                                 <TableCell className={classes.fromto} component="th" scope="row">{fromto}</TableCell>
-                                <TableCell className={classes.fromto} style={{width:'1%'}}/>
                             </TableRow>
 
                             <TableRow>
                                 <TableCell className={classes.srvtype} component="th" scope="row">{msgInfo.serviceType}</TableCell>
-                                <TableCell className={classes.srvtype} style={{width: '1%'}}/>
                             </TableRow>
 
                             <TableRow>
-                                <TableCell className={classes.specialicon} component="th" scope="row"/>
                                 <TableCell className={classes.nummsg}>
                                     {msgInfo.numTh}
                                     <img src={iconNumTh} alt="thn" style={{paddingLeft:4, width:20}}/>

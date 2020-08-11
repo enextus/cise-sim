@@ -3,8 +3,8 @@ package eu.cise.sim.dropw.restresources;
 
 import eu.cise.sim.api.ResponseApi;
 import eu.cise.sim.api.dto.MessageShortInfoDto;
-import eu.cise.sim.api.helpers.BuildHelper;
 import eu.cise.sim.api.history.ThreadMessageAPI;
+import eu.cise.sim.dropw.helpers.BuildHelper;
 import org.apache.commons.collections.CollectionUtils;
 
 import javax.ws.rs.GET;

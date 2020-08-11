@@ -21,7 +21,7 @@ export default class MessageIdField extends React.Component {
 
     render() {
         return (
-            <Tooltip title={"[Required/Generated] Use this field to set a unique message Identifier"} >
+            <Tooltip title={"[Required] Message identifier (UUID)"} >
             <TextField
                 name="messageId"
                 required={true}
@@ -34,7 +34,8 @@ export default class MessageIdField extends React.Component {
                     style: {fontSize: fontSizeSmall}
                 }}
                 size={"small"}
-                label={<Box component="div" fontSize={fontSizeSmall}>Message Id</Box>}
+                style={{minWidth:"max-content"}}
+                label={<Box component="label" fontSize={fontSizeSmall} >Message Id</Box>}
             />
             </Tooltip>
         )

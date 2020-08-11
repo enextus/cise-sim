@@ -24,7 +24,7 @@ public class UseCaseSendMessageTest {
         simEngine = mock(SimEngine.class);
         loader = mock(MessageLoader.class);
 
-        useCaseSendMessage = new UseCaseSendMessage(simEngine, loader);
+        useCaseSendMessage = new UseCaseSendMessage(simEngine, loader, null);
 
         messageLoaded = new Push();
         preparedMessage = new Push();

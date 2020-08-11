@@ -93,7 +93,9 @@ public class FileMessageService implements ThreadMessageService {
         Set<String> correlationIdSet = idTimestampCache.getIdAfter(timestamp);
         List<MessageShortInfoDto> shortInfoDtoList = getMessagesFilterByCorrelationId(correlationIdSet, timestamp);
 
-        LOGGER.info("getShortInfoAfter timestamp[{}} number of messages[{}]", new Date(timestamp), shortInfoDtoList.size());
+        if (shortInfoDtoList.size() > 0) {
+            LOGGER.info("Retrieve message thread info after timestamp[{}]: found {} messages", new Date(timestamp), shortInfoDtoList.size());
+        }
 
         return shortInfoDtoList;
     }
@@ -116,7 +118,7 @@ public class FileMessageService implements ThreadMessageService {
         try {
             Path path =  getPathByUuid(uuid);
 
-            LOGGER.info("getXmlMessageByUuid uuid[{}] -> {}", uuid, path.getFileName());
+            LOGGER.info("Message Persistence : read xml file -> {}", path.getFileName());
             String xmlMessage = Files.readString(path, StandardCharsets.UTF_8);
             result = new ResponseApi<>(xmlMessage);
         } catch (IOException e) {
@@ -137,7 +139,7 @@ public class FileMessageService implements ThreadMessageService {
             writer.write(xmlMessage);
         }
 
-        LOGGER.info("write xml file {}", fileName);
+        LOGGER.info("Message Persistence : write xml file -> {}", fileName);
 
         return fileNameRepository;
     }

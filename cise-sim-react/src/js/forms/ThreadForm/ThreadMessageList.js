@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {Box, Grid} from '@material-ui/core';
+import {Box} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import ThreadMsgInfo from './List/ThreadListMessageInfo';
 import {observer} from "mobx-react";
+import Typography from "@material-ui/core/Typography";
+import {fontSizeNormal} from "../../layouts/Font";
 
 const styles = theme => ({
     root: {
@@ -12,7 +14,6 @@ const styles = theme => ({
         margin: '16px auto',
         maxWidth: 800,
         overflowY: 'scroll',
-        maxHeight: 800,
     },
     button: {
         align: "right"
@@ -58,12 +59,12 @@ class ThreadMessageList extends Component {
                 if (mostRecentTimestamp[msg.correlationId] <  msg.dateTime) {
                     mostRecentTimestamp[msg.correlationId] =  msg.dateTime;
                 }
-                if (msg.messageType !== 'Ack Synch' && (group[msg.correlationId].messageType === 'Ack Synch' || group[msg.correlationId].dateTime >= msg.dateTime)) {
+                if (msg.messageType !== 'Sync Ack' && (group[msg.correlationId].messageType === 'Sync Ack' || group[msg.correlationId].dateTime >= msg.dateTime)) {
                     group[msg.correlationId]  =  {...msg};
 
                 }
             }
-            if (msg.messageType === 'Ack Synch') {
+            if (msg.messageType === 'Sync Ack') {
                 ackSuccess[msg.correlationId] = ackSuccess[msg.correlationId] && msg.ackResult.includes('Success');
                 rcvAckSynch[msg.correlationId] = Boolean('true');
             }
@@ -85,7 +86,31 @@ class ThreadMessageList extends Component {
         return result;
     }
 
+    renderList = (threadCards) => {
+        return ( <Box hidden={threadCards.length === 0}  >
 
+            {threadCards.map((msg) =>
+                <ThreadMsgInfo
+                    key={msg.id}
+                    msgInfo={msg}
+                    selectThread={() => this.selectThread(msg.correlationId)}
+                    selected={this.getMessageStore().threadIdSelected === msg.correlationId}
+                />)}
+
+        </Box>)
+    }
+
+    renderEmptyList = () => {
+
+        return ( <Box>
+
+                <Typography style={{paddingTop:60, fontSize:fontSizeNormal}} variant="h4" component="h1" align={"center"}>
+                    Empty Thread List
+                </Typography>
+            </Box>
+
+        )
+    }
     render() {
 
         const {classes} = this.props;
@@ -105,22 +130,8 @@ class ThreadMessageList extends Component {
             }
         }
 
-        // Render ( maxHeight="420px"  overflow= "scroll") .. ?
-        return (
-            <Box p="8px" mt="20px" mx="6px" hidden={threadCards.length === 0}  >
-                <Grid item xs={12} >
+        return threadCards.length ?  this.renderList(threadCards) : this.renderEmptyList();
 
-                    {threadCards.map((msg) =>
-                        <ThreadMsgInfo
-                            key={msg.id}
-                            msgInfo={msg}
-                            selectThread={() => this.selectThread(msg.correlationId)}
-                            selected={this.getMessageStore().threadIdSelected === msg.correlationId}
-                        />)}
-
-                </Grid>
-            </Box>
-        )
     }
 
     getMessageStore() {

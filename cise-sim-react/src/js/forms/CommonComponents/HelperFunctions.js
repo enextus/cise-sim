@@ -1,3 +1,4 @@
+import React from "react";
 
 
 export const buildValueLabelMap = (valueList) => {
@@ -36,4 +37,50 @@ const value2label= (value) => {
         }
     }
     return label.join("");
+}
+
+export const date2String = (timestamp) => {
+
+    let date = new Date(timestamp);
+    let aaaa = date.getFullYear();
+    let gg = date.getDate();
+    let mm = (date.getMonth() + 1);
+
+    const options = {month: 'long'};
+    let monthLiteral = new Intl.DateTimeFormat('en-EN', options).format(date);
+
+    if (gg < 10)
+        gg = "0" + gg;
+
+    if (mm < 10)
+        mm = "0" + mm;
+
+    let cur_day =  gg + "-" + monthLiteral.substr(0,3) + "-" + aaaa;
+
+    let hours = date.getHours()
+    let minutes = date.getMinutes()
+    let seconds = date.getSeconds();
+    let mseconds = date.getMilliseconds();
+
+    if (hours < 10)
+        hours = "0" + hours;
+
+    if (minutes < 10)
+        minutes = "0" + minutes;
+
+    if (seconds < 10)
+        seconds = "0" + seconds;
+
+    if (mseconds < 10)
+        mseconds = "00" + mseconds;
+    else if (mseconds < 100)
+        mseconds = "0" + mseconds;
+
+    // GMT
+    let mytime = date.toString();
+    const y = mytime.indexOf('GMT');
+    const z = mytime.indexOf(' ', y);
+    const gmt = mytime.substr(y+3, z-y-3);
+
+    return cur_day + " " + hours + ":" + minutes + ":" + seconds + "." + mseconds + " "+ gmt;
 }
