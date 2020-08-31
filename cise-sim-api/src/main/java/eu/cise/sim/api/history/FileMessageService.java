@@ -153,6 +153,8 @@ public class FileMessageService implements ThreadMessageService {
         }
 
         for (File f : files) {
+            if (!f.getName().endsWith(".xml"))
+                continue;
             try {
                 FileNameRepository fileNameRepository = FileNameRepository.getInstance(f.getName());
                 if (fileNameRepository.getUuid().equals(uuid)) {
@@ -182,6 +184,8 @@ public class FileMessageService implements ThreadMessageService {
         }
 
         for (File f : files) {
+            if (!f.getName().endsWith(".xml"))
+                continue;
 
             try {
                 String xmlMessage = Files.readString(f.toPath(), StandardCharsets.UTF_8);
@@ -217,7 +221,8 @@ public class FileMessageService implements ThreadMessageService {
 
         Map<String, Long> idTimeMap = new HashMap<>();
         for (File f : files) {
-
+            if (!f.getName().endsWith(".xml"))
+                continue;
             try {
                 String xmlMessage = Files.readString(f.toPath(), StandardCharsets.UTF_8);
                 Message message = xmlMapper.fromXML(xmlMessage);
