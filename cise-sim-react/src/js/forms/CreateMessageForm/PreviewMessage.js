@@ -38,17 +38,17 @@ class PreviewMessage extends Component {
           <ExpansionPanel expanded={!this.isTemplateEmpty()} elevation={0} >
 
             <ExpansionPanelSummary
-                onClick={this.handleUpdate}
-               aria-controls="previewMessageContent"
-                id="previewMessage"
-                style={{margin:0, padding:0}}
+              onClick={this.handleUpdate}
+              aria-controls="previewMessageContent"
+              id="previewMessage"
+              style={{margin:0, padding:0}}
             >
 
               <Typography className={classes.title}><strong>Message Preview</strong></Typography>
 
             </ExpansionPanelSummary>
 
-            <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeNormal}}>
+            <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeNormal, overflow:"auto"}}>
               <XmlContent size={xmlContentHeightSize}>
                 {this.templateStore().template.errorCode === undefined ?
                   this.templateStore().template.content :
