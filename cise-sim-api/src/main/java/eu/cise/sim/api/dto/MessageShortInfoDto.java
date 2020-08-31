@@ -42,8 +42,8 @@ public class MessageShortInfoDto implements Serializable {
         this.isSent = isSent;
         this.messageId = messageId;
         this.correlationId = correlationId;
-        this.from = from;
-        this.to = to;
+        this.from = from != null ? from : "";
+        this.to = to != null ? to : "";
         this.ackResult = ackType;
     }
 

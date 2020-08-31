@@ -26,7 +26,7 @@ public class MessageShortInfoDtoTest {
 
     @BeforeClass
     public static void createTempDir() throws Exception {
-        XML_MAPPER = new DefaultXmlMapper.PrettyNotValidating();
+        XML_MAPPER = new DefaultXmlMapper();
     }
 
     @Test
