@@ -43,7 +43,7 @@ public class DefaultAppContext implements AppContext {
 
     public DefaultAppContext() {
         this.simConfig = ConfigFactory.create(SimConfig.class);
-        this.xmlMapper = new DefaultXmlMapper.NotValidating();
+        this.xmlMapper = new DefaultXmlMapper();
 
         // TODO GK testing if we have any issue
         this.prettyNotValidatingXmlMapper = new DefaultXmlMapper.PrettyNotValidating();

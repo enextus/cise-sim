@@ -84,7 +84,7 @@ public class DefaultMessageAPI implements MessageAPI {
     @Override
     public ResponseApi<String> receiveXML(String content) {
         logger.debug("receive is receiving through api : {}", content.substring(0, 200));
-        Message message = prettyNotValidatingXmlMapper.fromXML(content);
+        Message message = xmlMapper.fromXML(content);
         ResponseApi<Acknowledgement> acknowledgement = receive(message);
         return new ResponseApi<>(xmlMapper.toXML(acknowledgement.getResult()));
     }
