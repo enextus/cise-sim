@@ -110,5 +110,29 @@
                 <exclude>*/**</exclude>
             </excludes>
         </fileSet>
+
+        <!-- ./docker -->
+        <fileSet>
+            <directory>${project.parent.basedir}/target/</directory>
+            <outputDirectory>docker</outputDirectory>
+            <includes>
+                <include>docker_cisesim_*</include>
+            </includes>
+        </fileSet>
     </fileSets>
+
+    <!-- Docker -->
+    <files>
+        <file>
+            <source>${project.parent.basedir}/cise-sim-assembly/src/main/docker/docker-compose.yml</source>
+            <outputDirectory>/docker</outputDirectory>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>${project.parent.basedir}/cise-sim-assembly/src/main/docker/docker_install.sh</source>
+            <outputDirectory>/docker</outputDirectory>
+            <filtered>true</filtered>
+        </file>
+    </files>
+
 </assembly>

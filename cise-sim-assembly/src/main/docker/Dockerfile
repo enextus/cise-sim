@@ -6,9 +6,9 @@ RUN apk update &&\
     apk upgrade &&\
     apk add bash
 
-ARG VERSION=1.3.0
+ARG VERSION=latest
 
-COPY target/cise-sim-$VERSION.tar.gz /srv/cise-sim.tar.gz
+COPY cise-sim-$VERSION.tar.gz /srv/cise-sim.tar.gz
 RUN mkdir -p /srv/cise-simulator && tar xvfz /srv/cise-sim.tar.gz -C /srv/cise-simulator --strip-components 1
 RUN rm /srv/cise-sim.tar.gz
 
