@@ -22,7 +22,7 @@ EXPOSE 8200 8201
 
 WORKDIR /srv/cise-simulator
 
-VOLUME /srv/cise-simulator/conf /srv/cise-simulator/logs /srv/cise-simulator/msghistory
+VOLUME /srv/cise-simulator/conf /srv/cise-simulator/logs /srv/cise-simulator/msghistory /srv/cise-simulator/templates
 
 ENTRYPOINT ["/srv/cise-simulator/sim"]
 CMD ["run"]

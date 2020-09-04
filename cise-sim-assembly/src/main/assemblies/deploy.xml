@@ -128,11 +128,11 @@
             <outputDirectory>/docker</outputDirectory>
             <filtered>true</filtered>
         </file>
-        <file>
+        <!--file>
             <source>${project.parent.basedir}/cise-sim-assembly/src/main/docker/docker_install.sh</source>
             <outputDirectory>/docker</outputDirectory>
             <filtered>true</filtered>
-        </file>
+        </file-->
     </files>
 
 </assembly>

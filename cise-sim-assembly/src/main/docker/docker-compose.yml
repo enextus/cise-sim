@@ -6,6 +6,7 @@ services:
       - ./conf:/srv/cise-simulator/conf
       - ./logs:/srv/cise-simulator/logs
       - ./msghistory:/srv/cise-simulator/msghistory
+      - ./templates:/srv/cise-simulator/templates
     ports:
       - 8200:8200
       - 8201:8201

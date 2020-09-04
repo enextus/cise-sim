@@ -69,7 +69,7 @@ The name of the docker image is
 ### Install the docker image 
 To install the docker image in the local docker images repository, use the following command:
 ```
-docker load < docker_cisesim_latest.tar.gz
+docker load < docker_cisesim_1.3.0.tar.gz
 ```
 
 ### Set up Docker volumes
