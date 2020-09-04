@@ -171,7 +171,7 @@ const messageInfoCard = (props)  => {
                                 </TableRow>
                                 : null }
 
-                            {messageType.startsWith('Sync Ack') ? null :
+                            {messageType.startsWith('Sync Ack') || messageType.startsWith('Discover') ? null :
                             <TableRow>
                                 <TableCell className={classes.srvtype}>Service Type : {msgInfo.serviceType}</TableCell>
                                 <TableCell className={classes.srvtype}/>
