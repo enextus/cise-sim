@@ -118,7 +118,7 @@ public class FileMessageService implements ThreadMessageService {
         try {
             Path path =  getPathByUuid(uuid);
 
-            LOGGER.info("Message Persistence : read xml file -> {}", path.getFileName());
+            LOGGER.debug("Message Persistence : read xml file -> {}", path.getFileName());
             String xmlMessage = Files.readString(path, StandardCharsets.UTF_8);
             result = new ResponseApi<>(xmlMessage);
         } catch (IOException e) {
@@ -139,7 +139,7 @@ public class FileMessageService implements ThreadMessageService {
             writer.write(xmlMessage);
         }
 
-        LOGGER.info("Message Persistence : write xml file -> {}", fileName);
+        LOGGER.debug("Message Persistence : write xml file -> {}", fileName);
 
         return fileNameRepository;
     }

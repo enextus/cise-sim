@@ -304,17 +304,16 @@ Output:
 Java path:    /usr/bin/java
 Java version: "11.0.7"
 =================================================
-Logging in: logs/sim_stdout.log
 [ok] sim started at 2020-07-07T17:09:53+02:00
 ```
 
 With the start command, the CISE Sim will run in background (using nohup) even if the terminal session is closed.   
 
-The application log will be stored in the file ``logs/sim_stdout.log``:
+The application log will be stored in the file ``logs/sim.log``:
 
 ```bash
 $ cd /my/installation/path
-$ tail -f logs/sim_stdout.log
+$ tail -f logs/sim.log
 ```
 
 ### Stop a CISE Sim in background

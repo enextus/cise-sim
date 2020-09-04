@@ -78,7 +78,8 @@ function setup_debug {
 
 function start {
 
-  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
+#  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
+  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> /dev/null 2>&1 &
   local PID=$!
   sleep 3
   kill -0 ${PID} 2> /dev/null
