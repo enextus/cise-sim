@@ -137,7 +137,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>cise-sim-${project.version}</finalName>
+              <finalName>cise-sim-${project.version}-bin</finalName>
               <appendAssemblyId>false</appendAssemblyId>
               <outputDirectory>../target/</outputDirectory>
               <descriptors>
@@ -188,7 +188,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>cise-sim-deploy-${project.version}</finalName>
+              <finalName>cise-sim-${project.version}</finalName>
               <appendAssemblyId>false</appendAssemblyId>
               <outputDirectory>../target/</outputDirectory>
               <descriptors>
