@@ -21,7 +21,7 @@ export default class ButtonsPanel extends Component {
         const discoveryServiceType = this.getServiceStore().serviceSelf.discoveryServiceType;
         const discoveryServiceOperation = this.getServiceStore().serviceSelf.discoveryServiceOperation;
 
-        const doDiscovery = discoverySender !== undefined && discoveryServiceType !== undefined && discoveryServiceOperation !== undefined;
+        const doDiscovery = discoverySender && discoveryServiceType && discoveryServiceOperation;
         return (
             <TableContainer>
                 <Table size="small">
