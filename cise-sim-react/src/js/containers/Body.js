@@ -28,7 +28,7 @@ class Body extends Component {
 
                     <Grid item xs={12}>
                         <Paper elevation={3}>
-                            <h1>Here nav bar</h1>
+                            <h3>Here nav bar</h3>
                         </Paper>
                     </Grid>
 

@@ -65,7 +65,7 @@ class ThreadMessageDetails extends Component {
 
         return (
             <TableContainer>
-                <Table size="small" aria-label="a dense table" style={{marginTop:200}}>
+                <Table size="small" aria-label="a dense table" style={{marginTop:"5%"}}>
                     <TableBody>
                         <TableRow>
                             <TableCell style={{borderBottom:0}}>
