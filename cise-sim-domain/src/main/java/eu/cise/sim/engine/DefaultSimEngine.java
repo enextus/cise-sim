@@ -88,10 +88,11 @@ public class DefaultSimEngine implements SimEngine {
         try {
             DispatchResult sendResult = dispatcher.send(message, simConfig.destinationUrl());
 
+            /* Understand if this can be managed in a better way
             if (!sendResult.isOK()) {
                 throw new EndpointErrorEx();
             }
-
+            */
             return sendResult.getResult();
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();
