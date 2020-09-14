@@ -12,6 +12,112 @@
 
   <packaging>pom</packaging>
 
+  <profiles>
+    <profile>
+      <id>default</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/resources/docker</directory>
+            <filtering>true</filtering>
+          </resource>
+        </resources>
+
+        <plugins>
+
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>prepare-package</phase>
+                <configuration>
+                  <tasks>
+                    <replace token="cise-sim-assembly/src/main/resources/" value="" dir="../cise-sim-api/target/classes">
+                      <include name="sim.properties" />
+                    </replace>
+                  </tasks>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+
+              <!-- cise-sim -->
+              <execution>
+                <id>emulator-docker-files</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <finalName>cise-sim-${project.version}-bin</finalName>
+                  <appendAssemblyId>false</appendAssemblyId>
+                  <outputDirectory>../target/</outputDirectory>
+                  <descriptors>
+                    <descriptor>src/main/assemblies/bin.xml</descriptor>
+                  </descriptors>
+                </configuration>
+              </execution>
+
+              <!-- cise sim src -->
+              <execution>
+                <id>emulator-src</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <finalName>cise-sim-${project.version}-src</finalName>
+                  <appendAssemblyId>false</appendAssemblyId>
+                  <outputDirectory>../target/</outputDirectory>
+                  <descriptors>
+                    <descriptor>src/main/assemblies/src.xml</descriptor>
+                  </descriptors>
+                </configuration>
+              </execution>
+
+              <!-- cise-sim cli -->
+              <execution>
+                <id>emulator-cli</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <finalName>cise-sim-${project.version}-cli</finalName>
+                  <appendAssemblyId>false</appendAssemblyId>
+                  <outputDirectory>../target/</outputDirectory>
+                  <descriptors>
+                    <descriptor>src/main/assemblies/cli.xml</descriptor>
+                  </descriptors>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  <profile>
+  <id>distribution-package</id>
   <build>
     <resources>
       <resource>
@@ -208,6 +314,9 @@
       </plugin>
     </plugins>
   </build>
+  </profile>
+  </profiles>
+
 
   <dependencies>
     <dependency>
