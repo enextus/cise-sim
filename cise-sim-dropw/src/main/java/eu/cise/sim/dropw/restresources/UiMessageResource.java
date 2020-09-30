@@ -5,10 +5,10 @@ import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.MessageResponse;
 import eu.cise.sim.api.ResponseApi;
-import eu.cise.sim.api.helpers.BuildHelper;
 import eu.cise.sim.api.messages.MessageService;
 import eu.cise.sim.api.messages.dto.discovery.DiscoveryRequestDto;
 import eu.cise.sim.api.messages.dto.incident.IncidentRequestDto;
+import eu.cise.sim.dropw.helpers.BuildHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

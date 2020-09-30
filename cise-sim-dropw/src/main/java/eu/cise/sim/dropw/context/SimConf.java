@@ -1,4 +1,4 @@
-package eu.cise.sim.dropw;
+package eu.cise.sim.dropw.context;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;

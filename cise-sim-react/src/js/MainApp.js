@@ -8,6 +8,7 @@ import ServiceStore from './stores/services/ServiceStore';
 import {autorun} from 'mobx';
 import IncidentStore from "./forms/IncidentForm/IncidentStore";
 import DiscoveryStore from "./forms/DiscoveryForm/DiscoveryStore";
+import FooterBar from "./components/FooterBar";
 
 
 const stores = {
@@ -34,10 +35,13 @@ export default class MainApp extends Component {
     }
 
     render() {
+        const bodyElt = document.querySelector("body");
+        bodyElt.style.backgroundColor = "white";
         return (
             <>
                 <NavBar store={stores}/>
                 <Body store={stores}/>
+                <FooterBar/>
             </>
         )
     }

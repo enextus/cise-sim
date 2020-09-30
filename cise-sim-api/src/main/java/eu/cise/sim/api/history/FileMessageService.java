@@ -93,7 +93,9 @@ public class FileMessageService implements ThreadMessageService {
         Set<String> correlationIdSet = idTimestampCache.getIdAfter(timestamp);
         List<MessageShortInfoDto> shortInfoDtoList = getMessagesFilterByCorrelationId(correlationIdSet, timestamp);
 
-        LOGGER.info("getShortInfoAfter timestamp[{}} number of messages[{}]", new Date(timestamp), shortInfoDtoList.size());
+        if (shortInfoDtoList.size() > 0) {
+            LOGGER.info("Retrieve message thread info after timestamp[{}]: found {} messages", new Date(timestamp), shortInfoDtoList.size());
+        }
 
         return shortInfoDtoList;
     }
@@ -116,7 +118,7 @@ public class FileMessageService implements ThreadMessageService {
         try {
             Path path =  getPathByUuid(uuid);
 
-            LOGGER.info("getXmlMessageByUuid uuid[{}] -> {}", uuid, path.getFileName());
+            LOGGER.debug("Message Persistence : read xml file -> {}", path.getFileName());
             String xmlMessage = Files.readString(path, StandardCharsets.UTF_8);
             result = new ResponseApi<>(xmlMessage);
         } catch (IOException e) {
@@ -137,7 +139,7 @@ public class FileMessageService implements ThreadMessageService {
             writer.write(xmlMessage);
         }
 
-        LOGGER.info("write xml file {}", fileName);
+        LOGGER.debug("Message Persistence : write xml file -> {}", fileName);
 
         return fileNameRepository;
     }
@@ -151,6 +153,8 @@ public class FileMessageService implements ThreadMessageService {
         }
 
         for (File f : files) {
+            if (!f.getName().endsWith(".xml"))
+                continue;
             try {
                 FileNameRepository fileNameRepository = FileNameRepository.getInstance(f.getName());
                 if (fileNameRepository.getUuid().equals(uuid)) {
@@ -180,6 +184,8 @@ public class FileMessageService implements ThreadMessageService {
         }
 
         for (File f : files) {
+            if (!f.getName().endsWith(".xml"))
+                continue;
 
             try {
                 String xmlMessage = Files.readString(f.toPath(), StandardCharsets.UTF_8);
@@ -215,7 +221,8 @@ public class FileMessageService implements ThreadMessageService {
 
         Map<String, Long> idTimeMap = new HashMap<>();
         for (File f : files) {
-
+            if (!f.getName().endsWith(".xml"))
+                continue;
             try {
                 String xmlMessage = Files.readString(f.toPath(), StandardCharsets.UTF_8);
                 Message message = xmlMapper.fromXML(xmlMessage);

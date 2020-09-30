@@ -2,7 +2,7 @@ package eu.cise.sim.dropw.restresources;
 
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.ResponseApi;
-import eu.cise.sim.api.helpers.BuildHelper;
+import eu.cise.sim.dropw.helpers.BuildHelper;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

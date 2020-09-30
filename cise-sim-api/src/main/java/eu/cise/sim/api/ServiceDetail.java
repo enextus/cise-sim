@@ -24,22 +24,39 @@ public class ServiceDetail {
     @JsonProperty("messageHistoryMaxLength")
     private final int maxHistoryMsg;
 
-    @JsonProperty("hideIncidentButton")
-    private final boolean hideIncident;
+    @JsonProperty("showIncident")
+    private final boolean showIncident;
+
+    @JsonProperty("discoverySender")
+    private final String discoverySender;
+
+    @JsonProperty("discoveryServiceType")
+    private final String discoveryServiceType;
+
+    @JsonProperty("discoveryServiceOperation")
+    private final String discoveryServiceOperation;
 
 
     public ServiceDetail(Service service,
                          DispatcherType transportMode,
                          String endpointUrl,
                          String appVersion,
-                         int maxHistoryMsg, boolean hideIncident) {
+                         int maxHistoryMsg,
+                         boolean showIncident,
+                         String discoverySender,
+                         String discoveryServiceType,
+                         String discoveryServiceOperation) {
         this.serviceParticipantId =
             (service.getParticipant() != null) ? service.getParticipant().getId() : null;
         this.serviceTransportMode = transportMode.toString();
         this.endpointUrl = endpointUrl;
         this.appVersion = appVersion;
         this.maxHistoryMsg = maxHistoryMsg;
-        this.hideIncident = hideIncident;
+        this.showIncident = showIncident;
+
+        this.discoverySender = discoverySender;
+        this.discoveryServiceType = discoveryServiceType;
+        this.discoveryServiceOperation = discoveryServiceOperation;
     }
 
     public String getServiceParticipantId() {
@@ -62,7 +79,19 @@ public class ServiceDetail {
         return maxHistoryMsg;
     }
 
-    public boolean isHideIncident() {
-        return hideIncident;
+    public boolean isShowIncident() {
+        return showIncident;
+    }
+
+    public String getDiscoverySender() {
+        return discoverySender;
+    }
+
+    public String getDiscoveryServiceType() {
+        return discoveryServiceType;
+    }
+
+    public String getDiscoveryServiceOperation() {
+        return discoveryServiceOperation;
     }
 }

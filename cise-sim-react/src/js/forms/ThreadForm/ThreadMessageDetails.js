@@ -10,7 +10,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import {fontSizeLarge} from "../../layouts/Font";
+import {fontSizeNormal} from "../../layouts/Font";
 
 const styles = theme => ({
     root: {
@@ -28,7 +28,7 @@ class ThreadMessageDetails extends Component {
 
     buildAckSuccessFail(threadWithBodyList) {
 
-        const ackType = 'Ack Synch'; // messageType
+        const ackType = 'Sync Ack'; // messageType
 
         let ackResult = [];
         threadWithBodyList.map( (msg) => {
@@ -65,24 +65,23 @@ class ThreadMessageDetails extends Component {
 
         return (
             <TableContainer>
-                <Table size="small" aria-label="a dense table" style={{marginTop:200}}>
+                <Table size="small" aria-label="a dense table" style={{marginTop:"5%"}}>
                     <TableBody>
                         <TableRow>
                             <TableCell style={{borderBottom:0}}>
                                 <p align="center">
-                                    <img src={Logo}  width="300" height="300" alt="Select a thread to see details" />
+                                    <img src={Logo}  width="150" alt="Select a thread to see details" />
                                 </p>
                             </TableCell>
                         </TableRow>
                         <TableRow style={{borderBottom:0}}>
-                            <TableCell style={{borderBottom:0, textAlign:"center", fontSize:fontSizeLarge}}>
+                            <TableCell style={{borderBottom:0, textAlign:"center", fontSize:fontSizeNormal}}>
                                 Select a thread to see details
                             </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
-
         )
     }
 

@@ -1,11 +1,11 @@
 package eu.cise.cli;
 
+import eu.cise.cli.repository.FileMessagePersistence;
 import eu.cise.dispatcher.DispatcherFactory;
 import eu.cise.signature.SignatureService;
 import eu.cise.sim.config.SimConfig;
-import eu.cise.sim.engine.DefaultSimEngine;
-import eu.cise.sim.engine.Dispatcher;
-import eu.cise.sim.engine.SimEngine;
+import eu.cise.sim.engine.*;
+import eu.cise.sim.io.MessagePersistence;
 import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.aeonbits.owner.ConfigFactory;
@@ -41,10 +41,16 @@ public class CliAppContext {
         return new DefaultSimEngine(signatureService, makeDispatcher(), simConfig);
     }
 
+    public MessageProcessor makeMessageProcessor() {
+        return new DefaultMessageProcessor(makeSimEngine(), makeMessagePersistence());
+    }
+    public MessagePersistence makeMessagePersistence() {
+        return new FileMessagePersistence(xmlMapper, simConfig.messageHistoryDir());
+    }
+
     public Dispatcher makeDispatcher() {
         DispatcherFactory dispatcherFactory = new DispatcherFactory();
-        return dispatcherFactory
-                .getDispatcher(this.simConfig.destinationProtocol(), this.xmlMapper);
+        return dispatcherFactory.getDispatcher(this.simConfig.destinationProtocol(), this.xmlMapper);
     }
 
     public MessageLoader makeMessageLoader() {

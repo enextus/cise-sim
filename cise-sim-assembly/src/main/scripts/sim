@@ -8,6 +8,10 @@ JAVA_VERSION=`${JAVA_EXEC} -version 2>&1 | head -n 1 | awk '{ print $3 }'`
 NOHUP_EXEC=`which nohup`
 PID_DIR=${SW_HOME}/tmp
 PID_FILE=${PID_DIR}/${SW_NAME}.pid
+
+
+echo $PID_FILE
+
 DEBUG_PORT=9999
 
 # FUNCTIONS ###
@@ -25,6 +29,7 @@ COMMAND
     debug-run   starts the simulator in foreground launching the application
                 in debug mode (port ${DEBUG_PORT}).
     status      show the current status the simulator (started or stopped).
+    send        send a message from an xml file
 EOF
 }
 
@@ -49,7 +54,7 @@ function enable_colors_if_supported {
 function log_exit_msg {
   E=${1:-$?}
 test ${E} -eq 0 && echo "${OK} ${SW_NAME} started at `date -Iseconds`" || \
-    echo "${KO} ${SW_NAME} not started. Please, inspect the logs in ${GRE}logs/sim_stdout.log${NOR} to find the reason."; exit ${E}
+    echo "${KO} ${SW_NAME} not started. Please, inspect the logs in ${GRE}logs/sim.log${NOR} to find the reason."; exit ${E}
 }
 
 function log_start_msg {
@@ -73,21 +78,26 @@ function setup_debug {
 
 function start {
 
-  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
+#  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
+  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> /dev/null 2>&1 &
   local PID=$!
   sleep 3
-  kill -0 ${PID} 2> /dev/null 
+  kill -0 ${PID} 2> /dev/null
   local IT_EXISTS=$?
-  [ $IT_EXISTS -ne 0 ] && log_exit_msg 1   
+  [ $IT_EXISTS -ne 0 ] && log_exit_msg 1
 
   echo ${PID} >${PID_FILE}
-  echo "Logging in: ${GRE}logs/sim_stdout.log${NOR}"
+  #echo "Logging in: ${GRE}logs/sim_stdout.log${NOR}"
   log_exit_msg 0
 
 }
 
 function run() {
   ${SW_RUN_SWR_CMD} 2>&1
+}
+
+function run_cli() {
+  ${SW_RUN_CLI_CMD} 2>&1
 }
 
 function sw_run_cmd() {
@@ -101,7 +111,12 @@ function sw_run_cmd() {
   fi
 
   SW_RUN_SWR_CMD="${JAVA_EXEC} ${JAVA_OPTS} -Dconf.dir=${SW_HOME}/conf/ -jar ${SW_HOME}/lib/cise-sim.jar server ${SW_HOME}/conf/config.yml"
+
+  SW_RUN_CLI_CMD="${JAVA_EXEC} ${JAVA_OPTS} -jar ${SW_HOME}/lib/cise-sim-cli.jar -c ${SW_HOME}/conf/ -f "
+
 }
+
+
 
 function get_pid() {
   local PID=$(cat ${PID_FILE} 2>/dev/null)
@@ -140,6 +155,8 @@ done
 
 sw_run_cmd
 
+SW_RUN_CLI_CMD="$SW_RUN_CLI_CMD $2"
+
 case $1 in
 start)
   log_start_msg
@@ -172,6 +189,11 @@ restart)
   $0 stop
   sleep 1
   $0 start
+  ;;
+send)
+  log_start_msg
+  run_cli
+  exit 0
   ;;
 status)
   _status

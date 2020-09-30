@@ -3,6 +3,9 @@ package eu.cise.sim.engine;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.SignatureService;
+import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
+import eu.cise.signature.exceptions.SignatureMarshalEx;
+import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
 import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
 import eu.cise.sim.config.SimConfig;
@@ -85,10 +88,11 @@ public class DefaultSimEngine implements SimEngine {
         try {
             DispatchResult sendResult = dispatcher.send(message, simConfig.destinationUrl());
 
+            /* Understand if this can be managed in a better way
             if (!sendResult.isOK()) {
                 throw new EndpointErrorEx();
             }
-
+            */
             return sendResult.getResult();
         } catch (DispatcherException e) {
             throw new EndpointNotFoundEx();
@@ -106,11 +110,18 @@ public class DefaultSimEngine implements SimEngine {
             throw new NullSenderEx();
         }
 
-        signature.verify(message);
+        Acknowledgement ack;
+        try {
+            signature.verify(message);
+            ack = acknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.SUCCESS, "");
 
-        return acknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.SUCCESS, "");
+        } catch (InvalidMessageSignatureEx | SignatureMarshalEx | SigningCACertInvalidSignatureEx eInvalidSignature) {
+            ack = acknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.INVALID_SIGNATURE, eInvalidSignature.getMessage());
+        }
+
+        return ack;
+
     }
-
 
     private String computeCorrelationId(String correlationId, String messageId) {
         if (isNullOrEmpty(correlationId)) {

@@ -6,12 +6,14 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = (theme) => ({
   small: {
-    maxHeight: '270px',
+    maxHeight: '250px',
     overflow: 'auto',
+    overflowX: 'visible'
   },
   normal: {
       maxHeight: '370px',
       overflow: 'auto',
+      overflowX: 'visible'
   }
 });
 
@@ -39,7 +41,7 @@ class XmlContent extends Component {
 
     return (
         <div hidden={this.noContent()}>
-          <Highlight language={"xml"} className={styleType}>
+          <Highlight language={"xml"} className={styleType} >
             {this.getContent()}
           </Highlight>
         </div>);

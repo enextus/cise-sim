@@ -53,14 +53,12 @@ export default class TemplateStore {
             this.correlationId,
             this.requiresAck);
 
-        console.log("getTemplateByIdResposnse:", getTemplateByIdResposnse);
-
         if (getTemplateByIdResposnse.errorCode) {
-            console.log("TemplateStore preview returned an error.");
-        } else {
-            console.log("TemplateStore preview returned successfully.");
-            this.template = getTemplateByIdResposnse;
+            console.log("TemplateStore preview returned an error." + getTemplateByIdResposnse.errorMessage);
         }
+
+        this.template = getTemplateByIdResposnse;
+
         return getTemplateByIdResposnse;
     }
 

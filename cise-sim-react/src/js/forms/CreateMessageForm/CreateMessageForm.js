@@ -10,17 +10,16 @@ import RequiresAckCheck from './RequiresAckCheck';
 import SendButton from './SendButton';
 import PreviewMessage from "./PreviewMessage";
 import SendFormHeader from "./SendFormHeader";
-import {boxSizeHeight} from "../../layouts/Font";
+import {boxSizeHeight, boxSizeWidth} from "../../layouts/Font";
 
 const styles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
         padding: 16,
-        //margin: '16px auto',
-        margin: 'auto',
-        maxWidth: 600,
-        maxHeight: {boxSizeHeight}
+        margin: '16px auto',
+        maxWidth: boxSizeWidth,
+        maxHeight: boxSizeHeight
     },
 });
 
@@ -44,11 +43,11 @@ class CreateMessageForm extends Component {
         const {classes} = this.props;
 
         return (
-                <Box bgcolor="white" style={{maxHeight:"800px"}}>
+                <Box bgcolor="white" className={classes.root} id='CreateMessageForm'>
 
-                    <Grid container alignItems="flex-start" spacing={3} className={classes.root}>
+                    <Grid container alignItems="flex-start" spacing={3} >
 
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{padding:0}}>
                             <SendFormHeader onclose={this.props.onclose}/>
                         </Grid>
 

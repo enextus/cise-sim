@@ -21,14 +21,14 @@ const styles = theme => ({
 class Body extends Component {
 
     render() {
+        const {classes} = this.props;
 
         return (
-            <Paper elevation={3}>
-                <Grid container spacing={2}>
+                <Grid container spacing={2} style={{backgroundColor:"white"}}>
 
                     <Grid item xs={12}>
                         <Paper elevation={3}>
-                            <h1>Here nav bar</h1>
+                            <h3>Here nav bar</h3>
                         </Paper>
                     </Grid>
 
@@ -36,18 +36,17 @@ class Body extends Component {
                         <ButtonsPanel store={this.props.store} />
                     </Grid>
 
-                    <Grid item xs={5} >
+                    <Grid item xs={3} style={{paddingRight:0}}>
                         <ThreadListHeader store={this.props.store}/>
                         <ThreadMessageList  store={this.props.store} />
                     </Grid>
 
-                    <Grid item xs={7}>
+                    <Grid item xs={9}>
                         <ThreadDetailHeader store={this.props.store} />
                         <ThreadMessageDetails  store={this.props.store} />
                     </Grid>
 
                 </Grid>
-            </Paper>
         )
     }
 }

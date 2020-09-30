@@ -24,8 +24,10 @@ inherit 	Inherits this property from its parent element. Read about inherit
     export const fontSizeNormal=window.screen.availWidth < 1200 ?     "small"    : screen.availWidth > 1600 ? "large"    : "medium";
     export const fontSizeSmall=window.screen.availWidth < 1200 ?      "x-small"  : screen.availWidth > 1600 ? "medium"   : "small";
     export const fontSizeExtraSmall=window.screen.availWidth < 1200 ? "xx-small" : screen.availWidth > 1600 ? "small"    : "x-small";
+    export const fontSizeUltraSmall=window.screen.availWidth < 1200 ? "xx-small" : screen.availWidth > 1600 ? "xx-small"    : "xx-small";
 
     export const buttonSizeSmall=window.screen.availWidth < 1200 ?    "inherit"  : screen.availWidth > 1600 ? "inherit"  : "inherit"; //20px
 
     export const boxSizeHeight=window.screen.availWidth < 1200 ?    "600px"  : screen.availWidth > 1600 ? "800px"  : "600px";
-    export const xmlContentHeightSize=window.screen.availWidth < 1200 ?    "small"  : screen.availWidth > 1600 ? "normal"  : "normal";
+    export const boxSizeWidth=window.screen.availWidth < 1200 ?    "600px"  : screen.availWidth > 1600 ? "1400px"  : "800px";
+    export const xmlContentHeightSize=window.screen.availWidth < 1200 ?    "small"  : screen.availWidth > 1600 ? "normal"  : "small";

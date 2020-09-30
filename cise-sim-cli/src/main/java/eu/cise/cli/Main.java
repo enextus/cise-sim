@@ -34,8 +34,9 @@ public class Main implements Runnable {
         var appContext = new CliAppContext();
 
         var useCaseSendMessage = new UseCaseSendMessage(
-                appContext.makeSimEngine(), appContext.makeMessageLoader()
-        );
+                null, // appContext.makeSimEngine(),
+                appContext.makeMessageLoader(),
+                appContext.makeMessageProcessor());
 
         var useCaseReciveMessage = new UseCaseReciveMessage(
                 appContext.makeSimEngine(), appContext.makeMessageLoader()
@@ -59,7 +60,6 @@ public class Main implements Runnable {
 
             useCaseSendMessage.send(args.filename, sendParam);
         }
-
 
     }
 }

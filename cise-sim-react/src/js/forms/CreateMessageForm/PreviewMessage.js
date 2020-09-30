@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {ExpansionPanel, ExpansionPanelDetails, Typography} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import XmlContent from '../../components/common/XmlContent';
 import {fontSizeNormal, fontSizeSmall, xmlContentHeightSize} from "../../layouts/Font";
-import {CompactExpansionPanelSummary} from "../../components/common/CompactExpansionPanelSummary";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 
 const styles = (theme) => ({
   root: {
@@ -38,21 +37,23 @@ class PreviewMessage extends Component {
     return (
           <ExpansionPanel expanded={!this.isTemplateEmpty()} elevation={0} >
 
-            <CompactExpansionPanelSummary
-                onClick={this.handleUpdate}
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="previewMessageContent"
-                id="previewMessage"
-                style={{margin:0, padding:0}}
+            <ExpansionPanelSummary
+              onClick={this.handleUpdate}
+              aria-controls="previewMessageContent"
+              id="previewMessage"
+              style={{margin:0, padding:0}}
             >
 
               <Typography className={classes.title}><strong>Message Preview</strong></Typography>
 
-            </CompactExpansionPanelSummary>
+            </ExpansionPanelSummary>
 
-            <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeNormal}}>
+            <ExpansionPanelDetails style={{margin:0, padding:0,fontSize:fontSizeNormal, overflow:"auto"}}>
               <XmlContent size={xmlContentHeightSize}>
-                {this.templateStore().template.content}
+                {this.templateStore().template.errorCode === undefined ?
+                  this.templateStore().template.content :
+                    '<ErrorDetail>' + this.templateStore().template.errorMessage + '</ErrorDetail>'
+                }
               </XmlContent>
             </ExpansionPanelDetails>
           </ExpansionPanel>
