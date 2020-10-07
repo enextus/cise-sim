@@ -2,6 +2,8 @@ package eu.cise.sim.api;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import eu.cise.dispatcher.DispatcherFactory;
+import eu.cise.sim.engine.Dispatcher;
+import eu.cise.sim.engine.DispatcherType;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
