@@ -44,6 +44,7 @@ public class CliAppContext {
     public MessageProcessor makeMessageProcessor() {
         return new DefaultMessageProcessor(makeSimEngine(), makeMessagePersistence());
     }
+
     public MessagePersistence makeMessagePersistence() {
         return new FileMessagePersistence(xmlMapper, simConfig.messageHistoryDir());
     }
