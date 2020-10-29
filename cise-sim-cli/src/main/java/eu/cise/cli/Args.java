@@ -26,6 +26,12 @@ public class Args {
     @Parameter(names = {"--correlation-id", "-r"}, description = "Overrides the correlation id of the message to be sent")
     public String correlationId;
 
+    @Parameter(names = {"--sinc", "-si"}, description = "Send in a synchronously mode the indicate number of messages")
+    public Integer sincN = 0;
+
+    @Parameter(names = {"--asinc", "-asi"}, description = "Send in a asynchronously mode the indicate number of messages")
+    public Integer asincN = 0;
+
     @Parameter(names = {"-log", "-verbose"}, description = "Level of verbosity")
     public Boolean verbose = false;
 

@@ -39,12 +39,6 @@
             <groupId>eu.europa.ec.jrc.marex</groupId>
         </dependency>
 
-        <dependency>
-            <artifactId>cise-dispatcher-api</artifactId>
-            <groupId>eu.europa.ec.jrc.marex</groupId>
-            <version>1.2-SNAPSHOT</version>
-        </dependency>
-
         <!-- property file handling -->
         <dependency>
             <groupId>org.aeonbits.owner</groupId>
