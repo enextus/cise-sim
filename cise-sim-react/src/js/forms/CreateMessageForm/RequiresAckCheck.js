@@ -21,23 +21,21 @@ export default class RequiresAckCheck extends React.Component {
 
     render() {
         return (
-            <Tooltip title={"[Optional] Require asynchronous acknowledgement from destination node"} >
-            <FormControlLabel
-                control={
-                    <Switch
-                        id="asyncAcknowledge"
-                        name="asyncAcknowledge"
-                        onChange={this.handleChange}
-                        checked={this.props.store.requiresAck}
-                        value={this.props.store.requiresAck}
-                        size={"small"}
-                    />
+            <Tooltip title={"[Optional] Require asynchronous acknowledgement from destination node"}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            id="asyncAcknowledge"
+                            name="asyncAcknowledge"
+                            onChange={this.handleChange}
+                            checked={this.props.store.requiresAck}
+                            value={this.props.store.requiresAck}
+                            size={"small"}
+                        />
+                    }
 
-                }
-
-                label={<Box component="div" fontSize={fontSizeSmall}>Require Sync Ack</Box>}
-
-            />
+                    label={<Box component="div" fontSize={fontSizeSmall}>Require Async Ack</Box>}
+                />
             </Tooltip>
         )
     }
