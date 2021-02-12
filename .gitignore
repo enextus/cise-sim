@@ -16,7 +16,7 @@ buildNumber.properties
 .project
 .idea/
 *.iml
-
+java-templates/
 ## Package Files #
 *.war
 *.ear
