@@ -32,25 +32,27 @@
 
 package eu.cise.sim.SynchronousAcknowledgement;
 
-import eu.cise.servicemodel.v1.authority.SeaBasinType;
-import eu.cise.servicemodel.v1.message.*;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.AcknowledgementType;
+import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.servicemodel.v1.service.Service;
-import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.sim.engine.SyncAckFactory;
 import eu.cise.sim.engine.SyncAckType;
 import eu.eucise.helpers.PushBuilder;
 import eu.eucise.helpers.ServiceBuilder;
-import eu.eucise.helpers.ServiceProfileBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
+import static eu.cise.servicemodel.v1.authority.SeaBasinType.ATLANTIC;
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.BAD_REQUEST;
 import static eu.cise.servicemodel.v1.message.InformationSecurityLevelType.NON_CLASSIFIED;
 import static eu.cise.servicemodel.v1.message.InformationSensitivityType.GREEN;
 import static eu.cise.servicemodel.v1.message.PurposeType.NON_SPECIFIED;
+import static eu.cise.servicemodel.v1.service.ServiceOperationType.SUBSCRIBE;
 import static eu.cise.sim.engine.SyncAckType.INTERNAL_ERROR;
 import static eu.eucise.helpers.PushBuilder.newPush;
 import static eu.eucise.helpers.ServiceBuilder.newService;
+import static eu.eucise.helpers.ServiceProfileBuilder.newProfile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SyncAckFactoryTest {
@@ -104,7 +106,7 @@ public class SyncAckFactoryTest {
     @Test
     public void it_reply_with_DiscoveredProfiles_in_case_of_PushSubscribe_with_no_Recipient_and_no_DiscoveryProfiles() {
         Push message = messageBuilder
-            .sender(serviceBuilder.operation(ServiceOperationType.SUBSCRIBE).build())
+            .sender(serviceBuilder.operation(SUBSCRIBE).build())
             .build();
         message.setRecipient(null);
 
@@ -116,22 +118,22 @@ public class SyncAckFactoryTest {
     public void it_reply_with_DiscoveredProfiles_in_case_of_PushSubscribe_with_no_Recipient_and_a_DiscoveryProfiles() {
 
         Push message = messageBuilder
-            .sender(serviceBuilder.operation(ServiceOperationType.SUBSCRIBE).build())
-            .addProfile(ServiceProfileBuilder.newProfile().seaBasin(SeaBasinType.ATLANTIC))
+            .sender(serviceBuilder.operation(SUBSCRIBE))
+            .recipient((Service) null)
+            .addProfile(newProfile().seaBasin(ATLANTIC))
             .build();
-        message.setRecipient(null);
 
         Acknowledgement acknowledgement = syncAckFactory.buildAck(message, SyncAckType.SUCCESS, "");
 
-        assertThat(acknowledgement.getDiscoveredServices().size()).isGreaterThan(0);
+        assertThat(acknowledgement.getDiscoveredServices()).isNotEmpty();
     }
 
     @Test
     public void it_reply_with_error_in_case_of_PushSubscribe_with_both_Recipient_and_a_DiscoveryProfiles() {
 
         Acknowledgement acknowledgement = syncAckFactory.buildAck(
-            messageBuilder.sender(serviceBuilder.operation(ServiceOperationType.SUBSCRIBE).build())
-                .addProfile(ServiceProfileBuilder.newProfile().seaBasin(SeaBasinType.ATLANTIC))
+            messageBuilder.sender(serviceBuilder.operation(SUBSCRIBE).build())
+                .addProfile(newProfile().seaBasin(ATLANTIC))
                 .build(),
             SyncAckType.SUCCESS,
             "");
