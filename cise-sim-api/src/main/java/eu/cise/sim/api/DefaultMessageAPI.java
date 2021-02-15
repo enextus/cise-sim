@@ -38,12 +38,11 @@ import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
 import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
-import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
-import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
 import eu.cise.sim.api.dto.MessageTypeEnum;
 import eu.cise.sim.api.helpers.SendParamsReader;
 import eu.cise.sim.engine.MessageProcessor;
 import eu.cise.sim.engine.SendParam;
+import eu.cise.sim.engine.SyncAckFactory;
 import eu.cise.sim.exceptions.NullSenderEx;
 import eu.cise.sim.templates.Template;
 import eu.cise.sim.templates.TemplateLoader;
@@ -55,16 +54,16 @@ import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
+import static eu.cise.sim.engine.SyncAckType.*;
+
 public class DefaultMessageAPI implements MessageAPI {
 
     private final Logger logger = LoggerFactory.getLogger(MessageAPI.class);
 
-   // private final MessageStorage<Object> messageStorage;
     private final MessageProcessor engineMessageProcessor;
     private final XmlMapper xmlMapper;
-    private final XmlMapper prettyNotValidatingXmlMapper;
     private final TemplateLoader templateLoader;
-    private final SynchronousAcknowledgementFactory synchronousAcknowledgementFactory = new SynchronousAcknowledgementFactory();
+    private final SyncAckFactory syncAckFactory = new SyncAckFactory();
 
     public DefaultMessageAPI(MessageProcessor engineMessageProcessor,
                              TemplateLoader templateLoader,
@@ -73,13 +72,11 @@ public class DefaultMessageAPI implements MessageAPI {
 
         this.engineMessageProcessor = engineMessageProcessor;
         this.xmlMapper = xmlMapper;
-        this.prettyNotValidatingXmlMapper = prettyNotValidatingXmlMapper;
         this.templateLoader = templateLoader;
     }
 
-    // todo this should be put outside this domain
     @Override
-    public ResponseApi<MessageResponse>  send(String templateId, JsonNode params) {
+    public ResponseApi<MessageResponse> send(String templateId, JsonNode params) {
         logger.debug("send is passed through api templateId: {}, params: {}", templateId, params);
 
         Template template = templateLoader.loadTemplate(templateId);
@@ -91,14 +88,14 @@ public class DefaultMessageAPI implements MessageAPI {
     }
 
     @Override
-    public ResponseApi<MessageResponse>  send(Message message) {
+    public ResponseApi<MessageResponse> send(Message message) {
 
-            String messageId = UUID.randomUUID().toString();
-            SendParam sendParam = new SendParam(false, messageId, messageId);
-            return send(message, sendParam);
+        String messageId = UUID.randomUUID().toString();
+        SendParam sendParam = new SendParam(false, messageId, messageId);
+        return send(message, sendParam);
     }
 
-    private  ResponseApi<MessageResponse> send(Message message, SendParam sendParam) {
+    private ResponseApi<MessageResponse> send(Message message, SendParam sendParam) {
 
         try {
 
@@ -131,27 +128,19 @@ public class DefaultMessageAPI implements MessageAPI {
             return new ResponseApi<>(engineMessageProcessor.receive(message));
 
         } catch (InvalidMessageSignatureEx | SigningCACertInvalidSignatureEx eInvalidSignature) {
-            return new ResponseApi<>(synchronousAcknowledgementFactory
-                    .buildAck(message, SynchronousAcknowledgementType.INVALID_SIGNATURE,
-                            "" + eInvalidSignature.getMessage()));
+            return new ResponseApi<>(syncAckFactory.buildAck(message, INVALID_SIGNATURE, eInvalidSignature.getMessage()));
         } catch (XmlNotParsableException eXmlMalformed) {
-            return new ResponseApi<>(synchronousAcknowledgementFactory
-                    .buildAck(message, SynchronousAcknowledgementType.XML_MALFORMED,
-                            "" + eXmlMalformed.getMessage()));
+            return new ResponseApi<>(syncAckFactory.buildAck(message, XML_MALFORMED, eXmlMalformed.getMessage()));
         } catch (NullSenderEx eSemantic) {
-            return new ResponseApi<>(synchronousAcknowledgementFactory
-                    .buildAck(message, SynchronousAcknowledgementType.SEMANTIC,
-                            "" + eSemantic.getMessage()));
+            return new ResponseApi<>(syncAckFactory.buildAck(message, SEMANTIC, eSemantic.getMessage()));
         } catch (Exception eAny) {
-            return new ResponseApi<>(synchronousAcknowledgementFactory
-                    .buildAck(message, SynchronousAcknowledgementType.INTERNAL_ERROR,
-                            "Unknown Error : " + eAny.getMessage()));
+            return new ResponseApi<>(syncAckFactory.buildAck(message, INTERNAL_ERROR, "Unknown Error : " + eAny.getMessage()));
         }
     }
 
     private void logAckError(Acknowledgement ack) {
         if (ack.getAckCode() != AcknowledgementType.SUCCESS) {
-            logger.warn("ACK UNSECCESS : code[{}] detail[{}]", ack.getAckCode(), ack.getAckDetail());
+            logger.warn("ACK FAILURE: code[{}] detail[{}]", ack.getAckCode(), ack.getAckDetail());
         }
     }
 }

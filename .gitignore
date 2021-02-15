@@ -43,3 +43,4 @@ tmp/**
 npm-debug.log
 
 bundle.js
+*.swp

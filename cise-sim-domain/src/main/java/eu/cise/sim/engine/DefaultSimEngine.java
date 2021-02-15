@@ -38,8 +38,6 @@ import eu.cise.signature.SignatureService;
 import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
 import eu.cise.signature.exceptions.SignatureMarshalEx;
 import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
-import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
-import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
 import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.exceptions.*;
 
@@ -59,7 +57,7 @@ public class DefaultSimEngine implements SimEngine {
     private final SimConfig simConfig;
     private final SignatureService signature;
     private final Dispatcher dispatcher;
-    private final SynchronousAcknowledgementFactory acknowledgementFactory;
+    private final SyncAckFactory ackFactory;
 
     /**
      * Default constructor that uses UTC as a reference clock
@@ -97,7 +95,7 @@ public class DefaultSimEngine implements SimEngine {
         this.clock = notNull(clock, NullClockEx.class);
 
         // Every time there is a new it should be where all the constructions are happening
-        this.acknowledgementFactory = new SynchronousAcknowledgementFactory();
+        this.ackFactory = new SyncAckFactory();
     }
 
     @Override
@@ -145,10 +143,10 @@ public class DefaultSimEngine implements SimEngine {
         Acknowledgement ack;
         try {
             signature.verify(message);
-            ack = acknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.SUCCESS, "");
+            ack = ackFactory.buildAck(message, SyncAckType.SUCCESS, "");
 
         } catch (InvalidMessageSignatureEx | SignatureMarshalEx | SigningCACertInvalidSignatureEx eInvalidSignature) {
-            ack = acknowledgementFactory.buildAck(message, SynchronousAcknowledgementType.INVALID_SIGNATURE, eInvalidSignature.getMessage());
+            ack = ackFactory.buildAck(message, SyncAckType.INVALID_SIGNATURE, eInvalidSignature.getMessage());
         }
 
         return ack;

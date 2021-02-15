@@ -30,15 +30,16 @@
  *
  */
 
-package eu.cise.sim.SynchronousAcknowledgement;
+package eu.cise.sim.engine;
 
-import eu.cise.servicemodel.v1.message.*;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.PullRequest;
+import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.servicemodel.v1.service.Service;
-import eu.cise.servicemodel.v1.service.ServiceOperationType;
 import eu.cise.sim.exceptions.NullClockEx;
 import eu.cise.sim.utils.MockMessage;
 import eu.eucise.helpers.AckBuilder;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,23 +52,28 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
+import static eu.cise.servicemodel.v1.message.AcknowledgementType.*;
+import static eu.cise.servicemodel.v1.message.PriorityType.HIGH;
+import static eu.cise.servicemodel.v1.message.PullType.DISCOVER;
+import static eu.cise.servicemodel.v1.service.ServiceOperationType.SUBSCRIBE;
 import static eu.cise.sim.helpers.Asserts.notNull;
 import static eu.eucise.helpers.AckBuilder.newAck;
 import static eu.eucise.helpers.ServiceBuilder.newService;
+import static java.lang.String.format;
+import static org.apache.commons.lang3.StringUtils.abbreviate;
 
-public class SynchronousAcknowledgementFactory {
+public class SyncAckFactory {
 
-    private static final Logger LOGGER = LoggerFactory
-        .getLogger(SynchronousAcknowledgementFactory.class.getName());
     private final Clock clock;
     private final AtomicLong uniqueErrorId = new AtomicLong(5000000L);
+    private final Logger logger = LoggerFactory.getLogger(SyncAckFactory.class);
 
 
-    public SynchronousAcknowledgementFactory() {
+    public SyncAckFactory() {
         this(Clock.systemUTC());
     }
 
-    public SynchronousAcknowledgementFactory(Clock clock) {
+    public SyncAckFactory(Clock clock) {
         this.clock = notNull(clock, NullClockEx.class);
     }
 
@@ -81,74 +87,27 @@ public class SynchronousAcknowledgementFactory {
      * @return an ack to be sent to the client
      */
     public Acknowledgement buildAck(Message message,
-        SynchronousAcknowledgementType syncAcknowledgmentEvent, String extraMessage) {
+                                    SyncAckType syncAckEvent,
+                                    String exceptionMessage) {
 
         AckBuilder ackBuilder = newAck()
             .id(message.getMessageID() + "_" + UUID.randomUUID().toString())
             .correlationId(computeCorrelationId(message.getCorrelationID(), message.getMessageID()))
             .creationDateTime(Date.from(clock.instant()))
-            .priority(PriorityType.HIGH)
+            .priority(HIGH)
             .isRequiresAck(false);
 
-        long ueid = 0L;
-
-        if (syncAcknowledgmentEvent != SynchronousAcknowledgementType.SUCCESS) {
-            ueid = uniqueErrorId.getAndIncrement();
-            LOGGER.error("UEID:" + uniqueErrorId + " error occur detail:" + extraMessage);
-        }
-
-        switch (syncAcknowledgmentEvent) {
+        switch (syncAckEvent) {
             case SUCCESS:
-                ackBuilder.ackCode(AcknowledgementType.SUCCESS)
-                    .ackDetail(StringUtils.trim("Message delivered " + extraMessage));
-
-                /* Special case of Push Subscribe pattern*/
-                if ((message instanceof Push)) {
-                    Push pushMessage = (Push) message;
-                    if (message.getSender().getServiceOperation()
-                        == ServiceOperationType.SUBSCRIBE) {
-                        if ((pushMessage.getRecipient() == null
-                            && pushMessage.getDiscoveryProfiles().size() == 0) ||
-                            (pushMessage.getRecipient() == null
-                                && pushMessage.getDiscoveryProfiles().size() > 0)
-                        ) {
-                            List<Service> services = new ArrayList<>();
-                            Service service = newService()
-                                .id("cx.cisesim-nodecx.vessel.subscribe.consumer").build();
-                            service.setParticipant(null);
-                            services.add(service);
-                            ackBuilder.addAllDiscoveredServices(services);
-                            ackBuilder.ackDetail("Message delivered to all 1 recipients");
-                        }
-
-                        if (pushMessage.getRecipient() != null
-                            && pushMessage.getDiscoveryProfiles().size() > 0) {
-                            ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
-                                .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_007", ueid));
-                        }
-                    } else {
-                        if (pushMessage.getRecipient() == null
-                            && pushMessage.getDiscoveryProfiles().size() == 0) {
-                            ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
-                                .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_005", ueid));
-                        }
-                    }
-                }
-
+                successAck(message, exceptionMessage, ackBuilder);
                 break;
             case INVALID_SIGNATURE:
-                ackBuilder.recipient(newService().id("" + message.getSender().getServiceID()))
-                    .sender(newService().id("" + message.getRecipient().getServiceID()))
-                    .ackCode(AcknowledgementType.AUTHENTICATION_ERROR)
-                    .ackDetail("Message signature not validated: Signature failed core validation.["
-                        + extraMessage.substring(0, Integer.min(extraMessage.length(), 200))
-                        + "...] logged as event UEID:" + ueid);
+                invalidSignatureAck(message, exceptionMessage, ackBuilder);
                 break;
             case XML_MALFORMED:
             case INTERNAL_ERROR:
             case SEMANTIC:
-                ackBuilder.ackCode(AcknowledgementType.BAD_REQUEST)
-                    .ackDetail(buildAckDetail(extraMessage, "COM-SVC-ERR_001", ueid));
+                ackBuilder.ackCode(BAD_REQUEST).ackDetail(buildAckDetail(exceptionMessage, "COM-SVC-ERR_001", uniqueErrorId.get()));
                 break;
         }
 
@@ -158,18 +117,76 @@ public class SynchronousAcknowledgementFactory {
         // Mock discovery services
         if (message instanceof PullRequest) {
             PullRequest msgPull = (PullRequest) message;
-            if (msgPull.getPullType() == PullType.DISCOVER) {
+            if (msgPull.getPullType() == DISCOVER) {
 
                 try {
                     Acknowledgement mockDiscovery = MockMessage.getDiscoveryAckSynch();
                     acknowledgement.getDiscoveredServices().addAll(mockDiscovery.getDiscoveredServices());
                 } catch (IOException e) {
-                    LOGGER.warn("Adding discovered services throw exception {}", e.getMessage());
+                    logger.warn("Adding discovered services throw exception {}", e.getMessage());
                 }
             }
         }
 
         return acknowledgement;
+    }
+
+    private void invalidSignatureAck(Message message, String exceptionMessage, AckBuilder ackBuilder) {
+        final String detailMessage = "Message signature not validated: Signature failed core validation.[%s...] logged as event UEID:%d";
+        ackBuilder
+            .recipient(
+                newService().id(message.getSender().getServiceID()))
+            .sender(
+                newService().id(message.getRecipient().getServiceID()))
+            .ackCode(AUTHENTICATION_ERROR)
+            .ackDetail(format(detailMessage, abbreviate(exceptionMessage, 200), uniqueErrorId.get()));
+    }
+
+    private void successAck(Message message, String exceptionMessage, AckBuilder ackBuilder) {
+        ackBuilder.ackCode(SUCCESS).ackDetail("Message delivered");
+
+        /* Special case of Push Subscribe pattern*/
+        if ((message instanceof Push)) {
+            Push pushMessage = (Push) message;
+
+            if (isPushSubscribeType(message)) {
+                // Double check. It does not seems correct: the discovery message
+                // should be answered for all the push / pullrequest unknown
+                // not for the PushSubscribe
+                if (pushMessage.getRecipient() == null) {
+                    List<Service> services = new ArrayList<>();
+                    Service service = newService().id("cx.cisesim-nodecx.vessel.subscribe.consumer").build();
+                    service.setParticipant(null);
+                    services.add(service);
+                    ackBuilder.addAllDiscoveredServices(services);
+                    ackBuilder.ackDetail("Message delivered to all 1 recipients");
+                }
+
+                if (areRecipientAndDiscoveryValued(pushMessage)) {
+                    ackBuilder.ackCode(BAD_REQUEST)
+                        .ackDetail(buildAckDetail(exceptionMessage, "COM-SVC-ERR_007", uniqueErrorId.get()));
+                }
+
+                return;
+            }
+
+            if (recipientAndDiscoveryAreEmpty(pushMessage)) {
+                ackBuilder.ackCode(BAD_REQUEST)
+                    .ackDetail(buildAckDetail(exceptionMessage, "COM-SVC-ERR_005", uniqueErrorId.get()));
+            }
+        }
+    }
+
+    private boolean areRecipientAndDiscoveryValued(Push pushMessage) {
+        return pushMessage.getRecipient() != null && !pushMessage.getDiscoveryProfiles().isEmpty();
+    }
+
+    private boolean recipientAndDiscoveryAreEmpty(Push pushMessage) {
+        return pushMessage.getRecipient() == null && pushMessage.getDiscoveryProfiles().isEmpty();
+    }
+
+    private boolean isPushSubscribeType(Message message) {
+        return message.getSender().getServiceOperation() == SUBSCRIBE;
     }
 
     private String buildAckDetail(String extraMessage, String errorCode, long ueid) {
