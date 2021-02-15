@@ -38,8 +38,8 @@ import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
 import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
-import eu.cise.sim.SynchronousAcknowledgement.SyncAckFactory;
-import eu.cise.sim.SynchronousAcknowledgement.SyncAckType;
+import eu.cise.sim.engine.SyncAckFactory;
+import eu.cise.sim.engine.SyncAckType;
 import eu.cise.sim.api.dto.MessageTypeEnum;
 import eu.cise.sim.api.helpers.SendParamsReader;
 import eu.cise.sim.engine.MessageProcessor;
@@ -59,10 +59,8 @@ public class DefaultMessageAPI implements MessageAPI {
 
     private final Logger logger = LoggerFactory.getLogger(MessageAPI.class);
 
-   // private final MessageStorage<Object> messageStorage;
     private final MessageProcessor engineMessageProcessor;
     private final XmlMapper xmlMapper;
-    private final XmlMapper prettyNotValidatingXmlMapper;
     private final TemplateLoader templateLoader;
     private final SyncAckFactory synchronousAcknowledgementFactory = new SyncAckFactory();
 
@@ -73,11 +71,9 @@ public class DefaultMessageAPI implements MessageAPI {
 
         this.engineMessageProcessor = engineMessageProcessor;
         this.xmlMapper = xmlMapper;
-        this.prettyNotValidatingXmlMapper = prettyNotValidatingXmlMapper;
         this.templateLoader = templateLoader;
     }
 
-    // todo this should be put outside this domain
     @Override
     public ResponseApi<MessageResponse>  send(String templateId, JsonNode params) {
         logger.debug("send is passed through api templateId: {}, params: {}", templateId, params);

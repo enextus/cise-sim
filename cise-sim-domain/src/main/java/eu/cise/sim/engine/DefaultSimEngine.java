@@ -38,8 +38,6 @@ import eu.cise.signature.SignatureService;
 import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
 import eu.cise.signature.exceptions.SignatureMarshalEx;
 import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
-import eu.cise.sim.SynchronousAcknowledgement.SyncAckType;
-import eu.cise.sim.SynchronousAcknowledgement.SyncAckFactory;
 import eu.cise.sim.config.SimConfig;
 import eu.cise.sim.exceptions.*;
 

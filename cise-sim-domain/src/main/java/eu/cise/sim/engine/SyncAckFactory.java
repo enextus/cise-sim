@@ -30,7 +30,7 @@
  *
  */
 
-package eu.cise.sim.SynchronousAcknowledgement;
+package eu.cise.sim.engine;
 
 import eu.cise.servicemodel.v1.message.*;
 import eu.cise.servicemodel.v1.service.Service;

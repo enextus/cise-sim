@@ -30,7 +30,7 @@
  *
  */
 
-package eu.cise.sim.SynchronousAcknowledgement;
+package eu.cise.sim.engine;
 
 public enum SyncAckType {
     SUCCESS, XML_MALFORMED, SEMANTIC, INVALID_SIGNATURE, INTERNAL_ERROR
