@@ -55,19 +55,19 @@ import static eu.cise.sim.helpers.Asserts.notNull;
 import static eu.eucise.helpers.AckBuilder.newAck;
 import static eu.eucise.helpers.ServiceBuilder.newService;
 
-public class SynchronousAcknowledgementFactory {
+public class SyncAckFactory {
 
     private static final Logger LOGGER = LoggerFactory
-        .getLogger(SynchronousAcknowledgementFactory.class.getName());
+        .getLogger(SyncAckFactory.class.getName());
     private final Clock clock;
     private final AtomicLong uniqueErrorId = new AtomicLong(5000000L);
 
 
-    public SynchronousAcknowledgementFactory() {
+    public SyncAckFactory() {
         this(Clock.systemUTC());
     }
 
-    public SynchronousAcknowledgementFactory(Clock clock) {
+    public SyncAckFactory(Clock clock) {
         this.clock = notNull(clock, NullClockEx.class);
     }
 
@@ -81,7 +81,7 @@ public class SynchronousAcknowledgementFactory {
      * @return an ack to be sent to the client
      */
     public Acknowledgement buildAck(Message message,
-        SynchronousAcknowledgementType syncAcknowledgmentEvent, String extraMessage) {
+        SyncAckType syncAcknowledgmentEvent, String extraMessage) {
 
         AckBuilder ackBuilder = newAck()
             .id(message.getMessageID() + "_" + UUID.randomUUID().toString())
@@ -92,7 +92,7 @@ public class SynchronousAcknowledgementFactory {
 
         long ueid = 0L;
 
-        if (syncAcknowledgmentEvent != SynchronousAcknowledgementType.SUCCESS) {
+        if (syncAcknowledgmentEvent != SyncAckType.SUCCESS) {
             ueid = uniqueErrorId.getAndIncrement();
             LOGGER.error("UEID:" + uniqueErrorId + " error occur detail:" + extraMessage);
         }

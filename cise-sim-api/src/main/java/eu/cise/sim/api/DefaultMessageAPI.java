@@ -38,8 +38,8 @@ import eu.cise.servicemodel.v1.message.AcknowledgementType;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.signature.exceptions.InvalidMessageSignatureEx;
 import eu.cise.signature.exceptions.SigningCACertInvalidSignatureEx;
-import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementFactory;
-import eu.cise.sim.SynchronousAcknowledgement.SynchronousAcknowledgementType;
+import eu.cise.sim.SynchronousAcknowledgement.SyncAckFactory;
+import eu.cise.sim.SynchronousAcknowledgement.SyncAckType;
 import eu.cise.sim.api.dto.MessageTypeEnum;
 import eu.cise.sim.api.helpers.SendParamsReader;
 import eu.cise.sim.engine.MessageProcessor;
@@ -64,7 +64,7 @@ public class DefaultMessageAPI implements MessageAPI {
     private final XmlMapper xmlMapper;
     private final XmlMapper prettyNotValidatingXmlMapper;
     private final TemplateLoader templateLoader;
-    private final SynchronousAcknowledgementFactory synchronousAcknowledgementFactory = new SynchronousAcknowledgementFactory();
+    private final SyncAckFactory synchronousAcknowledgementFactory = new SyncAckFactory();
 
     public DefaultMessageAPI(MessageProcessor engineMessageProcessor,
                              TemplateLoader templateLoader,
@@ -132,19 +132,19 @@ public class DefaultMessageAPI implements MessageAPI {
 
         } catch (InvalidMessageSignatureEx | SigningCACertInvalidSignatureEx eInvalidSignature) {
             return new ResponseApi<>(synchronousAcknowledgementFactory
-                    .buildAck(message, SynchronousAcknowledgementType.INVALID_SIGNATURE,
+                    .buildAck(message, SyncAckType.INVALID_SIGNATURE,
                             "" + eInvalidSignature.getMessage()));
         } catch (XmlNotParsableException eXmlMalformed) {
             return new ResponseApi<>(synchronousAcknowledgementFactory
-                    .buildAck(message, SynchronousAcknowledgementType.XML_MALFORMED,
+                    .buildAck(message, SyncAckType.XML_MALFORMED,
                             "" + eXmlMalformed.getMessage()));
         } catch (NullSenderEx eSemantic) {
             return new ResponseApi<>(synchronousAcknowledgementFactory
-                    .buildAck(message, SynchronousAcknowledgementType.SEMANTIC,
+                    .buildAck(message, SyncAckType.SEMANTIC,
                             "" + eSemantic.getMessage()));
         } catch (Exception eAny) {
             return new ResponseApi<>(synchronousAcknowledgementFactory
-                    .buildAck(message, SynchronousAcknowledgementType.INTERNAL_ERROR,
+                    .buildAck(message, SyncAckType.INTERNAL_ERROR,
                             "Unknown Error : " + eAny.getMessage()));
         }
     }
