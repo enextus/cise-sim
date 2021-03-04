@@ -44,7 +44,7 @@ public class Args {
     public String filename;
 
     @Parameter(names = {"--listen", "-l"}, description = "Set this argument to receive messages. The default port is 9999. To specify the port use the -p option.")
-    public Boolean listen = false;
+    public boolean listen = false;
 
     @Parameter(names = {"--port", "-p"}, description = "File of the CISE message to be sent")
     public Integer port = 9999;
@@ -58,11 +58,11 @@ public class Args {
     @Parameter(names = {"--correlation-id", "-r"}, description = "Overrides the correlation id of the message to be sent")
     public String correlationId;
 
-    @Parameter(names = {"--sinc", "-si"}, description = "Send in a synchronously mode the indicate number of messages")
-    public Integer sincN = 0;
+    @Parameter(names = {"--sync", "-sy"}, description = "Send in a synchronously mode the indicate number of messages")
+    public Integer syncN = 0;
 
-    @Parameter(names = {"--asinc", "-asi"}, description = "Send in a asynchronously mode the indicate number of messages")
-    public Integer asincN = 0;
+    @Parameter(names = {"--async", "-asy"}, description = "Send in a asynchronously mode the indicate number of messages")
+    public Integer asyncN = 0;
 
     @Parameter(names = {"-log", "-verbose"}, description = "Level of verbosity")
     public Boolean verbose = false;
