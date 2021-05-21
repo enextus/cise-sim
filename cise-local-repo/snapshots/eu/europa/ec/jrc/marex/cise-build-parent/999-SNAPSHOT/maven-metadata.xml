@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>eu.europa.ec.jrc.marex</groupId>
+  <artifactId>cise-build-parent</artifactId>
+  <version>999-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20210521.154924</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20210521154924</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>999-20210521.154924-1</value>
+        <updated>20210521154924</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

@@ -33,30 +33,15 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>cise-sim</artifactId>
   <groupId>eu.europa.ec.jrc.marex</groupId>
   <version>1.3.0</version>
   <packaging>pom</packaging>
-
   <name>cise-sim</name>
   <description>main aggregation for sim project</description>
-  <scm>
-    <connection>
-      scm:git:https://webgate.ec.europa.eu/CITnet/stash/scm/marex/cise-emu.git
-    </connection>
-    <developerConnection>
-      scm:git:https://webgate.ec.europa.eu/CITnet/stash/scm/marex/cise-emu.git
-    </developerConnection>
-    <url>
-      https://webgate.ec.europa.eu/CITnet/stash/projects/MAREX/repos/cise-emu/browse
-    </url>
-    <tag>HEAD</tag>
-  </scm>
-
-
   <modules>
     <module>cise-dispatcher</module>
     <module>cise-sim-domain</module>
@@ -66,7 +51,6 @@
     <module>cise-sim-dropw</module>
     <module>cise-sim-assembly</module>
   </modules>
-
   <build>
     <resources>
       <resource>
@@ -78,7 +62,6 @@
           </exclude>
         </excludes>
       </resource>
-
       <resource>
         <directory>${basedir}/src/main/resources</directory>
         <filtering>false</filtering>
@@ -88,9 +71,7 @@
           </include>
         </includes>
       </resource>
-
     </resources>
-
     <pluginManagement>
       <plugins>
         <plugin>
@@ -100,7 +81,6 @@
         </plugin>
       </plugins>
     </pluginManagement>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -115,7 +95,6 @@
           </generatedSourcesDirectory>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -134,13 +113,11 @@
           </filters>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.2.0</version>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -153,7 +130,6 @@
           </dependency>
         </dependencies>
         <configuration>
-
           <linkXRef>false</linkXRef>
           <failsOnError>true</failsOnError>
           <configLocation>checkstyle.xml</configLocation>
@@ -171,114 +147,91 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
-
   </build>
   <dependencyManagement>
-
     <dependencies>
       <!-- WebSocket Libraries -->
-
       <dependency>
         <groupId>com.liveperson</groupId>
         <artifactId>dropwizard-websockets</artifactId>
         <version>1.3.2</version>
       </dependency>
-
       <dependency>
         <groupId>org.eclipse.jetty.websocket</groupId>
         <artifactId>javax-websocket-server-impl</artifactId>
         <version>${jetty.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.java-websocket</groupId>
         <artifactId>Java-WebSocket</artifactId>
         <version>1.3.0</version>
       </dependency>
-
       <!-- inner module dependencies -->
       <dependency>
         <groupId>eu.europa.ec.jrc.marex</groupId>
         <artifactId>cise-sim-domain</artifactId>
         <version>1.3.0</version>
       </dependency>
-
       <!-- EUCISE dependencies -->
       <dependency>
         <artifactId>cise-data-model</artifactId>
         <groupId>eu.europa.ec.jrc.marex</groupId>
         <version>1.5.3.14-jdk11-SNAPSHOT</version>
       </dependency>
-
       <dependency>
         <artifactId>eucise-model-helpers</artifactId>
         <groupId>eu.europa.ec.jrc.marex</groupId>
         <version>1.0.11-jdk11-SNAPSHOT</version>
       </dependency>
-
       <dependency>
         <artifactId>eucise-service-model</artifactId>
         <groupId>eu.europa.ec.jrc.marex</groupId>
         <version>1.0.9-jdk11-SNAPSHOT</version>
       </dependency>
-
       <dependency>
         <groupId>eu.europa.ec.jrc.marex</groupId>
         <artifactId>cise-signature</artifactId>
         <version>1.1-SNAPSHOT</version>
       </dependency>
-
       <!-- ext Dependencies -->
       <dependency>
         <artifactId>guava</artifactId>
         <groupId>com.google.guava</groupId>
         <version>22.0</version>
       </dependency>
-
       <dependency>
         <groupId>joda-time</groupId>
         <artifactId>joda-time</artifactId>
         <version>${jodatime.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>1.7.25</version>
       </dependency>
-
       <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
         <version>1.2.3</version>
       </dependency>
-
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>log4j-over-slf4j</artifactId>
         <version>1.7.25</version>
       </dependency>
-
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>jul-to-slf4j</artifactId>
         <version>1.7.25</version>
       </dependency>
-
-
       <!-- xml manipulation -->
-
       <dependency>
         <groupId>javax.xml</groupId>
         <artifactId>jaxp-api</artifactId>
         <version>1.4.2</version>
       </dependency>
-
       <!-- dropwizard framework Libraries -->
-
-
       <dependency>
         <groupId>io.dropwizard</groupId>
         <artifactId>dropwizard-core</artifactId>
@@ -311,32 +264,27 @@
         <artifactId>jackson-databind</artifactId>
         <version>2.9.2</version>
       </dependency>
-
       <!-- property file handling -->
       <dependency>
         <groupId>org.aeonbits.owner</groupId>
         <artifactId>owner</artifactId>
         <version>1.0.10</version>
       </dependency>
-
       <dependency>
         <groupId>org.aeonbits.owner</groupId>
         <artifactId>owner-java8</artifactId>
         <version>1.0.10</version>
       </dependency>
-
       <dependency>
         <groupId>org.aeonbits.owner</groupId>
         <artifactId>owner-java8-extras</artifactId>
         <version>1.0.10</version>
       </dependency>
-
       <dependency>
         <groupId>com.sparkjava</groupId>
         <artifactId>spark-core</artifactId>
         <version>2.8.0</version>
       </dependency>
-
       <!-- Test Libraries -->
       <dependency>
         <artifactId>junit</artifactId>
@@ -344,22 +292,18 @@
         <version>4.12</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
         <version>3.0.0</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>com.github.tomakehurst</groupId>
         <artifactId>wiremock-jre8-standalone</artifactId>
         <version>2.23.2</version>
         <scope>test</scope>
       </dependency>
-
-
       <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
@@ -367,26 +311,30 @@
         <scope>test</scope>
       </dependency>
     </dependencies>
-
   </dependencyManagement>
-
-
-  <distributionManagement>
+  <repositories>
     <repository>
-      <id>digit releases</id>
-      <name>DG DIGIT Repository</name>
-      <url>https://webgate.ec.europa.eu/CITnet/nexus/content/repositories/jrc
-      </url>
+      <id>file-snapshots</id>
+      <url>file://${main.basedir}/cise-local-repo/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
     </repository>
-    <snapshotRepository>
-      <id>digit snapshots</id>
-      <name>DG DIGIT Snapshot Repository</name>
-      <url>
-        https://webgate.ec.europa.eu/CITnet/nexus/content/repositories/jrc-snapshots
-      </url>
-    </snapshotRepository>
-  </distributionManagement>
 
+    <repository>
+      <id>file-releases</id>
+      <url>file://${main.basedir}/cise-local-repo/releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+  </repositories>
   <profiles>
     <profile>
       <id>ciBuild</id>

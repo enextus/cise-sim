@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>eu.europa.ec.jrc.marex</groupId>
+  <artifactId>cise-dropwizard-bom</artifactId>
+  <versioning>
+    <versions>
+      <version>999-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20210521154924</lastUpdated>
+  </versioning>
+</metadata>
