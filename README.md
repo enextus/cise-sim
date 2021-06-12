@@ -1,5 +1,9 @@
 # CISE Sim
 
+[![security status](https://www.meterian.com/badge/gh/ec-jrc/cise-sim/security?branch=master)](https://www.meterian.com/report/gh/ec-jrc/cise-sim)
+[![stability status](https://www.meterian.com/badge/gh/ec-jrc/cise-sim/stability?branch=master)](https://www.meterian.com/report/gh/ec-jrc/cise-sim)
+[![licensing status](https://www.meterian.com/badge/gh/ec-jrc/cise-sim/licensing?branch=master)](https://www.meterian.com/report/gh/ec-jrc/cise-sim)
+
 **CISE Sim** is an application capable of sending and receiving CISE messages to/from CISE Nodes, adaptors or other CISE Sims. The CISE Sim is conformant to the CISE Service model.
 
 ## Functionalities
