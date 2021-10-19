@@ -38,7 +38,7 @@ cd target
 mkdir dist
 cd dist
 
-cp ../cise-sim-1.3.0.tar.gz ./
+cp ../cise-sim-1.3.1.tar.gz ./
 cp ../../README.md ./
 cp ../../cise-sim-cli/sim-cli-readme.md ./
 

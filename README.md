@@ -1,4 +1,4 @@
-# CISE Sim (1.3.0)
+# CISE Sim (1.3.1)
 
 **CISE Sim** is an application capable of sending and receiving CISE messages to/from CISE Nodes, adaptors or other CISE Sims. The CISE Sim is conformant to the CISE Service model.
 
