@@ -32,12 +32,6 @@
 
 package eu.cise.cli.repository;
 
-import eu.cise.servicemodel.v1.message.Message;
-import eu.cise.sim.io.MessagePersistence;
-import eu.eucise.xml.XmlMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -47,12 +41,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.sim.io.MessagePersistence;
+import eu.eucise.xml.XmlMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * OCNET-335 Saving messages sent and received
  * The messages sent and received are saved in a file system so they can be easily exported/reused by the user.
  * Clearing the history doesn't delete the messages saved.
  * The messages should be named as follow:
- *
+ * <p>
  * date/time (type yyyymmdd-hhmmss)
  * type of message
  * sent/received
@@ -63,14 +63,12 @@ public class FileMessagePersistence implements MessagePersistence {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileMessagePersistence.class);
 
     private final XmlMapper xmlMapper;
-    private final String    repositoryDir;
-
+    private final String repositoryDir;
 
     public FileMessagePersistence(XmlMapper xmlMapper, String repositoryDir) {
-
-        this.xmlMapper          = xmlMapper;
-        this.repositoryDir      = new File(repositoryDir).getAbsolutePath();
-       }
+        this.xmlMapper = xmlMapper;
+        this.repositoryDir = new File(repositoryDir).getAbsolutePath();
+    }
 
     @Override
     public void messageReceived(Message msgRcv) {
@@ -107,7 +105,7 @@ public class FileMessagePersistence implements MessagePersistence {
 
         String fileName = fileNameRepository.getFileName();
         String xmlMessage = xmlMapper.toXML(message);
-        try (BufferedWriter  writer = new BufferedWriter(new FileWriter(repositoryDir + File.separatorChar + fileName))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(repositoryDir + File.separatorChar + fileName))) {
 
             writer.write(xmlMessage);
         }
@@ -178,13 +176,13 @@ public class FileMessagePersistence implements MessagePersistence {
         private static String buildFilename(String uuid, String direction, String messageTypeName, Date timestamp) {
 
             SimpleDateFormat formatter = new SimpleDateFormat(TIMESTAMP_FORMAT);
-            String  dateTime = formatter.format(timestamp);
+            String dateTime = formatter.format(timestamp);
 
-            return    dateTime + ITEM_SEPARATOR
-                    + messageTypeName + ITEM_SEPARATOR
-                    + direction + ITEM_SEPARATOR
-                    + uuid
-                    + ".xml";
+            return dateTime + ITEM_SEPARATOR
+                + messageTypeName + ITEM_SEPARATOR
+                + direction + ITEM_SEPARATOR
+                + uuid
+                + ".xml";
         }
 
         public String getUuid() {

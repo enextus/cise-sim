@@ -36,12 +36,12 @@ import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.sim.engine.SimEngine;
 
-public class UseCaseReciveMessage {
+public class UseCaseReceiveMessage {
 
     private final SimEngine simEngine;
     private final MessageLoader loader;
 
-    public UseCaseReciveMessage(SimEngine simEngine, MessageLoader loader) {
+    public UseCaseReceiveMessage(SimEngine simEngine, MessageLoader loader) {
         this.simEngine = simEngine;
         this.loader = loader;
     }

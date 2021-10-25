@@ -32,7 +32,12 @@
 
 package eu.cise.cli.repository;
 
-import eu.cise.servicemodel.v1.message.*;
+import eu.cise.servicemodel.v1.message.Acknowledgement;
+import eu.cise.servicemodel.v1.message.Feedback;
+import eu.cise.servicemodel.v1.message.Message;
+import eu.cise.servicemodel.v1.message.PullRequest;
+import eu.cise.servicemodel.v1.message.PullResponse;
+import eu.cise.servicemodel.v1.message.Push;
 import eu.cise.servicemodel.v1.service.ServiceOperationType;
 
 import static eu.cise.servicemodel.v1.message.AcknowledgementType.AUTHENTICATION_ERROR;
@@ -62,8 +67,8 @@ public enum MessageTypeEnum {
         if (message instanceof PullRequest) {
             // Suscribe is a pull request with <ServiceOperation>Subscribe</ServiceOperation>
             return (message.getSender().getServiceOperation() == ServiceOperationType.SUBSCRIBE) ?
-                    SUBSCRIBE :
-                    PULL_REQUEST;
+                SUBSCRIBE :
+                PULL_REQUEST;
         }
 
 
@@ -74,8 +79,8 @@ public enum MessageTypeEnum {
         if (message instanceof Push) {
             // Publish is Push with <ServiceOperation>Subscribe</ServiceOperation>
             return (message.getSender().getServiceOperation() == ServiceOperationType.SUBSCRIBE) ?
-                    PUBLISH :
-                    PUSH;
+                PUBLISH :
+                PUSH;
         }
 
         if (message instanceof Feedback) {

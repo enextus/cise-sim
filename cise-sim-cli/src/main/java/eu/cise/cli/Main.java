@@ -52,13 +52,13 @@ public class Main implements Runnable {
     public static void main(String[] argv) {
         args = new Args();
         Main main = new Main();
-        var jcmd = JCommander.newBuilder()
-                .addObject(args)
-                .build();
-        jcmd.parse(argv);
+        var cmd = JCommander.newBuilder()
+            .addObject(args)
+            .build();
+        cmd.parse(argv);
 
         if (args.help) {
-            jcmd.usage();
+            cmd.usage();
             System.exit(0);
         }
 
@@ -76,8 +76,8 @@ public class Main implements Runnable {
                 appContext.makeMessageLoader(),
                 appContext.makeMessageProcessor());
 
-        var useCaseReciveMessage = new UseCaseReciveMessage(
-                appContext.makeSimEngine(), appContext.makeMessageLoader()
+        var useCaseReceiveMessage = new UseCaseReceiveMessage(
+            appContext.makeSimEngine(), appContext.makeMessageLoader()
         );
 
 
@@ -86,7 +86,7 @@ public class Main implements Runnable {
             post("/", (request, response) -> {
                 var xmlMapper = appContext.getXmlMapper();
 
-                Acknowledgement ack = useCaseReciveMessage.receive(xmlMapper.fromXML(request.body()));
+                Acknowledgement ack = useCaseReceiveMessage.receive(xmlMapper.fromXML(request.body()));
 
                 response.status(201);
                 response.type("application/xml");
@@ -94,13 +94,13 @@ public class Main implements Runnable {
                 return xmlMapper.toXML(ack);
             });
         } else {
-            if (args.sincN > 0) {
+            if (args.syncN > 0) {
 
-                sendMultiSinc(args.sincN, useCaseSendMessage, args.filename, args.requiresAck, args.correlationId);
+                sendMultiSync(args.syncN, useCaseSendMessage, args.filename, args.requiresAck, args.correlationId);
 
-            } else if (args.asincN > 0) {
+            } else if (args.asyncN > 0) {
 
-                sendMultiASinc(args.asincN, useCaseSendMessage, args.filename, args.requiresAck, args.correlationId);
+                sendMultiAsync(args.asyncN, useCaseSendMessage, args.filename, args.requiresAck, args.correlationId);
 
             } else {
 
@@ -110,7 +110,7 @@ public class Main implements Runnable {
 
     }
 
-    private void sendMultiSinc(int n, UseCaseSendMessage useCaseSendMessage, String filename, boolean requiresAck, String correlationId) {
+    private void sendMultiSync(int n, UseCaseSendMessage useCaseSendMessage, String filename, boolean requiresAck, String correlationId) {
 
         if (StringUtils.isEmpty(correlationId)) {
             correlationId = UUID.randomUUID().toString();
@@ -122,7 +122,7 @@ public class Main implements Runnable {
         }
     }
 
-    private void sendMultiASinc(int n, UseCaseSendMessage useCaseSendMessage, String filename, boolean requiresAck, String correlationId) {
+    private void sendMultiAsync(int n, UseCaseSendMessage useCaseSendMessage, String filename, boolean requiresAck, String correlationId) {
 
         ExecutorService executor = Executors.newCachedThreadPool();
 
