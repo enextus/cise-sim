@@ -32,16 +32,16 @@
 
 package eu.cise.cli;
 
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import com.beust.jcommander.JCommander;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.sim.engine.SendParam;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
+import static java.util.concurrent.TimeUnit.MINUTES;
 import static spark.Spark.port;
 import static spark.Spark.post;
 
@@ -72,9 +72,9 @@ public class Main implements Runnable {
         var appContext = new CliAppContext();
 
         var useCaseSendMessage = new UseCaseSendMessage(
-                null, // appContext.makeSimEngine(),
-                appContext.makeMessageLoader(),
-                appContext.makeMessageProcessor());
+            appContext.makeSimEngine(),
+            appContext.makeMessageLoader(),
+            appContext.makeMessageProcessor());
 
         var useCaseReceiveMessage = new UseCaseReceiveMessage(
             appContext.makeSimEngine(), appContext.makeMessageLoader()
@@ -112,7 +112,7 @@ public class Main implements Runnable {
 
     private void sendMultiSync(int n, UseCaseSendMessage useCaseSendMessage, String filename, boolean requiresAck, String correlationId) {
 
-        if (StringUtils.isEmpty(correlationId)) {
+        if (correlationId.isBlank()) {
             correlationId = UUID.randomUUID().toString();
         }
 
@@ -134,8 +134,9 @@ public class Main implements Runnable {
         }
 
         executor.shutdown();
+
         try {
-            if (!executor.awaitTermination(1, TimeUnit.MINUTES)) {
+            if (!executor.awaitTermination(1, MINUTES)) {
                 executor.shutdownNow();
             }
         } catch (InterruptedException e) {
