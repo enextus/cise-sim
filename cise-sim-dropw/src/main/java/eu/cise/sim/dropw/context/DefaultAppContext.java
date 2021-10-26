@@ -57,6 +57,8 @@ import eu.eucise.xml.DefaultXmlMapper;
 import eu.eucise.xml.XmlMapper;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -71,11 +73,12 @@ public class DefaultAppContext implements AppContext {
     private final SimConfig simConfig;
     private final XmlMapper xmlMapper;
     private final XmlMapper prettyNotValidatingXmlMapper;
+    private final Logger logger = LoggerFactory.getLogger(DefaultAppContext.class);
 
 
     public DefaultAppContext() {
         this.simConfig = ConfigFactory.create(SimConfig.class);
-        System.out.println("SimConfig: pass: " + simConfig.keyStorePassword() + " private pass: " + simConfig.privateKeyPassword());
+        logger.info("SimConfig: pass: " + simConfig.keyStorePassword() + " private pass: " + simConfig.privateKeyPassword());
         this.xmlMapper = new DefaultXmlMapper();
 
         // TODO GK testing if we have any issue
