@@ -110,13 +110,19 @@ function setup_debug {
 
 function start {
 
+  echo "Enter jks keystore password:"
+  read -s keystorePassword
+  echo "Enter jks private key password:"
+  read -s privateKeyPassword
+
 #  ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> ${SW_HOME}/logs/sim_stdout.log 2>&1 &
   ${NOHUP_EXEC} ${SW_RUN_SWR_CMD} >> /dev/null 2>&1 <<EOF &
-`#Enter jks keystore password`	cisesim
-`#Enter jks private key password`	ciseim
+`#Enter jks keystore password`	$keystorePassword
+`#Enter jks private key password`	$privateKeyPassword
 EOF
+
   local PID=$!
-  sleep 3
+  sleep 5
   kill -0 ${PID} 2> /dev/null
   local IT_EXISTS=$?
   [ $IT_EXISTS -ne 0 ] && log_exit_msg 1

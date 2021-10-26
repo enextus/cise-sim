@@ -132,9 +132,7 @@ This file contains the parameters to set up the protocol, the endpoint and the m
 |destination.url| URL of the service endpoint where the CISE Sim will send the XML messages.|http://10.10.10.34:8300/api/soap/messages
 |templates.messages.directory|Relative path to the folder with the message templates (from the installation directory).| `templates/messages` (Default value)
 |signature.keystore.filename|Filename of the Java Key Store (contained in the ``conf/`` directory).|`cisesim-nodeex.jks`
-|signature.keystore.password|Password if the JKS file `signature.keystore.filename`.|12345
 |signature.privatekey.alias|Alias for _key pair_ used to  sign the XML messages. The key pair is stored in the in `signature.keystore.filename` |``cisesim-nodeex.nodeex.eucise.ex``
-|signature.privatekey.password|Password of the key pair `signature.privatekey.alias`.|12345
 |history.repository.directory|Relative path to the folder with the messages sent/received|`msghistory` (Default value)
 |history.gui.maxnummsgs|Maximum number of threads displayed in the user interface|10
 |proxy.host|IP address of the HTTP Proxy (Optional)|10.10.10.10
@@ -167,9 +165,7 @@ templates.messages.directory=templates/messages
 
 # JKS configuration for message signature
 signature.keystore.filename=cisesim-nodeex.jks
-signature.keystore.password=cisesim
 signature.privatekey.alias=cisesim-nodeex.nodeex.eucise.ex
-signature.privatekey.password=cisesim
 
 # Relative path to the folder with the messages sent/received
 history.repository.directory=msghistory
