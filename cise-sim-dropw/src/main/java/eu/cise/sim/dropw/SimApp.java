@@ -56,6 +56,10 @@ import org.eclipse.jetty.util.component.LifeCycle.Listener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class SimApp extends Application<SimConf> {
 
     private final Logger logger = LoggerFactory.getLogger(SimApp.class);
@@ -83,6 +87,23 @@ public class SimApp extends Application<SimConf> {
         CrossOriginSupport.setup(environment);
 
         environment.jersey().setUrlPattern("/api");
+        // ask user for private key
+        String privateKeypass = "";
+        String privateKeyalias = "";
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            System.out.println("Enter jks keystore password :");
+            privateKeypass = br.readLine();
+            System.out.println("Enter jks private key password :");
+            privateKeyalias = br.readLine();
+        } catch (IOException e) {
+            System.out.println("I/O Error getting string: " + e);
+            throw new RuntimeException(e);
+        }
+
+
+        System.setProperty("signature.keystore.password", privateKeypass);
+        System.setProperty("signature.privatekey.password", privateKeyalias);
+
 
         AppContext appCtx;
         try {

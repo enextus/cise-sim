@@ -40,10 +40,11 @@ import org.aeonbits.owner.Preprocessor;
 /**
  * This file is containing the sim application configuration
  */
+@Config.HotReload(type = Config.HotReloadType.SYNC)
+@Config.LoadPolicy(Config.LoadType.MERGE)
 @Config.PreprocessorClasses({SimConfig.TrimAndInsureBoolean.class})
-@Sources({"file:${conf.dir}sim.properties",
-        "classpath:sim.properties",
-        "file:./sim.properties"})
+@Sources({"file:${conf.dir}/sim.properties",
+        "system:properties"})
 public interface SimConfig extends Config {
 
     @Key("simulator.name")

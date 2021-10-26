@@ -75,6 +75,7 @@ public class DefaultAppContext implements AppContext {
 
     public DefaultAppContext() {
         this.simConfig = ConfigFactory.create(SimConfig.class);
+        System.out.println("SimConfig: pass: " + simConfig.keyStorePassword() + " private pass: " + simConfig.privateKeyPassword());
         this.xmlMapper = new DefaultXmlMapper();
 
         // TODO GK testing if we have any issue
