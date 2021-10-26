@@ -276,6 +276,9 @@ To connect the CISE Sim to a CISE Node, the node administrator should create a s
 
 
 # Launch the CISE Sim
+- When launching the scripts below (sim start | run) prompts will appear to the user to enter the:
+   - keystore password
+   - the private key password 
 
 ## As a process 
 
