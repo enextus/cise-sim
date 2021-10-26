@@ -57,6 +57,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -66,6 +67,18 @@ public class SimApp extends Application<SimConf> {
 
     // JAX-WS Bundle
     private final JAXWSBundle<Object> jaxwsBundle = new JAXWSBundle<>("/api/soap");
+
+    public static void main(final String[] args) {
+
+        SimApp simApp = new SimApp();
+        try {
+            simApp.run(args);
+        } catch (ConfigurationException ce) {
+            simApp.logger.error("Configuration error : {}", ce.getMessage());
+        } catch (Exception e) {
+            simApp.logger.error("FATAL ERROR ", e);
+        }
+    }
 
     @Override
     public String getName() {
@@ -88,16 +101,25 @@ public class SimApp extends Application<SimConf> {
 
         environment.jersey().setUrlPattern("/api");
         // ask user for private key
+
         String privateKeypass = "";
         String privateKeyalias = "";
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            System.out.println("Enter jks keystore password :");
-            privateKeypass = br.readLine();
-            System.out.println("Enter jks private key password :");
-            privateKeyalias = br.readLine();
-        } catch (IOException e) {
-            System.out.println("I/O Error getting string: " + e);
-            throw new RuntimeException(e);
+
+        Console console = System.console();
+        // try to use the console first
+        if (console != null) {
+            privateKeypass = String.valueOf(console.readPassword("Enter jks keystore password :"));
+            privateKeyalias = String.valueOf(console.readPassword("Enter jks private key password :"));
+        } else {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+                System.out.println("Enter jks keystore password :");
+                privateKeypass = br.readLine();
+                System.out.println("Enter jks private key password :");
+                privateKeyalias = br.readLine();
+            } catch (IOException e) {
+                System.out.println("I/O Error getting string: " + e);
+                throw new RuntimeException(e);
+            }
         }
 
 
@@ -118,8 +140,8 @@ public class SimApp extends Application<SimConf> {
         String logProxyActivation = proxyManager.activate();
         logger.info(logProxyActivation);
 
-        ThreadMessageService threadMessageService =  appCtx.getThreadMessageService();
-        MessageAPI  messageAPI = appCtx.getMessageAPI(threadMessageService);
+        ThreadMessageService threadMessageService = appCtx.getThreadMessageService();
+        MessageAPI messageAPI = appCtx.getMessageAPI(threadMessageService);
         TemplateAPI templateAPI = appCtx.getTemplateAPI();
 
         environment.healthChecks().register("noop", new HealthCheck() {
@@ -164,17 +186,5 @@ public class SimApp extends Application<SimConf> {
             }
         });
 
-    }
-
-    public static void main(final String[] args) {
-
-        SimApp simApp = new SimApp();
-        try {
-            simApp.run(args);
-        } catch (ConfigurationException ce) {
-            simApp.logger.error("Configuration error : {}", ce.getMessage());
-        } catch (Exception e) {
-            simApp.logger.error("FATAL ERROR ", e);
-        }
     }
 }
