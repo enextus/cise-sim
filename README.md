@@ -73,7 +73,7 @@ The name of the docker image is
 ### Install the docker image 
 To install the docker image in the local docker images repository, use the following command:
 ```
-docker load < docker_cisesim_1.3.1.tar.gz
+docker load < docker_cisesim_1.3.2.tar.gz
 ```
 
 ### Set up Docker volumes
@@ -145,7 +145,7 @@ Note: Discovery sevice button will be present in the UI, only if all the three p
 #### Example: sim.properties
 ```properties
 #
-# CISE Sim (1.3.1-ALPHA)
+# CISE Sim (1.3.2-ALPHA)
 #
 
 # Simulator name displayed on the CISE Sim web interface.
@@ -217,7 +217,7 @@ logging:
 #### Example: config.yml 
 ```yaml
 #
-# CISE Sim - server configuration (1.3.1-ALPHA)
+# CISE Sim - server configuration (1.3.2-ALPHA)
 #
 # The CISE Sim uses Dropwizard as application server. 
 # For more information on this configuration file, please check: 
