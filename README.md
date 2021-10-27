@@ -1,4 +1,4 @@
-:q# CISE Sim
+# CISE Sim
 
 [![security status](https://www.meterian.com/badge/pb/5fa62dc3-4eea-4652-8b35-47753ad61b0d/security)](https://www.meterian.com/projects/?id=5fa62dc3-4eea-4652-8b35-47753ad61b0d)
 [![stability status](https://www.meterian.com/badge/pb/5fa62dc3-4eea-4652-8b35-47753ad61b0d/stability)](https://www.meterian.com/projects/?id=5fa62dc3-4eea-4652-8b35-47753ad61b0d)
