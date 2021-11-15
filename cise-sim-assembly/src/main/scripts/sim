@@ -30,7 +30,6 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-#
 
 # VARIABLES ###
 SW_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
@@ -40,7 +39,6 @@ JAVA_VERSION=`${JAVA_EXEC} -version 2>&1 | head -n 1 | awk '{ print $3 }'`
 NOHUP_EXEC=`which nohup`
 PID_DIR=${SW_HOME}/tmp
 PID_FILE=${PID_DIR}/${SW_NAME}.pid
-
 
 echo $PID_FILE
 
@@ -133,6 +131,17 @@ EOF
 
 }
 
+# 0 stdin
+#
+# 1 stdout
+#
+# 2 stderr
+#
+# “&” that moves the command to the background, freeing up the terminal that you’re working in.
+#
+# nohup is short for “No Hangups.”
+#
+
 function run() {
   ${SW_RUN_SWR_CMD} 2>&1
 }
@@ -156,8 +165,6 @@ function sw_run_cmd() {
   SW_RUN_CLI_CMD="${JAVA_EXEC} ${JAVA_OPTS} -jar ${SW_HOME}/lib/cise-sim-cli.jar -c ${SW_HOME}/conf/ -f "
 
 }
-
-
 
 function get_pid() {
   local PID=$(cat ${PID_FILE} 2>/dev/null)

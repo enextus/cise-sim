@@ -43,7 +43,8 @@
     <fileSets>
         <fileSet>
             <directory>${project.parent.basedir}</directory>
-            <outputDirectory>/</outputDirectory>
+            <!--            <outputDirectory>/</outputDirectory>-->
+            <outputDirectory>./</outputDirectory>
             <includes>
                 <include>**/*</include>
                 <include>.gitignore</include>

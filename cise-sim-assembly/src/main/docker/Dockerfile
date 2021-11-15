@@ -8,11 +8,20 @@ RUN apk update &&\
 
 ARG VERSION=latest
 
+# The -p flag will create nested directories, but only if they don't exist already.
+# For example, suppose you have a directory /foo that you have write permissions for.
+# mkdir -p /foo/bar/baz  # creates bar and baz within bar under existing /foo
+# It is also an idempotent operation, because if you run the same command over again, you will not get an error,
+# but nothing will be created.
+
 COPY cise-sim-$VERSION-bin.tar.gz /srv/cise-sim.tar.gz
 RUN mkdir -p /srv/cise-simulator && tar xvfz /srv/cise-sim.tar.gz -C /srv/cise-simulator --strip-components 1
 RUN rm /srv/cise-sim.tar.gz
 
-# Create a group and user. NB: this user group should exists in the host machine and the volume must be writeble by it
+# Create a group and user.
+# NB: this user of the group must be present in the host machine and the volume must be writeble by it
+# where appgroup -> name of the group & appuser -> application user name
+
 #RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # All future commands should run as the appuser user
