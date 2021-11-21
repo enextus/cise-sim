@@ -2,6 +2,10 @@ version: '3'
 services:
   cise-sim:
     image: ec-jrc/cise-sim:latest
+    # added
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    # added
     volumes:
       - ./conf:/srv/cise-simulator/conf
       - ./logs:/srv/cise-simulator/logs
