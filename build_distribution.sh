@@ -48,6 +48,7 @@ chmod +x ./docker_install.sh
 docker save ec-jrc/cise-sim:latest | gzip > ./docker_cisesim_latest.tar.gz
 
 tar -cvf ../cise-sim-distribution.tar *
+# shellcheck disable=SC2103
 cd ..
 rm -rf dist
 cd ..
