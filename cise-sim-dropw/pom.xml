@@ -99,6 +99,9 @@
         </plugins>
     </build>
 
+    <properties>
+        <main.basedir>${project.basedir}/..</main.basedir>
+    </properties>
 
     <dependencies>
 
@@ -240,7 +243,4 @@
         </dependency>
     </dependencies>
 
-    <properties>
-        <main.basedir>${project.basedir}/..</main.basedir>
-    </properties>
 </project>
