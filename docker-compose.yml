@@ -11,6 +11,6 @@ services:
       - ./logs:/srv/cise-simulator/logs
       - ./msghistory:/srv/cise-simulator/msghistory
     ports:
-      - 8200:8200
-      - 8201:8201
+      - "8200:8200"
+      - "8201:8201"
 
