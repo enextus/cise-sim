@@ -1,2 +1,138 @@
-10:28:39[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
-10:30:16[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
+08:26:22[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
+08:26:23[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
+     _______________ ______   _____ ______  ___
+    / ____/  _/ ___// ____/  / ___//  _/  |/  /
+   / /    / / \__ \/ __/     \__ \ / // /|_/ /
+  / /____/ / ___/ / /___    ___/ // // /  / /
+  \____/___//____/_____/   /____/___/_/  /_/
+
+// CISE Sim // Ver: 1.3.2 //
+
+08:26:23[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
+08:26:23[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
+
+    POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
+    GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
+    GET     /api/ui/history/message/{uuid} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
+    POST    /api/ui/messages (eu.cise.sim.dropw.restresources.UiMessageResource)
+    POST    /api/ui/messages/discovery/send (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/messages/discovery/values (eu.cise.sim.dropw.restresources.UiMessageResource)
+    POST    /api/ui/messages/incident/send (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/messages/incident/values (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/service/self (eu.cise.sim.dropw.restresources.UIServiceResource)
+    GET     /api/ui/templates (eu.cise.sim.dropw.restresources.TemplateResource)
+    GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
+    POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
+
+08:26:23[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
+
+    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
+    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
+
+08:26:23[ main]INFO |o.e.j.s.AbstractConnector|Started application@309ac89e{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
+08:26:23[ main]INFO |o.e.j.s.AbstractConnector|Started admin@2db0dd19{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+08:26:24[ main]INFO |o.e.j.s.Server           |Started @11875ms
+08:26:24[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
+
+    /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
+
+08:33:36[dw-24]INFO |e.c.d.s.WsHandler        |SOAP Outbound message sent
+08:33:36[dw-21]INFO |e.c.s.a.MessageAPI       |Received message Push id[709f2938-ecd6-4050-9911-dbc6b0bbed0e]
+08:33:36[dw-24]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
+08:33:36[dw-20]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 2 messages
+08:33:39[dw-47]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Tue Nov 23 08:33:36 GMT 2021]: found 2 messages
+08:34:06[dw-24]INFO |e.c.d.s.WsHandler        |SOAP Outbound message sent
+08:34:06[dw-26]INFO |e.c.s.a.MessageAPI       |Received message Pull Request id[63956c34-b12d-49d3-9d2e-59af55f42503]
+08:34:06[dw-24]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
+08:34:09[dw-47]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Tue Nov 23 08:33:36 GMT 2021]: found 4 messages
+08:35:37[dw-25]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+08:42:46[dw-45]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+08:46:03[dw-47]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+08:46:13[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
+08:46:13[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 1 and oldestTimestamp 0
+08:46:14[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
+     _______________ ______   _____ ______  ___
+    / ____/  _/ ___// ____/  / ___//  _/  |/  /
+   / /    / / \__ \/ __/     \__ \ / // /|_/ /
+  / /____/ / ___/ / /___    ___/ // // /  / /
+  \____/___//____/_____/   /____/___/_/  /_/
+
+// CISE Sim // Ver: 1.3.2 //
+
+08:46:14[ main]ERROR|i.d.c.ServerCommand      |Unable to start server, shutting down
+java.lang.RuntimeException: java.net.BindException: Address in use
+	at org.eclipse.jetty.setuid.SetUIDListener.lifeCycleStarting(SetUIDListener.java:213)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.setStarting(AbstractLifeCycle.java:188)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:67)
+	at io.dropwizard.cli.ServerCommand.run(ServerCommand.java:53)
+	at io.dropwizard.cli.EnvironmentCommand.run(EnvironmentCommand.java:44)
+	at io.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:87)
+	at io.dropwizard.cli.Cli.run(Cli.java:78)
+	at io.dropwizard.Application.run(Application.java:93)
+	at eu.cise.sim.dropw.SimApp.main(SimApp.java:75)
+Caused by: java.net.BindException: Address in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:455)
+	at java.base/sun.nio.ch.Net.bind(Net.java:447)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:227)
+	at java.base/sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:80)
+	at org.eclipse.jetty.server.ServerConnector.openAcceptChannel(ServerConnector.java:331)
+	at org.eclipse.jetty.server.ServerConnector.open(ServerConnector.java:299)
+	at org.eclipse.jetty.setuid.SetUIDListener.lifeCycleStarting(SetUIDListener.java:200)
+	... 8 common frames omitted
+08:46:25[dw-47]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+08:46:40[dw-55]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+08:46:52[Threa]INFO |o.e.j.s.AbstractConnector|Stopped application@309ac89e{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
+08:46:52[Threa]INFO |o.e.j.s.AbstractConnector|Stopped admin@2db0dd19{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+09:16:13[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
+09:16:13[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 1 and oldestTimestamp 0
+09:16:13[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
+     _______________ ______   _____ ______  ___
+    / ____/  _/ ___// ____/  / ___//  _/  |/  /
+   / /    / / \__ \/ __/     \__ \ / // /|_/ /
+  / /____/ / ___/ / /___    ___/ // // /  / /
+  \____/___//____/_____/   /____/___/_/  /_/
+
+// CISE Sim // Ver: 1.3.2 //
+
+09:16:13[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
+09:16:14[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
+
+    POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
+    GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
+    GET     /api/ui/history/message/{uuid} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
+    POST    /api/ui/messages (eu.cise.sim.dropw.restresources.UiMessageResource)
+    POST    /api/ui/messages/discovery/send (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/messages/discovery/values (eu.cise.sim.dropw.restresources.UiMessageResource)
+    POST    /api/ui/messages/incident/send (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/messages/incident/values (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/service/self (eu.cise.sim.dropw.restresources.UIServiceResource)
+    GET     /api/ui/templates (eu.cise.sim.dropw.restresources.TemplateResource)
+    GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
+    POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
+
+09:16:14[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
+
+    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
+    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
+
+09:16:14[ main]INFO |o.e.j.s.AbstractConnector|Started application@11c372e9{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
+09:16:14[ main]INFO |o.e.j.s.AbstractConnector|Started admin@4b59a1c1{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+09:16:14[ main]INFO |o.e.j.s.Server           |Started @16368ms
+09:16:14[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
+
+    /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
+
+09:16:23[dw-23]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+09:19:27[dw-18]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+09:20:01[dw-37]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+09:20:43[dw-20]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+09:20:46[dw-23]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+09:20:51[dw-37]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+09:21:07[dw-22]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+09:24:55[dw-24]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+09:26:08[dw-20]INFO |e.c.d.s.WsHandler        |SOAP Outbound message sent
+09:26:08[dw-35]INFO |e.c.s.a.MessageAPI       |Received message Push id[43362a73-801d-4b17-a2ca-a55e093732e7]
+09:26:08[dw-20]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
+09:26:09[dw-23]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Tue Nov 23 08:34:06 GMT 2021]: found 4 messages
+09:28:10[dw-22]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 12 messages

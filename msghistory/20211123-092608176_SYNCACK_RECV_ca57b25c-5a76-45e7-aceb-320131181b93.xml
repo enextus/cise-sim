@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:Acknowledgement xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/">
+    <CorrelationID>001</CorrelationID>
+    <CreationDateTime>2021-11-23T09:26:08.138Z</CreationDateTime>
+    <MessageID>43362a73-801d-4b17-a2ca-a55e093732e7_68d8c43b-cb54-4960-a759-0b18a17c4ac4</MessageID>
+    <Priority>High</Priority>
+    <RequiresAck>false</RequiresAck>
+    <AckCode>Success</AckCode>
+    <AckDetail>Message delivered</AckDetail>
+</ns4:Acknowledgement>
