@@ -274,6 +274,7 @@
                                 <goals>
                                     <goal>single</goal>
                                 </goals>
+
                                 <configuration>
                                     <finalName>cise-sim-${project.version}-bin</finalName>
                                     <appendAssemblyId>false</appendAssemblyId>
@@ -282,6 +283,7 @@
                                         <descriptor>src/main/assemblies/bin.xml</descriptor>
                                     </descriptors>
                                 </configuration>
+
                             </execution>
 
                             <!-- cise sim src -->
@@ -366,4 +368,7 @@
     <properties>
         <main.basedir>${project.basedir}/..</main.basedir>
     </properties>
+
+
+
 </project>
