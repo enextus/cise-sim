@@ -683,3 +683,43 @@ Caused by: java.lang.NoSuchMethodException: sun.misc.Unsafe.defineClass(java.lan
 13:01:47[dw-34]INFO |e.c.s.a.MessageAPI       |Received message Pull Request id[c7a03739-0475-4cfe-9c1e-eddb91004759]
 13:01:47[dw-22]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
 13:01:47[dw-24]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Tue Nov 30 11:10:49 GMT 2021]: found 4 messages
+13:31:01[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
+13:31:01[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 5 and oldestTimestamp 0
+13:31:02[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
+     _______________ ______   _____ ______  ___
+    / ____/  _/ ___// ____/  / ___//  _/  |/  /
+   / /    / / \__ \/ __/     \__ \ / // /|_/ /
+  / /____/ / ___/ / /___    ___/ // // /  / /
+  \____/___//____/_____/   /____/___/_/  /_/
+
+// CISE Sim // Ver: 1.3.2 //
+
+13:31:02[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
+13:31:02[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
+
+    POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
+    GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
+    GET     /api/ui/history/message/{uuid} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
+    POST    /api/ui/messages (eu.cise.sim.dropw.restresources.UiMessageResource)
+    POST    /api/ui/messages/discovery/send (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/messages/discovery/values (eu.cise.sim.dropw.restresources.UiMessageResource)
+    POST    /api/ui/messages/incident/send (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/messages/incident/values (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/service/self (eu.cise.sim.dropw.restresources.UIServiceResource)
+    GET     /api/ui/templates (eu.cise.sim.dropw.restresources.TemplateResource)
+    GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
+    POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
+
+13:31:02[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
+
+    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
+    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
+
+13:31:02[ main]INFO |o.e.j.s.AbstractConnector|Started application@6cb3463b{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
+13:31:02[ main]INFO |o.e.j.s.AbstractConnector|Started admin@2f9236d8{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+13:31:02[ main]INFO |o.e.j.s.Server           |Started @10250ms
+13:31:02[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
+
+    /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
+
+13:31:19[dw-22]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 28 messages

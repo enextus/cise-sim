@@ -45,6 +45,8 @@
     <packaging>pom</packaging>
 
     <profiles>
+
+        <!--     Profile: default -->
         <profile>
             <id>default</id>
             <activation>
@@ -147,6 +149,8 @@
                 </plugins>
             </build>
         </profile>
+
+        <!--   Profile: distribution-package-->
         <profile>
             <id>distribution-package</id>
             <build>
@@ -177,7 +181,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
 
                     <!-- Docker Build Image -->
                     <plugin>
@@ -368,7 +371,5 @@
     <properties>
         <main.basedir>${project.basedir}/..</main.basedir>
     </properties>
-
-
 
 </project>
