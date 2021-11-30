@@ -1,5 +1,5 @@
-# FROM azul/zulu-openjdk-alpine:11-jre
-FROM azul/zulu-openjdk-alpine:17-jre
+FROM azul/zulu-openjdk-alpine:11-jre
+# FROM azul/zulu-openjdk-alpine:17-jre
 LABEL maintainer="Alessandro.LA-PORTA@ext.ec.europa.eu" \
       maintainer="Giancarlo.PACE@ec.europa.eu"
 
