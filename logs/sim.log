@@ -1,7 +1,6 @@
-12:52:38[ main]ERROR|e.c.s.d.SimApp           |Configuration error : Wrong signature configuration : Cannot recover key
-12:53:10[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
-12:53:10[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 2 and oldestTimestamp 0
-12:53:11[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
+20:45:53[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
+20:45:53[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 3 and oldestTimestamp 0
+20:45:54[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
      _______________ ______   _____ ______  ___
     / ____/  _/ ___// ____/  / ___//  _/  |/  /
    / /    / / \__ \/ __/     \__ \ / // /|_/ /
@@ -10,8 +9,8 @@
 
 // CISE Sim // Ver: 1.3.2 //
 
-12:53:11[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
-12:53:11[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
+20:45:54[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
+20:45:54[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
 
     POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
     GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
@@ -26,17 +25,140 @@
     GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
     POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
 
-12:53:11[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
+20:45:54[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
 
     POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
     POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
 
-12:53:11[ main]INFO |o.e.j.s.AbstractConnector|Started application@68cc6fa4{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-12:53:11[ main]INFO |o.e.j.s.AbstractConnector|Started admin@484dde7d{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
-12:53:11[ main]INFO |o.e.j.s.Server           |Started @17139ms
-12:53:11[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
+20:45:54[ main]INFO |o.e.j.s.AbstractConnector|Started application@73418044{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
+20:45:54[ main]INFO |o.e.j.s.AbstractConnector|Started admin@58ec04f4{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+20:45:54[ main]INFO |o.e.j.s.Server           |Started @10384ms
+20:45:54[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
 
     /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
 
-12:53:28[Threa]INFO |o.e.j.s.AbstractConnector|Stopped application@68cc6fa4{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-12:53:28[Threa]INFO |o.e.j.s.AbstractConnector|Stopped admin@484dde7d{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+20:46:04[Threa]INFO |o.e.j.s.AbstractConnector|Stopped application@73418044{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
+20:46:04[Threa]INFO |o.e.j.s.AbstractConnector|Stopped admin@58ec04f4{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+20:58:38[ main]ERROR|c.s.x.b.v.r.r.o.Injector |null
+java.security.PrivilegedActionException: null
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:573)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.Injector.<clinit>(Injector.java:166)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.AccessorInjector.prepare(AccessorInjector.java:51)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.OptimizedAccessorFactory.get(OptimizedAccessorFactory.java:157)
+	at com.sun.xml.bind.v2.runtime.reflect.Accessor$FieldReflection.optimize(Accessor.java:255)
+	at com.sun.xml.bind.v2.runtime.property.SingleElementLeafProperty.<init>(SingleElementLeafProperty.java:62)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at com.sun.xml.bind.v2.runtime.property.PropertyFactory.create(PropertyFactory.java:99)
+	at com.sun.xml.bind.v2.runtime.ClassBeanInfoImpl.<init>(ClassBeanInfoImpl.java:150)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.getOrCreate(JAXBContextImpl.java:493)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:310)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:109)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl$JAXBContextBuilder.build(JAXBContextImpl.java:1142)
+	at com.sun.xml.bind.v2.ContextFactory.createContext(ContextFactory.java:141)
+	at com.sun.xml.bind.v2.JAXBContextFactory.createContext(JAXBContextFactory.java:35)
+	at javax.xml.bind.ContextFinder.find(ContextFinder.java:404)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:721)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:662)
+	at eu.eucise.xml.DefaultXmlMapper.newJaxbContext(DefaultXmlMapper.java:180)
+	at eu.eucise.xml.DefaultXmlMapper.<init>(DefaultXmlMapper.java:78)
+	at eu.eucise.xml.DefaultXmlMapper.<init>(DefaultXmlMapper.java:66)
+	at eu.cise.sim.dropw.context.DefaultAppContext.<init>(DefaultAppContext.java:81)
+	at eu.cise.sim.dropw.SimApp.run(SimApp.java:135)
+	at eu.cise.sim.dropw.SimApp.run(SimApp.java:64)
+	at io.dropwizard.cli.EnvironmentCommand.run(EnvironmentCommand.java:43)
+	at io.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:87)
+	at io.dropwizard.cli.Cli.run(Cli.java:78)
+	at io.dropwizard.Application.run(Application.java:93)
+	at eu.cise.sim.dropw.SimApp.main(SimApp.java:75)
+Caused by: java.lang.NoSuchMethodException: sun.misc.Unsafe.defineClass(java.lang.String,[B,int,int,java.lang.ClassLoader,java.security.ProtectionDomain)
+	at java.base/java.lang.Class.getMethod(Class.java:2227)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.Injector$3.run(Injector.java:170)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.Injector$3.run(Injector.java:166)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569)
+	... 32 common frames omitted
+21:00:11[ main]ERROR|c.s.x.b.v.r.r.o.Injector |null
+java.security.PrivilegedActionException: null
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:573)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.Injector.<clinit>(Injector.java:166)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.AccessorInjector.prepare(AccessorInjector.java:51)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.OptimizedAccessorFactory.get(OptimizedAccessorFactory.java:157)
+	at com.sun.xml.bind.v2.runtime.reflect.Accessor$FieldReflection.optimize(Accessor.java:255)
+	at com.sun.xml.bind.v2.runtime.property.SingleElementLeafProperty.<init>(SingleElementLeafProperty.java:62)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at com.sun.xml.bind.v2.runtime.property.PropertyFactory.create(PropertyFactory.java:99)
+	at com.sun.xml.bind.v2.runtime.ClassBeanInfoImpl.<init>(ClassBeanInfoImpl.java:150)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.getOrCreate(JAXBContextImpl.java:493)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:310)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:109)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl$JAXBContextBuilder.build(JAXBContextImpl.java:1142)
+	at com.sun.xml.bind.v2.ContextFactory.createContext(ContextFactory.java:141)
+	at com.sun.xml.bind.v2.JAXBContextFactory.createContext(JAXBContextFactory.java:35)
+	at javax.xml.bind.ContextFinder.find(ContextFinder.java:404)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:721)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:662)
+	at eu.eucise.xml.DefaultXmlMapper.newJaxbContext(DefaultXmlMapper.java:180)
+	at eu.eucise.xml.DefaultXmlMapper.<init>(DefaultXmlMapper.java:78)
+	at eu.eucise.xml.DefaultXmlMapper.<init>(DefaultXmlMapper.java:66)
+	at eu.cise.sim.dropw.context.DefaultAppContext.<init>(DefaultAppContext.java:81)
+	at eu.cise.sim.dropw.SimApp.run(SimApp.java:135)
+	at eu.cise.sim.dropw.SimApp.run(SimApp.java:64)
+	at io.dropwizard.cli.EnvironmentCommand.run(EnvironmentCommand.java:43)
+	at io.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:87)
+	at io.dropwizard.cli.Cli.run(Cli.java:78)
+	at io.dropwizard.Application.run(Application.java:93)
+	at eu.cise.sim.dropw.SimApp.main(SimApp.java:75)
+Caused by: java.lang.NoSuchMethodException: sun.misc.Unsafe.defineClass(java.lang.String,[B,int,int,java.lang.ClassLoader,java.security.ProtectionDomain)
+	at java.base/java.lang.Class.getMethod(Class.java:2227)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.Injector$3.run(Injector.java:170)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.Injector$3.run(Injector.java:166)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569)
+	... 32 common frames omitted
+21:10:45[ main]ERROR|c.s.x.b.v.r.r.o.Injector |null
+java.security.PrivilegedActionException: null
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:573)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.Injector.<clinit>(Injector.java:166)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.AccessorInjector.prepare(AccessorInjector.java:51)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.OptimizedAccessorFactory.get(OptimizedAccessorFactory.java:157)
+	at com.sun.xml.bind.v2.runtime.reflect.Accessor$FieldReflection.optimize(Accessor.java:255)
+	at com.sun.xml.bind.v2.runtime.property.SingleElementLeafProperty.<init>(SingleElementLeafProperty.java:62)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at com.sun.xml.bind.v2.runtime.property.PropertyFactory.create(PropertyFactory.java:99)
+	at com.sun.xml.bind.v2.runtime.ClassBeanInfoImpl.<init>(ClassBeanInfoImpl.java:150)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.getOrCreate(JAXBContextImpl.java:493)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:310)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl.<init>(JAXBContextImpl.java:109)
+	at com.sun.xml.bind.v2.runtime.JAXBContextImpl$JAXBContextBuilder.build(JAXBContextImpl.java:1142)
+	at com.sun.xml.bind.v2.ContextFactory.createContext(ContextFactory.java:141)
+	at com.sun.xml.bind.v2.JAXBContextFactory.createContext(JAXBContextFactory.java:35)
+	at javax.xml.bind.ContextFinder.find(ContextFinder.java:404)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:721)
+	at javax.xml.bind.JAXBContext.newInstance(JAXBContext.java:662)
+	at eu.eucise.xml.DefaultXmlMapper.newJaxbContext(DefaultXmlMapper.java:180)
+	at eu.eucise.xml.DefaultXmlMapper.<init>(DefaultXmlMapper.java:78)
+	at eu.eucise.xml.DefaultXmlMapper.<init>(DefaultXmlMapper.java:66)
+	at eu.cise.sim.dropw.context.DefaultAppContext.<init>(DefaultAppContext.java:81)
+	at eu.cise.sim.dropw.SimApp.run(SimApp.java:135)
+	at eu.cise.sim.dropw.SimApp.run(SimApp.java:64)
+	at io.dropwizard.cli.EnvironmentCommand.run(EnvironmentCommand.java:43)
+	at io.dropwizard.cli.ConfiguredCommand.run(ConfiguredCommand.java:87)
+	at io.dropwizard.cli.Cli.run(Cli.java:78)
+	at io.dropwizard.Application.run(Application.java:93)
+	at eu.cise.sim.dropw.SimApp.main(SimApp.java:75)
+Caused by: java.lang.NoSuchMethodException: sun.misc.Unsafe.defineClass(java.lang.String,[B,int,int,java.lang.ClassLoader,java.security.ProtectionDomain)
+	at java.base/java.lang.Class.getMethod(Class.java:2227)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.Injector$3.run(Injector.java:170)
+	at com.sun.xml.bind.v2.runtime.reflect.opt.Injector$3.run(Injector.java:166)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569)
+	... 32 common frames omitted

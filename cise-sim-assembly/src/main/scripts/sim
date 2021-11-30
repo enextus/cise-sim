@@ -187,7 +187,8 @@ function _stop() {
 # MAIN ###
 enable_colors_if_supported
 
-cd ${SW_HOME}
+# https://github.com/koalaman/shellcheck/wiki/SC2164
+cd ${SW_HOME}  || { echo "Failure"; exit 1; }
 PREFIX_CMD=""
 POSTFIX_CMD=""
 COUNT_VAR=0

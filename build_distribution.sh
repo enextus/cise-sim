@@ -34,9 +34,10 @@
 
 docker build -t ec-jrc/cise-sim:latest .
 
-cd target
+# https://github.com/koalaman/shellcheck/wiki/SC2164
+cd target  || { echo "Failure"; exit 1; }
 mkdir dist
-cd dist
+cd dist  || { echo "Failure"; exit 1; }
 
 cp ../cise-sim-1.3.2.tar.gz ./
 cp ../../README.md ./
@@ -47,9 +48,8 @@ echo 'docker load < docker_cisesim_latest.tar.gz' > docker_install.sh
 chmod +x ./docker_install.sh
 docker save ec-jrc/cise-sim:latest | gzip > ./docker_cisesim_latest.tar.gz
 
-# shellcheck disable=SC2035
 tar -cvf ../cise-sim-distribution.tar *
-# shellcheck disable=SC2103
-cd ..
+
+cd ..  || { echo "Failure"; exit 1; }
 rm -rf dist
-cd ..
+cd ..  || { echo "Failure"; exit 1; }
