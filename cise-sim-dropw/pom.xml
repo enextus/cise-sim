@@ -199,12 +199,19 @@
             <version>3.3.1</version>
             <scope>compile</scope>
         </dependency>
+<!--        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+&lt;!&ndash;            <version>2.3.1</version>&ndash;&gt;
+            <version>2.3.3</version>
+        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-<!--            <version>2.3.1</version>-->
-            <version>2.3.3</version>
+            <version>3.0.2</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
