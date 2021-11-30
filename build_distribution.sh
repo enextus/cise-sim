@@ -35,9 +35,9 @@
 docker build -t ec-jrc/cise-sim:latest .
 
 # https://github.com/koalaman/shellcheck/wiki/SC2164
-cd target  || { echo "Failure"; exit 1; }
+cd target  || { echo "Failure line 38"; exit 1; }
 mkdir dist
-cd dist  || { echo "Failure"; exit 1; }
+cd dist  || { echo "Failure line 40"; exit 1; }
 
 cp ../cise-sim-1.3.2.tar.gz ./
 cp ../../README.md ./
@@ -50,6 +50,6 @@ docker save ec-jrc/cise-sim:latest | gzip > ./docker_cisesim_latest.tar.gz
 
 tar -cvf ../cise-sim-distribution.tar *
 
-cd ..  || { echo "Failure"; exit 1; }
+cd ..  || { echo "Failure line 53"; exit 1; }
 rm -rf dist
-cd ..  || { echo "Failure"; exit 1; }
+cd ..  || { echo "Failure line 55"; exit 1; }
