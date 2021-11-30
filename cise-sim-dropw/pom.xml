@@ -199,13 +199,7 @@
             <version>3.3.1</version>
             <scope>compile</scope>
         </dependency>
-<!--        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-&lt;!&ndash;            <version>2.3.1</version>&ndash;&gt;
-            <version>2.3.3</version>
-        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
+
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
