@@ -723,3 +723,6 @@ Caused by: java.lang.NoSuchMethodException: sun.misc.Unsafe.defineClass(java.lan
     /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
 
 13:31:19[dw-22]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 28 messages
+13:32:07[dw-24]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 28 messages
+16:50:19[dw-32]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 28 messages
+16:51:23[dw-27]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 28 messages
