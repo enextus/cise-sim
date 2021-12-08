@@ -877,7 +877,7 @@
   </wsdl:binding>
   <wsdl:service name="CISEMessageService">
     <wsdl:port binding="tns:CISEMessageServiceSoapBinding" name="CISEMessageServiceSoapPort">
-      <soap:address location="http://192.168.42.37:8180/eucise-com-services-web/CISEMessageService"/>
+      <soap:address location="/eucise-com-services-web/CISEMessageService"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -31,21 +31,28 @@
   ~
   -->
 
-<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                  xmlns:tns="http://www.cise.eu/accesspoint/service/v1/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
-                  name="CISEMessageService" targetNamespace="http://www.cise.eu/accesspoint/service/v1/">
+<wsdl:definitions
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:tns="http://www.cise.eu/accesspoint/service/v1/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+        name="CISEMessageService"
+        targetNamespace="http://www.cise.eu/accesspoint/service/v1/">
   <wsdl:types>
-<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/service/"
-           xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://www.cise.eu/servicemodel/v1/authority/" targetNamespace="http://www.cise.eu/servicemodel/v1/service/" version="1.0">
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+               xmlns:tns="http://www.cise.eu/servicemodel/v1/service/"
+               xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+               xmlns:ns1="http://www.cise.eu/servicemodel/v1/authority/"
+               targetNamespace="http://www.cise.eu/servicemodel/v1/service/" version="1.0">
 
-  
-  <xs:import namespace="http://www.cise.eu/servicemodel/v1/authority/"/>
 
-  
-  <xs:element name="Service" type="tns:Service"/>
+      <xs:import namespace="http://www.cise.eu/servicemodel/v1/authority/"/>
 
-  
-  <xs:element name="ServiceProfile" type="tns:ServiceProfile"/>
+
+      <xs:element name="Service" type="tns:Service"/>
+
+
+      <xs:element name="ServiceProfile" type="tns:ServiceProfile"/>
 
   
   <xs:element name="SubscriptionCapability" type="tns:SubscriptionCapability"/>
@@ -296,19 +303,23 @@
 
 
 </xs:schema>
-<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/message/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns1="http://www.cise.eu/servicemodel/v1/service/" targetNamespace="http://www.cise.eu/servicemodel/v1/message/" version="1.0">
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+               xmlns:tns="http://www.cise.eu/servicemodel/v1/message/"
+               xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+               xmlns:ns1="http://www.cise.eu/servicemodel/v1/service/"
+               targetNamespace="http://www.cise.eu/servicemodel/v1/message/" version="1.0">
 
-  
-  <xs:import namespace="http://www.cise.eu/servicemodel/v1/service/"/>
 
-  
-  <xs:import namespace="http://www.cise.eu/servicemodel/v1/authority/"/>
+      <xs:import namespace="http://www.cise.eu/servicemodel/v1/service/"/>
 
-  
-  <xs:element name="Acknowledgement" type="tns:Acknowledgement"/>
 
-  
-  <xs:element name="EncryptedEntityPayload" type="tns:EncryptedEntityPayload"/>
+      <xs:import namespace="http://www.cise.eu/servicemodel/v1/authority/"/>
+
+
+      <xs:element name="Acknowledgement" type="tns:Acknowledgement"/>
+
+
+      <xs:element name="EncryptedEntityPayload" type="tns:EncryptedEntityPayload"/>
 
   
   <xs:element name="Feedback" type="tns:Feedback"/>
@@ -826,19 +837,22 @@
 
 
 </xs:schema>
-<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/servicemodel/v1/authority/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" targetNamespace="http://www.cise.eu/servicemodel/v1/authority/" version="1.0">
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+               xmlns:tns="http://www.cise.eu/servicemodel/v1/authority/"
+               xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+               targetNamespace="http://www.cise.eu/servicemodel/v1/authority/" version="1.0">
 
-  
-  <xs:element name="Gateway" type="tns:Gateway"/>
 
-  
-  <xs:element name="Participant" type="tns:Participant"/>
+      <xs:element name="Gateway" type="tns:Gateway"/>
 
-  
-  <xs:element name="PointOfContact" type="tns:PointOfContact"/>
 
-  
-  <xs:complexType name="Participant">
+      <xs:element name="Participant" type="tns:Participant"/>
+
+
+      <xs:element name="PointOfContact" type="tns:PointOfContact"/>
+
+
+      <xs:complexType name="Participant">
     
     <xs:sequence>
       
@@ -1535,30 +1549,33 @@
       <xs:enumeration value="ZM"/>
       
       <xs:enumeration value="ZW"/>
-      
+
       <xs:enumeration value="EU"/>
-      
+
       <xs:enumeration value="RC"/>
-    
+
     </xs:restriction>
-  
+
   </xs:simpleType>
 
 
-</xs:schema>
-<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.cise.eu/accesspoint/service/v1/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://www.cise.eu/servicemodel/v1/service/" xmlns:ns1="http://www.cise.eu/servicemodel/v1/message/" elementFormDefault="unqualified" targetNamespace="http://www.cise.eu/accesspoint/service/v1/" version="1.0">
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+               xmlns:tns="http://www.cise.eu/accesspoint/service/v1/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+               xmlns:ns1="http://www.cise.eu/servicemodel/v1/message/" elementFormDefault="unqualified"
+               targetNamespace="http://www.cise.eu/accesspoint/service/v1/" version="1.0">
 
-  
-  <xs:import namespace="http://www.cise.eu/servicemodel/v1/message/"/>
 
-  
-  <xs:import namespace="http://www.cise.eu/servicemodel/v1/service/"/>
+      <xs:import namespace="http://www.cise.eu/servicemodel/v1/message/"/>
 
-  
-  <xs:element name="message" type="ns1:Message"/>
 
-  
-  <xs:element name="send" type="tns:send"/>
+      <xs:import namespace="http://www.cise.eu/servicemodel/v1/service/"/>
+
+
+      <xs:element name="message" type="ns1:Message"/>
+
+
+      <xs:element name="send" type="tns:send"/>
 
   
   <xs:element name="sendResponse" type="tns:sendResponse"/>
