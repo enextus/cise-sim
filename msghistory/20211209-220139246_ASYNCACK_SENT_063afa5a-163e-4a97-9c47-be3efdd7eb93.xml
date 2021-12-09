@@ -1,40 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns4:PullResponse xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/">
-    <CorrelationID>120</CorrelationID>
-    <CreationDateTime>2021-11-26T16:54:14.244Z</CreationDateTime>
-    <MessageID>376651d5-0218-4bba-9adb-71c06c325f1a</MessageID>
+<ns4:Acknowledgement xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/">
+    <CorrelationID>001</CorrelationID>
+    <CreationDateTime>2021-12-09T22:01:38.643Z</CreationDateTime>
+    <MessageID>be642085-2c3a-49ee-9532-15fa5dcf514f</MessageID>
     <Priority>Low</Priority>
-    <RequiresAck>false</RequiresAck>
+    <RequiresAck>true</RequiresAck>
     <Sender>
-        <SeaBasin>NorthSea</SeaBasin>
-        <ServiceID>de.sim1-node01.vessel.pull.provider</ServiceID>
-        <ServiceOperation>Pull</ServiceOperation>
-        <ServiceRole>Provider</ServiceRole>
-        <ServiceStatus>Online</ServiceStatus>
-        <ServiceType>VesselService</ServiceType>
+        <ServiceID>de.sim2-node01.vessel.push.consumer</ServiceID>
+        <ServiceOperation>Acknowledgement</ServiceOperation>
     </Sender>
     <Recipient>
-        <SeaBasin>NorthSea</SeaBasin>
-        <ServiceID>de.sim2-node01.vessel.pull.consumer</ServiceID>
-        <ServiceOperation>Pull</ServiceOperation>
-        <ServiceRole>Consumer</ServiceRole>
-        <ServiceStatus>Online</ServiceStatus>
-        <ServiceType>VesselService</ServiceType>
+        <ServiceID>de.sim1-node01.vessel.push.provider</ServiceID>
+        <ServiceOperation>Acknowledgement</ServiceOperation>
     </Recipient>
-    <Payload xsi:type="ns4:XmlEntityPayload" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-        <InformationSecurityLevel>NonClassified</InformationSecurityLevel>
-        <InformationSensitivity>Green</InformationSensitivity>
-        <IsPersonalData>false</IsPersonalData>
-        <Purpose>NonSpecified</Purpose>
-        <EnsureEncryption>false</EnsureEncryption>
-        <Vessel xmlns:ns5="http://www.cise.eu/accesspoint/service/v1/">
-            <IMONumber>7710525</IMONumber>
-        </Vessel>
-    </Payload>
-    <Reliability>
-        <RetryStrategy>NoRetry</RetryStrategy>
-    </Reliability>
-    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#" xmlns:ns5="http://www.cise.eu/accesspoint/service/v1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
         <SignedInfo>
             <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
             <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
@@ -55,14 +34,14 @@
                     <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
                 </Transforms>
                 <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-                <DigestValue>4v5JbIuUMiEB8KI974sgkUWoUcg=</DigestValue>
+                <DigestValue>nyqen2RHA876XrQ+vBsKlRn6iuE=</DigestValue>
             </Reference>
         </SignedInfo>
-        <SignatureValue>AM12rL4DIFZk1mXhggVe4SsiSHXIBZ35gbdRJTNGCctR1MffX3VoJ0CDX0j4AW1s43lgcKpUQSwE&#13;
-TiF289Th4gkJQWejdS+aK1qS/DqB4WS7iTarqCs7BlGlemxDdO4Qt6ArPh3s3d5Cooop/EQuL8GV&#13;
-AtjhKCzoXKTJUXQlgLdftdTtquag3lSFivbRtmuS+1ZbOq/UOmL89dEVWL1sxdzjRXYrwpv8Z5mV&#13;
-QuLtyf5vabAmgy9jrBk8x/FLKid98WJxf3lROiwq5XWHRsxC0QX7itiWZiNq154JoQpAQGs0Ghia&#13;
-odH8esf95G9Jh+GIbCyasKNKDKV3EndW7HfIhA==</SignatureValue>
+        <SignatureValue>LCZo1Q+nzxtac0sDxFR2Za3jc6FP2eeY5b5QZddOGpI8V3nBqqO5svDjLTbN2ifuwaMlm2i/p3+w&#13;
+u1qSx8jr3wTvpdhjqGssq8skCysc3o9nGGulwlcFHe+dCqjIu34yI1jWOnNeLGAMUV1Zpka9MSo1&#13;
+JIEwY8swgTks7Ujl82ndmskIOvpJpe3Srvzq1abH1JeemjdwmiqYVRFb1qaRNIAtUurLddm88AnG&#13;
+B47nWXX+Gw//JsI4BCH/tOFcenZLwW6MVQHduRZFrgW91o9m9gH3x08paJdZqYqh+CFoUruVCSM8&#13;
+r9QcTU625Cxq7EAC0rXws6G5W0J8jstDsy11jA==</SignatureValue>
         <KeyInfo>
             <X509Data>
                 <X509SubjectName>CN=cisesim-nodeex.nodeex.eucise.ex, OU=Participants, O=cisesim-nodeex.nodeex, DC=eucise, C=ex</X509SubjectName>
@@ -89,5 +68,6 @@ Ew1QjbzHHzIPTQCSHsBR/CfGmbDZamI6u71ACVdwAwRUVpjB/MMOs44ec3xD82JubSq/0QHcLRpo&#13
             </X509Data>
         </KeyInfo>
     </Signature>
-    <ResultCode>Success</ResultCode>
-</ns4:PullResponse>
+    <AckCode>Success</AckCode>
+    <AckDetail>Push message received</AckDetail>
+</ns4:Acknowledgement>

@@ -1,36 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns4:Push xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/">
-    <CorrelationID>234</CorrelationID>
-    <CreationDateTime>2021-11-30T11:10:49.000Z</CreationDateTime>
-    <MessageID>11836b33-f988-45c8-b4bf-1948978e6bf8</MessageID>
+<ns4:Acknowledgement xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/">
+    <CorrelationID>001</CorrelationID>
+    <CreationDateTime>2021-12-09T22:01:38.643Z</CreationDateTime>
+    <MessageID>be642085-2c3a-49ee-9532-15fa5dcf514f</MessageID>
     <Priority>Low</Priority>
-    <RequiresAck>false</RequiresAck>
+    <RequiresAck>true</RequiresAck>
     <Sender>
-        <SeaBasin>NorthSea</SeaBasin>
-        <ServiceID>de.sim1-node01.vessel.push.provider</ServiceID>
-        <ServiceOperation>Push</ServiceOperation>
-        <ServiceRole>Provider</ServiceRole>
-        <ServiceStatus>Online</ServiceStatus>
-        <ServiceType>VesselService</ServiceType>
+        <ServiceID>de.sim2-node01.vessel.push.consumer</ServiceID>
+        <ServiceOperation>Acknowledgement</ServiceOperation>
     </Sender>
     <Recipient>
-        <SeaBasin>NorthSea</SeaBasin>
-        <ServiceID>de.sim2-node01.vessel.push.consumer</ServiceID>
-        <ServiceOperation>Push</ServiceOperation>
-        <ServiceRole>Consumer</ServiceRole>
-        <ServiceStatus>Online</ServiceStatus>
-        <ServiceType>VesselService</ServiceType>
+        <ServiceID>de.sim1-node01.vessel.push.provider</ServiceID>
+        <ServiceOperation>Acknowledgement</ServiceOperation>
     </Recipient>
-    <Payload xsi:type="ns4:XmlEntityPayload" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-        <InformationSecurityLevel>NonClassified</InformationSecurityLevel>
-        <InformationSensitivity>Green</InformationSensitivity>
-        <IsPersonalData>false</IsPersonalData>
-        <Purpose>NonSpecified</Purpose>
-        <EnsureEncryption>false</EnsureEncryption>
-        <Vessel xmlns:ns5="http://www.cise.eu/accesspoint/service/v1/">
-            <IMONumber>7710525</IMONumber>
-        </Vessel>
-    </Payload>
     <Signature xmlns="http://www.w3.org/2000/09/xmldsig#" xmlns:ns5="http://www.cise.eu/accesspoint/service/v1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <SignedInfo>
             <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
@@ -52,14 +34,14 @@
                     <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
                 </Transforms>
                 <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-                <DigestValue>5jiWjFVOlyzqiORHc/Cx97gtYLs=</DigestValue>
+                <DigestValue>nyqen2RHA876XrQ+vBsKlRn6iuE=</DigestValue>
             </Reference>
         </SignedInfo>
-        <SignatureValue>U2YBL9FNvncNsqffNrtnWy4gLKFypjPGrh5EzFBkPrzxSDRFxagV19d9rogw/I6UmCfwJGhd8Ox9&#13;
-7Saj/86Inq1Y2IUAwBlof3ORnpj1Blr67FG51g3o2cMxHDZucG7r7xBNHU8V3QDXxQPhnFWStQ4h&#13;
-RU2DPgqaRd4Ygm5ZN04r2Sy16dRYQ9aFh7nCcj2vi5HMQTIeNsR6JmMNbYZ/4105iMbMWxUnyTXl&#13;
-eOk/5BTRz0fC3BgVfeAlEOHBK8KrNBxEuHg8kmhmGbnuMoADE3+StORU/JgY1nD3iFL7QLPrD6hw&#13;
-0V5zjzQ3mTHTiERVLBIWQHPKK0C6jwIvbne8RQ==</SignatureValue>
+        <SignatureValue>LCZo1Q+nzxtac0sDxFR2Za3jc6FP2eeY5b5QZddOGpI8V3nBqqO5svDjLTbN2ifuwaMlm2i/p3+w&#13;
+u1qSx8jr3wTvpdhjqGssq8skCysc3o9nGGulwlcFHe+dCqjIu34yI1jWOnNeLGAMUV1Zpka9MSo1&#13;
+JIEwY8swgTks7Ujl82ndmskIOvpJpe3Srvzq1abH1JeemjdwmiqYVRFb1qaRNIAtUurLddm88AnG&#13;
+B47nWXX+Gw//JsI4BCH/tOFcenZLwW6MVQHduRZFrgW91o9m9gH3x08paJdZqYqh+CFoUruVCSM8&#13;
+r9QcTU625Cxq7EAC0rXws6G5W0J8jstDsy11jA==</SignatureValue>
         <KeyInfo>
             <X509Data>
                 <X509SubjectName>CN=cisesim-nodeex.nodeex.eucise.ex, OU=Participants, O=cisesim-nodeex.nodeex, DC=eucise, C=ex</X509SubjectName>
@@ -86,4 +68,6 @@ Ew1QjbzHHzIPTQCSHsBR/CfGmbDZamI6u71ACVdwAwRUVpjB/MMOs44ec3xD82JubSq/0QHcLRpo&#13
             </X509Data>
         </KeyInfo>
     </Signature>
-</ns4:Push>
+    <AckCode>Success</AckCode>
+    <AckDetail>Push message received</AckDetail>
+</ns4:Acknowledgement>
