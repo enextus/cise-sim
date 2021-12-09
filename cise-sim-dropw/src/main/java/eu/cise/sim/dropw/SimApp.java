@@ -35,7 +35,7 @@ package eu.cise.sim.dropw;
 import com.codahale.metrics.health.HealthCheck;
 import com.roskart.dropwizard.jaxws.EndpointBuilder;
 import com.roskart.dropwizard.jaxws.JAXWSBundle;
-import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
+import eu.cise.dispatcher.soap.CISEMessageServiceSoapImpl;
 import eu.cise.sim.api.MessageAPI;
 import eu.cise.sim.api.TemplateAPI;
 import eu.cise.sim.api.history.ThreadMessageService;

@@ -33,7 +33,6 @@
 package eu.cise.sim.dropw.soapresources;
 
 import eu.cise.accesspoint.service.v1.CISEMessageServiceSoapImpl;
-import eu.cise.dispatcher.soap.CISEMessageServiceSoapImpl;
 import eu.cise.servicemodel.v1.message.Acknowledgement;
 import eu.cise.servicemodel.v1.message.Message;
 import eu.cise.sim.api.MessageAPI;

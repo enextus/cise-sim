@@ -45,7 +45,7 @@ public class VersionApp {
         String result;
         try {
 
-        InputStream inputStream;
+            InputStream inputStream;
             Properties prop = new Properties();
             String propFileName = "version.properties";
 

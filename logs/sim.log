@@ -235,3 +235,5 @@ java.lang.NullPointerException: null
 	at java.base/java.lang.Thread.run(Thread.java:829)
 18:17:32[Threa]INFO |o.e.j.s.AbstractConnector|Stopped application@28d16af8{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
 18:17:32[Threa]INFO |o.e.j.s.AbstractConnector|Stopped admin@58932d08{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+23:01:41[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
+23:01:42[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 6 and oldestTimestamp 0

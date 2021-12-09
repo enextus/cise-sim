@@ -150,9 +150,9 @@ public class DefaultAppContext implements AppContext {
 
     @Override
     public ThreadMessageService getThreadMessageService() {
-        return  new FileMessageService(getPrettyNotValidatingXmlMapper(),
-                                       getRepoDir(),
-                                       getGuiMaxThMsgs());
+        return new FileMessageService(getPrettyNotValidatingXmlMapper(),
+                getRepoDir(),
+                getGuiMaxThMsgs());
 
     }
 
@@ -168,10 +168,10 @@ public class DefaultAppContext implements AppContext {
     @Override
     public TemplateAPI getTemplateAPI() {
         return new DefaultTemplateAPI(
-                    makeMessageProcessor(),
-                    makeTemplateLoader(),
-                    getXmlMapper(),
-                    getPrettyNotValidatingXmlMapper());
+                makeMessageProcessor(),
+                makeTemplateLoader(),
+                getXmlMapper(),
+                getPrettyNotValidatingXmlMapper());
     }
 
     @Override
