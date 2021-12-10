@@ -6,6 +6,9 @@ RUN apk update &&\
     apk upgrade &&\
     apk add bash
 
+RUN apk add --no-cache --upgrade ncurses
+RUN apk add --no-cache --upgrade vim
+
 ARG VERSION=1.3.2
 
 COPY target/cise-sim-$VERSION.tar.gz /srv/cise-sim.tar.gz
