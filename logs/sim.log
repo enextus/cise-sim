@@ -1,5 +1,6 @@
-11:14:36[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
-11:14:37[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
+09:33:38[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
+09:33:38[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 3 and oldestTimestamp 0
+09:33:39[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
      _______________ ______   _____ ______  ___
     / ____/  _/ ___// ____/  / ___//  _/  |/  /
    / /    / / \__ \/ __/     \__ \ / // /|_/ /
@@ -8,8 +9,8 @@
 
 // CISE Sim // Ver: 1.3.2 //
 
-11:14:37[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
-11:14:37[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
+09:33:39[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
+09:33:39[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
 
     POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
     GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
@@ -24,163 +25,18 @@
     GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
     POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
 
-11:14:37[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
+09:33:39[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
 
     POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
     POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
 
-11:14:37[ main]INFO |o.e.j.s.AbstractConnector|Started application@c157abf{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-11:14:37[ main]INFO |o.e.j.s.AbstractConnector|Started admin@472dbaf5{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
-11:14:37[ main]INFO |o.e.j.s.Server           |Started @29490ms
-11:14:37[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
+09:33:39[ main]INFO |o.e.j.s.AbstractConnector|Started application@e1c91cd{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
+09:33:39[ main]INFO |o.e.j.s.AbstractConnector|Started admin@69e8b711{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+09:33:39[ main]INFO |o.e.j.s.Server           |Started @3814ms
+09:33:39[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
 
     /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
 
-11:16:11[Threa]INFO |o.e.j.s.AbstractConnector|Stopped application@c157abf{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-11:16:11[Threa]INFO |o.e.j.s.AbstractConnector|Stopped admin@472dbaf5{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
-11:16:48[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
-11:16:48[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
-     _______________ ______   _____ ______  ___
-    / ____/  _/ ___// ____/  / ___//  _/  |/  /
-   / /    / / \__ \/ __/     \__ \ / // /|_/ /
-  / /____/ / ___/ / /___    ___/ // // /  / /
-  \____/___//____/_____/   /____/___/_/  /_/
-
-// CISE Sim // Ver: 1.3.2 //
-
-11:16:48[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
-11:16:49[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
-
-    POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
-    GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
-    GET     /api/ui/history/message/{uuid} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
-    POST    /api/ui/messages (eu.cise.sim.dropw.restresources.UiMessageResource)
-    POST    /api/ui/messages/discovery/send (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/messages/discovery/values (eu.cise.sim.dropw.restresources.UiMessageResource)
-    POST    /api/ui/messages/incident/send (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/messages/incident/values (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/service/self (eu.cise.sim.dropw.restresources.UIServiceResource)
-    GET     /api/ui/templates (eu.cise.sim.dropw.restresources.TemplateResource)
-    GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
-    POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
-
-11:16:49[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
-
-    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
-    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
-
-11:16:49[ main]INFO |o.e.j.s.AbstractConnector|Started application@c157abf{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-11:16:49[ main]INFO |o.e.j.s.AbstractConnector|Started admin@472dbaf5{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
-11:16:49[ main]INFO |o.e.j.s.Server           |Started @9846ms
-11:16:49[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
-
-    /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
-
-11:21:10[dw-18]INFO |e.c.d.s.WsHandler        |SOAP Outbound message sent
-11:21:10[dw-37]INFO |e.c.s.a.MessageAPI       |Received message Push id[823c32b8-8a5e-4c68-9a53-6f88feae42e5]
-11:21:10[dw-18]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
-11:21:12[dw-22]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 4 messages
-11:22:50[dw-24]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 05:36:51 GMT 1970]: found 4 messages
-11:22:55[dw-24]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 05:36:51 GMT 1970]: found 4 messages
-11:24:33[dw-24]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 05:36:51 GMT 1970]: found 4 messages
-11:24:34[dw-24]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 05:36:51 GMT 1970]: found 4 messages
-11:24:36[dw-38]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 05:36:51 GMT 1970]: found 4 messages
-11:27:56[dw-24]INFO |e.c.d.s.WsHandler        |SOAP Outbound message sent
-11:27:56[dw-35]INFO |e.c.s.a.MessageAPI       |Received message Pull Request id[6ff8b134-efdb-41fa-9710-56028a83f5f2]
-11:27:56[dw-24]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
-11:27:57[dw-38]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Dec 16 11:21:10 GMT 2021]: found 4 messages
-11:28:35[dw-19]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Dec 16 11:21:10 GMT 2021]: found 4 messages
-11:33:56[Threa]INFO |o.e.j.s.AbstractConnector|Stopped application@c157abf{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-11:33:56[Threa]INFO |o.e.j.s.AbstractConnector|Stopped admin@472dbaf5{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
-19:51:08[ main]ERROR|e.c.s.d.SimApp           |Configuration error : Wrong signature configuration : Keystore was tampered with, or password was incorrect
-19:51:26[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
-19:51:26[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 2 and oldestTimestamp 0
-19:51:27[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
-     _______________ ______   _____ ______  ___
-    / ____/  _/ ___// ____/  / ___//  _/  |/  /
-   / /    / / \__ \/ __/     \__ \ / // /|_/ /
-  / /____/ / ___/ / /___    ___/ // // /  / /
-  \____/___//____/_____/   /____/___/_/  /_/
-
-// CISE Sim // Ver: 1.3.2 //
-
-19:51:27[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
-19:51:27[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
-
-    POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
-    GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
-    GET     /api/ui/history/message/{uuid} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
-    POST    /api/ui/messages (eu.cise.sim.dropw.restresources.UiMessageResource)
-    POST    /api/ui/messages/discovery/send (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/messages/discovery/values (eu.cise.sim.dropw.restresources.UiMessageResource)
-    POST    /api/ui/messages/incident/send (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/messages/incident/values (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/service/self (eu.cise.sim.dropw.restresources.UIServiceResource)
-    GET     /api/ui/templates (eu.cise.sim.dropw.restresources.TemplateResource)
-    GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
-    POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
-
-19:51:28[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
-
-    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
-    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
-
-19:51:28[ main]INFO |o.e.j.s.AbstractConnector|Started application@fc21ff4{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-19:51:28[ main]INFO |o.e.j.s.AbstractConnector|Started admin@58647985{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
-19:51:28[ main]INFO |o.e.j.s.Server           |Started @10801ms
-19:51:28[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
-
-    /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
-
-19:54:55[Threa]INFO |o.e.j.s.AbstractConnector|Stopped application@fc21ff4{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-19:54:55[Threa]INFO |o.e.j.s.AbstractConnector|Stopped admin@58647985{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
-19:55:13[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
-19:55:13[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 2 and oldestTimestamp 0
-19:55:14[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
-     _______________ ______   _____ ______  ___
-    / ____/  _/ ___// ____/  / ___//  _/  |/  /
-   / /    / / \__ \/ __/     \__ \ / // /|_/ /
-  / /____/ / ___/ / /___    ___/ // // /  / /
-  \____/___//____/_____/   /____/___/_/  /_/
-
-// CISE Sim // Ver: 1.3.2 //
-
-19:55:14[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
-19:55:14[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
-
-    POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
-    GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
-    GET     /api/ui/history/message/{uuid} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
-    POST    /api/ui/messages (eu.cise.sim.dropw.restresources.UiMessageResource)
-    POST    /api/ui/messages/discovery/send (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/messages/discovery/values (eu.cise.sim.dropw.restresources.UiMessageResource)
-    POST    /api/ui/messages/incident/send (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/messages/incident/values (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/service/self (eu.cise.sim.dropw.restresources.UIServiceResource)
-    GET     /api/ui/templates (eu.cise.sim.dropw.restresources.TemplateResource)
-    GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
-    POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
-
-19:55:14[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
-
-    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
-    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
-
-19:55:15[ main]INFO |o.e.j.s.AbstractConnector|Started application@7c857e8f{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-19:55:15[ main]INFO |o.e.j.s.AbstractConnector|Started admin@42028589{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
-19:55:15[ main]INFO |o.e.j.s.Server           |Started @3968ms
-19:55:15[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
-
-    /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
-
-19:56:01[dw-19]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
-19:56:27[dw-33]INFO |e.c.d.s.WsHandler        |SOAP Outbound message sent
-19:56:27[dw-24]INFO |e.c.s.a.MessageAPI       |Received message Subscribe id[d81c0a74-be71-4df7-b86e-5b853c684198]
-19:56:27[dw-33]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
-19:56:28[dw-22]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Dec 16 11:27:56 GMT 2021]: found 4 messages
-19:58:25[dw-18]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 12 messages
-19:58:36[dw-23]INFO |e.c.d.s.WsHandler        |SOAP Outbound message sent
-19:58:36[dw-35]INFO |e.c.s.a.MessageAPI       |Received message Discover id[09be81e0-aade-4d56-b0a7-aacb9a7597a6]
-19:58:36[dw-23]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
-19:58:37[dw-18]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Dec 16 19:56:27 GMT 2021]: found 4 messages
-19:59:25[dw-22]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 16 messages
+09:33:44[dw-26]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 16 messages
+09:33:49[Threa]INFO |o.e.j.s.AbstractConnector|Stopped application@e1c91cd{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
+09:33:49[Threa]INFO |o.e.j.s.AbstractConnector|Stopped admin@69e8b711{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
