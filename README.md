@@ -400,3 +400,66 @@ Examples:
 `20200611-120029798_PULLREQUEST_SENT_31fb100d-dd13-450d-858b-d410a5f2c345`
 
 `20200611-120029808_ACKSYNCH_RECV_184e0b37-bdb0-4efd-b993-ac18abd1f7ec`
+.
+
+.
+As a process
+...
+bash-5.1# ./sim run
+/srv/cise-simulator/tmp/sim.pid
+== CISE sim =====================================
+Java path:    /usr/bin/java
+Java version: "11.0.13"
+=================================================
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by com.fasterxml.jackson.module.afterburner.util.MyClassLoader (file:/srv/cise-simulator/lib/cise-sim.jar) to method java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int)
+WARNING: Please consider reporting this to the maintainers of com.fasterxml.jackson.module.afterburner.util.MyClassLoader
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+Enter jks keystore password:
+Enter jks private key password:
+I|PROXY: no proxy configured
+I|init with size 2 and oldestTimestamp 0
+I|Starting CISE Sim
+_______________ ______   _____ ______  ___
+/ ____/  _/ ___// ____/  / ___//  _/  |/  /
+/ /    / / \__ \/ __/     \__ \ / // /|_/ /
+/ /____/ / ___/ / /___    ___/ // // /  / /
+\____/___//____/_____/   /____/___/_/  /_/
+
+// CISE Sim // Ver: 1.3.2 //
+
+I|jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
+I|The following paths were found for the configured resources:
+
+    POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
+    GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
+    GET     /api/ui/history/message/{uuid} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
+    POST    /api/ui/messages (eu.cise.sim.dropw.restresources.UiMessageResource)
+    POST    /api/ui/messages/discovery/send (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/messages/discovery/values (eu.cise.sim.dropw.restresources.UiMessageResource)
+    POST    /api/ui/messages/incident/send (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/messages/incident/values (eu.cise.sim.dropw.restresources.UiMessageResource)
+    GET     /api/ui/service/self (eu.cise.sim.dropw.restresources.UIServiceResource)
+    GET     /api/ui/templates (eu.cise.sim.dropw.restresources.TemplateResource)
+    GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
+    POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
+
+I|tasks =
+
+    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
+    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
+
+I|Started application@fc21ff4{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
+I|Started admin@58647985{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+I|Started @10801ms
+I|JAX-WS service endpoints [/api/soap]:
+
+    /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
+
+== API Server started ===========================
+
+
+
+
+...

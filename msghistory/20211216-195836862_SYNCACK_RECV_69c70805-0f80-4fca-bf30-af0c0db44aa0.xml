@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:Acknowledgement xmlns:ns2="http://www.cise.eu/servicemodel/v1/authority/" xmlns:ns4="http://www.cise.eu/servicemodel/v1/message/" xmlns:ns3="http://www.cise.eu/servicemodel/v1/service/">
+    <CorrelationID>120</CorrelationID>
+    <CreationDateTime>2021-12-16T19:58:36.600Z</CreationDateTime>
+    <MessageID>09be81e0-aade-4d56-b0a7-aacb9a7597a6_d7bca46a-7e7c-4ffa-abc9-7d274be6dc2c</MessageID>
+    <Priority>High</Priority>
+    <RequiresAck>false</RequiresAck>
+    <AckCode>Success</AckCode>
+    <AckDetail>Message delivered</AckDetail>
+    <DiscoveredServices>
+        <SeaBasin>Mediterranean</SeaBasin>
+        <ServiceID>cx.simlsa1-nodecx.vessel.pull.consumer</ServiceID>
+        <ServiceOperation>Pull</ServiceOperation>
+        <ServiceRole>Consumer</ServiceRole>
+        <ServiceStatus>Online</ServiceStatus>
+        <ServiceType>VesselService</ServiceType>
+        <Participant>
+            <Id>eu.eucise.cx.simlsa1-nodecx</Id>
+            <Name>Simulator LSA 1</Name>
+            <Description>First simulator LSA</Description>
+            <ClassificationLevel>Unclassified</ClassificationLevel>
+            <EndpointUrl>http://192.168.42.37:8280/sim-LSA/CISEMessageService</EndpointUrl>
+            <EndpointType>SOAP</EndpointType>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.vessel.push.provider</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.vessel.pull.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.persondocument.subscribe.provider</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.vessel.subscribe.provider</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.incident.subscribe.provider</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa1-nodecx.locationdocument.subscribe.provider</ProvidedServicesIds>
+            <Gateway>
+                <Id>eu.eucise.cx.nodecx</Id>
+            </Gateway>
+            <Owner>JRC</Owner>
+            <PointOfContact>
+                <Name>Jesus</Name>
+                <Surname>Alvarado</Surname>
+                <Address>10 Simon Cruz street, JRC, Italy</Address>
+                <Telephone>+3984847722</Telephone>
+                <Email>simon10.cruz@gmail.com</Email>
+            </PointOfContact>
+            <AreasOfInterest>BalticSea</AreasOfInterest>
+            <AreasOfInterest>Mediterranean</AreasOfInterest>
+            <Communities>Customs</Communities>
+            <Communities>MaritimeSafetySecurity</Communities>
+            <Functions>BorderMonitoring</Functions>
+            <Functions>BorderOperation</Functions>
+            <MemberState>CX</MemberState>
+        </Participant>
+        <ServiceCapability/>
+    </DiscoveredServices>
+    <DiscoveredServices>
+        <DataFreshness>Unknown</DataFreshness>
+        <SeaBasin>Mediterranean</SeaBasin>
+        <ServiceID>cx.simlsa3-nodecx.vessel.push.consumer</ServiceID>
+        <ServiceOperation>Push</ServiceOperation>
+        <ServiceRole>Consumer</ServiceRole>
+        <ServiceStatus>Online</ServiceStatus>
+        <ServiceType>VesselService</ServiceType>
+        <Participant>
+            <Id>eu.eucise.cx.simlsa3-nodecx</Id>
+            <Name>Simulator LSA 3</Name>
+            <Description>Third Simulator</Description>
+            <ClassificationLevel>Unclassified</ClassificationLevel>
+            <EndpointUrl>http://192.168.42.37:8480/sim-LSA/CISEMessageService</EndpointUrl>
+            <EndpointType>SOAP</EndpointType>
+            <ProvidedServicesIds>cx.simlsa3-nodecx.vessel.push.consumer</ProvidedServicesIds>
+            <Gateway>
+                <Id>eu.eucise.cx.nodecx</Id>
+            </Gateway>
+            <Owner>JRC</Owner>
+            <PointOfContact/>
+            <AreasOfInterest>Mediterranean</AreasOfInterest>
+            <Communities>Customs</Communities>
+            <Functions>Safety</Functions>
+            <MemberState>CX</MemberState>
+        </Participant>
+        <ServiceCapability/>
+    </DiscoveredServices>
+    <DiscoveredServices>
+        <SeaBasin>Mediterranean</SeaBasin>
+        <ServiceID>cx.simlsa2-nodecx.vessel.pull.provider</ServiceID>
+        <ServiceOperation>Pull</ServiceOperation>
+        <ServiceRole>Provider</ServiceRole>
+        <ServiceStatus>Online</ServiceStatus>
+        <ServiceType>VesselService</ServiceType>
+        <Participant>
+            <Id>eu.eucise.cx.simlsa2-nodecx</Id>
+            <Name>Simulator LSA 2</Name>
+            <Description>Second simulator LSA</Description>
+            <ClassificationLevel>Unclassified</ClassificationLevel>
+            <EndpointUrl>http://192.168.42.37:8380/sim-LSA/CISEMessageService</EndpointUrl>
+            <EndpointType>SOAP</EndpointType>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.vessel.push.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.persondocument.subscribe.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.vessel.subscribe.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.incident.subscribe.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.locationdocument.subscribe.consumer</ProvidedServicesIds>
+            <ProvidedServicesIds>cx.simlsa2-nodecx.vessel.pull.provider</ProvidedServicesIds>
+            <Gateway>
+                <Id>eu.eucise.cx.nodecx</Id>
+            </Gateway>
+            <Owner>JRC</Owner>
+            <PointOfContact>
+                <Name>Jesus</Name>
+            </PointOfContact>
+            <AreasOfInterest>BalticSea</AreasOfInterest>
+            <AreasOfInterest>NorthSea</AreasOfInterest>
+            <Communities>GeneralLawEnforcement</Communities>
+            <Communities>MarineEnvironment</Communities>
+            <Functions>Safety</Functions>
+            <MemberState>CX</MemberState>
+        </Participant>
+        <ServiceCapability/>
+    </DiscoveredServices>
+</ns4:Acknowledgement>
