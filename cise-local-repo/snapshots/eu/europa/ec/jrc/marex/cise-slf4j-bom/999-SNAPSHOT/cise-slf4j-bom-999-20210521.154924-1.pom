@@ -14,7 +14,8 @@
   <packaging>pom</packaging>
 
   <properties>
-    <slf4j-api.version>1.7.30</slf4j-api.version>
+<!--    <slf4j-api.version>1.7.30</slf4j-api.version>-->
+    <slf4j-api.version>1.7.32</slf4j-api.version>
   </properties>
 
   <dependencyManagement>
