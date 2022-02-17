@@ -42,6 +42,7 @@ import eu.cise.sim.templates.DefaultTemplateLoader;
 import eu.cise.sim.templates.Template;
 import eu.cise.sim.templates.TemplateLoader;
 import eu.eucise.xml.XmlMapper;
+// junit 4.13.2
 import org.junit.Before;
 import org.junit.Test;
 
@@ -70,8 +71,7 @@ public class DefaultTemplateAPIPreviewTest {
         when(templateLoader.loadTemplate(any())).thenReturn(mock(Template.class));
     }
 
-    /*
-     public PreviewResponse preview(TemplateParams templateParams) {
+/*     public PreviewResponse preview(TemplateParams templateParams) {
         try {
             Template template = loadTemplate(templateParams.getTemplateId())
             Message message = messaageProcessor(template.getMessage(), templateParams.getSendParams());
@@ -80,8 +80,8 @@ public class DefaultTemplateAPIPreviewTest {
         } catch(Exception e) {
             return new KoPreviewResponse(e.getMessage(), templateParams);
         }
-    }
-    * */
+    }*/
+
 
     @Test
     public void it_returns_a_previewResponse_successfully() {
