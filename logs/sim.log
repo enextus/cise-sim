@@ -1,7 +1,6 @@
-09:01:17[ main]ERROR|e.c.s.d.SimApp           |Configuration error : Wrong signature configuration : To build a SignatureService object it's mandatory to specify a keystore passwordusing the .withKeyStorePassword(...) method
-09:05:16[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
-09:05:16[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 1 and oldestTimestamp 0
-09:05:16[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
+11:23:03[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
+11:23:03[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 2 and oldestTimestamp 0
+11:23:03[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
      _______________ ______   _____ ______  ___
     / ____/  _/ ___// ____/  / ___//  _/  |/  /
    / /    / / \__ \/ __/     \__ \ / // /|_/ /
@@ -10,8 +9,8 @@
 
 // CISE Sim // Ver: 1.3.2 //
 
-09:05:16[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
-09:05:17[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
+11:23:04[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
+11:23:04[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
 
     POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
     GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
@@ -26,188 +25,21 @@
     GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
     POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
 
-09:05:17[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
+11:23:04[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
 
     POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
     POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
 
-09:05:17[ main]INFO |o.e.j.s.AbstractConnector|Started application@7c857e8f{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-09:05:17[ main]INFO |o.e.j.s.AbstractConnector|Started admin@42028589{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
-09:05:17[ main]INFO |o.e.j.s.Server           |Started @3752ms
-09:05:17[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
+11:23:04[ main]INFO |o.e.j.s.AbstractConnector|Started application@7b1d2f65{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
+11:23:04[ main]INFO |o.e.j.s.AbstractConnector|Started admin@33bd9ac3{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
+11:23:04[ main]INFO |o.e.j.s.Server           |Started @3962ms
+11:23:04[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
 
     /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
 
-11:02:05[ main]INFO |e.c.s.d.SimApp           |PROXY: no proxy configured
-11:02:05[ main]INFO |.c.s.a.h.IdTimestampCache|init with size 1 and oldestTimestamp 0
-11:02:06[ main]INFO |i.d.s.ServerFactory      |Starting CISE Sim
-     _______________ ______   _____ ______  ___
-    / ____/  _/ ___// ____/  / ___//  _/  |/  /
-   / /    / / \__ \/ __/     \__ \ / // /|_/ /
-  / /____/ / ___/ / /___    ___/ // // /  / /
-  \____/___//____/_____/   /____/___/_/  /_/
-
-// CISE Sim // Ver: 1.3.2 //
-
-11:02:06[ main]INFO |o.e.j.s.Server           |jetty-9.4.z-SNAPSHOT; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 11.0.13+8-LTS
-11:02:06[ main]INFO |.DropwizardResourceConfig|The following paths were found for the configured resources:
-
-    POST    /api/messages (eu.cise.sim.dropw.restresources.MessageResource)
-    GET     /api/ui/history/latest/{timestamp} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
-    GET     /api/ui/history/message/{uuid} (eu.cise.sim.dropw.restresources.ThreadMessageResource)
-    POST    /api/ui/messages (eu.cise.sim.dropw.restresources.UiMessageResource)
-    POST    /api/ui/messages/discovery/send (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/messages/discovery/values (eu.cise.sim.dropw.restresources.UiMessageResource)
-    POST    /api/ui/messages/incident/send (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/messages/incident/values (eu.cise.sim.dropw.restresources.UiMessageResource)
-    GET     /api/ui/service/self (eu.cise.sim.dropw.restresources.UIServiceResource)
-    GET     /api/ui/templates (eu.cise.sim.dropw.restresources.TemplateResource)
-    GET     /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
-    POST    /api/ui/templates/{templateId} (eu.cise.sim.dropw.restresources.TemplateResource)
-
-11:02:06[ main]INFO |i.d.s.AdminEnvironment   |tasks = 
-
-    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
-    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
-
-11:02:06[ main]INFO |o.e.j.s.AbstractConnector|Started application@7b1d2f65{HTTP/1.1,[http/1.1]}{0.0.0.0:8200}
-11:02:06[ main]INFO |o.e.j.s.AbstractConnector|Started admin@33bd9ac3{HTTP/1.1,[http/1.1]}{0.0.0.0:8201}
-11:02:06[ main]INFO |o.e.j.s.Server           |Started @3859ms
-11:02:06[ main]INFO |c.r.d.j.JAXWSEnvironment |JAX-WS service endpoints [/api/soap]:
-
-    /api/soap/messages ({http://www.cise.eu/accesspoint/service/v1/}CISEMessageServiceSoapImpl)
-
-11:02:19[dw-19]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 4 messages
-11:28:04[dw-22]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 4 messages
-13:35:17[dw-21]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 4 messages
-13:38:13[dw-11]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 05:36:51 GMT 1970]: found 4 messages
-13:38:47[dw-20]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 4 messages
-13:40:05[dw-20]WARN |c.p.PhaseInterceptorChain|Interceptor for {http://www.cise.eu/accesspoint/service/v1/}CISEMessageService has thrown exception, unwinding now
-java.lang.NullPointerException: null
-	at com.roskart.dropwizard.jaxws.AbstractInvoker.getTargetMethod(AbstractInvoker.java:24)
-	at com.roskart.dropwizard.jaxws.ValidatingInvoker.invoke(ValidatingInvoker.java:39)
-	at org.apache.cxf.interceptor.ServiceInvokerInterceptor$1.run(ServiceInvokerInterceptor.java:59)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at org.apache.cxf.interceptor.ServiceInvokerInterceptor$2.run(ServiceInvokerInterceptor.java:126)
-	at org.apache.cxf.workqueue.SynchronousExecutor.execute(SynchronousExecutor.java:37)
-	at org.apache.cxf.interceptor.ServiceInvokerInterceptor.handleMessage(ServiceInvokerInterceptor.java:131)
-	at org.apache.cxf.phase.PhaseInterceptorChain.doIntercept(PhaseInterceptorChain.java:308)
-	at org.apache.cxf.transport.ChainInitiationObserver.onMessage(ChainInitiationObserver.java:121)
-	at org.apache.cxf.transport.http.AbstractHTTPDestination.invoke(AbstractHTTPDestination.java:265)
-	at org.apache.cxf.transport.servlet.ServletController.invokeDestination(ServletController.java:234)
-	at org.apache.cxf.transport.servlet.ServletController.invoke(ServletController.java:208)
-	at org.apache.cxf.transport.servlet.ServletController.invoke(ServletController.java:160)
-	at org.apache.cxf.transport.servlet.CXFNonSpringServlet.invoke(CXFNonSpringServlet.java:225)
-	at org.apache.cxf.transport.servlet.AbstractHTTPServlet.handleRequest(AbstractHTTPServlet.java:298)
-	at org.apache.cxf.transport.servlet.AbstractHTTPServlet.doGet(AbstractHTTPServlet.java:222)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)
-	at org.apache.cxf.transport.servlet.AbstractHTTPServlet.service(AbstractHTTPServlet.java:273)
-	at io.dropwizard.jetty.NonblockingServletHolder.handle(NonblockingServletHolder.java:49)
-	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1655)
-	at io.dropwizard.servlets.ThreadNameFilter.doFilter(ThreadNameFilter.java:35)
-	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)
-	at io.dropwizard.jersey.filter.AllowedMethodsFilter.handle(AllowedMethodsFilter.java:45)
-	at io.dropwizard.jersey.filter.AllowedMethodsFilter.doFilter(AllowedMethodsFilter.java:39)
-	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)
-	at org.eclipse.jetty.servlets.CrossOriginFilter.handle(CrossOriginFilter.java:311)
-	at org.eclipse.jetty.servlets.CrossOriginFilter.doFilter(CrossOriginFilter.java:265)
-	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)
-	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:533)
-	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:255)
-	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1317)
-	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:203)
-	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:473)
-	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:201)
-	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1219)
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:144)
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
-	at com.codahale.metrics.jetty9.InstrumentedHandler.handle(InstrumentedHandler.java:239)
-	at io.dropwizard.jetty.RoutingHandler.handle(RoutingHandler.java:52)
-	at org.eclipse.jetty.server.handler.gzip.GzipHandler.handle(GzipHandler.java:724)
-	at io.dropwizard.jetty.BiDiGzipHandler.handle(BiDiGzipHandler.java:67)
-	at org.eclipse.jetty.server.handler.RequestLogHandler.handle(RequestLogHandler.java:56)
-	at org.eclipse.jetty.server.handler.StatisticsHandler.handle(StatisticsHandler.java:169)
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
-	at org.eclipse.jetty.server.Server.handle(Server.java:531)
-	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:352)
-	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:260)
-	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:281)
-	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:102)
-	at org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:118)
-	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:333)
-	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:310)
-	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:168)
-	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:126)
-	at org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:366)
-	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:762)
-	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:680)
-	at java.base/java.lang.Thread.run(Thread.java:829)
-13:41:43[dw-24]WARN |c.p.PhaseInterceptorChain|Interceptor for {http://www.cise.eu/accesspoint/service/v1/}CISEMessageService has thrown exception, unwinding now
-java.lang.NullPointerException: null
-	at com.roskart.dropwizard.jaxws.AbstractInvoker.getTargetMethod(AbstractInvoker.java:24)
-	at com.roskart.dropwizard.jaxws.ValidatingInvoker.invoke(ValidatingInvoker.java:39)
-	at org.apache.cxf.interceptor.ServiceInvokerInterceptor$1.run(ServiceInvokerInterceptor.java:59)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at org.apache.cxf.interceptor.ServiceInvokerInterceptor$2.run(ServiceInvokerInterceptor.java:126)
-	at org.apache.cxf.workqueue.SynchronousExecutor.execute(SynchronousExecutor.java:37)
-	at org.apache.cxf.interceptor.ServiceInvokerInterceptor.handleMessage(ServiceInvokerInterceptor.java:131)
-	at org.apache.cxf.phase.PhaseInterceptorChain.doIntercept(PhaseInterceptorChain.java:308)
-	at org.apache.cxf.transport.ChainInitiationObserver.onMessage(ChainInitiationObserver.java:121)
-	at org.apache.cxf.transport.http.AbstractHTTPDestination.invoke(AbstractHTTPDestination.java:265)
-	at org.apache.cxf.transport.servlet.ServletController.invokeDestination(ServletController.java:234)
-	at org.apache.cxf.transport.servlet.ServletController.invoke(ServletController.java:208)
-	at org.apache.cxf.transport.servlet.ServletController.invoke(ServletController.java:160)
-	at org.apache.cxf.transport.servlet.CXFNonSpringServlet.invoke(CXFNonSpringServlet.java:225)
-	at org.apache.cxf.transport.servlet.AbstractHTTPServlet.handleRequest(AbstractHTTPServlet.java:298)
-	at org.apache.cxf.transport.servlet.AbstractHTTPServlet.doGet(AbstractHTTPServlet.java:222)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)
-	at org.apache.cxf.transport.servlet.AbstractHTTPServlet.service(AbstractHTTPServlet.java:273)
-	at io.dropwizard.jetty.NonblockingServletHolder.handle(NonblockingServletHolder.java:49)
-	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1655)
-	at io.dropwizard.servlets.ThreadNameFilter.doFilter(ThreadNameFilter.java:35)
-	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)
-	at io.dropwizard.jersey.filter.AllowedMethodsFilter.handle(AllowedMethodsFilter.java:45)
-	at io.dropwizard.jersey.filter.AllowedMethodsFilter.doFilter(AllowedMethodsFilter.java:39)
-	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)
-	at org.eclipse.jetty.servlets.CrossOriginFilter.handle(CrossOriginFilter.java:311)
-	at org.eclipse.jetty.servlets.CrossOriginFilter.doFilter(CrossOriginFilter.java:265)
-	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1642)
-	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:533)
-	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:255)
-	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1317)
-	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:203)
-	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:473)
-	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:201)
-	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1219)
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:144)
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
-	at com.codahale.metrics.jetty9.InstrumentedHandler.handle(InstrumentedHandler.java:239)
-	at io.dropwizard.jetty.RoutingHandler.handle(RoutingHandler.java:52)
-	at org.eclipse.jetty.server.handler.gzip.GzipHandler.handle(GzipHandler.java:724)
-	at io.dropwizard.jetty.BiDiGzipHandler.handle(BiDiGzipHandler.java:67)
-	at org.eclipse.jetty.server.handler.RequestLogHandler.handle(RequestLogHandler.java:56)
-	at org.eclipse.jetty.server.handler.StatisticsHandler.handle(StatisticsHandler.java:169)
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
-	at org.eclipse.jetty.server.Server.handle(Server.java:531)
-	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:352)
-	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:260)
-	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:281)
-	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:102)
-	at org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:118)
-	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:333)
-	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:310)
-	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:168)
-	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:126)
-	at org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:366)
-	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:762)
-	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:680)
-	at java.base/java.lang.Thread.run(Thread.java:829)
-13:41:58[dw-24]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 4 messages
-13:45:09[dw-72]INFO |e.c.d.s.WsHandler        |SOAP Outbound message sent
-13:45:09[dw-21]INFO |e.c.s.a.MessageAPI       |Received message Pull Request id[84481a06-93e4-4990-8317-97663589584f]
-13:45:09[dw-72]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
-13:45:10[dw-11]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Wed Mar 02 08:16:38 GMT 2022]: found 4 messages
-13:45:43[dw-11]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Wed Mar 02 08:16:38 GMT 2022]: found 4 messages
-19:01:20[dw-24]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+11:23:09[dw-26]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 05:36:51 GMT 1970]: found 8 messages
+11:23:18[dw-26]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
+11:24:11[dw-26]INFO |e.c.d.s.WsHandler        |SOAP Outbound message sent
+11:24:11[dw-25]INFO |e.c.s.a.MessageAPI       |Received message Pull Request id[fe3cdd92-4558-4dad-857e-97277625838e]
+11:24:11[dw-26]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
+11:24:12[dw-37]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Wed Mar 02 13:45:09 GMT 2022]: found 4 messages
