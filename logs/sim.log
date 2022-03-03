@@ -210,3 +210,4 @@ java.lang.NullPointerException: null
 13:45:09[dw-72]INFO |e.c.d.s.WsHandler        |SOAP Inbound message received
 13:45:10[dw-11]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Wed Mar 02 08:16:38 GMT 2022]: found 4 messages
 13:45:43[dw-11]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Wed Mar 02 08:16:38 GMT 2022]: found 4 messages
+19:01:20[dw-24]INFO |.s.a.h.FileMessageService|Retrieve message thread info after timestamp[Thu Jan 01 00:00:00 GMT 1970]: found 8 messages
