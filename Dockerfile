@@ -15,11 +15,11 @@ COPY target/cise-sim-$VERSION.tar.gz /srv/cise-sim.tar.gz
 RUN mkdir -p /srv/cise-simulator && tar xvfz /srv/cise-sim.tar.gz -C /srv/cise-simulator --strip-components 1
 RUN rm /srv/cise-sim.tar.gz
 
-# Create a group and user. NB: this user group should exists in the host machine and the volume must be writeble by it
-#RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+# Create a group and user. NB: this user group should exists in the host machine and the volume must be writable by it
+ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # All future commands should run as the appuser user
-#USER appuser
+ USER appuser
 
 EXPOSE 8200 8201
 
